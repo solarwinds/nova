@@ -170,7 +170,7 @@ export class FilteredViewTableWithVirtualScrollComponent
             _pull(this.chipsDataSource.flatItems || [], event.item);
         }
         const group = this.filterGroups.find(
-            (i) => event.group?.id === i.filterGroupItem.id
+            i => event.group?.id === i.filterGroupItem.id
         );
         group?.deselectFilterItemByValue(event.item.label);
     }
@@ -178,14 +178,14 @@ export class FilteredViewTableWithVirtualScrollComponent
     public onClearAll(e: MouseEvent): void {
         this.chipsDataSource.groupedItems = [];
         this.popover?.onClick(e);
-        this.filterGroups.forEach((i) => i.deselectAllFilterItems());
+        this.filterGroups.forEach(i => i.deselectAllFilterItems());
     }
 
     private updateChips() {
-        this.chipsDataSource.groupedItems = this.filterGroupItems.map((i) => ({
+        this.chipsDataSource.groupedItems = this.filterGroupItems.map(i => ({
             id: i.id,
             label: i.title,
-            items: i.selectedFilterValues.map((selected) => ({
+            items: i.selectedFilterValues.map(selected => ({
                 label: selected,
             })),
         }));
@@ -193,8 +193,8 @@ export class FilteredViewTableWithVirtualScrollComponent
     }
 
     private recalculateCounts(filterData: IFilteringOutputs) {
-        this.filterGroupItems.forEach((filterGroupItem) => {
-            filterGroupItem.allFilterOptions.forEach((filterOption) => {
+        this.filterGroupItems.forEach(filterGroupItem => {
+            filterGroupItem.allFilterOptions.forEach(filterOption => {
                 const counts = filterData[filterGroupItem.id];
                 filterOption.count = counts[filterOption.value] ?? 0;
             });

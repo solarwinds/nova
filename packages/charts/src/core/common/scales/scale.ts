@@ -109,7 +109,7 @@ export abstract class Scale<T> implements IScale<T> {
 
     /** See {@link IScale#reverse} */
     public isDomainValid(): boolean {
-        return -1 === this.domain().findIndex((value) => value === undefined);
+        return -1 === this.domain().findIndex(value => value === undefined);
     }
 
     public reverse(): this {

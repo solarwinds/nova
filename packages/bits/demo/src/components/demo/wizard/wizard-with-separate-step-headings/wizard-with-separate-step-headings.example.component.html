@@ -5,8 +5,7 @@
         name="nui-demo-textbox"
         [value]="textboxValue"
         customBoxWidth="150px"
-        (textChange)="onTextboxChange($event)"
-    >
+        (textChange)="onTextboxChange($event)">
     </nui-textbox>
 </ng-template>
 <ng-template #step2>
@@ -30,13 +29,11 @@
         title="Heading for first step content"
         i18n-shortTitle
         shortTitle="First step"
-        [stepTemplate]="step1"
-    ></nui-wizard-step>
+        [stepTemplate]="step1"></nui-wizard-step>
     <nui-wizard-step
         i18n-title
         title="Heading for final step content"
         i18n-shortTitle
         shortTitle="Final step"
-        [stepTemplate]="step2"
-    ></nui-wizard-step>
+        [stepTemplate]="step2"></nui-wizard-step>
 </nui-wizard>

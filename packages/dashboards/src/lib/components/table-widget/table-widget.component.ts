@@ -249,7 +249,10 @@ export class TableWidgetComponent
     }
 
     public get searchLimitMaxLength(): number {
-        return this.configuration?.searchConfiguration?.maxSearchLength ?? this.defaultMaxSearchLength;
+        return (
+            this.configuration?.searchConfiguration?.maxSearchLength ??
+            this.defaultMaxSearchLength
+        );
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -316,7 +319,7 @@ export class TableWidgetComponent
         this.dataSource.busy
             ?.pipe(
                 // eslint-disable-next-line import/no-deprecated
-                tap((isBusy) => (this.isBusy = isBusy)),
+                tap(isBusy => (this.isBusy = isBusy)),
                 takeUntil(this.onDestroy$)
             )
             .subscribe();
@@ -327,18 +330,18 @@ export class TableWidgetComponent
             .getStream(WIDGET_RESIZE)
             .pipe(
                 filter(
-                    (event) =>
+                    event =>
                         event.payload?.widgetId?.toString() ===
                         this.widgetConfigurationService.getWidget().id
                 ),
                 // eslint-disable-next-line import/no-deprecated
-                map((event) => event.payload?.height ?? 0)
+                map(event => event.payload?.height ?? 0)
             );
 
         // subscribing to widget resize event from dashboard and update virtual scroll viewport size
         tableHeightChanged$
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((height) => {
+            .subscribe(height => {
                 this.tableContainerHeight = height - this.indentFromTop;
                 this.vscrollViewport?.checkViewportSize();
                 this.changeDetector.detectChanges();
@@ -356,10 +359,10 @@ export class TableWidgetComponent
                 of(this.el.nativeElement.getBoundingClientRect().height)
             )
                 .pipe(
-                    filter((value) => !!value),
+                    filter(value => !!value),
                     take(1),
                     // eslint-disable-next-line import/no-deprecated
-                    tap((value) => {
+                    tap(value => {
                         this.tableWidgetHeight = value;
                         if (this.hasVirtualScroll) {
                             this.virtualScrollAddon.subscribeToVirtualScroll();
@@ -441,10 +444,10 @@ export class TableWidgetComponent
      */
     public updateColumns(configuration: ITableWidgetConfig): void {
         this.headers = configuration.columns
-            .filter((item) => item.isActive)
-            .map((item) => item.id);
+            .filter(item => item.isActive)
+            .map(item => item.id);
         const allColumnsHaveWidthSpecified = configuration.columns.every(
-            (column) => Boolean(column.width)
+            column => Boolean(column.width)
         );
 
         const columns = configuration.columns.map((column, index, array) => {
@@ -501,7 +504,7 @@ export class TableWidgetComponent
             return [];
         }
 
-        return widgetData.map((record) => {
+        return widgetData.map(record => {
             const row = columns.reduce(
                 (result: Record<string, any>, column) => {
                     const dataFieldIds =
@@ -542,7 +545,7 @@ export class TableWidgetComponent
     public onSortOrderChanged(event: ISortedItem): void {
         this.sortedColumn = event;
         const columnToSort = this.columns.find(
-            (column) => column.id === event.sortBy
+            column => column.id === event.sortBy
         );
         if (!columnToSort) {
             return;
@@ -665,7 +668,7 @@ export class TableWidgetComponent
         if (this.configuration) {
             const sortBy = this.configuration.sorterConfiguration?.sortBy;
             const columnValue = this.configuration.columns?.find(
-                (column) => column.id === sortBy
+                column => column.id === sortBy
             )?.formatter?.properties?.dataFieldIds?.value;
 
             this.sortFilter = {
@@ -737,7 +740,7 @@ export class TableWidgetComponent
 
     private setSortableSet() {
         this.sortableSet = {};
-        this.dataFields.forEach((dataField) => {
+        this.dataFields.forEach(dataField => {
             this.sortableSet[dataField.id] = dataField.sortable ?? true;
         });
     }
@@ -821,7 +824,7 @@ export class TableWidgetComponent
                     ?.searchConfiguration
             )
         ) {
-           this.searchAddon.initWidget(this);
+            this.searchAddon.initWidget(this);
         }
     }
 }

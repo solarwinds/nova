@@ -5,8 +5,7 @@
     <div class="legend">
         <nui-legend
             [interactive]="false"
-            (mouseleave)="chartAssist.resetVisibleSeries()"
-        >
+            (mouseleave)="chartAssist.resetVisibleSeries()">
             <nui-legend-series
                 *ngFor="
                     let legendSeries of chartAssist.legendSeriesSet;
@@ -20,16 +19,13 @@
                 [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                 (isSelectedChange)="
                     chartAssist.toggleSeries(legendSeries.id, $event)
-                "
-            >
+                ">
                 <nui-rich-legend-tile
                     [value]="legendSeries.data"
-                    backgroundColor="transparent"
-                >
+                    backgroundColor="transparent">
                 </nui-rich-legend-tile>
                 <nui-icon
-                    [icon]="'status_' + legendSeries['name'] | lowercase"
-                ></nui-icon>
+                    [icon]="'status_' + legendSeries['name'] | lowercase"></nui-icon>
             </nui-legend-series>
         </nui-legend>
     </div>

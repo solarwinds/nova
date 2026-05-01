@@ -199,7 +199,7 @@ export class OverlayPositionService {
         let result;
         for (const panelClassKey in OverlayPanelClass) {
             if (OverlayPanelClass.hasOwnProperty(panelClassKey)) {
-                result = panelClass.find((i) => i === panelClassKey);
+                result = panelClass.find(i => i === panelClassKey);
             }
         }
         return result || "";

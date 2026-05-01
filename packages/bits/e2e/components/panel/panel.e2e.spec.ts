@@ -61,7 +61,9 @@ test.describe("USERCONTROL Panel", () => {
         });
 
         test("should hide/unhide the left pane when hideLeftPane is toggled", async () => {
-            await Helpers.page.waitForTimeout(1000); /* wait for animation to finish */
+            await Helpers.page.waitForTimeout(
+                1000
+            ); /* wait for animation to finish */
             await panelHidden.toBeVisible();
             await panelHidden.toHavePaneVisible("left");
             await panelHidden.closeSidePane();
@@ -111,7 +113,9 @@ test.describe("USERCONTROL Panel", () => {
             const oldBox = await panelResize.centerPane.boundingBox();
             await gutter.moveRight(gutterMoveDistance);
             const newBox = await panelResize.centerPane.boundingBox();
-            await Helpers.page.waitForTimeout(1000); /* wait for animation to finish */
+            await Helpers.page.waitForTimeout(
+                1000
+            ); /* wait for animation to finish */
             expect(oldBox!.width).toBeCloseTo(
                 newBox!.width + gutterMoveDistance,
                 -1
@@ -158,11 +162,9 @@ test.describe("USERCONTROL Panel", () => {
             expect(newSideBox!.width).toBeGreaterThan(oldSideBox!.width);
 
             await page.setViewportSize({ width: 1200, height: 880 });
-            const oldSideBoxResized =
-                await panelResize.sidePane.boundingBox();
+            const oldSideBoxResized = await panelResize.sidePane.boundingBox();
             await gutter.moveLeft(200);
-            const newSideBoxResized =
-                await panelResize.sidePane.boundingBox();
+            const newSideBoxResized = await panelResize.sidePane.boundingBox();
             expect(oldSideBoxResized!.width).toBeGreaterThan(
                 newSideBoxResized!.width
             );

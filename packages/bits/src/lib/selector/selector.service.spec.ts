@@ -435,7 +435,7 @@ describe("services >", () => {
                 expect(newSelection).toEqual(EMPTY_SELECTION);
             });
             it("should return one item for single selection modes", () => {
-                Object.values(RepeatSelectionMode).forEach((selectionMode) => {
+                Object.values(RepeatSelectionMode).forEach(selectionMode => {
                     if (
                         selectionMode !== RepeatSelectionMode.none &&
                         selectionMode !== RepeatSelectionMode.multi
@@ -453,7 +453,7 @@ describe("services >", () => {
                 });
             });
             it("should return one item for single selection modes regardless of initial selection", () => {
-                Object.values(RepeatSelectionMode).forEach((selectionMode) => {
+                Object.values(RepeatSelectionMode).forEach(selectionMode => {
                     if (
                         selectionMode !== RepeatSelectionMode.none &&
                         selectionMode !== RepeatSelectionMode.multi
@@ -471,7 +471,7 @@ describe("services >", () => {
                 });
             });
             it("should return one item for single selection modes when a previous selection was made, and a new item has been selected", () => {
-                Object.values(RepeatSelectionMode).forEach((selectionMode) => {
+                Object.values(RepeatSelectionMode).forEach(selectionMode => {
                     if (
                         selectionMode !== RepeatSelectionMode.none &&
                         selectionMode !== RepeatSelectionMode.multi
@@ -489,7 +489,7 @@ describe("services >", () => {
                 });
             });
             it("should return an empty selection for single selection modes when a previous selection was not made, and no new item has been selected", () => {
-                Object.values(RepeatSelectionMode).forEach((selectionMode) => {
+                Object.values(RepeatSelectionMode).forEach(selectionMode => {
                     if (
                         selectionMode !== RepeatSelectionMode.none &&
                         selectionMode !== RepeatSelectionMode.multi

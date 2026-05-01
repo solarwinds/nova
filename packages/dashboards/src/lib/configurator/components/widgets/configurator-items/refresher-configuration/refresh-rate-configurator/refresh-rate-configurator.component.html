@@ -5,14 +5,12 @@
             customBoxWidth="90px"
             [minValue]="minSeconds"
             [maxValue]="maxSeconds"
-            (valueChange)="valueChangeFix()"
-        ></nui-textbox-number>
+            (valueChange)="valueChangeFix()"></nui-textbox-number>
 
         <nui-select-v2 formControlName="unit" class="ml-3">
             <nui-select-v2-option
                 *ngFor="let item of displayedUnitItems"
-                [value]="item"
-            >
+                [value]="item">
                 {{ item.label }}
             </nui-select-v2-option>
         </nui-select-v2>

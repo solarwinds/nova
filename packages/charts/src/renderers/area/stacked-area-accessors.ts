@@ -27,10 +27,10 @@ export function stackedAreaAccessors(
 ): IAreaAccessors {
     const areaAccessors = new AreaAccessors(colorProvider, markerProvider);
 
-    areaAccessors.data.x = (d) => d.x;
+    areaAccessors.data.x = d => d.x;
     areaAccessors.data.y = areaAccessors.data.absoluteY1;
     areaAccessors.data.y0 = () => 0;
-    areaAccessors.data.y1 = (d) => d.y;
+    areaAccessors.data.y1 = d => d.y;
 
     return areaAccessors;
 }

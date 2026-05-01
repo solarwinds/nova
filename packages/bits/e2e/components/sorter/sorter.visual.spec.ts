@@ -32,7 +32,9 @@ test.describe(`Visual tests: ${name}`, () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("sorter/visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
 
         sorter = Atom.find<SorterAtom>(SorterAtom, "nui-demo-sorter", true);
         sorterLegacyStringInput = Atom.find<SorterAtom>(

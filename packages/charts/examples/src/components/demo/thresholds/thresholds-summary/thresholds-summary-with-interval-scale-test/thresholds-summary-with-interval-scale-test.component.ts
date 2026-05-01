@@ -142,7 +142,7 @@ export class ThresholdsSummaryWithIntervalScaleTestComponent implements OnInit {
 
         const summarySeriesSet: IChartAssistSeries<IAccessors>[] = [
             ...seriesSet,
-        ].map((s) => {
+        ].map(s => {
             const zones = this.thresholdsService.getThresholdZones(
                 s,
                 this.summaryZones,

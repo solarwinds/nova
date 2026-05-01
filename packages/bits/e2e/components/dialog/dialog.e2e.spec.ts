@@ -277,7 +277,7 @@ test.describe("USERCONTROL Dialog", () => {
                     throw new Error("The overlay is not defined");
                 }
                 await page.waitForFunction(
-                    (el) => window.getComputedStyle(el).zIndex === "1000",
+                    el => window.getComputedStyle(el).zIndex === "1000",
                     overlay
                 );
 
@@ -289,7 +289,7 @@ test.describe("USERCONTROL Dialog", () => {
                     throw new Error("The overlayB is not defined");
                 }
                 await page.waitForFunction(
-                    (el) => window.getComputedStyle(el).zIndex === "1000",
+                    el => window.getComputedStyle(el).zIndex === "1000",
                     overlayB
                 );
             });
@@ -298,30 +298,52 @@ test.describe("USERCONTROL Dialog", () => {
 
     test.describe("dialog with date-time-picker in overlay >", () => {
         test.beforeEach(async () => {
-            await insideOverlayWithDateTimePickerBtn.getLocator().scrollIntoViewIfNeeded();
+            await insideOverlayWithDateTimePickerBtn
+                .getLocator()
+                .scrollIntoViewIfNeeded();
             await insideOverlayWithDateTimePickerBtn.click();
             await dialog.toBeVisible();
         });
 
-        test("should close overlay in datepicker on click outside dialog", async ({ page }) => {
+        test("should close overlay in datepicker on click outside dialog", async ({
+            page,
+        }) => {
             const datePicker = dateTimePicker.datePicker;
             await datePicker.toggle();
             // Click outside the dialog using Playwright's mouse API
             const dialogBox = await dialog.getLocator().boundingBox();
-            if (!dialogBox) { throw new Error("Dialog bounding box not found"); }
-            await page.mouse.move(dialogBox.x - 500, dialogBox.y + dialogBox.height / 2);
-            await page.mouse.click(dialogBox.x - 500, dialogBox.y + dialogBox.height / 2);
+            if (!dialogBox) {
+                throw new Error("Dialog bounding box not found");
+            }
+            await page.mouse.move(
+                dialogBox.x - 500,
+                dialogBox.y + dialogBox.height / 2
+            );
+            await page.mouse.click(
+                dialogBox.x - 500,
+                dialogBox.y + dialogBox.height / 2
+            );
             await datePicker.getOverlay.toNotBeOpened();
         });
 
-        test("should close overlay in timepicker on click outside dialog", async ({ page }) => {
+        test("should close overlay in timepicker on click outside dialog", async ({
+            page,
+        }) => {
             const timePicker = dateTimePicker.timePicker;
             await timePicker.toggle();
             // Click outside the dialog using Playwright's mouse API
             const dialogBox = await dialog.getLocator().boundingBox();
-            if (!dialogBox) { throw new Error("Dialog bounding box not found"); }
-            await page.mouse.move(dialogBox.x - 500, dialogBox.y + dialogBox.height / 2);
-            await page.mouse.click(dialogBox.x - 500, dialogBox.y + dialogBox.height / 2);
+            if (!dialogBox) {
+                throw new Error("Dialog bounding box not found");
+            }
+            await page.mouse.move(
+                dialogBox.x - 500,
+                dialogBox.y + dialogBox.height / 2
+            );
+            await page.mouse.click(
+                dialogBox.x - 500,
+                dialogBox.y + dialogBox.height / 2
+            );
             await timePicker.overlay.toNotBeOpened();
         });
     });

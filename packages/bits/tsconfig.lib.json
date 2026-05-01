@@ -11,7 +11,7 @@
         "declaration": false,
         "forceConsistentCasingInFileNames": true,
         "module": "ES6",
-        "strict": false,
+        "strict": false
     },
     "extends": "./tsconfig.json",
     "files": ["./src/public_api.ts"],

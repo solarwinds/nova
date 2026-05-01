@@ -82,7 +82,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
 
     public ngAfterViewInit(): void {
         // Observing the size of the component to check traverse
-        this._ro = new ResizeObserver((entries) =>
+        this._ro = new ResizeObserver(entries =>
             entries.forEach(() => this.checkTraverse())
         );
         this.ngZone.runOutsideAngular(() => {
@@ -97,7 +97,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
         this._changesSubscription = this._tabs.changes.subscribe(
             (changedTabs: any) => {
                 this.setActiveTab();
-                this._tabSelectedSubscriptions.forEach((sub) =>
+                this._tabSelectedSubscriptions.forEach(sub =>
                     sub.unsubscribe()
                 );
                 this._tabSelectedSubscriptions = [];
@@ -246,7 +246,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
 
     public ngOnDestroy(): void {
         this._changesSubscription.unsubscribe();
-        this._tabSelectedSubscriptions.forEach((sub) => sub.unsubscribe());
+        this._tabSelectedSubscriptions.forEach(sub => sub.unsubscribe());
         this._ro.disconnect();
     }
 }

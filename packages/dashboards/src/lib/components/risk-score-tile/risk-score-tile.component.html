@@ -15,19 +15,16 @@
 <ng-template #riskScoreContent>
     <div
         class="nui-risk-score-tile-indicator__background"
-        [class.nui-risk-score-tile-indicator--interactive]="interactive"
-    ></div>
+        [class.nui-risk-score-tile-indicator--interactive]="interactive"></div>
     <div
         class="nui-risk-score-tile-indicator__text"
         [ngStyle]="{
             color: widgetData?.textColor || defaultColor
-        }"
-    >
+        }">
         <div class="nui-risk-score-tile-indicator__zoom-container">
             <div
                 class="nui-risk-score-tile-indicator__label"
-                [title]="widgetData?.label"
-            >
+                [title]="widgetData?.label">
                 <span
                     nuiZoomContent
                     [useZoom]="false"
@@ -41,8 +38,7 @@
             <div
                 class="nui-risk-score-tile-indicator__value"
                 [style.font-size]="widgetData?.fontSize"
-                [title]="widgetData?.value"
-            >
+                [title]="widgetData?.value">
                 <nui-risk-score
                     nuiZoomContent
                     [useZoom]="false"
@@ -56,22 +52,19 @@
                         widgetData?.useStaticLabel ?? false
                             ? widgetData?.staticLabel
                             : widgetData?.value
-                    "
-                ></nui-risk-score>
+                    "></nui-risk-score>
             </div>
 
             <div
                 class="nui-risk-score-tile-indicator__description"
-                [title]="widgetData?.description"
-            >
+                [title]="widgetData?.description">
                 <div
                     class="nui-risk-score-tile-indicator__description__text"
                     nuiZoomContent
                     [useZoom]="false"
                     [minScale]="0.7"
                     [scaleIN$]="getScaleBroker('description')?.out$"
-                    [scaleOUT$]="getScaleBroker('description')?.in$"
-                >
+                    [scaleOUT$]="getScaleBroker('description')?.in$">
                     <p>{{ widgetData?.description }}</p>
                 </div>
             </div>

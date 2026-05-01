@@ -1,7 +1,6 @@
 <div class="widget-configurator-section">
     <div
-        class="widget-configurator-section__header d-flex justify-content-between align-items-center"
-    >
+        class="widget-configurator-section__header d-flex justify-content-between align-items-center">
         <ng-container *ngTemplateOutlet="headerTextTemplate"></ng-container>
         <ng-container *ngTemplateOutlet="headerButtonsTemplate"></ng-container>
 
@@ -10,8 +9,7 @@
             headerText
             *ngIf="headerText"
             class="widget-configurator-section__header-text"
-            [title]="headerText"
-        >
+            [title]="headerText">
             {{ headerText }}
         </div>
         <ng-content select="[headerText]"></ng-content>
@@ -26,12 +24,10 @@
             [providers]="node.providers"
             [properties]="node.properties"
             [outputs]="['formReady']"
-            (output)="onEvent(node.id, $event)"
-        >
+            (output)="onEvent(node.id, $event)">
             <ng-template
                 [cdkPortalOutlet]="componentPortal.portal"
-                (attached)="componentPortal.attached($event)"
-            ></ng-template>
+                (attached)="componentPortal.attached($event)"></ng-template>
         </ng-container>
     </ng-container>
     <ng-content></ng-content>

@@ -71,18 +71,14 @@ test.describe(`Visual tests: ${name}`, () => {
         );
 
         expanders = {
-            detailsBasicPanel: page.locator(
-                "#nui-visual-basic-panel-details"
-            ),
+            detailsBasicPanel: page.locator("#nui-visual-basic-panel-details"),
             detailsCustomSizes: page.locator(
                 "#nui-visual-custom-size-panel-details"
             ),
             detailsHoverable: page.locator(
                 "#nui-visual-hoverable-panel-details"
             ),
-            detailsClosable: page.locator(
-                "#nui-visual-closable-panel-details"
-            ),
+            detailsClosable: page.locator("#nui-visual-closable-panel-details"),
             detailsWithEmbeddedContent: page.locator(
                 "#nui-visual-with-embedded-details"
             ),

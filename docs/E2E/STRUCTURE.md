@@ -1,4 +1,5 @@
 # 📁 Folder Structure Strategy
+
 ```
 nova/
 ├── packages/
@@ -23,7 +24,6 @@ nova/
 │       └── ...
 └── playwright.config.ts
 ```
-
 
 ## Key idea
 

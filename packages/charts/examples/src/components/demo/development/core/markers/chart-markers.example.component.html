@@ -6,8 +6,7 @@
                 seriesUnitLabel="Mbps"
                 [active]="chartAssist.isLegendActive"
                 [interactive]="true"
-                (mouseleave)="chartAssist.resetVisibleSeries()"
-            >
+                (mouseleave)="chartAssist.resetVisibleSeries()">
                 <nui-legend-series
                     *ngFor="
                         let legendSeries of chartAssist.legendSeriesSet;
@@ -21,8 +20,7 @@
                     [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                     (isSelectedChange)="
                         chartAssist.toggleSeries(legendSeries.id, $event)
-                    "
-                >
+                    ">
                     <nui-rich-legend-tile
                         [value]="
                             chartAssist.getHighlightedValue(
@@ -38,8 +36,7 @@
                         "
                         [color]="
                             chartAssist.palette.textColors.get(legendSeries.id)
-                        "
-                    >
+                        ">
                         <nui-chart-marker
                             [marker]="markers.get(legendSeries.id)"
                             [color]="
@@ -47,8 +44,7 @@
                                     legendSeries.id
                                 )
                             "
-                            rightEdge
-                        ></nui-chart-marker>
+                            rightEdge></nui-chart-marker>
                     </nui-rich-legend-tile>
                 </nui-legend-series>
             </nui-legend>
@@ -59,8 +55,7 @@
 <div class="d-flex flex-column pt-3">
     <nui-switch
         [value]="useCustomMarkers"
-        (valueChange)="onSwitchMarkers($event)"
-    >
+        (valueChange)="onSwitchMarkers($event)">
         Use Custom Markers
     </nui-switch>
     <button nui-button (click)="updateData()" type="button">Refresh</button>

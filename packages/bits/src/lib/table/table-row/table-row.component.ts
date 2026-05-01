@@ -71,7 +71,7 @@ import {
         { provide: CdkHeaderRowDef, useExisting: TableHeaderRowDefDirective },
     ],
     host: { role: "row" },
-    standalone: false
+    standalone: false,
 })
 export class TableHeaderRowDefDirective
     extends CdkHeaderRowDef
@@ -131,7 +131,7 @@ export class TableHeaderRowDefDirective
 @Directive({
     selector: "[nuiRowDef]",
     providers: [{ provide: CdkRowDef, useExisting: TableRowDefDirective }],
-    standalone: false
+    standalone: false,
 })
 export class TableRowDefDirective<T>
     extends CdkRowDef<T>
@@ -185,7 +185,7 @@ export class TableRowDefDirective<T>
     providers: [
         { provide: CdkFooterRowDef, useExisting: TableFooterRowDefDirective },
     ],
-    standalone: false
+    standalone: false,
 })
 export class TableFooterRowDefDirective
     extends CdkFooterRowDef
@@ -268,7 +268,7 @@ export class TableFooterRowDefDirective
     providers: [
         { provide: CdkHeaderRow, useExisting: TableHeaderRowComponent },
     ],
-    standalone: false
+    standalone: false,
 })
 export class TableHeaderRowComponent
     extends CdkHeaderRow
@@ -424,7 +424,7 @@ export class TableHeaderRowComponent
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: "nuiRow",
     providers: [{ provide: CdkRow, useExisting: TableRowComponent }],
-    standalone: false
+    standalone: false,
 })
 export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     @Input() density: RowHeightOptions = "default";
@@ -591,6 +591,6 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     providers: [
         { provide: CdkFooterRow, useExisting: TableFooterRowComponent },
     ],
-    standalone: false
+    standalone: false,
 })
 export class TableFooterRowComponent extends CdkFooterRow {}

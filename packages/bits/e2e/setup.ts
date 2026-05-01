@@ -56,13 +56,16 @@ export class Helpers {
     }
 
     static async getActiveElement(): Promise<JSHandle | null> {
-        return await test.step("Get active element", async () => Helpers.page.evaluateHandle(() => document.activeElement));
+        return await test.step("Get active element", async () =>
+            Helpers.page.evaluateHandle(() => document.activeElement));
     }
 
     static async prepareBrowser(pageName: string, page: Page): Promise<void> {
         await test.step(`Prepare browser for page: ${pageName}`, async () => {
             Helpers.setPage(page);
-            const baseURL = process.env["PLAYWRIGHT_TEST_BASE_URL"] ?? "http://localhost:4200";
+            const baseURL =
+                process.env["PLAYWRIGHT_TEST_BASE_URL"] ??
+                "http://localhost:4200";
             await Helpers.page.goto(`${baseURL}/#/${pageName}`);
         });
     }
@@ -88,7 +91,8 @@ export class Helpers {
         });
     }
     static async evaluateActiveElementHtml(): Promise<string | null> {
-        return await test.step("Evaluate active element innerHTML", async () => Helpers.page.evaluate(() => {
+        return await test.step("Evaluate active element innerHTML", async () =>
+            Helpers.page.evaluate(() => {
                 const el = document.activeElement;
                 return el ? el.innerHTML : null;
             }));
@@ -162,7 +166,7 @@ export class Helpers {
 
     static async switchDarkTheme(mode: "on" | "off"): Promise<void> {
         await test.step(`Switch dark theme: ${mode}`, async () => {
-            await Helpers.page.evaluate((themeMode) => {
+            await Helpers.page.evaluate(themeMode => {
                 const html = document.getElementsByTagName("html")[0];
                 if (themeMode === "on") {
                     html.classList.add("dark-nova-theme");
@@ -181,7 +185,7 @@ export class Helpers {
     static async browserZoom(percent: number): Promise<void> {
         await test.step(`browserZoom(${percent}%)`, async () => {
             await Helpers.page.evaluate(
-                (num) => (document.body.style.zoom = `${num}%`),
+                num => (document.body.style.zoom = `${num}%`),
                 percent
             );
         });

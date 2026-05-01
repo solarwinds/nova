@@ -5,8 +5,7 @@
     i18n-placeholder
     [formControl]="comboboxControl"
     style="width: 50%"
-    #combobox
->
+    #combobox>
     <nui-select-v2-option *ngFor="let item of items" [value]="item">
         <span class="mr-3" [nuiComboboxV2OptionHighlight]="item"></span>
     </nui-select-v2-option>
@@ -16,7 +15,6 @@
     class="d-inline-flex"
     style="padding-left: 15px"
     [(value)]="error"
-    i18n
->
+    i18n>
     Toggle error state
 </nui-switch>

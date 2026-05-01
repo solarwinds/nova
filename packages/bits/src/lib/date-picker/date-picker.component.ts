@@ -260,7 +260,7 @@ export class DatePickerComponent
         if (this.overlay) {
             this.overlay.clickOutside
                 .pipe(takeUntil(this.onDestroy$))
-                .subscribe((_) => this.overlay.hide());
+                .subscribe(_ => this.overlay.hide());
 
             // Sets innerDatePicker 'value' to 'null' on popup close and refreshView() on popup open,
             // so in case datePicker.value is invalid it will build the calendar from the scratch
@@ -268,16 +268,14 @@ export class DatePickerComponent
 
             this.overlay.show$
                 .pipe(takeUntil(this.onDestroy$))
-                .subscribe((_) => this._datePicker.refreshView());
-            this.overlay.hide$
-                .pipe(takeUntil(this.onDestroy$))
-                .subscribe((_) => {
-                    const currentDateValid = this.value?.isValid();
-                    if (!currentDateValid) {
-                        this._datePicker.value = undefined;
-                        this._datePicker.datepickerMode = "day";
-                    }
-                });
+                .subscribe(_ => this._datePicker.refreshView());
+            this.overlay.hide$.pipe(takeUntil(this.onDestroy$)).subscribe(_ => {
+                const currentDateValid = this.value?.isValid();
+                if (!currentDateValid) {
+                    this._datePicker.value = undefined;
+                    this._datePicker.datepickerMode = "day";
+                }
+            });
         }
     }
 

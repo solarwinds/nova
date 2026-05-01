@@ -44,17 +44,15 @@ export class BaseGridDisablingInteractionExampleComponent implements OnInit {
         gridConfig.interactive = false;
         this.chart = new Chart(new XYGrid(gridConfig));
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
-            (d) => ({
-                ...d,
-                scales: {
-                    x: new LinearScale(),
-                    y: new LinearScale(),
-                },
-                accessors: new LineAccessors(),
-                renderer: new LineRenderer(),
-            })
-        );
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
+            ...d,
+            scales: {
+                x: new LinearScale(),
+                y: new LinearScale(),
+            },
+            accessors: new LineAccessors(),
+            renderer: new LineRenderer(),
+        }));
 
         this.chart.update(seriesSet);
     }

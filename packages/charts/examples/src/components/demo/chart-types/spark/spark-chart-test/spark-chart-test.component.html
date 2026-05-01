@@ -7,21 +7,18 @@
                     *ngFor="
                         let spark of chartAssist.sparks;
                         trackBy: chartAssist.trackByFn
-                    "
-                >
+                    ">
                     <div class="d-flex">
                         <nui-chart
                             [chart]="spark.chart"
-                            nuiChartCollectionId="1"
-                        ></nui-chart>
+                            nuiChartCollectionId="1"></nui-chart>
                         <div class="d-flex flex-column pl-2">
                             <nui-legend-series
                                 [interactive]="false"
                                 [active]="chartAssist.isLegendActive"
                                 [descriptionPrimary]="
                                     spark.chartSeriesSet[0].name
-                                "
-                            >
+                                ">
                                 <nui-rich-legend-tile
                                     unitLabel="sec"
                                     [value]="
@@ -40,8 +37,7 @@
                                         chartAssist.palette.textColors.get(
                                             spark.chartSeriesSet[0].id
                                         )
-                                    "
-                                >
+                                    ">
                                     <nui-chart-marker
                                         [marker]="
                                             chartAssist.markers.get(
@@ -53,8 +49,7 @@
                                                 spark.chartSeriesSet[0].id
                                             )
                                         "
-                                        rightEdge
-                                    >
+                                        rightEdge>
                                     </nui-chart-marker>
                                 </nui-rich-legend-tile>
                             </nui-legend-series>
@@ -66,8 +61,7 @@
                     type="text"
                     class="w-100 mt-5"
                     [ngModel]="input"
-                    (ngModelChange)="inputChanged($event)"
-                />
+                    (ngModelChange)="inputChanged($event)" />
             </div>
         </div>
         <div class="m-5">

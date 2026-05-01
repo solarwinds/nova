@@ -4,16 +4,14 @@
             <nui-menu
                 displayStyle="action"
                 [itemsSource]="itemsSource"
-                icon="menu"
-            ></nui-menu>
+                icon="menu"></nui-menu>
             <span class="ml-1">
                 <h4 i18n class="my-0">Path History</h4>
             </span>
         </div>
         <div
             nuiPanelEmbeddedIcon
-            class="d-flex align-items-center order-2 ml-auto"
-        >
+            class="d-flex align-items-center order-2 ml-auto">
             <nui-switch [(value)]="isOn">
                 Live {{ isOn ? "On" : "Off" }}
             </nui-switch>

@@ -2,19 +2,16 @@
     class="nui-items-dynamic"
     cdkDropList
     (cdkDropListDropped)="drop($event)"
-    [formGroup]="form"
->
+    [formGroup]="form">
     <div
         cdkDrag
         class="nui-items-dynamic__node-item"
         (cdkDragStarted)="cdkDragStarted($event)"
-        *ngFor="let node of nodeConfigs; let i = index; trackBy: trackBy"
-    >
+        *ngFor="let node of nodeConfigs; let i = index; trackBy: trackBy">
         <nui-drop-area
             class="nui-items-dynamic__drop-area"
             *cdkDragPlaceholder
-            [style.height.px]="height"
-        ></nui-drop-area>
+            [style.height.px]="height"></nui-drop-area>
 
         <ng-template #headerText>
             <ng-container *ngIf="moveButtons">
@@ -27,8 +24,7 @@
                     headerMap.get(node.id)
                         | nuiWidgetConfiguratorSectionHeader : i : headerPrefix
                 "
-                class="nui-items-dynamic__header-text"
-            >
+                class="nui-items-dynamic__header-text">
                 {{
                     headerMap.get(node.id)
                         | nuiWidgetConfiguratorSectionHeader : i : headerPrefix
@@ -45,8 +41,7 @@
                     type="button"
                     icon="delete"
                     displayStyle="action"
-                    (click)="removeItem(getItemForNode(node), i)"
-                ></button>
+                    (click)="removeItem(getItemForNode(node), i)"></button>
             </div>
         </ng-template>
 
@@ -62,12 +57,10 @@
                     | nuiAddData : headerButtons : 'headerButtonsTemplate'
             "
             [outputs]="['formReady', 'formDestroy']"
-            (output)="onEvent(node.id, $event)"
-        >
+            (output)="onEvent(node.id, $event)">
             <ng-template
                 [cdkPortalOutlet]="componentPortal.portal"
-                (attached)="componentPortal.attached($event)"
-            >
+                (attached)="componentPortal.attached($event)">
             </ng-template>
         </ng-container>
     </div>

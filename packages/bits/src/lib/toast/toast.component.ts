@@ -264,9 +264,7 @@ export class ToastComponent implements OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        this.subscriptions.forEach((subscription) =>
-            subscription.unsubscribe()
-        );
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
         clearInterval(this.intervalId);
         clearTimeout(this.timeout);
     }

@@ -17,8 +17,7 @@
                 *ngFor="let filterGroupItem of filterGroupItems"
                 [filterGroupItem]="filterGroupItem"
                 (filterChanged)="changeFilters($event)"
-                (showAllButtonClicked)="handleFilterDialog(filterGroupItem)"
-            >
+                (showAllButtonClicked)="handleFilterDialog(filterGroupItem)">
             </app-dialog-filter-group>
         </app-dialog-filter-groups-wrapper>
     </div>
@@ -28,8 +27,7 @@
                 id="nui-composites-demo-repeat"
                 [itemsSource]="filteringState.repeat.itemsSource"
                 [repeatItemTemplateRef]="listRepeatItemTemplate"
-                paddingSize="normal"
-            >
+                paddingSize="normal">
             </nui-repeat>
         </div>
     </div>

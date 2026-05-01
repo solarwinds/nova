@@ -214,12 +214,12 @@ export abstract class XYChartComponent
             (series: any) => {
                 // matches scale units to the metric unit for either left y-axis scale or right y-axis scale
                 let yScale = yScales.find(
-                    (yScale) => yScale.scaleUnits === series.metricUnits
+                    yScale => yScale.scaleUnits === series.metricUnits
                 );
                 if (!yScale) {
                     yScale =
                         yScales.find(
-                            (yScale) => yScale.scaleUnits === "generic"
+                            yScale => yScale.scaleUnits === "generic"
                         ) ?? scales.y;
                 }
 
@@ -366,7 +366,7 @@ export abstract class XYChartComponent
             .getStream(SET_DOMAIN_EVENT)
             // eslint-disable-next-line import/no-deprecated
             .pipe(takeUntil(merge(this.destroy$, this.buildChart$)))
-            .subscribe((event) => {
+            .subscribe(event => {
                 const payload = <ISetDomainEventPayload>event.data;
                 const newDomain = payload[Object.keys(payload)[0]];
                 this.eventBus.getStream(SET_TIMEFRAME).next({
@@ -442,7 +442,7 @@ export abstract class XYChartComponent
     }
 
     public transformData(metricId: string, trId: TimeseriesTransformer): void {
-        const serie = this.widgetData.series.find((s) => s.id === metricId);
+        const serie = this.widgetData.series.find(s => s.id === metricId);
         if (!serie) {
             return;
         }

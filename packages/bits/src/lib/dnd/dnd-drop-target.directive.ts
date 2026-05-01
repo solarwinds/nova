@@ -49,8 +49,10 @@ import {
         // to let the user customize drop zone only via css
         "[class.nui-dnd-dropzone]": "true",
         "[class.nui-dnd-dropzone--active]": "isDropZoneActive",
-        "[class.nui-dnd-dropzone--drop-allowed]": "isDropZoneActive && canLastDragItemBeDropped",
-        "[class.nui-dnd-dropzone--drop-not-allowed]": "isDropZoneActive && canLastDragItemBeDropped === false",
+        "[class.nui-dnd-dropzone--drop-allowed]":
+            "isDropZoneActive && canLastDragItemBeDropped",
+        "[class.nui-dnd-dropzone--drop-not-allowed]":
+            "isDropZoneActive && canLastDragItemBeDropped === false",
     },
     standalone: false,
 })
@@ -121,7 +123,7 @@ export class DndDropTargetDirective implements AfterContentInit, OnDestroy {
 
         // Merging observables to obtain reliable draggedItem reference
         const draggedItem$: Observable<CdkDrag> = merge(
-            this.targetDropList.entered.pipe(map((event) => event.item)),
+            this.targetDropList.entered.pipe(map(event => event.item)),
             this.itemDragStarted$
         ).pipe(shareReplay());
 

@@ -38,5 +38,5 @@ export type ComponentChanges<T> = {
 
 export interface CodeSourceFiles {
     context: string;
-    files: { path: string; content: () => Promise <any> }[];
+    files: { path: string; content: () => Promise<any> }[];
 }

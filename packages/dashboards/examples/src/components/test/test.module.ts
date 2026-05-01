@@ -28,7 +28,7 @@ const routes = [
         path: "overview",
         loadChildren: async () =>
             import("./visual/overview/overview.module").then(
-                (m) => m.OverviewModule
+                m => m.OverviewModule
             ),
     },
     {
@@ -36,41 +36,41 @@ const routes = [
         loadChildren: async () =>
             import(
                 "./visual/proportional/proportional-widget-test.module"
-            ).then((m) => m.ProportionalWidgetTestModule),
+            ).then(m => m.ProportionalWidgetTestModule),
     },
     {
         path: "configurator",
         loadChildren: async () =>
             import("./visual/configurator/configurator-test.module").then(
-                (m) => m.ConfiguratorTestModule
+                m => m.ConfiguratorTestModule
             ),
     },
     {
         path: "timeseries",
         loadChildren: async () =>
             import("./visual/timeseries/timeseries-test.module").then(
-                (m) => m.TimeseriesTestModule
+                m => m.TimeseriesTestModule
             ),
     },
     {
         path: "table",
         loadChildren: async () =>
             import("./visual/table/table-test.module").then(
-                (m) => m.TableTestModule
+                m => m.TableTestModule
             ),
     },
     {
         path: "kpi",
         loadChildren: async () =>
             import("./visual/kpi/kpi-widget-test.module").then(
-                (m) => m.KpiWidgetTestModule
+                m => m.KpiWidgetTestModule
             ),
     },
     {
         path: "drilldown",
         loadChildren: async () =>
             import("./visual/drilldown/drilldown-widget-test.module").then(
-                (m) => m.DrilldownWidgetTestModule
+                m => m.DrilldownWidgetTestModule
             ),
     },
 ];

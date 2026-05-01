@@ -168,7 +168,7 @@ export class DatePickerInnerComponent
         }
 
         if (shouldRefreshView) {
-            _each(changes, (change) => {
+            _each(changes, change => {
                 shouldRefreshView =
                     !change.firstChange &&
                     moment.isMoment(change.currentValue) &&

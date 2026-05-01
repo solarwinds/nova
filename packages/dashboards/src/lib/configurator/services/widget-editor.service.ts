@@ -45,7 +45,7 @@ export class WidgetEditorService {
                     WidgetEditorComponent,
                     null
                 ),
-                attached: (componentRef) => {
+                attached: componentRef => {
                     const editorComponent = componentRef.instance;
                     editorComponent.formPizzagna = widgetEditor.formPizzagna;
                     editorComponent.formRoot = widgetEditor.paths?.root;

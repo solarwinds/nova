@@ -42,10 +42,7 @@ describe("components >", () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [IconComponent],
-                declarations: [
-                    PopoverModalComponent,
-                    OverlayArrowComponent,
-                ],
+                declarations: [PopoverModalComponent, OverlayArrowComponent],
                 providers: [
                     EdgeDetectionService,
                     LoggerService,

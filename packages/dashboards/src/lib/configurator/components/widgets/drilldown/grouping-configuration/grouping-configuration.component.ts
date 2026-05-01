@@ -126,7 +126,7 @@ export class GroupingConfigurationComponent
         }
         if (changes.groupBy && !changes.groupBy.firstChange) {
             this.getGroupByControl.clear();
-            this.groupBy.forEach((group) =>
+            this.groupBy.forEach(group =>
                 this.getGroupByControl.push(this.createControl(group))
             );
             this.fillGroupsOptions();
@@ -151,7 +151,7 @@ export class GroupingConfigurationComponent
     }
 
     public isAddRestricted(): boolean {
-        return this.selectData.some((i) => i.length === 1);
+        return this.selectData.some(i => i.length === 1);
     }
 
     public getSubtitle(): string {

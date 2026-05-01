@@ -1,7 +1,6 @@
 <div
     class="nui-wizard-vertical-header-container"
-    *ngFor="let step of steps; let i = index; let isLast = last"
->
+    *ngFor="let step of steps; let i = index; let isLast = last">
     <nui-wizard-step-header
         class="nui-wizard-vertical-header"
         (click)="step.select()"
@@ -20,22 +19,19 @@
         [label]="step.stepLabel || step.label"
         [selected]="selectedIndex === i"
         [active]="step.completed || selectedIndex === i || !linear"
-        [errorMessage]="step.errorMessage"
-    >
+        [errorMessage]="step.errorMessage">
     </nui-wizard-step-header>
 
     <div
         class="nui-wizard-vertical-content-container"
-        [class.nui-wizard-vertical-line]="!isLast"
-    >
+        [class.nui-wizard-vertical-line]="!isLast">
         <div
             class="nui-wizard-vertical-content"
             role="tabpanel"
             [attr.tabindex]="selectedIndex === i ? 0 : null"
             [id]="_getStepContentId(i)"
             [attr.aria-labelledby]="_getStepLabelId(i)"
-            [attr.aria-expanded]="selectedIndex === i"
-        >
+            [attr.aria-expanded]="selectedIndex === i">
             <div class="nui-wizard-vertical-content">
                 <ng-container [ngTemplateOutlet]="step.content"></ng-container>
             </div>

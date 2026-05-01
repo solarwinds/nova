@@ -71,7 +71,7 @@ export class WizardAsyncFormValidationExampleComponent {
         }
 
         this.busy = true;
-        stepControl.statusChanges.pipe(take(1)).subscribe((status) => {
+        stepControl.statusChanges.pipe(take(1)).subscribe(status => {
             if (status === "VALID") {
                 this.wizard.next();
                 this.busy = false;

@@ -1,13 +1,11 @@
 <div
     class="nui-radio"
-    [class.nui-radio--empty]="radioTranscludeIsEmpty && !hint"
->
+    [class.nui-radio--empty]="radioTranscludeIsEmpty && !hint">
     <label
         class="nui-radio__label"
         [class.nui-radio__label--translucent]="disabled"
         (mouseenter)="hoverHandler()"
-        (mouseleave)="hoverHandler()"
-    >
+        (mouseleave)="hoverHandler()">
         <div class="nui-radio__content">
             <input
                 #inputViewContainer
@@ -19,13 +17,11 @@
                 [attr.aria-label]="ariaLabel"
                 [attr.aria-checked]="checked"
                 (change)="changeHandler()"
-                (click)="onInputClick($event)"
-            />
+                (click)="onInputClick($event)" />
 
             <div
                 class="nui-radio__mark"
-                [class.nui-radio__mark--disabled]="disabled"
-            >
+                [class.nui-radio__mark--disabled]="disabled">
                 <div class="nui-radio__glyph"></div>
             </div>
 

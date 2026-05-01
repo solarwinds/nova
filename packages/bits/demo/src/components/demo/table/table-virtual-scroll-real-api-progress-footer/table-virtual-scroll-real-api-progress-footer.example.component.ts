@@ -46,7 +46,8 @@ import { RandomuserTableDataSource } from "../table-virtual-scroll-datasource";
 
 @Component({
     selector: "nui-table-virtual-scroll-real-api-progress-footer-example",
-    templateUrl: "./table-virtual-scroll-real-api-progress-footer.example.component.html",
+    templateUrl:
+        "./table-virtual-scroll-real-api-progress-footer.example.component.html",
     styleUrls: [
         "./table-virtual-scroll-real-api-progress-footer.example.component.less",
     ],
@@ -134,7 +135,7 @@ export class TableVirtualScrollRealApiProgressFooterExampleComponent
             }
         );
 
-        this.dataSource.busy.subscribe((busy) => {
+        this.dataSource.busy.subscribe(busy => {
             this._isBusy = busy;
         });
     }
@@ -147,7 +148,7 @@ export class TableVirtualScrollRealApiProgressFooterExampleComponent
 
         this.viewport.renderedRangeStream
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((value) => {
+            .subscribe(value => {
                 // There is no use to proceed if we've already fetched all the items
                 if (this.users.length === this._totalItems) {
                     return;

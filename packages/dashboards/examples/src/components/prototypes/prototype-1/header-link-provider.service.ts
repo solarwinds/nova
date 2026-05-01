@@ -40,7 +40,7 @@ export class HeaderLinkProviderService implements IHeaderLinkProvider {
         // use global filter values as query parameters for the string
         const queryParams = Object.keys(filters)
             .map(
-                (f) =>
+                f =>
                     encodeURIComponent(f) +
                     "=" +
                     encodeURIComponent(filters[f].data.value)

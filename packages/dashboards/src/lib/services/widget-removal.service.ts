@@ -66,7 +66,7 @@ export class WidgetRemovalService {
     private updateDashboard =
         (dashboardComponent: DashboardComponent) =>
         (source: Observable<string>) =>
-            new Observable<void>((observer) =>
+            new Observable<void>(observer =>
                 source.subscribe((widgetId: string) => {
                     if (widgetId) {
                         dashboardComponent.removeWidget(widgetId);

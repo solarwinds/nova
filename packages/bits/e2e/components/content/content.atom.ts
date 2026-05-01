@@ -8,9 +8,7 @@ export class ContentAtom extends Atom {
         await expect
             .poll(async () => {
                 const el = this.getLocator();
-                return await el.evaluate(
-                    (e) => e.scrollHeight > e.clientHeight
-                );
+                return await el.evaluate(e => e.scrollHeight > e.clientHeight);
             })
             .toBe(true);
     }
@@ -19,9 +17,7 @@ export class ContentAtom extends Atom {
         await expect
             .poll(async () => {
                 const el = this.getLocator();
-                return await el.evaluate(
-                    (e) => e.scrollHeight > e.clientHeight
-                );
+                return await el.evaluate(e => e.scrollHeight > e.clientHeight);
             })
             .toBe(false);
     }

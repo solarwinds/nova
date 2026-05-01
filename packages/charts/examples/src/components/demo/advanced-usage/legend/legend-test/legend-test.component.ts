@@ -70,7 +70,7 @@ export class LegendTestExampleComponent {
         const accessors = new LineAccessors();
         const renderer = new LineRenderer();
         this.chartAssist.update(
-            this.seriesData.map((series) => ({
+            this.seriesData.map(series => ({
                 id: series.seriesId,
                 data: [series.value],
                 accessors,

@@ -18,7 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Atom, Camera, Helpers, test } from "@nova-ui/bits/sdk/atoms-playwright";
+import {
+    Atom,
+    Camera,
+    Helpers,
+    test,
+} from "@nova-ui/bits/sdk/atoms-playwright";
 
 const name: string = "Proportional Widget";
 
@@ -37,8 +42,12 @@ test.describe(`Visual tests: Dashboards - ${name}`, () => {
 
         // Hover on the last legend series inside the 3rd nui-widget
         // (mirrors old Protractor: .all(nui-widget).get(2).all(nui-legend-series).last())
-        const thirdWidget = page.locator("#proportional-widget nui-widget").nth(2);
-        const lastLegendSeries = thirdWidget.locator("nui-legend-series").last();
+        const thirdWidget = page
+            .locator("#proportional-widget nui-widget")
+            .nth(2);
+        const lastLegendSeries = thirdWidget
+            .locator("nui-legend-series")
+            .last();
         await lastLegendSeries.hover();
 
         await camera.say.cheese(`${name} - Hover on legend`);

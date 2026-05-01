@@ -154,7 +154,7 @@ export class DataGenerator {
         const generateValue = () => Math.random() * 100 + 50;
         const maxThreshold = 10;
 
-        return DataGenerator.range(0, pointCount).map((index) => {
+        return DataGenerator.range(0, pointCount).map(index => {
             let next = generateValue();
             if (prev) {
                 while (Math.abs(next - prev) > maxThreshold) {

@@ -1,18 +1,15 @@
 @if (isSelect) {
 <nui-select-v2
     class="color-picker-select-label"
-    [displayValueTemplate]="colorPickerTemplate"
->
+    [displayValueTemplate]="colorPickerTemplate">
     @for (item of palette; track item) {
     <nui-select-v2-option
         class="color-picker-select-label__option nui-text-default"
-        [value]="item"
-    >
+        [value]="item">
         <div class="color-picker-input__box" [attr.title]="item?.label">
             <div
                 class="color-picker-select-label__color-box"
-                [ngStyle]="setStyles(item?.color)"
-            ></div>
+                [ngStyle]="setStyles(item?.color)"></div>
         </div>
         <div>{{ item?.label }}</div>
     </nui-select-v2-option>
@@ -23,8 +20,7 @@
     class="color-picker-select"
     [overlayConfig]="overlayConfig"
     [syncWidth]="false"
-    [displayValueTemplate]="colorPickerTemplate"
->
+    [displayValueTemplate]="colorPickerTemplate">
     <div class="color-picker-container">
         @for (item of palette; track item) {
         <div class="d-inline-flex flex-wrap box">
@@ -32,24 +28,20 @@
                 [value]="item?.color"
                 [displayValueContext]="item"
                 class="w-100 h-100 reset-box-sizes"
-                #option
-            >
+                #option>
                 <div
                     class="color-picker-option"
                     [attr.title]="item?.label"
-                    [class.color-picker-option--selected]="option?.selected"
-                >
+                    [class.color-picker-option--selected]="option?.selected">
                     <div
                         class="color-picker-option__color-box"
-                        [ngStyle]="setStyles(item?.color)"
-                    >
+                        [ngStyle]="setStyles(item?.color)">
                         <div
                             class="color-picker-option__glyph"
                             [class.black-tick]="
                                 isBlackTick || item?.color === defaultColor
                             "
-                            *ngIf="option?.selected"
-                        ></div>
+                            *ngIf="option?.selected"></div>
                     </div>
                 </div>
             </nui-select-v2-option>
@@ -64,8 +56,7 @@
         <div class="color-picker-input__box" [attr.title]="item?.label">
             <div
                 class="color-picker-input__color-box"
-                [ngStyle]="setStyles(item?.color)"
-            ></div>
+                [ngStyle]="setStyles(item?.color)"></div>
             @if (isSelect){
             <div class="color-picker-input__label nui-text-default">
                 {{ item?.label }}
@@ -76,8 +67,7 @@
         <div class="color-picker-input__toggle">
             <nui-icon
                 [style.transform]="open ? 'rotate(180deg)' : ''"
-                icon="caret-down"
-            ></nui-icon>
+                icon="caret-down"></nui-icon>
         </div>
     </div>
 </ng-template>

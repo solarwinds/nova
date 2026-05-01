@@ -36,8 +36,7 @@
                 [filterGroupItem]="filterGroupItem"
                 [checkboxTemplateRef]="customCheckboxTemplate"
                 [expanderTemplateRef]="customExpanderTemplate"
-                (filterChanged)="changeFilters($event)"
-            ></app-custom-template-filter-group>
+                (filterChanged)="changeFilters($event)"></app-custom-template-filter-group>
         </app-custom-template-filter-groups-wrapper>
     </div>
     <div>
@@ -46,8 +45,7 @@
                 id="nui-composites-demo-repeat"
                 [itemsSource]="filteringState.repeat.itemsSource"
                 [repeatItemTemplateRef]="listRepeatItemTemplate"
-                paddingSize="normal"
-            >
+                paddingSize="normal">
             </nui-repeat>
         </div>
     </div>

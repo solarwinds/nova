@@ -68,7 +68,7 @@ export const getAutomaticDomain: DomainCalculator = (
 ): any[] => {
     const fixedDomains = getFixedDomains(chartSeriesSet, scaleKey);
 
-    const domains: any[][] = chartSeriesSet.map((cs) => {
+    const domains: any[][] = chartSeriesSet.map(cs => {
         // find fixed, continuous scales that are referenced by this series
         const filterScales = Object.keys(fixedDomains).reduce(
             (result, next: string) => {

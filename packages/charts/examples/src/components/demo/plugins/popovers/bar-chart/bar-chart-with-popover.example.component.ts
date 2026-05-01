@@ -61,7 +61,7 @@ export class BarChartWithPopoverExampleComponent implements OnInit {
 
         // tell the chart assist to populate the chart
         this.chartAssist.update(
-            getData().map((s) => ({
+            getData().map(s => ({
                 ...s,
                 accessors,
                 renderer,

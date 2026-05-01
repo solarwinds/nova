@@ -1,12 +1,10 @@
 <div
     [attr.aria-label]="ariaLabel"
     class="nui-breadcrumb"
-    *ngIf="items?.length > 1"
->
+    *ngIf="items?.length > 1">
     <span
         class="nui-breadcrumb__wrapper"
-        *ngFor="let item of items; let isLast = last"
-    >
+        *ngFor="let item of items; let isLast = last">
         <ng-container *ngIf="!isLast">
             <a
                 [attr.href]="item?.url"
@@ -18,8 +16,7 @@
                 class="nui-breadcrumb__caret-icon"
                 icon="caret-right"
                 iconColor="disabled-gray"
-                iconSize="small"
-            ></nui-icon>
+                iconSize="small"></nui-icon>
         </ng-container>
         <span
             *ngIf="isLast"

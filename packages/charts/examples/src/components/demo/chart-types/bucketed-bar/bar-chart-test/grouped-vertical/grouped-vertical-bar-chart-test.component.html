@@ -7,16 +7,14 @@
             [interactive]="false"
             orientation="horizontal"
             (mouseleave)="chartAssist.resetVisibleSeries()"
-            class="flex-wrap"
-        >
+            class="flex-wrap">
             <nui-legend-series
                 *ngFor="
                     let legendSeries of chartAssist.legendSeriesSet;
                     trackBy: chartAssist.seriesTrackByFn
                 "
                 [descriptionPrimary]="legendSeries.name"
-                (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
-            >
+                (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)">
                 <nui-basic-legend-tile>
                     <nui-chart-marker
                         [drawLine]="false"
@@ -25,8 +23,7 @@
                             chartAssist.palette.standardColors.get(
                                 legendSeries.id
                             )
-                        "
-                    >
+                        ">
                     </nui-chart-marker>
                 </nui-basic-legend-tile>
             </nui-legend-series>

@@ -57,7 +57,7 @@ export class WidgetEditorDirective implements OnInit, OnDestroy {
             .getStream(WIDGET_EDIT)
             .pipe(
                 // eslint-disable-next-line import/no-deprecated
-                switchMap((event) => {
+                switchMap(event => {
                     const widget =
                         this.dashboardComponent.dashboard.widgets[
                             event.widgetId
@@ -89,7 +89,7 @@ export class WidgetEditorDirective implements OnInit, OnDestroy {
             .getStream(WIDGET_REMOVE)
             .pipe(
                 // eslint-disable-next-line import/no-deprecated
-                switchMap((event) => {
+                switchMap(event => {
                     if (!event.widgetId) {
                         throw new Error(`event has to have widgetId`);
                     }

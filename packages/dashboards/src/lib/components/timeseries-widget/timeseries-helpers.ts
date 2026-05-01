@@ -28,12 +28,12 @@ export function metricsSeriesMeasurementsMinMax(
 ): { min: number; max: number } {
     if (axisUnits === "percent") {
         const percentMetrics = series.filter(
-            (metric) => metric.metricUnits === "percent" && metric.data?.length
+            metric => metric.metricUnits === "percent" && metric.data?.length
         );
         const percentMax =
             percentMetrics.length > 0
                 ? percentMetrics
-                      .flatMap((m) => m.data ?? [])
+                      .flatMap(m => m.data ?? [])
                       .reduce(
                           (acc, measurement) => Math.max(acc, measurement.y),
                           0
@@ -43,7 +43,7 @@ export function metricsSeriesMeasurementsMinMax(
     }
     // skips percent measurements as they are displayed on the left y-axis and would affect right y-axis domain
     const nonPercentMetrics = series.filter(
-        (metric) => metric.metricUnits !== "percent" && metric.data?.length
+        metric => metric.metricUnits !== "percent" && metric.data?.length
     );
 
     // case where there are no measurements for non-percent metrics,  e.g when a license expires
@@ -51,7 +51,7 @@ export function metricsSeriesMeasurementsMinMax(
         return { min: -1, max: 1 };
     }
 
-    const measurements = nonPercentMetrics.flatMap((m) => m.data ?? []);
+    const measurements = nonPercentMetrics.flatMap(m => m.data ?? []);
 
     return measurements.reduce(
         (acc: { min: number; max: number }, measurement) => ({

@@ -46,8 +46,7 @@
             orientation="right"
             paneMinSize="150px"
             paneMaxSize="550px"
-            paneSize="350px"
-        >
+            paneSize="350px">
             <div nuiPanelEmbeddedBody>
                 <div>
                     <p>
@@ -91,8 +90,7 @@
             panelMode="hoverable"
             orientation="left"
             [displacePrimaryContent]="false"
-            id="nui-visual-test-hoverable-panel"
-        >
+            id="nui-visual-test-hoverable-panel">
             <div nuiPanelEmbeddedBody>
                 <div>
                     <p>
@@ -134,8 +132,7 @@
             orientation="left"
             panelMode="closable"
             heading="panel header"
-            id="nui-visual-test-hidden-panel"
-        >
+            id="nui-visual-test-hidden-panel">
             <div nuiPanelEmbeddedBody>
                 <div>
                     <p>
@@ -182,8 +179,7 @@
             <button
                 type="button"
                 id="nui-visual-test-panel-footer-toggle-btn"
-                (click)="toggleFooter()"
-            >
+                (click)="toggleFooter()">
                 Toggle Footer
             </button>
             <div>
@@ -192,25 +188,21 @@
                     id="nui-visual-test-embedded-content-panel"
                     orientation="left"
                     [isCollapsed]="false"
-                    (collapsed)="onCollapseChange($event)"
-                >
+                    (collapsed)="onCollapseChange($event)">
                     <div nuiPanelEmbeddedIcon>
                         <nui-icon
                             *ngIf="isCollapsed"
                             [icon]="headerIcon"
-                            [counter]="headerIconCounter"
-                        >
+                            [counter]="headerIconCounter">
                         </nui-icon>
                     </div>
                     <div
                         nuiPanelEmbeddedHeading
-                        class="d-flex flex-row align-items-center"
-                    >
+                        class="d-flex flex-row align-items-center">
                         <nui-icon
                             *ngIf="!isCollapsed"
                             [icon]="headerIcon"
-                            iconColor="gray"
-                        >
+                            iconColor="gray">
                         </nui-icon>
                         <span>
                             <h4 class="my-0">TRANSCLUDED</h4>
@@ -254,8 +246,7 @@
                     <div
                         *ngIf="displayFooter"
                         nuiPanelEmbeddedFooter
-                        class="d-flex justify-content-between"
-                    >
+                        class="d-flex justify-content-between">
                         <button nui-button type="button">Cancel</button>
                         <button nui-button type="button" displayStyle="primary">
                             Confirm
@@ -277,12 +268,10 @@
             panelMode="collapsible"
             [darkBorder]="true"
             [headerPadding]="false"
-            [panelBackgroundColor]="panelColor"
-        >
+            [panelBackgroundColor]="panelColor">
             <div
                 nuiPanelEmbeddedHeading
-                class="d-flex flex-row align-items-center w-100"
-            >
+                class="d-flex flex-row align-items-center w-100">
                 <span class="ml-1">
                     <h4>Custom Heading</h4>
                 </span>
@@ -290,8 +279,7 @@
                     <nui-menu
                         displayStyle="action"
                         [itemsSource]="itemsSource"
-                        icon="menu"
-                    ></nui-menu>
+                        icon="menu"></nui-menu>
                 </div>
             </div>
             <div nuiPanelEmbeddedBody>
@@ -337,8 +325,7 @@
             panelMode="collapsible"
             isResizable="true"
             heading="Panel Header"
-            paneSize="20%"
-        >
+            paneSize="20%">
             <div nuiPanelEmbeddedBody>
                 <div>
                     <p>
@@ -381,14 +368,12 @@
         <nui-panel
             panelMode="collapsible"
             orientation="top"
-            id="nui-visual-test-top-oriented-panel"
-        >
+            id="nui-visual-test-top-oriented-panel">
             <div nuiPanelEmbeddedHeading class="d-flex align-items-center">
                 <nui-menu
                     displayStyle="action"
                     [itemsSource]="itemsSource"
-                    icon="menu"
-                ></nui-menu>
+                    icon="menu"></nui-menu>
                 <span class="ml-1">
                     <h4 class="my-0">Path History</h4>
                 </span>
@@ -437,12 +422,10 @@
             panelMode="collapsible"
             orientation="left"
             [isCollapsed]="false"
-            id="nui-visual-test-nested-panel-outer"
-        >
+            id="nui-visual-test-nested-panel-outer">
             <div
                 nuiPanelEmbeddedHeading
-                class="flex flex-row align-items-center"
-            >
+                class="flex flex-row align-items-center">
                 <span>
                     <h4 i18n class="my-0">Outer Panel</h4>
                 </span>
@@ -463,12 +446,10 @@
                     class="w-100"
                     panelMode="collapsible"
                     orientation="left"
-                    [isCollapsed]="false"
-                >
+                    [isCollapsed]="false">
                     <div
                         nuiPanelEmbeddedHeading
-                        class="flex flex-row align-items-center"
-                    >
+                        class="flex flex-row align-items-center">
                         <span>
                             <h4 i18n class="my-0">Inner Panel</h4>
                         </span>

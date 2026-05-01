@@ -107,6 +107,6 @@ export class CustomTemplateFilterGroupCompositeComponent
     private getAllFilterOptionsList(
         filterGroupItems: IFilterGroupOption[]
     ): string[] {
-        return filterGroupItems.map((item) => item.value);
+        return filterGroupItems.map(item => item.value);
     }
 }

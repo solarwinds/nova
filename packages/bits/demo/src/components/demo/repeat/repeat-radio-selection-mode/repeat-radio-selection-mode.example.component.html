@@ -13,8 +13,7 @@
         selectionMode="radio"
         [preventRowClick]="preventRowClick"
         [repeatItemTemplateRef]="repeatItemTemplate"
-        (selectionChange)="selectedColors = $event"
-    ></nui-repeat>
+        (selectionChange)="selectedColors = $event"></nui-repeat>
 </div>
 
 <ng-template #repeatItemTemplate let-item="item">

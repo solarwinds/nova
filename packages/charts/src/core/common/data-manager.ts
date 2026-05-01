@@ -57,7 +57,7 @@ export class DataManager {
 
     public update(seriesSet: IChartSeries<IAccessors>[]): void {
         const duplicateIds = filter(
-            seriesSet.map((series) => series.id),
+            seriesSet.map(series => series.id),
             (val, i, iteratee) => includes(iteratee, val, i + 1)
         );
 
@@ -74,8 +74,8 @@ export class DataManager {
 
         this._scalesIndexByKey = this.buildScalesIndex(this._chartSeriesSet);
         this._scalesIndexById = keyBy(
-            flatten(values(this._scalesIndexByKey).map((v) => v.list)),
-            (s) => s.id
+            flatten(values(this._scalesIndexByKey).map(v => v.list)),
+            s => s.id
         );
     }
 
@@ -91,11 +91,11 @@ export class DataManager {
         if (scale.domainCalculator) {
             const chartSeriesSet = this.chartSeriesSet
                 .filter(
-                    (cs) =>
+                    cs =>
                         cs.scales[scaleKey] === scale &&
                         !cs.renderer.config.ignoreForDomainCalculation
                 )
-                .filter((c) => c.renderState !== RenderState.hidden);
+                .filter(c => c.renderState !== RenderState.hidden);
             if (
                 chartSeriesSet.length ||
                 this.chart?.configuration?.updateDomainForEmptySeries
@@ -114,8 +114,8 @@ export class DataManager {
         chartSeries: IChartSeries<IAccessors>[]
     ): ScalesIndex {
         const scales: ScalesIndex = {};
-        each(chartSeries, (cs) => {
-            each(Object.keys(cs.scales), (scaleKey) => {
+        each(chartSeries, cs => {
+            each(Object.keys(cs.scales), scaleKey => {
                 const scale = cs.scales[scaleKey];
                 let indexEntry = scales[scaleKey];
                 if (!indexEntry) {
@@ -135,8 +135,8 @@ export class DataManager {
     }
 
     public updateScaleDomains(): void {
-        each(Object.keys(this._scalesIndexByKey), (scaleKey) => {
-            each(this._scalesIndexByKey[scaleKey].list, (scale) => {
+        each(Object.keys(this._scalesIndexByKey), scaleKey => {
+            each(this._scalesIndexByKey[scaleKey].list, scale => {
                 this.updateScaleDomain(scale, scaleKey);
             });
         });

@@ -36,14 +36,40 @@ test.describe(`Visual tests: ${name}`, () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("menu/menu-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
 
-        menuBasic = Atom.find<MenuAtom>(MenuAtom, "nui-demo-basic-menu-with-icon", true);
-        menuBasicDesctructive = Atom.find<MenuAtom>(MenuAtom, "nui-demo-destructive-menu-with-icon", true);
-        menuBasicFooter = Atom.find<MenuAtom>(MenuAtom, "nui-demo-basic-menu-with-icon-footer", true);
-        menuBasicFooterDestructive = Atom.find<MenuAtom>(MenuAtom, "nui-demo-destructive-menu-with-icon-footer", true);
-        menuIconOnlyDestructive = Atom.find<MenuAtom>(MenuAtom, "nui-demo-menu-variants_run", true);
-        menuMultiSelection = Atom.find<MenuAtom>(MenuAtom, "nui-demo-multi-selection-menu", true);
+        menuBasic = Atom.find<MenuAtom>(
+            MenuAtom,
+            "nui-demo-basic-menu-with-icon",
+            true
+        );
+        menuBasicDesctructive = Atom.find<MenuAtom>(
+            MenuAtom,
+            "nui-demo-destructive-menu-with-icon",
+            true
+        );
+        menuBasicFooter = Atom.find<MenuAtom>(
+            MenuAtom,
+            "nui-demo-basic-menu-with-icon-footer",
+            true
+        );
+        menuBasicFooterDestructive = Atom.find<MenuAtom>(
+            MenuAtom,
+            "nui-demo-destructive-menu-with-icon-footer",
+            true
+        );
+        menuIconOnlyDestructive = Atom.find<MenuAtom>(
+            MenuAtom,
+            "nui-demo-menu-variants_run",
+            true
+        );
+        menuMultiSelection = Atom.find<MenuAtom>(
+            MenuAtom,
+            "nui-demo-multi-selection-menu",
+            true
+        );
 
         camera = new Camera().loadFilm(page, name, "Bits");
     });
@@ -61,7 +87,10 @@ test.describe(`Visual tests: ${name}`, () => {
             `Basic menu aligned top-left toggled. Edge detection worked fine`
         );
 
-        await menuBasic.getMenuItemByIndex(-1).getLocator().scrollIntoViewIfNeeded();
+        await menuBasic
+            .getMenuItemByIndex(-1)
+            .getLocator()
+            .scrollIntoViewIfNeeded();
         await camera.say.cheese(
             `Scroll to bottom to capture the destructive item and verify it's last`
         );

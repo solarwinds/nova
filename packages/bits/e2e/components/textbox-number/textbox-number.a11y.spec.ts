@@ -25,7 +25,10 @@ test.describe("a11y: textbox-number", () => {
     const rulesToDisable: string[] = [];
 
     test.beforeEach(async ({ page }) => {
-        await Helpers.prepareBrowser("textbox/textbox-number-visual-test", page);
+        await Helpers.prepareBrowser(
+            "textbox/textbox-number-visual-test",
+            page
+        );
     });
 
     test("should check a11y of textbox-number", async ({ runA11yScan }) => {

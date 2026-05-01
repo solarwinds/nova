@@ -236,7 +236,7 @@ export class SheetGroupComponent implements OnInit, AfterViewInit, OnDestroy {
 
     public ngOnDestroy(): void {
         if (this.resizersList.length > 0) {
-            this.resizersList.forEach((resizer) => {
+            this.resizersList.forEach(resizer => {
                 resizer.destroy();
             });
         }

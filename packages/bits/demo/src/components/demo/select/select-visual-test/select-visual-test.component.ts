@@ -131,7 +131,7 @@ export class SelectVisualTestComponent {
     public onSubmit(): void {
         if (!this.myForm.valid) {
             // if form is invalid mark all controls as touched to trigger isInErrorState
-            Object.keys(this.myForm.controls).forEach((field) => {
+            Object.keys(this.myForm.controls).forEach(field => {
                 const control = this.myForm.get(field);
                 control?.markAsTouched({ onlySelf: true });
             });

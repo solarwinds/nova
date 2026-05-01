@@ -3,8 +3,7 @@
     trigger="click"
     [template]="popoverTimeFramePicker"
     [hasPadding]="false"
-    [closePopover]="closePopoverSubject"
->
+    [closePopover]="closePopoverSubject">
     <span class="nui-text-link" style="cursor: pointer">{{
         acceptedTimeframe | timeFrame
     }}</span>
@@ -19,14 +18,12 @@
             [selectedPreset]="acceptedTimeframe.selectedPresetId"
             (presetSelected)="handlePresetSelection($event)"
             pickerTitle="Custom Range"
-            i18n-pickerTitle
-        >
+            i18n-pickerTitle>
             <nui-time-frame-picker
                 [startModel]="acceptedTimeframe"
                 (changed)="updateTf($event)"
                 [maxDate]="maxDate"
-                [minDate]="minDate"
-            >
+                [minDate]="minDate">
             </nui-time-frame-picker>
         </nui-quick-picker>
     </div>
@@ -38,8 +35,7 @@
             class="pr-3 nui-time-frame-picker__cancel"
             (click)="cancelPopover()"
             id="nui-demo-basic-time-frame-picker-cancel"
-            i18n
-        >
+            i18n>
             Cancel
         </button>
         <button
@@ -49,8 +45,7 @@
             class="nui-time-frame-picker__use"
             (click)="confirmPopover()"
             id="nui-demo-basic-time-frame-picker-use"
-            i18n
-        >
+            i18n>
             Use
         </button>
     </nui-dialog-footer>

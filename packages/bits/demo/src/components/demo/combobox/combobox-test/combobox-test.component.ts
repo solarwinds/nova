@@ -164,7 +164,7 @@ export class ComboboxTestComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.myForm.controls.item.valueChanges.subscribe((value) =>
+        this.myForm.controls.item.valueChanges.subscribe(value =>
             console.log(value)
         );
         this.isInErrorState();
@@ -183,8 +183,8 @@ export class ComboboxTestComponent implements OnInit {
         this.separatorsDisplayedItems = _cloneDeep(
             this.separatorsDataset.itemsInGroups
         );
-        this.separatorsDisplayedItems.forEach((items) => {
-            items.items = items.items.filter((item) =>
+        this.separatorsDisplayedItems.forEach(items => {
+            items.items = items.items.filter(item =>
                 item.includes(searchQuery.newValue)
             );
         });
@@ -215,9 +215,9 @@ export class ComboboxTestComponent implements OnInit {
         searchQuery: ISelectChangedEvent<any>
     ): void {
         this.typeaheadDisplayedItems = _cloneDeep(this.typeaheadDataset);
-        this.typeaheadDisplayedItems.forEach((group) => {
+        this.typeaheadDisplayedItems.forEach(group => {
             group.items = group.items.filter(
-                (item) =>
+                item =>
                     item.label.includes(searchQuery.newValue) ||
                     item.label.includes(searchQuery.newValue.label)
             );

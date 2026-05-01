@@ -79,7 +79,7 @@ export class DragdropFilesExampleComponent {
     }
 
     rmFile(fileInput: File): void {
-        this.files = this.files.filter((file) => file !== fileInput);
+        this.files = this.files.filter(file => file !== fileInput);
     }
 
     private validateDataType(dataType: string) {

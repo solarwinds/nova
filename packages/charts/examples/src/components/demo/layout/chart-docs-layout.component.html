@@ -73,40 +73,35 @@
     <nui-example-code
         language="html"
         [ngClass]="{ 'turned-off': !hasLegend }"
-        [code]="getCodeLine('legend', 'Legend')"
-    />
+        [code]="getCodeLine('legend', 'Legend')" />
 </div>
 <div class="d-flex align-items-center code-line px-3">
     <nui-switch [(value)]="hasLegendBottom"></nui-switch>
     <nui-example-code
         language="html"
         [ngClass]="{ 'turned-off': !hasLegendBottom }"
-        [code]="getCodeLine('legend-bottom', 'Bottom legend')"
-    />
+        [code]="getCodeLine('legend-bottom', 'Bottom legend')" />
 </div>
 <div class="d-flex align-items-center code-line px-3">
     <nui-switch [(value)]="hasAxisLabelLeft"></nui-switch>
     <nui-example-code
         language="html"
         [ngClass]="{ 'turned-off': !hasAxisLabelLeft }"
-        [code]="getCodeLine('axis-label-left', 'Left axis label')"
-    />
+        [code]="getCodeLine('axis-label-left', 'Left axis label')" />
 </div>
 <div class="d-flex align-items-center code-line px-3">
     <nui-switch [(value)]="hasAxisLabelRight"></nui-switch>
     <nui-example-code
         language="html"
         [ngClass]="{ 'turned-off': !hasAxisLabelRight }"
-        [code]="getCodeLine('axis-label-right', 'Right axis label')"
-    />
+        [code]="getCodeLine('axis-label-right', 'Right axis label')" />
 </div>
 <div class="d-flex align-items-center code-line px-3">
     <nui-switch [(value)]="hasAxisLabelBottom"></nui-switch>
     <nui-example-code
         language="html"
         [ngClass]="{ 'turned-off': !hasAxisLabelBottom }"
-        [code]="getCodeLine('axis-label-bottom', 'Bottom axis label')"
-    />
+        [code]="getCodeLine('axis-label-bottom', 'Bottom axis label')" />
 </div>
 <nui-example-code language="html">{{ outro }}</nui-example-code>
 

@@ -8,8 +8,7 @@
                 type="button"
                 [isEmpty]="false"
                 (click)="overlay.toggle()"
-                i18n
-            >
+                i18n>
                 Draggable toggle
             </button>
         </div>
@@ -20,8 +19,7 @@
             type="button"
             [isEmpty]="false"
             (click)="draggable.reset()"
-            i18n
-        >
+            i18n>
             Reset draggable button
         </button>
     </div>
@@ -29,13 +27,11 @@
     <nui-overlay
         #overlay
         [toggleReference]="toggleButton['el'].nativeElement"
-        [overlayConfig]="overlayConfig"
-    >
+        [overlayConfig]="overlayConfig">
         <img
             src="https://cdn.stocksnap.io/img-thumbs/960w/thumbs%20up-hand_QUWPLI693K.jpg"
             alt="Thumbs up"
-            class="w-100"
-        />
+            class="w-100" />
         <nui-overlay-arrow *ngIf="arrowSelectControl.value"></nui-overlay-arrow>
     </nui-overlay>
 
@@ -44,8 +40,7 @@
         placeholder="Select Position"
         i18n-placeholder
         [formControl]="positionSelectControl"
-        class="select"
-    >
+        class="select">
         <nui-select-v2-option
             *ngFor="let position of possiblePositions"
             [value]="position"
@@ -58,8 +53,7 @@
         placeholder="Select Arrow"
         i18n-placeholder
         [formControl]="arrowSelectControl"
-        class="select"
-    >
+        class="select">
         <nui-select-v2-option
             *ngFor="let arrow of [true, false]"
             [value]="arrow"

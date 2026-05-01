@@ -241,10 +241,10 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         this.menuGroups = [];
         this.groups.forEach((group: ToolbarGroupComponent) => {
             const commandGroupItems = group.items.filter(
-                (item) => !item.menuHidden
+                item => !item.menuHidden
             );
             const menuGroupItems = group.items.filter(
-                (item) => !!item.menuHidden
+                item => !!item.menuHidden
             );
 
             if (commandGroupItems.length) {
@@ -309,8 +309,8 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
                 this.toolbarItems = buttons
                     .toArray()
                     .slice()
-                    .map((b) => b["el"].nativeElement as HTMLElement)
-                    .filter((el) => !!el);
+                    .map(b => b["el"].nativeElement as HTMLElement)
+                    .filter(el => !!el);
 
                 if (this.menu) {
                     // In case all buttons are hidden within the Commands menu we want this menu to receive the focus

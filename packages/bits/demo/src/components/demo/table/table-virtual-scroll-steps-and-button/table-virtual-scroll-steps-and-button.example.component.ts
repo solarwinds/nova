@@ -38,7 +38,8 @@ import { RandomuserTableDataSource1 } from "../table-virtual-scroll-datasource-1
 
 @Component({
     selector: "nui-table-virtual-scroll-steps-and-button-example",
-    templateUrl: "./table-virtual-scroll-steps-and-button.example.component.html",
+    templateUrl:
+        "./table-virtual-scroll-steps-and-button.example.component.html",
     styleUrls: [
         "./table-virtual-scroll-steps-and-button.example.component.less",
     ],
@@ -138,7 +139,7 @@ export class TableVirtualScrollStepsAndButtonExampleComponent
         );
         this.dataSource.applyFilters();
 
-        this.dataSource.busy.subscribe((busy) => {
+        this.dataSource.busy.subscribe(busy => {
             this._isBusy = busy;
         });
     }

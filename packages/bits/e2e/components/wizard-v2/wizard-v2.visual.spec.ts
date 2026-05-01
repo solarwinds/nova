@@ -37,7 +37,10 @@ test.describe(`Visual tests: ${name}`, () => {
         await Helpers.prepareBrowser("wizard-v2/test", page);
         await Helpers.disableCSSAnimations(Animations.ALL);
 
-        wizard = Atom.find<WizardV2Atom>(WizardV2Atom, "nui-wizard-v2-horizontal");
+        wizard = Atom.find<WizardV2Atom>(
+            WizardV2Atom,
+            "nui-wizard-v2-horizontal"
+        );
         wizardInDialog = Atom.find<WizardV2Atom>(
             WizardV2Atom,
             "nui-wizard-v2-horizontal-dialog",

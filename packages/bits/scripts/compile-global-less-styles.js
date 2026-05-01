@@ -13,7 +13,7 @@ if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
 compileStyles(requredFiles);
 
 function compileStyles(files) {
-    files.forEach((fileName) => {
+    files.forEach(fileName => {
         const filePath = `${stylesDir}/${fileName}`;
 
         if (!fs.existsSync(filePath)) {

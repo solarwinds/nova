@@ -34,4 +34,3 @@ test.describe("a11y: search", () => {
         await runA11yScan(SearchAtom, rulesToDisable);
     });
 });
-

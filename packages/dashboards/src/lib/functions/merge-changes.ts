@@ -37,13 +37,13 @@ export interface IValueChange {
  */
 export function mergeChanges<T>(result: T, ...changes: IValueChange[]): T {
     const validChanges = changes.filter(
-        (c) =>
+        c =>
             typeof c.previousValue !== "undefined" ||
             typeof c.currentValue !== "undefined"
     );
 
     // there were no changes in the provided values, so just return the input object
-    if (!some(validChanges, (c) => c.currentValue !== c.previousValue)) {
+    if (!some(validChanges, c => c.currentValue !== c.previousValue)) {
         return result;
     }
 
@@ -62,7 +62,7 @@ export function mergeChanges<T>(result: T, ...changes: IValueChange[]): T {
 
     // collect all the keys of all the objects in given changes
     const keys: string[] = union(
-        ...validChanges.map((c) =>
+        ...validChanges.map(c =>
             typeof c.currentValue === "object"
                 ? Object.keys(c.currentValue || {})
                 : []
@@ -78,7 +78,7 @@ export function mergeChanges<T>(result: T, ...changes: IValueChange[]): T {
             typeof (<Record<string, any>>result)[key] === "undefined"
                 ? undefined
                 : (<Record<string, any>>result)[key];
-        const nestedChanges = validChanges.map((c) => ({
+        const nestedChanges = validChanges.map(c => ({
             previousValue:
                 typeof c.previousValue === "undefined" ||
                 c.previousValue == null

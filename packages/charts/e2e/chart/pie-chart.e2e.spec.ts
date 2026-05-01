@@ -32,7 +32,10 @@ test.describe("Pie chart", () => {
     let pageObject: PieChartTestPage;
 
     test.beforeEach(async ({ page }) => {
-        await Helpers.prepareBrowser("chart-types/pie-and-donut/pie-test", page);
+        await Helpers.prepareBrowser(
+            "chart-types/pie-and-donut/pie-test",
+            page
+        );
         await Helpers.disableCSSAnimations(
             Animations.TRANSITIONS_AND_ANIMATIONS
         );
@@ -46,10 +49,13 @@ test.describe("Pie chart", () => {
 
     test("should highlight active segments and fade inactive ones", async () => {
         await expect
-            .poll(async () =>
-                (await pageObject.chart.getAllVisibleDataSeries(
-                    RadialSeriesAtom
-                )).length
+            .poll(
+                async () =>
+                    (
+                        await pageObject.chart.getAllVisibleDataSeries(
+                            RadialSeriesAtom
+                        )
+                    ).length
             )
             .toBeGreaterThanOrEqual(4);
 

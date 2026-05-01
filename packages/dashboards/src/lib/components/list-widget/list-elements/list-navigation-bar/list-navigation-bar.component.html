@@ -6,8 +6,7 @@
         displayStyle="action"
         icon="arrow-left"
         [disabled]="!navBarConfig?.buttons?.back?.disabled"
-        (click)="onBack()"
-    ></button>
+        (click)="onBack()"></button>
 
     <button
         nui-button
@@ -15,7 +14,6 @@
         [isRepeat]="true"
         displayStyle="action"
         icon="overview"
-        (click)="onHome()"
-    ></button>
+        (click)="onHome()"></button>
     <div class="list-nav-bar__label">{{ navBarConfig?.label }}</div>
 </div>

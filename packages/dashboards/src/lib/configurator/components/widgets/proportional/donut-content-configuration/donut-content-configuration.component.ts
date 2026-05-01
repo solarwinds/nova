@@ -116,7 +116,7 @@ export class DonutContentConfigurationComponent
                 if (dataSource) {
                     dataSource.dataFieldsConfig?.dataFields$
                         .pipe(takeUntil(this.destroy$))
-                        .subscribe((dataFields) => {
+                        .subscribe(dataFields => {
                             this.dataFields = dataFields;
                             this.updateAggregatorConfiguratorProps();
                         });
@@ -165,7 +165,7 @@ export class DonutContentConfigurationComponent
         this.aggregators = this.aggregatorRegistry.getItems();
 
         let formatterToSet = this.formatters.find(
-            (formatter) =>
+            formatter =>
                 formatter.componentType === this.formatter?.componentType
         );
         if (!formatterToSet) {
@@ -176,7 +176,7 @@ export class DonutContentConfigurationComponent
             ?.setValue(formatterToSet.componentType);
 
         let aggregatorToSet = this.aggregators.find(
-            (aggregator) =>
+            aggregator =>
                 aggregator.aggregatorType === this.aggregator?.aggregatorType
         );
         if (!aggregatorToSet) {

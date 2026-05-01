@@ -34,11 +34,23 @@ test.describe("a11y: combobox-v2", () => {
     });
 
     test("should verify a11y of combobox-v2", async ({ runA11yScan, page }) => {
-        const comboboxBasic = Atom.find<ComboboxV2Atom>(ComboboxV2Atom, "basic");
-        const comboboxError = Atom.find<ComboboxV2Atom>(ComboboxV2Atom, "error");
+        const comboboxBasic = Atom.find<ComboboxV2Atom>(
+            ComboboxV2Atom,
+            "basic"
+        );
+        const comboboxError = Atom.find<ComboboxV2Atom>(
+            ComboboxV2Atom,
+            "error"
+        );
         const comboboxForm = Atom.find<ComboboxV2Atom>(ComboboxV2Atom, "form");
-        const comboboxSingle = Atom.find<ComboboxV2Atom>(ComboboxV2Atom, "single");
-        const comboboxMulti = Atom.find<ComboboxV2Atom>(ComboboxV2Atom, "multi");
+        const comboboxSingle = Atom.find<ComboboxV2Atom>(
+            ComboboxV2Atom,
+            "single"
+        );
+        const comboboxMulti = Atom.find<ComboboxV2Atom>(
+            ComboboxV2Atom,
+            "multi"
+        );
         const comboboxCustomControl = Atom.find<ComboboxV2Atom>(
             ComboboxV2Atom,
             "custom-control"
@@ -89,7 +101,7 @@ test.describe("a11y: combobox-v2", () => {
         await comboboxValueRemoval.hover();
         await runA11yScan(ComboboxV2Atom, rulesToDisable);
 
-        await focusdrop.click({ force: true});
+        await focusdrop.click({ force: true });
         await toggleButton.click();
         await comboboxCustomControl.selectFirst(24);
         await comboboxCustomControl.removeChips(1);

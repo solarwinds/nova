@@ -83,7 +83,12 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [FormsModule, ReactiveFormsModule, PopupAdapterModule, IconComponent],
+                imports: [
+                    FormsModule,
+                    ReactiveFormsModule,
+                    PopupAdapterModule,
+                    IconComponent,
+                ],
                 declarations: [
                     ButtonComponent,
                     CheckboxComponent,

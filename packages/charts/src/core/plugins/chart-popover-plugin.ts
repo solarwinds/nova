@@ -124,9 +124,7 @@ export class ChartPopoverPlugin extends ChartPlugin {
             throw new Error("Chart parent node is not defined");
         }
 
-        const dataPointsLeft = Math.min(
-            ...valuesArray.map((d) => d.position.x)
-        );
+        const dataPointsLeft = Math.min(...valuesArray.map(d => d.position.x));
         const left =
             chartElement.offsetLeft +
             this.chart.getGrid().config().dimension.margin.left +
@@ -143,7 +141,7 @@ export class ChartPopoverPlugin extends ChartPlugin {
             width:
                 Math.max(
                     ...valuesArray.map(
-                        (d) => d.position.x + (d.position.width || 0)
+                        d => d.position.x + (d.position.width || 0)
                     )
                 ) - dataPointsLeft,
         };

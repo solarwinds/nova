@@ -115,14 +115,14 @@ export class SiUnitsFormatterComponent implements OnChanges {
             // iterate over prefixes from higher to lower
             const prefix = [...SI_UNITS_PREFIXES]
                 .reverse()
-                .find((pref) => roundedLength >= pref.power + 1 + shiftPoint);
+                .find(pref => roundedLength >= pref.power + 1 + shiftPoint);
             return prefix;
         } else {
             const modifier = getValueNegativeModifier(value);
             const prefix = [...SI_UNITS_PREFIXES_NEGATIVE]
                 .reverse()
                 .find(
-                    (pref) => modifier <= Math.abs(pref.power) + 1 + shiftPoint
+                    pref => modifier <= Math.abs(pref.power) + 1 + shiftPoint
                 );
             return prefix;
         }

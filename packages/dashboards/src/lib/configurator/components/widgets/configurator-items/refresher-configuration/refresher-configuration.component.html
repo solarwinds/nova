@@ -1,13 +1,11 @@
 <nui-widget-editor-accordion
     [formGroup]="form"
-    [state]="form | nuiWidgetEditorAccordionFormState | async"
->
+    [state]="form | nuiWidgetEditorAccordionFormState | async">
     <div accordionHeader class="d-flex align-items-center px-4 py-2">
         <nui-icon
             class="align-self-start pt-2"
             iconColor="gray"
-            [icon]="form | nuiFormHeaderIconPipe : 'reset' | async"
-        ></nui-icon>
+            [icon]="form | nuiFormHeaderIconPipe : 'reset' | async"></nui-icon>
         <div class="d-flex flex-column ml-4 pt-1">
             <span class="nui-text-label" i18n>Refresh</span>
             <div class="nui-text-secondary" [title]="getHeaderSubtitle()">
@@ -16,8 +14,7 @@
         </div>
     </div>
     <div
-        class="d-flex flex-column nui-refresher-configuration__accordion-content"
-    >
+        class="d-flex flex-column nui-refresher-configuration__accordion-content">
         <div>
             <nui-form-field [control]="form.get('enabled')">
                 <nui-switch formControlName="enabled" i18n
@@ -33,13 +30,13 @@
                         <div
                             class="nui-help-hint"
                             *ngIf="!form.get('overrideDefaultSettings')?.value"
-                            i18n
-                        >
+                            i18n>
                             By default, the widget will refresh every
                             {{
                                 getDurationLabel(
                                     refresherSettings.refreshRateSeconds
                                 )
+
                             }}.
                         </div>
                     </nui-switch>
@@ -47,14 +44,12 @@
             </div>
             <div
                 [class.hidden]="!form.get('overrideDefaultSettings')?.value"
-                class="mt-4"
-            >
+                class="mt-4">
                 <nui-form-field [control]="form.get('interval')">
                     <nui-refresh-rate-configurator
                         [minSeconds]="minSeconds"
                         [maxSeconds]="maxSeconds"
-                        formControlName="interval"
-                    ></nui-refresh-rate-configurator>
+                        formControlName="interval"></nui-refresh-rate-configurator>
                 </nui-form-field>
             </div>
         </div>

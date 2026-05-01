@@ -67,7 +67,7 @@ describe("TransformerNormalize", () => {
         const actualTransformedDataY = transformNormalize(
             mockTimeSeriesData,
             false
-        ).map((d) => d.y);
+        ).map(d => d.y);
         expect(actualTransformedDataY).toEqual(expectedTransformedDataY);
     });
 });

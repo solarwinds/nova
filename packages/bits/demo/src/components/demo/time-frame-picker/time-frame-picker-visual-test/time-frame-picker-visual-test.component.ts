@@ -143,7 +143,7 @@ export class TimeFramePickerVisualTestComponent {
     private getPresetFromDate(date: Moment): string {
         const preset: string | undefined = _find(
             Object.keys(this.presets),
-            (key) => date.isSame(this.getDateFromPreset(key), "day")
+            key => date.isSame(this.getDateFromPreset(key), "day")
         );
         if (_isUndefined(preset)) {
             throw new Error("DatePreset was not found");

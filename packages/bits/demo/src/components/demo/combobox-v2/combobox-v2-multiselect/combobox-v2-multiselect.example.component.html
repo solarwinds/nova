@@ -2,8 +2,7 @@
     [placeholder]="combobox.selectedOptions.length ? '' : placeholder"
     [formControl]="comboboxControl"
     [multiselect]="true"
-    #combobox
->
+    #combobox>
     <ng-container selectedItems>
         <nui-chip
             nuiMarkAsSelectedItem
@@ -12,8 +11,7 @@
             closeButtonTooltip="Remove"
             [item]="convertToChip(option)"
             (remove)="combobox.deselectItem(option)"
-            (mouseup)="$event.stopPropagation()"
-        >
+            (mouseup)="$event.stopPropagation()">
         </nui-chip>
     </ng-container>
 
@@ -27,7 +25,6 @@
     type="button"
     displayStyle="action"
     i18n
-    (click)="setModel()"
->
+    (click)="setModel()">
     Set model
 </button>

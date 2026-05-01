@@ -90,14 +90,14 @@ export class RiskScoreTilesConfigurationComponent
         });
 
         this.emptyItems$ = this.form.valueChanges.pipe(
-            map((result) => result.tiles.length === 0)
+            map(result => result.tiles.length === 0)
         );
         this.formReady.emit(this.form);
     }
 
     public onItemsChange(tiles: IItemConfiguration[]): void {
         const parentPath = "tiles";
-        const componentIds = tiles.map((tile) => tile.id);
+        const componentIds = tiles.map(tile => tile.id);
         this.pizzagnaService.createComponentsFromTemplate(
             parentPath,
             componentIds

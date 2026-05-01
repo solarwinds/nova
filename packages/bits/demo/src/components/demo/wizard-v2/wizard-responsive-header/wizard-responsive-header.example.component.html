@@ -9,16 +9,14 @@
                 <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                 <ng-container *ngIf="i">
                     <ng-container
-                        *ngTemplateOutlet="wizardPrevious"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardPrevious"></ng-container>
                 </ng-container>
                 <ng-container *ngIf="i !== steps.length - 1">
                     <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
                 </ng-container>
                 <ng-container *ngIf="i === steps.length - 1">
                     <ng-container
-                        *ngTemplateOutlet="wizardFinish"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardFinish"></ng-container>
                 </ng-container>
             </ng-template>
         </nui-wizard-step-v2>
@@ -37,8 +35,7 @@
             nui-button
             displayStyle="primary"
             icon="caret-right"
-            iconRight="true"
-        >
+            iconRight="true">
             Next
         </button>
     </ng-template>
@@ -48,8 +45,7 @@
             type="button"
             nui-button
             displayStyle="action"
-            (click)="reset(); notifyOnCancel()"
-        >
+            (click)="reset(); notifyOnCancel()">
             Cancel
         </button>
     </ng-template>
@@ -59,8 +55,7 @@
             type="button"
             nui-button
             displayStyle="primary"
-            (click)="notifyOnFinished()"
-        >
+            (click)="notifyOnFinished()">
             Finish
         </button>
     </ng-template>

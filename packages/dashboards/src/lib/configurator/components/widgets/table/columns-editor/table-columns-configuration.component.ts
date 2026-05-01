@@ -214,7 +214,7 @@ export class TableColumnsConfigurationComponent
         }
 
         if (changes.columns) {
-            const components = this.columns.map((c) => ({
+            const components = this.columns.map(c => ({
                 id: c.id,
                 children: {
                     [`${c.id}/description`]: {
@@ -251,12 +251,12 @@ export class TableColumnsConfigurationComponent
             columnsOutput: {},
         });
         this.emptyColumns$ = this.form.valueChanges.pipe(
-            map((result) => result.columns.length === 0)
+            map(result => result.columns.length === 0)
         );
         this.formReady.emit(this.form);
 
         // we listen for changes of the `columns` and transform it into ITableWidgetColumnConfig[]
-        this.form.get("columns")?.valueChanges.subscribe((value) => {
+        this.form.get("columns")?.valueChanges.subscribe(value => {
             const newColumns = value.map(
                 (c: any /* form representing one column */) => {
                     let result: ITableWidgetColumnConfig = {
@@ -271,7 +271,7 @@ export class TableColumnsConfigurationComponent
                         };
                     }
                     result.sortable = this.lastValidDataFields?.find(
-                        (df) =>
+                        df =>
                             df.id ===
                             result.formatter?.properties?.dataFieldIds?.value
                     )?.sortable;
@@ -285,7 +285,7 @@ export class TableColumnsConfigurationComponent
 
     public onItemsChange(columns: ITableWidgetColumnConfig[]): void {
         const parentPath = "columns";
-        const componentIds = columns.map((tile) => tile.id);
+        const componentIds = columns.map(tile => tile.id);
         this.pizzagnaService.createComponentsFromTemplate(
             parentPath,
             componentIds
@@ -318,7 +318,7 @@ export class TableColumnsConfigurationComponent
     public resetColumns(confirmation: boolean): void {
         const reset = () => {
             const columns: ITableWidgetColumnConfig[] =
-                this.lastValidDataFields.map((df) => ({
+                this.lastValidDataFields.map(df => ({
                     id: uuid("column"),
                     formatter: {
                         componentType: "RawFormatterComponent",
@@ -345,7 +345,7 @@ export class TableColumnsConfigurationComponent
             });
 
             dialog.result.then(
-                (result) => {
+                result => {
                     if (result) {
                         reset();
                     }
@@ -370,9 +370,9 @@ export class TableColumnsConfigurationComponent
         columns: ITableWidgetColumnConfig[]
     ): ITableWidgetColumnConfig[] {
         const currentDatafieldIds = currentDatafields.map(
-            (datafield) => datafield.id
+            datafield => datafield.id
         );
-        return columns.filter((column) => {
+        return columns.filter(column => {
             if (!column.formatter?.properties?.dataFieldIds) {
                 return false;
             }

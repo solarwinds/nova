@@ -78,7 +78,7 @@ export class TimeseriesDataSourceAdapter extends DataSourceAdapter {
         // displaying only series which are in widget config
         return data
             .filter((series: ITimeseriesWidgetData) =>
-                this.seriesIndex.find((s) => s.selectedSeriesId === series.id)
+                this.seriesIndex.find(s => s.selectedSeriesId === series.id)
             )
             .map((series: ITimeseriesWidgetData) => ({
                 id: series.id,
@@ -86,7 +86,7 @@ export class TimeseriesDataSourceAdapter extends DataSourceAdapter {
                 link: series.link,
                 secondaryLink: series.secondaryLink,
                 legendDescriptionPrimary: this.seriesIndex.find(
-                    (s) => s.selectedSeriesId === series.id
+                    s => s.selectedSeriesId === series.id
                 )?.label,
                 legendDescriptionSecondary: series.description,
             }));

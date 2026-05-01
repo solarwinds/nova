@@ -102,7 +102,7 @@ describe("thresholds service", () => {
         });
 
         it("should mark entered zones as entered", () => {
-            expect(zones.filter((z) => z.entered).length).toEqual(3);
+            expect(zones.filter(z => z.entered).length).toEqual(3);
         });
 
         it("should sort zones in priority order, so first definition wins", () => {
@@ -143,7 +143,7 @@ describe("thresholds service", () => {
                 "ok",
             ];
 
-            expect(backgrounds.data.map((d) => d.status)).toEqual(
+            expect(backgrounds.data.map(d => d.status)).toEqual(
                 expectedStatuses
             );
         });
@@ -197,7 +197,7 @@ describe("thresholds service", () => {
             const testSeriesSet = thresholdsService.getThresholdLines(zones);
 
             expect(testSeriesSet.length).toEqual(
-                uniq(testSeriesSet.map((series) => series.id)).length
+                uniq(testSeriesSet.map(series => series.id)).length
             );
         });
 
@@ -214,7 +214,7 @@ describe("thresholds service", () => {
             const testSeriesSet = thresholdsService.getThresholdLines(zones);
 
             expect(testSeriesSet.length).toEqual(
-                uniq(testSeriesSet.map((series) => series.id)).length
+                uniq(testSeriesSet.map(series => series.id)).length
             );
         });
 
@@ -281,7 +281,7 @@ describe("thresholds service", () => {
             );
 
             expect(
-                sideIndicators.filter((si) => si.data[0].active).length
+                sideIndicators.filter(si => si.data[0].active).length
             ).toEqual(zoneDefinitions.length);
         });
 
@@ -302,7 +302,7 @@ describe("thresholds service", () => {
             );
 
             expect(
-                sideIndicators.filter((si) => si.data[0].active).length
+                sideIndicators.filter(si => si.data[0].active).length
             ).toEqual(0);
         });
     });
@@ -446,7 +446,7 @@ describe("thresholds service", () => {
                 sourceSeries,
                 zones
             );
-            testCases.forEach((testCase) => {
+            testCases.forEach(testCase => {
                 let isZoneEdge = false;
                 breakPoints.forEach((breakPoint: IZoneCrossPoint) => {
                     if (

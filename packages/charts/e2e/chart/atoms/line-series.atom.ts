@@ -53,9 +53,9 @@ export class LineSeriesAtom extends SeriesAtom {
             .split("L");
 
         return dSegments
-            .map((segment) => segment.split(","))
-            .filter((coords) => coords.length >= 2)
-            .map((coords) => ({
+            .map(segment => segment.split(","))
+            .filter(coords => coords.length >= 2)
+            .map(coords => ({
                 x: parseFloat(coords[0]),
                 y: parseFloat(coords[1]),
             }));

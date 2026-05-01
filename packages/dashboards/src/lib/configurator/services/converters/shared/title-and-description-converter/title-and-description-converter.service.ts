@@ -82,7 +82,7 @@ export class TitleAndDescriptionConverterService
     }
 
     public toPreview(form: FormGroup): void {
-        form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((value) => {
+        form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
             const preview = immutableSet(
                 this.getPreview(),
                 `header.properties`,

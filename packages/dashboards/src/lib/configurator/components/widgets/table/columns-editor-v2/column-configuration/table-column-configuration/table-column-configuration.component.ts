@@ -84,7 +84,7 @@ export class TableColumnConfigurationComponent
 
         this.form.valueChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe((value) => {
+            .subscribe(value => {
                 const newValue = {
                     id: this.input?.id,
                     ...value.description,

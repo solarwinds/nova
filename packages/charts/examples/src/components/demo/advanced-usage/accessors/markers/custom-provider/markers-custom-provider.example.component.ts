@@ -60,14 +60,12 @@ export class RendererMarkersCustomProviderExampleComponent implements OnInit {
             customMarkerSet
         ).get;
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
-            (d) => ({
-                ...d,
-                scales,
-                renderer,
-                accessors,
-            })
-        );
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
+            ...d,
+            scales,
+            renderer,
+            accessors,
+        }));
 
         this.chart.update(seriesSet);
     }

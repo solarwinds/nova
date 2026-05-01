@@ -33,7 +33,9 @@ export class BarDataPointAtom extends Atom {
     }
 
     public async getOpacity(): Promise<number> {
-        const opacity = await this.getLocator().evaluate((el) => getComputedStyle(el).opacity);
+        const opacity = await this.getLocator().evaluate(
+            el => getComputedStyle(el).opacity
+        );
         return parseFloat(opacity);
     }
 
@@ -51,7 +53,7 @@ export class BarDataPointAtom extends Atom {
         // SVG rect fill can be computed; prefer the attribute first, fall back to computed style.
         return (
             (await this.rect.getAttribute("fill")) ||
-            (await this.rect.evaluate((el) => getComputedStyle(el as any).fill))
+            (await this.rect.evaluate(el => getComputedStyle(el as any).fill))
         );
     }
 

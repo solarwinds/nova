@@ -478,7 +478,7 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
             this.selection = [...this.selection, item];
         } else {
             this.selection = this.selection.filter(
-                (selectionItem) => selectionItem !== item
+                selectionItem => selectionItem !== item
             );
         }
         this.selectionChange.emit(this.selection);
@@ -545,13 +545,13 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
             // self-destroyed subscription
             this.dropListRef.dropped
                 .pipe(
-                    tap((event) => this.itemDropped(event)),
+                    tap(event => this.itemDropped(event)),
                     takeUntil(this.dropListDestroyed)
                 )
                 .subscribe();
 
             this.dropListRef.withItems(
-                this.draggableElements.map((item) => item._dragRef)
+                this.draggableElements.map(item => item._dragRef)
             );
         }
     }

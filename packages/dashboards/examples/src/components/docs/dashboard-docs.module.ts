@@ -27,7 +27,6 @@ import { HttpLink } from "apollo-angular/http";
 
 import { NuiDocsModule, NuiMessageModule } from "@nova-ui/bits";
 
-
 const COUNTRIES_API = "https://countries.trevorblades.com/graphql";
 
 const exampleRoutes: Routes = [

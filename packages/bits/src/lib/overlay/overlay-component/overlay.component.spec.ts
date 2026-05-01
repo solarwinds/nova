@@ -110,14 +110,14 @@ describe("components >", () => {
 
         describe("ngAfterContentChecked()", () => {
             it("dropdown content should be empty", () => {
-                component.empty$.subscribe((isEmpty) => {
+                component.empty$.subscribe(isEmpty => {
                     expect(isEmpty).toBe(true);
                 });
                 component.ngAfterContentChecked();
             });
 
             it("dropdown content should not be empty", () => {
-                wrapperComponent.dropdown.empty$.subscribe((isEmpty) => {
+                wrapperComponent.dropdown.empty$.subscribe(isEmpty => {
                     expect(isEmpty).toBe(false);
                 });
                 component.ngAfterContentChecked();

@@ -29,7 +29,10 @@ test.describe(`Visual tests: ${name}`, () => {
     test.beforeEach(async ({ page }) => {
         Helpers.setPage(page);
         await Helpers.disableCSSAnimations(Animations.ALL);
-        await Helpers.prepareBrowser("schematics/table-outlet/visual-test", page);
+        await Helpers.prepareBrowser(
+            "schematics/table-outlet/visual-test",
+            page
+        );
         camera = new Camera().loadFilm(page, name, "Bits");
     });
 

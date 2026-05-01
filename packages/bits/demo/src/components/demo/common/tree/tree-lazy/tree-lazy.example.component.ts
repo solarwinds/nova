@@ -78,7 +78,7 @@ class HttpMock {
     standalone: false,
 })
 export class TreeLazyExampleComponent {
-    treeControl = new NestedTreeControl<FoodNode>((node) => node.children);
+    treeControl = new NestedTreeControl<FoodNode>(node => node.children);
     dataSource = new ArrayDataSource(TREE_DATA);
 
     @ViewChild(CdkTree) private cdkTree: CdkTree<FoodNode>;

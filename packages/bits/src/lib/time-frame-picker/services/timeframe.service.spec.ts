@@ -158,7 +158,7 @@ describe("services >", () => {
             it("should preserve the values of all incoming properties", () => {
                 const clonedTimeframe =
                     TimeframeService.cloneTimeFrame(testTimeFrame);
-                Object.keys(testTimeFrame).forEach((key) => {
+                Object.keys(testTimeFrame).forEach(key => {
                     expect(testTimeFrame[<keyof ITimeframe>key]).toEqual(
                         clonedTimeframe[<keyof ITimeframe>key]
                     );

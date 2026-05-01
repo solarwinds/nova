@@ -104,7 +104,7 @@ export class StatusChartTestComponent implements OnInit {
         // Marker accessor is used to draw marker on a bar depending on the data point
         accessors.data.marker = (data: any) => icons.get(data.status);
 
-        const seriesSet = getData().map((d) => ({
+        const seriesSet = getData().map(d => ({
             ...d,
             accessors,
             renderer,
@@ -222,7 +222,7 @@ function getData() {
                     start: 980,
                     end: 1000,
                 },
-            ].map((d) => ({
+            ].map(d => ({
                 value: d.end - d.start,
                 status: d.status,
                 start: getDate(d.start),

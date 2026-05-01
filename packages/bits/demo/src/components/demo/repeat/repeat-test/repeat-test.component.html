@@ -1,7 +1,6 @@
 <nui-tab-heading-group
     id="repeat-test-tab-group"
-    (selected)="currentTabId = $event"
->
+    (selected)="currentTabId = $event">
     <nui-tab-heading
         *ngFor="let tab of tabs"
         [tabId]="tab.id"
@@ -23,7 +22,6 @@
     Add color
 </button>
 <nui-repeat-radio-selection-mode-example
-    [colors]="colors"
-></nui-repeat-radio-selection-mode-example>
+    [colors]="colors"></nui-repeat-radio-selection-mode-example>
 <nui-repeat-radio-with-non-required-selection-mode-example></nui-repeat-radio-with-non-required-selection-mode-example>
 <nui-repeat-single-with-required-selection-mode-example></nui-repeat-single-with-required-selection-mode-example>

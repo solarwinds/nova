@@ -2,8 +2,7 @@
     <div
         class="nui-dashwiz__header"
         *ngIf="!hideHeader"
-        [class.nui-dashwiz__header--lines-stretched]="stretchStepLines"
-    >
+        [class.nui-dashwiz__header--lines-stretched]="stretchStepLines">
         <ul class="nui-dashwiz__header-steps" *ngIf="steps">
             <li
                 *ngFor="let step of steps; let first = first; let last = last"
@@ -19,50 +18,41 @@
                     'nui-dashwiz__header-step--active': step.active,
                     'nui-dashwiz__header-step--complete': step.complete
                 }"
-                class="nui-dashwiz__header-step"
-            >
+                class="nui-dashwiz__header-step">
                 <div
                     class="nui-dashwiz__header-step-container"
-                    *ngIf="!step.hidden"
-                >
+                    *ngIf="!step.hidden">
                     <div class="nui-dashwiz__header-step-row">
                         <div class="nui-dashwiz__header-step-col">
                             <div class="nui-dashwiz__header-step-content">
                                 <span class="nui-dashwiz__header-step-link">
                                     <span
                                         class="nui-dashwiz__header-step-title"
-                                        #stepTitle
-                                    >
+                                        #stepTitle>
                                         {{ step.title }}
                                     </span>
                                     <div
-                                        class="nui-dashwiz__header-step-link-container"
-                                    >
+                                        class="nui-dashwiz__header-step-link-container">
                                         <div
-                                            class="nui-dashwiz__header-step-col nui-dashwiz__header-step-col-right"
-                                        >
+                                            class="nui-dashwiz__header-step-col nui-dashwiz__header-step-col-right">
                                             <div
                                                 class="nui-dashwiz__header-step-line"
                                                 [ngStyle]="{
                                                     'min-width.px':
                                                         stepLineWidth
-                                                }"
-                                            ></div>
+                                                }"></div>
                                         </div>
                                         <nui-icon
                                             [icon]="step.icon"
-                                            [iconColor]="step.iconColor"
-                                        ></nui-icon>
+                                            [iconColor]="step.iconColor"></nui-icon>
                                         <div
-                                            class="nui-dashwiz__header-step-col nui-dashwiz__header-step-col-left"
-                                        >
+                                            class="nui-dashwiz__header-step-col nui-dashwiz__header-step-col-left">
                                             <div
                                                 class="nui-dashwiz__header-step-line"
                                                 [ngStyle]="{
                                                     'min-width.px':
                                                         stepLineWidth
-                                                }"
-                                            ></div>
+                                                }"></div>
                                         </div>
                                     </div>
                                 </span>
@@ -79,10 +69,7 @@
         <ng-template #container></ng-template>
     </div>
 
-    <div
-        class="nui-dashwiz__footer"
-        [class.shadow]="scrolled"
-    >
+    <div class="nui-dashwiz__footer" [class.shadow]="scrolled">
         <ng-container
             nuiComponentPortal
             componentId="dashwizButtons"
@@ -94,12 +81,10 @@
             [properties]="buttonProperties"
             [outputs]="['cancel', 'next', 'back', 'finish']"
             (output)="onButtonPortalOutput($event)"
-            #componentPortal="nuiComponentPortal"
-        >
+            #componentPortal="nuiComponentPortal">
             <ng-template
                 [cdkPortalOutlet]="componentPortal.portal"
-                (attached)="componentPortal.attached($event)"
-            ></ng-template>
+                (attached)="componentPortal.attached($event)"></ng-template>
         </ng-container>
     </div>
 </div>

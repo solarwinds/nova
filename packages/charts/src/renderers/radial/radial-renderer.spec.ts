@@ -172,7 +172,7 @@ describe("Radial renderer >", () => {
                     HIGHLIGHT_DATA_POINT_EVENT,
                     INTERACTION_DATA_POINTS_EVENT,
                 ],
-                (eventName) => {
+                eventName => {
                     expect(spy).toHaveBeenCalledWith(
                         jasmine.objectContaining({ eventName })
                     );
@@ -187,7 +187,7 @@ describe("Radial renderer >", () => {
                     HIGHLIGHT_DATA_POINT_EVENT,
                     INTERACTION_DATA_POINTS_EVENT,
                 ],
-                (eventName) => {
+                eventName => {
                     expect(spy).toHaveBeenCalledWith(
                         jasmine.objectContaining({ eventName })
                     );

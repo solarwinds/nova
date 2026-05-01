@@ -32,7 +32,9 @@ test.describe(`Visual tests: ${name}`, () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("layout/layout-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
         separatedSheets = Atom.find<LayoutSheetGroupAtom>(
             LayoutSheetGroupAtom,
             "nui-visual-test-layout-separated-sheet-group"

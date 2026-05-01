@@ -68,6 +68,6 @@ function buildStatusLabel(
     if (!base) {
         return null;
     }
-    const valid = (parts || []).map((p) => p?.trim()).filter((p) => !!p);
+    const valid = (parts || []).map(p => p?.trim()).filter(p => !!p);
     return valid.length ? `${base} ${valid.join(" ")}` : base;
 }

@@ -63,7 +63,7 @@ export class FormFieldTestComponent implements OnInit {
     public ngOnInit(): void {
         this.dynamicForm.disable();
         this.dynamicForm.valueChanges.subscribe(
-            (value) =>
+            value =>
                 (this.dateTimePickerModel = moment(value.dateTimePicker).format(
                     "LLLL"
                 ))

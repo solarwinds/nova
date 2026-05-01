@@ -53,11 +53,13 @@ import { WizardDirective } from "../wizard.directive";
     templateUrl: "wizard-horizontal.component.html",
     styleUrls: ["../wizard.component.less"],
     host: {
-        class: "nui-wizard-horizontal-layout",
-        "[class.nui-wizard-step-header__label-position--end]": "labelPosition == 'end'",
-        "[class.nui-wizard-step-header__label-position--top]": "labelPosition == 'top'",
+        "class": "nui-wizard-horizontal-layout",
+        "[class.nui-wizard-step-header__label-position--end]":
+            "labelPosition == 'end'",
+        "[class.nui-wizard-step-header__label-position--top]":
+            "labelPosition == 'top'",
         "aria-orientation": "horizontal",
-        role: "tablist",
+        "role": "tablist",
     },
     providers: [
         { provide: WizardDirective, useExisting: WizardHorizontalComponent },
@@ -183,7 +185,7 @@ export class WizardHorizontalComponent
                         if (this.overflownStepsEnd.length) {
                             const selectedIndex =
                                 this.overflownStepsEnd.findIndex(
-                                    (item) =>
+                                    item =>
                                         item ===
                                         (event.selectedStep as WizardStepV2Component)
                                 );

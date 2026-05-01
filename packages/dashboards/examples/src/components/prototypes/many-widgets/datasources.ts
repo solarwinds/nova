@@ -47,7 +47,7 @@ export class AcmeKpiDataSource
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
         const randomId = Math.floor(Math.random() * Math.floor(99)) + 1;
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             this.http
                 .get(`https://jsonplaceholder.typicode.com/todos/${randomId}`)
                 .pipe(finalize(() => this.busy.next(false)))

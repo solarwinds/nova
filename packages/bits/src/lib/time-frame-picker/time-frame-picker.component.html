@@ -2,8 +2,7 @@
     <div class="nui-time-frame-picker__date-times">
         <label class="nui-time-frame-picker__label" i18n>Start</label>
         <span
-            class="nui-time-frame-picker__date-time nui-time-frame-picker__date-time_start"
-        >
+            class="nui-time-frame-picker__date-time nui-time-frame-picker__date-time_start">
             <nui-date-time-picker
                 [minDate]="minDate"
                 [maxDate]="maxDate"
@@ -11,13 +10,11 @@
                 (modelChanged)="onChangeInternalStart($event)"
                 (focus)="onFocusInternal()"
                 (blur)="onBlurInternal()"
-                [appendToBody]="appendToBody"
-            ></nui-date-time-picker>
+                [appendToBody]="appendToBody"></nui-date-time-picker>
         </span>
         <label class="nui-time-frame-picker__label" i18n>End</label>
         <span
-            class="nui-time-frame-picker__date-time nui-time-frame-picker__date-time_end"
-        >
+            class="nui-time-frame-picker__date-time nui-time-frame-picker__date-time_end">
             <nui-date-time-picker
                 [minDate]="minDate"
                 [maxDate]="maxDate"
@@ -25,8 +22,7 @@
                 (modelChanged)="onChangeInternalEnd($event)"
                 (focus)="onFocusInternal()"
                 (blur)="onBlurInternal()"
-                [appendToBody]="appendToBody"
-            ></nui-date-time-picker>
+                [appendToBody]="appendToBody"></nui-date-time-picker>
         </span>
     </div>
 </div>

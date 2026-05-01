@@ -49,7 +49,9 @@ test.describe("Line chart", () => {
 
     const getYCoordinate = (value: number): number => 105 - value;
 
-    const getLineSeriesById = async (id: string): Promise<LineSeriesAtom | undefined> => {
+    const getLineSeriesById = async (
+        id: string
+    ): Promise<LineSeriesAtom | undefined> => {
         const [layer] = await pageObject.chart.getLayer("data");
         if (!layer) {
             return undefined;
@@ -77,11 +79,15 @@ test.describe("Line chart", () => {
 
     test.describe("by default", () => {
         test("should render 2 lines in basic line chart", async () => {
-            expect(await pageObject.chart.getNumberOfVisibleDataSeries()).toEqual(2);
+            expect(
+                await pageObject.chart.getNumberOfVisibleDataSeries()
+            ).toEqual(2);
         });
 
         test("should have markers in basic line chart", async () => {
-            expect(await pageObject.chart.getNumberOfSeriesWithMarkers()).toEqual(2);
+            expect(
+                await pageObject.chart.getNumberOfSeriesWithMarkers()
+            ).toEqual(2);
         });
     });
 
@@ -117,16 +123,24 @@ test.describe("Line chart", () => {
 
     test.describe("markers", () => {
         test("should have proper color", async () => {
-            const marker1 = (await pageObject.chart.getMarkerSeriesById("1"))?.getMarker(0);
-            const marker2 = (await pageObject.chart.getMarkerSeriesById("2"))?.getMarker(0);
+            const marker1 = (
+                await pageObject.chart.getMarkerSeriesById("1")
+            )?.getMarker(0);
+            const marker2 = (
+                await pageObject.chart.getMarkerSeriesById("2")
+            )?.getMarker(0);
 
             expect(await marker1?.getColor()).toEqual(colors[0]);
             expect(await marker2?.getColor()).toEqual(colors[1]);
         });
 
         test("should be in positions corresponding to last data points by default", async () => {
-            const marker1 = (await pageObject.chart.getMarkerSeriesById("1"))?.getMarker(0);
-            const marker2 = (await pageObject.chart.getMarkerSeriesById("2"))?.getMarker(0);
+            const marker1 = (
+                await pageObject.chart.getMarkerSeriesById("1")
+            )?.getMarker(0);
+            const marker2 = (
+                await pageObject.chart.getMarkerSeriesById("2")
+            )?.getMarker(0);
 
             const index = xTicks.length - 1;
             const position1 = await marker1?.getPosition();
@@ -149,8 +163,12 @@ test.describe("Line chart", () => {
             });
 
             test("should be moved to correct positions", async () => {
-                const marker1 = (await pageObject.chart.getMarkerSeriesById("1"))?.getMarker(0);
-                const marker2 = (await pageObject.chart.getMarkerSeriesById("2"))?.getMarker(0);
+                const marker1 = (
+                    await pageObject.chart.getMarkerSeriesById("1")
+                )?.getMarker(0);
+                const marker2 = (
+                    await pageObject.chart.getMarkerSeriesById("2")
+                )?.getMarker(0);
 
                 const position1 = await marker1?.getPosition();
                 const position2 = await marker2?.getPosition();

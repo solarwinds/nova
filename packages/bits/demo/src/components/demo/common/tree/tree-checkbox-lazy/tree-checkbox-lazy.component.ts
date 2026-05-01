@@ -56,7 +56,7 @@ const TREE_DATA: ServerNode[] = [
 export class HttpMock {
     get(): Observable<ServerNode[]> {
         const res = {
-            servers: [
+            "servers": [
                 {
                     name: "Microsoft Server",
                     children: [],
@@ -105,7 +105,7 @@ export class HttpMock {
 })
 export class TreeCheckboxLazyComponent {
     public selectionModel = new SelectionModel<ServerNode>(true);
-    treeControl = new NestedTreeControl<ServerNode>((node) => node.children);
+    treeControl = new NestedTreeControl<ServerNode>(node => node.children);
     dataSource = new ArrayDataSource(TREE_DATA);
 
     @ViewChild(CdkTree) private cdkTree: CdkTree<ServerNode>;
@@ -143,13 +143,13 @@ export class TreeCheckboxLazyComponent {
         const descendants = this.treeControl.getDescendants(node);
         return (
             descendants.length > 0 &&
-            descendants.every((child) => this.selectionModel.isSelected(child))
+            descendants.every(child => this.selectionModel.isSelected(child))
         );
     }
 
     public descendantsPartiallySelected(node: ServerNode): boolean {
         const descendants = this.treeControl.getDescendants(node);
-        const result = descendants.some((child) =>
+        const result = descendants.some(child =>
             this.selectionModel.isSelected(child)
         );
         return result && !this.descendantsAllSelected(node);
@@ -162,7 +162,7 @@ export class TreeCheckboxLazyComponent {
             ? this.selectionModel.select(...descendants)
             : this.selectionModel.deselect(...descendants);
 
-        descendants.forEach((child) => {
+        descendants.forEach(child => {
             this.selectionModel.isSelected(child);
         });
         this.checkAllParentsSelection(node);
@@ -195,7 +195,7 @@ export class TreeCheckboxLazyComponent {
         const descendants = this.treeControl.getDescendants(node);
         const descAllSelected =
             descendants.length > 0 &&
-            descendants.every((child) => this.selectionModel.isSelected(child));
+            descendants.every(child => this.selectionModel.isSelected(child));
         if (nodeSelected && !descAllSelected) {
             this.selectionModel.deselect(node);
         } else if (!nodeSelected && descAllSelected) {
@@ -206,7 +206,7 @@ export class TreeCheckboxLazyComponent {
     private getParentNode(node: ServerNode): ServerNode | undefined {
         let parent: ServerNode | undefined;
 
-        if (TREE_DATA.find((n) => n === node)) {
+        if (TREE_DATA.find(n => n === node)) {
             return;
         }
 
@@ -214,7 +214,7 @@ export class TreeCheckboxLazyComponent {
             if (parent || !n.children) {
                 return;
             }
-            if (n.children.find((i) => i === node)) {
+            if (n.children.find(i => i === node)) {
                 parent = n;
                 return;
             }

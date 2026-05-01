@@ -38,11 +38,11 @@ You can check the example of GoogleBooks API [DataSource](../widget-types/table/
 
 Currently supported Features by Nova:
 
--   Search ([Table Widget](../widget-types/table/table-with-search.html))
+- Search ([Table Widget](../widget-types/table/table-with-search.html))
 
 Planned support:
 
--   TBD
+- TBD
 
 ## DataFields Config
 
@@ -79,10 +79,10 @@ An adapter is another specialized type of a provider, whose purpose is to invoke
 the result, and assign it to the right component. This provider type was introduced for the following
 reasons:
 
--   To maintain the pure nature of a widget that accepts all data via component inputs thereby respecting
-    one-way data binding.
--   To separate responsibilities between the data source, the component that displays the data, and the
-    bridge between them.
+- To maintain the pure nature of a widget that accepts all data via component inputs thereby respecting
+  one-way data binding.
+- To separate responsibilities between the data source, the component that displays the data, and the
+  bridge between them.
 
 The basic implementation is called
 [`NOVA_DATASOURCE_ADAPTER`](../../miscellaneous/variables.html#NOVA_DATASOURCE_ADAPTER), and it invokes a

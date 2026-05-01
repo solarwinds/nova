@@ -88,7 +88,7 @@ export class WidgetBodyComponent
         this.eventBus
             .getStream(DASHBOARD_EDIT_MODE)
             .pipe(takeUntil(this.destroyed$))
-            .subscribe((event) => {
+            .subscribe(event => {
                 this.pizzagnaService.setProperty(
                     {
                         componentId: this.componentId,

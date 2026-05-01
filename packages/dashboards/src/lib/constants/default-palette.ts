@@ -87,7 +87,7 @@ export const DEFAULT_KPI_TILE_COLOR = "var(--nui-color-bg-secondary)";
 export const DEFAULT_KPI_BACKGROUND_COLORS = [
     ...CHART_PALETTE_CS3,
     ...CHART_PALETTE_CS_S_EXTENDED,
-].map((color) => ({
+].map(color => ({
     color,
     label: chartPaletteColorMap[color],
 }));

@@ -3,13 +3,11 @@
     id="fruit-radio-group-inline"
     name="fruit"
     class="nui-radio-group-inline"
-    [(value)]="selectedFruit"
->
+    [(value)]="selectedFruit">
     <nui-radio
         *ngFor="let fruit of fruits"
         [value]="fruit"
-        [checked]="fruit === 'Orange'"
-    >
+        [checked]="fruit === 'Orange'">
         {{ fruit }}
     </nui-radio>
 </nui-radio-group>

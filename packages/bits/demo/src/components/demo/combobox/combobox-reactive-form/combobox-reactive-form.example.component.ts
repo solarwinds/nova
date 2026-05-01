@@ -52,7 +52,7 @@ export class ComboboxReactiveFormExampleComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.myForm.controls.item.valueChanges
             .pipe(takeUntil(this.destroy$$))
-            .subscribe((value) => console.log(value));
+            .subscribe(value => console.log(value));
     }
 
     public ngOnDestroy(): void {

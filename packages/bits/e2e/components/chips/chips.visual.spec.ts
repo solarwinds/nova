@@ -33,11 +33,22 @@ test.describe(`Visual tests: ${name}`, () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("chips/chips-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
 
-        chipsBasic = Atom.find<ChipsAtom>(ChipsAtom, "nui-demo-chips-flat-horizontal-visual");
-        chipsVertGroup = Atom.find<ChipsAtom>(ChipsAtom, "nui-demo-chips-grouped-vertical-visual");
-        chipsOverflow = Atom.find<ChipsAtom>(ChipsAtom, "nui-demo-chips-overflow");
+        chipsBasic = Atom.find<ChipsAtom>(
+            ChipsAtom,
+            "nui-demo-chips-flat-horizontal-visual"
+        );
+        chipsVertGroup = Atom.find<ChipsAtom>(
+            ChipsAtom,
+            "nui-demo-chips-grouped-vertical-visual"
+        );
+        chipsOverflow = Atom.find<ChipsAtom>(
+            ChipsAtom,
+            "nui-demo-chips-overflow"
+        );
 
         camera = new Camera().loadFilm(page, name, "Bits");
     });

@@ -105,7 +105,7 @@ export class TimeFrameBarBasicExampleComponent implements OnInit, OnDestroy {
         this.chart
             .getEventBus()
             .getStream(SET_DOMAIN_EVENT)
-            .subscribe((event) => {
+            .subscribe(event => {
                 const payload = <ISetDomainEventPayload>event.data;
                 const newDomain = payload[this.xScale.id];
                 this.timeFrame = this.history.save({

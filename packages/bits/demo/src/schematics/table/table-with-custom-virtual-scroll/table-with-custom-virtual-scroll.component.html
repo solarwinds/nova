@@ -3,8 +3,7 @@
         <nui-search
             [value]="searchTerm"
             (search)="onSearch()"
-            (cancel)="onSearchCancel()"
-        >
+            (cancel)="onSearchCancel()">
         </nui-search>
     </div>
 
@@ -12,15 +11,13 @@
         class="app-table-with-custom-virtual-scroll-scrolling-container"
         tableStickyHeader
         #viewportRef
-        [itemSize]="rowHeight"
-    >
+        [itemSize]="rowHeight">
         <table
             nui-table
             [dataSource]="items | sliceRange : viewportRef.getRenderedRange()"
             [sortable]="true"
             [sortedColumn]="sortedColumn"
-            (sortOrderChanged)="sortData($event)"
-        >
+            (sortOrderChanged)="sortData($event)">
             <ng-container nuiColumnDef="name">
                 <th nui-header-cell [style.width.%]="30" *nuiHeaderCellDef i18n>
                     Name
@@ -44,15 +41,13 @@
 
             <tr
                 nui-header-row
-                *nuiHeaderRowDef="displayedColumns; sticky: true"
-            ></tr>
+                *nuiHeaderRowDef="displayedColumns; sticky: true"></tr>
             <ng-template
                 nuiRowDef
                 cdkVirtualFor
                 let-context
                 [nuiRowDefColumns]="displayedColumns"
-                [cdkVirtualForOf]="items"
-            >
+                [cdkVirtualForOf]="items">
                 <tr nui-row></tr>
             </ng-template>
         </table>
@@ -80,8 +75,7 @@
                             type="button"
                             size="default"
                             displayStyle="action"
-                            (click)="applyFilters(false)"
-                        >
+                            (click)="applyFilters(false)">
                             Load another {{ pageSize }} items
                         </button>
                     </div>

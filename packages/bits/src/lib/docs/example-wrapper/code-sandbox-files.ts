@@ -33,10 +33,7 @@ export const createAngularApp = (
             content: getAngular(),
         },
         "package.json": {
-            content: getPackage(
-                packageJson,
-                latestNovaVersion
-            ),
+            content: getPackage(packageJson, latestNovaVersion),
         },
         "src/app/app.module.ts": {
             content: getAppModule(
@@ -54,12 +51,11 @@ export const createAngularApp = (
         },
     };
 
-    sources
-        .forEach((source: FileMetadata) => {
-            files = Object.assign(files, {
-                [`src/app/${source.filePath}`]: { content: source.fileContent },
-            });
+    sources.forEach((source: FileMetadata) => {
+        files = Object.assign(files, {
+            [`src/app/${source.filePath}`]: { content: source.fileContent },
         });
+    });
 
     return { files: files };
 };
@@ -75,15 +71,17 @@ export const getAppModule = (
     packageJson: any
 ): string => {
     const mainComponentName = getMainComponentName(sources, filenamePrefix);
-    const componentNames = sources && sources
-        .filter((source: FileMetadata) => source.fileType === "ts")
-        .map((source: FileMetadata) => getComponentName(source))
-        .join(",");
+    const componentNames =
+        sources &&
+        sources
+            .filter((source: FileMetadata) => source.fileType === "ts")
+            .map((source: FileMetadata) => getComponentName(source))
+            .join(",");
     const imports = sources
         .filter((source: FileMetadata) => source.fileType === "ts")
         .filter((source: FileMetadata) => source.fileName !== `routes.ts`)
         .map(
-            (source) =>
+            source =>
                 `import { ${getComponentName(
                     source
                 )} } from "./${source.filePath.slice(
@@ -197,7 +195,8 @@ export const getMainComponentName = (
 
 export const getComponentName = (source: FileMetadata): string => {
     const matches: RegExpMatchArray | null | undefined =
-        source?.fileContent?.match && source?.fileContent?.match(/class (\w+Component)/);
+        source?.fileContent?.match &&
+        source?.fileContent?.match(/class (\w+Component)/);
     return (matches || [])[1]; // capture exported component name
 };
 

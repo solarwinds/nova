@@ -40,23 +40,23 @@ export class FilterGroupService {
             : 10;
         const displayedCheckboxesValues = filterGroupItem.allFilterOptions
             .slice(0, numberToDisplay)
-            .map((item) => item.value);
+            .map(item => item.value);
         const checkedCheckboxes = filterGroupItem.selectedFilterValues;
         const difference = _difference(
             checkedCheckboxes,
             displayedCheckboxesValues
         );
         if (difference.length !== 0) {
-            difference.forEach((diff) => {
+            difference.forEach(diff => {
                 valuesToAppend.push(
                     filterGroupItem.allFilterOptions.filter(
-                        (item) => item.value === diff
+                        item => item.value === diff
                     )
                 );
             });
             const flattenedValuesToAppend: IFilterGroupOption[] =
                 _flatten(valuesToAppend);
-            flattenedValuesToAppend.forEach((item) => {
+            flattenedValuesToAppend.forEach(item => {
                 filterGroupItem.allFilterOptions.splice(
                     filterGroupItem.allFilterOptions.indexOf(item),
                     1

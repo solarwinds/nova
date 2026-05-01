@@ -59,7 +59,7 @@ export class LegendMetadataExampleComponent implements OnInit {
         const accessors = stackedAreaAccessors();
         // 'y1' defines access to the numeric values we want to visualize.
         // The items in the data array of this example have a property named 'value',so we'll use that.
-        accessors.data.y1 = (d) => d.value;
+        accessors.data.y1 = d => d.value;
 
         // The area renderer will make the chart look like a area chart.
         const renderer = new AreaRenderer();
@@ -80,7 +80,7 @@ export class LegendMetadataExampleComponent implements OnInit {
         // Here we create an accessor for our average metadata
         const avgAccessors = new XYAccessors();
         // This is so the legend knows the value for the y
-        avgAccessors.data.y = (d) => d.value;
+        avgAccessors.data.y = d => d.value;
 
         this.avgSeries = {
             ...averageData,
@@ -95,7 +95,7 @@ export class LegendMetadataExampleComponent implements OnInit {
 
         // Here we assemble the complete chart series.
         let seriesSet: Partial<IChartSeries<IAccessors>>[] = dataSeries.map(
-            (d) => ({
+            d => ({
                 ...d,
                 accessors,
                 renderer,

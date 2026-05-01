@@ -4,8 +4,7 @@
 
 <div
     class="nui nui-demo panel-body component-demo-card"
-    ng-controller="ExamplePaletteController as ctrl"
->
+    ng-controller="ExamplePaletteController as ctrl">
     <h1 id="usage-warning">
         These colors should not be directly used in implemented components!
         Instead, use the colors in the "Semantic" tab.
@@ -26,17 +25,14 @@
                 <div class="doc-color-swatch" ng-repeat="item in value">
                     <div
                         class="doc-color-swatch-block"
-                        ng-class="item.color | limitTo:1000:1"
-                    ></div>
+                        ng-class="item.color | limitTo:1000:1"></div>
 
                     <div
-                        class="doc-color-swatch-label doc-color-swatch-label-primary"
-                    >
+                        class="doc-color-swatch-label doc-color-swatch-label-primary">
                         {{::item.color}}
                     </div>
                     <div
-                        class="doc-color-swatch-label doc-color-swatch-label-secondary"
-                    >
+                        class="doc-color-swatch-label doc-color-swatch-label-secondary">
                         {{::item.secondary}}
                     </div>
                 </div>

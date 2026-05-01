@@ -87,7 +87,7 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
         this.form
             .get(["organization", "createDynamicStep1"])
             ?.valueChanges.pipe(takeUntil(this.destroy$))
-            .subscribe((changes) => {
+            .subscribe(changes => {
                 this.handleDynamicSteps(
                     "I was created dynamically!",
                     this.template1,
@@ -98,7 +98,7 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
         this.form
             .get(["organization", "createDynamicStep2"])
             ?.valueChanges.pipe(takeUntil(this.destroy$))
-            .subscribe((changes) => {
+            .subscribe(changes => {
                 this.handleDynamicSteps(
                     "Another dynamic step",
                     this.template2,
@@ -162,7 +162,7 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
             title: title,
             templateRef: template,
         };
-        const index = this.dynamicSteps.findIndex((step) =>
+        const index = this.dynamicSteps.findIndex(step =>
             isEqual(step, newStep)
         );
 

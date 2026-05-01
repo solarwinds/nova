@@ -27,7 +27,6 @@ import { IEvent, INovaFilteringOutputs } from "@nova-ui/bits";
 import { SET_NEXT_PAGE } from "../../../services/types";
 import { IPaginatorState, TableWidgetComponent } from "../public-api";
 
-
 @Injectable()
 export class PaginatorFeatureAddonService {
     public defaultPaginatorState: IPaginatorState = {
@@ -82,10 +81,12 @@ export class PaginatorFeatureAddonService {
             };
 
             // update only if needed to avoid additional calls to ds
-            if (!isEqual(modifiedConfiguration, {
-                pageSize: this.paginatorState.pageSize,
-                pageSizeSet: this.paginatorState.pageSizeSet,
-            } )) {
+            if (
+                !isEqual(modifiedConfiguration, {
+                    pageSize: this.paginatorState.pageSize,
+                    pageSizeSet: this.paginatorState.pageSizeSet,
+                })
+            ) {
                 this.updatePaginatorState(modifiedConfiguration);
                 this.widget.eventBus.getStream(SET_NEXT_PAGE).next({});
                 this.widget.changeDetector.detectChanges();

@@ -49,7 +49,8 @@ export class ResizerAtom extends Atom {
     public getResizeDirection = async (): Promise<
         "horizontal" | "vertical"
     > => {
-        const className = (await this.resizeSplitElement.getAttribute("class")) ?? "";
+        const className =
+            (await this.resizeSplitElement.getAttribute("class")) ?? "";
         return className.includes("horizontal") ? "horizontal" : "vertical";
     };
 
@@ -69,7 +70,10 @@ export class ResizerAtom extends Atom {
 
         await Helpers.page.mouse.move(startX, startY);
         await Helpers.page.mouse.down();
-        await Helpers.page.mouse.move(startX + resizeCoords.x, startY + resizeCoords.y);
+        await Helpers.page.mouse.move(
+            startX + resizeCoords.x,
+            startY + resizeCoords.y
+        );
         await Helpers.page.mouse.up();
     };
 }

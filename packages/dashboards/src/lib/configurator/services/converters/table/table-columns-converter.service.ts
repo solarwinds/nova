@@ -177,7 +177,7 @@ export class TableColumnsConverterService
     private filterColumnsWithoutSpecifiedWidth(
         columns: ITableWidgetColumnConfig[]
     ) {
-        return columns.filter((column) => column.isActive && !column.width);
+        return columns.filter(column => column.isActive && !column.width);
     }
 
     /**
@@ -195,7 +195,7 @@ export class TableColumnsConverterService
             case 0: {
                 const activeColumns = (
                     this.component.form.get("columns") as FormArray
-                ).controls.filter((control) =>
+                ).controls.filter(control =>
                     get(
                         control,
                         `value.properties[${control.value.id}/description].isActive`

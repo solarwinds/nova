@@ -1,32 +1,27 @@
 <ng-container [formGroup]="formatterForm">
     <nui-widget-editor-accordion
-        [state]="form | nuiWidgetEditorAccordionFormState | async"
-    >
+        [state]="form | nuiWidgetEditorAccordionFormState | async">
         <nui-widget-editor-accordion-header
             [headerIcon]="form | nuiFormHeaderIconPipe : 'customize' | async"
             [subtitle]="subtitleText"
-            headerTitle="Property and formatting"
-        />
+            headerTitle="Property and formatting" />
         <div class="presentation-configuration__accordion-content">
             <div class="mb-4">
                 <nui-form-field
                     caption="Format"
                     i18n-caption
-                    [control]="formatterForm.controls['componentType']"
-                >
+                    [control]="formatterForm.controls['componentType']">
                     <nui-select-v2
                         placeholder="Select Format"
                         i18n-placeholder
                         [popupViewportMargin]="
                             configuratorHeading.height$ | async
                         "
-                        formControlName="componentType"
-                    >
+                        formControlName="componentType">
                         <nui-select-v2-option
                             *ngFor="let formatter of formatters"
                             [displayValueContext]="formatter.label"
-                            [value]="formatter.componentType"
-                        >
+                            [value]="formatter.componentType">
                             {{ formatter.label }}
                         </nui-select-v2-option>
                     </nui-select-v2>
@@ -40,12 +35,10 @@
                 [properties]="formatterConfiguratorProps"
                 [outputs]="['formReady']"
                 (output)="onFormReady($event.payload)"
-                #componentPortal="nuiComponentPortal"
-            >
+                #componentPortal="nuiComponentPortal">
                 <ng-template
                     [cdkPortalOutlet]="componentPortal.portal"
-                    (attached)="componentPortal.attached($event)"
-                ></ng-template>
+                    (attached)="componentPortal.attached($event)"></ng-template>
             </ng-container>
         </div>
     </nui-widget-editor-accordion>

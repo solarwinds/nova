@@ -20,7 +20,12 @@
 
 import { Locator } from "@playwright/test";
 
-import { Animations, expect, Helpers, test } from "@nova-ui/bits/sdk/atoms-playwright";
+import {
+    Animations,
+    expect,
+    Helpers,
+    test,
+} from "@nova-ui/bits/sdk/atoms-playwright";
 
 import { RadialSeriesAtom } from "./atoms/radial-series.atom";
 import { DonutChartContentBooster } from "./boosters/donut-chart-content.booster";
@@ -29,9 +34,9 @@ import { DonutChartTestPage } from "./donut-chart-test.po";
 test.describe("Donut chart", () => {
     let pageObject: DonutChartTestPage;
     const arcCoords = {
-            blue: { x: 950, y: 150 },
-            pink: { x: 900, y: 100 },
-            lilac: { x: 950, y: 100 },
+        blue: { x: 950, y: 150 },
+        pink: { x: 900, y: 100 },
+        lilac: { x: 950, y: 100 },
     };
 
     let allSeries: RadialSeriesAtom[];
@@ -45,8 +50,13 @@ test.describe("Donut chart", () => {
 
     test.beforeEach(async ({ page }) => {
         await page.setViewportSize({ width: 1920, height: 1080 });
-        await Helpers.prepareBrowser("chart-types/pie-and-donut/donut-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.prepareBrowser(
+            "chart-types/pie-and-donut/donut-test",
+            page
+        );
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
 
         pageObject = new DonutChartTestPage();
 

@@ -5,8 +5,7 @@
                 *ngIf="icon; else statusTpl"
                 [icon]="icon"
                 [status]="status"
-                class="mr-1"
-            ></nui-icon>
+                class="mr-1"></nui-icon>
         </div>
         <div class="nui-list-leaf-item__description">
             <a
@@ -14,12 +13,10 @@
                 [ngClass]="url ? '' : 'not-active'"
                 [attr.target]="url ? '_blank' : null"
                 [attr.href]="url || null"
-                [innerHTML]="label | nuiHighlight : searchTerm"
-            ></a>
+                [innerHTML]="label | nuiHighlight : searchTerm"></a>
             <div
                 class="nui-text-secondary nui-text-ellipsis"
-                [innerHTML]="detailedUrl | nuiHighlight : searchTerm"
-            ></div>
+                [innerHTML]="detailedUrl | nuiHighlight : searchTerm"></div>
         </div>
 
         <ng-template #statusTpl>{{ status }}</ng-template>

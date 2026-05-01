@@ -168,7 +168,7 @@ describe("components >", () => {
             });
             it(`should have text content`, () => {
                 de.queryAll(By.css(".nui-button__content")).forEach(
-                    (debugElement) => {
+                    debugElement => {
                         expect(debugElement.nativeElement.textContent).toEqual(
                             "testText"
                         );

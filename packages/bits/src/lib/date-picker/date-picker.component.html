@@ -4,8 +4,7 @@
             #toggleRef
             class="nui-datepicker__container"
             [class.disabled]="isDisabled"
-            (click)="!isDisabled && overlay.toggle()"
-        >
+            (click)="!isDisabled && overlay.toggle()">
             <nui-textbox
                 #date
                 autocomplete="off"
@@ -13,22 +12,19 @@
                 [isInErrorState]="isInErrorState"
                 (textChange)="onInputActiveDateChanged($event)"
                 (blurred)="updateTouchedState()"
-                [ariaLabel]="ariaLabel"
-            >
+                [ariaLabel]="ariaLabel">
             </nui-textbox>
             <nui-icon
                 class="nui-datepicker__icon"
                 icon="calendar"
                 aria-hidden="true"
-                [iconColor]="getIconColor()"
-            ></nui-icon>
+                [iconColor]="getIconColor()"></nui-icon>
         </div>
         <nui-overlay
             #overlay
             [toggleReference]="toggleRef"
             [overlayConfig]="overlayConfig"
-            [customContainer]="customContainer"
-        >
+            [customContainer]="customContainer">
             <ng-container *ngTemplateOutlet="datePickerInner"></ng-container>
         </nui-overlay>
     </ng-container>
@@ -66,8 +62,7 @@
         [disabledDates]="disabledDates"
         [onlyCurrentMonth]="onlyCurrentMonth"
         [handleTimezone]="handleTimezone"
-        [value]="value"
-    >
+        [value]="value">
         <nui-day-picker tabindex="0"></nui-day-picker>
         <nui-month-picker tabindex="0"></nui-month-picker>
         <nui-year-picker tabindex="0"></nui-year-picker>

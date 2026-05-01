@@ -16,8 +16,7 @@
             <app-custom-data-source-filter-group
                 *ngFor="let filterGroupItem of filterGroupItems"
                 [filterGroupItem]="filterGroupItem"
-                (filterChanged)="changeFilters($event)"
-            ></app-custom-data-source-filter-group>
+                (filterChanged)="changeFilters($event)"></app-custom-data-source-filter-group>
         </app-custom-data-source-filter-groups-wrapper>
     </div>
     <div>
@@ -26,8 +25,7 @@
                 id="nui-composites-demo-repeat"
                 [itemsSource]="filteringState.repeat.itemsSource"
                 [repeatItemTemplateRef]="listRepeatItemTemplate"
-                paddingSize="normal"
-            >
+                paddingSize="normal">
             </nui-repeat>
         </div>
     </div>

@@ -38,8 +38,14 @@ test.describe(`Visual tests: ${name}`, () => {
         await Helpers.disableCSSAnimations(Animations.ALL);
 
         basicTree = Atom.find<TreeAtom>(TreeAtom, "nui-tree-basic-example");
-        checkboxTree = Atom.find<TreeAtom>(TreeAtom, "nui-tree-checkbox-example");
-        paginatorTree = Atom.find<TreeAtom>(TreeAtom, "nui-tree-paginator-example");
+        checkboxTree = Atom.find<TreeAtom>(
+            TreeAtom,
+            "nui-tree-checkbox-example"
+        );
+        paginatorTree = Atom.find<TreeAtom>(
+            TreeAtom,
+            "nui-tree-paginator-example"
+        );
         paginator1 = Atom.find<PaginatorAtom>(
             PaginatorAtom,
             "nui-tree-paginator-component-vegetables"

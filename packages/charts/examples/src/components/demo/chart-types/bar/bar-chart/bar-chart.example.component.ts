@@ -46,7 +46,7 @@ export class BarChartExampleComponent implements OnInit {
         const scales = barScales(this.config);
 
         this.chart.update(
-            getData().map((s) => ({
+            getData().map(s => ({
                 ...s,
                 accessors,
                 renderer,

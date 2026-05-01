@@ -14,16 +14,13 @@
             [formControl]="comboboxControl"
             id="error"
             [overlayConfig]="overlayConfig"
-            #comboboxError
-        >
+            #comboboxError>
             <nui-select-v2-option
                 *ngFor="let item of customizedItems"
-                [value]="item"
-            >
+                [value]="item">
                 <span
                     class="mr-3"
-                    [nuiComboboxV2OptionHighlight]="item.name"
-                ></span>
+                    [nuiComboboxV2OptionHighlight]="item.name"></span>
                 <nui-icon [icon]="item.icon"></nui-icon>
             </nui-select-v2-option>
         </nui-combobox-v2>
@@ -38,12 +35,10 @@
                     formControlName="combobox"
                     id="form"
                     [overlayConfig]="overlayConfig"
-                    #comboboxReactive
-                >
+                    #comboboxReactive>
                     <nui-select-v2-option
                         *ngFor="let item of items"
-                        [value]="item"
-                    >
+                        [value]="item">
                         <span [nuiComboboxV2OptionHighlight]="item"></span>
                     </nui-select-v2-option>
                 </nui-combobox-v2>
@@ -62,8 +57,7 @@
             i18n-placeholder
             id="basic"
             [overlayConfig]="overlayConfig"
-            #comboboxBasic
-        >
+            #comboboxBasic>
             <nui-select-v2-option *ngFor="let item of items" [value]="item">
                 <span [nuiComboboxV2OptionHighlight]="item"></span>
             </nui-select-v2-option>
@@ -79,33 +73,28 @@
             [formControl]="comboboxControlSingle"
             id="single"
             [overlayConfig]="overlayConfig"
-            #comboboxSingle
-        >
+            #comboboxSingle>
             <nui-select-v2-option
                 *ngFor="let option of options; index"
                 [value]="option"
-                [isDisabled]="isDisabled(option)"
-            >
+                [isDisabled]="isDisabled(option)">
                 <div class="d-flex align-items-center">
                     <span
                         class="mr-3 nui-select-v2-option__label"
-                        [nuiComboboxV2OptionHighlight]="option"
-                    ></span>
+                        [nuiComboboxV2OptionHighlight]="option"></span>
                 </div>
             </nui-select-v2-option>
 
             <nui-overlay-item
                 *ngIf="comboboxSingle.canCreateOption | async"
                 class="nui-combobox-v2__create-option"
-                (click)="createOption(comboboxSingle.inputValue)"
-            >
+                (click)="createOption(comboboxSingle.inputValue)">
                 Create option "{{ comboboxSingle.inputValue }}"
             </nui-overlay-item>
             <div
                 *ngIf="comboboxSingle.searchEmpty | async"
                 class="nui-combobox-v2__empty-search"
-                i18n
-            >
+                i18n>
                 No other existing item available
             </div>
         </nui-combobox-v2>
@@ -120,8 +109,7 @@
             [multiselect]="true"
             [overlayConfig]="overlayConfig"
             id="multi"
-            #combobox
-        >
+            #combobox>
             <ng-container selectedItems>
                 <nui-chip
                     nuiMarkAsSelectedItem
@@ -130,34 +118,29 @@
                     closeButtonTooltip="Remove"
                     [item]="convertToChip(item)"
                     (remove)="combobox.deselectItem(item)"
-                    (mouseup)="$event.stopPropagation()"
-                >
+                    (mouseup)="$event.stopPropagation()">
                 </nui-chip>
             </ng-container>
 
             <nui-select-v2-option
                 *ngFor="let option of optionsMulti"
                 [value]="option"
-                class="d-flex align-items-center"
-            >
+                class="d-flex align-items-center">
                 <span
                     class="mr-3 nui-select-v2-option__label"
-                    [nuiComboboxV2OptionHighlight]="option.name"
-                ></span>
+                    [nuiComboboxV2OptionHighlight]="option.name"></span>
             </nui-select-v2-option>
 
             <nui-overlay-item
                 *ngIf="combobox.canCreateOption | async"
                 class="nui-combobox-v2__create-option"
-                (click)="createOptionMulti(combobox.inputValue)"
-            >
+                (click)="createOptionMulti(combobox.inputValue)">
                 Create option "{{ combobox.inputValue }}"
             </nui-overlay-item>
             <div
                 *ngIf="combobox.searchEmpty | async"
                 class="nui-combobox-v2__empty-search"
-                i18n
-            >
+                i18n>
                 No other existing item available
             </div>
         </nui-combobox-v2>
@@ -172,21 +155,18 @@
                 id="disabled"
                 [overlayConfig]="overlayConfig"
                 class="flex-grow-1"
-                #comboboxDisabled
-            >
+                #comboboxDisabled>
                 <nui-select-v2-option
                     *ngFor="let item of optionsMulti.slice()"
                     [value]="item"
-                    [isDisabled]="item.disabled"
-                >
+                    [isDisabled]="item.disabled">
                     <span [nuiComboboxV2OptionHighlight]="item.name"></span>
                 </nui-select-v2-option>
             </nui-combobox-v2>
             <button
                 id="trigger-disabled"
                 (click)="isComboboxDisabled = !isComboboxDisabled"
-                class="ml-auto"
-            >
+                class="ml-auto">
                 {{ isComboboxDisabled ? "enable" : "disable" }}
             </button>
         </div>
@@ -201,8 +181,7 @@
             [isRemoveValueEnabled]="false"
             id="removal"
             [overlayConfig]="overlayConfig"
-            #comboboxValueRemoval
-        >
+            #comboboxValueRemoval>
             <nui-select-v2-option *ngFor="let item of items" [value]="item">
                 <span [nuiComboboxV2OptionHighlight]="item"></span>
             </nui-select-v2-option>
@@ -221,8 +200,7 @@
         [manualDropdownControl]="true"
         id="custom-control"
         [overlayConfig]="overlayConfig"
-        #comboboxMultiDimensions
-    >
+        #comboboxMultiDimensions>
         <ng-container selectedItems>
             <nui-chip
                 nuiMarkAsSelectedItem
@@ -231,19 +209,16 @@
                 closeButtonTooltip="Remove"
                 [item]="convertToChip(item)"
                 (remove)="comboboxMultiDimensions.deselectItem(item)"
-                (mouseup)="$event.stopPropagation()"
-            >
+                (mouseup)="$event.stopPropagation()">
             </nui-chip>
         </ng-container>
         <nui-select-v2-option
             *ngFor="let option of optionsMultiDimensions"
             [value]="option"
-            class="d-flex align-items-center"
-        >
+            class="d-flex align-items-center">
             <span
                 class="mr-3 nui-select-v2-option__label"
-                [nuiComboboxV2OptionHighlight]="option.name"
-            ></span>
+                [nuiComboboxV2OptionHighlight]="option.name"></span>
         </nui-select-v2-option>
     </nui-combobox-v2>
     <button id="show" class="ml-3" (click)="showList($event)">Show</button>
@@ -261,19 +236,16 @@
         id="virtual-combobox"
         [formControl]="comboboxControl"
         [overlayConfig]="overlayConfig"
-        [isTypeaheadEnabled]="false"
-    >
+        [isTypeaheadEnabled]="false">
         <cdk-virtual-scroll-viewport
             itemSize="30"
             [minBufferPx]="300"
             [maxBufferPx]="600"
-            [style.height.px]="containerHeight"
-        >
+            [style.height.px]="containerHeight">
             <div *cdkVirtualFor="let item of filteredItems | async; index as i">
                 <nui-select-v2-option
                     [value]="item"
-                    class="d-flex align-items-center"
-                >
+                    class="d-flex align-items-center">
                     <span [nuiComboboxV2OptionHighlight]="item"></span>
                 </nui-select-v2-option>
             </div>
@@ -291,8 +263,7 @@
         [manualDropdownControl]="true"
         [overlayConfig]="overlayConfig"
         class="w-100"
-        #comboboxWithDialog
-    >
+        #comboboxWithDialog>
         <ng-container selectedItems>
             <nui-chip
                 nuiMarkAsSelectedItem
@@ -301,8 +272,7 @@
                 closeButtonTooltip="Remove"
                 [item]="convertToChip(item)"
                 (remove)="comboboxWithDialog.deselectItem(item)"
-                (mouseup)="$event.stopPropagation()"
-            >
+                (mouseup)="$event.stopPropagation()">
             </nui-chip>
         </ng-container>
 
@@ -310,12 +280,10 @@
             *ngFor="let option of optionsMultiDimensions"
             [value]="option"
             class="d-flex align-items-center"
-            (click)="openInOverlay(headerButtonsContent)"
-        >
+            (click)="openInOverlay(headerButtonsContent)">
             <span
                 class="mr-3 nui-select-v2-option__label"
-                [nuiComboboxV2OptionHighlight]="option.name"
-            ></span>
+                [nuiComboboxV2OptionHighlight]="option.name"></span>
         </nui-select-v2-option>
     </nui-combobox-v2>
     <button class="ml-3" (click)="comboboxWithDialog.toggleDropdown()">
@@ -327,8 +295,7 @@
     <nui-dialog-header
         title="Dialog title"
         i18n-title
-        (closed)="close()"
-    ></nui-dialog-header>
+        (closed)="close()"></nui-dialog-header>
     <div class="dialog-body">
         <p i18n>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
@@ -346,8 +313,7 @@
             nui-button
             type="button"
             (click)="actionCanceled(); close()"
-            i18n
-        >
+            i18n>
             Cancel
         </button>
         <button
@@ -355,8 +321,7 @@
             type="button"
             displayStyle="primary"
             (click)="actionDone(); close()"
-            i18n
-        >
+            i18n>
             Action
         </button>
     </nui-dialog-footer>
@@ -368,41 +333,35 @@
             nui-button
             type="button"
             displayStyle="action"
-            icon="fullscreen"
-        ></button>
+            icon="fullscreen"></button>
         <button
             nui-button
             type="button"
             displayStyle="action"
-            icon="menu"
-        ></button>
+            icon="menu"></button>
     </nui-dialog-header>
     <div class="dialog-body">
         <p>
             <nui-select-v2 placeholder="Select Item">
                 <nui-select-v2-option
                     *ngFor="let item of dataset.items; let i = index"
-                    [value]="item"
-                >
+                    [value]="item">
                     <div class="d-flex align-items-center">
                         <button
                             nui-button
                             type="button"
-                            (click)="confirm($event)"
-                        >
+                            (click)="confirm($event)">
                             boom!
                         </button>
                         {{ item }}
                         <div
                             #popoverContainer
-                            id="nui-demo-popover-container"
-                        ></div>
+                            id="nui-demo-popover-container"></div>
                         <nui-popover
                             id="nui-demo-popover-with-container"
                             [container]="popoverContainer"
                             [template]="popoverWithContainerTemplate"
-                            i18n
-                        >
+                            i18n>
                             Hover over me!
                         </nui-popover>
 
@@ -414,14 +373,12 @@
                             [template]="popoverModal"
                             [modal]="true"
                             [preventClosing]="true"
-                            [closePopover]="closePopoverSubject"
-                        >
+                            [closePopover]="closePopoverSubject">
                             <button
                                 nui-button
                                 type="button"
                                 id="nui-demo-popover-modal"
-                                i18n
-                            >
+                                i18n>
                                 Show modal popover
                             </button>
                         </nui-popover>
@@ -438,8 +395,7 @@
                                     type="button"
                                     displayStyle="action"
                                     (click)="closePopover()"
-                                    i18n
-                                >
+                                    i18n>
                                     Close
                                 </button>
                                 <button
@@ -448,8 +404,7 @@
                                     type="button"
                                     displayStyle="primary"
                                     (click)="closePopover()"
-                                    i18n
-                                >
+                                    i18n>
                                     Confirm
                                 </button>
                             </div>
@@ -484,8 +439,7 @@
             nui-button
             type="button"
             displayStyle="primary"
-            (click)="onButtonClick('Action')"
-        >
+            (click)="onButtonClick('Action')">
             Action
         </button>
     </nui-dialog-footer>

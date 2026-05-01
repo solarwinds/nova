@@ -48,7 +48,9 @@ export class UnitConversionService {
     private convertLinear(
         value: number,
         base: number
-    ): { [Key in keyof Pick<IUnitConversionResult, "value" | "order">]: number } {
+    ): {
+        [Key in keyof Pick<IUnitConversionResult, "value" | "order">]: number;
+    } {
         let resultValue: number;
         let resultOrder: number;
 
@@ -59,9 +61,7 @@ export class UnitConversionService {
             };
         }
 
-        resultOrder = Math.floor(
-            Math.log(Math.abs(value)) / Math.log(base)
-        );
+        resultOrder = Math.floor(Math.log(Math.abs(value)) / Math.log(base));
         resultValue = value / Math.pow(base, Math.floor(resultOrder));
 
         if (Math.abs(value) > 0 && Math.abs(value) < 1) {
@@ -95,9 +95,15 @@ export class UnitConversionService {
     private convertNonLinear(
         value: number,
         factors: number[]
-    ): { [Key in keyof Pick<IUnitConversionResult, "value" | "order">]: number } {
-        const sortedFactors = factors.sort((a, b) => a > b ? -1 : a < b ? 1 : 0);
-        const highestFactorIndex = sortedFactors.findIndex((factor) => value / factor >= 1);
+    ): {
+        [Key in keyof Pick<IUnitConversionResult, "value" | "order">]: number;
+    } {
+        const sortedFactors = factors.sort((a, b) =>
+            a > b ? -1 : a < b ? 1 : 0
+        );
+        const highestFactorIndex = sortedFactors.findIndex(
+            factor => value / factor >= 1
+        );
         const highestFactor = factors[highestFactorIndex];
 
         if (Math.abs(value) > 0 && Math.abs(value) < 1) {
@@ -109,7 +115,10 @@ export class UnitConversionService {
 
         return {
             value: value / highestFactor,
-            order: highestFactorIndex === -1 ? 0 : factors.length - highestFactorIndex - 1,
+            order:
+                highestFactorIndex === -1
+                    ? 0
+                    : factors.length - highestFactorIndex - 1,
         };
     }
 
@@ -127,9 +136,9 @@ export class UnitConversionService {
         base: number | number[] = UnitBase.Standard,
         scale: number = 1
     ): IUnitConversionResult {
-        const result = Array.isArray(base) ?
-            this.convertNonLinear(value, base) :
-            this.convertLinear(value, base);
+        const result = Array.isArray(base)
+            ? this.convertNonLinear(value, base)
+            : this.convertLinear(value, base);
 
         let strValue: string;
 

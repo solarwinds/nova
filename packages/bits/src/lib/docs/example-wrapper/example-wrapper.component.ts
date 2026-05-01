@@ -75,15 +75,15 @@ export class ExampleWrapperComponent implements OnInit {
 
     public async ngOnInit(): Promise<void> {
         this.componentSources =
-            await this.sourcesService.getSourcesByFilenamePrefix(
+            (await this.sourcesService.getSourcesByFilenamePrefix(
                 this.filenamePrefix
-            ) ?? [];
+            )) ?? [];
     }
 
     public getExampleComponents(fileType: string): string {
         return (
             this.componentSources?.find(
-                (component) =>
+                component =>
                     component.fileName.includes(this.filenamePrefix) &&
                     component.fileType === fileType
             )?.fileContent ?? ""

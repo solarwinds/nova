@@ -70,7 +70,7 @@ export class BarChartTimeScaleExampleComponent implements OnInit {
             })
         );
 
-        bandScale.fixDomain(seriesSet.map((s) => s.data[0].category));
+        bandScale.fixDomain(seriesSet.map(s => s.data[0].category));
 
         const scaleId = "bottom";
         const time = new TimeScale(scaleId);

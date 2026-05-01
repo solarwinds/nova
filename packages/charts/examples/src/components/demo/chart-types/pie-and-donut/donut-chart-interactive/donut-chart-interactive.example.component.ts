@@ -84,7 +84,7 @@ export class DonutChartInteractiveExampleComponent implements OnInit {
 
         // Invoke the chart assist's update method with the IChartAssistSeries collection as the argument
         this.chartAssist.update(
-            getData().map((s) => ({
+            getData().map(s => ({
                 ...s,
                 accessors,
                 scales,
@@ -103,5 +103,5 @@ function getData() {
         { status: Status.Down, value: 7 },
         { status: Status.Unmanaged, value: 5 },
         { status: Status.Unknown, value: 3 },
-    ].map((d) => ({ id: d.status, name: d.status, data: [d.value] }));
+    ].map(d => ({ id: d.status, name: d.status, data: [d.value] }));
 }

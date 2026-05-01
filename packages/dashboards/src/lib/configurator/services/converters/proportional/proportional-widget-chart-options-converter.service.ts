@@ -92,7 +92,7 @@ export class ProportionalWidgetChartOptionsConverterService
     public toPreview(form: FormGroup): void {
         form.valueChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe((chartOptions) => {
+            .subscribe(chartOptions => {
                 const preview = immutableSet(
                     this.getPreview(),
                     "chart.properties.configuration.chartOptions",

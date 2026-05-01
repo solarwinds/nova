@@ -6,8 +6,7 @@
         (timeFrameChange)="onChange($event)"
         (undo)="timeFrame = history.undo()"
         (clear)="onChange()"
-        [historyIndex]="history.index"
-    >
+        [historyIndex]="history.index">
         <nui-icon icon="calendar" class="pr-3"></nui-icon>
         {{ timeFrame | timeFrame }}
         <nui-quick-picker timeFrameSelection>

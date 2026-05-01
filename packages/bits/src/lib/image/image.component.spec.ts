@@ -29,7 +29,8 @@ import { LoggerService } from "../../services/log-service";
 import { UtilService } from "../../services/util.service";
 
 function unwrapSafeHtml(safeHtml: SafeHtml): string {
-    return (safeHtml as { changingThisBreaksApplicationSecurity: string }).changingThisBreaksApplicationSecurity;
+    return (safeHtml as { changingThisBreaksApplicationSecurity: string })
+        .changingThisBreaksApplicationSecurity;
 }
 
 describe("components >", () => {

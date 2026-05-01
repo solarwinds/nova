@@ -56,7 +56,12 @@ export class PopupToggleDirective {
 
     @HostListener("keydown", ["$event"])
     public handleKeydown(event: KeyboardEvent): void {
-        if (this.isDisabled || this.disabled || !this.toggleOnKey || event.defaultPrevented) {
+        if (
+            this.isDisabled ||
+            this.disabled ||
+            !this.toggleOnKey ||
+            event.defaultPrevented
+        ) {
             return;
         }
         if (event.key === " " || event.key === "Enter") {

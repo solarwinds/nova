@@ -68,7 +68,7 @@ const TREE_DATA: FoodNode[] = [
     standalone: false,
 })
 export class TreeBasicExampleComponent {
-    treeControl = new NestedTreeControl<FoodNode>((node) => node.children);
+    treeControl = new NestedTreeControl<FoodNode>(node => node.children);
     dataSource = new ArrayDataSource(TREE_DATA);
 
     hasChild = (_: number, node: FoodNode): boolean => !!node.children?.length;

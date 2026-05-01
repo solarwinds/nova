@@ -158,10 +158,14 @@ export class ToastTestPage {
         await this.btnReset.click();
     }
 
-    public async waitForToastDisplayed(index: number = 0): Promise<ToastAtom | null> {
+    public async waitForToastDisplayed(
+        index: number = 0
+    ): Promise<ToastAtom | null> {
         const toast = this.getToast(index);
         try {
-            await expect(toast.getLocator()).toBeVisible({ timeout: this.waitTimeout });
+            await expect(toast.getLocator()).toBeVisible({
+                timeout: this.waitTimeout,
+            });
             return toast;
         } catch {
             return null;
@@ -200,12 +204,20 @@ export class ToastTestPage {
         await this.updateSelectable(input, true);
     }
 
-    private async updateCheckBox(input: Locator, value: boolean): Promise<void> {
+    private async updateCheckBox(
+        input: Locator,
+        value: boolean
+    ): Promise<void> {
         await this.updateSelectable(input, value);
     }
 
-    private async updateSelectable(input: Locator, value: boolean): Promise<void> {
-        const currentValue = await input.isChecked().catch(async () => await input.isChecked());
+    private async updateSelectable(
+        input: Locator,
+        value: boolean
+    ): Promise<void> {
+        const currentValue = await input
+            .isChecked()
+            .catch(async () => await input.isChecked());
         if (currentValue === value) {
             return;
         }

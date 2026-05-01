@@ -4,8 +4,7 @@
     i18n-seriesUnitLabel
     [interactive]="true"
     (mouseleave)="chartAssist.resetVisibleSeries()"
-    orientation="horizontal"
->
+    orientation="horizontal">
     <nui-legend-series
         *ngFor="
             let legendSeries of chartAssist.legendSeriesSet;
@@ -17,16 +16,14 @@
             chartAssist.renderStatesIndex[legendSeries.id]?.state
         "
         [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
-        (isSelectedChange)="chartAssist.toggleSeries(legendSeries.id, $event)"
-    >
+        (isSelectedChange)="chartAssist.toggleSeries(legendSeries.id, $event)">
         <nui-basic-legend-tile>
             <nui-chart-marker
                 [marker]="chartAssist.markers.get(legendSeries.id)"
                 [color]="
                     chartAssist.palette.standardColors.get(legendSeries.id)
                 "
-                [drawLine]="true"
-            ></nui-chart-marker>
+                [drawLine]="true"></nui-chart-marker>
         </nui-basic-legend-tile>
     </nui-legend-series>
 </nui-legend>

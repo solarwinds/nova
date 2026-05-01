@@ -6,16 +6,14 @@
                 *ngFor="let position of positions"
                 [value]="position"
                 [checked]="position === 'top'"
-                i18n
-            >
+                i18n>
                 {{ position }}
             </nui-radio>
         </nui-radio-group>
     </div>
     <div class="d-flex ml-5">
         <div
-            class="d-flex flex-column justify-content-center align-items-center container"
-        >
+            class="d-flex flex-column justify-content-center align-items-center container">
             <div class="with-border">
                 <span
                     nuiTooltip="I'm the Tooltip!"

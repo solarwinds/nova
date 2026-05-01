@@ -25,7 +25,10 @@ const rulesToDisable: string[] = ["nested-interactive", "aria-required-attr"];
 
 test.describe("a11y: radio group", () => {
     test.beforeEach(async ({ page }) => {
-        await Helpers.prepareBrowser("radio-group/radio-group-visual-test", page);
+        await Helpers.prepareBrowser(
+            "radio-group/radio-group-visual-test",
+            page
+        );
     });
 
     test("should check a11y of radio group", async ({ runA11yScan }) => {

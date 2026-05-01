@@ -7,11 +7,9 @@
         [providers]="pizza[rootNode]?.providers"
         [outputs]="outputs"
         (output)="onOutput($event)"
-        #componentPortal="nuiComponentPortal"
-    >
+        #componentPortal="nuiComponentPortal">
         <ng-template
             [cdkPortalOutlet]="componentPortal.portal"
-            (attached)="componentPortal.attached($event)"
-        ></ng-template>
+            (attached)="componentPortal.attached($event)"></ng-template>
     </ng-container>
 </ng-container>

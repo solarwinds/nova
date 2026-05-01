@@ -4,8 +4,7 @@
         type="button"
         class="mb-2"
         id="nui-demo-sortable-table-btn"
-        (click)="sortByName()"
-    >
+        (click)="sortByName()">
         Sort By Name ({{ nameSortedDesc ? "Ascending" : "Descending" }})
     </button>
 
@@ -17,8 +16,7 @@
         [sortable]="true"
         [sortedColumn]="sortedColumn"
         #sortableTable
-        (sortOrderChanged)="sortData($event)"
-    >
+        (sortOrderChanged)="sortData($event)">
         <ng-container nuiColumnDef="position">
             <th nui-header-cell *nuiHeaderCellDef i18n>No.</th>
             <td nui-cell *nuiCellDef="let element">{{ element.position }}</td>
@@ -35,8 +33,7 @@
                 <nui-icon
                     *ngFor="let icon of element.features"
                     [icon]="icon"
-                    class="icon-margin"
-                ></nui-icon>
+                    class="icon-margin"></nui-icon>
             </td>
         </ng-container>
 
@@ -65,8 +62,7 @@
                 nui-header-cell
                 [isColumnSortingDisabled]="true"
                 *nuiHeaderCellDef
-                i18n
-            >
+                i18n>
                 Checks
             </th>
             <td nui-cell *nuiCellDef="let element">

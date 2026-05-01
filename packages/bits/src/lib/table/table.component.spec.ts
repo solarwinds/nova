@@ -137,7 +137,7 @@ describe("components >", () => {
                     throw new Error("headerRow is not defined");
                 }
                 const headerCells = TableSpecHelpers.getHeaderCells(headerRow);
-                headerCells.forEach((cell) => {
+                headerCells.forEach(cell => {
                     expect(
                         window
                             .getComputedStyle(cell)
@@ -154,7 +154,7 @@ describe("components >", () => {
                     throw new Error("headerRow is not defined");
                 }
                 const headerCells = TableSpecHelpers.getHeaderCells(headerRow);
-                headerCells.forEach((cell) => {
+                headerCells.forEach(cell => {
                     expect(
                         cell.classList.contains("cdk-table-sticky")
                     ).toBeTruthy();
@@ -172,7 +172,7 @@ describe("components >", () => {
                 component.setStickyFalse();
                 expect(component.isSticky).toBeFalsy();
                 fixture.detectChanges();
-                headerCells.forEach((cell) => {
+                headerCells.forEach(cell => {
                     expect(
                         window
                             .getComputedStyle(cell)
@@ -192,7 +192,7 @@ describe("components >", () => {
                 component.setStickyFalse();
                 expect(component.isSticky).toBeFalsy();
                 fixture.detectChanges();
-                headerCells.forEach((cell) => {
+                headerCells.forEach(cell => {
                     expect(
                         cell.classList.contains("cdk-table-sticky")
                     ).toBeFalsy();
@@ -219,7 +219,7 @@ describe("components >", () => {
                     throw new Error("headerRow is not defined");
                 }
                 TableSpecHelpers.getHeaderCells(headerRow).forEach(
-                    (headerCell) => {
+                    headerCell => {
                         expect(
                             headerCell.getAttribute("draggable")
                         ).toBeTruthy();
@@ -234,7 +234,7 @@ describe("components >", () => {
                     throw new Error("headerRow is not defined");
                 }
                 TableSpecHelpers.getHeaderCells(headerRow).forEach(
-                    (headerCell) => {
+                    headerCell => {
                         expect(headerCell.classList).toContain(
                             `nui-table__table-header-cell--reorderable`
                         );
@@ -244,7 +244,7 @@ describe("components >", () => {
 
             it("should have nui-table__table-row_height_default class set on nui-row element by default, if density attribute is not specified", () => {
                 const tableRows = TableSpecHelpers.getRows(tableElement);
-                tableRows.forEach((row) => {
+                tableRows.forEach(row => {
                     expect(
                         row.classList.contains(
                             "nui-table__table-row_height_default"
@@ -254,7 +254,7 @@ describe("components >", () => {
             });
 
             describe("columns reorder >", () => {
-                columnReorderTestCases.forEach((test) => {
+                columnReorderTestCases.forEach(test => {
                     it(`should reorder columns when dragging from cell #${test.dragCellIndex} to cell#${test.dropCellIndex}
                     when drop position is ${test.offsetX}px and cell width is ${test.clientWidth}px`, () => {
                         const headerRow: Element | undefined =
@@ -333,14 +333,14 @@ describe("components >", () => {
 
             it("should have nui-row element with density attribute set to tiny", async () => {
                 const tableRows = TableSpecHelpers.getRows(tableElement);
-                tableRows.forEach((row) => {
+                tableRows.forEach(row => {
                     expect(row.getAttribute("density")).toEqual("tiny");
                 });
             });
 
             it("should have nui-table__table-row_height_tiny class set on nui-row element with density=tiny", async () => {
                 const tableRows = TableSpecHelpers.getRows(tableElement);
-                tableRows.forEach((row) => {
+                tableRows.forEach(row => {
                     expect(
                         row.classList.contains(
                             "nui-table__table-row_height_tiny"
@@ -493,7 +493,7 @@ describe("components >", () => {
                 it(`should add first column with checkbox [${name}]`, () => {
                     setTableSelectionConfiguration(config);
                     const rows = TableSpecHelpers.getRows(tableElement);
-                    rows.forEach((row) => {
+                    rows.forEach(row => {
                         expect(
                             TableSpecHelpers.getCells(
                                 row

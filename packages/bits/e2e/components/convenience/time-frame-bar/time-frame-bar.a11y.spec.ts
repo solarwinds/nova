@@ -23,10 +23,7 @@ import { Helpers, test } from "../../../setup";
 
 test.describe("a11y: time frame bar", () => {
     test.beforeEach(async ({ page }) => {
-        await Helpers.prepareBrowser(
-            "convenience/time-frame-bar/visual",
-            page
-        );
+        await Helpers.prepareBrowser("convenience/time-frame-bar/visual", page);
     });
 
     test("should verify a11y of time frame bar", async ({ runA11yScan }) => {

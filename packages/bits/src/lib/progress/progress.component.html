@@ -2,8 +2,7 @@
     <div
         class="nui-progress__header"
         *ngIf="message && !compactMode"
-        [ngClass]="{ 'nui-progress__header--stacked': stacked }"
-    >
+        [ngClass]="{ 'nui-progress__header--stacked': stacked }">
         <span
             class="nui-progress__message nui-text-label nui-progress__header-item"
             >{{ message }}</span
@@ -17,25 +16,21 @@
         aria-valuemin="0"
         aria-valuemax="100"
         [attr.aria-label]="ariaLabel"
-        [attr.aria-valuenow]="percent || null"
-    >
+        [attr.aria-valuenow]="percent || null">
         <div
             class="nui-progress__bar"
             [ngClass]="{
                 'nui-progress--indeterminate': isIndeterminate,
                 'nui-progress__bar--compact': compactMode
-            }"
-        >
+            }">
             <div
                 class="nui-progress__bar-value"
-                [ngStyle]="{ 'width.%': percent }"
-            ></div>
+                [ngStyle]="{ 'width.%': percent }"></div>
         </div>
 
         <div
             *ngIf="showNumber && !compactMode"
-            class="nui-progress__number nui-progress__header-item nui-text-small"
-        >
+            class="nui-progress__number nui-progress__header-item nui-text-small">
             {{ percent }}%
         </div>
 
@@ -47,20 +42,17 @@
             *ngIf="allowCancel && !compactMode"
             (click)="cancelProgress()"
             displayStyle="action"
-            [nuiTooltip]="'Cancel'"
-        ></button>
+            [nuiTooltip]="'Cancel'"></button>
     </div>
 
     <div
         *ngIf="!compactMode"
         class="nui-progress__hint"
-        [class.nui-progress__hint--stacked]="stacked"
-    >
+        [class.nui-progress__hint--stacked]="stacked">
         <ng-container
             [ngTemplateOutlet]="
                 helpTemplateRef ? helpTemplateRef : defaultHelpTemplateRef
-            "
-        ></ng-container>
+            "></ng-container>
     </div>
 </div>
 

@@ -294,11 +294,11 @@ export class BarRenderer extends XYRenderer<IRectangleAccessors> {
             const values =
                 data && data.length > 0 ? data.map(accessor("start")) : [];
             const maxLength = Math.max(
-                ...values.map((d) => (isArray(d) ? d.length : -1))
+                ...values.map(d => (isArray(d) ? d.length : -1))
             );
             if (maxLength >= 0) {
                 return Array.from(Array(maxLength)).map((e, i) => {
-                    const scalesDomains = values.map((d) =>
+                    const scalesDomains = values.map(d =>
                         i < d.length ? d[i] : []
                     );
                     return uniq(flatten(scalesDomains));

@@ -740,7 +740,7 @@ describe("services >", () => {
                 },
             ];
 
-            testCases.forEach((testCase) => {
+            testCases.forEach(testCase => {
                 it(`should display ${testCase.name}`, () => {
                     const base = unitConversionBases[testCase.unit];
                     const conversion = subject.convert(

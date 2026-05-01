@@ -95,7 +95,7 @@ export class SparkChartAssist implements IChartAssist {
      * See {@link IChartAssist#update}
      */
     public update(inputSeriesSet: IChartAssistSeries<IAccessors>[]): void {
-        const sparks = inputSeriesSet.map((chartSeries) => ({
+        const sparks = inputSeriesSet.map(chartSeries => ({
             id: chartSeries.id,
             chartSeriesSet: [chartSeries],
         }));
@@ -113,7 +113,7 @@ export class SparkChartAssist implements IChartAssist {
             const lastSpark = index === inputSparks.length - 1;
             const existingSparkIndex = spark.id
                 ? this.sparks.findIndex(
-                      (existingSpark) => existingSpark.id === spark.id
+                      existingSpark => existingSpark.id === spark.id
                   )
                 : -1;
             if (existingSparkIndex !== -1) {
@@ -184,10 +184,10 @@ export class SparkChartAssist implements IChartAssist {
     }
 
     private configureEventSubscriptions(eventBus: EventBus<IChartEvent>): void {
-        eventBus.getStream(INTERACTION_DATA_POINTS_EVENT).subscribe((event) => {
+        eventBus.getStream(INTERACTION_DATA_POINTS_EVENT).subscribe(event => {
             if (event.data.interactionType === InteractionType.MouseMove) {
                 const dataPoints = <IDataPointsPayload>event.data.dataPoints;
-                Object.keys(dataPoints).forEach((seriesId) => {
+                Object.keys(dataPoints).forEach(seriesId => {
                     this.highlightedDataPoints[seriesId] = Object.assign(
                         {},
                         dataPoints[seriesId]
@@ -195,7 +195,7 @@ export class SparkChartAssist implements IChartAssist {
                 });
             }
         });
-        eventBus.getStream(MOUSE_ACTIVE_EVENT).subscribe((event) => {
+        eventBus.getStream(MOUSE_ACTIVE_EVENT).subscribe(event => {
             this.isLegendActive = event.data;
         });
     }

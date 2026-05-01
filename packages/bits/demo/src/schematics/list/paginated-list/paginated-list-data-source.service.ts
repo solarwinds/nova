@@ -115,9 +115,9 @@ export class PaginatedListDataSource<T>
 
                 // transform backend API response (IServersApiResponse)
                 // to our frontend items collection (IServersCollection)
-                map((response) => ({
+                map(response => ({
                     items:
-                        response.items?.map((item) => ({
+                        response.items?.map(item => ({
                             name: item.name,
                             location: item.location,
                             status: item.status,
@@ -126,7 +126,7 @@ export class PaginatedListDataSource<T>
                 })),
 
                 // error handle in case of any error
-                catchError((e) => {
+                catchError(e => {
                     this.logger.error(e);
                     return of({
                         items: [],

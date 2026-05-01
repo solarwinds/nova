@@ -42,11 +42,9 @@ export class RadialSeriesAtom extends SeriesAtom {
         const arcParams: number[][] | undefined = match[0]
             .slice(1)
             .split("A")
-            .map((array) => array.split(","))
-            .map((params) => params.map((param) => parseFloat(param)));
-        arcParams?.forEach((array) =>
-            array.forEach((param) => result.push(param))
-        );
+            .map(array => array.split(","))
+            .map(params => params.map(param => parseFloat(param)));
+        arcParams?.forEach(array => array.forEach(param => result.push(param)));
         return result;
     }
 

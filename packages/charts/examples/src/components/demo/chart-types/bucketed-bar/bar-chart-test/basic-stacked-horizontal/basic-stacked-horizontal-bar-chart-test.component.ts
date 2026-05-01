@@ -56,7 +56,7 @@ export class BasicStackedHorizontalBarChartTestComponent implements OnInit {
 
         const scales = barScales(config);
 
-        const seriesSet = getData().map((d) => ({
+        const seriesSet = getData().map(d => ({
             ...d,
             accessors,
             renderer,

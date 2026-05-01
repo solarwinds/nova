@@ -75,7 +75,7 @@ describe("WidgetHeaderComponent", () => {
     });
 
     describe("removable configuration >", () => {
-        [true, false].forEach((removable) => {
+        [true, false].forEach(removable => {
             it(`is removable button shown ${removable}`, () => {
                 component.removable = removable;
                 fixture.detectChanges();
@@ -95,7 +95,7 @@ describe("WidgetHeaderComponent", () => {
     });
 
     describe("editable configuration > ", () => {
-        [true, false].forEach((editable) => {
+        [true, false].forEach(editable => {
             it(`is edit button shown ${editable}`, () => {
                 component.editable = editable;
                 fixture.detectChanges();

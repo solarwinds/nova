@@ -4,8 +4,7 @@
     class="header"
     (close)="onCancel()"
     [disableCloseButton]="busy"
-    [class.shadow]="scrolled"
-></nui-configurator-heading>
+    [class.shadow]="scrolled"></nui-configurator-heading>
 <nui-dashwiz
     [hideHeader]="true"
     [canProceed]="!!widgetTemplate"
@@ -15,8 +14,7 @@
     [navigationControl]="navigationControl"
     (finish)="onFinish()"
     (cancel)="onCancel()"
-    (stepNavigated)="onStepNavigated($event)"
->
+    (stepNavigated)="onStepNavigated($event)">
     <nui-dashwiz-step [stepTemplate]="step1" nextText="Customize" i18n-nextText>
     </nui-dashwiz-step>
     <nui-dashwiz-step [stepTemplate]="step2"></nui-dashwiz-step>
@@ -29,12 +27,10 @@
             [componentType]="cloneSelectionComponentType"
             [outputs]="['widgetSelected']"
             (output)="onSelect($event.payload)"
-            #componentPortal="nuiComponentPortal"
-        >
+            #componentPortal="nuiComponentPortal">
             <ng-template
                 [cdkPortalOutlet]="componentPortal.portal"
-                (attached)="componentPortal.attached($event)"
-            ></ng-template>
+                (attached)="componentPortal.attached($event)"></ng-template>
         </ng-container>
     </div>
 </ng-template>
@@ -43,7 +39,6 @@
     <div [formGroup]="form">
         <nui-pizzagna
             #formPizzagnaComponent
-            [(pizzagna)]="formPizzagna"
-        ></nui-pizzagna>
+            [(pizzagna)]="formPizzagna"></nui-pizzagna>
     </div>
 </ng-template>

@@ -3,14 +3,14 @@
     "compilerOptions": {
         "baseUrl": ".",
         "esModuleInterop": true,
-        "useDefineForClassFields": false,
         "forceConsistentCasingInFileNames": true,
         "importHelpers": true,
         "lib": ["ES2019", "DOM"],
         "paths": {
             "@nova-ui/bits": ["./src/public_api.ts"]
         },
-        "target": "ES2022"
+        "target": "ES2022",
+        "useDefineForClassFields": false
     },
     "exclude": ["node_modules", "atoms.d.ts"],
     "extends": "../../tsconfig.main.json"

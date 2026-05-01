@@ -1,7 +1,6 @@
 <nui-example-wrapper
     filenamePrefix="runtime-i18n-example"
-    exampleTitle="Runtime i18n"
->
+    exampleTitle="Runtime i18n">
     <div class="m-5" style="border: 1px lightgrey dashed; padding: 30px">
         <div class="row">
             <div class="col-2">
@@ -24,8 +23,7 @@
                     btn
                     nui-button
                     type="button"
-                    (click)="setDefaultLocale()"
-                >
+                    (click)="setDefaultLocale()">
                     English
                 </button>
             </div>
@@ -48,34 +46,28 @@
                     caption="First Name"
                     i18n-caption
                     hint="Please enter your first name"
-                    i18n-hint
-                >
+                    i18n-hint>
                     <nui-textbox
                         [placeholder]="firstNamePlaceholder"
-                        i18n-placeholder
-                    ></nui-textbox>
+                        i18n-placeholder></nui-textbox>
                 </nui-form-field>
                 <nui-form-field
                     caption="Second Name"
                     i18n-caption
                     hint="Please enter your second name"
-                    i18n-hint
-                >
+                    i18n-hint>
                     <nui-textbox
                         [placeholder]="lastNamePlaceholder"
-                        i18n-placeholder
-                    ></nui-textbox>
+                        i18n-placeholder></nui-textbox>
                 </nui-form-field>
                 <nui-form-field
                     caption="Email address"
                     i18n-caption
                     hint="Please enter a valid e-mail address"
-                    i18n-hint
-                >
+                    i18n-hint>
                     <nui-textbox
                         [placeholder]="email"
-                        i18n-placeholder
-                    ></nui-textbox>
+                        i18n-placeholder></nui-textbox>
                 </nui-form-field>
                 <button btn nui-button type="button" i18n>Submit</button>
             </form>

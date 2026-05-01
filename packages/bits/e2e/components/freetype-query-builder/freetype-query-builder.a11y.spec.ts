@@ -31,7 +31,9 @@ test.describe("a11y: freetype-query-builder", () => {
         );
     });
 
-    test("should verify a11y of freetype-query-builder", async ({ runA11yScan }) => {
+    test("should verify a11y of freetype-query-builder", async ({
+        runA11yScan,
+    }) => {
         await runA11yScan(FreetypeQueryBuilderAtom, rulesToDisable);
     });
 });

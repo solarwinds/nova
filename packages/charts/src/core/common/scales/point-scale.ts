@@ -29,7 +29,7 @@ export class PointScale extends Scale<string> {
     constructor(id?: string) {
         super(id);
 
-        this.formatters.tick = (value) => value;
+        this.formatters.tick = value => value;
     }
 
     protected createD3Scale(): any {

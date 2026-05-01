@@ -120,7 +120,10 @@ export interface IPortalEnvironment {
     injector?: Injector;
 }
 
-export type IPizzagnaLayer = Record<string, DeepPartial<IComponentConfiguration>>;
+export type IPizzagnaLayer = Record<
+    string,
+    DeepPartial<IComponentConfiguration>
+>;
 
 export type IPizzagna = Record<string, IPizzagnaLayer>;
 
@@ -189,5 +192,5 @@ export interface IBackgroundColorComparator {
     label?: string;
 }
 export type IComparatorsDict = Partial<
-        Record<ComparatorTypes | string, IBackgroundColorComparator>
-    >;
+    Record<ComparatorTypes | string, IBackgroundColorComparator>
+>;

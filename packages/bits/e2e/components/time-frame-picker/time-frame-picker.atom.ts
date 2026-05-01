@@ -36,17 +36,13 @@ export class TimeFramePickerAtom extends Atom {
 
     public getStartDatetimePicker(): DateTimepickerAtom {
         return new DateTimepickerAtom(
-            this.getLocator().locator(
-                ".nui-time-frame-picker__date-time_start"
-            )
+            this.getLocator().locator(".nui-time-frame-picker__date-time_start")
         );
     }
 
     public getEndDatetimePicker(): DateTimepickerAtom {
         return new DateTimepickerAtom(
-            this.getLocator().locator(
-                ".nui-time-frame-picker__date-time_end"
-            )
+            this.getLocator().locator(".nui-time-frame-picker__date-time_end")
         );
     }
 }

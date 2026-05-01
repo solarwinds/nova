@@ -45,7 +45,7 @@ describe("pipes >", () => {
             },
         ];
 
-        parametererizedTest.forEach((paramter) => {
+        parametererizedTest.forEach(paramter => {
             it(paramter.description, () => {
                 const subject = new HighlightPipe();
                 expect(subject.transform(paramter.text, paramter.search)).toBe(

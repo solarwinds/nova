@@ -68,7 +68,12 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [ReactiveFormsModule, FormsModule, NuiOverlayModule, IconComponent],
+                imports: [
+                    ReactiveFormsModule,
+                    FormsModule,
+                    NuiOverlayModule,
+                    IconComponent,
+                ],
                 declarations: [
                     CheckboxComponent,
                     TimePickerComponent,
@@ -124,7 +129,7 @@ describe("components >", () => {
             ).nativeElement.innerText;
             const index = _findIndex(
                 componentInstance.times,
-                (time) =>
+                time =>
                     moment(time)
                         .format(componentInstance.timeFormat)
                         .toUpperCase() === initialState
@@ -165,7 +170,7 @@ describe("components >", () => {
             const timeStep = 60;
             const items = componentInstance.generateTimeItems(timeStep);
             let prevItem: Moment;
-            _each(items, (item) => {
+            _each(items, item => {
                 if (!prevItem) {
                     // this checks that first element in array of times is 00:00
                     prevItem = item;
@@ -186,7 +191,7 @@ describe("components >", () => {
             const timeStep = 30;
             const items = componentInstance.generateTimeItems(timeStep);
             let prevItem: Moment;
-            _each(items, (item) => {
+            _each(items, item => {
                 if (!prevItem) {
                     // this checks that first element in array of times is 00:00
                     prevItem = item;

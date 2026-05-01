@@ -7,8 +7,7 @@
                 [show]="true"
                 [stacked]="true"
                 [percent]="progress | number : '1.0-0'"
-                [showNumber]="true"
-            >
+                [showNumber]="true">
             </nui-progress>
             <p>Step {{ selectedIndex + 1 }} out of {{ steps }} steps</p>
             <p>
@@ -20,8 +19,7 @@
             <p>
                 Symptoms:
                 <ng-container
-                    [ngSwitch]="form.get(['personDetails', 'symptoms'])?.value"
-                >
+                    [ngSwitch]="form.get(['personDetails', 'symptoms'])?.value">
                     <ng-container *ngSwitchCase="true">
                         {{
                             form.get(["diseaseDetails", "date"]).valid
@@ -50,22 +48,19 @@
             i18n-label
             label="Person Details"
             formName="personDetails"
-            [stepControl]="form.get(['personDetails'])"
-        >
+            [stepControl]="form.get(['personDetails'])">
             <!-- content of the current step -->
             <nui-form-field
                 [control]="form.get(['personDetails', 'name'])"
                 i18n-caption
-                caption="Name"
-            >
+                caption="Name">
                 <nui-textbox formControlName="name"></nui-textbox>
                 <nui-validation-message
                     for="required"
                     *ngIf="
                         form.get(['personDetails', 'name'])?.errors?.required
                     "
-                    i18n
-                >
+                    i18n>
                     This is required
                 </nui-validation-message>
                 <nui-validation-message
@@ -74,8 +69,7 @@
                         form.get(['personDetails', 'name'])?.errors
                             ?.['minlength']
                     "
-                    i18n
-                >
+                    i18n>
                     Minimum length is 3
                 </nui-validation-message>
             </nui-form-field>
@@ -83,15 +77,13 @@
             <nui-form-field
                 [control]="form.get(['personDetails', 'symptoms'])"
                 i18n-caption
-                caption="Do you have Covid ?"
-            >
+                caption="Do you have Covid ?">
                 <nui-checkbox
                     formControlName="symptoms"
                     [indeterminate]="
                         form.get(['personDetails', 'symptoms'])?.pristine
                     "
-                    i18n
-                >
+                    i18n>
                     Diseases symptoms
                 </nui-checkbox>
                 <nui-validation-message
@@ -100,8 +92,7 @@
                         form.get(['personDetails', 'symptoms'])?.errors
                             ?.required
                     "
-                    i18n
-                >
+                    i18n>
                     This is required
                 </nui-validation-message>
             </nui-form-field>
@@ -118,24 +109,21 @@
             i18n-label
             label="Disease Details"
             formName="diseaseDetails"
-            [stepControl]="form.get(['diseaseDetails'])"
-        >
+            [stepControl]="form.get(['diseaseDetails'])">
             <ng-template nuiWizardStepLabel i18n
                 >Disease Details for your Symptoms</ng-template
             >
             <nui-form-field
                 [control]="form.get(['diseaseDetails', 'date'])"
                 i18n-caption
-                caption="When did you noticed your first symptoms ?"
-            >
+                caption="When did you noticed your first symptoms ?">
                 <nui-date-picker formControlName="date" i18n></nui-date-picker>
                 <nui-validation-message
                     for="required"
                     *ngIf="
                         form.get(['diseaseDetails', 'date'])?.errors?.required
                     "
-                    i18n
-                >
+                    i18n>
                     Date when disease manifested is required
                 </nui-validation-message>
             </nui-form-field>
@@ -150,22 +138,19 @@
             i18n-label
             label="Contact Details"
             formName="contactDetails"
-            [stepControl]="form.get(['contactDetails'])"
-        >
+            [stepControl]="form.get(['contactDetails'])">
             <!-- content of the current step -->
             <nui-form-field
                 [control]="form.get(['contactDetails', 'email'])"
                 i18n-caption
-                caption="Email"
-            >
+                caption="Email">
                 <nui-textbox type="email" formControlName="email"></nui-textbox>
                 <nui-validation-message
                     for="required"
                     *ngIf="
                         form.get(['contactDetails', 'email'])?.errors?.required
                     "
-                    i18n
-                >
+                    i18n>
                     This is required
                 </nui-validation-message>
 
@@ -175,16 +160,14 @@
                         form.get(['contactDetails', 'email'])?.errors
                             ?.['email']
                     "
-                    i18n
-                >
+                    i18n>
                     Invalid email
                 </nui-validation-message>
             </nui-form-field>
             <nui-form-field
                 [control]="form.get(['contactDetails', 'phone'])"
                 i18n-caption
-                caption="Phone"
-            >
+                caption="Phone">
                 <nui-textbox type="email" formControlName="phone"></nui-textbox>
             </nui-form-field>
 
@@ -211,8 +194,7 @@
                 type="button"
                 nuiWizardPrevious
                 nui-button
-                icon="caret-left"
-            >
+                icon="caret-left">
                 Back
             </button>
         </ng-template>
@@ -225,8 +207,7 @@
                 displayStyle="primary"
                 icon="caret-right"
                 iconRight="true"
-                (click)="validate(wizard.selected)"
-            >
+                (click)="validate(wizard.selected)">
                 Next
             </button>
         </ng-template>

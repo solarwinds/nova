@@ -3,16 +3,14 @@
         [disabled]="isCollapsed"
         type="button"
         nui-button
-        (click)="collapse()"
-    >
+        (click)="collapse()">
         Collapse
     </button>
     <button
         [disabled]="!isCollapsed"
         type="button"
         nui-button
-        (click)="expand()"
-    >
+        (click)="expand()">
         Expand
     </button>
     <nui-panel
@@ -21,8 +19,7 @@
         orientation="left"
         [heading]="heading"
         [isCollapsed]="isCollapsed"
-        (collapsed)="onCollapseChange($event)"
-    >
+        (collapsed)="onCollapseChange($event)">
         <div nuiPanelEmbeddedBody>
             <div>
                 <p i18n>

@@ -247,9 +247,9 @@ export class ChartWaterfallTestComponent implements AfterViewInit, OnInit {
         this.gridChart
             .getEventBus()
             .getStream(SET_DOMAIN_EVENT)
-            .subscribe((event) => {
+            .subscribe(event => {
                 const payload = <ISetDomainEventPayload>event.data;
-                this.listItems.forEach((item) => {
+                this.listItems.forEach(item => {
                     this.scales.x.fixDomain(payload[this.scales.x.id]);
                     item.chart.updateDimensions();
                 });
@@ -297,12 +297,12 @@ export class ChartWaterfallTestComponent implements AfterViewInit, OnInit {
 
         let commonWidth = 0;
 
-        this.listItems.forEach((item) => {
+        this.listItems.forEach(item => {
             const seriesSet = [
                 {
                     id: "series-1",
                     name: "Series 1",
-                    data: item.data.map((d) => ({
+                    data: item.data.map(d => ({
                         value: d.end - d.start,
                         category: "cat1",
                         type: d.type,

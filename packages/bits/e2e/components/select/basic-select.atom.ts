@@ -35,13 +35,18 @@ export class BasicSelectAtom extends Atom {
     /**
      * Toggle select and select a new item from the options.
      */
-    public async select(title: string|RegExp, first: boolean = false): Promise<void> {
+    public async select(
+        title: string | RegExp,
+        first: boolean = false
+    ): Promise<void> {
         await this.toggleMenu();
         const matcher =
             typeof title === "string"
                 ? new RegExp(`^${this.escapeRegExp(title)}$`)
                 : title;
-        await this.getMenu().getMenuItemByContainingText(matcher).clickItem(first);
+        await this.getMenu()
+            .getMenuItemByContainingText(matcher)
+            .clickItem(first);
     }
 
     public getSelectedItem(): Locator {

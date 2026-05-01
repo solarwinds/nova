@@ -104,7 +104,7 @@ export class FormFieldComponent
                 this.control.statusChanges,
                 extractTouchedChanges(this.control)
             ).subscribe(() => {
-                this.validationMessages.forEach((message) => {
+                this.validationMessages.forEach(message => {
                     if (_isNull(this.control.errors)) {
                         message.show = false;
                     } else {

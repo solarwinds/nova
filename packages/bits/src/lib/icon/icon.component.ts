@@ -44,7 +44,7 @@ import { computeA11yForGraphic } from "../../functions/a11y-graphics.util";
     templateUrl: "./icon.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        class: "nui-icon-wrapper",
+        "class": "nui-icon-wrapper",
         "[attr.role]": "computedRole()",
         "[attr.aria-hidden]": "computedAriaHidden()",
         "[attr.aria-label]": "computedAriaLabel()",
@@ -70,13 +70,18 @@ export class IconComponent {
     public status = input<IconStatus>();
     public childStatus = input<IconStatus>();
     public icon = input<string>();
-    public counter = input<string | number | undefined, string | number | undefined>(undefined, {
-        transform: (value) => {
+    public counter = input<
+        string | number | undefined,
+        string | number | undefined
+    >(undefined, {
+        transform: value => {
             if (value == null) {
                 return undefined;
             }
             const counterAttrValue = +value;
-            return Number.isInteger(counterAttrValue) ? counterAttrValue.toString() : undefined;
+            return Number.isInteger(counterAttrValue)
+                ? counterAttrValue.toString()
+                : undefined;
         },
     });
 
@@ -123,7 +128,9 @@ export class IconComponent {
             }
 
             const iconSize = this.iconSize();
-            const sizeClass = iconSize ? IconComponent.SIZE_MAP[iconSize] : undefined;
+            const sizeClass = iconSize
+                ? IconComponent.SIZE_MAP[iconSize]
+                : undefined;
             if (sizeClass) {
                 classes.push(sizeClass);
             }
@@ -149,11 +156,15 @@ export class IconComponent {
         let svg = `<div class='nui-icon-item'>${iconData?.code ?? ""}</div>`;
 
         if (status) {
-            svg += `<div class="nui-icon-item nui-icon-item__child">${this.getIconByStatus(status)}</div>`;
+            svg += `<div class="nui-icon-item nui-icon-item__child">${this.getIconByStatus(
+                status
+            )}</div>`;
         }
 
         if (childStatus) {
-            svg += `<div class="nui-icon-item nui-icon-item__grand-child">${this.getIconByStatus(childStatus)}</div>`;
+            svg += `<div class="nui-icon-item nui-icon-item__grand-child">${this.getIconByStatus(
+                childStatus
+            )}</div>`;
         }
 
         return this.sanitizer.bypassSecurityTrustHtml(svg);

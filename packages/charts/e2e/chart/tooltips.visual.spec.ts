@@ -43,9 +43,15 @@ test.describe(`Visual Tests: Charts - ${name}`, () => {
             Animations.TRANSITIONS_AND_ANIMATIONS
         );
 
-        barChart = new ChartAtom(page.locator("#visual-test-bar-chart-tooltips"));
-        donutChart = new ChartAtom(page.locator("#visual-test-donut-chart-tooltips"));
-        lineChart = new ChartAtom(page.locator("#visual-test-line-chart-tooltips"));
+        barChart = new ChartAtom(
+            page.locator("#visual-test-bar-chart-tooltips")
+        );
+        donutChart = new ChartAtom(
+            page.locator("#visual-test-donut-chart-tooltips")
+        );
+        lineChart = new ChartAtom(
+            page.locator("#visual-test-line-chart-tooltips")
+        );
         lineChartInScrollContainer = new ChartAtom(
             page.locator("#visual-test-line-chart-tooltips-with-scroll")
         );

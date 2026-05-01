@@ -83,7 +83,7 @@ const TREE_DATA: FoodNode[] = [
     standalone: false,
 })
 export class TreeStylingExampleComponent {
-    treeControl = new NestedTreeControl<FoodNode>((node) => node.children);
+    treeControl = new NestedTreeControl<FoodNode>(node => node.children);
     dataSource = new ArrayDataSource(TREE_DATA);
     textStyles: typeof TextStyle = TextStyle;
 

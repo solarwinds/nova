@@ -49,14 +49,12 @@ export class RendererColorsCustomAccessorExampleComponent implements OnInit {
         // Custom color accessor
         accessors.series.color = () => CHART_PALETTE_CS2[6];
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
-            (d) => ({
-                ...d,
-                scales,
-                renderer,
-                accessors,
-            })
-        );
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
+            ...d,
+            scales,
+            renderer,
+            accessors,
+        }));
 
         this.chart.update(seriesSet);
     }

@@ -48,7 +48,9 @@ test.describe("a11y: date time picker", () => {
     });
 
     // Enable once NUI-6031 is fixed
-    test.skip("should verify a11y of date time picker", async ({ runA11yScan }) => {
+    test.skip("should verify a11y of date time picker", async ({
+        runA11yScan,
+    }) => {
         await runA11yScan(DateTimepickerAtom);
     });
 

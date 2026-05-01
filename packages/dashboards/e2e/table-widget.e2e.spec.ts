@@ -48,7 +48,10 @@ test.describe(`Dashboards - ${name}`, () => {
     ): Promise<number> => {
         await select.click();
         // Options render inside the configurator's overlay container, not body's
-        await page.locator(".cdk-overlay-pane").first().waitFor({ state: "visible" });
+        await page
+            .locator(".cdk-overlay-pane")
+            .first()
+            .waitFor({ state: "visible" });
         const count = await page
             .locator(".cdk-overlay-pane nui-select-v2-option")
             .count();
@@ -66,9 +69,7 @@ test.describe(`Dashboards - ${name}`, () => {
     };
 
     const submitConfigurator = async (page: any): Promise<void> => {
-        await page
-            .locator(".nui-dashwiz-buttons__finish-button")
-            .click();
+        await page.locator(".nui-dashwiz-buttons__finish-button").click();
         await page
             .locator(`.${ConfiguratorAtom.CSS_CLASS}`)
             .waitFor({ state: "hidden" });
@@ -151,8 +152,14 @@ test.describe(`Dashboards - ${name}`, () => {
         );
         // Click the select to open dropdown, then pick the first option
         await dataSourceSelect?.click();
-        await page.locator(".cdk-overlay-pane").first().waitFor({ state: "visible" });
-        await page.locator(".cdk-overlay-pane nui-select-v2-option").first().click();
+        await page
+            .locator(".cdk-overlay-pane")
+            .first()
+            .waitFor({ state: "visible" });
+        await page
+            .locator(".cdk-overlay-pane nui-select-v2-option")
+            .first()
+            .click();
 
         // Count sort-by options after datasource changed but before reset
         await sortingAccordion?.toggle();
@@ -161,10 +168,7 @@ test.describe(`Dashboards - ${name}`, () => {
 
         // Click reset columns and confirm the dialog
         await page.locator("#table-widget-reset-indicator-btn").click();
-        await page
-            .locator(".nui-dialog")
-            .locator(".btn-primary")
-            .click();
+        await page.locator(".nui-dialog").locator(".btn-primary").click();
 
         // Count sort-by options after reset
         count = await countSelectOptions(sortBy, page);

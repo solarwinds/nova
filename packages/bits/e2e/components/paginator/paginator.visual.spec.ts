@@ -40,7 +40,7 @@ test.describe(`Visual tests: ${name}`, () => {
     let dotsBasicButton: ButtonAtom;
     let dotsCustomStylingButton: ButtonAtom;
 
-    test.beforeEach(async ({page}) => {
+    test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("paginator/paginator-visual-test", page);
         await Helpers.disableCSSAnimations(Animations.ALL);
         basicPaginator = Atom.find<PaginatorAtom>(

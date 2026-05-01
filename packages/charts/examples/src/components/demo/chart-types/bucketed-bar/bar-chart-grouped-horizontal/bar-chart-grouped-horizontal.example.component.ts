@@ -66,7 +66,7 @@ export class BarChartGroupedHorizontalExampleComponent implements OnInit {
         const scales = barScales(this.barConfig);
 
         this.chartAssist.update(
-            getData().map((s) => ({
+            getData().map(s => ({
                 ...s,
                 accessors,
                 renderer,

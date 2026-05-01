@@ -10,10 +10,10 @@ The Nova UI coding Style Guide can be found [here](./docs/STYLE_GUIDE.md#style-g
 
 Nova UI consists of three packages within a single monorepo:
 
--   [Bits](./packages/bits/README.md#bits-overview) - A set of atomic components to be used as building blocks for applications and more complex
-    components. Exception - **convenience components** - prototypes of composite components, that are meant to accommodate a wide breadth of use cases.
--   [Charts](./packages/charts/README.md#charts-overview) - A visualization library built on top of [d3](https://d3js.org/).
--   [Dashboards](./packages/dashboards/README.md#dashboards-overview) - A framework designed to provide developers a solution for presenting data coming from various sources within a single view.
+- [Bits](./packages/bits/README.md#bits-overview) - A set of atomic components to be used as building blocks for applications and more complex
+  components. Exception - **convenience components** - prototypes of composite components, that are meant to accommodate a wide breadth of use cases.
+- [Charts](./packages/charts/README.md#charts-overview) - A visualization library built on top of [d3](https://d3js.org/).
+- [Dashboards](./packages/dashboards/README.md#dashboards-overview) - A framework designed to provide developers a solution for presenting data coming from various sources within a single view.
 
 ## Contributions
 
@@ -49,9 +49,11 @@ Find tips for solving some common development environment problems [here](./docs
 Nova supports modern E2E testing using [Playwright](https://playwright.dev/). Playwright is recommended for new E2E tests, while Protractor is retained for legacy support.
 
 ### 📖 Playwright E2E Documentation
+
 - **Accessibility (a11y) Testing:** See [`docs/E2E/A11Y.md`](./docs/E2E/A11Y.md) for setup, running, and writing accessibility tests with Playwright and axe-core.
 - **Project Structure:** See [`docs/E2E/STRUCTURE.md`](./docs/E2E/STRUCTURE.md) for E2E folder and config organization, including Playwright config location.
 
 #### More E2E Docs
+
 - Additional E2E topics: [docs/E2E/](./docs/E2E/)
 - Legacy Protractor info: see below and in [HOW_TO.md](./docs/HOW_TO.md#e2e-testing)

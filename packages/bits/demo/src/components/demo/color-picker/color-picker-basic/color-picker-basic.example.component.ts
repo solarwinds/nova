@@ -19,11 +19,7 @@
 //  THE SOFTWARE.
 
 import { Component, OnInit } from "@angular/core";
-import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-} from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 
 const CHART_PALETTE_CS1: string[] = [
     "var(--nui-color-bg-secondary)",
@@ -48,10 +44,8 @@ const CHART_PALETTE_CS1: string[] = [
 export class ColorPickerBasicExampleComponent implements OnInit {
     public myForm: FormGroup<{ backgroundColor: FormControl<string | null> }>;
     public colors: string[] = CHART_PALETTE_CS1;
-    
-    constructor(
-        private formBuilder: FormBuilder
-    ) {}
+
+    constructor(private formBuilder: FormBuilder) {}
 
     public ngOnInit(): void {
         this.myForm = this.formBuilder.group({

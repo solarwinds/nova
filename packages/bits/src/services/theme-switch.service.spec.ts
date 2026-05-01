@@ -20,7 +20,7 @@
 
 import { Component, NgZone } from "@angular/core";
 import { fakeAsync, TestBed, tick } from "@angular/core/testing";
-import {Router, RouterModule, Routes} from "@angular/router";
+import { Router, RouterModule, Routes } from "@angular/router";
 
 import { ThemeSwitchService } from "./theme-switch.service";
 

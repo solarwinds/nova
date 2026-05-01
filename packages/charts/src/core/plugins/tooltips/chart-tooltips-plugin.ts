@@ -154,7 +154,7 @@ export class ChartTooltipsPlugin extends ChartPlugin {
             .getStream(SERIES_STATE_CHANGE_EVENT)
             .pipe(takeUntil(this.destroy$))
             .subscribe((event: IChartEvent<IRenderStateData[]>) => {
-                event.data.forEach((series) => {
+                event.data.forEach(series => {
                     this.seriesVisibilityMap[series.seriesId] =
                         series.state !== RenderState.hidden;
                 });
@@ -206,7 +206,7 @@ export class ChartTooltipsPlugin extends ChartPlugin {
             y: bbox.top - offsetParentBbox.top,
         };
 
-        each(Object.keys(this.dataPoints), (seriesId) => {
+        each(Object.keys(this.dataPoints), seriesId => {
             const dataPoint = this.dataPoints[seriesId];
 
             const chartSeries = this.chart

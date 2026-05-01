@@ -5,8 +5,7 @@
         class="m-2"
         type="button"
         (click)="increaseHeight()"
-        i18n
-    >
+        i18n>
         Increase height of container
     </button>
     <button
@@ -14,8 +13,7 @@
         class="m-2"
         type="button"
         (click)="decreaseHeight()"
-        i18n
-    >
+        i18n>
         Decrease height of container
     </button>
 </ng-template>
@@ -40,27 +38,22 @@
     [enableScroll]="true"
     [bodyContainerHeight]="wizardBodyHeight"
     finishText="Finish"
-    i18n-finishText
->
+    i18n-finishText>
     <nui-wizard-step
         id="nui-demo-wizard-height-invariable-step"
         i18n-title
         title="First"
-        [stepTemplate]="step1"
-    ></nui-wizard-step>
+        [stepTemplate]="step1"></nui-wizard-step>
     <nui-wizard-step
         i18n-title
         title="Second"
-        [stepTemplate]="step2"
-    ></nui-wizard-step>
+        [stepTemplate]="step2"></nui-wizard-step>
     <nui-wizard-step
         i18n-title
         title="Third"
-        [stepTemplate]="step3"
-    ></nui-wizard-step>
+        [stepTemplate]="step3"></nui-wizard-step>
     <nui-wizard-step
         i18n-title
         title="Final"
-        [stepTemplate]="step4"
-    ></nui-wizard-step>
+        [stepTemplate]="step4"></nui-wizard-step>
 </nui-wizard>

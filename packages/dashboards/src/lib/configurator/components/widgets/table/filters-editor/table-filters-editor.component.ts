@@ -87,7 +87,7 @@ export class TableFiltersEditorComponent
 
         this.form.valueChanges
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((val) => {
+            .subscribe(val => {
                 this.setAccordionSubtitleValues(val);
             });
         this.formReady.emit(this.form);
@@ -103,7 +103,7 @@ export class TableFiltersEditorComponent
 
         if (changes.sorterConfiguration) {
             const sortedColumn = this.sortableColumns.find(
-                (column) => column.id === this.sorterConfiguration?.sortBy
+                column => column.id === this.sorterConfiguration?.sortBy
             );
             sortByFormControl?.setValue(sortedColumn?.id, { emitEvent: false });
             descendantSortingFormControl?.setValue(
@@ -117,7 +117,7 @@ export class TableFiltersEditorComponent
                     !!column.formatter && (column.sortable ?? true)
             );
             const sortedColumn = this.sortableColumns.find(
-                (column) => column.id === this.sorterConfiguration?.sortBy
+                column => column.id === this.sorterConfiguration?.sortBy
             );
 
             sortByFormControl?.setValue(sortedColumn?.id, { emitEvent: false });
@@ -141,7 +141,7 @@ export class TableFiltersEditorComponent
     private setAccordionSubtitleValues(val: ITableWidgetConfig) {
         if (val.sorterConfiguration) {
             const sortedColumn = this.columns?.find(
-                (col) => col.id === val.sorterConfiguration.sortBy
+                col => col.id === val.sorterConfiguration.sortBy
             );
             if (!sortedColumn) {
                 this.selectedSortByValue = $localize`No sorting`;

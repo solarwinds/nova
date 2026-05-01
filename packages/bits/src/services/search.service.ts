@@ -110,7 +110,7 @@ export class SearchService implements ISearchService {
         searchValue: any,
         dateFormat?: string
     ): T[] {
-        return items.filter((item) => {
+        return items.filter(item => {
             if (isString(item) || isNumber(item)) {
                 return this.filterPredicate(item, searchValue);
             }

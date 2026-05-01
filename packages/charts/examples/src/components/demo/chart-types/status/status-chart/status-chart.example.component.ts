@@ -118,7 +118,7 @@ export class StatusChartExampleComponent implements OnInit {
         bandScale.fixDomain(StatusAccessors.STATUS_DOMAIN);
 
         // Assemble the series set
-        const seriesSet = getData().map((d) => ({
+        const seriesSet = getData().map(d => ({
             ...d,
             accessors,
             renderer,
@@ -237,7 +237,7 @@ function getData() {
                     start: 980,
                     end: 1000,
                 },
-            ].map((d) => ({
+            ].map(d => ({
                 value: d.end - d.start,
                 status: d.status,
                 start: getDate(d.start),

@@ -33,8 +33,7 @@
     id="nui-visual-test-open-overlay-btn"
     nui-button
     type="button"
-    (click)="openOverlay(mainOverlayContent, '60%', '400px')"
->
+    (click)="openOverlay(mainOverlayContent, '60%', '400px')">
     Open overlay
 </button>
 
@@ -49,16 +48,14 @@
             id="nui-visual-test-open-small-dialog-btn"
             nui-button
             type="button"
-            (click)="openInnerDialog(smallDialogContent)"
-        >
+            (click)="openInnerDialog(smallDialogContent)">
             Open small Dialog
         </button>
         <button
             id="nui-visual-test-close-overlay-from-small-btn"
             nui-button
             type="button"
-            (click)="closeOverlay()"
-        >
+            (click)="closeOverlay()">
             Close overlay
         </button>
     </div>
@@ -71,11 +68,9 @@
                 *ngTemplateOutlet="
                     tooltip;
                     context: { text: 'Main overlay tooltip' }
-                "
-            ></ng-container>
+                "></ng-container>
             <ng-container
-                *ngTemplateOutlet="timeframeBarTemplate"
-            ></ng-container>
+                *ngTemplateOutlet="timeframeBarTemplate"></ng-container>
             <ng-container *ngTemplateOutlet="menu"></ng-container>
             <ng-container *ngTemplateOutlet="popup"></ng-container>
             <ng-container *ngTemplateOutlet="select"></ng-container>
@@ -87,8 +82,7 @@
                 *ngTemplateOutlet="
                     busyTemplate;
                     context: { text: 'Inner overlay tooltip' }
-                "
-            ></ng-container>
+                "></ng-container>
         </div>
     </div>
     <div class="overlay-footer">
@@ -100,8 +94,7 @@
             nui-button
             type="button"
             (click)="toggleAppendToBody()"
-            i18n
-        >
+            i18n>
             appendToBody={{ appendToBody }}
         </button>
         <button
@@ -109,16 +102,14 @@
             nui-button
             type="button"
             (click)="toggleBusy()"
-            i18n
-        >
+            i18n>
             busy={{ busy }}
         </button>
         <button
             id="nui-visual-test-inner-dialog-btn"
             nui-button
             type="button"
-            (click)="openInnerDialog(innerDialogContent)"
-        >
+            (click)="openInnerDialog(innerDialogContent)">
             Open Inner Dialog
         </button>
         <button nui-button type="button" (click)="closeOverlay()">
@@ -130,8 +121,7 @@
 <ng-template #smallDialogContent let-close="close" let-dismiss="dismiss">
     <nui-dialog-header
         title="Small Dialog Title"
-        (closed)="close()"
-    ></nui-dialog-header>
+        (closed)="close()"></nui-dialog-header>
     <div class="dialog-body">
         <ng-container *ngTemplateOutlet="loremIpsum"></ng-container>
     </div>
@@ -140,8 +130,7 @@
             id="nui-visual-test-close-small-dialog-btn"
             nui-button
             type="button"
-            (click)="close()"
-        >
+            (click)="close()">
             Close
         </button>
     </nui-dialog-footer>
@@ -150,16 +139,14 @@
 <ng-template #innerDialogContent let-close="close" let-dismiss="dismiss">
     <nui-dialog-header
         title="Inner Dialog Title"
-        (closed)="close()"
-    ></nui-dialog-header>
+        (closed)="close()"></nui-dialog-header>
     <div class="dialog-body">
         <p>This is the content of a dialog.</p>
         <ng-container
             *ngTemplateOutlet="
                 tooltip;
                 context: { text: 'Inner dialog tooltip' }
-            "
-        ></ng-container>
+            "></ng-container>
         <ng-container *ngTemplateOutlet="timeframeBarTemplate"></ng-container>
         <ng-container *ngTemplateOutlet="menu"></ng-container>
         <ng-container *ngTemplateOutlet="popup"></ng-container>
@@ -172,24 +159,21 @@
             *ngTemplateOutlet="
                 busyTemplate;
                 context: { text: 'Inner dialog tooltip' }
-            "
-        ></ng-container>
+            "></ng-container>
     </div>
     <nui-dialog-footer>
         <button
             id="nui-visual-test-open-overlay-from-dialog-btn"
             nui-button
             type="button"
-            (click)="openOverlay(smallOverlayContent, '40%', '200px')"
-        >
+            (click)="openOverlay(smallOverlayContent, '40%', '200px')">
             +Overlay
         </button>
         <button
             id="nui-visual-test-open-small-dialog-from-dialog-btn"
             nui-button
             type="button"
-            (click)="openInnerDialog(smallDialogContent)"
-        >
+            (click)="openInnerDialog(smallDialogContent)">
             +Dialog
         </button>
         <button nui-button type="button" (click)="toggleBusy()" i18n>
@@ -208,8 +192,7 @@
     <nui-menu
         [appendToBody]="appendToBody"
         title="Menu"
-        class="clickable-visual-item"
-    >
+        class="clickable-visual-item">
         <nui-menu-action *ngFor="let item of items">{{ item }}</nui-menu-action>
     </nui-menu>
 </ng-template>
@@ -224,8 +207,7 @@
             [iconRight]="true"
             class="menu-button"
             [isEmpty]="false"
-            i18n
-        >
+            i18n>
             Popup
         </button>
         <div popupAreaContent>
@@ -247,14 +229,12 @@
         [itemsSource]="items"
         [inline]="true"
         [appendToBody]="appendToBody"
-        placeholder="Select v1"
-    ></nui-select>
+        placeholder="Select v1"></nui-select>
 
     <!-- select v2 -->
     <nui-select-v2
         class="clickable-visual-item d-inline-flex"
-        placeholder="Select v2"
-    >
+        placeholder="Select v2">
         <ng-container *ngFor="let item of items">
             <nui-select-v2-option [value]="item" i18n>{{
                 item
@@ -270,13 +250,11 @@
         [inline]="true"
         [appendToBody]="appendToBody"
         i18n-placeholder
-        placeholder="Combobox v1"
-    ></nui-combobox>
+        placeholder="Combobox v1"></nui-combobox>
 
     <nui-combobox-v2
         class="clickable-visual-item d-inline-flex"
-        placeholder="Combobox v2"
-    >
+        placeholder="Combobox v2">
         <ng-container *ngFor="let item of items">
             <nui-select-v2-option [value]="item">
                 <div class="d-flex align-items-center">
@@ -294,8 +272,7 @@
         message="Spinner"
         i18n-message
         helpText="Optional spinner description"
-        i18n-helpText
-    >
+        i18n-helpText>
     </nui-spinner>
 </ng-template>
 
@@ -305,8 +282,7 @@
         <span
             nuiTooltip="{{ text }} {{ longTextTooltip }}"
             tooltipPlacement="bottom"
-            class="nui-text-widget--hoverable"
-        >
+            class="nui-text-widget--hoverable">
             big tooltip
         </span>
         will remain open even after we move the mouse away from it even.
@@ -319,8 +295,7 @@
             class="clickable-visual-item"
             [appendToBody]="appendToBody"
             [model]="dt"
-            displayMode="inline"
-        >
+            displayMode="inline">
         </nui-date-time-picker>
     </div>
 </ng-template>
@@ -344,8 +319,7 @@
         tabindex="1"
         class="clickable-visual-item"
         trigger="focus"
-        [template]="popoverWithBasicUsage"
-    >
+        [template]="popoverWithBasicUsage">
         <span class="nui-text-widget--hoverable">popover</span>
     </nui-popover>
     with Focus Trigger

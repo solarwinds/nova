@@ -32,7 +32,6 @@ import { Subject } from "rxjs/internal/Subject";
 import { ColorPickerComponent } from "./color-picker.component";
 import { ColorService } from "./color.service";
 
-
 @Component({
     selector: "nui-select-v2",
     template: "<ng-content></ng-content>",
@@ -79,7 +78,6 @@ describe("components >", () => {
                 },
                 elRef: new ElementRef(document.createElement("div")),
             } as any;
-
         });
 
         describe("default >", () => {

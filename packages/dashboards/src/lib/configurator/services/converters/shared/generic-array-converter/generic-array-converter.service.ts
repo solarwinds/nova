@@ -62,7 +62,7 @@ export class GenericArrayConverterService extends BaseConverter {
         const updatedPizzagna = this.formParts.reduce((res, v) => {
             const previewSlice = get(preview, v.previewPath) as any[];
             const componentInArray = previewSlice?.find(
-                (c) => c.id === this.previewComponentId
+                c => c.id === this.previewComponentId
             );
             const fromPreview = pick(componentInArray, v.keys);
 
@@ -78,25 +78,23 @@ export class GenericArrayConverterService extends BaseConverter {
     }
 
     public toPreview(form: FormGroup): void {
-        form.valueChanges
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((formData) => {
-                const updatedPreview = this.formParts.reduce((p, v) => {
-                    const outPath = v.previewOutputPath || v.previewPath;
+        form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(formData => {
+            const updatedPreview = this.formParts.reduce((p, v) => {
+                const outPath = v.previewOutputPath || v.previewPath;
 
-                    const preview = get(p, outPath) as any[];
-                    const compIndex = preview.findIndex(
-                        (c) => c.id === this.previewComponentId
-                    );
-                    const fromPreview = preview[compIndex];
+                const preview = get(p, outPath) as any[];
+                const compIndex = preview.findIndex(
+                    c => c.id === this.previewComponentId
+                );
+                const fromPreview = preview[compIndex];
 
-                    const fromForm = pick(formData, v.keys);
-                    const merged = { ...fromPreview, ...fromForm };
+                const fromForm = pick(formData, v.keys);
+                const merged = { ...fromPreview, ...fromForm };
 
-                    return immutableSet(p, `${outPath}[${compIndex}]`, merged);
-                }, this.getPreview());
+                return immutableSet(p, `${outPath}[${compIndex}]`, merged);
+            }, this.getPreview());
 
-                this.updatePreview(updatedPreview);
-            });
+            this.updatePreview(updatedPreview);
+        });
     }
 }

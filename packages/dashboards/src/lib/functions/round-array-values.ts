@@ -27,7 +27,7 @@ export function roundToOptimalDecimals(
         [4, 1],
     ])
 ): number[] {
-    return arr.map((v) => {
+    return arr.map(v => {
         const digits = Math.floor(Math.abs(v)).toString().length;
         const optimalDecimalsForDigits = optimalDecimals.get(digits) ?? 0;
         return +v.toFixed(optimalDecimalsForDigits);

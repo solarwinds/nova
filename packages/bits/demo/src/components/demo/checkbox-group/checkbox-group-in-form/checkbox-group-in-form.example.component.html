@@ -6,20 +6,17 @@
             *ngIf="
                 !myForm.controls['checkboxGroup'].valid &&
                 myForm.controls['checkboxGroup'].touched
-            "
-        >
+            ">
             <b i18n>Select minimum 3 checkboxes!</b>
         </nui-message>
         <nui-checkbox-group
             id="nui-demo-checkbox-group-in-form"
             formControlName="checkboxGroup"
             name="vegetable"
-            required
-        >
+            required>
             <nui-checkbox
                 *ngFor="let vegetable of vegetables"
-                [value]="vegetable"
-            >
+                [value]="vegetable">
                 {{ vegetable }}
             </nui-checkbox>
         </nui-checkbox-group>
@@ -28,8 +25,7 @@
         nui-button
         type="submit"
         [disabled]="myForm.disabled || myForm.controls['checkboxGroup'].invalid"
-        i18n
-    >
+        i18n>
         Submit
     </button>
 </form>

@@ -135,7 +135,7 @@ export class PizzagnaService {
 
     public removeComponents(ids: string | string[]): void {
         if (isArray(ids)) {
-            ids.forEach((id) => this.removeComponent(id));
+            ids.forEach(id => this.removeComponent(id));
         } else {
             this.removeComponent(ids);
         }

@@ -5,6 +5,9 @@
       "name": "SolarWinds Nova Team"
     }
   ],
+  "dependencies": {
+    "@nova-ui/bits": "~20.0.0"
+  },
   "devDependencies": {
     "@types/d3": "^5.7.2",
     "@types/d3-selection-multi": "^1.0.7",
@@ -15,18 +18,18 @@
     "d3-time-format": "^2.1.3"
   },
   "exports": {
-    "./sdk/atoms-playwright": {
-      "types": "./sdk/atmos/index.d.ts",
-      "default": "./sdk/atoms-playwright/index.js"
-    },
-    "./sdk/atoms-playwright/*": {
-      "types": "./sdk/atoms-playwright/*.d.ts",
-      "default": "./sdk/atoms-playwright/*.js"
-    },
+    "./bundles/*": "./bundles/*",
     "./sdk/*": {
       "default": "./sdk/*"
     },
-    "./bundles/*": "./bundles/*"
+    "./sdk/atoms-playwright": {
+      "default": "./sdk/atoms-playwright/index.js",
+      "types": "./sdk/atmos/index.d.ts"
+    },
+    "./sdk/atoms-playwright/*": {
+      "default": "./sdk/atoms-playwright/*.js",
+      "types": "./sdk/atoms-playwright/*.d.ts"
+    }
   },
   "keywords": [
     "chart",
@@ -36,9 +39,6 @@
   ],
   "license": "Apache-2.0",
   "name": "@nova-ui/charts",
-  "dependencies": {
-    "@nova-ui/bits": "~20.0.0"
-  },
   "peerDependencies": {
     "@types/d3": "^5.0.0",
     "@types/d3-selection-multi": "^1.0.0",
@@ -73,8 +73,8 @@
     "lint:fix": "ng lint --fix",
     "playwright:base": "yarn playwright test",
     "playwright:ci": "yarn playwright:base",
-    "playwright:ui": "yarn playwright:base --ui",
     "playwright:report": "yarn playwright show-report",
+    "playwright:ui": "yarn playwright:base --ui",
     "prebuild-examples": "yarn run compile-demo-paths",
     "prettier": "prettier --config ./.prettierrc.js",
     "prettier-check": "yarn run prettier --check .",

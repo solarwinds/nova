@@ -149,7 +149,7 @@ export class StatusBarChartComponent
                   )
                 : undefined;
 
-        this.accessors.data.y = (d) => d.value;
+        this.accessors.data.y = d => d.value;
 
         // disable pointer events on bars to ensure the zoom drag target is the mouse interactive area rather than the bars
         this.renderer = new BarRenderer({

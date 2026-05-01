@@ -43,6 +43,6 @@ export class IconVisualTestComponent implements OnInit {
     }
 
     public getCategories(icons: ITypedIconData[]): IconCategory[] {
-        return Array.from(new Set(icons.flatMap((icon) => icon.category)));
+        return Array.from(new Set(icons.flatMap(icon => icon.category)));
     }
 }

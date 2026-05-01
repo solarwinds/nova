@@ -217,16 +217,16 @@ export class VirtualScrollListDataSource<T = any>
             .pipe(
                 delay(300),
                 // eslint-disable-next-line import/no-deprecated
-                map((response) => ({
+                map(response => ({
                     items:
-                        response.items?.map((item) => ({
+                        response.items?.map(item => ({
                             name: item.name,
                             location: item.location,
                             status: item.status,
                         })) || [],
                     count: response.count,
                 })),
-                catchError((e) => {
+                catchError(e => {
                     this.logger.error(e);
                     return of({
                         items: [],
@@ -276,7 +276,7 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
     public nodesTotalItems: { [key: string]: number } = {};
 
     public treeControl = new NestedTreeControl<IServerNode>(
-        (node) => node.children
+        node => node.children
     );
     public dataSource = new ArrayDataSource(TREE_DATA);
 
@@ -332,7 +332,7 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
                 .subscribe(() => {
                     this.virtualScrollListDataSource.applyFilters();
                     this.virtualScrollListDataSource.outputsSubject.subscribe(
-                        (v) => {
+                        v => {
                             if (!this.activeDialogComponent) {
                                 return;
                             } // in case dialog was closed early

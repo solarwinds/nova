@@ -3,8 +3,7 @@
     nui-button
     type="button"
     (click)="openInOverlay(headerButtonsContent)"
-    i18n
->
+    i18n>
     Open Dialog
 </button>
 
@@ -12,8 +11,7 @@
     <nui-dialog-header
         title="Dialog Title"
         i18n-title
-        (closed)="close()"
-    ></nui-dialog-header>
+        (closed)="close()"></nui-dialog-header>
     <div class="dialog-body">
         <p>
             <nui-date-time-picker
@@ -21,8 +19,7 @@
                 (modelChanged)="onModelChanged($event)"
                 displayMode="inline"
                 [model]="dt"
-                [appendToBody]="true"
-            ></nui-date-time-picker>
+                [appendToBody]="true"></nui-date-time-picker>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
             maximus faucibus bibendum. Aenean feugiat interdum leo sed posuere.
             Etiam at pulvinar enim, nec interdum purus. Duis elit metus,
@@ -42,8 +39,7 @@
             type="button"
             displayStyle="primary"
             (click)="onDone()"
-            i18n
-        >
+            i18n>
             Action
         </button>
     </nui-dialog-footer>

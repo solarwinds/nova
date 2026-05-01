@@ -61,9 +61,7 @@ test.describe("USERCONTROL Message", () => {
     });
 
     test("should have class 'nui-message-allow-dismiss' based on 'allowDismiss' property", async () => {
-        await messageDismissAllowed.toContainClass(
-            "nui-message-allow-dismiss"
-        );
+        await messageDismissAllowed.toContainClass("nui-message-allow-dismiss");
         await messageDismissNotAllowed.toNotContainClass(
             "nui-message-allow-dismiss"
         );

@@ -89,7 +89,7 @@ export class DescriptionConfigurationV2Component
 
         this.form.valueChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe((value) => {
+            .subscribe(value => {
                 this.changeFn?.(value);
             });
     }

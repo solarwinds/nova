@@ -49,9 +49,9 @@ const FOCUSABLE_SELECTOR =
     selector: "nui-dialog-window",
     host: {
         "[class]": `"nui-dialog fade in show" + (windowClass ? " " + windowClass : "")`,
-        role: "dialog",
+        "role": "dialog",
         "aria-modal": "true",
-        tabindex: "-1",
+        "tabindex": "-1",
         "(keyup.esc)": "escKey($event)",
         "(mousedown)": "backdropMouseDown($event)",
         "(mouseup)": "backdropMouseUp($event)",
@@ -61,7 +61,7 @@ const FOCUSABLE_SELECTOR =
     encapsulation: ViewEncapsulation.None,
     standalone: false,
 })
-export class DialogComponent implements OnInit, AfterViewInit, OnDestroy  {
+export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
     private elWithFocus: any;
     /**
      * Whether a backdrop element should be created for a given dialog (true by default).
@@ -145,7 +145,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy  {
         this.renderer.addClass(this.document.body, "dialog-open");
         this.router.events
             .pipe(
-                filter((e) => e instanceof NavigationEnd),
+                filter(e => e instanceof NavigationEnd),
                 take(1)
             )
             .subscribe(() => this.dismiss("ROUTE_CHANGED"));

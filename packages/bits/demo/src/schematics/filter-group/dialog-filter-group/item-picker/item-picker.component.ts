@@ -83,7 +83,7 @@ export class ItemPickerCompositeComponent implements OnInit {
 
     public getSelectedOptions(): IFilterGroupOption[] {
         return this.itemPickerOptions.filter(
-            (item) => this.selectedValues.indexOf(item.value) !== -1
+            item => this.selectedValues.indexOf(item.value) !== -1
         );
     }
 }

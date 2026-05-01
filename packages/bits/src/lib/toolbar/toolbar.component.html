@@ -2,22 +2,19 @@
     class="nui-toolbar-content"
     nuiResizeObserver
     (containerResize)="moveToolbarItems()"
-    #toolbarContainer
->
+    #toolbarContainer>
     <div class="nui-toolbar-content__dynamic">
         <ng-template
             ngFor
             let-i="index"
             let-commandGroup
             let-last="last"
-            [ngForOf]="commandGroups"
-        >
+            [ngForOf]="commandGroups">
             <ng-template
                 ngFor
                 let-commandItem
                 let-j="index"
-                [ngForOf]="commandGroup.items"
-            >
+                [ngForOf]="commandGroup.items">
                 <!-- (!i && !j) is used for set focusable state to first element first group -->
                 <button
                     nui-button
@@ -34,24 +31,21 @@
                         'nui-toolbar-primary-item':
                             commandItem.displayStyle === 'main'
                     }"
-                    [icon]="commandItem.icon"
-                >
+                    [icon]="commandItem.icon">
                     <span>{{ commandItem.title }}</span>
                 </button>
             </ng-template>
             <nui-divider
                 *ngIf="!last || showMenu"
                 isVertical="true"
-                size="extra-small"
-            ></nui-divider>
+                size="extra-small"></nui-divider>
         </ng-template>
         <nui-menu
             displayStyle="action"
             #menuComponent
             [appendToBody]="appendToBody"
             [title]="menuTitle"
-            *ngIf="showMenu"
-        >
+            *ngIf="showMenu">
             <ng-template ngFor let-menuGroup [ngForOf]="menuGroups">
                 <nui-menu-group [header]="menuGroup.title">
                     <ng-template ngFor let-menuItem [ngForOf]="menuGroup.items">
@@ -71,8 +65,7 @@
         </nui-menu>
         <ng-container>
             <nui-toolbar-message
-                *ngIf="allItemsHidden && !showMenu && !noEmptyMessage"
-            >
+                *ngIf="allItemsHidden && !showMenu && !noEmptyMessage">
                 <ng-container *ngIf="selectionEnabled" i18n
                     >No actions available for this selection</ng-container
                 >

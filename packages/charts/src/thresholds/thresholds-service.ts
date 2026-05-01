@@ -79,7 +79,7 @@ export class ThresholdsService {
         zones: IDataSeries<IAreaAccessors>[]
     ): void {
         const zoneIndexes: Record<string, number> = {};
-        zones.forEach((z) => (z.entered = false));
+        zones.forEach(z => (z.entered = false));
 
         for (let i = 0; i < dataSeries.data.length; i++) {
             const d = dataSeries.data[i];
@@ -144,17 +144,16 @@ export class ThresholdsService {
 
         let data: any[];
         const accessors = statusAccessors(colorProvider);
-        accessors.data.thickness = (d) => thicknessMap[d.status];
+        accessors.data.thickness = d => thicknessMap[d.status];
         if (isBandScale(scales.x)) {
             data = cloneDeep(sourceSeries.data);
             accessors.data.start = sourceSeries.accessors.data.x;
             accessors.data.end = sourceSeries.accessors.data.x;
-            accessors.data.color = (d) =>
+            accessors.data.color = d =>
                 d.__thresholds && d.__thresholds.status
                     ? colorProvider.get(d.__thresholds.status)
                     : "transparent";
-            accessors.data.thickness = (d) =>
-                thicknessMap[d.__thresholds.status];
+            accessors.data.thickness = d => thicknessMap[d.__thresholds.status];
         } else {
             data = this.getBackgroundsDataForContinuousScale(
                 sourceSeries,
@@ -284,10 +283,10 @@ export class ThresholdsService {
                     zoneStartY,
                     zoneEndY,
                 ]
-                    .map((y) => this.getCrossPointWithY(xy1, xy2, y)) // calculate cross points for both limits
-                    .filter((c) => c); // take only those that actually intersect
+                    .map(y => this.getCrossPointWithY(xy1, xy2, y)) // calculate cross points for both limits
+                    .filter(c => c); // take only those that actually intersect
 
-                [xy1, xy2].forEach((xy) => {
+                [xy1, xy2].forEach(xy => {
                     if (xy.y === zoneStartY || xy.y === zoneEndY) {
                         xy.isZoneEdge = true;
                     }
@@ -321,8 +320,8 @@ export class ThresholdsService {
         colorProvider: IValueProvider<string>
     ): IDataSeries<IAreaAccessors>[] {
         const areaAccessors = new AreaAccessors();
-        areaAccessors.data.start = (d) => d.start;
-        areaAccessors.data.end = (d) => d.end;
+        areaAccessors.data.start = d => d.start;
+        areaAccessors.data.end = d => d.end;
         areaAccessors.series.color = (seriesId, series) =>
             colorProvider.get(series.value);
 
@@ -343,7 +342,7 @@ export class ThresholdsService {
     public getThresholdLines(
         zones: IDataSeries<IAreaAccessors>[]
     ): IChartAssistSeries<ILineAccessors>[] {
-        if (-1 === zones.findIndex((z) => z.entered)) {
+        if (-1 === zones.findIndex(z => z.entered)) {
             return [];
         }
 
@@ -378,7 +377,7 @@ export class ThresholdsService {
             }
         }
 
-        return values(limits).map((limit) =>
+        return values(limits).map(limit =>
             this.getThresholdLine(
                 limit.series,
                 limit.accessor,
@@ -567,7 +566,7 @@ export class ThresholdsService {
         const renderer = new SideIndicatorRenderer(
             rendererConfig || cloneDeep(THRESHOLDS_MAIN_CHART_RENDERER_CONFIG)
         );
-        const indicatorsActive = -1 !== zones.findIndex((z) => z.entered);
+        const indicatorsActive = -1 !== zones.findIndex(z => z.entered);
         for (const z of zones) {
             const sideIndicatorAccessors = new SideIndicatorAccessors();
             sideIndicatorAccessors.series = {

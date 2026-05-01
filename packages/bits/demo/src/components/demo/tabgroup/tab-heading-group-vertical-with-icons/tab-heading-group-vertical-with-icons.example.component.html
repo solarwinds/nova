@@ -3,8 +3,7 @@
         <nui-tab-heading
             *ngFor="let tab of tabsetContent"
             [disabled]="tab.isDisabled"
-            [tabId]="tab.id"
-        >
+            [tabId]="tab.id">
             <div class="d-flex align-content-center">
                 <div class="d-inline-flex align-items-center">
                     <!-- That ternary operator below (bind to [iconColor]) applies different colors depending on 
@@ -19,8 +18,7 @@
                                 : currentTabId === tab.id
                                 ? tab.icon.activeColor
                                 : tab.icon.inactiveColor
-                        "
-                    ></nui-icon>
+                        "></nui-icon>
                     <span>{{ tab.title }}</span>
                 </div>
             </div>

@@ -23,7 +23,6 @@ import isNil from "lodash/isNil";
 
 import { HTML_COLORS } from "./../../constants/color-picker.constants";
 
-
 @Injectable()
 export class ColorService {
     public RGBToHexRGBToHex(rgbColor: string): string {

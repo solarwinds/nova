@@ -81,7 +81,7 @@ describe("OverlayItemComponent", () => {
             component.active = false;
         });
 
-        ["active", "disabled"].forEach((className) => {
+        ["active", "disabled"].forEach(className => {
             it(`is not have ${className} class name by default`, () => {
                 expect(
                     debug.nativeElement.classList.value.includes(className)

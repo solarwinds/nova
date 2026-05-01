@@ -86,19 +86,17 @@ export class LineChartWith2YAxesExampleComponent implements OnInit, OnDestroy {
 
         const accessors = new LineAccessors();
         const renderer = new LineRenderer();
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
-            (d) => ({
-                ...d,
-                accessors,
-                renderer,
-                scales: {
-                    x: xScale,
-                    // In this case, we're using the right-hand scale only for "series-3"
-                    y: d.id === "series-3" ? this.yRightScale : this.yLeftScale,
-                },
-                unitLabel: d.id === "series-3" ? "GB" : "%",
-            })
-        );
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
+            ...d,
+            accessors,
+            renderer,
+            scales: {
+                x: xScale,
+                // In this case, we're using the right-hand scale only for "series-3"
+                y: d.id === "series-3" ? this.yRightScale : this.yLeftScale,
+            },
+            unitLabel: d.id === "series-3" ? "GB" : "%",
+        }));
 
         // chart assist needs to be used to update data
         this.chartAssist.update(seriesSet);

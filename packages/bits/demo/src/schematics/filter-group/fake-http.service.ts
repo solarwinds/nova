@@ -128,7 +128,7 @@ export class FakeHTTPService {
     public async getData(filters: IFilters): Promise<ICustomDSFilteredData> {
         this.getFilteredDataSubject.next(filters);
 
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             this.receiveFilteredDataSubject.subscribe(
                 (filteredData: ICustomDSFilteredData) => {
                     resolve(filteredData);
@@ -207,8 +207,8 @@ export class FakeServer implements OnDestroy {
     }
 
     private recalculateCounts(filterData: IFilteringOutputs): void {
-        this.filterGroupItems.forEach((filterGroupItem) => {
-            filterGroupItem.allFilterOptions.forEach((filterOption) => {
+        this.filterGroupItems.forEach(filterGroupItem => {
+            filterGroupItem.allFilterOptions.forEach(filterOption => {
                 const counts = filterData[filterGroupItem.id];
 
                 if (!_isEmpty(counts)) {
@@ -223,7 +223,7 @@ export class FakeServer implements OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        this.filterGroupSubscriptions.forEach((subscription) =>
+        this.filterGroupSubscriptions.forEach(subscription =>
             subscription.unsubscribe()
         );
     }

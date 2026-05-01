@@ -114,7 +114,7 @@ export class CustomDataSourceFilterGroupExampleComponent
     }
 
     public ngOnDestroy(): void {
-        this.filterGroupSubscriptions.forEach((subscription) =>
+        this.filterGroupSubscriptions.forEach(subscription =>
             subscription.unsubscribe()
         );
     }

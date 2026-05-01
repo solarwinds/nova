@@ -1,21 +1,18 @@
 <div
     *ngIf="chartAssist"
     class="status-bar-chart"
-    [class.layout-fixed]="configuration.gridConfig?.fixedLayout"
->
+    [class.layout-fixed]="configuration.gridConfig?.fixedLayout">
     <div
         class="d-flex"
         *ngFor="
             let spark of chartAssist.sparks;
             let i = index;
             trackBy: chartAssist.trackByFn
-        "
-    >
+        ">
         <nui-chart
             class="d-flex flex-grow-1"
             [chart]="spark.chart"
-            [nuiChartCollectionId]="collectionId"
-        ></nui-chart>
+            [nuiChartCollectionId]="collectionId"></nui-chart>
         <div
             class="d-flex flex-column pl-2"
             [class.justify-content-center]="
@@ -31,16 +28,13 @@
             *ngIf="
                 spark.chartSeriesSet?.length > 0 && spark.chartSeriesSet[0];
                 let series
-            "
-        >
+            ">
             <nui-legend
                 class="status-bar-chart__legend"
-                [active]="chartAssist.isLegendActive"
-            >
+                [active]="chartAssist.isLegendActive">
                 <nui-legend-series
                     [descriptionPrimary]="series.legendDescriptionPrimary"
-                    [descriptionSecondary]="getDescriptionSecondary(series, i)"
-                >
+                    [descriptionSecondary]="getDescriptionSecondary(series, i)">
                     <nui-rich-legend-tile
                         *ngIf="
                             configuration.type === timeseriesChartTypes.alert
@@ -63,24 +57,20 @@
                             i === 0
                                 ? summaryLegendColor
                                 : chartAssist.palette.textColors.get(series.id)
-                        "
-                    >
+                        ">
                     </nui-rich-legend-tile>
                     <div
                         *ngIf="isStatusChart()"
-                        class="status-bar-chart__legend__tile d-flex justify-content-center align-items-center"
-                    >
+                        class="status-bar-chart__legend__tile d-flex justify-content-center align-items-center">
                         <div
                             class="w-100 h-100 status-bar-chart__legend__tile__background"
                             [style.background-color]="
                                 getDataPointData(series, 'color')
-                            "
-                        ></div>
+                            "></div>
                         <nui-icon
                             *ngIf="getDataPointData(series, 'icon'); let icon"
                             class="status-bar-chart__legend__tile__icon"
-                            [icon]="icon"
-                        ></nui-icon>
+                            [icon]="icon"></nui-icon>
                     </div>
                     <button
                         nui-button
@@ -89,8 +79,7 @@
                         (click)="removeMetric(series.id)"
                         icon="remove"
                         type="button"
-                        displayStyle="action"
-                    ></button>
+                        displayStyle="action"></button>
                 </nui-legend-series>
             </nui-legend>
         </div>

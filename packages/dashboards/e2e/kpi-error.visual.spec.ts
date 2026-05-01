@@ -18,7 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Atom, Camera, Helpers, test } from "@nova-ui/bits/sdk/atoms-playwright";
+import {
+    Atom,
+    Camera,
+    Helpers,
+    test,
+} from "@nova-ui/bits/sdk/atoms-playwright";
 
 import { ConfiguratorAtom } from "./configurator/configurator.atom";
 import { DashboardAtom } from "./dashboard.atom";
@@ -55,7 +60,9 @@ test.describe(`Visual tests: Dashboards - ${name}`, () => {
         await page.locator("#edit-mode").click();
 
         // Edit the "Error Widget"
-        const errorWidget = await dashboard.getWidgetByHeaderTitleText("Error Widget");
+        const errorWidget = await dashboard.getWidgetByHeaderTitleText(
+            "Error Widget"
+        );
         await errorWidget?.header.clickEdit();
 
         const dsAccordion = await configurator.getAccordion(

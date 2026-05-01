@@ -29,7 +29,7 @@ import {
 } from "@angular/core";
 import _set from "lodash/set";
 
-import {CodeSourceFiles, DEMO_PATH_TOKEN} from "@nova-ui/bits";
+import { CodeSourceFiles, DEMO_PATH_TOKEN } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-schematic-docs-example",
@@ -63,7 +63,10 @@ export class SchematicDocsExampleComponent implements OnInit {
     }
 
     constructor(
-        @SkipSelf() @Optional() @Inject(DEMO_PATH_TOKEN) private context: CodeSourceFiles
+        @SkipSelf()
+        @Optional()
+        @Inject(DEMO_PATH_TOKEN)
+        private context: CodeSourceFiles
     ) {}
 
     public ngOnInit(): void {
@@ -90,8 +93,7 @@ export class SchematicDocsExampleComponent implements OnInit {
     }
 
     private getSourcesByFilenamePrefix(prefix: string) {
-        const matchingFilePaths = this.context
-            .files
+        const matchingFilePaths = this.context.files
             .map(f => f.path)
             .filter((filePath: string) => {
                 const prefixIndex = filePath.indexOf(prefix);
@@ -125,7 +127,9 @@ export class SchematicDocsExampleComponent implements OnInit {
         let fileContent = "";
         const regExResultArray = this.fileExtensionsRegex.exec(fileName);
         if (regExResultArray) {
-             fileContent = await this.context.files.find(f=>f.path.includes(fileName))?.content();
+            fileContent = await this.context.files
+                .find(f => f.path.includes(fileName))
+                ?.content();
 
             const extension = <string>fileName.split(".").pop();
             if (extension === "less") {

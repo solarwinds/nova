@@ -47,7 +47,8 @@ interface IExampleTableModel {
 @Component({
     selector: "nui-table-search-with-select-and-pagination",
     providers: [ClientSideDataSource],
-    templateUrl: "./table-search-with-select-and-pagination.example.component.html",
+    templateUrl:
+        "./table-search-with-select-and-pagination.example.component.html",
     styleUrls: [
         "./table-search-with-select-and-pagination.example.component.less",
     ],

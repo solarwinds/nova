@@ -122,7 +122,7 @@ export class HeroDashboardComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        const widgetsWithStructure = widgets.map((w) => ({
+        const widgetsWithStructure = widgets.map(w => ({
             ...w,
             pizzagna: {
                 ...this.widgetTypesService.getWidgetType(w.type, w.version)

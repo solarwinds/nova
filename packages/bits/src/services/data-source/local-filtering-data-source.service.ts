@@ -340,7 +340,7 @@ export class LocalFilteringDataSource<
         // We are filtering out filter groups which doesn't have selected filters. If filters are not present,
         // it means that filtered data with this filters should not participate in intersection
         return arrToMap
-            .filter((arr) => !!arr[Object.keys(arr)[0]].value.length)
+            .filter(arr => !!arr[Object.keys(arr)[0]].value.length)
             .map(
                 (
                     multiFilter: IFilterGroup<
