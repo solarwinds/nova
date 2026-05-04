@@ -19,7 +19,12 @@
 //  THE SOFTWARE.
 
 import { DebugElement } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 import { BehaviorSubject, Subject } from "rxjs";
 
 import {
@@ -104,7 +109,7 @@ describe("components >", () => {
         });
 
         describe("ngAfterViewInit>", () => {
-            it("should update fadeIn in zoneSubscription", () => {
+            it("should update fadeIn asynchronously after initial render", fakeAsync(() => {
                 subject.fadeIn = false;
                 subject.context = {
                     arrowMarginTop: 0,
@@ -114,9 +119,9 @@ describe("components >", () => {
                     placement: "left",
                 };
                 subject.ngAfterViewInit();
-                (subject as any).zone.onStable.next();
+                tick();
                 expect(subject.fadeIn).toBe(true);
-            });
+            }));
         });
     });
 });

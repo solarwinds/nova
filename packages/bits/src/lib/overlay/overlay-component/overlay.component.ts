@@ -20,6 +20,7 @@
 
 import {
     Overlay,
+    OVERLAY_DEFAULT_CONFIG,
     OverlayConfig,
     OverlayContainer,
     OverlayRef,
@@ -78,6 +79,7 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
         OverlayService,
         OverlayPositionService,
         { provide: OverlayContainer, useClass: OverlayCustomContainer },
+        { provide: OVERLAY_DEFAULT_CONFIG, useValue: { usePopover: false } },
     ],
     styleUrls: ["overlay.component.less"],
     encapsulation: ViewEncapsulation.None,
