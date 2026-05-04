@@ -25,6 +25,7 @@ import {
     EventEmitter,
     Input,
     Output,
+    inject,
 } from "@angular/core";
 
 import { IHasChangeDetector } from "../../../../types";
@@ -60,7 +61,7 @@ export class ListGroupItemComponent implements IHasChangeDetector {
     public isMedium: boolean;
     public isSmall: boolean;
 
-    constructor(public changeDetector: ChangeDetectorRef) {}
+    public changeDetector = inject(ChangeDetectorRef);
 
     public onButtonClick(): void {
         if (this.canNavigate) {

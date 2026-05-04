@@ -25,6 +25,7 @@ import {
     Input,
     OnChanges,
     SimpleChanges,
+    inject,
 } from "@angular/core";
 import toNumber from "lodash/toNumber";
 import toString from "lodash/toString";
@@ -53,6 +54,8 @@ export class SiUnitsFormatterComponent implements OnChanges {
     // e.g. setting "shiftPoint" to "1" makes "1000k" to be displayed instead of "1M"
     static SHIFT_POINT_DEFAULT = 0;
 
+    public changeDetector = inject(ChangeDetectorRef);
+
     @Input() public data: IFormatterData;
 
     @Input()
@@ -61,8 +64,6 @@ export class SiUnitsFormatterComponent implements OnChanges {
 
     public value: string = "0";
     public modifier: string | undefined;
-
-    constructor(public changeDetector: ChangeDetectorRef) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.data) {

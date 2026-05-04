@@ -28,6 +28,7 @@ import {
     OnDestroy,
     Output,
     SimpleChanges,
+    inject,
 } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
@@ -56,7 +57,7 @@ export class DataSourceErrorComponent implements OnDestroy, OnChanges {
 
     private dataSourceClear$: Subject<void> = new Subject<void>();
 
-    constructor(public changeDetector: ChangeDetectorRef) {}
+    public changeDetector = inject(ChangeDetectorRef);
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.dataSource) {

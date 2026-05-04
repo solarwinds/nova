@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component, Input, OnChanges } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnChanges, inject } from "@angular/core";
 import sumBy from "lodash/sumBy";
 
 import { IFormatterData } from "../types";
@@ -35,7 +35,7 @@ export class DonutContentSumFormatterComponent implements OnChanges {
 
     public sum: number;
 
-    constructor(public changeDetector: ChangeDetectorRef) {}
+    public changeDetector = inject(ChangeDetectorRef);
 
     @Input() data: IFormatterData[];
 

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 
 import { LoggerService } from "@nova-ui/bits";
 
@@ -26,7 +26,7 @@ import { LoggerService } from "@nova-ui/bits";
     providedIn: "root",
 })
 export class UrlInteractionService {
-    constructor(private logger: LoggerService) {}
+    private logger = inject(LoggerService);
 
     public template(url: string, data: any): string {
         const regex = new RegExp(/\$\{([a-zA-Z0-9.]*)\}/g);

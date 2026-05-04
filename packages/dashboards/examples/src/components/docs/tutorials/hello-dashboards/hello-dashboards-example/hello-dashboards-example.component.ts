@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 
 import {
@@ -48,7 +48,7 @@ export class HelloDashboardsExampleComponent implements OnInit {
     public gridsterConfig: GridsterConfig = {};
 
     // WidgetTypesService provides the widget's necessary structure information
-    constructor(private widgetTypesService: WidgetTypesService) {}
+    private widgetTypesService = inject(WidgetTypesService);
 
     public ngOnInit(): void {
         // Here we are hard-coding the widget config for this example, but this is where you

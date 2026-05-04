@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import moment, { duration } from "moment/moment";
 
 import {
@@ -67,8 +67,7 @@ export class ThresholdsPrototypeComponent implements OnInit {
             [Status.Warning]: CHART_PALETTE_CS_S_EXTENDED[4],
         })
     );
-
-    constructor(private thresholdsService: ThresholdsService) {}
+    private thresholdsService = inject(ThresholdsService);
 
     public ngOnInit(): void {
         const accessors = new LineAccessors(

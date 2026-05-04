@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Pipe, PipeTransform } from "@angular/core";
+import { Pipe, PipeTransform, inject } from "@angular/core";
 
 import {
     UnitConversionService,
@@ -37,7 +37,7 @@ import { DEFAULT_UNIT_CONVERSION_THRESHOLD } from "../constants";
     standalone: false,
 })
 export class DashboardUnitConversionPipe implements PipeTransform {
-    constructor(private unitConversionService: UnitConversionService) {}
+    private unitConversionService = inject(UnitConversionService);
 
     /**
      * Transforms a large number value to its abbreviated counterpart

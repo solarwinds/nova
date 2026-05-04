@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import cloneDeep from "lodash/cloneDeep";
 import moment, { duration } from "moment/moment";
 
@@ -56,6 +56,8 @@ import {
     standalone: false,
 })
 export class ThresholdsSummaryWithIntervalScaleTestComponent implements OnInit {
+    private thresholdsService = inject(ThresholdsService);
+
     public zones = [
         { status: "error", start: 80 },
         { status: "error", start: -100, end: 10 },
@@ -81,7 +83,7 @@ export class ThresholdsSummaryWithIntervalScaleTestComponent implements OnInit {
     private backgroundScales: IXYScales;
     private summaryScales: IXYScales;
 
-    constructor(private thresholdsService: ThresholdsService) {
+    constructor() {
         this.scales = {
             x: new TimeIntervalScale(duration(5, "minutes")),
             y: new LinearScale(),

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
 
 import { ThemeSwitchService } from "@nova-ui/bits";
 
@@ -29,7 +29,7 @@ import { ThemeSwitchService } from "@nova-ui/bits";
     standalone: false,
 })
 export class DashboardTestHarnessComponent {
-    constructor(public themeSwitcher: ThemeSwitchService) {}
+    public themeSwitcher = inject(ThemeSwitchService);
 
     @Input() public editMode: boolean;
     @Input() public dsError: boolean;

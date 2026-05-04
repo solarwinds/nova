@@ -24,6 +24,7 @@ import {
     EventEmitter,
     Input,
     Output,
+    inject,
 } from "@angular/core";
 
 import { IDashwizButtonsComponent } from "../types";
@@ -82,7 +83,7 @@ import { IDashwizButtonsComponent } from "../types";
 export class DashwizButtonsComponent implements IDashwizButtonsComponent {
     static lateLoadKey = "DashwizButtonsComponent";
 
-    constructor(public changeDetector: ChangeDetectorRef) {}
+    public changeDetector = inject(ChangeDetectorRef);
 
     @Input() public busy = false;
     @Input() public canFinish = false;

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Pipe, PipeTransform } from "@angular/core";
+import { Pipe, PipeTransform, inject } from "@angular/core";
 
 import { IWidget } from "../../components/widget/types";
 import { WidgetTypesService } from "../../services/widget-types.service";
@@ -29,7 +29,7 @@ import { WidgetTypesService } from "../../services/widget-types.service";
     standalone: false,
 })
 export class PizzagnaRootPipe implements PipeTransform {
-    constructor(private widgetTypesService: WidgetTypesService) {}
+    private widgetTypesService = inject(WidgetTypesService);
 
     public transform(
         widget: IWidget | null,

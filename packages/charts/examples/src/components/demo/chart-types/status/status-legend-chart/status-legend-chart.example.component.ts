@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
@@ -58,13 +58,13 @@ const OPACITY_BACKGROUND_EMPHASIZED = 0.4;
     standalone: false,
 })
 export class StatusLegendChartExampleComponent implements OnInit {
+    private iconService = inject(IconService);
+
     public chartAssist: ChartAssist;
 
     public legendLabel$: Observable<any>;
     public legendIcon$: Observable<any>;
     public legendBackground$: Observable<any>;
-
-    constructor(private iconService: IconService) {}
 
     public ngOnInit(): void {
         const chart = new Chart(new XYGrid(new BarStatusGridConfig()));

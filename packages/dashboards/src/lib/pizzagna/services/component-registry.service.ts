@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable, Type } from "@angular/core";
+import { Injectable, Type, inject } from "@angular/core";
 
 import { LoggerService } from "@nova-ui/bits";
 
@@ -33,7 +33,7 @@ export interface IComponentWithLateLoadKey extends Type<any> {
 export class ComponentRegistryService {
     private components: Record<string, any> = {};
 
-    constructor(private logger: LoggerService) {}
+    private logger = inject(LoggerService);
 
     public registerByLateLoadKey(component: IComponentWithLateLoadKey): void {
         this.registerComponentType(component.lateLoadKey, component);

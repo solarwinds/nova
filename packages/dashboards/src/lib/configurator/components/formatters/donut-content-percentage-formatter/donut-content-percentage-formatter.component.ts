@@ -25,6 +25,7 @@ import {
     OnChanges,
     OnInit,
     SimpleChanges,
+    inject,
 } from "@angular/core";
 import sumBy from "lodash/sumBy";
 import { Subject } from "rxjs";
@@ -61,7 +62,7 @@ export class DonutContentPercentageFormatterComponent
 
     private readonly destroy$ = new Subject<void>();
 
-    constructor(public changeDetector: ChangeDetectorRef) {}
+    public changeDetector = inject(ChangeDetectorRef);
 
     @Input() data: IChartAssistSeries<IAccessors>[];
     @Input() chartAssist: ChartAssist;

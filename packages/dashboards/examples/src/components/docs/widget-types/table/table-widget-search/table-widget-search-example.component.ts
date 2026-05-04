@@ -22,6 +22,7 @@ import { HttpClient } from "@angular/common/http";
 import {
     ChangeDetectorRef,
     Component,
+    inject,
     Injectable,
     OnInit,
 } from "@angular/core";
@@ -141,7 +142,10 @@ export class AcmeTableGBooksDataSource
         },
     ];
 
-    constructor(private logger: LoggerService, private http: HttpClient) {
+    private logger = inject(LoggerService);
+    private http = inject(HttpClient);
+
+    constructor() {
         super();
         // Using Nova DataSourceFeatures implementation for the features
         this.features = new DataSourceFeatures(this.supportedFeatures);
@@ -256,11 +260,9 @@ export class TableWidgetSearchExampleComponent implements OnInit {
     public gridsterConfig: GridsterConfig = {};
     public editMode: boolean = false;
 
-    constructor(
-        private widgetTypesService: WidgetTypesService,
-        private providerRegistry: ProviderRegistryService,
-        private changeDetectorRef: ChangeDetectorRef
-    ) {}
+    private widgetTypesService = inject(WidgetTypesService);
+    private providerRegistry = inject(ProviderRegistryService);
+    private changeDetectorRef = inject(ChangeDetectorRef);
 
     public ngOnInit(): void {
         const widgetTemplate = this.widgetTypesService.getWidgetType(

@@ -22,6 +22,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    inject,
     OnInit,
 } from "@angular/core";
 import moment from "moment/moment";
@@ -50,8 +51,7 @@ export class LineChartWithTooltipsExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());
     public chartAssist = new ChartAssist(this.chart);
     public tooltipsPlugin = new ChartTooltipsPlugin();
-
-    constructor(private changeDetector: ChangeDetectorRef) {}
+    private changeDetector = inject(ChangeDetectorRef);
 
     public ngOnInit(): void {
         // this is necessary to make the chart work in OnPush change detection mode

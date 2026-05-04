@@ -20,7 +20,7 @@
 
 import { ListRange } from "@angular/cdk/collections";
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import isEqual from "lodash/isEqual";
 import orderBy from "lodash/orderBy";
 import { BehaviorSubject } from "rxjs";
@@ -101,9 +101,8 @@ export class AcmeTableDataSource
         { id: "cell", label: $localize`Cell`, dataType: "string" },
     ];
 
-    constructor(private logger: LoggerService, private http: HttpClient) {
-        super();
-    }
+    private logger = inject(LoggerService);
+    private http = inject(HttpClient);
 
     public async getFilteredData(
         filters: INovaFilters

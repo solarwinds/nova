@@ -24,6 +24,7 @@ import {
     HostBinding,
     Input,
     OnInit,
+    inject,
 } from "@angular/core";
 
 import { IWidgetErrorDisplayProperties } from "../../../components/widget/types";
@@ -54,7 +55,7 @@ export class WidgetErrorComponent
 
     @HostBinding("class") public classNames: string;
 
-    constructor(public changeDetector: ChangeDetectorRef) {}
+    public changeDetector = inject(ChangeDetectorRef);
 
     public ngOnInit(): void {
         this.classNames = `${this.defaultClasses} ${this.elementClass}`;

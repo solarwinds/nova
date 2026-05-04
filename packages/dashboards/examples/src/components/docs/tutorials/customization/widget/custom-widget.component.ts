@@ -24,6 +24,7 @@ import {
     Component,
     EventEmitter,
     HostBinding,
+    inject,
     Input,
     OnChanges,
     OnInit,
@@ -91,7 +92,7 @@ export class CustomWidgetBodyContentComponent implements IHasChangeDetector {
 
     // Injecting the ChangeDetectorRef to implement IHasChangeDetector.
     // This allows the dashboard framework to reliably propagate component property changes to the DOM.
-    constructor(public changeDetector: ChangeDetectorRef) {}
+    public changeDetector = inject(ChangeDetectorRef);
 }
 
 /**

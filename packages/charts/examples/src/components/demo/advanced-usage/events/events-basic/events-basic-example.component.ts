@@ -22,6 +22,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    inject,
     OnInit,
 } from "@angular/core";
 import moment from "moment/moment";
@@ -47,10 +48,10 @@ import {
     standalone: false,
 })
 export class EventsBasicExampleComponent implements OnInit {
+    private changeDetectorRef = inject(ChangeDetectorRef);
+
     public chart = new Chart(new XYGrid());
     public payload: string;
-
-    constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
     public ngOnInit(): void {
         const accessors = new LineAccessors();

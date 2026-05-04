@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Numeric } from "d3-array";
 import cloneDeep from "lodash/cloneDeep";
 import sortBy from "lodash/sortBy";
@@ -64,7 +64,7 @@ import {
 export class ThresholdsService {
     public static SERIES_ID_SUFFIX = "__thresholds-background";
 
-    constructor(private loggerService: LoggerService) {}
+    private loggerService = inject(LoggerService);
 
     /**
      * Calculates the threshold "statuses" - from/to and what zone we're in. It is the first step that is required before the usage of other methods. Having

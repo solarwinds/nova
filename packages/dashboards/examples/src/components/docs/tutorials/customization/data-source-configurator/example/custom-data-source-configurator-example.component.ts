@@ -22,6 +22,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import {
     ChangeDetectorRef,
     Component,
+    inject,
     Inject,
     Injectable,
     Injector,
@@ -241,10 +242,7 @@ export class AcmeKpiDataSource
     public busy = new BehaviorSubject<boolean>(false);
 
     public properties: IProperties;
-
-    constructor(private http: HttpClient) {
-        super();
-    }
+    private http = inject(HttpClient);
 
     // This function MUST be implemented in order to receive property updates from our configurator
     public updateConfiguration(properties: IProperties): void {
@@ -311,16 +309,9 @@ export class CustomDataSourceConfiguratorExampleComponent implements OnInit {
     // Boolean which dashboard takes in as an input if its true it allows you to move widgets around.
     public editMode: boolean = false;
 
-    constructor(
-        // WidgetTypesService provides the widget's necessary structure information
-        private widgetTypesService: WidgetTypesService,
-
-        // In general, the ProviderRegistryService is used for making entities available for injection into dynamically loaded components.
-        private providerRegistry: ProviderRegistryService,
-
-        // Inject the ComponentRegistryService to make our custom component available for late loading by the dashboards framework
-        private componentRegistry: ComponentRegistryService
-    ) {}
+    private widgetTypesService = inject(WidgetTypesService);
+    private providerRegistry = inject(ProviderRegistryService);
+    private componentRegistry = inject(ComponentRegistryService);
 
     public ngOnInit(): void {
         // Registering the new data source configurator so it can be used.
