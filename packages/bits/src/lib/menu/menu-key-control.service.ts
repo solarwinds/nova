@@ -27,7 +27,7 @@ import {
     QueryList,
     Renderer2,
     Inject,
-    inject
+    inject,
 } from "@angular/core";
 import isNull from "lodash/isNull";
 import { Subject, Subscription } from "rxjs";
