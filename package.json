@@ -49,6 +49,7 @@
     "eslint-plugin-jsdoc": "50.6.9",
     "eslint-plugin-prefer-arrow": "1.2.3",
     "highlight.js": "11.10.0",
+    "husky": "9.1.7",
     "jasmine": "6.0.0",
     "jasmine-core": "5.4.0",
     "jasmine-reporters": "2.5.2",
@@ -62,6 +63,7 @@
     "karma-junit-reporter": "2.0.1",
     "karma-spec-reporter": "0.0.34",
     "less": "4.2.0",
+    "lint-staged": "16.4.0",
     "lodash": "4.18.1",
     "lz-string": "1.5.0",
     "moment": "2.30.1",
@@ -87,6 +89,9 @@
     "node": ">=20"
   },
   "license": "Apache-2.0",
+  "lint-staged": {
+    "*.{js,ts,html,css,scss,json,md,yml,yaml}": "prettier --write"
+  },
   "main": "index.js",
   "name": "nova",
   "packageManager": "yarn@1.22.18",
@@ -113,6 +118,7 @@
     "in-charts": "yarn run --cwd=packages/charts",
     "in-dashboards": "yarn run --cwd=packages/dashboards",
     "merge-ci": "bash scripts/merge",
+    "prepare": "husky",
     "prettier": "prettier --config ./.prettierrc.js",
     "prettier-check": "yarn run prettier --check .",
     "prettier-fix": "yarn run prettier --write .",
