@@ -6,14 +6,17 @@
                 value="carrot"
                 checked
                 [nuiSetFocus]="carrotFocused"
-                i18n>
+                i18n
+            >
                 carrot
             </nui-radio>
             <nui-radio
                 id="nui-demo-setfocus-radio-onion"
                 value="onion"
+                class="onion"
                 [nuiSetFocus]="onionFocused"
-                i18n>
+                i18n
+            >
                 onion
             </nui-radio>
         </nui-radio-group>
@@ -23,15 +26,18 @@
                 nui-button
                 type="button"
                 (click)="setCarrotFocus()"
-                i18n>
+                i18n
+            >
                 temporary carrot focus
             </button>
+
             <button
                 id="nui-demo-setfocus-button-onion"
                 nui-button
                 type="button"
                 (click)="setOnionFocus()"
-                i18n>
+                i18n
+            >
                 temporary onion focus
             </button>
         </div>
