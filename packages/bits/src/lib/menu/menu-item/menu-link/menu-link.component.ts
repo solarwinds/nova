@@ -49,7 +49,6 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
             [target]="target"
             (click)="handleClick($event)"
             #menuLink
-            title
         >
             <nui-icon *ngIf="icon" [icon]="icon"></nui-icon>
             <ng-content></ng-content>

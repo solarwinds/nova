@@ -67,7 +67,7 @@ export class TableVirtualScrollLinearStrategy implements VirtualScrollStrategy {
 
     public onRenderedOffsetChanged(): void {}
 
-    public scrollToIndex(index: number, behavior: ScrollBehavior): void {}
+    public scrollToIndex(_index: number, _behavior: ScrollBehavior): void {}
 
     /**
      * Sets the size of the items in the virtually scrolling list.
@@ -198,7 +198,7 @@ export class TableVirtualScrollStrategy implements VirtualScrollStrategy {
 
     public onRenderedOffsetChanged(): void {}
 
-    public scrollToIndex(index: number, behavior: ScrollBehavior): void {}
+    public scrollToIndex(_index: number, _behavior: ScrollBehavior): void {}
 
     /**
      * Sets the size of the items in the virtually scrolling list.

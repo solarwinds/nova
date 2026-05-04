@@ -156,5 +156,12 @@ describe("components >", () => {
             const actionMenu = el.querySelectorAll("nui-menu-action");
             expect(actionMenu.length).toBe(1);
         });
+
+        it("should render single menu role container", () => {
+            testComponent.menu.popup.toggleOpened(new FocusEvent("focusin"));
+            fixture.detectChanges();
+            const menuRoleContainers = el.querySelectorAll('[role="menu"]');
+            expect(menuRoleContainers.length).toBe(1);
+        });
     });
 });

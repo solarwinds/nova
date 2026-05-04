@@ -72,7 +72,7 @@ describe("components >", () => {
 
         it("should set compare handler", () => {
             expect((inner as any).compareHandlerDay).toBeUndefined();
-            inner.setCompareHandler(_noop, "day");
+            inner.setCompareHandler((_a: Moment, _b: Moment) => 0, "day");
             expect((inner as any).compareHandlerDay).toBeDefined();
         });
 
@@ -85,7 +85,7 @@ describe("components >", () => {
 
             it("return result of handler", () => {
                 inner.datepickerMode = "day";
-                inner.setCompareHandler((a: Date, b: Date) => 1, "day");
+                inner.setCompareHandler((_a: Moment, _b: Moment) => 1, "day");
                 expect((inner as any).compareHandlerDay).toBeDefined();
                 const compareResult = inner.compare(
                     moment({ year: 2018, month: 0, day: 1 }),
