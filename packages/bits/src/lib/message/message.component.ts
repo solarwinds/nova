@@ -26,18 +26,7 @@ import {
     transition,
     trigger,
 } from "@angular/animations";
-import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    ViewEncapsulation,
-} from "@angular/core";
+import { Component, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, Renderer2, ViewEncapsulation, inject } from "@angular/core";
 import { Subject, Subscription } from "rxjs";
 
 // <example-url>./../examples/index.html#/message</example-url>
@@ -70,6 +59,9 @@ export class MessageComponent implements OnInit, OnDestroy {
     };
     public static UNKNOWN_ICON = "severity_unknown";
 
+    private element = inject(ElementRef);
+    private renderer = inject(Renderer2);
+
     @HostBinding("class.d-none") isHidden: boolean = false;
 
     @Input() public type: null | "ok" | "info" | "critical" | "warning";
@@ -87,8 +79,6 @@ export class MessageComponent implements OnInit, OnDestroy {
     get role(): string {
         return this.type === "ok" || this.type === "info" ? "status" : "alert";
     }
-
-    constructor(private element: ElementRef, private renderer: Renderer2) {}
 
     public ngOnInit(): void {
         if (this.manualControl) {

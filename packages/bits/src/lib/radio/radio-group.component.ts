@@ -18,26 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterContentInit,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnDestroy,
-    OnInit,
-    Optional,
-    Output,
-    QueryList,
-    Renderer2,
-    TemplateRef,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterContentInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, QueryList, Renderer2, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation, inject } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _isNil from "lodash/isNil";
 import _isUndefined from "lodash/isUndefined";
@@ -73,6 +54,8 @@ import { NuiFormFieldControl } from "../form-field/public-api";
 export class RadioGroupComponent
     implements AfterContentInit, OnDestroy, ControlValueAccessor
 {
+    private renderer = inject(Renderer2);
+
     /**
      * Input to set aria label text
      */
@@ -115,7 +98,6 @@ export class RadioGroupComponent
     private _value: any = null;
     private selectedRadio: RadioComponent | null = null;
     private subscriptions = new Array<Subscription>();
-    constructor(private renderer: Renderer2) {}
 
     private registerChild(child: RadioComponent): void {
         this.renderer.setAttribute(
@@ -226,6 +208,9 @@ export class RadioGroupComponent
     standalone: false,
 })
 export class RadioComponent implements OnInit, OnDestroy {
+    private changeDetector = inject(ChangeDetectorRef);
+    private eventBusService = inject(EventBusService);
+
     /**
      * Sets the radio instance value
      */
@@ -284,11 +269,9 @@ export class RadioComponent implements OnInit, OnDestroy {
     @ContentChildren("[nui-radio-hint]")
     protected contentHints: QueryList<TemplateRef<any>>;
 
-    constructor(
-        @Optional() radioGroup: RadioGroupComponent,
-        private changeDetector: ChangeDetectorRef,
-        private eventBusService: EventBusService
-    ) {
+    constructor() {
+        const radioGroup = inject(RadioGroupComponent, { optional: true });
+
         this.radioGroup = radioGroup;
     }
 

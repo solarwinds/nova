@@ -18,19 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    Output,
-    Renderer2,
-    SimpleChanges,
-} from "@angular/core";
+import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, OnChanges, OnDestroy, Output, Renderer2, SimpleChanges, inject } from "@angular/core";
 import debounce from "lodash/debounce";
 import isFunction from "lodash/isFunction";
 import isUndefined from "lodash/isUndefined";
@@ -59,6 +47,13 @@ const resizeClass = "nui-resize-gutter";
     standalone: false,
 })
 export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
+    private elRef = inject(ElementRef);
+    private renderer = inject(Renderer2);
+    private utilService = inject(UtilService);
+    private _element = inject(ElementRef);
+    private ngZone = inject(NgZone);
+    private eventBusService = inject(EventBusService);
+
     /**
      * Direction in which element can be resizable. can be "top", "right", "left" and "bottom"
      */
@@ -130,15 +125,6 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     private mouseUpUnlisten: () => void;
     private mouseMoveUnlisten: () => void;
     private sibling: any;
-
-    public constructor(
-        private elRef: ElementRef,
-        private renderer: Renderer2,
-        private utilService: UtilService,
-        private _element: ElementRef,
-        private ngZone: NgZone,
-        private eventBusService: EventBusService
-    ) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes["resizerDirection"] && this.resizeGutter) {

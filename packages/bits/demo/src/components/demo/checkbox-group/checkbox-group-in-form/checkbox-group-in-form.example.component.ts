@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 import { ToastService } from "@nova-ui/bits";
@@ -29,6 +29,9 @@ import { ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class CheckboxGroupInFormExampleComponent {
+    private formBuilder = inject(FormBuilder);
+    private toastService = inject(ToastService);
+
     public cabbage = $localize`Cabbage`;
     public potato = $localize`Potato`;
     public tomato = $localize`Tomato`;
@@ -37,10 +40,7 @@ export class CheckboxGroupInFormExampleComponent {
     public selectedVegetables = [this.cabbage];
     public myForm;
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private toastService: ToastService
-    ) {
+    constructor() {
         this.myForm = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control(
                 [this.cabbage, this.potato],

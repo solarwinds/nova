@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import isFunction from "lodash/isFunction";
 import { EMPTY, Observable, of } from "rxjs";
 import { catchError } from "rxjs/operators";
@@ -31,7 +31,7 @@ import { WidgetRemovalOperation } from "../configurator/services/types";
 
 @Injectable({ providedIn: "root" })
 export class WidgetRemovalService {
-    constructor(private logger: LoggerService) {}
+    private logger = inject(LoggerService);
 
     public handleRemove(
         dashboardComponent: DashboardComponent,

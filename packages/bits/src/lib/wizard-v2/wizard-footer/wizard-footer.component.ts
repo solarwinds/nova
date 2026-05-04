@@ -19,15 +19,7 @@
 //  THE SOFTWARE.
 
 import { FocusableOption, FocusMonitor } from "@angular/cdk/a11y";
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    ElementRef,
-    Input,
-    OnDestroy,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, ViewEncapsulation, inject } from "@angular/core";
 
 import { WizardStepFooterDirective } from "../wizard-step-footer.directive";
 
@@ -47,13 +39,11 @@ import { WizardStepFooterDirective } from "../wizard-step-footer.directive";
 export class WizardFooterComponent
     implements FocusableOption, AfterViewInit, OnDestroy
 {
+    private _focusMonitor = inject(FocusMonitor);
+    private _elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
     /** Label of the given step. */
     @Input() footer: WizardStepFooterDirective | string;
-
-    constructor(
-        private _focusMonitor: FocusMonitor,
-        private _elementRef: ElementRef<HTMLElement>
-    ) {}
 
     public ngAfterViewInit(): void {
         this._focusMonitor.monitor(this._elementRef, true);

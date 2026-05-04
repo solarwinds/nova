@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 
 import { CheckboxChangeEvent } from "@nova-ui/bits";
@@ -29,6 +29,8 @@ import { CheckboxChangeEvent } from "@nova-ui/bits";
     standalone: false,
 })
 export class RadioGroupTestComponent {
+    private formBuilder = inject(FormBuilder);
+
     public disabledForm;
 
     public fruits = [
@@ -47,7 +49,7 @@ export class RadioGroupTestComponent {
     public selectedFruit: string;
     public selectedFruitInline: string;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor() {
         this.disabledForm = this.formBuilder.group({
             radioGroup: this.formBuilder.control({ value: "", disabled: true }),
         });

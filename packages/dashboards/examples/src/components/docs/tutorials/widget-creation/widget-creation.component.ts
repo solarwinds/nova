@@ -22,6 +22,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import {
     Component,
     EventEmitter,
+    inject,
     Injectable,
     OnDestroy,
     OnInit,
@@ -105,7 +106,7 @@ export class WidgetTemplateSelectionComponent
     public widgetItems: IWidgetItem[] = [];
     public widgetSelection: IWidgetItem[];
 
-    constructor(private widgetTypesService: WidgetTypesService) {}
+    private widgetTypesService = inject(WidgetTypesService);
 
     public ngOnInit(): void {
         // Here we combine the widget structure from the WidgetTypesService with the corresponding widget
@@ -150,7 +151,9 @@ export class PersistenceHandler implements IDashboardPersistenceHandler {
 
     // The example uses the toast service to demonstrate the
     // invocation of each of the persistence handler callbacks
-    constructor(private toastService: ToastService) {
+    private toastService = inject(ToastService);
+
+    constructor() {
         // toastService options to let it sit on the page for 2 seconds.
         this.toastService.setConfig({
             timeOut: 2000,
@@ -252,19 +255,10 @@ export class WidgetCreationComponent implements OnInit {
     // Subject used for auto-unsubscribing from subscriptions on component destruction
     private readonly destroy$ = new Subject<void>();
 
-    constructor(
-        // WidgetTypesService provides the widget's necessary structure information
-        private widgetTypesService: WidgetTypesService,
-
-        // In general, the ProviderRegistryService is used for making entities available for injection into dynamically loaded components.
-        private providerRegistry: ProviderRegistryService,
-
-        // Injecting the PersistenceHandler we created and assigning it to a property we use in the template.
-        public persistenceHandler: PersistenceHandler,
-
-        // Injecting the cloner service which is needed for opening up the cloner wizard.
-        private widgetClonerService: WidgetClonerService
-    ) {}
+    private widgetTypesService = inject(WidgetTypesService);
+    private providerRegistry = inject(ProviderRegistryService);
+    public persistenceHandler = inject(PersistenceHandler);
+    private widgetClonerService = inject(WidgetClonerService);
 
     public ngOnInit(): void {
         // Grabbing the widget's default template which will be needed as a parameter for setNode
@@ -471,10 +465,7 @@ export class AverageRatingKpiDataSource
 
     // Use this subject to communicate the data source's busy state
     public busy = new BehaviorSubject<boolean>(false);
-
-    constructor(private http: HttpClient) {
-        super();
-    }
+    private http = inject(HttpClient);
 
     // In this example, getFilteredData is invoked every 10 minutes (Take a look at the refresher
     // provider definition in the widget configuration below to see how the interval is set)
@@ -522,10 +513,7 @@ export class RatingsCountKpiDataSource
 
     // Use this subject to communicate the data source's busy state
     public busy = new BehaviorSubject<boolean>(false);
-
-    constructor(private http: HttpClient) {
-        super();
-    }
+    private http = inject(HttpClient);
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);

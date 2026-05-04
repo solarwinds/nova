@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
@@ -27,11 +27,13 @@ import { FormBuilder, Validators } from "@angular/forms";
     standalone: false,
 })
 export class FormFieldVisualTestComponent {
+    private formBuilder = inject(FormBuilder);
+
     public fancyForm;
 
     public vegetables = ["Cabbage", "Potato", "Tomato", "Carrot"];
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor() {
         this.fancyForm = this.formBuilder.group({
             nickname: this.formBuilder.control("", [
                 Validators.required,

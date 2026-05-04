@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Inject, Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 
 import { DataSourceService, IFilters } from "@nova-ui/bits";
 
@@ -27,9 +27,8 @@ import { FakeHTTPService } from "../fake-http.service";
 
 @Injectable()
 export class FilterGroupCustomDataSourceService extends DataSourceService<ExampleItem> {
-    constructor(@Inject(FakeHTTPService) public httpService: FakeHTTPService) {
-        super();
-    }
+    httpService = inject<FakeHTTPService>(FakeHTTPService);
+
 
     // Emitting current filters to 'server' via http service, to get filtered data 'ICustomDSFilteredData'
     public async getFilteredData(

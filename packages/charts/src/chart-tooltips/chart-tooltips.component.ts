@@ -28,6 +28,7 @@ import {
     QueryList,
     SimpleChanges,
     ViewChildren,
+    inject,
 } from "@angular/core";
 import {
     forceCollide,
@@ -74,13 +75,12 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
     private tooltipDirectivesIndex: {
         [seriesId: string]: ChartTooltipDirective;
     } = {};
+    private changeDetector = inject(ChangeDetectorRef);
     private closePending = false;
     private isOpen = false;
     private openTimeout: number;
     private collisionTimeout: number;
     private closeTimeout: number;
-
-    constructor(private changeDetector: ChangeDetectorRef) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (!(changes["plugin"] && changes["plugin"].currentValue)) {

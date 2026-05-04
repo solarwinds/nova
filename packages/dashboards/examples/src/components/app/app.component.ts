@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ViewEncapsulation } from "@angular/core";
+import { Component, inject, ViewEncapsulation } from "@angular/core";
 
 import { ThemeSwitchService } from "@nova-ui/bits";
 
@@ -30,5 +30,5 @@ import { ThemeSwitchService } from "@nova-ui/bits";
     standalone: false,
 })
 export class AppComponent {
-    constructor(public themeSwitcher: ThemeSwitchService) {}
+    public themeSwitcher = inject(ThemeSwitchService);
 }

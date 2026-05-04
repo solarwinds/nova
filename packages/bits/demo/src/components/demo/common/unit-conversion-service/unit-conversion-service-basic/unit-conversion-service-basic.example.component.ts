@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 
 import {
     IUnitConversionResult,
@@ -33,7 +33,8 @@ import {
     standalone: false,
 })
 export class UnitConversionServiceBasicExampleComponent implements OnInit {
-    constructor(public unitConversionService: UnitConversionService) {}
+    unitConversionService = inject(UnitConversionService);
+
 
     public num: number;
     public conversionDisplay: string;

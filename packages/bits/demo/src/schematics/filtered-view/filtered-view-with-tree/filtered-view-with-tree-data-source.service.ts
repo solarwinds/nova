@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Apollo, gql } from "apollo-angular";
 import { DocumentNode } from "graphql";
 import isArray from "lodash/isArray";
@@ -51,9 +51,9 @@ export class FilteredViewWithTreeDataSource<T>
     extends ServerSideDataSource<T>
     implements IDataSource
 {
-    constructor(private logger: LoggerService, private apollo: Apollo) {
-        super();
-    }
+    private logger = inject(LoggerService);
+    private apollo = inject(Apollo);
+
 
     public async getFilteredData(
         data: IServersCollection

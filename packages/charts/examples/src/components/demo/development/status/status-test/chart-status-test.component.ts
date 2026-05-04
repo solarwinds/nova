@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component } from "@angular/core";
+import { AfterViewInit, Component, inject } from "@angular/core";
 import range from "lodash/range";
 import moment from "moment/moment";
 
@@ -54,6 +54,8 @@ enum Status {
     standalone: false,
 })
 export class ChartStatusTestComponent implements AfterViewInit {
+    private iconService = inject(IconService);
+
     public chartThreshold = new Chart(new XYGrid(new BarStatusGridConfig()));
     public chartBand = new Chart(new XYGrid(new BarStatusGridConfig()));
 
@@ -62,7 +64,7 @@ export class ChartStatusTestComponent implements AfterViewInit {
     private thresholdScales: { x: TimeScale; y: BandScale };
     private bandScales: { x: TimeIntervalScale; y: BandScale };
 
-    constructor(private iconService: IconService) {
+    constructor() {
         const getStatusMarker = (status: string) =>
             new SvgMarker(this.iconService.getStatusIcon(status));
 

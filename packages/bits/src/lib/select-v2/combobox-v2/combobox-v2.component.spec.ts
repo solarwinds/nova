@@ -19,14 +19,7 @@
 //  THE SOFTWARE.
 
 import { LiveAnnouncer } from "@angular/cdk/a11y";
-import {
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    NO_ERRORS_SCHEMA,
-    QueryList,
-    ViewChild,
-} from "@angular/core";
+import { ChangeDetectorRef, Component, ElementRef, NO_ERRORS_SCHEMA, QueryList, ViewChild, inject } from "@angular/core";
 import {
     ComponentFixture,
     fakeAsync,
@@ -71,10 +64,11 @@ const nonExistentItem = { id: "item-101", name: "Item 101" };
     standalone: false,
 })
 class ComboboxV2WrapperComponent {
+    elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
     public items = Array.from({ length: 10 }).map((_, i) => `Item ${i}`);
     public comboboxControl = new FormControl();
     @ViewChild(ComboboxV2Component) combobox: ComboboxV2Component;
-    constructor(public elRef: ElementRef<HTMLElement>) {}
 }
 
 describe("components >", () => {

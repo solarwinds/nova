@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
+import { inject, NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
@@ -94,7 +94,9 @@ const routes = [
     providers: [ConfiguratorHeadingService],
 })
 export default class OverviewModule {
-    constructor(private widgetTypesService: WidgetTypesService) {
+    private widgetTypesService = inject(WidgetTypesService);
+
+    constructor() {
         this.setupDataSourceProviders();
         this.setupProportionalLegendFormatters();
     }

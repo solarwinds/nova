@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 
 import {
     IToastConfig,
@@ -33,9 +33,9 @@ import {
     standalone: false,
 })
 export class ToastConfigExampleComponent implements OnInit {
-    public selectedPosition: string;
+    private toastService = inject<IToastService>(ToastService);
 
-    constructor(@Inject(ToastService) private toastService: IToastService) {}
+    public selectedPosition: string;
 
     public ngOnInit(): void {
         this.toastService.setConfig({}, "id");

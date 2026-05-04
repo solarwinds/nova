@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import cloneDeep from "lodash/cloneDeep";
 import moment from "moment/moment";
 
@@ -66,8 +66,7 @@ export class ThresholdsSummaryExampleComponent implements OnInit {
     public summaryChartAssist: ChartAssist;
 
     private thresholdsPalette: ChartPalette;
-
-    constructor(private thresholdsService: ThresholdsService) {}
+    private thresholdsService = inject(ThresholdsService);
 
     public ngOnInit(): void {
         // When instantiating the charts, use the provided grid configuration functions for the main grid and summary grid

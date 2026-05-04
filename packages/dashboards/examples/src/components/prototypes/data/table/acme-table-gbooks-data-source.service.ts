@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import { BehaviorSubject, firstValueFrom, Observable, of, Subject } from "rxjs";
@@ -114,7 +114,10 @@ export class AcmeTableGBooksDataSource
         { id: "authors", label: $localize`Authors`, dataType: "string" },
     ];
 
-    constructor(private logger: LoggerService, private http: HttpClient) {
+    private logger = inject(LoggerService);
+    private http = inject(HttpClient);
+
+    constructor() {
         super();
         // Using Nova DataSourceFeatures implementation for the features
         this.features = new DataSourceFeatures(this.supportedFeatures);

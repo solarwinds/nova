@@ -27,7 +27,7 @@ import {
 } from "@angular/cdk/overlay";
 import { Portal } from "@angular/cdk/portal";
 import { DOCUMENT } from "@angular/common";
-import { Inject, Injectable, OnDestroy, Optional } from "@angular/core";
+import { Injectable, OnDestroy, inject } from "@angular/core";
 import { Subject } from "rxjs";
 
 import { OVERLAY_CONTAINER } from "./constants";
@@ -40,6 +40,11 @@ import { OverlayContainerType, OVERLAY_PANEL_CLASS } from "./types";
  */
 @Injectable()
 export class OverlayService implements OnDestroy {
+    protected overlay = inject(Overlay);
+    protected overlayContainer = inject(OverlayContainer);
+    protected document = inject<Document>(DOCUMENT);
+    private customContainerInjection = inject<OverlayContainerType>(OVERLAY_CONTAINER, { optional: true });
+
     // inputs
     public contentTemplate: Portal<any>; // double check the type
     public customContainer: OverlayContainerType;
@@ -60,15 +65,6 @@ export class OverlayService implements OnDestroy {
     }
     private _overlayConfig: OverlayConfig;
     private overlayRef: OverlayRef;
-
-    constructor(
-        protected overlay: Overlay,
-        protected overlayContainer: OverlayContainer,
-        @Inject(DOCUMENT) protected document: Document,
-        @Optional()
-        @Inject(OVERLAY_CONTAINER)
-        private customContainerInjection: OverlayContainerType
-    ) {}
 
     public createOverlay(): void {
         this.appendToContainer();

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, EventEmitter, Inject, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output, inject } from "@angular/core";
 import {
     FormBuilder,
     FormControl,
@@ -50,12 +50,10 @@ type SecondFormGroup = FormGroup<{
     standalone: false,
 })
 export class NestedFormsAsComponentExampleComponent implements OnInit {
-    public fancyForm: NestedFormGroup;
+    private fb = inject(FormBuilder);
+    private toastService = inject<ToastService>(ToastService);
 
-    constructor(
-        private fb: FormBuilder,
-        @Inject(ToastService) private toastService: ToastService
-    ) {}
+    public fancyForm: NestedFormGroup;
 
     public ngOnInit(): void {
         this.fancyForm = this.fb.group({
@@ -113,13 +111,13 @@ export class NestedFormsAsComponentExampleComponent implements OnInit {
     standalone: false,
 })
 export class FirstCustomFormExampleComponent implements OnInit {
+    private fb = inject(FormBuilder);
+
     @Output() formReady = new EventEmitter<FirstFormGroup>();
     public firstForm = this.fb.group({
         firstName: this.fb.control("", Validators.required),
         lastName: this.fb.control("", Validators.required),
     });
-
-    constructor(private fb: FormBuilder) {}
 
     public ngOnInit(): void {
         this.formReady.emit(this.firstForm);
@@ -158,13 +156,13 @@ export class FirstCustomFormExampleComponent implements OnInit {
     standalone: false,
 })
 export class SecondCustomFormExampleComponent implements OnInit {
+    private fb = inject(FormBuilder);
+
     @Output() formReady = new EventEmitter<SecondFormGroup>();
     public secondForm = this.fb.group({
         city: null,
         address: null,
     });
-
-    constructor(private fb: FormBuilder) {}
 
     public ngOnInit(): void {
         this.formReady.emit(this.secondForm);

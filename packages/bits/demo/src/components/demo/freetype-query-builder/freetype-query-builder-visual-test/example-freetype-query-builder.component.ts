@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.s
 
-import {
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    Output,
-} from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, inject } from "@angular/core";
 import { Subject } from "rxjs";
 
 import { HelpEntry, Tokenizer } from "@nova-ui/bits";
@@ -40,6 +34,8 @@ import { ExampleAppRenderer } from "../freetype-query-builder-test/renderer";
     standalone: false,
 })
 export class ExampleFreetypeQueryBuilderComponent {
+    private cd = inject(ChangeDetectorRef);
+
     @Input() exampleId: string;
     /**
      * Inputs and outputs here are example of how the api for such a component can look. But This is going to be very specific based on required use-cases.
@@ -69,8 +65,6 @@ export class ExampleFreetypeQueryBuilderComponent {
     currentHelp: HelpEntry[] = [];
     tokenizer: Tokenizer<ExampleAppToken> = new ExampleTokenizer();
     helpUpdater: ExampleHelp = new ExampleHelp();
-
-    constructor(private cd: ChangeDetectorRef) {}
 
     onValueChange($event: { value: string; tokens: ExampleAppToken[] }): void {
         this.tokens = $event.tokens;

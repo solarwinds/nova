@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component } from "@angular/core";
+import { ChangeDetectorRef, Component, inject } from "@angular/core";
 
 @Component({
     selector: "nui-tab-heading-group-vertical-example",
@@ -26,6 +26,8 @@ import { ChangeDetectorRef, Component } from "@angular/core";
     standalone: false,
 })
 export class TabHeadingGroupVerticalExampleComponent {
+    private changeDetector = inject(ChangeDetectorRef);
+
     public currentTabId: string;
 
     public tabsetContent = [
@@ -74,8 +76,6 @@ export class TabHeadingGroupVerticalExampleComponent {
             isDisabled: false,
         },
     ];
-
-    constructor(private changeDetector: ChangeDetectorRef) {}
 
     public updateContent(tabId: string): void {
         this.currentTabId = tabId;

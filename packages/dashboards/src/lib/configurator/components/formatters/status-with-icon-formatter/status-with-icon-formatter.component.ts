@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component, Input, OnChanges } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnChanges, inject } from "@angular/core";
 
 import { IHasChangeDetector } from "../../../../types";
 
@@ -70,7 +70,7 @@ export class StatusWithIconFormatterComponent
 {
     static lateLoadKey = "StatusWithIconFormatterComponent";
 
-    constructor(public changeDetector: ChangeDetectorRef) {}
+    public changeDetector = inject(ChangeDetectorRef);
 
     public isValid: boolean = false;
     @Input() data: {

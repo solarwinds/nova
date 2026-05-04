@@ -19,14 +19,7 @@
 //  THE SOFTWARE.
 
 import { Overlay } from "@angular/cdk/overlay";
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    Input,
-    NO_ERRORS_SCHEMA,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, Component, ElementRef, Input, NO_ERRORS_SCHEMA, ViewChild, inject } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { first } from "rxjs/operators";
 
@@ -47,13 +40,13 @@ import { NuiOverlayModule } from "../overlay.module";
     standalone: false,
 })
 class PopupWrapperComponent implements AfterViewInit {
+    elRef = inject(ElementRef);
+
     public items = Array.from({ length: 50 }).map((_, i) => `Item ${i}`);
     public selectedOptions = this.items[0];
     @Input() destroyed: boolean = false;
 
     @ViewChild(OverlayComponent) dropdown: OverlayComponent;
-
-    constructor(public elRef: ElementRef) {}
 
     public ngAfterViewInit(): void {}
 }

@@ -55,6 +55,13 @@ import { UtilService } from "../../services/util.service";
     },
 })
 export class ImageComponent {
+    private logger = inject(LoggerService);
+    private utilService = inject(UtilService);
+    private changeDetector = inject(ChangeDetectorRef);
+    private images = inject<Array<IImagesPresetItem>>(imagesPresetToken);
+    private domSanitizer = inject(DomSanitizer);
+    private el = inject(ElementRef);
+
     /**
      * Image name from nui image preset or external source
      */
@@ -143,13 +150,6 @@ export class ImageComponent {
             statusParts: undefined,
         })
     );
-
-    private logger = inject(LoggerService);
-    private utilService = inject(UtilService);
-    private changeDetector = inject(ChangeDetectorRef);
-    private images = inject<Array<IImagesPresetItem>>(imagesPresetToken);
-    private domSanitizer = inject(DomSanitizer);
-    private el = inject(ElementRef);
 
     public computedRole = computed(() => this.a11y().role);
     public computedAriaHidden = computed(() => this.a11y().ariaHidden);

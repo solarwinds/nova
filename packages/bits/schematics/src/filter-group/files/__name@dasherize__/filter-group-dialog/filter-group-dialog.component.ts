@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    Output,
-} from "@angular/core";
+import { Component, EventEmitter, Input, Output, inject } from "@angular/core";
 import { ISelection, NuiActiveDialog, SelectorService } from "@nova-ui/bits";
 
 import { IFilterGroupOption } from "../public-api";
@@ -35,13 +29,14 @@ import { IFilterGroupOption } from "../public-api";
     styleUrls: ["./filter-group-dialog.component.less"],
 })
 export class FilterGroupDialogComponent {
+    private activeDialog = inject<NuiActiveDialog>(NuiActiveDialog);
+    private selectorService = inject(SelectorService);
+
     @Input() title: string;
     @Input() itemPickerOptions: IFilterGroupOption[] = [];
     @Input() selectedValues: string[] = [];
 
     @Output() dialogClosed: EventEmitter<string[]> = new EventEmitter();
-
-    constructor(@Inject(NuiActiveDialog) private activeDialog: NuiActiveDialog, private selectorService: SelectorService) {}
 
     public acceptDialogFilters() {
         this.dialogClosed.emit(this.selectedValues);

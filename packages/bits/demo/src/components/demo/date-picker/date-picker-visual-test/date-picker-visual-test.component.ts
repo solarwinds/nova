@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import moment, { Moment } from "moment/moment";
 
@@ -28,6 +28,8 @@ import moment, { Moment } from "moment/moment";
     standalone: false,
 })
 export class DatePickerVisualTestComponent {
+    private formBuilder = inject(FormBuilder);
+
     public initDate: Moment = moment().set({
         year: 2017,
         month: 11,
@@ -38,7 +40,7 @@ export class DatePickerVisualTestComponent {
     public emptyDate = moment("");
     public myForm;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor() {
         this.myForm = this.formBuilder.group({
             datePickerFormControl: this.formBuilder.control(this.emptyDate, [
                 Validators.required,

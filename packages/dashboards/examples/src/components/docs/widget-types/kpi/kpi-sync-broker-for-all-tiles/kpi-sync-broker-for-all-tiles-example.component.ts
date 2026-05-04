@@ -22,6 +22,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import {
     ChangeDetectorRef,
     Component,
+    inject,
     Injectable,
     OnDestroy,
     OnInit,
@@ -58,10 +59,7 @@ export class AverageRatingKpiDataSource
 {
     public static providerId = "AverageRatingKpiDataSource";
     public busy = new BehaviorSubject<boolean>(false);
-
-    constructor(private http: HttpClient) {
-        super();
-    }
+    private http = inject(HttpClient);
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
@@ -107,10 +105,7 @@ export class RatingsCountKpiDataSource
 
     // Use this subject to communicate the data source's busy state
     public busy = new BehaviorSubject<boolean>(false);
-
-    constructor(private http: HttpClient) {
-        super();
-    }
+    private http = inject(HttpClient);
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
@@ -203,11 +198,9 @@ export class KpiSyncBrokerForAllTilesExampleComponent implements OnInit {
     public gridsterConfig: GridsterConfig = {};
     public editMode: boolean = false;
 
-    constructor(
-        private widgetTypesService: WidgetTypesService,
-        private providerRegistry: ProviderRegistryService,
-        private changeDetectorRef: ChangeDetectorRef
-    ) {}
+    private widgetTypesService = inject(WidgetTypesService);
+    private providerRegistry = inject(ProviderRegistryService);
+    private changeDetectorRef = inject(ChangeDetectorRef);
 
     public ngOnInit(): void {
         this.setupDashboard();

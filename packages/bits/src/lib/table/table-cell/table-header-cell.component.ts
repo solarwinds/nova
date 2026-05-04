@@ -19,20 +19,7 @@
 //  THE SOFTWARE.
 
 import { CdkHeaderCell } from "@angular/cdk/table";
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    HostBinding,
-    HostListener,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Renderer2,
-    SimpleChanges,
-} from "@angular/core";
+import { AfterViewInit, Component, ElementRef, HostBinding, HostListener, Input, NgZone, OnChanges, OnDestroy, OnInit, Renderer2, SimpleChanges, inject } from "@angular/core";
 import _isNil from "lodash/isNil";
 import _isUndefined from "lodash/isUndefined";
 import { fromEvent, Subscription } from "rxjs";
@@ -80,6 +67,13 @@ export class TableHeaderCellComponent
     extends CdkHeaderCell
     implements OnInit, OnChanges, AfterViewInit, OnDestroy
 {
+    private columnDef: TableColumnDefDirective;
+    private elementRef: ElementRef;
+    private tableStateHandlerService = inject(TableStateHandlerService);
+    private utilService = inject(UtilService);
+    private zone = inject(NgZone);
+    private renderer = inject(Renderer2);
+
     @Input() alignment: TableAlignmentOptions;
     @Input() tooltipText: string;
     @Input() isColumnSortingDisabled: boolean = false;
@@ -238,15 +232,14 @@ export class TableHeaderCellComponent
         this.tableStateHandlerService.draggedOverCell.next(undefined);
     }
 
-    constructor(
-        private columnDef: TableColumnDefDirective,
-        private elementRef: ElementRef,
-        private tableStateHandlerService: TableStateHandlerService,
-        private utilService: UtilService,
-        private zone: NgZone,
-        private renderer: Renderer2
-    ) {
+    constructor() {
+        const columnDef = inject(TableColumnDefDirective);
+        const elementRef = inject(ElementRef);
+
         super(columnDef, elementRef);
+        this.columnDef = columnDef;
+        this.elementRef = elementRef;
+
 
         this.tableStateHandlerService.columnType = <ColumnType>{
             columnName: this.columnDef.name,

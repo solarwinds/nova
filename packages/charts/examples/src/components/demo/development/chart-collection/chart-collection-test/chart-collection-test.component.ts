@@ -22,6 +22,7 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     Component,
+    inject,
     OnInit,
     QueryList,
     ViewChildren,
@@ -63,12 +64,14 @@ interface IMyChart {
     standalone: false,
 })
 export class ChartCollectionTestComponent implements OnInit, AfterViewInit {
+    private changeDetection = inject(ChangeDetectorRef);
+
     @ViewChildren(ChartComponent) charts: QueryList<ChartComponent>;
 
     public myCharts: IMyChart[] = [];
     private chartCount = 2;
 
-    constructor(private changeDetection: ChangeDetectorRef) {
+    constructor() {
         for (let i = 0; i < this.chartCount; i++) {
             const chart = new Chart(new XYGrid());
 

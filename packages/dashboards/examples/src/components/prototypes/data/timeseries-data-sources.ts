@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import moment from "moment/moment";
 import { BehaviorSubject } from "rxjs";
 import { finalize } from "rxjs/operators";
@@ -53,10 +53,7 @@ export class AcmeTimeseriesDataSource
 {
     public static providerId = "AcmeTimeseriesDataSource";
     public static mockError = false;
-
-    constructor(private http: HttpClient) {
-        super();
-    }
+    private http = inject(HttpClient);
 
     public busy = new BehaviorSubject(false);
 

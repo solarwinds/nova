@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Injectable, OnDestroy } from "@angular/core";
+import { inject, Injectable, OnDestroy } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { finalize } from "rxjs/operators";
 
@@ -40,10 +40,7 @@ export class AcmeKpiDataSource
     public static mockError = false;
 
     public busy = new BehaviorSubject<boolean>(false);
-
-    constructor(private http: HttpClient) {
-        super();
-    }
+    private http = inject(HttpClient);
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
@@ -98,10 +95,7 @@ export class AcmeKpiDataSource2
     });
 
     public busy = new BehaviorSubject<boolean>(false);
-
-    constructor(private http: HttpClient) {
-        super();
-    }
+    private http = inject(HttpClient);
 
     public properties: any;
 

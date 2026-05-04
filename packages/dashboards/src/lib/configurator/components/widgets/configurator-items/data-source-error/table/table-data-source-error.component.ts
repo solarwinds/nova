@@ -23,6 +23,7 @@ import {
     ChangeDetectorRef,
     Component,
     OnDestroy,
+    inject,
 } from "@angular/core";
 
 import { DataSourceErrorComponent } from "../data-source-error.component";
@@ -39,8 +40,10 @@ export class TableDataSourceErrorComponent
 {
     public static lateLoadKey = "TableDataSourceErrorComponent";
 
-    constructor(public changeDetector: ChangeDetectorRef) {
-        super(changeDetector);
+    public changeDetector = inject(ChangeDetectorRef);
+
+    constructor() {
+        super();
     }
 
     public ngOnDestroy(): void {

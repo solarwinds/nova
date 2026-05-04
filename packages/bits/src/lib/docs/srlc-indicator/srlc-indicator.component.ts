@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { Router, RoutesRecognized } from "@angular/router";
 import defaults from "lodash/defaults";
 import { filter, map } from "rxjs/operators";
@@ -32,7 +32,8 @@ import { ISrlcDetails, SrlcStage } from "./public-api";
     standalone: false,
 })
 export class SrlcIndicatorComponent implements OnInit {
-    constructor(private router: Router) {}
+    private router = inject(Router);
+
 
     public globalSrlc: ISrlcDetails = {
         stage: SrlcStage.preAlpha,
