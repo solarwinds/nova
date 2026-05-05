@@ -93,34 +93,32 @@ describe("components >", () => {
             });
         });
 
-        beforeEach(() => {
+        beforeEach(fakeAsync(() => {
             fixture = TestBed.createComponent(TestWrapperComponent);
             component = fixture.debugElement.children[0].componentInstance;
             // Double detectChanges to fully settle ngAfterContentInit's splitToolbarItems()
-            // and ngAfterViewInit's moveToolbarItems() before each test (Angular 21 pattern).
+            // and ngAfterViewInit's deferred overflow recalculation before each test.
             fixture.detectChanges();
             fixture.detectChanges();
-        });
+            flush();
+        }));
 
         describe("ngAfterViewInit >", () => {
-            it("should add visible group to commandGroups array", () => {
-                // splitToolbarItems runs in ngAfterContentInit (already done in beforeEach).
-                // ngAfterViewInit subscribes to ngZone.onStable to call moveToolbarItems.
-                // In Angular 21, detectChanges() does not emit onStable — trigger it manually.
+            it("should add visible group to commandGroups array", fakeAsync(() => {
                 spyOn(component, "moveToolbarItems").and.callFake(noop);
                 component.ngAfterViewInit();
-                fixture.ngZone!.onStable.emit(null);
+                flush();
                 expect(component.commandGroups.length).toBe(2);
                 expect(component.moveToolbarItems).toHaveBeenCalled();
-            });
+            }));
 
-            it("should visible group contain 3 items", () => {
+            it("should visible group contain 3 items", fakeAsync(() => {
                 spyOn(component, "moveToolbarItems").and.callFake(noop);
                 component.ngAfterViewInit();
-                fixture.ngZone!.onStable.emit(null);
+                flush();
                 expect(component.commandGroups[0].items.length).toBe(3);
                 expect(component.moveToolbarItems).toHaveBeenCalled();
-            });
+            }));
         });
         describe("splitToolbarItems >", () => {
             it("should split items", () => {

@@ -28,7 +28,6 @@ import {
     HostBinding,
     HostListener,
     Input,
-    NgZone,
     OnDestroy,
     QueryList,
     ViewChild,
@@ -37,7 +36,7 @@ import {
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import { merge, Subject, Subscription } from "rxjs";
-import { debounceTime, take, takeUntil } from "rxjs/operators";
+import { debounceTime, takeUntil } from "rxjs/operators";
 
 import {
     IToolbarGroupContent,
@@ -123,12 +122,12 @@ export class ToolbarComponent implements AfterViewInit, AfterContentInit, OnDest
     private childrenSubscription: Subscription;
     private destructiveItems: any[];
     private destroy$: Subject<void> = new Subject<void>();
+    private moveToolbarItemsTimeout?: ReturnType<typeof setTimeout>;
 
     constructor(
         public element: ElementRef,
         private changeDetector: ChangeDetectorRef,
         private logger: LoggerService,
-        private ngZone: NgZone,
         private keyboardService: ToolbarKeyboardService
     ) {}
 
@@ -151,17 +150,9 @@ export class ToolbarComponent implements AfterViewInit, AfterContentInit, OnDest
         )
             .pipe(debounceTime(20))
             .subscribe(() => {
-                // timeout is needed for updating actual querylist. without it splitToolbarItems won't get new element in groups' arrays
-                setTimeout(() => {
-                    this.splitToolbarItems();
-                }, 0);
+                this.scheduleMoveToolbarItems();
             });
-        this.ngZone.onStable
-            .asObservable()
-            .pipe(take(1))
-            .subscribe(() => {
-                this.moveToolbarItems();
-            });
+        this.scheduleMoveToolbarItems();
         this.destructiveItems = [];
         this.groups.forEach((group: ToolbarGroupComponent) => {
             const isDestructiveItem = group.items.filter(
@@ -185,9 +176,27 @@ export class ToolbarComponent implements AfterViewInit, AfterContentInit, OnDest
     }
 
     public ngOnDestroy(): void {
-        this.childrenSubscription.unsubscribe();
+        this.childrenSubscription?.unsubscribe();
+        if (this.moveToolbarItemsTimeout) {
+            clearTimeout(this.moveToolbarItemsTimeout);
+            this.moveToolbarItemsTimeout = undefined;
+        }
         this.destroy$.next();
         this.destroy$.complete();
+    }
+
+    public scheduleMoveToolbarItems(): void {
+        if (this.moveToolbarItemsTimeout) {
+            clearTimeout(this.moveToolbarItemsTimeout);
+        }
+
+        // Angular 21 can invoke resize/query-list callbacks before projected content and layout
+        // measurements have fully settled, so defer the overflow recalculation to the next tick.
+        this.moveToolbarItemsTimeout = setTimeout(() => {
+            this.moveToolbarItems();
+            this.changeDetector.detectChanges();
+            this.moveToolbarItemsTimeout = undefined;
+        });
     }
 
     public onClickToolbarBtn(
@@ -201,6 +210,7 @@ export class ToolbarComponent implements AfterViewInit, AfterContentInit, OnDest
 
     public moveToolbarItems(): void {
         this.makeAllItemsVisible();
+        this.changeDetector.detectChanges();
 
         const containerBorder = Math.floor(
             this.toolbarContainer.nativeElement.getBoundingClientRect().right
@@ -236,6 +246,7 @@ export class ToolbarComponent implements AfterViewInit, AfterContentInit, OnDest
                 }
             );
             this.splitToolbarItems();
+            this.changeDetector.detectChanges();
             this.lastChildBorder = Math.floor(
                 this.toolbarContainer.nativeElement.lastElementChild.getBoundingClientRect()
                     .right
