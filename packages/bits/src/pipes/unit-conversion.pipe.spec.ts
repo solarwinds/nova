@@ -33,8 +33,8 @@ describe("pipes >", () => {
                 providers: [LoggerService, UnitConversionService],
             });
 
-            pipe = new UnitConversionPipe(
-                TestBed.inject(UnitConversionService)
+            pipe = TestBed.runInInjectionContext(
+                () => new UnitConversionPipe()
             );
         });
 

@@ -18,6 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { DOCUMENT } from "@angular/common";
+import { PLATFORM_ID } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
+
 import { BrowserName, UtilService } from "./util.service";
 
 describe("services >", () => {
@@ -32,7 +36,15 @@ describe("services >", () => {
         };
 
         beforeEach(() => {
-            utilService = new UtilService(fakeDocument, "browser" as any);
+            TestBed.configureTestingModule({
+                providers: [
+                    UtilService,
+                    { provide: DOCUMENT, useValue: fakeDocument },
+                    { provide: PLATFORM_ID, useValue: "browser" },
+                ],
+            });
+
+            utilService = TestBed.inject(UtilService);
         });
 
         describe("when sizeof() is called", () => {

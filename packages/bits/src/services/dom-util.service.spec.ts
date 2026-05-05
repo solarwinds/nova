@@ -55,13 +55,13 @@ describe("services >", () => {
         };
 
         beforeEach(() => {
-            domUtilService = new DomUtilService(document);
             TestBed.configureTestingModule({
                 declarations: [DomUtilServiceTestComponent],
             });
         });
         beforeEach(async () => {
             fixture = await createTestComponent();
+            domUtilService = TestBed.inject(DomUtilService);
             sourceElement = fixture.debugElement.query(
                 By.css("#source-element")
             ).nativeElement;

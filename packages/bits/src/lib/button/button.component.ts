@@ -41,7 +41,7 @@ import { LoggerService } from "../../services/log-service";
     standalone: false,
 })
 export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
-    private type = inject(new HostAttributeToken("type"));
+    private type = inject(new HostAttributeToken("type"), { optional: true });
     private el = inject(ElementRef);
     private logger = inject(LoggerService);
 

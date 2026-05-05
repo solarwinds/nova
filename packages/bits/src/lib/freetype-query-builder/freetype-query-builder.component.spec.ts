@@ -18,10 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ChangeDetectorRef, Renderer2 } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
 import { Subject } from "rxjs";
 import { take } from "rxjs/operators";
 
 import { FreetypeQueryBuilderComponent } from "./freetype-query-builder.component";
+import { FreeTypeQueryUtilsService } from "./helpers/freetype-query-utils.service";
+import { ToastService } from "../toast/toast.service";
 
 describe("FreetypeQueryBuilderComponent", () => {
     describe("UnitTests", () => {
@@ -71,22 +76,24 @@ describe("FreetypeQueryBuilderComponent", () => {
         });
         let tooLongDropEvent: jasmine.SpyObj<DragEvent>;
         let keyDownEvent: KeyboardEvent;
-        let instance: FreetypeQueryBuilderComponent<any> =
-            new FreetypeQueryBuilderComponent(
-                renderer2,
-                formBuilder,
-                cd,
-                toastService,
-                utils
-            );
+        let instance: FreetypeQueryBuilderComponent<any>;
 
         beforeEach(() => {
-            instance = new FreetypeQueryBuilderComponent(
-                renderer2,
-                formBuilder,
-                cd,
-                toastService,
-                utils
+            TestBed.configureTestingModule({
+                providers: [
+                    { provide: Renderer2, useValue: renderer2 },
+                    { provide: FormBuilder, useValue: formBuilder },
+                    { provide: ChangeDetectorRef, useValue: cd },
+                    { provide: ToastService, useValue: toastService },
+                    {
+                        provide: FreeTypeQueryUtilsService,
+                        useValue: utils,
+                    },
+                ],
+            });
+
+            instance = TestBed.runInInjectionContext(
+                () => new FreetypeQueryBuilderComponent<any>()
             );
             instance.querySelect = qs;
             instance.messageTextarea = ta;

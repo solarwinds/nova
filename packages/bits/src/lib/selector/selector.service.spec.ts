@@ -18,6 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { TestBed } from "@angular/core/testing";
+
 import { CheckboxStatus, SelectionType } from "./public-api";
 import { SelectorService } from "./selector.service";
 import { ISelection, SelectionModel } from "../../services/public-api";
@@ -93,7 +95,8 @@ describe("services >", () => {
         });
 
         beforeEach(() => {
-            selectorService = new SelectorService();
+            TestBed.configureTestingModule({});
+            selectorService = TestBed.inject(SelectorService);
         });
 
         describe("applySelector >", () => {

@@ -155,7 +155,7 @@ export class TableComponent<T>
         const _differs = inject(IterableDiffers);
         const _changeDetectorRef = inject(ChangeDetectorRef);
         const _elementRef = inject<ElementRef<any>>(ElementRef);
-        const role = inject(new HostAttributeToken("role"));
+        const role = inject(new HostAttributeToken("role"), { optional: true });
         const _dir = inject(Directionality);
         const document = inject<Document>(DOCUMENT);
         const platform = inject(Platform);

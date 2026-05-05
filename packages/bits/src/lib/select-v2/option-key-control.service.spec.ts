@@ -18,6 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { TestBed } from "@angular/core/testing";
+
 import { OptionKeyControlService } from "./option-key-control.service";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 
@@ -50,7 +53,14 @@ describe("components > ", () => {
 
     describe("combobox > OptionKeyControlService", () => {
         beforeEach(() => {
-            service = new OptionKeyControlService<any>(announcerMock);
+            TestBed.configureTestingModule({
+                providers: [
+                    OptionKeyControlService,
+                    { provide: LiveAnnouncer, useValue: announcerMock },
+                ],
+            });
+
+            service = TestBed.inject(OptionKeyControlService<any>);
             service.popup = popupMock;
             service.optionItems = options as any;
             service.initKeyboardManager();

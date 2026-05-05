@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import { NgZone } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
 
 import { ChipsOverflowService } from "./chips-overflow.service";
 import { ChipsComponent } from "./chips.component";
@@ -39,9 +40,21 @@ describe("components >", () => {
         let subject: ChipsComponent;
 
         beforeEach(() => {
-            subject = new ChipsComponent(
-                {} as NgZone,
-                {} as ChipsOverflowService
+            TestBed.configureTestingModule({
+                providers: [
+                    {
+                        provide: NgZone,
+                        useValue: new NgZone({ enableLongStackTrace: false }),
+                    },
+                    {
+                        provide: ChipsOverflowService,
+                        useValue: {} as ChipsOverflowService,
+                    },
+                ],
+            });
+
+            subject = TestBed.runInInjectionContext(
+                () => new ChipsComponent()
             );
         });
 

@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectorRef } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
 
 import { QuickPickerComponent } from "./quick-picker.component";
 
@@ -27,7 +28,18 @@ describe("components >", () => {
         let quickPicker: QuickPickerComponent;
 
         beforeEach(() => {
-            quickPicker = new QuickPickerComponent(<ChangeDetectorRef>{});
+            TestBed.configureTestingModule({
+                providers: [
+                    {
+                        provide: ChangeDetectorRef,
+                        useValue: <ChangeDetectorRef>{},
+                    },
+                ],
+            });
+
+            quickPicker = TestBed.runInInjectionContext(
+                () => new QuickPickerComponent()
+            );
         });
 
         describe("if selectedPreset is defined", () => {

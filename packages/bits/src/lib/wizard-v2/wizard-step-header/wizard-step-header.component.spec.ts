@@ -28,6 +28,7 @@ import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
 import { WizardStepLabelDirective } from "../wizard-step-label.directive";
 
 const fakeStep = {} as WizardStepV2Component;
+const fakeTemplateRef = {} as TemplateRef<any>;
 
 describe("components >", () => {
     describe("WizardStepHeader", () => {
@@ -38,6 +39,9 @@ describe("components >", () => {
             TestBed.configureTestingModule({
                 declarations: [WizardStepHeaderComponent],
                 imports: [IconComponent],
+                providers: [
+                    { provide: TemplateRef, useValue: fakeTemplateRef },
+                ],
             });
 
             fixture = TestBed.createComponent(WizardStepHeaderComponent);
@@ -121,8 +125,8 @@ describe("components >", () => {
             });
 
             it("should return null if user pass template as input for label", () => {
-                const label = new WizardStepLabelDirective(
-                    {} as TemplateRef<any>
+                const label = TestBed.runInInjectionContext(
+                    () => new WizardStepLabelDirective()
                 );
 
                 component.label = label;
@@ -143,8 +147,8 @@ describe("components >", () => {
             });
 
             it("should return wizardDirective if user pass template as input for label", () => {
-                const label = new WizardStepLabelDirective(
-                    {} as TemplateRef<any>
+                const label = TestBed.runInInjectionContext(
+                    () => new WizardStepLabelDirective()
                 );
 
                 component.label = label;

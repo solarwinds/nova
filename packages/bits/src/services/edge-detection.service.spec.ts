@@ -96,32 +96,42 @@ describe("services >", () => {
                 },
             });
             await TestBed.compileComponents();
+            edgeDetectionService = TestBed.inject(EdgeDetectionService);
             return TestBed.createComponent(EdgeDetectionTestComponent);
         };
 
         beforeEach(() => {
-            logger = new LoggerService();
+            logger = {
+                get error() {
+                    return noop;
+                },
+                get warn() {
+                    return noop;
+                },
+            } as LoggerService;
 
             logErrorSpy = spyOnProperty(logger, "error").and.returnValue(noop);
             spyOnProperty(logger, "warn").and.returnValue(noop);
-            edgeDetectionService = new EdgeDetectionService(
-                new DomUtilService(document),
-                document,
-                logger
-            );
             TestBed.configureTestingModule({
                 declarations: [EdgeDetectionTestComponent],
+                providers: [
+                    EdgeDetectionService,
+                    DomUtilService,
+                    { provide: LoggerService, useValue: logger },
+                ],
             });
         });
 
         describe("canBe", () => {
             it("logs errors if arguments were not passed", () => {
+                edgeDetectionService = TestBed.inject(EdgeDetectionService);
                 (edgeDetectionService as any).canBe();
 
                 expect(logErrorSpy).toHaveBeenCalled();
             });
 
             it("uses private 'offset' method to calculate element offset", () => {
+                edgeDetectionService = TestBed.inject(EdgeDetectionService);
                 basePoint = document.createElement("div");
                 deposit = document.createElement("div");
 
@@ -131,6 +141,7 @@ describe("services >", () => {
             });
 
             it("uses private 'outer' method to calculate either element outerWith or outerHeight", () => {
+                edgeDetectionService = TestBed.inject(EdgeDetectionService);
                 basePoint = document.createElement("div");
                 deposit = document.createElement("div");
 
@@ -142,6 +153,7 @@ describe("services >", () => {
 
         describe("getEdgeDefinerMeasurements (private)", () => {
             it("returns window measurements if no edgeDefiner element passed", () => {
+                edgeDetectionService = TestBed.inject(EdgeDetectionService);
                 const container = (
                     edgeDetectionService as any
                 ).getEdgeDefinerMeasurements(null);

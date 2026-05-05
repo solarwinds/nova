@@ -71,7 +71,7 @@ describe("components >", () => {
                     EventBusService,
                     {
                         provide: NUI_SELECT_V2_OPTION_PARENT_COMPONENT,
-                        useClass: PopupWrapperComponent,
+                        useValue: { selectOption: () => {}, selectedOptions: [], multiselect: false },
                     },
                 ],
                 schemas: [NO_ERRORS_SCHEMA],

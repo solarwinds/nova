@@ -18,6 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { DOCUMENT } from "@angular/common";
+import { TestBed } from "@angular/core/testing";
+
 import {
     IPopoverPosition,
     PopoverAlignment,
@@ -329,18 +332,21 @@ describe("services >", () => {
         let popover: HTMLDivElement;
         let triggerElement: HTMLDivElement;
 
-        beforeAll(() => {
-            edgeDetectionService = new EdgeDetectionService(
-                new DomUtilService(document),
-                document,
-                new LoggerService()
-            );
-            positionService = new PositionService(document);
-            popoverModalService = new PopoverModalService(
-                positionService,
-                document,
-                edgeDetectionService
-            );
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                providers: [
+                    DomUtilService,
+                    EdgeDetectionService,
+                    LoggerService,
+                    PositionService,
+                    PopoverModalService,
+                    { provide: DOCUMENT, useValue: document },
+                ],
+            });
+
+            edgeDetectionService = TestBed.inject(EdgeDetectionService);
+            positionService = TestBed.inject(PositionService);
+            popoverModalService = TestBed.inject(PopoverModalService);
 
             popover = document.createElement("div");
             popover.innerHTML =
@@ -351,8 +357,10 @@ describe("services >", () => {
             document.body.appendChild(triggerElement);
         });
 
-        afterAll(() => {
-            document.body.removeChild(triggerElement);
+        afterEach(() => {
+            if (triggerElement.parentNode === document.body) {
+                document.body.removeChild(triggerElement);
+            }
         });
 
         beforeEach(() => {
