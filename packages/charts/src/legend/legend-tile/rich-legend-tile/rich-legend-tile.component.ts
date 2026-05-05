@@ -23,9 +23,8 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     Component,
-    Host,
+    inject,
     Input,
-    Optional,
     ViewEncapsulation,
 } from "@angular/core";
 import _isNil from "lodash/isNil";
@@ -65,11 +64,9 @@ export class RichLegendTileComponent
 
     public seriesHasAdditionalContent: boolean;
 
-    constructor(
-        @Host() private legendSeries: LegendSeriesComponent,
-        @Optional() @Host() private legend: LegendComponent,
-        private changeDetector: ChangeDetectorRef
-    ) {}
+    private legendSeries = inject(LegendSeriesComponent, { host: true });
+    private legend = inject(LegendComponent, { optional: true, host: true });
+    private changeDetector = inject(ChangeDetectorRef);
 
     public ngAfterContentInit(): void {
         if (this.legend) {

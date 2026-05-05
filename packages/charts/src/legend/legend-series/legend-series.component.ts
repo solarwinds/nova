@@ -24,11 +24,10 @@ import {
     Component,
     ElementRef,
     EventEmitter,
-    Host,
     HostBinding,
     HostListener,
+    inject,
     Input,
-    Optional,
     Output,
     ViewChild,
 } from "@angular/core";
@@ -138,8 +137,7 @@ export class LegendSeriesComponent implements AfterContentInit {
     private _seriesRenderState: RenderState;
     private _active = false;
     private _interactive: boolean;
-
-    constructor(@Optional() @Host() private legend: LegendComponent) {}
+    private legend = inject(LegendComponent, { optional: true, host: true });
 
     public ngAfterContentInit(): void {
         if (this.legend) {
