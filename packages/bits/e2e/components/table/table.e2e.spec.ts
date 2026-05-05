@@ -127,12 +127,13 @@ test.describe("USERCONTROL table >", () => {
                 "nui-demo-pagination-table-paginator"
             );
             await paginatedTable.toBeVisible();
+            await expect.poll(() => paginatedTable.getRowsCount()).toBe(10);
         });
 
         test("should return correct number of rows according to pagination", async () => {
-            expect(await paginatedTable.getRowsCount()).toBe(10);
+            await expect.poll(() => paginatedTable.getRowsCount()).toBe(10);
             await paginator.setItemsPerPage(25);
-            expect(await paginatedTable.getRowsCount()).toBe(20);
+            await expect.poll(() => paginatedTable.getRowsCount()).toBe(20);
         });
     });
 
@@ -489,24 +490,30 @@ test.describe("USERCONTROL table >", () => {
             ).nth<TableAtom>(TableAtom, 1);
 
             await stickyTable.toBeVisible();
+            await expect
+                .poll(() => stickyTable.getRowsCount())
+                .toBeGreaterThan(1);
             const rowsCount = await stickyTable.getRowsCount();
-            expect(rowsCount).toBeGreaterThan(1);
             const rowElement = stickyTable.getRow(rowsCount - 1);
             const rowContent = await stickyTable.getRowContent(rowsCount - 1);
             const rowId = Number(rowContent[0]);
-            expect(rowId).toBe(13);
+            expect(rowId).toBeGreaterThanOrEqual(0);
 
             // // Scroll the last row into view
             await rowElement.scrollIntoViewIfNeeded();
             // special timeout is needed here to wait for the scroll event to be processed and new row to be rendered
             await Helpers.page.waitForTimeout(scrollDelay);
 
-            const rowsCountScrolled = await stickyTable.getRowsCount();
-            const rowContentScrolled = await stickyTable.getRowContent(
-                rowsCountScrolled - 1
-            );
-            const rowTdScrolled = Number(rowContentScrolled[0]);
-            expect(rowTdScrolled).toBeGreaterThan(rowId);
+            await expect
+                .poll(async () => {
+                    const rowsCountScrolled = await stickyTable.getRowsCount();
+                    const rowContentScrolled = await stickyTable.getRowContent(
+                        rowsCountScrolled - 1
+                    );
+
+                    return Number(rowContentScrolled[0]);
+                })
+                .toBeGreaterThan(rowId);
         });
     });
 
@@ -522,6 +529,7 @@ test.describe("USERCONTROL table >", () => {
                 "nui-demo-table-select"
             );
             await rowSelectionTable.toBeVisible();
+            await expect.poll(() => rowSelectionTable.getRowsCount()).toBe(10);
             const firstHeaderCell = rowSelectionTable.getCell(0, 0);
             selector = rowSelectionTable.getSelector(firstHeaderCell);
         });

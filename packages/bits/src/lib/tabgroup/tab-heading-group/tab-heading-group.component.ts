@@ -93,6 +93,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
         queueMicrotask(() => {
             this.setActiveTab();
             this.subscribeToSelection();
+            this.checkTraverse();
         });
 
         this._changesSubscription = this._tabs.changes.subscribe(
@@ -103,6 +104,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
                 );
                 this._tabSelectedSubscriptions = [];
                 this.subscribeToSelection();
+                this.checkTraverse();
             }
         );
     }
