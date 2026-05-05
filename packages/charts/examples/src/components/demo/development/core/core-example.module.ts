@@ -22,7 +22,6 @@ import { NgModule, Provider } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 import {
-    LoggerService,
     LogLevel,
     NuiButtonModule,
     NuiCheckboxModule,
@@ -80,8 +79,8 @@ environment.logLevel = LogLevel.debug;
     ],
     providers: [
         {
-            provide: LoggerService,
-            useValue: new LoggerService(environment),
+            provide: NuiEnvironment,
+            useValue: environment,
         } as Provider,
     ],
 })
