@@ -71,7 +71,7 @@ export class DragAndDropService {
             event.dataTransfer?.getData("text/plain");
         try {
             return JSON.parse(payload || "");
-        } catch (e) {
+        } catch (_e) {
             return payload;
         }
     }
