@@ -83,6 +83,7 @@ export class MenuSwitchComponent extends MenuItemBaseComponent {
         if (!this.disabled) {
             event.preventDefault();
             this.checked = !this.checked;
+            this.refreshView();
             this.actionDone.emit(this.checked);
         }
     }
@@ -105,6 +106,7 @@ export class MenuSwitchComponent extends MenuItemBaseComponent {
 
     public doAction(): void {
         this.checked = !this.checked;
+        this.refreshView();
         this.actionDone.emit(this.checked);
     }
 }
