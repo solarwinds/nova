@@ -74,6 +74,14 @@ describe("components >", () => {
                     document.activeElement
                 );
             });
+
+            it("should update the native input value when writeValue is called", () => {
+                testComponent.writeValue("formatted value");
+
+                expect(testComponent.textboxInput.nativeElement.value).toBe(
+                    "formatted value"
+                );
+            });
         });
     });
 });

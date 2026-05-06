@@ -7,7 +7,7 @@
         @if (!rows || rows <= 1) {
         <input
             class="form-control input-control nui-textbox__input"
-            value="{{ value }}"
+            [value]="value || ''"
             [autocomplete]="autocomplete"
             [disabled]="disabled"
             [attr.name]="name"
@@ -24,7 +24,7 @@
         } @if (rows > 1) {
         <textarea
             class="form-control input-control nui-textbox__input"
-            value="{{ value }}"
+            [value]="value || ''"
             [rows]="rows"
             [disabled]="disabled"
             [attr.name]="name"

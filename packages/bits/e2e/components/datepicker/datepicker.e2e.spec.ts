@@ -64,6 +64,9 @@ test.describe("USERCONTROL datepicker", () => {
         );
     });
 
+    const getTrimmedText = async (id: string): Promise<string> =>
+        ((await Atom.find<Atom>(Atom, id).getLocator().textContent()) ?? "").trim();
+
     test("should show year in title and months in body upon click on title", async () => {
         const currentYear: string = moment().year().toString();
         // Get random month
@@ -206,14 +209,8 @@ test.describe("USERCONTROL datepicker", () => {
     });
 
     test.describe("when minDate, maxDate or dateDisabled is set", () => {
-        const getMinDate = async () =>
-            Atom.find<Atom>(Atom, "nui-demo-datepicker-min-date")
-                .getLocator()
-                .textContent();
-        const getMaxDate = async () =>
-            Atom.find<Atom>(Atom, "nui-demo-datepicker-max-date")
-                .getLocator()
-                .textContent();
+        const getMinDate = async () => getTrimmedText("nui-demo-datepicker-min-date");
+        const getMaxDate = async () => getTrimmedText("nui-demo-datepicker-max-date");
 
         test("should forbid selection of date via text input, less than minDate", async () => {
             const minDate: Moment = moment(await getMinDate());
@@ -326,19 +323,9 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerWithPreserve.clickInput();
             await datepickerWithPreserve.selectDate(11);
             await datepickerWithPreserve.toggle();
-            const oldValue = await Atom.find<Atom>(
-                Atom,
-                activeDateValueIdPreserved
-            )
-                .getLocator()
-                .textContent();
+            const oldValue = await getTrimmedText(activeDateValueIdPreserved);
             await datepickerWithPreserve.selectDate(10);
-            const newValue = await Atom.find<Atom>(
-                Atom,
-                activeDateValueIdPreserved
-            )
-                .getLocator()
-                .textContent();
+            const newValue = await getTrimmedText(activeDateValueIdPreserved);
 
             expect(newValue).not.toBe(oldValue);
 
@@ -347,13 +334,9 @@ test.describe("USERCONTROL datepicker", () => {
 
         test("should change date (NOT saving hours, minutes, seconds)", async () => {
             await datepickerInline.selectDate(11);
-            const oldValue = await Atom.find<Atom>(Atom, activeDateValueId)
-                .getLocator()
-                .textContent();
+            const oldValue = await getTrimmedText(activeDateValueId);
             await datepickerInline.selectDate(10);
-            const newValue = await Atom.find<Atom>(Atom, activeDateValueId)
-                .getLocator()
-                .textContent();
+            const newValue = await getTrimmedText(activeDateValueId);
 
             expect(newValue).not.toBe(oldValue);
             expect(moment(newValue).hour()).toBe(0);
@@ -366,24 +349,14 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerWithPreserve.selectDate(5);
             const month = moment().month();
             const monthName = DatepickerAtom.MONTHNAMES_SHORT[month];
-            const oldValue = await Atom.find<Atom>(
-                Atom,
-                activeDateValueIdPreserved
-            )
-                .getLocator()
-                .textContent();
+            const oldValue = await getTrimmedText(activeDateValueIdPreserved);
             await datepickerWithPreserve.clickInput();
             await datepickerWithPreserve.clickTitle();
             await datepickerWithPreserve.selectMonth(monthName);
             await datepickerWithPreserve.selectDate(
                 moment().date() > 15 ? 10 : 20
             );
-            const newValue = await Atom.find<Atom>(
-                Atom,
-                activeDateValueIdPreserved
-            )
-                .getLocator()
-                .textContent();
+            const newValue = await getTrimmedText(activeDateValueIdPreserved);
 
             expect(newValue).not.toBe(oldValue);
             expect(moment(newValue).hour()).toBe(moment(oldValue).hour());
@@ -393,15 +366,11 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerInline.selectDate(5);
             const month = moment().month();
             const monthName = DatepickerAtom.MONTHNAMES_SHORT[month];
-            const oldValue = await Atom.find<Atom>(Atom, activeDateValueId)
-                .getLocator()
-                .textContent();
+            const oldValue = await getTrimmedText(activeDateValueId);
             await datepickerInline.clickTitle();
             await datepickerInline.selectMonth(monthName);
             await datepickerInline.selectDate(moment().date() > 15 ? 10 : 20);
-            const newValue = await Atom.find<Atom>(Atom, activeDateValueId)
-                .getLocator()
-                .textContent();
+            const newValue = await getTrimmedText(activeDateValueId);
 
             expect(newValue).not.toBe(oldValue);
             expect(moment(newValue).hour()).toBe(0);
@@ -410,22 +379,12 @@ test.describe("USERCONTROL datepicker", () => {
         test("should save hour correctly when triggered at 23:00 - 0:00", async () => {
             await datepickerWithInitAndPreserve.clickInput();
             await datepickerWithInitAndPreserve.selectDate(5);
-            const oldValue = await Atom.find<Atom>(
-                Atom,
-                initDateValueIdPreserved
-            )
-                .getLocator()
-                .textContent();
+            const oldValue = await getTrimmedText(initDateValueIdPreserved);
             await datepickerWithInitAndPreserve.clickInput();
             await datepickerWithInitAndPreserve.selectDate(
                 moment().date() > 15 ? 10 : 20
             );
-            const newValue = await Atom.find<Atom>(
-                Atom,
-                initDateValueIdPreserved
-            )
-                .getLocator()
-                .textContent();
+            const newValue = await getTrimmedText(initDateValueIdPreserved);
 
             expect(newValue).not.toBe(oldValue);
             expect(moment(newValue).hour()).toBe(moment(oldValue).hour());

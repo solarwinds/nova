@@ -316,5 +316,41 @@ describe("components >", () => {
                 });
             });
         });
+
+        describe("typed input formatting >", () => {
+            const inputChangeDebounceTime = 500;
+
+            it("should reformat a valid typed date in the textbox", fakeAsync(() => {
+                componentInstance.ngOnInit();
+
+                componentInstance.onInputActiveDateChanged("05/07/26");
+                tick(inputChangeDebounceTime);
+                fixture.detectChanges();
+
+                const textboxInput = debugElement.query(
+                    By.css("input.form-control")
+                ).nativeElement as HTMLInputElement;
+
+                expect(textboxInput.value).toBe("07 May 2026");
+                expect(componentInstance.isInErrorState).toBe(false);
+            }));
+
+            it("should apply error styling for an invalid typed date", fakeAsync(() => {
+                componentInstance.ngOnInit();
+
+                componentInstance.onInputActiveDateChanged("20189-50.Nov2");
+                tick(inputChangeDebounceTime);
+                fixture.detectChanges();
+
+                const textbox = debugElement.query(By.css(".nui-textbox"));
+                const textboxInput = debugElement.query(
+                    By.css("input.form-control")
+                ).nativeElement as HTMLInputElement;
+
+                expect(componentInstance.isInErrorState).toBe(true);
+                expect(textbox.nativeElement.classList).toContain("has-error");
+                expect(textboxInput.getAttribute("aria-invalid")).toBe("true");
+            }));
+        });
     });
 });

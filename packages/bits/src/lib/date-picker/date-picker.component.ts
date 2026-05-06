@@ -33,6 +33,7 @@ import {
     OnInit,
     Output,
     SimpleChanges,
+    ViewRef,
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
@@ -241,6 +242,8 @@ export class DatePickerComponent
             ) {
                 this.updateTextboxValue();
             }
+
+            this.detectChanges();
         });
         this.onAppendToBodyChange(this.appendToBody);
     }
@@ -382,5 +385,11 @@ export class DatePickerComponent
 
     private onAppendToBodyChange(appendToBody: boolean): void {
         this.customContainer = appendToBody ? undefined : this.popupArea;
+    }
+
+    private detectChanges(): void {
+        if (!(this.cd as ViewRef).destroyed) {
+            this.cd.detectChanges();
+        }
     }
 }
