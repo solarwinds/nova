@@ -32,9 +32,9 @@ import forEach from "lodash/forEach";
 /** @ignore */
 interface IResizeEventQueue {
     events: any[];
-    add(event: Function): void;
+    add(event: () => void): void;
     call(): void;
-    remove(event: Function): void;
+    remove(event: () => void): void;
 }
 /** @ignore */
 interface IResizeElement extends HTMLElement {
@@ -87,7 +87,7 @@ export class ResizeDirective implements AfterViewInit, OnDestroy {
     private resizeEventQueue = class implements IResizeEventQueue {
         public events: any[] = [];
 
-        public add(event: Function) {
+        public add(event: () => void) {
             this.events.push(event);
         }
 
@@ -95,7 +95,7 @@ export class ResizeDirective implements AfterViewInit, OnDestroy {
             forEach(this.events, (event) => event.call());
         }
 
-        public remove(event: Function) {
+        public remove(event: () => void) {
             this.events = filter(
                 this.events,
                 (item: Function) => item !== event
@@ -134,7 +134,7 @@ export class ResizeDirective implements AfterViewInit, OnDestroy {
      */
     private attachResizeEvent(
         targetElement: IResizeElement,
-        resizeCallback: Function
+        resizeCallback: () => void
     ): void {
         if (targetElement.resizedAttached) {
             targetElement.resizedAttached.add(resizeCallback);
@@ -234,7 +234,7 @@ export class ResizeDirective implements AfterViewInit, OnDestroy {
      */
     private detachResizeEvent = (
         targetElement: IResizeElement,
-        event: Function
+        event: () => void
     ) => {
         if (targetElement.resizedAttached && typeof event === "function") {
             targetElement.resizedAttached.remove(event);

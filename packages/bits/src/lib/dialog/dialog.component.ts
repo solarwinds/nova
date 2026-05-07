@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { CdkScrollable, ScrollDispatcher } from "@angular/cdk/scrolling";
+import { CdkScrollable } from "@angular/cdk/scrolling";
 import { DOCUMENT } from "@angular/common";
 import {
     AfterViewInit,

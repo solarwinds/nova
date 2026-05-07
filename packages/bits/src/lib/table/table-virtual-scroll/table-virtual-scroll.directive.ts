@@ -65,11 +65,11 @@ export class TableVirtualScrollLinearDirective implements OnChanges {
     );
 
     public ngOnChanges(
-        changes: ComponentChanges<TableVirtualScrollLinearDirective>
+        _changes: ComponentChanges<TableVirtualScrollLinearDirective>
     ): void {
         this.scrollStrategy.setRowHeight(+this.rowHeight);
 
-        if (changes.rowCount) {
+        if (_changes.rowCount) {
             this.updateDataLength(this.rowCount);
         }
     }

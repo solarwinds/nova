@@ -41,7 +41,7 @@ import {
 export abstract class DataSourceService<
     T,
     F extends IFilters = IFilters,
-    D = any
+    _D = any
 > extends DataSource<T> {
     public dataSubject: BehaviorSubject<T[]>;
     public outputsSubject: Subject<IFilteringOutputs>;

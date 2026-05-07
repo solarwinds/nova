@@ -47,10 +47,8 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     template: `
         <div
             class="nui-menu-item__switch"
-            tabindex="0"
             #menuSwitch
             tabIndex="-1"
-            title
         >
             <nui-switch [value]="checked" [disabled]="disabled">
                 <ng-content></ng-content>

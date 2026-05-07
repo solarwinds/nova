@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { Overlay } from "@angular/cdk/overlay";
 import {
     Component,
     CUSTOM_ELEMENTS_SCHEMA,
@@ -26,11 +27,10 @@ import {
 } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { Overlay } from "@angular/cdk/overlay";
+import { Subject } from "rxjs/internal/Subject";
 
 import { ColorPickerComponent } from "./color-picker.component";
 import { ColorService } from "./color.service";
-import { Subject } from "rxjs/internal/Subject";
 
 
 @Component({
