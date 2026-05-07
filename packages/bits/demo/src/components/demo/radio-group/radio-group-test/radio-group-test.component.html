@@ -35,8 +35,8 @@
     </form>
     <nui-checkbox
         id="toggle-disabled-group-checkbox"
-        [checked]="true"
-        (valueChange)="toggleDisabled($event)"
+        [checked]="isDisabledGroup"
+        (valueChange)="toggleDisabled()"
     >
         Disabled
     </nui-checkbox>

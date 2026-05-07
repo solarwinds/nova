@@ -21,8 +21,6 @@
 import { Component } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 
-import { CheckboxChangeEvent } from "@nova-ui/bits";
-
 @Component({
     selector: "nui-radio-group-test",
     templateUrl: "./radio-group-test.component.html",
@@ -30,6 +28,7 @@ import { CheckboxChangeEvent } from "@nova-ui/bits";
 })
 export class RadioGroupTestComponent {
     public disabledForm;
+    public isDisabledGroup = true;
 
     public fruits = [
         $localize`Banana`,
@@ -53,11 +52,13 @@ export class RadioGroupTestComponent {
         });
     }
 
-    public toggleDisabled(event: CheckboxChangeEvent): void {
-        if (!event.target.checked) {
-            this.disabledForm.enable();
-        } else {
+    public toggleDisabled(): void {
+        this.isDisabledGroup = !this.isDisabledGroup;
+
+        if (this.isDisabledGroup) {
             this.disabledForm.disable();
+        } else {
+            this.disabledForm.enable();
         }
     }
 }

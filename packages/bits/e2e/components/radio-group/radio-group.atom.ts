@@ -93,9 +93,11 @@ export class RadioGroupAtom extends Atom {
 
     /** Assert the number of disabled radio inputs. */
     public async toHaveDisabledItemsCount(expected: number): Promise<void> {
-        await expect(
-            this.getLocator().locator(".nui-radio__input[disabled]")
-        ).toHaveCount(expected);
+        await expect
+            .poll(() =>
+                this.getLocator().locator(".nui-radio__input[disabled]").count()
+            )
+            .toBe(expected);
     }
 
     /** Assert the help-hint text at a given index. */

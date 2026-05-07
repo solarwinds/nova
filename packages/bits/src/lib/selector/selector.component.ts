@@ -215,5 +215,6 @@ export class SelectorComponent
 
         // propagate selection
         this.selectionChange.emit(selection);
+        this.overlay.hide();
     }
 }

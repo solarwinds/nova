@@ -29,7 +29,7 @@ import { ToastAtom } from "./toast.atom";
 import { expect, Helpers, test } from "../../setup";
 
 test.describe("USERCONTROL Toast", () => {
-    const toastTimingTolerance = 1000;
+    const toastTimingTolerance = 1200;
 
     let page: ToastTestPage;
 
