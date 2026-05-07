@@ -19,7 +19,12 @@
 //  THE SOFTWARE.
 
 import { DebugElement } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flushMicrotasks,
+    TestBed,
+} from "@angular/core/testing";
 import { FormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
@@ -68,13 +73,27 @@ describe("components >", () => {
             );
         });
 
-        it("should set 'captureFocus' and emit 'focusChange' with true passed on cancel", () => {
+        it("should clear the input on cancel", () => {
+            subject.value = "current input";
+
+            subject.onCancel();
+
+            expect(subject.value).toBe("");
+        });
+
+        it("should set 'captureFocus' and emit 'focusChange' with true passed on cancel", fakeAsync(() => {
             subject.captureFocus = false;
             spyOn(subject.focusChange, "emit");
+
             subject.onCancel();
-            expect(subject.captureFocus).toEqual(true);
+
+            expect(subject.captureFocus).toBe(false);
+
+            flushMicrotasks();
+
+            expect(subject.captureFocus).toBe(true);
             expect(subject.focusChange.emit).toHaveBeenCalledWith(true);
-        });
+        }));
 
         it("should emit 'cancel' with empty string passed if 'cancel' btn clicked", () => {
             const currentInput = "current input";

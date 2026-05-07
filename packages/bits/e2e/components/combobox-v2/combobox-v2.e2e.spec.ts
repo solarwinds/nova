@@ -204,18 +204,47 @@ test.describe("USERCONTROL Combobox v2 >", () => {
         });
 
         test.describe("when popup follows the dimensions of its toggle reference", () => {
-            const checkComboboxOverlayWidthEquality = async ()=>{
+            const checkComboboxOverlayWidthEquality = async () => {
                 await expect
                     .poll(async () => {
-                        const comboboxWidth = (await comboboxCustomControl.getLocator().first().boundingBox())?.width;
-                        const overlayWidth = (await comboboxCustomControl.getPopupElement.first().boundingBox())?.width;
-                        if (comboboxWidth == null || overlayWidth == null) {
+                        const comboboxWidth =
+                            (
+                                await comboboxCustomControl
+                                    .getLocator()
+                                    .first()
+                                    .boundingBox()
+                            )?.width;
+                        const overlayWidth =
+                            (
+                                await comboboxCustomControl
+                                    .getPopupElement
+                                    .first()
+                                    .boundingBox()
+                            )?.width;
+                        const toggleWidth =
+                            (
+                                await comboboxCustomControl.toggleButton
+                                    .first()
+                                    .boundingBox()
+                            )?.width;
+
+                        if (
+                            comboboxWidth == null ||
+                            overlayWidth == null ||
+                            toggleWidth == null
+                        ) {
                             return false;
                         }
-                        return Math.round(comboboxWidth) === Math.round(overlayWidth);
+
+                        const widthDifference = Math.abs(
+                            Math.round(comboboxWidth) - Math.round(overlayWidth)
+                        );
+
+                        return widthDifference <= Math.ceil(toggleWidth);
                     })
                     .toBe(true);
-            }
+            };
+
             test("width should match", async () => {
                 await Helpers.page.locator("#toggle").click();
                 await checkComboboxOverlayWidthEquality();

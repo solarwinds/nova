@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { ChangeDetectorRef, Component, inject } from "@angular/core";
 
 @Component({
     selector: "nui-search-example",
@@ -26,6 +26,7 @@ import { Component } from "@angular/core";
     standalone: false,
 })
 export class SearchTestExampleComponent {
+    private readonly cd = inject(ChangeDetectorRef);
     public active = false;
     public captureFocus = true;
     public name = "example-name";
@@ -43,12 +44,13 @@ export class SearchTestExampleComponent {
         Fusce porttitor laoreet dui a mollis.
     `;
     public value: string;
+    private clearFocusTimeoutId: ReturnType<typeof setTimeout> | undefined;
 
     public interval = 2000;
 
     public isInErrorState = true;
 
-    public onCancel(value: string): void {
+    public onCancel(): void {
         this.value = "";
         this.searchKey = "";
     }
@@ -66,9 +68,20 @@ export class SearchTestExampleComponent {
     }
 
     public setFocus(): void {
-        this.captureFocus = true;
-        setTimeout(() => {
+        if (this.clearFocusTimeoutId !== undefined) {
+            clearTimeout(this.clearFocusTimeoutId);
+        }
+
+        this.captureFocus = false;
+        queueMicrotask(() => {
+            this.captureFocus = true;
+            this.cd.detectChanges();
+        });
+
+        this.clearFocusTimeoutId = setTimeout(() => {
             this.captureFocus = false;
+            this.cd.detectChanges();
+            this.clearFocusTimeoutId = undefined;
         }, this.interval);
     }
 

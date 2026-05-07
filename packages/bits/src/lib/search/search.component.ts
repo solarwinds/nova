@@ -125,8 +125,11 @@ export class SearchComponent implements IFilterPub, OnDestroy {
     public onCancel(): void {
         this.value = "";
         this.cancel.emit(this.value);
-        this.captureFocus = true;
-        this.focusChange.emit(true);
+        this.captureFocus = false;
+        queueMicrotask(() => {
+            this.captureFocus = true;
+            this.focusChange.emit(true);
+        });
     }
 
     public onFocusChange(event: boolean): void {

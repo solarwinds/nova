@@ -8,6 +8,7 @@
                 class="nui-search__button-cancel"
                 displayStyle="action"
                 icon="close"
+                (mousedown)="$event.preventDefault()"
                 (click)="onCancel()"
             ></button>
             }

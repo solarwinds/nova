@@ -26,6 +26,7 @@ import {
     EventEmitter,
     Inject,
     Input,
+    OnDestroy,
     OnChanges,
     Output,
     SimpleChanges,
@@ -47,7 +48,7 @@ import {
     selector: "[nuiSetFocus]",
     standalone: false,
 })
-export class SetFocusDirective implements AfterViewInit, OnChanges {
+export class SetFocusDirective implements AfterViewInit, OnChanges, OnDestroy {
     private static readonly focusablesToCapture: string[] = [
         "input",
         "textarea",
@@ -66,6 +67,7 @@ export class SetFocusDirective implements AfterViewInit, OnChanges {
     @Output() public focusChange = new EventEmitter<boolean>();
 
     private focusableElement: HTMLElement;
+    private focusTimeoutId: ReturnType<typeof setTimeout> | undefined;
 
     constructor(
         private el: ElementRef,
@@ -77,8 +79,9 @@ export class SetFocusDirective implements AfterViewInit, OnChanges {
             return;
         }
         if (changes["nuiSetFocus"].currentValue) {
-            this.focusableElement.focus({ preventScroll: this.preventScroll });
+            this.scheduleFocus();
         } else {
+            this.clearPendingFocus();
             this.focusableElement.blur();
         }
     }
@@ -88,8 +91,14 @@ export class SetFocusDirective implements AfterViewInit, OnChanges {
         this.focusableElement.addEventListener("focus", this.onFocus);
         this.focusableElement.addEventListener("blur", this.onBlur);
         if (this.nuiSetFocus) {
-            this.focusableElement.focus({ preventScroll: this.preventScroll });
+            this.scheduleFocus();
         }
+    }
+
+    public ngOnDestroy(): void {
+        this.clearPendingFocus();
+        this.focusableElement?.removeEventListener("focus", this.onFocus);
+        this.focusableElement?.removeEventListener("blur", this.onBlur);
     }
 
     private onBlur = () => {
@@ -109,6 +118,24 @@ export class SetFocusDirective implements AfterViewInit, OnChanges {
             }
         }
     };
+
+    private scheduleFocus(): void {
+        this.clearPendingFocus();
+        this.focusTimeoutId = setTimeout(() => {
+            if (!this.focusableElement || !this.nuiSetFocus) {
+                return;
+            }
+
+            this.focusableElement.focus({ preventScroll: this.preventScroll });
+        });
+    }
+
+    private clearPendingFocus(): void {
+        if (this.focusTimeoutId !== undefined) {
+            clearTimeout(this.focusTimeoutId);
+            this.focusTimeoutId = undefined;
+        }
+    }
 
     private getFirstFocusable(element: HTMLElement): HTMLElement {
         const tagName = element["tagName"].toLowerCase();
