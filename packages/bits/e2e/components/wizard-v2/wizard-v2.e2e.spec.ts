@@ -111,8 +111,10 @@ test.describe("USERCONTROL Wizard V2: ", () => {
 
             const finishButton = wizardDialog.footer.getLocator().locator(".complete");
             await finishButton.click();
+            await wizardDialog.toBeHidden();
 
             await openWizardDialogBtn.click();
+            await wizardDialog.toBeVisible();
 
             const lastHeader = wizardDialog.getHeader(3);
             await lastHeader.toContainClass("nui-wizard-step-header--selected");
@@ -123,7 +125,7 @@ test.describe("USERCONTROL Wizard V2: ", () => {
 
     test.describe("wizard with dynamic steps > ", () => {
         let addButton: ButtonAtom;
-        
+
 
         test.beforeEach(async () => {
             await wizardDynamic.toBeVisible();

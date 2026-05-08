@@ -17,12 +17,11 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-
+import { Locator } from "playwright-core";
 
 import { Atom } from "../../atom";
 import { ButtonAtom } from "../../components/button/button.atom";
-import { Helpers , test, expect} from "../../setup";
-import { Locator } from "playwright-core";
+import { Helpers, test, expect } from "../../setup";
 
 test.describe("USERCONTROL setFocus:", () => {
     let carrotRadio: Locator;
@@ -63,14 +62,18 @@ test.describe("USERCONTROL setFocus:", () => {
     });
 
     async function expectIsSelected(finder: Locator) {
-        const activeElementHandle = await Helpers.page.evaluateHandle(() => document.activeElement);
-        const isSameElement = await finder.evaluate((el, active) => el === active, activeElementHandle);
-        expect(isSameElement).toBe(true);
+        await expect
+            .poll(async () =>
+                finder.evaluate((el) => el === document.activeElement)
+            )
+            .toBe(true);
     }
 
     async function expectIsNotSelected(finder: Locator) {
-        const activeElementHandle = await Helpers.page.evaluateHandle(() => document.activeElement);
-        const isEqual = await finder.evaluate((el, active) => el === active, activeElementHandle);
-        expect(isEqual).toBe(false);
+        await expect
+            .poll(async () =>
+                finder.evaluate((el) => el === document.activeElement)
+            )
+            .toBe(false);
     }
 });

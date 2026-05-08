@@ -230,28 +230,47 @@ test.describe("USERCONTROL Combobox >", () => {
             test("should respect width smaller than default", async () => {
                 await widthInput.clearText();
                 await widthInput.acceptText("60");
+                await expect.poll(() => widthInput.getValue()).toEqual("60");
                 await compareWidths(60);
             });
 
             async function compareWidths(expectedValue: number) {
-                const componentWidth = (await component.boundingBox())?.width;
-                const containerOuterWidth = (await parent.boundingBox())?.width;
-                const containerLeftPadding = parseFloat(
-                    (await parent.evaluate((el) => getComputedStyle(el).paddingLeft)) as string
-                );
-                const containerRightPadding = parseFloat(
-                    (await parent.evaluate((el) => getComputedStyle(el).paddingRight)) as string
-                );
-                if (componentWidth == null || containerOuterWidth == null) {
-                    throw new Error("Unable to measure element widths");
-                }
-                const containerWidth =
-                    containerOuterWidth -
-                    containerLeftPadding -
-                    containerRightPadding;
+                await expect
+                    .poll(async () => {
+                        const componentWidth = (await component.boundingBox())?.width;
+                        const containerOuterWidth = (await parent.boundingBox())?.width;
+                        const containerLeftPadding = parseFloat(
+                            (await parent.evaluate((el) =>
+                                getComputedStyle(el).paddingLeft
+                            )) as string
+                        );
+                        const containerRightPadding = parseFloat(
+                            (await parent.evaluate((el) =>
+                                getComputedStyle(el).paddingRight
+                            )) as string
+                        );
 
-                expect(componentWidth).toEqual(containerWidth);
-                expect(Math.round(componentWidth)).toEqual(expectedValue);
+                        if (
+                            componentWidth == null ||
+                            containerOuterWidth == null
+                        ) {
+                            return null;
+                        }
+
+                        const containerWidth =
+                            containerOuterWidth -
+                            containerLeftPadding -
+                            containerRightPadding;
+
+                        return {
+                            componentWidth: Math.round(componentWidth),
+                            containerWidth: Math.round(containerWidth),
+                        };
+                    })
+                    .toEqual({
+                        componentWidth: expectedValue,
+                        containerWidth: expectedValue,
+                    });
             }
         });
 
@@ -265,13 +284,21 @@ test.describe("USERCONTROL Combobox >", () => {
             test("should not indicate error state if item is selected", async () => {
                 expect(await comboboxRequired.isRequiredStyleDisplayed()).toEqual(true);
                 await comboboxRequired.select("Item 5");
-                expect(await comboboxRequired.isRequiredStyleDisplayed()).toEqual(false);
+                await expect
+                    .poll(() => comboboxRequired.isRequiredStyleDisplayed())
+                    .toEqual(false);
                 await comboboxBasic.toggleMenu();
-                expect(await comboboxRequired.isRequiredStyleDisplayed()).toEqual(false);
+                await expect
+                    .poll(() => comboboxRequired.isRequiredStyleDisplayed())
+                    .toEqual(false);
                 await comboboxRequired.toggleMenu();
-                expect(await comboboxRequired.isRequiredStyleDisplayed()).toEqual(false);
+                await expect
+                    .poll(() => comboboxRequired.isRequiredStyleDisplayed())
+                    .toEqual(false);
                 await comboboxBasic.toggleMenu();
-                expect(await comboboxRequired.isRequiredStyleDisplayed()).toEqual(false);
+                await expect
+                    .poll(() => comboboxRequired.isRequiredStyleDisplayed())
+                    .toEqual(false);
             });
         });
 

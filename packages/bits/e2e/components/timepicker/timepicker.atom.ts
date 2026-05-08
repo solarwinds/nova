@@ -54,7 +54,11 @@ export class TimepickerAtom extends Atom {
     }
 
     public get menuPopup(): MenuPopupAtom {
-        return Atom.findIn<MenuPopupAtom>(MenuPopupAtom, this.getLocator());
+        return new MenuPopupAtom(
+            Helpers.page
+                .locator(".cdk-overlay-pane:visible .nui-menu-popup")
+                .first()
+        );
     }
 
     public get icon(): IconAtom {

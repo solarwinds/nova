@@ -18,9 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { SorterAtom } from "./sorter.atom";
 import { Atom } from "../../atom";
 import { test, expect, Helpers } from "../../setup";
-import { SorterAtom } from "./sorter.atom";
 import { ButtonAtom } from "../button/button.atom";
 import { IconAtom } from "../icon/icon.atom";
 
@@ -41,9 +41,12 @@ test.describe("USERCONTROL Sorter >", () => {
         }
         if ((await sorter.displayValue.textContent()) !== "Year") {
             await sorter.select("Year");
+            await sorter.toHaveValue("Year");
         }
+        await expect.poll(async () => icon.getName()).toBeTruthy();
         if ((await icon.getName()) === "arrow-down") {
             await button.click();
+            await expect.poll(async () => icon.getName()).toBe("arrow-up");
         }
     });
 
@@ -59,7 +62,7 @@ test.describe("USERCONTROL Sorter >", () => {
 
         test("should change icon direction on click", async () => {
             await button.click();
-            expect(await icon.getName()).toBe("arrow-down");
+            await expect.poll(async () => icon.getName()).toBe("arrow-down");
         });
 
         test("should have correct text in caption", async () => {

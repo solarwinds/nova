@@ -80,15 +80,35 @@ export class WizardV2Atom extends Atom {
     };
 
     public moveToFinalStep = async (): Promise<void> => {
-        const count = await this.steps.count();
-        for (let i = 0; i < count; i++) {
-            const nextButton = this.footer.nextButton;
-            if (!(await nextButton.getLocator().isVisible())) {
-                return;
-            }
-            await nextButton.click();
+        const finalStepIndex = (await this.steps.count()) - 1;
+        let selectedIndex = await this.getSelectedIndex();
+
+        while (selectedIndex < finalStepIndex) {
+            const nextIndex = selectedIndex + 1;
+            await this.footer.nextButton.click();
+            await expect.poll(async () => this.getSelectedIndex()).toBe(nextIndex);
+            selectedIndex = nextIndex;
         }
     };
+
+    public async getSelectedIndex(): Promise<number> {
+        await expect(this.headers.first()).toBeVisible();
+        const posInSet = await this.headers.evaluateAll((headers) =>
+            headers
+                .find((header) =>
+                    header.classList.contains(
+                        "nui-wizard-step-header--selected"
+                    )
+                )
+                ?.getAttribute("aria-posinset")
+        );
+
+        if (!posInSet) {
+            throw new Error("Unable to determine selected wizard step");
+        }
+
+        return Number(posInSet) - 1;
+    }
 
     public toHaveStepsCount = async (expected: number): Promise<void> => {
         await expect(this.steps).toHaveCount(expected);
