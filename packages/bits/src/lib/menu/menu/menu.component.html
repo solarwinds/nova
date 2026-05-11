@@ -9,8 +9,11 @@
         #menuToggle
         nui-button
         nuiPopupToggle
+        [id]="menuTriggerId"
         [disabled]="isDisabled"
         aria-haspopup="true"
+        [attr.aria-expanded]="popup?.isOpen ? 'true' : 'false'"
+        [attr.aria-controls]="popup?.isOpen ? popupContentId : null"
         type="button"
         (blur)="onBlur($event)"
         [displayStyle]="displayStyle"
@@ -23,7 +26,7 @@
     >
         <span>{{ title }}</span>
     </button>
-    <div popupAreaContent>
+    <div popupAreaContent [id]="popupContentId">
         @if (itemsSource) {
         <nui-menu-popup
             [itemsSource]="itemsSource"

@@ -296,13 +296,17 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [FormsModule, ReactiveFormsModule, NuiOverlayModule],
+                imports: [
+                    FormsModule,
+                    ReactiveFormsModule,
+                    NuiOverlayModule,
+                    IconComponent,
+                ],
                 declarations: [
                     ButtonComponent,
                     CheckboxComponent,
                     DividerComponent,
                     FormFieldComponent,
-                    IconComponent,
                     MenuActionComponent,
                     MenuItemComponent,
                     MenuLinkComponent,
