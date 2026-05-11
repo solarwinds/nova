@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { STEP_STATE } from "@angular/cdk/stepper";
-import { NO_ERRORS_SCHEMA, TemplateRef } from "@angular/core";
+import { TemplateRef } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { WizardStepHeaderComponent } from "./wizard-step-header.component";
@@ -36,8 +36,8 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [WizardStepHeaderComponent, IconComponent],
-                schemas: [NO_ERRORS_SCHEMA],
+                declarations: [WizardStepHeaderComponent],
+                imports: [IconComponent],
             });
 
             fixture = TestBed.createComponent(WizardStepHeaderComponent);
@@ -104,10 +104,7 @@ describe("components >", () => {
             });
 
             it("should call createStepStateConfigMap method", () => {
-                const spy = spyOn(
-                    component as any,
-                    "createStepStateConfigMap"
-                );
+                const spy = spyOn(component as any, "createStepStateConfigMap");
 
                 component.ngOnChanges(config);
                 expect(spy).toHaveBeenCalled();

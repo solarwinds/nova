@@ -98,7 +98,9 @@ describe("TimeseriesScalesService > ", () => {
             };
             service.updateConfiguration(scale, scaleConfig, widgetConfig);
 
-            expect(scale.fixDomainValues).toEqual([0, 25, 50, 75, 100, 125, 150]);
+            expect(scale.fixDomainValues).toEqual([
+                0, 25, 50, 75, 100, 125, 150,
+            ]);
             expect(scale.isDomainFixed).toEqual(true);
         });
 

@@ -30,8 +30,13 @@ test.describe(`Visual tests: ${name}`, () => {
     let checkboxJustified: CheckboxGroupAtom;
 
     test.beforeEach(async ({ page }) => {
-        await Helpers.prepareBrowser("checkbox-group/checkbox-group-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.prepareBrowser(
+            "checkbox-group/checkbox-group-visual-test",
+            page
+        );
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
         checkboxJustified = Atom.find<CheckboxGroupAtom>(
             CheckboxGroupAtom,
             "nui-demo-checkbox-group-justified"

@@ -64,9 +64,7 @@ test.describe("USERCONTROL tab heading group", () => {
         expect(tabs).toHaveLength(tabContent.length);
 
         for (let i = 0; i < tabs.length; i++) {
-            await expect(tabs[i].getLocator()).toHaveText(
-                tabContent[i]
-            );
+            await expect(tabs[i].getLocator()).toHaveText(tabContent[i]);
         }
     });
 

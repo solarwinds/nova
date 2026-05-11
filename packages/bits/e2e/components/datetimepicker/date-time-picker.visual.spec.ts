@@ -35,8 +35,13 @@ test.describe(`Visual tests: ${name}`, () => {
     let dialogButton: Locator;
 
     test.beforeEach(async ({ page }) => {
-        await Helpers.prepareBrowser("date-time-picker/date-time-picker-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.prepareBrowser(
+            "date-time-picker/date-time-picker-visual-test",
+            page
+        );
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
         dateTimePickerBasic = Atom.find<DateTimepickerAtom>(
             DateTimepickerAtom,
             "nui-basic-date-time-picker"

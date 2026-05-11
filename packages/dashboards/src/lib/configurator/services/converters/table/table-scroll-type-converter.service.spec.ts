@@ -30,7 +30,6 @@ import { DynamicComponentCreator } from "../../../../pizzagna/services/dynamic-c
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";
 import { PreviewService } from "../../preview.service";
 
-
 class MockComponent {
     public static lateLoadKey = "MockComponent";
     public form: FormGroup;

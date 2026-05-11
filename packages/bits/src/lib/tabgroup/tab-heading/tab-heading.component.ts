@@ -78,10 +78,12 @@ export class TabHeadingComponent {
     }
 
     public onKeyDown(event: KeyboardEvent): void {
-        if (event.code === KEYBOARD_CODE.ENTER || event.code === KEYBOARD_CODE.SPACE) {
+        if (
+            event.code === KEYBOARD_CODE.ENTER ||
+            event.code === KEYBOARD_CODE.SPACE
+        ) {
             event.preventDefault();
             this.elementRef.nativeElement.click();
         }
     }
 }
-

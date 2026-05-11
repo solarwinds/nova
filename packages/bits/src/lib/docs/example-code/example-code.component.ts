@@ -19,11 +19,7 @@
 //  THE SOFTWARE.
 
 /** @ignore */
-import {
-    Component,
-    Input,
-    ViewEncapsulation,
-} from "@angular/core";
+import { Component, Input, ViewEncapsulation } from "@angular/core";
 import hljs from "highlight.js";
 
 /**

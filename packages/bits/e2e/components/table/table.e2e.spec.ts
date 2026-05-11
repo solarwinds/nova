@@ -49,7 +49,6 @@ test.describe("USERCONTROL table >", () => {
             TextboxAtom,
             "position-input"
         );
-
     }
     test.describe("Basic table >", () => {
         test.beforeEach(async ({ page }) => {
@@ -116,7 +115,7 @@ test.describe("USERCONTROL table >", () => {
     });
 
     test.describe("Paginated table > ", () => {
-        test.beforeEach(async ({page}) => {
+        test.beforeEach(async ({ page }) => {
             await Helpers.prepareBrowser("table/pagination", page);
             paginatedTable = Atom.find<TableAtom>(
                 TableAtom,
@@ -284,7 +283,7 @@ test.describe("USERCONTROL table >", () => {
     });
 
     test.describe("Sortable table >", () => {
-        test.beforeEach(async ({page}) => {
+        test.beforeEach(async ({ page }) => {
             await Helpers.prepareBrowser("table/sorting", page);
             sortableTable = Atom.find<TableAtom>(
                 TableAtom,
@@ -336,7 +335,9 @@ test.describe("USERCONTROL table >", () => {
             await headerCell.click();
             await expect.poll(() => sortingIcon.getName()).toBe("triangle-up");
             await headerCell.click();
-            await expect.poll(() => sortingIcon.getName()).toBe("triangle-down");
+            await expect
+                .poll(() => sortingIcon.getName())
+                .toBe("triangle-down");
         });
 
         test("should display sorting icon only on active header cell", async () => {
@@ -372,7 +373,9 @@ test.describe("USERCONTROL table >", () => {
             await sortByNameButton.click();
             const firstCell = sortableTable.getCell(0, 1);
             const sortingIcon = sortableTable.getSortingIcon(firstCell);
-            await expect.poll(() => sortingIcon.getName()).toBe("triangle-down");
+            await expect
+                .poll(() => sortingIcon.getName())
+                .toBe("triangle-down");
             await expect(firstCell).toHaveClass(
                 /nui-table__table-header-cell--sortable--dark/
             );
@@ -382,7 +385,9 @@ test.describe("USERCONTROL table >", () => {
             await sortByNameButton.click();
             const firstCell = sortableTable.getCell(0, 1);
             const sortingIcon = sortableTable.getSortingIcon(firstCell);
-            await expect.poll(() => sortingIcon.getName()).toBe("triangle-down");
+            await expect
+                .poll(() => sortingIcon.getName())
+                .toBe("triangle-down");
             await sortByNameButton.click();
             await expect.poll(() => sortingIcon.getName()).toBe("triangle-up");
             await expect(firstCell).toHaveClass(
@@ -401,7 +406,7 @@ test.describe("USERCONTROL table >", () => {
     });
 
     test.describe("Resizable table >", () => {
-        test.beforeEach(async ({page}) => {
+        test.beforeEach(async ({ page }) => {
             await Helpers.prepareBrowser("table/resize", page);
             resizableTable = Atom.find<TableAtom>(
                 TableAtom,
@@ -484,7 +489,11 @@ test.describe("USERCONTROL table >", () => {
                 TableAtom,
                 container
             );
-            const headerHeight = await stickyHeader.getLocator().locator("thead").first().evaluate((el) => (el as HTMLElement).clientHeight);
+            const headerHeight = await stickyHeader
+                .getLocator()
+                .locator("thead")
+                .first()
+                .evaluate((el) => (el as HTMLElement).clientHeight);
 
             expect(headerHeight + viewPortHeight).toEqual(containerHeight);
         });
@@ -629,7 +638,10 @@ test.describe("USERCONTROL table >", () => {
 
         test.beforeEach(async ({ page }) => {
             await Helpers.prepareBrowser("table/reorder", page);
-            reorderableTable = Atom.find<TableAtom>(TableAtom, "nui-demo-table-cell-reorder");
+            reorderableTable = Atom.find<TableAtom>(
+                TableAtom,
+                "nui-demo-table-cell-reorder"
+            );
             await expect(reorderableTable.getLocator()).toBeVisible();
         });
 
@@ -647,30 +659,44 @@ test.describe("USERCONTROL table >", () => {
 
         test.beforeEach(async ({ page }) => {
             await Helpers.prepareBrowser("table/selectable-toggle", page);
-            selectableToggleTable = Atom.find<TableAtom>(TableAtom, "demo-table-selectable-toggle");
-            selectableToggleBtn = Atom.find<ButtonAtom>(ButtonAtom, "demo-table-selectable-toggle-btn");
+            selectableToggleTable = Atom.find<TableAtom>(
+                TableAtom,
+                "demo-table-selectable-toggle"
+            );
+            selectableToggleBtn = Atom.find<ButtonAtom>(
+                ButtonAtom,
+                "demo-table-selectable-toggle-btn"
+            );
             await expect(selectableToggleTable.getLocator()).toBeVisible();
         });
 
         test("should toggle selectability off", async () => {
-            expect(await selectableToggleTable.checkSelectability(true)).toEqual(true);
+            expect(
+                await selectableToggleTable.checkSelectability(true)
+            ).toEqual(true);
             await selectableToggleTable.checkRowClickability(true);
 
             await selectableToggleBtn.click();
 
-            expect(await selectableToggleTable.checkSelectability(false)).toEqual(true);
+            expect(
+                await selectableToggleTable.checkSelectability(false)
+            ).toEqual(true);
             await selectableToggleTable.checkRowClickability(false);
         });
 
         test("should toggle selectability on", async () => {
             await selectableToggleBtn.click();
 
-            expect(await selectableToggleTable.checkSelectability(false)).toEqual(true);
+            expect(
+                await selectableToggleTable.checkSelectability(false)
+            ).toEqual(true);
             await selectableToggleTable.checkRowClickability(false);
 
             await selectableToggleBtn.click();
 
-            expect(await selectableToggleTable.checkSelectability(true)).toEqual(true);
+            expect(
+                await selectableToggleTable.checkSelectability(true)
+            ).toEqual(true);
             await selectableToggleTable.checkRowClickability(true);
         });
     });
@@ -697,36 +723,54 @@ test.describe("USERCONTROL table >", () => {
 
         test.beforeEach(async ({ page }) => {
             await Helpers.prepareBrowser("table/custom-actions", page);
-            tableColumnsAddRemove = Atom.find<TableAtom>(TableAtom, "nui-demo-table-columns-add-remove");
-            actionsMenu = tableColumnsAddRemove.getLocator().locator(".nui-menu").first();
+            tableColumnsAddRemove = Atom.find<TableAtom>(
+                TableAtom,
+                "nui-demo-table-columns-add-remove"
+            );
+            actionsMenu = tableColumnsAddRemove
+                .getLocator()
+                .locator(".nui-menu")
+                .first();
             await expect(tableColumnsAddRemove.getLocator()).toBeVisible();
         });
 
         test("should add new row to the beginning", async () => {
             expect(await tableColumnsAddRemove.getRowsCount()).toEqual(5);
-            expect(await tableColumnsAddRemove.getCellText(1, 0)).toEqual("NUI-111");
+            expect(await tableColumnsAddRemove.getCellText(1, 0)).toEqual(
+                "NUI-111"
+            );
             await toggleActionsMenu();
             await clickAddRowStartButton();
             expect(await tableColumnsAddRemove.getRowsCount()).toEqual(6);
-            expect(await tableColumnsAddRemove.getCellText(1, 0)).toEqual("NUI-100");
+            expect(await tableColumnsAddRemove.getCellText(1, 0)).toEqual(
+                "NUI-100"
+            );
         });
 
         test("should add new row to the end", async () => {
             expect(await tableColumnsAddRemove.getRowsCount()).toEqual(5);
-            expect(await tableColumnsAddRemove.getCellText(5, 0)).toEqual("NUI-555");
+            expect(await tableColumnsAddRemove.getCellText(5, 0)).toEqual(
+                "NUI-555"
+            );
             await toggleActionsMenu();
             await clickAddRowEndButton();
             expect(await tableColumnsAddRemove.getRowsCount()).toEqual(6);
-            expect(await tableColumnsAddRemove.getCellText(6, 0)).toEqual("NUI-1100");
+            expect(await tableColumnsAddRemove.getCellText(6, 0)).toEqual(
+                "NUI-1100"
+            );
         });
 
         test("should delete first row under header", async () => {
             expect(await tableColumnsAddRemove.getRowsCount()).toEqual(5);
-            expect(await tableColumnsAddRemove.getCellText(1, 0)).toEqual("NUI-111");
+            expect(await tableColumnsAddRemove.getCellText(1, 0)).toEqual(
+                "NUI-111"
+            );
             await toggleActionsMenu();
             await clickRemoveRowButton();
             expect(await tableColumnsAddRemove.getRowsCount()).toEqual(4);
-            expect(await tableColumnsAddRemove.getCellText(1, 0)).toEqual("NUI-222");
+            expect(await tableColumnsAddRemove.getCellText(1, 0)).toEqual(
+                "NUI-222"
+            );
         });
     });
 });

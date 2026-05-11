@@ -59,15 +59,21 @@ export class FormFieldAtom extends Atom {
         await this.getInfoIcon().click();
     };
 
-    public toHaveHintText = async (expected: string | RegExp): Promise<void> => {
+    public toHaveHintText = async (
+        expected: string | RegExp
+    ): Promise<void> => {
         await expect(this.hint).toHaveText(expected);
     };
 
-    public toHaveCaptionText = async (expected: string | RegExp): Promise<void> => {
+    public toHaveCaptionText = async (
+        expected: string | RegExp
+    ): Promise<void> => {
         await expect(this.caption).toHaveText(expected);
     };
 
-    public toHaveStateText = async (expected: string | RegExp): Promise<void> => {
+    public toHaveStateText = async (
+        expected: string | RegExp
+    ): Promise<void> => {
         await expect(this.stateText).toHaveText(expected);
     };
 

@@ -152,7 +152,11 @@ export class SelectorService {
      * @param comparator
      * @returns {any[]} Set of items
      */
-    public getSelectedItems(selection: ISelection, items: any[], comparator: (a: any, b: any) => boolean = _isEqual): any[] {
+    public getSelectedItems(
+        selection: ISelection,
+        items: any[],
+        comparator: (a: any, b: any) => boolean = _isEqual
+    ): any[] {
         if (selection.isAllPages) {
             return _differenceWith(items, selection.exclude, comparator);
         } else {

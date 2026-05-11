@@ -172,7 +172,8 @@ export class BeerReviewCountsByCityMockDataSource
  */
 @Component({
     selector: "proportional-widget-donut-content-formatters-example",
-    templateUrl: "./proportional-donut-content-formatters-example.component.html",
+    templateUrl:
+        "./proportional-donut-content-formatters-example.component.html",
     styleUrls: [
         "./proportional-donut-content-formatters-example.component.less",
     ],

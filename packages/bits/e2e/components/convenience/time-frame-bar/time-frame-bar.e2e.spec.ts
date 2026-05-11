@@ -32,7 +32,10 @@ test.describe("CONVENIENCE COMPONENTS", () => {
         const maxDate = moment([2050]);
 
         test.beforeEach(async ({ page: pwPage }) => {
-            await Helpers.prepareBrowser("convenience/time-frame-bar/test", pwPage);
+            await Helpers.prepareBrowser(
+                "convenience/time-frame-bar/test",
+                pwPage
+            );
             await Helpers.disableCSSAnimations(Animations.ALL);
 
             page = new TimeFrameBarTestPage();
@@ -40,28 +43,44 @@ test.describe("CONVENIENCE COMPONENTS", () => {
         });
 
         test("should have 'prev' and 'next' buttons enabled by default", async () => {
-            await expect(page.timeFrameBar.nextButton.getLocator()).not.toBeDisabled();
-            await expect(page.timeFrameBar.prevButton.getLocator()).not.toBeDisabled();
+            await expect(
+                page.timeFrameBar.nextButton.getLocator()
+            ).not.toBeDisabled();
+            await expect(
+                page.timeFrameBar.prevButton.getLocator()
+            ).not.toBeDisabled();
         });
 
         test("should not show 'undo' and 'clear' buttons by default", async () => {
-            await expect(page.timeFrameBar.undoButton.getLocator()).toHaveCount(0);
-            await expect(page.timeFrameBar.clearButton.getLocator()).toHaveCount(0);
+            await expect(page.timeFrameBar.undoButton.getLocator()).toHaveCount(
+                0
+            );
+            await expect(
+                page.timeFrameBar.clearButton.getLocator()
+            ).toHaveCount(0);
         });
 
         test("should show just 'clear' button after zoom in once", async () => {
             await page.zoomIn();
 
-            await expect(page.timeFrameBar.undoButton.getLocator()).toHaveCount(0);
-            await expect(page.timeFrameBar.clearButton.getLocator()).toBeVisible();
+            await expect(page.timeFrameBar.undoButton.getLocator()).toHaveCount(
+                0
+            );
+            await expect(
+                page.timeFrameBar.clearButton.getLocator()
+            ).toBeVisible();
         });
 
         test("should show both 'undo' and 'clear' buttons after zoom in twice", async () => {
             await page.zoomIn();
             await page.zoomIn();
 
-            await expect(page.timeFrameBar.undoButton.getLocator()).toBeVisible();
-            await expect(page.timeFrameBar.clearButton.getLocator()).toBeVisible();
+            await expect(
+                page.timeFrameBar.undoButton.getLocator()
+            ).toBeVisible();
+            await expect(
+                page.timeFrameBar.clearButton.getLocator()
+            ).toBeVisible();
         });
 
         test.describe("should reset zoom after", () => {
@@ -69,15 +88,21 @@ test.describe("CONVENIENCE COMPONENTS", () => {
                 await page.zoomIn();
                 await page.zoomIn();
 
-                await expect(page.timeFrameBar.undoButton.getLocator()).toBeVisible();
-                await expect(page.timeFrameBar.clearButton.getLocator()).toBeVisible();
+                await expect(
+                    page.timeFrameBar.undoButton.getLocator()
+                ).toBeVisible();
+                await expect(
+                    page.timeFrameBar.clearButton.getLocator()
+                ).toBeVisible();
             });
 
             test.afterEach(async () => {
                 await expect(
                     page.timeFrameBar.undoButton.getLocator()
                 ).toBeHidden();
-                await expect(page.timeFrameBar.clearButton.getLocator()).toBeHidden();
+                await expect(
+                    page.timeFrameBar.clearButton.getLocator()
+                ).toBeHidden();
             });
 
             test("shifting to earlier time frame", async () => {
@@ -102,17 +127,31 @@ test.describe("CONVENIENCE COMPONENTS", () => {
 
         test.describe("when time frame is out of limits", () => {
             test("should disable 'prev' button", async () => {
-                await page.timeFrameBar.pickTimeFrame(minDate, baseDate.clone());
+                await page.timeFrameBar.pickTimeFrame(
+                    minDate,
+                    baseDate.clone()
+                );
 
-                await expect(page.timeFrameBar.prevButton.getLocator()).toBeDisabled();
-                await expect(page.timeFrameBar.nextButton.getLocator()).not.toBeDisabled();
+                await expect(
+                    page.timeFrameBar.prevButton.getLocator()
+                ).toBeDisabled();
+                await expect(
+                    page.timeFrameBar.nextButton.getLocator()
+                ).not.toBeDisabled();
             });
 
             test("should disable 'next' button", async () => {
-                await page.timeFrameBar.pickTimeFrame(baseDate.clone(), maxDate);
+                await page.timeFrameBar.pickTimeFrame(
+                    baseDate.clone(),
+                    maxDate
+                );
 
-                await expect(page.timeFrameBar.nextButton.getLocator()).toBeDisabled();
-                await expect(page.timeFrameBar.prevButton.getLocator()).not.toBeDisabled();
+                await expect(
+                    page.timeFrameBar.nextButton.getLocator()
+                ).toBeDisabled();
+                await expect(
+                    page.timeFrameBar.prevButton.getLocator()
+                ).not.toBeDisabled();
             });
         });
     });

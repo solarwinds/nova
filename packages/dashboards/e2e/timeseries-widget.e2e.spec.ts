@@ -47,9 +47,7 @@ test.describe(`Dashboards - ${name}`, () => {
         expect(lineLegends.length).toEqual(3);
 
         await lineLegends[0].hover();
-        await expect(
-            lineLegends[0].getMenuButton().getLocator()
-        ).toBeVisible();
+        await expect(lineLegends[0].getMenuButton().getLocator()).toBeVisible();
         await expect(
             lineLegends[1].getMenuButton().getLocator()
         ).not.toBeVisible();
@@ -102,7 +100,9 @@ test.describe(`Dashboards - ${name}`, () => {
             .getLocator()
             .page()
             .locator("nui-menu-group[header='Display Transforms']");
-        const items = group.locator(".nui-menu-item:not(.nui-menu-item--header)");
+        const items = group.locator(
+            ".nui-menu-item:not(.nui-menu-item--header)"
+        );
         const count = await items.count();
         const names: string[] = [];
         for (let i = 0; i < count; i++) {
@@ -117,16 +117,12 @@ test.describe(`Dashboards - ${name}`, () => {
         // Apply "Difference" → icon should be visible
         await lineChart.transformSeries("Difference", 0);
         const legends1 = await lineChart.getLegendSeries();
-        await expect(
-            legends1[0].getTransformIcon().getLocator()
-        ).toBeVisible();
+        await expect(legends1[0].getTransformIcon().getLocator()).toBeVisible();
 
         // Apply "Linear" → icon should be visible
         await lineChart.transformSeries("Linear", 0);
         const legends2 = await lineChart.getLegendSeries();
-        await expect(
-            legends2[0].getTransformIcon().getLocator()
-        ).toBeVisible();
+        await expect(legends2[0].getTransformIcon().getLocator()).toBeVisible();
 
         // Apply "None" → icon should NOT be visible
         await lineChart.transformSeries("None", 0);
@@ -138,9 +134,7 @@ test.describe(`Dashboards - ${name}`, () => {
         // Apply "Standardize" → icon should be visible
         await lineChart.transformSeries("Standardize", 0);
         const legends4 = await lineChart.getLegendSeries();
-        await expect(
-            legends4[0].getTransformIcon().getLocator()
-        ).toBeVisible();
+        await expect(legends4[0].getTransformIcon().getLocator()).toBeVisible();
     });
 
     test("should display remove icon for status charts", async () => {

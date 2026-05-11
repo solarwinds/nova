@@ -30,10 +30,7 @@ export class CameraEngine {
     public currentLensInstance: ILens;
     private snapshotsFolderName: string = "_snapshots";
 
-    constructor(
-        private page: Page,
-        private settings: ICameraSettings
-    ) {
+    constructor(private page: Page, private settings: ICameraSettings) {
         this.useLens();
     }
 
@@ -76,7 +73,6 @@ export class CameraEngine {
     }
 
     public async takePhoto(label: string): Promise<void> {
-
         if (!this.settings.fullframe) {
             return await this.currentLensInstance.takeSnapshot(label);
         }
@@ -87,7 +83,9 @@ export class CameraEngine {
     }
 
     public getToolConfig(): ReturnType<ILens["toolConfig"]> {
-        return this.currentLensInstance ? this.currentLensInstance.toolConfig() : undefined as any;
+        return this.currentLensInstance
+            ? this.currentLensInstance.toolConfig()
+            : (undefined as any);
     }
 
     private cleanFileName(name: string) {

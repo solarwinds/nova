@@ -2,9 +2,7 @@ import { CodeSourceFiles } from "@nova-ui/bits";
 
 import { DEMO_PATHS } from "./components/docs/demo.files";
 
-export const getDemoFiles = (
-    filePrefix: string
-): CodeSourceFiles => {
+export const getDemoFiles = (filePrefix: string): CodeSourceFiles => {
     const files = DEMO_PATHS.filter((filePath) =>
         filePath.includes(filePrefix)
     );

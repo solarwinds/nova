@@ -44,7 +44,10 @@ test.describe(`Visual tests: ${name}`, () => {
             "bottom-tooltip"
         );
         rightTooltipButton = Atom.find<ButtonAtom>(ButtonAtom, "right-tooltip");
-        manualTooltipButton = Atom.find<ButtonAtom>(ButtonAtom, "manual-tooltip");
+        manualTooltipButton = Atom.find<ButtonAtom>(
+            ButtonAtom,
+            "manual-tooltip"
+        );
 
         camera = new Camera().loadFilm(page, name, "Bits");
     });

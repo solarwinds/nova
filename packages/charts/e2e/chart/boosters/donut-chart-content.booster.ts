@@ -30,9 +30,7 @@ export class DonutChartContentBooster {
         const host = chart
             .getLocator()
             .locator("xpath=ancestor-or-self::nui-chart[1]");
-        return host.locator(
-            "xpath=following-sibling::nui-chart-donut-content"
-        );
+        return host.locator("xpath=following-sibling::nui-chart-donut-content");
     }
 
     public static async getContent(chart: ChartAtom): Promise<string | null> {

@@ -230,8 +230,8 @@ export class StatusBarChartComponent
                     if (
                         !(spark?.chart as Chart)?.hasPlugin(
                             TimeseriesZoomPlugin
-                        )
-                        && zoomPlugin
+                        ) &&
+                        zoomPlugin
                     ) {
                         spark?.chart?.addPlugin(zoomPlugin);
                     }

@@ -1,19 +1,17 @@
-import { ITimeseriesWidgetData } from "./types";
 import { metricsSeriesMeasurementsMinMax } from "./timeseries-helpers";
+import { ITimeseriesWidgetData } from "./types";
 
 describe("metricsSeriesMeasurementsMinMax", () => {
-    function makeSeries(
+    const makeSeries = (
         overrides: Partial<ITimeseriesWidgetData> = {}
-    ): ITimeseriesWidgetData {
-        return {
-            id: "s1",
-            name: "Series 1",
-            description: "",
-            data: [],
-            metricUnits: undefined,
-            ...overrides,
-        };
-    }
+    ): ITimeseriesWidgetData => ({
+        id: "s1",
+        name: "Series 1",
+        description: "",
+        data: [],
+        metricUnits: undefined,
+        ...overrides,
+    });
 
     describe("when axisUnits is percent", () => {
         it("should return { min: 0, max: 100 } when all values are <= 100", () => {
@@ -52,9 +50,7 @@ describe("metricsSeriesMeasurementsMinMax", () => {
             const series = [
                 makeSeries({
                     metricUnits: "bytes",
-                    data: [
-                        { x: 1, y: 500 },
-                    ],
+                    data: [{ x: 1, y: 500 }],
                 }),
             ];
             expect(metricsSeriesMeasurementsMinMax(series, "percent")).toEqual({

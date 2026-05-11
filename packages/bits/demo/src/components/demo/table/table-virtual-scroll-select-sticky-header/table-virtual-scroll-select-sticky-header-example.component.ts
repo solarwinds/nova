@@ -48,7 +48,8 @@ interface IRandomUserTableModel {
 
 @Component({
     selector: "nui-table-virtual-scroll-select-sticky-header-example",
-    templateUrl: "./table-virtual-scroll-select-sticky-header-example.component.html",
+    templateUrl:
+        "./table-virtual-scroll-select-sticky-header-example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [ClientSideDataSource],
     standalone: false,

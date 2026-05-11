@@ -96,9 +96,7 @@ export class SorterAtom extends Atom {
 
     /** Assert the popup is hidden. */
     public async toBeCollapsed(): Promise<void> {
-        await expect(
-            this.overlay.cdkContainerPane
-        ).toBeHidden();
+        await expect(this.overlay.cdkContainerPane).toBeHidden();
     }
 
     /** Assert the current display value text. */

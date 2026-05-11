@@ -133,8 +133,7 @@ describe("Pizzagna", () => {
                 // locale id that you're using (default en-US)
                 { provide: LOCALE_ID, useValue: "fr" },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {

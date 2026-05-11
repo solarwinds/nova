@@ -123,8 +123,7 @@ describe("WidgetClonerComponent", () => {
                     useValue: mockLoggerService,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {

@@ -249,7 +249,10 @@ export class TableWidgetComponent
     }
 
     public get searchLimitMaxLength(): number {
-        return this.configuration?.searchConfiguration?.maxSearchLength ?? this.defaultMaxSearchLength;
+        return (
+            this.configuration?.searchConfiguration?.maxSearchLength ??
+            this.defaultMaxSearchLength
+        );
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -821,7 +824,7 @@ export class TableWidgetComponent
                     ?.searchConfiguration
             )
         ) {
-           this.searchAddon.initWidget(this);
+            this.searchAddon.initWidget(this);
         }
     }
 }

@@ -26,11 +26,15 @@ export class DashboardAtom extends Atom {
     public static CSS_CLASS = "nui-dashboard";
 
     public getWidgetByIndex(index: number): WidgetAtom {
-        return Atom.findIn<WidgetAtom>(WidgetAtom, this.getLocator()).nth<WidgetAtom>(WidgetAtom, index);
+        return Atom.findIn<WidgetAtom>(
+            WidgetAtom,
+            this.getLocator()
+        ).nth<WidgetAtom>(WidgetAtom, index);
     }
 
     public getWidgetById(id: string): WidgetAtom {
-        return Atom.findIn<WidgetAtom>(WidgetAtom,
+        return Atom.findIn<WidgetAtom>(
+            WidgetAtom,
             this.getLocator().locator(`nui-widget[widget-id="${id}"]`),
             true
         );

@@ -25,13 +25,9 @@ import {
     flushMicrotasks,
     TestBed,
 } from "@angular/core/testing";
-import { FormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
 import { SearchComponent } from "./search.component";
-import { NuiCommonModule } from "../../common/common.module";
-import { NuiButtonModule } from "../button/button.module";
-import { NuiSpinnerModule } from "../spinner/spinner.module";
 
 describe("components >", () => {
     describe("search >", () => {
@@ -41,13 +37,7 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    NuiCommonModule,
-                    NuiSpinnerModule,
-                    FormsModule,
-                    NuiButtonModule,
-                ],
-                declarations: [SearchComponent],
+                imports: [SearchComponent],
             }).compileComponents();
 
             fixture = TestBed.createComponent(SearchComponent);
@@ -57,47 +47,49 @@ describe("components >", () => {
 
         it("should provide custom placeholder if specified", () => {
             const customPlaceholder = "custom";
-            subject.placeholder = customPlaceholder;
-            expect(subject.getPlaceholder()).toEqual(customPlaceholder);
+            fixture.componentRef.setInput("placeholder", customPlaceholder);
+            fixture.detectChanges();
+            expect(subject.resolvedPlaceholder()).toEqual(customPlaceholder);
         });
 
         it("should provide default placeholder if no custom one is provided", () => {
-            subject.placeholder = "";
-            expect(subject.getPlaceholder()).toEqual(
+            fixture.componentRef.setInput("placeholder", "");
+            fixture.detectChanges();
+            expect(subject.resolvedPlaceholder()).toEqual(
                 subject.defaultPlaceholder + "..."
             );
-            // @ts-ignore: Suppressing error for testing purposes
-            subject.placeholder = undefined;
-            expect(subject.getPlaceholder()).toEqual(
+            fixture.componentRef.setInput("placeholder", undefined);
+            fixture.detectChanges();
+            expect(subject.resolvedPlaceholder()).toEqual(
                 subject.defaultPlaceholder + "..."
             );
         });
 
         it("should clear the input on cancel", () => {
-            subject.value = "current input";
+            subject.value.set("current input");
 
             subject.onCancel();
 
-            expect(subject.value).toBe("");
+            expect(subject.value()).toBe("");
         });
 
         it("should set 'captureFocus' and emit 'focusChange' with true passed on cancel", fakeAsync(() => {
-            subject.captureFocus = false;
+            subject.captureFocus.set(false);
             spyOn(subject.focusChange, "emit");
 
             subject.onCancel();
 
-            expect(subject.captureFocus).toBe(false);
+            expect(subject.captureFocus()).toBe(false);
 
             flushMicrotasks();
 
-            expect(subject.captureFocus).toBe(true);
+            expect(subject.captureFocus()).toEqual(true);
             expect(subject.focusChange.emit).toHaveBeenCalledWith(true);
         }));
 
         it("should emit 'cancel' with empty string passed if 'cancel' btn clicked", () => {
             const currentInput = "current input";
-            subject.value = currentInput;
+            subject.value.set(currentInput);
             spyOn(subject.cancel, "emit");
             subject.onCancel();
             expect(subject.cancel.emit).toHaveBeenCalledWith("");
@@ -105,7 +97,7 @@ describe("components >", () => {
 
         it("should emit 'inputChange' event with current input string passed on each input change", () => {
             const currentInput = "current input";
-            subject.value = currentInput;
+            subject.value.set(currentInput);
             spyOn(subject.inputChange, "emit");
             subject.onInputChange();
             expect(subject.inputChange.emit).toHaveBeenCalledWith(currentInput);
@@ -113,7 +105,7 @@ describe("components >", () => {
 
         it("should emit 'search' event with current input string passed", () => {
             const currentInput = "current input";
-            subject.value = currentInput;
+            subject.value.set(currentInput);
             spyOn(subject.search, "emit");
             subject.onSearch();
             expect(subject.search.emit).toHaveBeenCalledWith(currentInput);
@@ -121,7 +113,7 @@ describe("components >", () => {
 
         it("should emit 'search' event when ENTER pressed", () => {
             const currentInput = "current input";
-            subject.value = currentInput;
+            subject.value.set(currentInput);
             spyOn(subject.search, "emit");
             const keyboardEvent = <KeyboardEvent>{ key: "Enter" };
             subject.onKeyup(keyboardEvent);
@@ -129,7 +121,7 @@ describe("components >", () => {
         });
 
         it("should add 'has-error' class if 'isInErrorState' is 'true'", () => {
-            subject.isInErrorState = true;
+            fixture.componentRef.setInput("isInErrorState", true);
             fixture.detectChanges();
             const searchGroup = debugElement.query(
                 By.css(".nui-search__group.has-error")

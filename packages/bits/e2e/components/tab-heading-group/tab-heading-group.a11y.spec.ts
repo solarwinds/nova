@@ -23,7 +23,6 @@ import { Atom } from "../../atom";
 import { TabHeadingGroupAtom } from "./tab-heading-group.atom";
 import { TabHeadingAtom } from "./tab-heading.atom";
 
-
 test.describe("a11y: tab-heading-group", () => {
     const rulesToDisable: string[] = [
         "color-contrast", // NUI-6014

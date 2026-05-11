@@ -46,7 +46,8 @@ import { RandomuserTableDataSource } from "../table-virtual-scroll-datasource";
 
 @Component({
     selector: "nui-table-virtual-scroll-real-api-minimalist-example",
-    templateUrl: "./table-virtual-scroll-real-api-minimalist.example.component.html",
+    templateUrl:
+        "./table-virtual-scroll-real-api-minimalist.example.component.html",
     styleUrls: [
         "./table-virtual-scroll-real-api-minimalist.example.component.less",
     ],

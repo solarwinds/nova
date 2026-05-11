@@ -850,17 +850,15 @@ describe("TableWidgetComponent", () => {
 
     describe("search max length", () => {
         const getSearchQueryLimitWarningElement = () =>
-            fixture.debugElement.query(By.css(".nui-table-search-limit-warning"))?.nativeElement;
+            fixture.debugElement.query(
+                By.css(".nui-table-search-limit-warning")
+            )?.nativeElement;
 
         beforeEach(() => {
             spyOn(component.searchTerm$, "next");
             component.isSearchEnabled = true;
             component.ngOnChanges(
-                createSimpleChanges(
-                    configuration,
-                    tableData,
-                    dataFields
-                )
+                createSimpleChanges(configuration, tableData, dataFields)
             );
             fixture.detectChanges();
         });

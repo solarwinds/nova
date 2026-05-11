@@ -26,6 +26,9 @@ export class WidgetAtom extends Atom {
     public static CSS_CLASS = "nui-widget";
 
     public get header(): WidgetHeaderAtom {
-        return Atom.findIn<WidgetHeaderAtom>(WidgetHeaderAtom, this.getLocator());
+        return Atom.findIn<WidgetHeaderAtom>(
+            WidgetHeaderAtom,
+            this.getLocator()
+        );
     }
 }

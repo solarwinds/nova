@@ -25,18 +25,26 @@ export class WizardV2FooterAtom extends Atom {
     public static CSS_CLASS = "nui-wizard-horizontal-footer-container";
 
     public get nextButton(): ButtonAtom {
-        return new ButtonAtom(this.getLocator().locator("button[nuiwizardnext]"));
+        return new ButtonAtom(
+            this.getLocator().locator("button[nuiwizardnext]")
+        );
     }
 
     public get backButton(): ButtonAtom {
-        return new ButtonAtom(this.getLocator().locator("button[nuiwizardprevious]"));
+        return new ButtonAtom(
+            this.getLocator().locator("button[nuiwizardprevious]")
+        );
     }
 
     public get finishButton(): ButtonAtom {
-        return new ButtonAtom(this.getLocator().locator("button[nuiwizardfinish]"));
+        return new ButtonAtom(
+            this.getLocator().locator("button[nuiwizardfinish]")
+        );
     }
 
     public get cancelButton(): ButtonAtom {
-        return new ButtonAtom(this.getLocator().locator("button[nuiwizardcancel]"));
+        return new ButtonAtom(
+            this.getLocator().locator("button[nuiwizardcancel]")
+        );
     }
 }

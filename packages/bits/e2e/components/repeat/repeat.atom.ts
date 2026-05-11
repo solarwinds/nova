@@ -36,9 +36,7 @@ export class RepeatAtom extends Atom {
     }
 
     public get vScrollViewportContent(): Locator {
-        return this.getLocator().locator(
-            ".cdk-virtual-scroll-content-wrapper"
-        );
+        return this.getLocator().locator(".cdk-virtual-scroll-content-wrapper");
     }
 
     public get emptyMessage(): Locator {
@@ -56,9 +54,7 @@ export class RepeatAtom extends Atom {
     }
 
     public getCheckbox(idx: number): CheckboxAtom {
-        return new CheckboxAtom(
-            this.getItem(idx).locator(".nui-checkbox")
-        );
+        return new CheckboxAtom(this.getItem(idx).locator(".nui-checkbox"));
     }
 
     private getRepeatItem(idx: number): Locator {
@@ -78,9 +74,7 @@ export class RepeatAtom extends Atom {
     }
 
     public async selectRow(idx: number): Promise<void> {
-        await this.getItem(idx)
-            .locator(".nui-repeat-item__content")
-            .click();
+        await this.getItem(idx).locator(".nui-repeat-item__content").click();
     }
 
     public async selectRows(...indexes: number[]): Promise<void> {
@@ -164,9 +158,6 @@ export class RepeatAtom extends Atom {
     public async toHaveVScrollViewportContentHeight(
         expected: string | RegExp
     ): Promise<void> {
-        await expect(this.vScrollViewportContent).toHaveCSS(
-            "height",
-            expected
-        );
+        await expect(this.vScrollViewportContent).toHaveCSS("height", expected);
     }
 }

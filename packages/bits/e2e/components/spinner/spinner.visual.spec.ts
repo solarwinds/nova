@@ -32,7 +32,10 @@ test.describe(`Visual tests: ${name}`, () => {
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("spinner/spinner-visual-test", page);
         await Helpers.disableCSSAnimations(Animations.ALL);
-        spinnerLargeWithCancel = Atom.find<SpinnerAtom>(SpinnerAtom, "nui-spinner-large-cancel");
+        spinnerLargeWithCancel = Atom.find<SpinnerAtom>(
+            SpinnerAtom,
+            "nui-spinner-large-cancel"
+        );
 
         camera = new Camera().loadFilm(page, name, "Bits");
     });

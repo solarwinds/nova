@@ -30,7 +30,9 @@ export class LineChartTestPage {
     constructor(page: Page) {
         this.root = page.locator(".nui-line-chart-basic-test");
         this.dataInput = this.root.locator("#data-input");
-        this.chart = new ChartAtom(this.root.locator(`.${ChartAtom.CSS_CLASS}`));
+        this.chart = new ChartAtom(
+            this.root.locator(`.${ChartAtom.CSS_CLASS}`)
+        );
     }
 
     public async changeData(input: number[][]): Promise<void> {

@@ -31,11 +31,8 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [
-                    DialogHeaderComponent,
-                    ButtonComponent,
-                    IconComponent,
-                ],
+                imports: [IconComponent],
+                declarations: [DialogHeaderComponent, ButtonComponent],
                 providers: [LoggerService],
             });
 

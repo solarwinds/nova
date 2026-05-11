@@ -41,11 +41,12 @@ export class Atom {
         if (!parentLocator) {
             return create(Atom.getFromRoot(selector));
         }
-        const sibling = Helpers.page.locator(selector);
+        if (root) {
+            const sibling = Helpers.page.locator(selector);
+            return create(parentLocator.and(sibling));
+        }
 
-        const operation = root ? "and" : "locator";
-
-        return create(parentLocator[operation](sibling));
+        return create(parentLocator.locator(selector));
     }
 
     public static getFromRoot(selector: string): Locator {
@@ -139,9 +140,12 @@ export class Atom {
         await this.locator.click();
     }
 
-    public async hover(target?: Locator, force: boolean = false): Promise<void> {
+    public async hover(
+        target?: Locator,
+        force: boolean = false
+    ): Promise<void> {
         if (target) {
-            await target.hover( { force });
+            await target.hover({ force });
             return;
         }
         await this.locator.hover({ force });

@@ -93,9 +93,9 @@ test.describe("USERCONTROL time-frame-picker", () => {
 
             await useButton.click();
 
-            await expect(basicTimeFramePickerPopover.getLocator()).toContainText(
-                "April 8, 2018 6:00 AM - April 9, 2018 6:00 AM"
-            );
+            await expect(
+                basicTimeFramePickerPopover.getLocator()
+            ).toContainText("April 8, 2018 6:00 AM - April 9, 2018 6:00 AM");
         });
 
         test("should not change all control values after Cancel is clicked", async () => {
@@ -136,9 +136,9 @@ test.describe("USERCONTROL time-frame-picker", () => {
 
             await cancelButton.click();
 
-            await expect(basicTimeFramePickerPopover.getLocator()).toContainText(
-                "Last hour"
-            );
+            await expect(
+                basicTimeFramePickerPopover.getLocator()
+            ).toContainText("Last hour");
         });
 
         test("should select quick pick and detect selected quick pick", async () => {
@@ -156,9 +156,9 @@ test.describe("USERCONTROL time-frame-picker", () => {
             );
 
             await basicQuickPicker.selectPresetByTitle("Last 12 hours");
-            await expect(basicTimeFramePickerPopover.getLocator()).toContainText(
-                "Last 12 hours"
-            );
+            await expect(
+                basicTimeFramePickerPopover.getLocator()
+            ).toContainText("Last 12 hours");
         });
 
         test("should not be able to select time before min time", async () => {

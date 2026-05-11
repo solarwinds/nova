@@ -18,12 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Component,
-    QueryList,
-    ViewChild,
-    ViewChildren,
-} from "@angular/core";
+import { Component, QueryList, ViewChild, ViewChildren } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { TabHeadingGroupComponent } from "./tab-heading-group.component";
@@ -85,11 +80,11 @@ describe("components >", () => {
 
         beforeEach(waitForAsync(() => {
             TestBed.configureTestingModule({
+                imports: [IconComponent],
                 declarations: [
                     TabHeadingGroupComponent,
                     TabHeadingComponent,
                     TestTabHeadingComponent,
-                    IconComponent,
                 ],
             })
                 .compileComponents()
@@ -127,8 +122,8 @@ describe("components >", () => {
                 componentFixture.whenStable().then(() => {
                     componentFixture.detectChanges();
                     expect(
-                        (subject.tabHeadingGroup as any)._tabSelectedSubscriptions
-                            .length
+                        (subject.tabHeadingGroup as any)
+                            ._tabSelectedSubscriptions.length
                     ).toEqual(3);
                     subject.popTab();
                     subject.popTab();
@@ -137,17 +132,18 @@ describe("components >", () => {
                     componentFixture.whenStable().then(() => {
                         componentFixture.detectChanges();
                         expect(
-                            (subject.tabHeadingGroup as any)._tabSelectedSubscriptions
-                                .length
+                            (subject.tabHeadingGroup as any)
+                                ._tabSelectedSubscriptions.length
                         ).toEqual(1);
                         spyOn(
-                            (subject.tabHeadingGroup as any)._tabSelectedSubscriptions[0],
+                            (subject.tabHeadingGroup as any)
+                                ._tabSelectedSubscriptions[0],
                             "unsubscribe"
                         );
                         subject.tabHeadingGroup.ngOnDestroy();
                         expect(
-                            (subject.tabHeadingGroup as any)._tabSelectedSubscriptions[0]
-                                .unsubscribe
+                            (subject.tabHeadingGroup as any)
+                                ._tabSelectedSubscriptions[0].unsubscribe
                         ).toHaveBeenCalled();
                     });
                 });

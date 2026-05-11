@@ -47,7 +47,9 @@ test.describe("a11y: dialog", () => {
     });
 
     for (const btnId of dialogButtons) {
-        test(`should verify a11y of dialog: ${btnId}`, async ({ runA11yScan }) => {
+        test(`should verify a11y of dialog: ${btnId}`, async ({
+            runA11yScan,
+        }) => {
             const btn = Helpers.page.locator("#" + btnId);
             await btn.click();
             await DialogAtom.toBeVisible();
@@ -56,7 +58,9 @@ test.describe("a11y: dialog", () => {
         });
     }
 
-    test("should verify a11y of confirmation dialog in dark theme", async ({ runA11yScan }) => {
+    test("should verify a11y of confirmation dialog in dark theme", async ({
+        runA11yScan,
+    }) => {
         await Helpers.switchDarkTheme("on");
         const btn = Helpers.page.locator(
             "#nui-visual-test-confirmation-dialog-overrides-btn"

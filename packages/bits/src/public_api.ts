@@ -203,7 +203,6 @@ export { OverlayPositionService } from "./lib/overlay/overlay-position.service";
 export { OverlayService } from "./lib/overlay/overlay.service";
 export { ColorService } from "./lib/color-picker/color.service";
 
-
 // External tokens also should be exposed here
 export { DEMO_PATH_TOKEN } from "./constants/path.constants";
 

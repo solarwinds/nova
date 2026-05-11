@@ -31,7 +31,10 @@ test.describe("USERCONTROL freetype-query-builder >", () => {
             "freetype-query/freetype-query-builder-test",
             page
         );
-        example1 = Atom.find<FreetypeQueryBuilderAtom>(FreetypeQueryBuilderAtom, "example1");
+        example1 = Atom.find<FreetypeQueryBuilderAtom>(
+            FreetypeQueryBuilderAtom,
+            "example1"
+        );
     });
 
     test("Should correctly select an option", async () => {

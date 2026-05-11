@@ -6,39 +6,39 @@ Nova Charts is a library created to provide potential consumers with solutions f
 
 Getting started with charts is quite simple:
 
-1.  Include charts in your package.json file
+1. Include charts in your package.json file
 
-        "devDependencies": {
-            ...
-            "@nova-ui/charts": >>last release version<<,
-            ...
-        }
+    "devDependencies": {
+    ...
+    "@nova-ui/charts": >>last release version<<,
+    ...
+    }
 
-2.  Add a reference to charts styles in your angular.json file. Without this step, the charts will render, but will look and act in unpredictable ways.
+2. Add a reference to charts styles in your angular.json file. Without this step, the charts will render, but will look and act in unpredictable ways.
 
-        "projects": {
-            "your-project": {
-                ...
-                "architect": {
-                    ...
-                    "styles": [
-                        "src/styles.less",
-                        "./node_modules/@nova-ui/bits/bundles/css/styles.css",
-                        "./node_modules/@nova-ui/charts/bundles/css/styles.css"
-                     ],
+    "projects": {
+    "your-project": {
+    ...
+    "architect": {
+    ...
+    "styles": [
+    "src/styles.less",
+    "./node_modules/@nova-ui/bits/bundles/css/styles.css",
+    "./node_modules/@nova-ui/charts/bundles/css/styles.css"
+    ],
 
-3.  Import NuiChartsModule
+3. Import NuiChartsModule
 
-        import { NuiChartsModule } from "@nova-ui/charts";
+    import { NuiChartsModule } from "@nova-ui/charts";
 
-        @NgModule({
-            declarations: [ ... ],
-            imports: [ NuiChartsModule ],
-            exports: [ ... ],
-            providers: [ ... ]
-        })
+    @NgModule({
+    declarations: [ ... ],
+    imports: [ NuiChartsModule ],
+    exports: [ ... ],
+    providers: [ ... ]
+    })
 
-4.  Copy/Paste any of our examples (see TOC below) to create your own component, add it to your view and then play around with the options.
+4. Copy/Paste any of our examples (see TOC below) to create your own component, add it to your view and then play around with the options.
 
 ## TOC
 

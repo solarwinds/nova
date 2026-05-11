@@ -32,7 +32,11 @@ test.describe("USERCONTROL search", () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("search/search-test", page);
-        searchField = Atom.find<SearchAtom>(SearchAtom, "nui-demo-search", true);
+        searchField = Atom.find<SearchAtom>(
+            SearchAtom,
+            "nui-demo-search",
+            true
+        );
         searchBtnAtom = searchField.getSearchButton();
         cancelBtnAtom = searchField.getCancelButton();
         setFocusBtnAtom = Atom.find<ButtonAtom>(
@@ -59,7 +63,9 @@ test.describe("USERCONTROL search", () => {
     test("should search on enter key", async () => {
         await searchField.acceptInput("Lorem");
         await Helpers.pressKey("Enter");
-        const highlighted = Helpers.page.locator(".nui-highlighted:text('Lorem')");
+        const highlighted = Helpers.page.locator(
+            ".nui-highlighted:text('Lorem')"
+        );
         await expect(highlighted).toBeVisible();
     });
 

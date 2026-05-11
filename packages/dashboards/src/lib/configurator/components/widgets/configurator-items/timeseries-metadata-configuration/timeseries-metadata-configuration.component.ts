@@ -43,7 +43,10 @@ import {
     IHasForm,
     PIZZAGNA_EVENT_BUS,
 } from "../../../../../types";
-import { ILegendPlacementOption, LegendPlacement } from "../../../../../widget-types/common/widget/legend";
+import {
+    ILegendPlacementOption,
+    LegendPlacement,
+} from "../../../../../widget-types/common/widget/legend";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
 
 export interface ITimeseriesChartTypeOption {

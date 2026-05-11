@@ -137,12 +137,16 @@ test.describe("USERCONTROL textbox-number >", () => {
             test("should be disabled if value equals to maxValue", async () => {
                 await component.acceptText("10");
                 await expect.poll(() => component.getValue()).toBe("10");
-                await expect.poll(() => component.upButton.isDisabled()).toBe(true);
+                await expect
+                    .poll(() => component.upButton.isDisabled())
+                    .toBe(true);
             });
 
             test("should be disabled if value exceeds maxValue", async () => {
                 await component.acceptText("100");
-                await expect.poll(() => component.upButton.isDisabled()).toBe(true);
+                await expect
+                    .poll(() => component.upButton.isDisabled())
+                    .toBe(true);
             });
         });
 
@@ -150,12 +154,16 @@ test.describe("USERCONTROL textbox-number >", () => {
             test("should be disabled if value equals to minValue", async () => {
                 await component.acceptText("1");
                 await expect.poll(() => component.getValue()).toBe("1");
-                await expect.poll(() => component.downButton.isDisabled()).toBe(true);
+                await expect
+                    .poll(() => component.downButton.isDisabled())
+                    .toBe(true);
             });
 
             test("should be disabled if value exceeds minValue", async () => {
                 await component.acceptText("-1");
-                await expect.poll(() => component.downButton.isDisabled()).toBe(true);
+                await expect
+                    .poll(() => component.downButton.isDisabled())
+                    .toBe(true);
             });
         });
     });

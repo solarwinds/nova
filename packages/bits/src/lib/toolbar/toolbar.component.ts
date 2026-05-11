@@ -71,7 +71,9 @@ import { MenuComponent } from "../menu";
     providers: [ToolbarKeyboardService],
     standalone: false,
 })
-export class ToolbarComponent implements AfterViewInit, AfterContentInit, OnDestroy {
+export class ToolbarComponent
+    implements AfterViewInit, AfterContentInit, OnDestroy
+{
     @ContentChildren(ToolbarGroupComponent)
     public groups: QueryList<ToolbarGroupComponent>;
 

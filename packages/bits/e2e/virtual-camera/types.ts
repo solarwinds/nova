@@ -75,6 +75,9 @@ export interface ICameraSettings {
 export interface ICameraSettingsActions {
     fullframe(): Promise<void>;
     crop(): Promise<void>;
-    responsive(values: Array<number>, callback?: (page: Page) => void): Promise<void>;
+    responsive(
+        values: Array<number>,
+        callback?: (page: Page) => void
+    ): Promise<void>;
     defaultResponsive(): Promise<void>;
 }

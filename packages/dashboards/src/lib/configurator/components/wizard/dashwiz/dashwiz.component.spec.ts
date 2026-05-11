@@ -55,14 +55,13 @@ describe("components >", () => {
         let fixture: ComponentFixture<TestWrapperComponent>;
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [PortalModule],
+                imports: [PortalModule, IconComponent],
                 declarations: [
                     TestWrapperComponent,
                     ButtonComponent,
                     DashwizComponent,
                     DashwizButtonsComponent,
                     DashwizStepComponent,
-                    IconComponent,
                     ComponentPortalDirective,
                     TemplateLoadErrorComponent,
                 ],
@@ -84,9 +83,9 @@ describe("components >", () => {
             fixture.detectChanges();
         });
 
-    afterEach(() => {
-        fixture.destroy();
-    });
+        afterEach(() => {
+            fixture.destroy();
+        });
 
         describe("stepNavigated >", () => {
             it("should notify with updated IWizardSelectionEvent", () => {

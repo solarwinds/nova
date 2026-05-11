@@ -26,7 +26,7 @@ import { Component } from "@angular/core";
     standalone: false,
 })
 export class MenuItemVariationsExampleComponent {
-    public onActionDone($event?:   boolean): void {
+    public onActionDone($event?: boolean): void {
         console.log("Action Done", $event);
     }
 }

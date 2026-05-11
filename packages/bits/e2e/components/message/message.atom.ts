@@ -74,10 +74,7 @@ export class MessageAtom extends Atom {
     public async toHaveBackgroundColor(
         expected: string | RegExp
     ): Promise<void> {
-        await expect(this.getLocator()).toHaveCSS(
-            "background-color",
-            expected
-        );
+        await expect(this.getLocator()).toHaveCSS("background-color", expected);
     }
 
     /** Assert the message content text. */

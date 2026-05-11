@@ -39,10 +39,11 @@ test.describe(`Visual Tests: Charts - ${name}`, () => {
     let verticalGauge: ChartAtom;
 
     test.beforeEach(async ({ page }) => {
-        await Helpers.prepareBrowser("chart-types/gauge/visual-test", page);
+        Helpers.setPage(page);
         await Helpers.disableCSSAnimations(
             Animations.TRANSITIONS_AND_ANIMATIONS
         );
+        await Helpers.prepareBrowser("chart-types/gauge/visual-test", page);
 
         donutGauge = new ChartAtom(
             page.locator("#visual-test-gauge-donut-high-value")

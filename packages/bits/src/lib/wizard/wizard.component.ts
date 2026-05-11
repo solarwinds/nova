@@ -196,7 +196,8 @@ export class WizardComponent
         wizardStep: IWizardStepComponent,
         indexToInsert: number
     ): IWizardStepComponent {
-        const componentRef = this.dynamicStep.createComponent(WizardStepComponent);
+        const componentRef =
+            this.dynamicStep.createComponent(WizardStepComponent);
         const instance: IWizardStepComponent = componentRef.instance;
         const wizardStepInputs = this.getInputsAndOutputs(wizardStep);
 

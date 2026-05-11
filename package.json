@@ -26,8 +26,8 @@
     "@angular/router": "21.2.8",
     "@axe-core/playwright": "4.10.1",
     "@axe-core/webdriverjs": "4.10.1",
-    "@compodoc/compodoc": "1.1.26",
-    "@percy/cli": "1.31.10",
+    "@compodoc/compodoc": "1.1.32",
+    "@percy/cli": "1.31.11",
     "@percy/playwright": "1.0.10",
     "@playwright/test": "1.58.1",
     "@schematics/angular": "21.2.7",
@@ -49,6 +49,7 @@
     "eslint-plugin-jsdoc": "50.6.9",
     "eslint-plugin-prefer-arrow": "1.2.3",
     "highlight.js": "11.10.0",
+    "husky": "9.1.7",
     "jasmine": "6.0.0",
     "jasmine-core": "5.4.0",
     "jasmine-reporters": "2.5.2",
@@ -62,7 +63,8 @@
     "karma-junit-reporter": "2.0.1",
     "karma-spec-reporter": "0.0.34",
     "less": "4.2.0",
-    "lodash": "4.17.23",
+    "lint-staged": "16.4.0",
+    "lodash": "4.18.1",
     "lz-string": "1.5.0",
     "moment": "2.30.1",
     "moment-timezone": "0.5.46",
@@ -83,14 +85,13 @@
     "webpack": "5.104.1",
     "zone.js": "0.16.1"
   },
-  "resolutions": {
-    "d3-color": "3.1.0",
-    "tablesort": "5.5.0"
-  },
   "engines": {
     "node": ">=20"
   },
   "license": "Apache-2.0",
+  "lint-staged": {
+    "*.{js,ts,html,css,scss,json,md,yml,yaml}": "prettier --write"
+  },
   "main": "index.js",
   "name": "nova",
   "packageManager": "yarn@1.22.18",
@@ -99,19 +100,25 @@
     "type": "git",
     "url": "https://github.com/solarwinds/nova.git"
   },
+  "resolutions": {
+    "d3-color": "3.1.0",
+    "picomatch": "4.0.4",
+    "tablesort": "5.5.0"
+  },
   "scripts": {
     "bash": "bash scripts/runner",
     "build-all": "cd packages/bits && yarn && yarn assemble-dev && cd ../charts && yarn && yarn symlink && yarn assemble-dev && cd ../dashboards && yarn && yarn symlink && yarn assemble-dev",
     "build-watch:bits": "yarn run in-bits build-lib:watch",
     "build-watch:charts": "yarn run in-charts build-lib:watch",
     "clean-docs-ci": "bash scripts/clean-docs",
-    "compute-version-local": "bash scripts/compute-version-local",
     "compute-version-ci": "bash scripts/compute-version",
+    "compute-version-local": "bash scripts/compute-version-local",
     "deploy-docs-ci": "bash scripts/deploy-docs",
     "in-bits": "yarn run --cwd=packages/bits",
     "in-charts": "yarn run --cwd=packages/charts",
     "in-dashboards": "yarn run --cwd=packages/dashboards",
     "merge-ci": "bash scripts/merge",
+    "prepare": "husky",
     "prettier": "prettier --config ./.prettierrc.js",
     "prettier-check": "yarn run prettier --check .",
     "prettier-fix": "yarn run prettier --write .",
@@ -126,7 +133,5 @@
     "verify-ci": "bash scripts/verify-published"
   },
   "version": "21.0.0",
-  "workspaces": [
-    "packages/*"
-  ]
+  "workspaces": ["packages/*"]
 }

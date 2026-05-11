@@ -19,7 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component, Input, NO_ERRORS_SCHEMA } from "@angular/core";
-import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
 import { IWizardSelectionEvent } from "./public-api";
@@ -32,7 +37,11 @@ import { LoggerService } from "../../services/log-service";
 
 @Component({
     selector: "nui-test-cmp",
-    template: ` <nui-wizard finishText="Finish" [bodyContainerHeight]="bodyContainerHeight" [enableScroll]="enableScroll">
+    template: ` <nui-wizard
+        finishText="Finish"
+        [bodyContainerHeight]="bodyContainerHeight"
+        [enableScroll]="enableScroll"
+    >
         <nui-wizard-step [title]="'step1'"></nui-wizard-step>
         <nui-wizard-step [title]="'step2'"></nui-wizard-step>
         <nui-wizard-step [title]="'step3'"></nui-wizard-step>
@@ -50,12 +59,12 @@ describe("components >", () => {
         let fixture: ComponentFixture<TestWrapperComponent>;
         beforeEach(() => {
             TestBed.configureTestingModule({
+                imports: [IconComponent],
                 declarations: [
                     TestWrapperComponent,
                     ButtonComponent,
                     WizardComponent,
                     WizardStepComponent,
-                    IconComponent,
                 ],
                 schemas: [NO_ERRORS_SCHEMA],
                 providers: [IconService, LoggerService],

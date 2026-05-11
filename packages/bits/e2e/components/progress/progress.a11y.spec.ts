@@ -28,7 +28,9 @@ test.describe("a11y: progress", () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("progress/progress-visual-test", page);
-        startProgressBasic = new ButtonAtom(page.locator("#nui-demo-start-basic-progress"));
+        startProgressBasic = new ButtonAtom(
+            page.locator("#nui-demo-start-basic-progress")
+        );
     });
 
     test("should check a11y of progress", async ({ runA11yScan }) => {

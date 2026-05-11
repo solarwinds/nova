@@ -69,7 +69,10 @@ describe("directives >", () => {
                 ],
                 providers: [
                     CdkStepper,
-                    {provide: ChangeDetectorRef, useValue: jasmine.createSpyObj(["markForCheck"])},
+                    {
+                        provide: ChangeDetectorRef,
+                        useValue: jasmine.createSpyObj(["markForCheck"]),
+                    },
                     { provide: ElementRef<HTMLElement>, useValue: {} as any },
                 ],
                 schemas: [NO_ERRORS_SCHEMA],

@@ -77,7 +77,8 @@ const PANE_HEADER = "DEFAULT HEADER";
 })
 class TestAppComponent {
     @Input() paneSize = PanelComponent.SIZE_VALUES.width.DEFAULT_VALUE;
-    @Input() paneCollapsedSize = PanelComponent.SIZE_VALUES.width.COLLAPSED_VALUE;
+    @Input() paneCollapsedSize =
+        PanelComponent.SIZE_VALUES.width.COLLAPSED_VALUE;
     @Input() panelMode = PanelModes.static;
     @Input() isCollapsed: boolean = false;
     @Input() headerIcon: string;
@@ -105,9 +106,8 @@ describe("components >", () => {
     describe("panel >", () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [NoopAnimationsModule],
+                imports: [NoopAnimationsModule, IconComponent],
                 declarations: [
-                    IconComponent,
                     ButtonComponent,
                     PanelComponent,
                     TestAppComponent,
@@ -298,7 +298,10 @@ describe("components >", () => {
 
             it("when collapsible and not collapsed", () => {
                 fixture.componentRef.setInput("isCollapsed", false);
-                fixture.componentRef.setInput("panelMode", PanelModes.collapsible);
+                fixture.componentRef.setInput(
+                    "panelMode",
+                    PanelModes.collapsible
+                );
                 fixture.detectChanges();
                 fixture.detectChanges();
 
@@ -332,7 +335,10 @@ describe("components >", () => {
             it("when collapsible and collapsed", fakeAsync(() => {
                 fixture.detectChanges();
                 // Use setInput() so Angular marks the view dirty (Angular 21 NG0100 fix)
-                fixture.componentRef.setInput("panelMode", PanelModes.collapsible);
+                fixture.componentRef.setInput(
+                    "panelMode",
+                    PanelModes.collapsible
+                );
                 fixture.componentRef.setInput("isCollapsed", true);
                 fixture.detectChanges();
                 tick();
@@ -379,7 +385,7 @@ describe("components >", () => {
                 By.css(".nui-panel__header-embedded-icon nui-icon")
             );
             expect(embeddedIconDebugElement).not.toBeNull();
-            expect(embeddedIconDebugElement.context.icon).toBe("filter");
+            expect(embeddedIconDebugElement.context.icon()).toBe("filter");
         });
         describe("position >", () => {
             it("should have correct classes when position is right", () => {
@@ -400,7 +406,10 @@ describe("components >", () => {
                 fixture.detectChanges();
                 fixture.detectChanges();
                 // Use setInput() + two detectChanges() for Angular 21 NG0100 fix
-                fixture.componentRef.setInput("panelMode", PanelModes.collapsible);
+                fixture.componentRef.setInput(
+                    "panelMode",
+                    PanelModes.collapsible
+                );
                 fixture.componentRef.setInput("displacePrimaryContent", true);
                 fixture.detectChanges();
                 fixture.detectChanges();
@@ -417,7 +426,10 @@ describe("components >", () => {
                 fixture.detectChanges();
                 fixture.detectChanges();
                 // Use setInput() + two detectChanges() for Angular 21 NG0100 fix
-                fixture.componentRef.setInput("panelMode", PanelModes.collapsible);
+                fixture.componentRef.setInput(
+                    "panelMode",
+                    PanelModes.collapsible
+                );
                 fixture.componentRef.setInput("isCollapsed", false);
                 fixture.componentRef.setInput("displacePrimaryContent", true);
                 fixture.detectChanges();
@@ -445,7 +457,10 @@ describe("components >", () => {
                 fixture.detectChanges();
                 fixture.detectChanges();
                 // Use setInput() + two detectChanges() for Angular 21 NG0100 fix
-                fixture.componentRef.setInput("panelMode", PanelModes.collapsible);
+                fixture.componentRef.setInput(
+                    "panelMode",
+                    PanelModes.collapsible
+                );
                 fixture.componentRef.setInput("isCollapsed", false);
                 fixture.componentRef.setInput("displacePrimaryContent", true);
                 fixture.detectChanges();
@@ -472,7 +487,10 @@ describe("components >", () => {
                 fixture.detectChanges();
                 // Use setInput() so Angular marks the view dirty (Angular 21 NG0100 fix)
                 fixture.componentRef.setInput("orientation", "top");
-                fixture.componentRef.setInput("panelMode", PanelModes.collapsible);
+                fixture.componentRef.setInput(
+                    "panelMode",
+                    PanelModes.collapsible
+                );
                 fixture.componentRef.setInput("isCollapsed", true);
                 fixture.detectChanges();
                 tick();
@@ -528,7 +546,10 @@ describe("components >", () => {
                 );
             });
             it("should have correct class when panelBackgroundColor input set to colorBgSecondary", () => {
-                fixture.componentRef.setInput("panelBackgroundColor", PanelBackgroundColor.colorBgSecondary);
+                fixture.componentRef.setInput(
+                    "panelBackgroundColor",
+                    PanelBackgroundColor.colorBgSecondary
+                );
                 fixture.detectChanges();
                 fixture.detectChanges();
                 const paneContainer = fixture.debugElement.query(

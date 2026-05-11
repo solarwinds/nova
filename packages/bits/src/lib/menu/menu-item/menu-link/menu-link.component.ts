@@ -44,7 +44,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     template: `
         <a
             class="nui-menu-item__link"
-            role="link"
+            role="menuitem"
             [href]="url"
             [target]="target"
             (click)="handleClick($event)"
@@ -65,7 +65,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     ],
     styleUrls: ["./menu-link.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: { role: "menuitem" },
+    host: { role: "none" },
     standalone: false,
 })
 export class MenuLinkComponent extends MenuItemBaseComponent {

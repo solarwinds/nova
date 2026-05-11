@@ -44,7 +44,8 @@ interface IPicker {
 
 @Component({
     selector: "nui-time-frame-picker-multiple-custom-pickers",
-    templateUrl: "./time-frame-picker-multiple-custom-pickers.example.component.html",
+    templateUrl:
+        "./time-frame-picker-multiple-custom-pickers.example.component.html",
     standalone: false,
 })
 export class TimeFramePickerMultipleCustomPickersExampleComponent

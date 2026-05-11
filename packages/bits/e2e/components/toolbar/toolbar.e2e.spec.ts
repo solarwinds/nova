@@ -157,9 +157,7 @@ test.describe("USERCONTROL toolbar: ", () => {
             await resizableToolbarTextboxAtom.acceptText("100");
             await toolbar.toHaveVisibleItemsCount(0);
             await toolbar.popup.open();
-            expect(
-                (await toolbar.menu.getItemTextArray()).length
-            ).toBe(12);
+            expect((await toolbar.menu.getItemTextArray()).length).toBe(12);
         });
     });
 
@@ -202,15 +200,15 @@ test.describe("USERCONTROL toolbar: ", () => {
 
             //                  [selection, items, extra, noEmpty, expected]
             const cases: [boolean, boolean, boolean, boolean, string[]][] = [
-                [false, true,  false, false, []],
-                [true,  true,  false, false, []],
-                [false, true,  true,  false, [EXTRA]],
+                [false, true, false, false, []],
+                [true, true, false, false, []],
+                [false, true, true, false, [EXTRA]],
                 [false, false, false, false, [NO_SELECTION_MSG]],
-                [true,  false, false, false, [WITH_SELECTION_MSG]],
-                [false, false, true,  false, [NO_SELECTION_MSG, EXTRA]],
-                [true,  false, true,  false, [WITH_SELECTION_MSG, EXTRA]],
-                [false, true,  false, true,  []],
-                [true,  true,  false, true,  []],
+                [true, false, false, false, [WITH_SELECTION_MSG]],
+                [false, false, true, false, [NO_SELECTION_MSG, EXTRA]],
+                [true, false, true, false, [WITH_SELECTION_MSG, EXTRA]],
+                [false, true, false, true, []],
+                [true, true, false, true, []],
             ];
 
             for (const [selection, items, extra, noEmpty, expected] of cases) {
@@ -219,7 +217,9 @@ test.describe("USERCONTROL toolbar: ", () => {
                     items ? "with items" : "no items",
                     extra ? "extra msg" : null,
                     noEmpty ? "noEmptyMsg" : null,
-                ].filter(Boolean).join(", ");
+                ]
+                    .filter(Boolean)
+                    .join(", ");
 
                 test(label, async () => {
                     await switchSelection.setState(selection);
@@ -229,9 +229,9 @@ test.describe("USERCONTROL toolbar: ", () => {
 
                     await toolbarEmpty.toHaveMessagesCount(expected.length);
                     for (let i = 0; i < expected.length; i++) {
-                        await expect(
-                            toolbarEmpty.messages.nth(i)
-                        ).toHaveText(expected[i]);
+                        await expect(toolbarEmpty.messages.nth(i)).toHaveText(
+                            expected[i]
+                        );
                     }
                 });
             }

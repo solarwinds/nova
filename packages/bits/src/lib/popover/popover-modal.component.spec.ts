@@ -46,11 +46,8 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [
-                    PopoverModalComponent,
-                    IconComponent,
-                    OverlayArrowComponent,
-                ],
+                imports: [IconComponent],
+                declarations: [PopoverModalComponent, OverlayArrowComponent],
                 providers: [
                     EdgeDetectionService,
                     LoggerService,
@@ -64,7 +61,8 @@ describe("components >", () => {
             // via zone events (e.g., from zone.run() in ngAfterViewInit test)
             subject.displayChange = new BehaviorSubject<boolean>(true);
             subject.popoverBeforeHiddenSubject = new Subject<void>();
-            subject.popoverModalEventSubject = new Subject<PopoverModalEvents>();
+            subject.popoverModalEventSubject =
+                new Subject<PopoverModalEvents>();
             subject.context = {
                 arrowMarginTop: 0,
                 icon: "add",

@@ -27,7 +27,10 @@ export class LayoutSheetGroupAtom extends Atom {
     public static CSS_CLASS = "nui-sheet-group";
 
     public getHorizontalResizerByIndex = (index: number): Locator =>
-        super.getLocator().locator(".nui-layout-resizer--horizontal").nth(index);
+        super
+            .getLocator()
+            .locator(".nui-layout-resizer--horizontal")
+            .nth(index);
 
     public getVerticalResizerByIndex = (index: number): Locator =>
         super.getLocator().locator(".nui-layout-resizer--vertical").nth(index);
@@ -36,28 +39,44 @@ export class LayoutSheetGroupAtom extends Atom {
         index: number,
         pixels: number
     ): Promise<void> => {
-        await this.dragResizer(this.getHorizontalResizerByIndex(index), -pixels, 0);
+        await this.dragResizer(
+            this.getHorizontalResizerByIndex(index),
+            -pixels,
+            0
+        );
     };
 
     public moveRightHorizontalResizerByIndex = async (
         index: number,
         pixels: number
     ): Promise<void> => {
-        await this.dragResizer(this.getHorizontalResizerByIndex(index), pixels, 0);
+        await this.dragResizer(
+            this.getHorizontalResizerByIndex(index),
+            pixels,
+            0
+        );
     };
 
     public moveUpVerticalResizerByIndex = async (
         index: number,
         pixels: number
     ): Promise<void> => {
-        await this.dragResizer(this.getVerticalResizerByIndex(index), 0, -pixels);
+        await this.dragResizer(
+            this.getVerticalResizerByIndex(index),
+            0,
+            -pixels
+        );
     };
 
     public moveDownVerticalResizerByIndex = async (
         index: number,
         pixels: number
     ): Promise<void> => {
-        await this.dragResizer(this.getVerticalResizerByIndex(index), 0, pixels);
+        await this.dragResizer(
+            this.getVerticalResizerByIndex(index),
+            0,
+            pixels
+        );
     };
 
     /** Press mouse down on a horizontal resizer (for visual testing of pressed state). */

@@ -32,7 +32,6 @@ import { DynamicComponentCreator } from "../../../../../pizzagna/services/dynami
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../../../types";
 
-
 describe("TableScrollTypeEditorComponent", () => {
     let component: TableScrollTypeEditorComponent;
     let fixture: ComponentFixture<TableScrollTypeEditorComponent>;

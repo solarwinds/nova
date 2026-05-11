@@ -10,7 +10,9 @@ test.describe(`Visual tests: ${name}`, () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("icon/icon-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
         iconBasic = Atom.find<IconAtom>(IconAtom, "nui-icon-test-basic-usage");
 
         camera = new Camera().loadFilm(page, name, "Bits");

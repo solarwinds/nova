@@ -257,9 +257,13 @@ export class PanelComponent
             this.isHidden = changes.isHidden.currentValue;
         }
         // Re-apply margin when relevant inputs change after the view is initialized
-        if (this._viewInitialized &&
-            (changes["displacePrimaryContent"] || changes["isClosable"] ||
-             changes["orientation"] || changes["panelMode"])) {
+        if (
+            this._viewInitialized &&
+            (changes["displacePrimaryContent"] ||
+                changes["isClosable"] ||
+                changes["orientation"] ||
+                changes["panelMode"])
+        ) {
             this.handleContentMargin();
         }
     }
