@@ -13,7 +13,8 @@
             tabindex="{{ disabled ? -1 : 0 }}"
             role="checkbox"
             [attr.aria-checked]="value"
-            [attr.aria-label]="ariaLabel"
+            [attr.aria-label]="ariaLabel || null"
+            [attr.aria-labelledby]="ariaLabel ? null : labelId"
         >
             <div class="nui-switch__on">
                 <svg
@@ -35,7 +36,7 @@
                 ></svg>
             </div>
         </div>
-        <label class="nui-switch__label">
+        <label class="nui-switch__label" [attr.id]="labelId">
             <ng-content></ng-content>
         </label>
     </div>
