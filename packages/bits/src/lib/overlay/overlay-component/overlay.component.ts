@@ -68,7 +68,7 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
             id="nui-overlay"
             class="nui-overlay"
             [attr.role]="roleAttr || null"
-            [attr.aria-label]="ariaLabel || roleAttr || null"
+            [attr.aria-label]="ariaLabel || null"
             [ngClass]="{ empty: empty$ | async }"
         >
             <ng-content></ng-content>
@@ -110,7 +110,7 @@ export class OverlayComponent
     @Input() roleAttr: string;
 
     /** Sets the aria-label attribute for accessibility */
-    @Input() ariaLabel: string;
+    @Input() ariaLabel?: string;
 
     /** Emits MouseEvent when click occurs outside Select/Combobox */
     @Output() public readonly clickOutside = new EventEmitter<MouseEvent>();
