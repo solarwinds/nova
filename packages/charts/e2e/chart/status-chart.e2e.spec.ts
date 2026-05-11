@@ -40,7 +40,7 @@ test.describe("Status chart", () => {
         );
 
         statusChartWithIcons = new StatusChartAtom(
-            page.locator("#nui-status-chart-with-icons")
+            page.locator("#nui-status-chart-with-icons svg.nui-chart")
         );
     });
 

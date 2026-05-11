@@ -23,6 +23,8 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { ConfiguratorHeadingService } from "@nova-ui/dashboards";
 
+import { CustomizationDocsComponent } from "./customization-docs.component";
+
 enum CustomizationModuleRoute {
     ConfiguratorSection = "configurator-section",
     Widget = "widget",
@@ -31,6 +33,16 @@ enum CustomizationModuleRoute {
 }
 
 const routes: Routes = [
+    {
+        path: "",
+        component: CustomizationDocsComponent,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+            showThemeSwitcher: true,
+        },
+    },
     {
         path: CustomizationModuleRoute.ConfiguratorSection,
         loadChildren: async () =>
@@ -63,6 +75,7 @@ const routes: Routes = [
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
+    declarations: [CustomizationDocsComponent],
     providers: [ConfiguratorHeadingService],
 })
 export default class CustomizationModule {}

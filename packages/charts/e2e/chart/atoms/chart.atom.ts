@@ -34,9 +34,17 @@ export class ChartAtom extends Atom {
     private lasagna: LasagnaAtom;
 
     constructor(rootElement: Locator) {
-        super(rootElement);
-        this.grid = rootElement.locator(".nui-chart-grid");
-        this.lasagna = Atom.findIn<LasagnaAtom>(LasagnaAtom, this.grid);
+        const chartRoot = rootElement
+            .locator(
+                `xpath=self::*[contains(concat(' ', normalize-space(@class), ' '), ' ${ChartAtom.CSS_CLASS} ')] | .//*[contains(concat(' ', normalize-space(@class), ' '), ' ${ChartAtom.CSS_CLASS} ')]`
+            )
+            .first();
+
+        super(chartRoot);
+        this.grid = chartRoot.locator(".nui-chart-grid");
+        this.lasagna = new LasagnaAtom(
+            this.grid.locator(`.${LasagnaAtom.CSS_CLASS}`).first()
+        );
     }
 
     public async getLayer(name: string): Promise<Locator[]> {
@@ -74,12 +82,13 @@ export class ChartAtom extends Atom {
 
     public async getMarkerSeriesById(seriesId: string): Promise<MarkerSeriesAtom | undefined> {
         const [layer] = await this.getLayer("foreground");
-        return layer
-            ? Atom.findIn<MarkerSeriesAtom>(
-                  MarkerSeriesAtom,
-                  layer.locator(`#foreground-${seriesId}`),
-                  true
-              )
+        if (!layer) {
+            return undefined;
+        }
+
+        const markerSeries = layer.locator(`#foreground-${seriesId}`);
+        return (await markerSeries.count()) > 0
+            ? new MarkerSeriesAtom(markerSeries.first())
             : undefined;
     }
 
@@ -112,7 +121,7 @@ export class ChartAtom extends Atom {
         for (let i = 0; i < count; i++) {
             const candidate = allSeries.nth(i);
             if (await this.isVisible(candidate)) {
-                result.push(Atom.findIn<T>(atomClass, candidate, true));
+                result.push(new atomClass(candidate));
             }
         }
 
@@ -133,7 +142,8 @@ export class ChartAtom extends Atom {
             return undefined;
         }
 
-        return Atom.findIn(atomClass, layer.locator(`#${layerName}-${seriesId}`), true);
+        const series = layer.locator(`#${layerName}-${seriesId}`);
+        return (await series.count()) > 0 ? new atomClass(series.first()) : undefined;
     }
 
     public async clickElementByCoordinates(coordinates: { x: number; y: number }): Promise<void> {

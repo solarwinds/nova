@@ -23,15 +23,45 @@ import type { Locator } from "@playwright/test";
 import { ChartAtom } from "../atoms/chart.atom";
 
 export class InteractiveBooster {
+    private static async getInteractiveTarget(chart: ChartAtom): Promise<Locator> {
+        const [layer] = await chart.getLayer("rendering-area");
+        return layer ? layer.locator(".mouse-interactive-area") : chart.getLocator();
+    }
+
+    private static async getAbsolutePosition(
+        target: Locator,
+        location: { x: number; y: number }
+    ): Promise<{ x: number; y: number }> {
+        await target.scrollIntoViewIfNeeded();
+
+        const box = await target.boundingBox();
+        if (!box) {
+            throw new Error("Could not resolve interactive chart area for interaction");
+        }
+
+        return {
+            x: box.x + Math.min(Math.max(location.x, 1), Math.max(box.width - 1, 1)),
+            y: box.y + Math.min(Math.max(location.y, 1), Math.max(box.height - 1, 1)),
+        };
+    }
+
     public static async hover(
         chart: ChartAtom,
         location: { x: number; y: number }
     ): Promise<void> {
-        const [layer] = await chart.getLayer("rendering-area");
-        const target: Locator = layer
-            ? layer.locator(".mouse-interactive-area")
-            : chart.getLocator();
+        const target = await this.getInteractiveTarget(chart);
+        const position = await this.getAbsolutePosition(target, location);
 
-        await target.hover({ position: location });
+        await chart.getLocator().page().mouse.move(position.x, position.y);
+    }
+
+    public static async click(
+        chart: ChartAtom,
+        location: { x: number; y: number }
+    ): Promise<void> {
+        const target = await this.getInteractiveTarget(chart);
+        const position = await this.getAbsolutePosition(target, location);
+
+        await chart.getLocator().page().mouse.click(position.x, position.y);
     }
 }

@@ -4,6 +4,7 @@
         "lib": ["ES2019"],
         "declaration": true,
         "module": "commonjs",
+        "moduleResolution": "node",
         "noEmitOnError": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitAny": true,

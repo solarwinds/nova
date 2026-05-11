@@ -199,6 +199,15 @@ describe(StatusBarChartComponent.name, () => {
             });
         });
 
+        it("should not throw if a perfstack spark has no matching zoom plugin", () => {
+            component.configuration.enableZoom = true;
+            component.configuration.projectType =
+                TimeseriesWidgetProjectType.PerfstackApp;
+            component.zoomPlugins = [new TimeseriesZoomPlugin()];
+
+            expect(() => (<any>component).updateChartData()).not.toThrow();
+        });
+
         it("should subscribe to only the first spark's SET_DOMAIN_EVENT", () => {
             component.configuration.enableZoom = true;
             const expectedDomain = [5, 10];

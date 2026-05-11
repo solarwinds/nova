@@ -226,12 +226,14 @@ export class StatusBarChartComponent
                     this.configuration?.projectType ===
                     TimeseriesWidgetProjectType.PerfstackApp
                 ) {
+                    const zoomPlugin = this.zoomPlugins[i];
                     if (
                         !(spark?.chart as Chart)?.hasPlugin(
                             TimeseriesZoomPlugin
                         )
+                        && zoomPlugin
                     ) {
-                        spark?.chart?.addPlugin(this.zoomPlugins[i]);
+                        spark?.chart?.addPlugin(zoomPlugin);
                     }
                 } else {
                     if (!(spark?.chart as Chart)?.hasPlugin(ZoomPlugin)) {

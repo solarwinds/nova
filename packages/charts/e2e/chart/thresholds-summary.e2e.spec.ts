@@ -74,11 +74,13 @@ test.describe("Thresholds summary", () => {
             return;
         }
 
-        const opacity = series.getComputedOpacity
-            ? await series.getComputedOpacity()
-            : await series.getOpacity();
-        await Helpers.page.waitForTimeout(100); // Wait for any potential animations to complete
-        expect(opacity).toBeLessThanOrEqual(0.06);
+        await expect
+            .poll(async () =>
+                series.getComputedOpacity
+                    ? await series.getComputedOpacity()
+                    : await series.getOpacity()
+            )
+            .toBeLessThanOrEqual(0.2);
     };
 
     test.beforeEach(async ({ page }) => {

@@ -18,20 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Locator } from "@playwright/test";
+import { Component } from "@angular/core";
 
-import { Helpers } from "@nova-ui/bits/sdk/atoms-playwright";
-
-import { ChartAtom } from "./atoms/chart.atom";
-
-export class DonutChartTestPage {
-    private root: Locator;
-
-    constructor() {
-        this.root = Helpers.page.locator(".nui-donut-chart-basic-test");
-    }
-
-    public get chart(): ChartAtom {
-        return new ChartAtom(this.root);
-    }
-}
+@Component({
+    selector: "nui-formatter-overview-docs",
+    templateUrl: "./formatter-overview-docs.component.html",
+    standalone: false,
+})
+export class FormatterOverviewDocsComponent {}
