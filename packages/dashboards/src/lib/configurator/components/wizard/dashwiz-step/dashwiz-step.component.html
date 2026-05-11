@@ -4,7 +4,11 @@
     nui-busy
     [busy]="busyConfig.busy"
 >
-    <div cdkScrollable class="h-100 overflow-auto configurator-scrollable">
+    <div
+        cdkScrollable
+        class="h-100 overflow-auto configurator-scrollable"
+        tabindex="0"
+    >
         <ng-container *ngTemplateOutlet="stepTemplate"></ng-container>
     </div>
     <nui-spinner
