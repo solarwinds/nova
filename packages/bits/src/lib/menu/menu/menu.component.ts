@@ -39,6 +39,7 @@ import _isEmpty from "lodash/isEmpty";
 import _uniqueId from "lodash/uniqueId";
 import { Subject, Subscription } from "rxjs";
 
+import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
 import { ButtonSizeType } from "../../../lib/button/public-api";
 import { PopupComponent } from "../../popup-adapter/popup-adapter.component";
 import { MenuGroupComponent } from "../menu-item/menu-group/menu-group.component";
@@ -124,6 +125,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     private menuKeyControlListeners: Function[] = [];
     private focusMonitorSubscription: Subscription;
+    private suppressNextToggleClick = false;
     constructor(
         private keyControlService: MenuKeyControlService,
         private renderer: Renderer2,
@@ -153,7 +155,27 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
                 "keydown",
                 (event: KeyboardEvent) => {
                     if (!this.popup.popupToggle.disabled) {
+                        if (
+                            event.code === KEYBOARD_CODE.ENTER ||
+                            event.code === KEYBOARD_CODE.SPACE
+                        ) {
+                            this.suppressNextToggleClick = true;
+                        }
+
                         this.keyControlService.handleKeydown(event);
+                    }
+                }
+            )
+        );
+        this.menuKeyControlListeners.push(
+            this.renderer.listen(
+                this.menuToggle.nativeElement,
+                "click",
+                (event: MouseEvent) => {
+                    if (this.suppressNextToggleClick) {
+                        this.suppressNextToggleClick = false;
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
                     }
                 }
             )
@@ -183,7 +205,20 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.blurred.emit(event);
     }
 
-    public onMenuOpen(): void {
+    public onMenuOpen(isOpen: boolean): void {
+        if (!isOpen) {
+            return;
+        }
+
+        if (
+            this.keyControlService.keyControlItemsSource &&
+            !this.keyControlService.keyboardEventsManager &&
+            this.menuPopup
+        ) {
+            this.setKeyboardManagerServiceData();
+            this.keyControlService.initKeyboardManager();
+        }
+
         this.menuOpenStream.next();
     }
 

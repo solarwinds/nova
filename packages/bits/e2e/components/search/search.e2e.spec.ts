@@ -91,6 +91,8 @@ test.describe("USERCONTROL search", () => {
     });
 
     test("should reflect error when isInErrorState is true", async () => {
-        await expect(searchField.hasError()).resolves.toBe(true);
+        await expect(
+            searchField.getLocator().locator(".nui-search__group")
+        ).toHaveClass(/has-error/);
     });
 });

@@ -1,6 +1,6 @@
 <nui-popup
     [class.nui-menu--compact]="isMenuCompact()"
-    (opened)="onMenuOpen()"
+    (opened)="onMenuOpen($event)"
     [appendToBody]="appendToBody"
     [width]="widthOfPopup"
     [contextClass]="contextClass + ' nui-menu-popup-host'"
@@ -9,6 +9,7 @@
         #menuToggle
         nui-button
         nuiPopupToggle
+        [toggleOnKey]="false"
         [id]="menuTriggerId"
         [disabled]="isDisabled"
         aria-haspopup="true"

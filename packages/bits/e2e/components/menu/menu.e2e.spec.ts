@@ -115,9 +115,9 @@ test.describe("USERCONTROL Menu", () => {
                 await Helpers.pressKey("Enter");
                 await menu.isMenuOpened();
                 // First menu item should be active
-                expect(await menu.getMenuItemByIndex(0).isActiveItem()).toBe(
-                    true
-                );
+                await expect
+                    .poll(() => menu.getMenuItemByIndex(0).isActiveItem())
+                    .toBe(true);
                 // ENTER on active menu item should close menu
                 await Helpers.pressKey("Enter");
                 await menu.isMenuClosed();
@@ -129,9 +129,9 @@ test.describe("USERCONTROL Menu", () => {
                 await Helpers.pressKey("Space");
                 await menu.isMenuOpened();
                 // First menu item should be active
-                expect(await menu.getMenuItemByIndex(0).isActiveItem()).toBe(
-                    true
-                );
+                await expect
+                    .poll(() => menu.getMenuItemByIndex(0).isActiveItem())
+                    .toBe(true);
                 // SPACE on active menu item should close menu
                 await Helpers.pressKey("Space");
                 await menu.isMenuClosed();
@@ -198,20 +198,28 @@ test.describe("USERCONTROL Menu", () => {
 
                 test("should check and uncheck menu-switch using Enter", async () => {
                     await Helpers.pressKey("ArrowDown", 3);
-                    expect(await menu.getSelectedSwitchesCount()).toEqual(1);
+                    await expect
+                        .poll(() => menu.getSelectedSwitchesCount())
+                        .toBe(1);
 
                     await Helpers.pressKey("Enter");
-                    expect(await menu.getSelectedSwitchesCount()).toEqual(0);
+                    await expect
+                        .poll(() => menu.getSelectedSwitchesCount())
+                        .toBe(0);
 
                     await Helpers.pressKey("Enter");
                     await Helpers.pressKey("ArrowDown");
                     await Helpers.pressKey("Enter");
-                    expect(await menu.getSelectedSwitchesCount()).toEqual(2);
+                    await expect
+                        .poll(() => menu.getSelectedSwitchesCount())
+                        .toBe(2);
                     // Return to initial state
                     await Helpers.pressKey("Enter");
                     await Helpers.pressKey("ArrowUp");
                     await Helpers.pressKey("Enter");
-                    expect(await menu.getSelectedSwitchesCount()).toEqual(0);
+                    await expect
+                        .poll(() => menu.getSelectedSwitchesCount())
+                        .toBe(0);
                 });
 
                 test("should select and close menu when selecting menu action item", async () => {
@@ -224,10 +232,14 @@ test.describe("USERCONTROL Menu", () => {
                     await Helpers.pressKey("ArrowDown", 5);
                     await Helpers.pressKey("Enter");
                     await menu.isMenuOpened();
-                    expect(await menu.getSelectedCheckboxesCount()).toBe(1);
+                    await expect
+                        .poll(() => menu.getSelectedCheckboxesCount())
+                        .toBe(1);
                     await Helpers.pressKey("Enter");
                     await menu.isMenuOpened();
-                    expect(await menu.getSelectedCheckboxesCount()).toBe(0);
+                    await expect
+                        .poll(() => menu.getSelectedCheckboxesCount())
+                        .toBe(0);
                 });
 
                 test("should close menu when clicking TAB from active menu item", async () => {
@@ -257,22 +269,27 @@ test.describe("USERCONTROL Menu", () => {
         test.describe("> append-to-body", () => {
             test("should check and uncheck checkbox in menu item", async () => {
                 await appendToBody.toggleMenu();
+                await appendToBody.getPopupBox().isOpenedAppendToBody();
                 await Helpers.pressKey("ArrowDown");
                 // Find the first checkbox in the appendToBody menu
-                const menuLocator = appendToBody.getAppendToBodyMenu();
+                const menuLocator = appendToBody
+                    .getPopupBox()
+                    .getPopupBoxDetachedArea();
                 const checkboxes = menuLocator.locator("nui-checkbox");
                 const firstCheckbox = checkboxes.first();
-                // Check class for checked state
-                const isChecked = async () =>
-                    (await firstCheckbox.getAttribute("class")).includes(
-                        "nui-checkbox--checked"
-                    );
-                expect(await isChecked()).toBe(false);
+                await expect(firstCheckbox).toBeVisible();
+                await expect(firstCheckbox).not.toHaveClass(
+                    /nui-checkbox--checked/
+                );
                 await Helpers.pressKey("Enter");
-                expect(await isChecked()).toBe(true);
+                await expect(firstCheckbox).toHaveClass(
+                    /nui-checkbox--checked/
+                );
                 // Return to initial state
                 await Helpers.pressKey("Enter");
-                expect(await isChecked()).toBe(false);
+                await expect(firstCheckbox).not.toHaveClass(
+                    /nui-checkbox--checked/
+                );
             });
         });
     });

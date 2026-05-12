@@ -82,13 +82,13 @@ export abstract class MenuItemBaseComponent
     }
 
     public setActiveStyles(): void {
-        this.cd.markForCheck();
         this.isActive = true;
+        this.refreshView();
     }
 
     public setInactiveStyles(): void {
-        this.cd.markForCheck();
         this.isActive = false;
+        this.refreshView();
     }
 
     protected refreshView(): void {

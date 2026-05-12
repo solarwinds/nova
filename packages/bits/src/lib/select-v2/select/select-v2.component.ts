@@ -70,6 +70,7 @@ import { OptionKeyControlService } from "../option-key-control.service";
     host: {
         class: "nui-select-v2",
         role: "button",
+        "[attr.aria-label]": "accessibleLabel",
     },
     standalone: false,
 })
@@ -149,6 +150,10 @@ export class SelectV2Component
     /** Checks whether value of the Select is empty */
     public get isEmpty(): boolean {
         return !this.getLastSelectedOption();
+    }
+
+    public get accessibleLabel(): string | null {
+        return this.ariaLabel || this.displayText || this.placeholder || null;
     }
 
     /**
