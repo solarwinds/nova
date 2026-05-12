@@ -179,8 +179,9 @@ export class SelectorComponent
 
         const selection = this.checkboxChecked
             ? SelectionType.All
-            : SelectionType.None;
+            : SelectionType.UnselectAll;
         this.status = selection;
+        this.selectionHasChanged = true;
 
         this.selectionChange.emit(selection);
     }

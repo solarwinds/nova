@@ -149,16 +149,11 @@ export class TableAtom extends Atom {
                 throw new Error("row is not defined");
             }
             const cell = this.getCell(rowIndex, 0);
-            if(enabled){
-                await Atom.findIn<CheckboxAtom>(
-                    CheckboxAtom,
-                    cell
-                ).toBeVisible();
+            const selectionControl = cell.getByRole("checkbox");
+            if (enabled) {
+                await expect(selectionControl.first()).toBeVisible();
             } else {
-                await Atom.findIn<CheckboxAtom>(
-                    CheckboxAtom,
-                    cell
-                ).toBeHidden();
+                await expect(selectionControl).toHaveCount(0);
             }
 
             selectionValidationPassed++;
