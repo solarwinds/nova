@@ -48,6 +48,18 @@ describe("ChartPopoverComponent", () => {
         expect(component).toBeTruthy();
     });
 
+    it("should render the popover before the first hover payload arrives", () => {
+        expect(component.popover).toBeTruthy();
+    });
+
+    it("should handle the first open event", () => {
+        const showPopoverSpy = spyOn(component.popover, "showPopover");
+
+        component.plugin.openPopoverSubject.next();
+
+        expect(showPopoverSpy).toHaveBeenCalled();
+    });
+
     describe("plugin.updatePositionSubject subscription", () => {
         it("should update the host element's position", () => {
             component.plugin.updatePositionSubject.next({
