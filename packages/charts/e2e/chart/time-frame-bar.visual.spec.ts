@@ -41,6 +41,7 @@ test.describe(`Visual tests: Charts - ${name}`, () => {
         );
 
         pageObject = new TimeFrameBarTestPage(page);
+        await pageObject.removeDelay();
 
         camera = new Camera().loadFilm(page, name, "Charts");
     });
@@ -50,15 +51,12 @@ test.describe(`Visual tests: Charts - ${name}`, () => {
 
         await camera.say.cheese(`${name} - Default`);
 
-        await pageObject.waitUntilReady();
-        await pageObject.removeDelay();
-
         await ZoomBooster.zoom(
             pageObject.chart,
             { x: 50, y: 50 },
             { x: 200, y: 50 }
         );
-        await pageObject.waitUntilReady();
+
         await camera.say.cheese(`${name} - After zoom`);
 
         await camera.turn.off();
