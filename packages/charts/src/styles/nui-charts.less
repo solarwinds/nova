@@ -190,6 +190,7 @@
             }
         }
 
+        &&--deselected,
         & .nui-legend-series--deselected,
         & .nui-legend-series__tile-wrapper:hover {
             .nui-legend-series__checkbox-wrapper {
@@ -208,6 +209,7 @@
         &:hover {
             .setCssVariable(background-color, nui-color-bg-light-hover);
 
+            &&--deselected,
             .nui-legend-series--deselected {
                 .nui-legend-series__tile-wrapper {
                     .setCssVariable(background-color, nui-color-bg-transparent-hover);
@@ -216,6 +218,7 @@
         }
 
         &:not(:hover) {
+            &&--deselected,
             .nui-legend-series--deselected {
                 .nui-legend-series__tile-wrapper {
                     .setCssVariable(background-color, nui-color-bg-secondary);
@@ -224,12 +227,14 @@
         }
     }
 
+    &:not(:hover)&&--state-hidden,
     &:not(:hover) &--state-hidden {
         .description-container {
             opacity: @nui-legend-deemphasized-opacity;
         }
     }
 
+    &&--state-deemphasized,
     & &--state-deemphasized {
         opacity: @nui-legend-deemphasized-opacity;
     }

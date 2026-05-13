@@ -25,7 +25,7 @@
             </nui-legend-series>
             <!-- These are the series displayed on the chart -->
             @for ( legendSeries of chartAssist.legendSeriesSet; track
-            chartAssist.seriesTrackByFn($index, legendSeries)) {
+            legendSeries.id) {
             <nui-legend-series
                 [descriptionPrimary]="legendSeries['name']"
                 (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"

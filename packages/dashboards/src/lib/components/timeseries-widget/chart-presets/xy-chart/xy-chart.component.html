@@ -79,7 +79,7 @@
                 }
             </nui-legend-series>
             } @for ( legendSeries of chartAssist.legendSeriesSet; track
-            chartAssist.seriesTrackByFn($index, legendSeries)) {
+            legendSeries.id) {
             <nui-legend-series
                 class="xy-chart__legend-series"
                 [ngClass]="

@@ -67,7 +67,7 @@
             "
         >
             @for ( legendSeries of chartAssist.legendSeriesSet; track
-            chartAssist.seriesTrackByFn(i, legendSeries); let i = $index) {
+            legendSeries.id; let i = $index) {
             <nui-legend-series
                 class="proportional-chart__legend-series"
                 [ngClass]="

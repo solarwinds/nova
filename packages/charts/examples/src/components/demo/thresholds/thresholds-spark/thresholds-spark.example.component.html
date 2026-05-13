@@ -1,4 +1,4 @@
-@for (spark of chartAssist.sparks; track chartAssist.trackByFn($index, spark)) {
+@for (spark of chartAssist.sparks; track spark.id) {
 <div class="d-flex">
     <nui-chart
         class="w-100"

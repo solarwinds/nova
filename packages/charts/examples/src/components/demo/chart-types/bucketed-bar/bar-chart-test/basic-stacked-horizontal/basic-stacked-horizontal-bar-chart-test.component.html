@@ -12,7 +12,7 @@
             (mouseleave)="chartAssist.resetVisibleSeries()"
         >
             @for ( legendSeries of chartAssist.legendSeriesSet; track
-            chartAssist.seriesTrackByFn($index, legendSeries)) {
+            legendSeries.id) {
             <nui-legend-series
                 [descriptionPrimary]="legendSeries.name"
                 (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"

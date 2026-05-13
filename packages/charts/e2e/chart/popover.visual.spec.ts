@@ -28,8 +28,10 @@ import {
 
 import { ChartAtom } from "./atoms/chart.atom";
 import { SeriesAtom } from "./atoms/series.atom";
+import { InteractiveBooster } from "./boosters/interactive.booster";
 
 const name: string = "Popovers";
+const lineHoverLocation = { x: 220, y: 40 };
 
 test.describe(`Visual Tests: Charts - ${name}`, () => {
     let camera: Camera;
@@ -74,6 +76,9 @@ test.describe(`Visual Tests: Charts - ${name}`, () => {
         if (barSeries) {
             await barSeries.hover();
         }
+        await expect(
+            page.locator(`#${barPopoverHostId} nui-popover-modal`)
+        ).toHaveCount(1);
         await camera.say.cheese(`${name} - Default look with bar hovered`);
 
         const donutSeries = await donutChart.getDataSeriesById(
@@ -87,22 +92,33 @@ test.describe(`Visual Tests: Charts - ${name}`, () => {
         await expect(
             page.locator(`#${barPopoverHostId} nui-popover-modal`)
         ).toHaveCount(0);
+        await expect(
+            page.locator(`#${donutPopoverHostId} nui-popover-modal`)
+        ).toHaveCount(1);
         await camera.say.cheese(
             `${name} - Default look with donut series hovered`
         );
 
-        await lineChart.hover();
+        await InteractiveBooster.hover(lineChart, lineHoverLocation);
         await expect(
             page.locator(`#${donutPopoverHostId} nui-popover-modal`)
         ).toHaveCount(0);
+        await expect(
+            page.locator(`#${linePopoverHostId} nui-popover-modal`)
+        ).toHaveCount(1);
         await camera.say.cheese(
             `${name} - Default look with line chart hovered`
         );
 
-        await bottomPositionChart.hover();
+        await InteractiveBooster.hover(bottomPositionChart, lineHoverLocation);
         await expect(
             page.locator(`#${linePopoverHostId} nui-popover-modal`)
         ).toHaveCount(0);
+        await expect(
+            page.locator(
+                "#visual-test-bottom-position-popover nui-popover-modal"
+            )
+        ).toHaveCount(1);
         await camera.say.cheese(
             `${name} - Default look with bottom position popover`
         );

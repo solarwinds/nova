@@ -3,8 +3,7 @@
     class="status-bar-chart"
     [class.layout-fixed]="configuration.gridConfig?.fixedLayout"
 >
-    @for ( spark of chartAssist.sparks; track chartAssist.trackByFn(i, spark);
-    let i = $index) {
+    @for (spark of chartAssist.sparks; track spark.id; let i = $index) {
     <div class="d-flex">
         <nui-chart
             class="d-flex flex-grow-1"

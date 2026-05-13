@@ -1,7 +1,6 @@
 <button nui-button (click)="update()" type="button">Refresh</button>
 <div class="spark-container mt-5 p-3">
-    @for (spark of chartAssist.sparks; track chartAssist.trackByFn($index,
-    spark)) {
+    @for (spark of chartAssist.sparks; track spark.id) {
     <div>
         <div class="d-flex">
             <nui-chart
