@@ -34,17 +34,9 @@ export class ChartAtom extends Atom {
     private lasagna: LasagnaAtom;
 
     constructor(rootElement: Locator) {
-        const chartRoot = rootElement
-            .locator(
-                `xpath=self::*[contains(concat(' ', normalize-space(@class), ' '), ' ${ChartAtom.CSS_CLASS} ')] | .//*[contains(concat(' ', normalize-space(@class), ' '), ' ${ChartAtom.CSS_CLASS} ')]`
-            )
-            .first();
-
-        super(chartRoot);
-        this.grid = chartRoot.locator(".nui-chart-grid");
-        this.lasagna = new LasagnaAtom(
-            this.grid.locator(`.${LasagnaAtom.CSS_CLASS}`).first()
-        );
+        super(rootElement);
+        this.grid = rootElement.locator(".nui-chart-grid");
+        this.lasagna = Atom.findIn<LasagnaAtom>(LasagnaAtom, this.grid);
     }
 
     public async getLayer(name: string): Promise<Locator[]> {
