@@ -120,7 +120,6 @@ export class ZoomContentDirective
         });
 
         this.resizeObserver = resizeObserver;
-        this.onResize();
     }
 
     public ngOnDestroy(): void {
@@ -156,17 +155,8 @@ export class ZoomContentDirective
         if (!this.elementRect || !this.parentRect) {
             return;
         }
-
-        const currentZoom = this.zoom || 1;
-        const normalizedElementWidth = this.elementRect.width / currentZoom;
-        const normalizedElementHeight = this.elementRect.height / currentZoom;
-
-        if (!normalizedElementWidth || !normalizedElementHeight) {
-            return;
-        }
-
-        const widthZoom = this.parentRect.width / normalizedElementWidth;
-        const heightZoom = this.parentRect.height / normalizedElementHeight;
+        const widthZoom = this.parentRect.width / this.elementRect.width;
+        const heightZoom = this.parentRect.height / this.elementRect.height;
 
         let zoom = Math.min(widthZoom, heightZoom) * this.zoomRatio;
         if (this.minZoom) {

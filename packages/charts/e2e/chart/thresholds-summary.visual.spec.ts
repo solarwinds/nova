@@ -45,7 +45,11 @@ test.describe(`Visual tests: Charts - ${name}`, () => {
 
         // Construct atoms directly from locators to avoid mixed Atom typing across installs
         singleSeriesChart = new ChartAtom(
-            page.locator(".nui-thresholds-summary-single-1 .nui-chart").first()
+            page
+                .locator(
+                    ".nui-thresholds-summary-single-1 .thresholds-main-chart .nui-chart"
+                )
+                .first()
         );
         multiSeriesChart1Legend = new LegendAtom(
             page.locator(".nui-thresholds-summary-multiple-1 .nui-legend")
