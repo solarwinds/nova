@@ -56,6 +56,7 @@ export class ZoomContentDirective
     implements OnDestroy, AfterViewInit, OnChanges
 {
     private readonly destroy$ = new Subject<void>();
+    private zoomRefreshFrame?: number;
 
     @HostBinding("style.zoom")
     public zoom = 1;
@@ -127,6 +128,10 @@ export class ZoomContentDirective
         this.destroy$.next();
         this.destroy$.complete();
 
+        if (this.zoomRefreshFrame) {
+            cancelAnimationFrame(this.zoomRefreshFrame);
+        }
+
         if (this.resizeObserver) {
             this.resizeObserver.unobserve(this.element);
             this.resizeObserver.unobserve(this.parentElement);
@@ -179,7 +184,21 @@ export class ZoomContentDirective
         if (Math.abs(zoom - this.zoom) > this.minZoomDifference) {
             this.zoom = zoom;
             this.cdRef.detectChanges(); // running inside an angular zone doesn't always work
+            this.scheduleZoomRefresh();
         }
+    }
+
+    private scheduleZoomRefresh(): void {
+        if (this.zoomRefreshFrame) {
+            cancelAnimationFrame(this.zoomRefreshFrame);
+        }
+
+        this.zoomRefreshFrame = this.ngZone.runOutsideAngular(() =>
+            requestAnimationFrame(() => {
+                this.zoomRefreshFrame = undefined;
+                this.onResize();
+            })
+        );
     }
 
     private applyScale() {
