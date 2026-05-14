@@ -66,6 +66,9 @@ test.describe(`Visual tests: Charts - ${name}`, () => {
 
         await camera.turn.on();
 
+        await singleSeriesChart.hover();
+        await camera.say.cheese(`${name} - Hover over main chart`);
+
         await multiSeriesChart1Legend.getSeriesByIndex(0).clickTile();
         await multiSeriesChart2Legend.getSeriesByIndex(0).hoverTile();
         await camera.say.cheese(`${name} - Default`);
@@ -73,9 +76,6 @@ test.describe(`Visual tests: Charts - ${name}`, () => {
         await multiSeriesChart1Legend.getSeriesByIndex(1).clickTile();
         await multiSeriesChart2Legend.getSeriesByIndex(0).clickTile();
         await camera.say.cheese(`${name} - Hover over unselected legend`);
-
-        await singleSeriesChart.hover();
-        await camera.say.cheese(`${name} - Hover over main chart`);
 
         await testPage.enableDarkTheme();
         await camera.say.cheese(`${name} - Dark theme`);
