@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { ToastService } from "@nova-ui/bits";
 
@@ -28,14 +28,14 @@ import { ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class CheckboxGroupBasicExampleComponent {
+    private toastService = inject(ToastService);
+
     public cabbage = $localize`Cabbage`;
     public potato = $localize`Potato`;
     public tomato = $localize`Tomato`;
     public carrot = $localize`Carrot`;
     public vegetables = [this.cabbage, this.potato, this.tomato, this.carrot];
     public selectedVegetables = [this.potato, this.tomato];
-
-    constructor(private toastService: ToastService) {}
 
     public isChecked(vegetable: string): boolean {
         return this.selectedVegetables.indexOf(vegetable) > -1;

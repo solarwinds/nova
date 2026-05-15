@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Directive, TemplateRef } from "@angular/core";
+import { Directive, TemplateRef, inject } from "@angular/core";
 
 import { TabComponent } from "./tab.component";
 
@@ -31,7 +31,10 @@ import { TabComponent } from "./tab.component";
 export class TabHeadingDirective {
     templateRef: TemplateRef<any>;
 
-    constructor(templateRef: TemplateRef<any>, tab: TabComponent) {
+    constructor() {
+        const templateRef = inject<TemplateRef<any>>(TemplateRef);
+        const tab = inject(TabComponent);
+
         tab.headingRef = templateRef;
     }
 }

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Inject, Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 
 import { WindowToken } from "./window";
 import { CaretCoordinates } from "../models";
@@ -62,7 +62,9 @@ type OurCSS = CSSStyleDeclaration & { [key: string]: any };
 @Injectable()
 export class FreeTypeQueryUtilsService {
     private window: Window;
-    constructor(@Inject(WindowToken) window: any) {
+    constructor() {
+        const window = inject(WindowToken);
+
         this.window = window as Window;
     }
 

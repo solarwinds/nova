@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, ElementRef } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, inject } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { LayoutResizerComponent } from "./layout-resizer.component";
@@ -33,7 +33,8 @@ import {
     standalone: false,
 })
 class LayoutResizerTestingComponent implements AfterViewInit {
-    constructor(public elRef: ElementRef) {}
+    elRef = inject(ElementRef);
+
     public ngAfterViewInit(): void {
         this.elRef.nativeElement.parentElement = document.createElement("div");
     }

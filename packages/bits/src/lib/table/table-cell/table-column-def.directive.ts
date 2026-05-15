@@ -19,13 +19,7 @@
 //  THE SOFTWARE.
 
 import { CdkColumnDef } from "@angular/cdk/table";
-import {
-    Directive,
-    Input,
-    OnChanges,
-    OnInit,
-    SimpleChanges,
-} from "@angular/core";
+import { Directive, Input, OnChanges, OnInit, SimpleChanges, inject } from "@angular/core";
 
 import { TableStateHandlerService } from "../table-state-handler.service";
 import { ColumnTypes } from "../types";
@@ -45,6 +39,8 @@ export class TableColumnDefDirective
     extends CdkColumnDef
     implements OnInit, OnChanges
 {
+    private tableStateHandlerService = inject(TableStateHandlerService);
+
     public get name(): string {
         return super.name;
     }
@@ -54,10 +50,6 @@ export class TableColumnDefDirective
     }
     @Input() type: ColumnTypes;
     @Input() columnWidth: number;
-
-    constructor(private tableStateHandlerService: TableStateHandlerService) {
-        super();
-    }
 
     public ngOnInit(): void {
         if (this.columnWidth) {

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { ToastService } from "@nova-ui/bits";
 
@@ -28,6 +28,8 @@ import { ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class PanelCollapseOutsideControlExampleComponent {
+    private toastService = inject<ToastService>(ToastService);
+
     public isCollapsed: boolean = false;
     public heading = $localize`Header`;
 
@@ -48,6 +50,4 @@ export class PanelCollapseOutsideControlExampleComponent {
             title: $localize`Panel State`,
         });
     }
-
-    constructor(@Inject(ToastService) private toastService: ToastService) {}
 }

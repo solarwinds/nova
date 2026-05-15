@@ -18,12 +18,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { TestBed } from "@angular/core/testing";
+
 import { EventBus, IEvent } from "@nova-ui/bits";
 
 import { DynamicComponentCreator } from "./dynamic-component-creator.service";
 import { PizzagnaService } from "./pizzagna.service";
 import { ISetPropertyPayload, SET_PROPERTY_VALUE } from "../../services/types";
-import { IPizzagna, PizzagnaLayer } from "../../types";
+import { IPizzagna, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../types";
 import {
     getPizzagnaPropertyPath,
     IPizzagnaProperty,
@@ -32,12 +34,17 @@ import {
 describe("PizzagnaService > ", () => {
     let service: PizzagnaService;
     let eventBus: EventBus<IEvent>;
-    let dynamicComponentCreator: DynamicComponentCreator;
 
     beforeEach(() => {
         eventBus = new EventBus<IEvent>();
-        dynamicComponentCreator = new DynamicComponentCreator();
-        service = new PizzagnaService(eventBus, dynamicComponentCreator);
+        TestBed.configureTestingModule({
+            providers: [
+                PizzagnaService,
+                DynamicComponentCreator,
+                { provide: PIZZAGNA_EVENT_BUS, useValue: eventBus },
+            ],
+        });
+        service = TestBed.inject(PizzagnaService);
     });
 
     describe("setProperty > ", () => {

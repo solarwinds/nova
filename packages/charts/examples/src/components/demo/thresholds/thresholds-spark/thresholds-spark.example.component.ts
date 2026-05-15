@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { rgb } from "d3-color";
 import get from "lodash/get";
 import moment, { Duration, Moment } from "moment/moment";
@@ -70,8 +70,7 @@ export class ThresholdsSparkExampleComponent implements OnInit {
     private renderer: LineRenderer;
     private accessors: LineAccessors;
     private xScale = new TimeScale();
-
-    constructor(private thresholdsService: ThresholdsService) {}
+    private thresholdsService = inject(ThresholdsService);
 
     public ngOnInit(): void {
         this.chartAssist = new SparkChartAssist();

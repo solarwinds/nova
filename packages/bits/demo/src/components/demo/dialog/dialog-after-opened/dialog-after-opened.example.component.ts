@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, inject } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -32,10 +32,9 @@ import { DialogContentExampleComponent } from "../component-as-content/dialog-co
     standalone: false,
 })
 export class DialogAfterOpenedExampleComponent implements OnInit, OnDestroy {
-    constructor(
-        @Inject(DialogService) private dialogService: DialogService,
-        @Inject(ToastService) private toastService: ToastService
-    ) {}
+    private dialogService = inject<DialogService>(DialogService);
+    private toastService = inject<ToastService>(ToastService);
+
 
     public destroy$$: Subject<void> = new Subject<void>();
 

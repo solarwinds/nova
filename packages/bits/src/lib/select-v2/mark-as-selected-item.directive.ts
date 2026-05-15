@@ -19,21 +19,17 @@
 //  THE SOFTWARE.
 
 import { Highlightable } from "@angular/cdk/a11y";
-import {
-    ChangeDetectorRef,
-    Directive,
-    ElementRef,
-    HostBinding,
-} from "@angular/core";
+import { ChangeDetectorRef, Directive, ElementRef, HostBinding, inject } from "@angular/core";
 
 @Directive({
     selector: "[nuiMarkAsSelectedItem]",
     standalone: false,
 })
 export class MarkAsSelectedItemDirective implements Highlightable {
-    @HostBinding("class.active") private isActive: boolean = false;
+    elRef = inject(ElementRef);
+    private cdRef = inject(ChangeDetectorRef);
 
-    constructor(public elRef: ElementRef, private cdRef: ChangeDetectorRef) {}
+    @HostBinding("class.active") private isActive: boolean = false;
 
     public setActiveStyles(): void {
         this.isActive = true;

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Inject, Injectable, Optional } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 
 import { DEMO_PATH_TOKEN } from "../../../constants/path.constants";
 import { LoggerService } from "../../../services/log-service";
@@ -27,12 +27,9 @@ import { CodeSourceFiles } from "../../../types";
 /** @ignore */
 @Injectable()
 export class SourcesService {
-    constructor(
-        private logger: LoggerService,
-        @Optional()
-        @Inject(DEMO_PATH_TOKEN)
-        private config: CodeSourceFiles
-    ) {}
+    private logger = inject(LoggerService);
+    private config = inject<CodeSourceFiles>(DEMO_PATH_TOKEN, { optional: true })!;
+
 
     public async getSourcesByFilenamePrefix(
         filenamePrefix: string

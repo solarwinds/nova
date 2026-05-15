@@ -22,6 +22,7 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     Component,
+    inject,
     OnInit,
     QueryList,
     ViewChildren,
@@ -58,6 +59,8 @@ import { DataGenerator } from "../../../../../data-generator";
     standalone: false,
 })
 export class ChartDomainExampleComponent implements OnInit, AfterViewInit {
+    private changeDetector = inject(ChangeDetectorRef);
+
     @ViewChildren(ChartComponent) chartComponents: QueryList<ChartComponent>;
 
     public dataRenderer: LineRenderer;
@@ -67,8 +70,6 @@ export class ChartDomainExampleComponent implements OnInit, AfterViewInit {
     public charts: IChart[] = [];
 
     public chartAssists: ChartAssist[] = [];
-
-    constructor(private changeDetector: ChangeDetectorRef) {}
 
     public ngOnInit(): void {
         const numCharts = 3;

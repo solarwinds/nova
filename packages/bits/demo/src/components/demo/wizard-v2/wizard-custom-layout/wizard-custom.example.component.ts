@@ -19,13 +19,7 @@
 //  THE SOFTWARE.
 
 import { CdkStepper, STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 // eslint-disable-next-line import/no-deprecated
 import { tap } from "rxjs/operators";
@@ -63,6 +57,8 @@ export class WizardCustomComponent extends WizardDirective {}
     standalone: false,
 })
 export class WizardCustomExampleComponent implements AfterViewInit {
+    private formBuilder = inject(FormBuilder);
+
     public form;
 
     public steps: number = 1;
@@ -71,7 +67,7 @@ export class WizardCustomExampleComponent implements AfterViewInit {
 
     @ViewChild("wizard") wizard: WizardCustomComponent;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor() {
         this.form = this.formBuilder.group({
             personDetails: this.formBuilder.group({
                 name: ["", [Validators.required, Validators.minLength(3)]],

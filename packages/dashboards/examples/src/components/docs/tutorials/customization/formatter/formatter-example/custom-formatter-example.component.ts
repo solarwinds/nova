@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { ListRange } from "@angular/cdk/collections";
-import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, inject, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import isEqual from "lodash/isEqual";
@@ -81,7 +81,7 @@ export const BREW_API_URL = "https://api.punkapi.com/v2/beers";
 export class CustomFormatterComponent implements IHasChangeDetector {
     public static lateLoadKey = "CustomFormatterComponent";
 
-    constructor(public changeDetector: ChangeDetectorRef) {}
+    public changeDetector = inject(ChangeDetectorRef);
 
     @Input() public data: any;
     @Input() public icon: string;
@@ -216,12 +216,13 @@ export class CustomFormatterConfiguratorComponent
 {
     public static lateLoadKey = "CustomFormatterConfiguratorComponent";
 
+    public iconService = inject(IconService);
+
     constructor(
         changeDetector: ChangeDetectorRef,
         configuratorHeading: ConfiguratorHeadingService,
         formBuilder: FormBuilder,
         logger: LoggerService,
-        public iconService: IconService
     ) {
         super(changeDetector, configuratorHeading, formBuilder, logger);
     }
@@ -269,16 +270,13 @@ export class CustomFormatterExampleComponent implements OnInit {
     // Pass this to the dashboard component's gridsterConfig input in the template.
     public gridsterConfig: GridsterConfig = {};
 
-    constructor(
-        // WidgetTypesService provides the widget's necessary structure information
-        private widgetTypesService: WidgetTypesService,
-        // In general, the ProviderRegistryService is used for making entities available for injection into dynamically loaded components.
-        private providerRegistry: ProviderRegistryService,
-        // Inject the ComponentRegistryService to make our custom component available for late loading by the dashboards framework
-        private componentRegistry: ComponentRegistryService,
-        private tableFormatterRegistryService: TableFormatterRegistryService,
-        private changeDetectorRef: ChangeDetectorRef
-    ) {
+    private widgetTypesService = inject(WidgetTypesService);
+    private providerRegistry = inject(ProviderRegistryService);
+    private componentRegistry = inject(ComponentRegistryService);
+    private tableFormatterRegistryService = inject(TableFormatterRegistryService);
+    private changeDetectorRef = inject(ChangeDetectorRef);
+
+    constructor() {
         // Register the custom configurator component with the component registry to make it available
         // for late loading by the dashboard framework.
         this.componentRegistry.registerByLateLoadKey(

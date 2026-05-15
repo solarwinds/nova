@@ -20,6 +20,7 @@
 
 import {
     Component,
+    inject,
     Input,
     OnChanges,
     OnInit,
@@ -64,6 +65,8 @@ import {
     standalone: false,
 })
 export class ThresholdsSummaryTestComponent implements OnChanges, OnInit {
+    private thresholdsService = inject(ThresholdsService);
+
     @Input() data: Record<string, number[]>;
     @Input() zones: ISimpleThresholdZone[];
     @Input() startDate: Moment;
@@ -85,7 +88,7 @@ export class ThresholdsSummaryTestComponent implements OnChanges, OnInit {
     private backgroundScales: IXYScales;
     private summaryScales: IXYScales;
 
-    constructor(private thresholdsService: ThresholdsService) {
+    constructor() {
         this.scales = {
             x: new TimeScale(),
             y: new LinearScale(),

@@ -18,19 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ElementRef,
-    EventEmitter,
-    Injectable,
-    NgZone,
-    QueryList,
-} from "@angular/core";
+import { ElementRef, EventEmitter, Injectable, NgZone, QueryList, inject } from "@angular/core";
 
 import { ChipComponent } from "./chip/chip.component";
 import { IChipsGroup, IChipsItem, IChipsItemsSource } from "./public-api";
 
 @Injectable()
 export class ChipsOverflowService {
+    private zone = inject(NgZone);
+
     public itemsSource: IChipsItemsSource;
     public mainCell: ElementRef<HTMLElement>;
     public clearAll: ElementRef<HTMLElement>;
@@ -44,8 +40,6 @@ export class ChipsOverflowService {
     private overflowedChips: IChipsItemsSource;
     private chipResizeObserver: ResizeObserver;
     private chipsMutationObserver: MutationObserver;
-
-    constructor(private zone: NgZone) {}
 
     public init(): void {
         this.initChipResizeObserver();

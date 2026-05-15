@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable, Optional, TrackByFunction } from "@angular/core";
+import { Injectable, TrackByFunction, inject } from "@angular/core";
 import _differenceWith from "lodash/differenceWith";
 import _intersectionWith from "lodash/intersectionWith";
 import _isEqual from "lodash/isEqual";
@@ -41,12 +41,14 @@ import { RepeatSelectionMode } from "../repeat/types";
  */
 @Injectable({ providedIn: "root" })
 export class SelectorService {
+    private logger = inject(LoggerService, { optional: true });
+
     /**
      * Map if SelectionType to internationalized selector options
      */
     public i18nTitleMap: Record<string, string> = {};
 
-    constructor(@Optional() private logger?: LoggerService) {
+    constructor() {
         this.i18nTitleMap[
             SelectionType.All
         ] = $localize`Select all items on this page`;

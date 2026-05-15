@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import moment from "moment/moment";
 
@@ -28,6 +28,8 @@ import moment from "moment/moment";
     standalone: false,
 })
 export class FormFieldTestComponent implements OnInit {
+    private formBuilder = inject(FormBuilder);
+
     public dynamicForm;
 
     public dateTimePickerModel: string;
@@ -38,7 +40,7 @@ export class FormFieldTestComponent implements OnInit {
         $localize`Carrot`,
     ];
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor() {
         this.dynamicForm = this.formBuilder.group({
             textbox: this.formBuilder.control("", Validators.required),
             textboxNumber: this.formBuilder.control("", Validators.required),

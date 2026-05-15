@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 
 @Component({
@@ -27,11 +27,13 @@ import { FormBuilder } from "@angular/forms";
     standalone: false,
 })
 export class TextboxNumberMinMaxExampleComponent {
+    formBuilder = inject(FormBuilder);
+
     public value = 10;
 
     public reactiveForm;
 
-    constructor(public formBuilder: FormBuilder) {
+    constructor() {
         this.reactiveForm = this.formBuilder.group({
             number: [1],
         });

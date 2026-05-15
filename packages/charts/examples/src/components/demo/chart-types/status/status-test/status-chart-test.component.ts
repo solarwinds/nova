@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import moment from "moment/moment";
 
 import { IconService } from "@nova-ui/bits";
@@ -58,11 +58,11 @@ enum Status {
     standalone: false,
 })
 export class StatusChartTestComponent implements OnInit {
+    private iconService = inject(IconService);
+
     public chart = new Chart(new XYGrid(new BarStatusGridConfig()));
     public tooltipsPlugin = new BarTooltipsPlugin({ horizontal: true });
     public statusMarkers: IValueProvider<SvgMarker>;
-
-    constructor(private iconService: IconService) {}
 
     public ngOnInit(): void {
         this.statusMarkers = createMarkerProvider(this.iconService);

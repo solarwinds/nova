@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { DOCUMENT } from "@angular/common";
-import { Inject, Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import _isNil from "lodash/isNil";
 
 import { PopoverPlacement } from "./public-api";
@@ -66,11 +66,10 @@ export interface IPopoverPosition {
  */
 @Injectable()
 export class PopoverModalService {
-    constructor(
-        private positionService: PositionService,
-        @Inject(DOCUMENT) private document: Document,
-        private edgeDetector: EdgeDetectionService
-    ) {}
+    private positionService = inject(PositionService);
+    private document = inject<Document>(DOCUMENT);
+    private edgeDetector = inject(EdgeDetectionService);
+
 
     public setPosition(
         popoverModal: HTMLElement,

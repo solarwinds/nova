@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnDestroy } from "@angular/core";
+import { Component, inject, OnDestroy } from "@angular/core";
 
 import { ThemeSwitchService } from "@nova-ui/bits";
 
@@ -29,9 +29,11 @@ import { ThemeSwitchService } from "@nova-ui/bits";
     standalone: false,
 })
 export class ChartsTestHarnessComponent implements OnDestroy {
+    public themeSwitcher = inject(ThemeSwitchService);
+
     public originalWithRefreshRoute: boolean;
 
-    constructor(public themeSwitcher: ThemeSwitchService) {
+    constructor() {
         // disable route refreshing because the theme service currently always reverts to
         // the light theme on route refresh unless route.data.showThemeSwitcher is 'true'
         this.originalWithRefreshRoute = this.themeSwitcher.withRefreshRoute;

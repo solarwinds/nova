@@ -18,16 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    QueryList,
-    ViewChild,
-    ViewChildren,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, QueryList, ViewChild, ViewChildren, inject } from "@angular/core";
 import _pull from "lodash/pull";
 
 import {
@@ -58,6 +49,9 @@ import { IFilterable, IServer } from "./types";
     standalone: false,
 })
 export class FilteredViewWithTreeComponent implements AfterViewInit {
+    private dataSource = inject(DataSourceService) as FilteredViewWithTreeDataSource<IServer>;
+    private cd = inject(ChangeDetectorRef);
+
     public filterGroupItems: IFilterGroupItem[] = [
         {
             id: "subregion",
@@ -145,14 +139,6 @@ export class FilteredViewWithTreeComponent implements AfterViewInit {
     @ViewChild("child") private child: IFilterable;
     @ViewChildren(FilterGroupComponent)
     private filterGroups: QueryList<FilterGroupComponent>;
-
-    constructor(
-        // inject dataSource providers only to share the same instance
-        // using DI descendants inheritance with child components
-        @Inject(DataSourceService)
-        private dataSource: FilteredViewWithTreeDataSource<IServer>,
-        private cd: ChangeDetectorRef
-    ) {}
 
     public ngAfterViewInit(): void {
         this.dataSource.applyFilters();

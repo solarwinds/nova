@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable, Optional } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import noop from "lodash/noop";
 
 import { LogLevel, NuiEnvironment } from "../environment";
@@ -37,7 +37,9 @@ import { LogLevel, NuiEnvironment } from "../environment";
 export class LoggerService {
     private logLevel: LogLevel = LogLevel.warn;
 
-    constructor(@Optional() env?: NuiEnvironment) {
+    constructor() {
+        const env = inject(NuiEnvironment, { optional: true });
+
         if (env && env.logLevel) {
             this.logLevel = env.logLevel;
             this.info("Log level set to " + this.logLevel);

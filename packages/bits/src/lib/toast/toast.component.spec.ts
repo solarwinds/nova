@@ -26,6 +26,7 @@ import { ToastPackage } from "./toast-package";
 import { ToastRef } from "./toast-ref";
 import { ToastComponent } from "./toast.component";
 import { ToastService } from "./toast.service";
+import { ToastServiceBase } from "./toast.servicebase";
 import { IconComponent } from "../../lib/icon/icon.component";
 import { NotificationService } from "../../services/notification-service";
 
@@ -34,13 +35,6 @@ describe("components >", () => {
         let toastService: IToastService;
         let toastPackage: ToastPackage;
         let toastRef: ToastRef<ToastComponent>;
-        const mockNgZone = jasmine.createSpyObj("mockNgZone", [
-            "run",
-            "runOutsideAngular",
-        ]);
-        mockNgZone.run.and.callFake(() => false);
-        mockNgZone.runOutsideAngular.and.callFake(() => {});
-
         const defaultToastConfig: IToastConfig = {
             maxOpened: 2,
             autoDismiss: false,
@@ -82,6 +76,8 @@ describe("components >", () => {
                     NotificationService,
                     ToastContainerService,
                     ToastService,
+                    { provide: ToastServiceBase, useExisting: ToastService },
+                    { provide: ToastPackage, useFactory: () => toastPackage },
                 ],
             });
 
@@ -91,11 +87,8 @@ describe("components >", () => {
         });
 
         it("Title and body of a component should be set correctly", fakeAsync(() => {
-            // @ts-ignore: Suppressing error for testing purposes
-            const componentInstance = new ToastComponent(
-                toastService,
-                toastPackage,
-                mockNgZone
+            const componentInstance = TestBed.runInInjectionContext(
+                () => new ToastComponent()
             );
             expect(componentInstance.body).toEqual("Test message");
             expect(componentInstance.title).toEqual("Test title");
@@ -104,11 +97,8 @@ describe("components >", () => {
         }));
 
         it("Class 'success' should be put on success toast", fakeAsync(() => {
-            // @ts-ignore: Suppressing error for testing purposes
-            const componentInstance = new ToastComponent(
-                toastService,
-                toastPackage,
-                mockNgZone
+            const componentInstance = TestBed.runInInjectionContext(
+                () => new ToastComponent()
             );
             expect(
                 componentInstance.toastClasses.indexOf("success")
@@ -119,11 +109,8 @@ describe("components >", () => {
 
         it("Class 'info' should be put on info toast", fakeAsync(() => {
             toastPackage.toastType = "info";
-            // @ts-ignore: Suppressing error for testing purposes
-            const componentInstance = new ToastComponent(
-                toastService,
-                toastPackage,
-                mockNgZone
+            const componentInstance = TestBed.runInInjectionContext(
+                () => new ToastComponent()
             );
             expect(componentInstance.toastClasses.indexOf("info")).not.toEqual(
                 -1
@@ -134,11 +121,8 @@ describe("components >", () => {
 
         it("Class 'error' should be put on error toast", fakeAsync(() => {
             toastPackage.toastType = "error";
-            // @ts-ignore: Suppressing error for testing purposes
-            const componentInstance = new ToastComponent(
-                toastService,
-                toastPackage,
-                mockNgZone
+            const componentInstance = TestBed.runInInjectionContext(
+                () => new ToastComponent()
             );
             expect(componentInstance.toastClasses.indexOf("error")).not.toEqual(
                 -1
@@ -149,11 +133,8 @@ describe("components >", () => {
 
         it("Class 'warning' should be put on warning toast", fakeAsync(() => {
             toastPackage.toastType = "warning";
-            // @ts-ignore: Suppressing error for testing purposes
-            const componentInstance = new ToastComponent(
-                toastService,
-                toastPackage,
-                mockNgZone
+            const componentInstance = TestBed.runInInjectionContext(
+                () => new ToastComponent()
             );
             expect(
                 componentInstance.toastClasses.indexOf("warning")
@@ -164,11 +145,8 @@ describe("components >", () => {
 
         // TODO: enable after NUI-3641 is fixed
         xit("After activation toast should be shown", () => {
-            // @ts-ignore: Suppressing error for testing purposes
-            const componentInstance = new ToastComponent(
-                toastService,
-                toastPackage,
-                mockNgZone
+            const componentInstance = TestBed.runInInjectionContext(
+                () => new ToastComponent()
             );
             toastRef.activate();
             expect(componentInstance.display).toEqual("block");
@@ -178,11 +156,8 @@ describe("components >", () => {
 
         // TODO: enable after NUI-3641 is fixed
         xit("After remove toast should be removed", fakeAsync(() => {
-            // @ts-ignore: Suppressing error for testing purposes
-            const componentInstance = new ToastComponent(
-                toastService,
-                toastPackage,
-                mockNgZone
+            const componentInstance = TestBed.runInInjectionContext(
+                () => new ToastComponent()
             );
             toastRef.activate();
             componentInstance.remove();

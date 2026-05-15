@@ -19,23 +19,7 @@
 //  THE SOFTWARE.
 
 import { OverlayConfig } from "@angular/cdk/overlay";
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    HostListener,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _isEmpty from "lodash/isEmpty";
 import _isNil from "lodash/isNil";
@@ -84,6 +68,10 @@ export class TimePickerComponent
         ControlValueAccessor,
         NuiFormFieldControl
 {
+    private elementRef = inject(ElementRef);
+    private keyboardService = inject(TimePickerKeyboardService);
+    private cdr = inject(ChangeDetectorRef);
+
     @ViewChild("date", { static: true }) textbox: TextboxComponent;
     @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
     @ViewChild("toggleRef", { static: true }) containerEl: ElementRef;
@@ -148,12 +136,6 @@ export class TimePickerComponent
 
     private itemToSelect: any;
     private inputChanged: Subject<string> = new Subject<string>();
-
-    constructor(
-        private elementRef: ElementRef,
-        private keyboardService: TimePickerKeyboardService,
-        private cdr: ChangeDetectorRef
-    ) {}
 
     public ngOnInit(): void {
         this.times = this.generateTimeItems(this.timeStep);

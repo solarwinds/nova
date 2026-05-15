@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable } from "@angular/core";
+import { EnvironmentInjector, Injectable, inject } from "@angular/core";
 import size from "lodash/size";
 
 import { ITransientCache } from "./public-api";
@@ -32,9 +32,10 @@ export interface IMap<T> {
 /** @ignore */
 @Injectable()
 export class TransientCacheFactory {
-    private cacheMap: IMap<ITransientCache> = {};
+    private utilService = inject(UtilService);
+    private environmentInjector = inject(EnvironmentInjector);
 
-    constructor(private utilService: UtilService) {}
+    private cacheMap: IMap<ITransientCache> = {};
 
     /** @ngdoc method
      *  @name create
@@ -54,8 +55,8 @@ export class TransientCacheFactory {
      */
     public create = (cacheId: string): ITransientCache => {
         if (this.cacheMap[cacheId] == null) {
-            this.cacheMap[cacheId] = new TransientCacheService(
-                this.utilService
+            this.cacheMap[cacheId] = this.environmentInjector.runInContext(
+                () => new TransientCacheService()
             );
             return this.get(cacheId);
         } else {

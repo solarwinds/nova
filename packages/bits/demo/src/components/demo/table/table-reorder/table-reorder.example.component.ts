@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { IToastService, ToastService } from "@nova-ui/bits";
 
@@ -40,6 +40,8 @@ interface IExampleTableModel {
     standalone: false,
 })
 export class TableReorderExampleComponent {
+    private toastService = inject<IToastService>(ToastService);
+
     public displayedColumns = [
         "position",
         "name",
@@ -51,8 +53,6 @@ export class TableReorderExampleComponent {
         "checks",
     ];
     public dataSource = getData();
-
-    constructor(@Inject(ToastService) private toastService: IToastService) {}
 
     public toastColumns(event: string[]): void {
         this.toastService.info({

@@ -18,6 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ChangeDetectorRef } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
+
 import { MenuSwitchComponent } from "./menu-switch.component";
 import { MockedChangeDetectorRef } from "../../../../spec-helpers/angular";
 import { MenuGroupComponent } from "../menu-group/menu-group.component";
@@ -34,9 +37,21 @@ describe("components >", () => {
                     "preventDefault",
                     "stopPropagation",
                 ]);
-                menuSwitch = new MenuSwitchComponent(
-                    new MenuGroupComponent(),
-                    new MockedChangeDetectorRef()
+                TestBed.configureTestingModule({
+                    providers: [
+                        {
+                            provide: MenuGroupComponent,
+                            useValue: new MenuGroupComponent(),
+                        },
+                        {
+                            provide: ChangeDetectorRef,
+                            useValue: new MockedChangeDetectorRef(),
+                        },
+                    ],
+                });
+
+                menuSwitch = TestBed.runInInjectionContext(
+                    () => new MenuSwitchComponent()
                 );
                 spyForSwitchEmit = spyOn(menuSwitch.actionDone, "emit");
             });

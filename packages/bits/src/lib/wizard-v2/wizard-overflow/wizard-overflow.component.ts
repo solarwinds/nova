@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ElementRef, Input, TemplateRef } from "@angular/core";
+import { Component, ElementRef, Input, TemplateRef, inject } from "@angular/core";
 
 /** @ignore */
 @Component({
@@ -28,11 +28,11 @@ import { Component, ElementRef, Input, TemplateRef } from "@angular/core";
     standalone: false,
 })
 export class WizardOverflowComponent {
+    el = inject(ElementRef);
+
     public tooltipText: string = $localize` more steps are available`;
 
     @Input() template: TemplateRef<any>;
     @Input() value: number | string;
     @Input() completed = false;
-
-    constructor(public el: ElementRef) {}
 }

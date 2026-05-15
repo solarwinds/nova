@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { DOCUMENT } from "@angular/common";
-import { Inject, Injectable, Renderer2, RendererFactory2 } from "@angular/core";
+import { Injectable, Renderer2, RendererFactory2, inject } from "@angular/core";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
 import { filter, map } from "rxjs/operators";
@@ -29,6 +29,11 @@ import { filter, map } from "rxjs/operators";
     providedIn: "root",
 })
 export class ThemeSwitchService {
+    private rendererFactory = inject(RendererFactory2);
+    private router = inject(Router);
+    private _route = inject(ActivatedRoute);
+    private document = inject<Document>(DOCUMENT);
+
     /** @ignore BehaviorSubject indicating whether we should display theme switcher */
     public showThemeSwitcherSubject: BehaviorSubject<boolean> =
         new BehaviorSubject<boolean>(false);
@@ -45,12 +50,7 @@ export class ThemeSwitchService {
 
     private renderer: Renderer2;
 
-    constructor(
-        private rendererFactory: RendererFactory2,
-        private router: Router,
-        private _route: ActivatedRoute,
-        @Inject(DOCUMENT) private document: Document
-    ) {
+    constructor() {
         /** Getting renderer instance */
         this.renderer = this.rendererFactory.createRenderer(null, null);
 

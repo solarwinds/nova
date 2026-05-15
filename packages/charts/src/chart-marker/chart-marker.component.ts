@@ -28,6 +28,7 @@ import {
     OnDestroy,
     SimpleChanges,
     ViewChild,
+    inject,
 } from "@angular/core";
 import isFunction from "lodash/isFunction";
 import { BehaviorSubject } from "rxjs";
@@ -57,9 +58,8 @@ export class ChartMarkerComponent
     public height: string = "10px"; // size needs to be defined by default to prevent initial svg element from being huge
     public width: string = "10px"; // same here
 
+    private changeDetector = inject(ChangeDetectorRef);
     private svg = new BehaviorSubject<string>("");
-
-    constructor(private changeDetector: ChangeDetectorRef) {}
 
     public ngAfterViewInit(): void {
         this.svg.subscribe((svg: string) => {

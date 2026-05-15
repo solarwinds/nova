@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { ListRange } from "@angular/cdk/collections";
-import { Inject, Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 
 import { IFilter, IFilterPub } from "@nova-ui/bits";
 
@@ -33,7 +33,9 @@ export class VirtualScrollCustomStrategyService
 
     protected virtualScrollRange: ListRange;
 
-    constructor(@Inject(CUSTOM_SCROLL_ITEMS_PER_PAGE) itemsPerPage: number) {
+    constructor() {
+        const itemsPerPage = inject(CUSTOM_SCROLL_ITEMS_PER_PAGE);
+
         this.itemsPerPage = itemsPerPage;
         this.reset();
     }

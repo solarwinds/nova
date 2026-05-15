@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import { NgZone } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
 
 import { TableSpecHelpers } from "./table-spec-helpers/table-spec-helpers";
 import {
@@ -91,10 +92,18 @@ describe("services >", () => {
         let serviceInstance: TableStateHandlerService;
 
         beforeEach(() => {
-            serviceInstance = new TableStateHandlerService(
-                NgZone as any,
-                SelectorService as any
-            );
+            TestBed.configureTestingModule({
+                providers: [
+                    TableStateHandlerService,
+                    {
+                        provide: NgZone,
+                        useValue: new NgZone({ enableLongStackTrace: false }),
+                    },
+                    SelectorService,
+                ],
+            });
+
+            serviceInstance = TestBed.inject(TableStateHandlerService);
             serviceInstance.tableColumns = ["first", "second", "third"];
         });
 

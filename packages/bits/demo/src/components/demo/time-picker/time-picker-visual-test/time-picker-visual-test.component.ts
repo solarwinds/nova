@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import {
     FormBuilder,
     FormControl,
@@ -33,13 +33,15 @@ import moment, { Moment } from "moment/moment";
     standalone: false,
 })
 export class TimePickerVisualTestComponent implements OnInit {
+    private formBuilder = inject(FormBuilder);
+
     public time: Moment;
     public myTime: Moment;
     public myForm: FormGroup<{
         timePickerFormControl: FormControl<Moment | null>;
     }>;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor() {
         this.myTime = moment("2018-12-14T12:00:00+02:00");
     }
 

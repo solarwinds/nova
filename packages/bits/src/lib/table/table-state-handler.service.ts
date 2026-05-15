@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    forwardRef,
-    Inject,
-    Injectable,
-    NgZone,
-    TrackByFunction,
-} from "@angular/core";
+import { Injectable, NgZone, TrackByFunction, inject } from "@angular/core";
 import _includes from "lodash/includes";
 import _isNil from "lodash/isNil";
 import _isNumber from "lodash/isNumber";
@@ -97,6 +91,9 @@ const DEFAULT_TRACK_BY: TrackByFunction<any> = (i, d) => d;
 
 @Injectable()
 export class TableStateHandlerService {
+    protected zone = inject(NgZone);
+    protected selectorService = inject(SelectorService);
+
     public tableParentWidth: number;
     public columnsState = new Subject<string[]>();
     public sortingState = new Subject<ISortedItem>();
@@ -143,12 +140,6 @@ export class TableStateHandlerService {
         asc: "triangle-up",
         desc: "triangle-down",
     };
-
-    constructor(
-        protected zone: NgZone,
-        @Inject(forwardRef(() => SelectorService))
-        protected selectorService: SelectorService
-    ) {}
 
     /**
      * Used to sync directives and components in table to apply additional styles and logic

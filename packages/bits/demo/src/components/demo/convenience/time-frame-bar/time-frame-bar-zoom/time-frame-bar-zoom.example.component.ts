@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import moment, { DurationInputArg2, Moment } from "moment/moment";
 
 import { HistoryStorage, ITimeframe } from "@nova-ui/bits";
@@ -30,6 +30,8 @@ import { HistoryStorage, ITimeframe } from "@nova-ui/bits";
     standalone: false,
 })
 export class TimeFrameBarZoomExampleComponent implements OnInit {
+    history = inject<HistoryStorage<ITimeframe>>(HistoryStorage);
+
     public minDate: Moment;
     public maxDate: Moment;
 
@@ -42,9 +44,6 @@ export class TimeFrameBarZoomExampleComponent implements OnInit {
         "hours",
         "minutes",
     ];
-
-    // Inject an instance of HistoryStorage
-    constructor(public history: HistoryStorage<ITimeframe>) {}
 
     public ngOnInit(): void {
         // Set the minimum and maximum selectable dates

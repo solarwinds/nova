@@ -18,12 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    Component,
-    TemplateRef,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, Component, TemplateRef, ViewChild, inject } from "@angular/core";
 
 import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
 
@@ -38,13 +33,13 @@ interface IWizardStepData {
     standalone: false,
 })
 export class WizardDynamicExampleComponent implements AfterViewInit {
+    private toastService = inject(ToastService);
+
     public enableDynamicStepWithButton = false;
     public steps: IWizardStepData[] = [];
 
     @ViewChild("dynamicTemplate1") dynamicTemplate1: TemplateRef<string>;
     @ViewChild("wizardComponent") private wizard: WizardHorizontalComponent;
-
-    constructor(private toastService: ToastService) {}
 
     public ngAfterViewInit(): void {
         this.addStep(this.dynamicTemplate1, $localize`My first dynamic step`);

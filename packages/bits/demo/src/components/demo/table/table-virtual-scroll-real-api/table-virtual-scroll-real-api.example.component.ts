@@ -19,16 +19,7 @@
 //  THE SOFTWARE.
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Injectable,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit, ViewChild, inject } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
 import { filter, switchMap, takeUntil, tap } from "rxjs/operators";
@@ -52,6 +43,9 @@ import {
 export class TableVirtualScrollRealApiExampleComponent
     implements AfterViewInit, OnDestroy, OnInit
 {
+    private cd = inject(ChangeDetectorRef);
+    private viewportManager = inject(VirtualViewportManager);
+
     @ViewChild(CdkVirtualScrollViewport, { static: false })
     viewport: CdkVirtualScrollViewport;
     // This value is obtained from the server and used to evaluate the total number of pages to display
@@ -87,10 +81,7 @@ export class TableVirtualScrollRealApiExampleComponent
     public gridHeight = 400;
     public makeSticky: boolean = true;
 
-    constructor(
-        private cd: ChangeDetectorRef,
-        private viewportManager: VirtualViewportManager
-    ) {
+    constructor() {
         this.dataSource = new RandomuserTableDataSource();
     }
 

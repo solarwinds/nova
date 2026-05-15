@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component, EventEmitter } from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, inject } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
 import { HelpEntry, ToastService, Tokenizer } from "@nova-ui/bits";
@@ -34,6 +34,9 @@ import { ExampleAppRenderer } from "./renderer";
     standalone: false,
 })
 export class FreetypeQueryBuilderBasicExampleComponent {
+    private cd = inject(ChangeDetectorRef);
+    private toastService = inject(ToastService);
+
     readonly: boolean = false;
     readonly SEPARATOR = " ";
     placeholder: string = "Click to start building query";
@@ -47,11 +50,6 @@ export class FreetypeQueryBuilderBasicExampleComponent {
     currentHelp: HelpEntry[] = [];
     tokenizer: Tokenizer<ExampleAppToken> = new ExampleTokenizer();
     helpUpdater: ExampleHelp = new ExampleHelp();
-
-    constructor(
-        private cd: ChangeDetectorRef,
-        private toastService: ToastService
-    ) {}
 
     onValueChange($event: { value: string; tokens: ExampleAppToken[] }): void {
         this.tokens = $event.tokens;

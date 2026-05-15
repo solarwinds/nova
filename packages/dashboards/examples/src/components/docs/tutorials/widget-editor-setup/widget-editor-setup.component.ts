@@ -22,6 +22,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import {
     ChangeDetectorRef,
     Component,
+    inject,
     Injectable,
     OnDestroy,
     OnInit,
@@ -62,10 +63,7 @@ export class AverageRatingKpiDataSource
 
     // Use this subject to communicate the data source's busy state
     public busy = new BehaviorSubject<boolean>(false);
-
-    constructor(private http: HttpClient) {
-        super();
-    }
+    private http = inject(HttpClient);
 
     // In this example, getFilteredData is invoked every 10 minutes (Take a look at the refresher
     // provider definition in the widget configuration below to see how the interval is set)
@@ -113,10 +111,7 @@ export class RatingsCountKpiDataSource
 
     // Use this subject to communicate the data source's busy state
     public busy = new BehaviorSubject<boolean>(false);
-
-    constructor(private http: HttpClient) {
-        super();
-    }
+    private http = inject(HttpClient);
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
@@ -170,14 +165,9 @@ export class WidgetEditorSetupComponent implements OnInit {
     // Boolean which dashboard takes in as an input if its true it allows you to move widgets around.
     public editMode: boolean = false;
 
-    constructor(
-        // WidgetTypesService provides the widget's necessary structure information
-        private widgetTypesService: WidgetTypesService,
-
-        // In general, the ProviderRegistryService is used for making entities available for injection into dynamically loaded components.
-        private providerRegistry: ProviderRegistryService,
-        private changeDetectorRef: ChangeDetectorRef
-    ) {}
+    private widgetTypesService = inject(WidgetTypesService);
+    private providerRegistry = inject(ProviderRegistryService);
+    private changeDetectorRef = inject(ChangeDetectorRef);
 
     public ngOnInit(): void {
         // Grabbing the widget's default template which will be needed as a parameter for setNode

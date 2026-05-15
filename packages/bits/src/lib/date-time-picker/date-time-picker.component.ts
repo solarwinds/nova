@@ -18,21 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnInit,
-    Output,
-    Renderer2,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import moment from "moment/moment";
 import { Moment } from "moment/moment";
@@ -64,6 +50,9 @@ import { NuiFormFieldControl } from "../form-field/public-api";
 export class DateTimePickerComponent
     implements AfterViewInit, OnInit, ControlValueAccessor
 {
+    private renderer = inject(Renderer2);
+    private cd = inject(ChangeDetectorRef);
+
     /** latest available date */
     @Input() maxDate: Moment;
     /** earliest available date */
@@ -124,8 +113,6 @@ export class DateTimePickerComponent
 
     onTouched = (): void => {};
     onChange = (value: any): void => {};
-
-    constructor(private renderer: Renderer2, private cd: ChangeDetectorRef) {}
 
     public ngOnInit(): void {
         if (!this.initEmpty && !this.model) {

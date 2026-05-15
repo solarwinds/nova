@@ -18,7 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { EventEmitter } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
 
 import { SelectedItemsKeyControlService } from "./selected-items-key-control.service";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
@@ -54,7 +56,14 @@ describe("components > ", () => {
     describe("combobox >", () => {
         describe(SelectedItemsKeyControlService.name, () => {
             beforeEach(() => {
-                testService = new SelectedItemsKeyControlService(announcerMock);
+                TestBed.configureTestingModule({
+                    providers: [
+                        SelectedItemsKeyControlService,
+                        { provide: LiveAnnouncer, useValue: announcerMock },
+                    ],
+                });
+
+                testService = TestBed.inject(SelectedItemsKeyControlService);
 
                 testService.initSelectedItemsKeyManager(
                     queryListMock as any,

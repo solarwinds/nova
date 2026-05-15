@@ -22,6 +22,7 @@ import { HttpClient } from "@angular/common/http";
 import {
     ChangeDetectorRef,
     Component,
+    inject,
     Injectable,
     Input,
     OnChanges,
@@ -121,7 +122,7 @@ export class CustomDonutContentFormatterComponent
 
     private readonly destroy$ = new Subject<void>();
 
-    constructor(public changeDetector: ChangeDetectorRef) {}
+    public changeDetector = inject(ChangeDetectorRef);
 
     // The data we receive from the chart, including metrics names and their values
     @Input() data: IChartAssistSeries<IAccessors>[];
@@ -278,12 +279,13 @@ export class CustomDonutContentFormatterConfiguratorComponent
 {
     public static lateLoadKey = "CustomFormatterConfiguratorComponent";
 
+    public iconService = inject(IconService);
+    public configuratorHeading = inject(ConfiguratorHeadingService);
+
     constructor(
         changeDetector: ChangeDetectorRef,
         formBuilder: FormBuilder,
         logger: LoggerService,
-        public iconService: IconService,
-        public configuratorHeading: ConfiguratorHeadingService
     ) {
         super(changeDetector, formBuilder, logger);
     }
@@ -317,15 +319,12 @@ export class CustomDonutContentFormatterExampleComponent implements OnInit {
     // Pass this to the dashboard component's gridsterConfig input in the template.
     public gridsterConfig: GridsterConfig = {};
 
-    constructor(
-        // WidgetTypesService provides the widget's necessary structure information
-        private widgetTypesService: WidgetTypesService,
-        // In general, the ProviderRegistryService is used for making entities available for injection into dynamically loaded components.
-        private providerRegistry: ProviderRegistryService,
-        // Inject the ComponentRegistryService to make our custom component available for late loading by the dashboards framework
-        private componentRegistry: ComponentRegistryService,
-        private changeDetectorRef: ChangeDetectorRef
-    ) {
+    private widgetTypesService = inject(WidgetTypesService);
+    private providerRegistry = inject(ProviderRegistryService);
+    private componentRegistry = inject(ComponentRegistryService);
+    private changeDetectorRef = inject(ChangeDetectorRef);
+
+    constructor() {
         // Register the custom configurator component with the component registry to make it available
         // for late loading by the dashboard framework.
         this.componentRegistry.registerByLateLoadKey(
@@ -482,10 +481,7 @@ export class StatusesExampleDatasource
     public static providerId = "StatusesExampleDatasource";
 
     public busy = new Subject<boolean>();
-
-    constructor(private http: HttpClient) {
-        super();
-    }
+    private http = inject(HttpClient);
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);

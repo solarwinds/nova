@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, Input } from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 
 import { IToastService } from "../../toast/public-api";
 import { ToastService } from "../../toast/toast.service";
@@ -31,12 +31,12 @@ import { ToastService } from "../../toast/toast.service";
     standalone: false,
 })
 export class CopyTextComponent {
+    private toastService = inject<IToastService>(ToastService);
+
     // file to which the copy applies
     @Input()
     public fileContent: string;
     public copyTooltip = $localize`copy snippet to clipboard`;
-
-    constructor(@Inject(ToastService) private toastService: IToastService) {}
 
     public onSnippetCopied(): void {
         this.toastService.info({

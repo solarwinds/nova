@@ -20,11 +20,10 @@
 
 import {
     Directive,
-    Host,
     Input,
     OnChanges,
-    Self,
     SimpleChanges,
+    inject,
 } from "@angular/core";
 import { GridsterItemComponent } from "angular-gridster2";
 
@@ -39,7 +38,7 @@ import { GridsterItemComponent } from "angular-gridster2";
 export class GridsterItemWidgetIdDirective implements OnChanges {
     @Input() nuiGridsterItemWidgetId: string;
 
-    constructor(@Host() @Self() private gridsterItem: GridsterItemComponent) {}
+    private gridsterItem = inject(GridsterItemComponent, { host: true, self: true });
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.nuiGridsterItemWidgetId) {

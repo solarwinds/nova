@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 import { IWizardSelectionEvent, WizardComponent } from "@nova-ui/bits";
@@ -29,11 +29,13 @@ import { IWizardSelectionEvent, WizardComponent } from "@nova-ui/bits";
     standalone: false,
 })
 export class WizardResetStepExampleComponent {
+    private formBuilder = inject(FormBuilder);
+
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;
     public myForm;
     public secondStepForm;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor() {
         this.myForm = this.formBuilder.group({
             name: ["", Validators.required],
             email: [

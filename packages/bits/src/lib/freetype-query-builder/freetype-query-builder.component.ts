@@ -18,22 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, Input, OnChanges, OnDestroy, Output, Renderer2, SimpleChanges, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import {
     FormBuilder,
     FormControl,
@@ -89,6 +74,12 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
 
         return document.execCommand("insertText", false, text);
     }
+
+    private renderer2 = inject(Renderer2);
+    private formBuilder = inject(FormBuilder);
+    private cd = inject(ChangeDetectorRef);
+    private toastService = inject(ToastService);
+    private utils = inject(FreeTypeQueryUtilsService);
 
     private readonly KEY_ENTER_CODE = "Enter";
     private readonly KEY_ESC_CODE = "Escape";
@@ -147,13 +138,7 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
     inputHeight = this.BASE_LINE;
     public selectControl: FormControl = new FormControl();
 
-    constructor(
-        private renderer2: Renderer2,
-        private formBuilder: FormBuilder,
-        private cd: ChangeDetectorRef,
-        private toastService: ToastService,
-        private utils: FreeTypeQueryUtilsService
-    ) {
+    constructor() {
         this.formGroup = this.formBuilder.group({
             body: [""],
         });

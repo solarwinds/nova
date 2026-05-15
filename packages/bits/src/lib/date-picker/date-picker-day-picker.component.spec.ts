@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { TestBed } from "@angular/core/testing";
 import _isUndefined from "lodash/isUndefined";
 import _keys from "lodash/keys";
 import moment from "moment/moment";
@@ -32,7 +33,16 @@ describe("components >", () => {
 
         beforeEach(() => {
             inner = new DatePickerInnerComponent();
-            dayPicker = new DayPickerComponent(inner);
+
+            TestBed.configureTestingModule({
+                providers: [
+                    { provide: DatePickerInnerComponent, useValue: inner },
+                ],
+            });
+
+            dayPicker = TestBed.runInInjectionContext(
+                () => new DayPickerComponent()
+            );
         });
 
         it("should check setting year step", () => {

@@ -21,6 +21,7 @@
 import uniq from "lodash/uniq";
 import moment from "moment/moment";
 
+import { TestBed } from "@angular/core/testing";
 import { LoggerService } from "@nova-ui/bits";
 
 import { ThresholdsService } from "./thresholds-service";
@@ -52,7 +53,13 @@ describe("thresholds service", () => {
     const format = "YYYY-MM-DDTHH:mm:ssZ";
 
     beforeEach(() => {
-        thresholdsService = new ThresholdsService(new LoggerService());
+        TestBed.configureTestingModule({
+            providers: [
+                ThresholdsService,
+                { provide: LoggerService, useValue: { warn: () => {}, error: () => {} } },
+            ],
+        });
+        thresholdsService = TestBed.inject(ThresholdsService);
         scales = {
             x: new TimeScale(),
             y: new LinearScale(),

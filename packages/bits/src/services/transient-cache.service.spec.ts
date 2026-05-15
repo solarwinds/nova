@@ -18,6 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { TestBed } from "@angular/core/testing";
+
 import { ITransientCache } from "./public-api";
 import { TransientCacheService } from "./transient-cache.service";
 import { UtilService } from "./util.service";
@@ -36,7 +38,15 @@ describe("services >", () => {
         beforeEach(() => {
             utilService = <UtilService>{};
             utilService.sizeof = () => 1;
-            cache = new TransientCacheService(utilService);
+
+            TestBed.configureTestingModule({
+                providers: [
+                    TransientCacheService,
+                    { provide: UtilService, useValue: utilService },
+                ],
+            });
+
+            cache = TestBed.inject(TransientCacheService);
         });
 
         it("should add object to the cache", () => {

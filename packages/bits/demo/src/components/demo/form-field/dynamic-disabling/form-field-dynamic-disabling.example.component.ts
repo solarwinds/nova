@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 import { ToastService } from "@nova-ui/bits";
@@ -29,13 +29,13 @@ import { ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class FormFieldDynamicDisablingExampleComponent {
+    private formBuilder = inject(FormBuilder);
+    private toastService = inject<ToastService>(ToastService);
+
     public dynamicForm;
     public visibleRadio: boolean;
 
-    constructor(
-        private formBuilder: FormBuilder,
-        @Inject(ToastService) private toastService: ToastService
-    ) {
+    constructor() {
         this.dynamicForm = this.formBuilder.group({
             password: this.formBuilder.control("", Validators.required),
             confirmPassword: this.formBuilder.control(

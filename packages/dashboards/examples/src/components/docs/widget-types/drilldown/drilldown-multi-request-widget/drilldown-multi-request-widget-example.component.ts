@@ -22,6 +22,7 @@ import { HttpClient } from "@angular/common/http";
 import {
     ChangeDetectorRef,
     Component,
+    inject,
     Injectable,
     OnDestroy,
     OnInit,
@@ -86,7 +87,10 @@ export class DrilldownDataSource
     private leafGroup: string = "country";
     private applyFilters$ = new Subject<IFilters>();
 
-    constructor(private http: HttpClient, private apollo: Apollo) {
+    private http = inject(HttpClient);
+    private apollo = inject(Apollo);
+
+    constructor() {
         super();
 
         // TODO: remove Partial in vNext after marking dataType field as optional - NUI-5838

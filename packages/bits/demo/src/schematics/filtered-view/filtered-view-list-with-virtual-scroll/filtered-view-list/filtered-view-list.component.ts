@@ -18,16 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, inject } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 import {
     filter,
@@ -66,6 +57,10 @@ import { IServer, IServerFilters } from "../types";
 export class FilteredViewListComponent
     implements OnInit, AfterViewInit, OnDestroy
 {
+    private dataSource = inject(DataSourceService) as FilteredViewListWithVirtualScrollDataSource<IServer>;
+    private changeDetection = inject(ChangeDetectorRef);
+    private viewportManager = inject(VirtualViewportManager);
+
     public listItems$ = new BehaviorSubject<IServer[]>([]);
     public readonly sorterItems: IMenuItem[] = [
         {
@@ -100,13 +95,6 @@ export class FilteredViewListComponent
     @ViewChild(SorterComponent) sorter: SorterComponent;
 
     private readonly destroy$ = new Subject<void>();
-
-    constructor(
-        @Inject(DataSourceService)
-        private dataSource: FilteredViewListWithVirtualScrollDataSource<IServer>,
-        private changeDetection: ChangeDetectorRef,
-        private viewportManager: VirtualViewportManager
-    ) {}
 
     public ngOnInit(): void {
         this.dataSource.busy

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 
 import { ToastService } from "@nova-ui/bits";
@@ -32,8 +32,9 @@ import {
 export class AcmeFormSubmitHandler implements IDashboardPersistenceHandler {
     public allowSubmit = true;
     public allowRemoval = true;
+    private toastService = inject(ToastService);
 
-    constructor(private toastService: ToastService) {
+    constructor() {
         this.toastService.setConfig({
             timeOut: 2000,
         });

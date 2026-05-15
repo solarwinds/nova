@@ -25,6 +25,7 @@ import {
     NgZone,
     Optional,
     StaticProvider,
+    inject,
 } from "@angular/core";
 
 import {
@@ -125,7 +126,9 @@ import { WidgetToDashboardEventProxyService } from "./widget-to-dashboard-event-
 export class ProviderRegistryService {
     public staticProviders: IStaticProviders = {};
 
-    constructor(private logger: LoggerService) {
+    private logger = inject(LoggerService);
+
+    constructor() {
         this.setProviders({
             [NOVA_DATASOURCE_INTERVAL_REFRESHER]: {
                 provide: Refresher,

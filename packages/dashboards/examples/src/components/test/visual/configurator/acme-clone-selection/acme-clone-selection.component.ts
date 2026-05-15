@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { TitleCasePipe } from "@angular/common";
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, inject, OnInit, Output } from "@angular/core";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 
@@ -48,7 +48,7 @@ export class AcmeCloneSelectionComponent
     public widgetItems: any[] = [];
     public widgetSelection: any[];
 
-    constructor(protected widgetTypesService: WidgetTypesService) {}
+    protected widgetTypesService = inject(WidgetTypesService);
 
     public ngOnInit(): void {
         const titleCasePipe = new TitleCasePipe();

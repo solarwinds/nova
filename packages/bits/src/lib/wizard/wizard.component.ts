@@ -18,24 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterContentInit,
-    AfterViewChecked,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    ViewChild,
-    ViewChildren,
-    ViewContainerRef,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterContentInit, AfterViewChecked, ChangeDetectorRef, Component, ContentChildren, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren, ViewContainerRef, ViewEncapsulation, inject } from "@angular/core";
 import _find from "lodash/find";
 import _findIndex from "lodash/findIndex";
 import _isUndefined from "lodash/isUndefined";
@@ -65,6 +48,10 @@ export class WizardComponent
     implements OnInit, AfterContentInit, AfterViewChecked, OnDestroy
 {
     private static placeholderFinishText = "Action"; // as a placeholder "Action" does not need to be i18n
+
+    private changeDetector = inject(ChangeDetectorRef);
+    private viewContainerRef = inject(ViewContainerRef);
+    private logger = inject(LoggerService);
 
     @ContentChildren(WizardStepComponent) steps: QueryList<WizardStepComponent>;
     @ViewChildren("stepTitle") stepTitles: QueryList<ElementRef>;
@@ -130,12 +117,6 @@ export class WizardComponent
     private arraySteps: any[];
     private dynamicSubscriptions = new Map();
     private dynamicRefs = new Map();
-
-    constructor(
-        private changeDetector: ChangeDetectorRef,
-        private viewContainerRef: ViewContainerRef,
-        private logger: LoggerService
-    ) {}
 
     public ngOnInit(): void {
         if (this.finishText === WizardComponent.placeholderFinishText) {

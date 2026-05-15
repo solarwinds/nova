@@ -18,22 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    HostBinding,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { Component, ElementRef, EventEmitter, forwardRef, HostBinding, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import _debounce from "lodash/debounce";
 import _isEmpty from "lodash/isEmpty";
@@ -74,6 +59,10 @@ export class SelectComponent
     extends BaseSelect
     implements OnInit, OnChanges, OnDestroy
 {
+    private renderer = inject(Renderer2);
+    elRef = inject(ElementRef);
+    private logger = inject(LoggerService);
+
     /**
      * A value that tells popup to be attached right after it's parent declaration or in <body>
      */
@@ -105,12 +94,9 @@ export class SelectComponent
 
     @ViewChild("menu") public menu: MenuComponent;
 
-    constructor(
-        utilService: UtilService,
-        private renderer: Renderer2,
-        public elRef: ElementRef,
-        private logger: LoggerService
-    ) {
+    constructor() {
+        const utilService = inject(UtilService);
+
         super(utilService);
         this.logger.warn(
             "<nui-select> is deprecated as of Nova v11. Please use <nui-select-v2> instead."

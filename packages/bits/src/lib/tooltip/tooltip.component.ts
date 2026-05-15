@@ -25,16 +25,7 @@ import {
     OverlayConfig,
     ScrollDispatcher,
 } from "@angular/cdk/overlay";
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    NgZone,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-} from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild, inject } from "@angular/core";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { skip, take, takeUntil } from "rxjs/operators";
 
@@ -77,6 +68,11 @@ const ANIMATION_DELAY = 200; // ms
     standalone: false,
 })
 export class TooltipComponent implements OnDestroy, OnInit {
+    private _changeDetectorRef = inject(ChangeDetectorRef);
+    private scrollDispatcher = inject(ScrollDispatcher);
+    private ngZone = inject(NgZone);
+    protected overlay = inject(Overlay);
+
     /** Message to display in the tooltip */
     public get message(): string {
         return this._message;
@@ -112,13 +108,6 @@ export class TooltipComponent implements OnDestroy, OnInit {
     private readonly _onHide = new Subject<void>();
     private readonly destroy$ = new Subject<void>();
     private hiding$ = new BehaviorSubject<boolean>(false);
-
-    constructor(
-        private _changeDetectorRef: ChangeDetectorRef,
-        private scrollDispatcher: ScrollDispatcher,
-        private ngZone: NgZone,
-        protected overlay: Overlay
-    ) {}
 
     public ngOnInit(): void {
         this.updatePopupOverlayConfig();

@@ -19,20 +19,7 @@
 //  THE SOFTWARE.
 
 import { LiveAnnouncer } from "@angular/cdk/a11y";
-import {
-    AfterContentInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    forwardRef,
-    Input,
-    OnChanges,
-    OnDestroy,
-    SimpleChanges,
-    TemplateRef,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, OnChanges, OnDestroy, SimpleChanges, TemplateRef, ViewEncapsulation, inject } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import { merge } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -79,19 +66,23 @@ export class SelectV2Component
     extends BaseSelectV2
     implements AfterContentInit, OnDestroy, OnChanges
 {
+    liveAnnouncer: LiveAnnouncer;
+
     /** Sets a custom template for displaying it in the Option */
     @Input() public displayValueTemplate: TemplateRef<any>;
 
     /** Value of the selected Option that derives in the Select */
     public displayText: string;
 
-    constructor(
-        elRef: ElementRef<HTMLElement>,
-        optionKeyControlService: OptionKeyControlService<SelectV2OptionComponent>,
-        cdRef: ChangeDetectorRef,
-        public liveAnnouncer: LiveAnnouncer
-    ) {
+    constructor() {
+        const elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+        const optionKeyControlService = inject<OptionKeyControlService<SelectV2OptionComponent>>(OptionKeyControlService);
+        const cdRef = inject(ChangeDetectorRef);
+        const liveAnnouncer = inject(LiveAnnouncer);
+
         super(optionKeyControlService, cdRef, elRef, liveAnnouncer);
+    
+        this.liveAnnouncer = liveAnnouncer;
     }
 
     public ngOnChanges(changes: SimpleChanges): void {

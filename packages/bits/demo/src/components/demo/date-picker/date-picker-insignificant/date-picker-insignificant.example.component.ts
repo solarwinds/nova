@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import moment, { Moment } from "moment/moment";
 
@@ -30,11 +30,11 @@ import { IToastService, ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class DatePickerInsignificantExampleComponent {
+    private toastService = inject<IToastService>(ToastService);
+
     public dt: Moment = moment().endOf("day");
     public selectedDate: Date;
     public control = new FormControl(this.dt, { nonNullable: true });
-
-    constructor(@Inject(ToastService) private toastService: IToastService) {}
 
     public dateChanged(event: Moment): void {
         this.selectedDate = new Date(event.valueOf());

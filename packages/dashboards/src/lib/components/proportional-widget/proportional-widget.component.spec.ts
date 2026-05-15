@@ -64,12 +64,8 @@ describe(ProportionalWidgetComponent.name, () => {
     let component: ProportionalWidgetComponent;
     let fixture: ComponentFixture<ProportionalWidgetComponent>;
     const eventBus = new EventBus<IEvent>();
-    const dynamicComponentCreator = new DynamicComponentCreator();
-    const pizzagnaService = new PizzagnaService(
-        eventBus,
-        dynamicComponentCreator
-    );
     const dataSource = new MockDataSource();
+    let pizzagnaService: PizzagnaService;
     let ngZone: NgZone;
 
     beforeAll(() => {
@@ -82,6 +78,7 @@ describe(ProportionalWidgetComponent.name, () => {
             imports: [NuiDashboardsModule],
             providers: [
                 ProviderRegistryService,
+                DynamicComponentCreator,
                 {
                     provide: PIZZAGNA_EVENT_BUS,
                     useValue: eventBus,
@@ -90,10 +87,7 @@ describe(ProportionalWidgetComponent.name, () => {
                     provide: DATA_SOURCE,
                     useValue: dataSource,
                 },
-                {
-                    provide: PizzagnaService,
-                    useValue: pizzagnaService,
-                },
+                PizzagnaService,
             ],
         }).compileComponents();
     }));

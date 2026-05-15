@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Directive, OnDestroy } from "@angular/core";
+import { Directive, OnDestroy, inject } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
@@ -50,10 +50,9 @@ export abstract class RegistryService<T = object> implements OnDestroy {
         return this._isEmpty;
     }
 
-    protected constructor(
-        private logger: LoggerService,
-        private className?: string
-    ) {}
+    protected logger = inject(LoggerService);
+
+    protected constructor(private className?: string) {}
 
     public addItems(
         items: T[],

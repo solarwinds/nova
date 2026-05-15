@@ -18,16 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    Output,
-    TemplateRef,
-    ViewEncapsulation,
-} from "@angular/core";
+import { Component, ElementRef, EventEmitter, HostBinding, Input, Output, TemplateRef, ViewEncapsulation, inject } from "@angular/core";
 
 import { TabGroupComponent } from "../tab-group/tab-group.component";
 /** @ignore */
@@ -42,6 +33,8 @@ import { TabGroupComponent } from "../tab-group/tab-group.component";
     standalone: false,
 })
 export class TabComponent {
+    private tabGroup = inject(TabGroupComponent);
+
     /** Tab header text */
     @Input() heading: string;
     /** If true tab can not be activated  */
@@ -83,7 +76,7 @@ export class TabComponent {
     public headingRef: TemplateRef<any>;
     protected _active: boolean;
 
-    constructor(private tabGroup: TabGroupComponent) {
+    constructor() {
         this.tabGroup.addTab(this);
     }
 }

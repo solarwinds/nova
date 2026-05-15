@@ -19,19 +19,7 @@
 //  THE SOFTWARE.
 
 import { animate, style, transition, trigger } from "@angular/animations";
-import {
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    HostBinding,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation,
-} from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, HostBinding, Input, NgZone, OnChanges, OnDestroy, Output, SimpleChanges, ViewEncapsulation, inject } from "@angular/core";
 
 import { ButtonIcon, SpinnerSize } from "./public-api";
 import { LoggerService } from "../../services/log-service";
@@ -66,6 +54,11 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
     private static defaultSize: SpinnerSize = SpinnerSize.Small;
     private showTimer: any;
     private _size: SpinnerSize;
+
+    private logger = inject(LoggerService);
+    private changeDetector = inject(ChangeDetectorRef);
+    private ngZone = inject(NgZone);
+
     public tooltipText = $localize`Cancel`;
 
     public showSpinner = false;
@@ -114,12 +107,6 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
     public get showText(): boolean {
         return this.size !== SpinnerSize.Small;
     }
-
-    constructor(
-        private logger: LoggerService,
-        private changeDetector: ChangeDetectorRef,
-        private ngZone: NgZone
-    ) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes?.percent) {

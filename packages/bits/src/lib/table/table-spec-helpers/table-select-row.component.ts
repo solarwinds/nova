@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, ViewChild, inject } from "@angular/core";
 
 import { TableSelectionConfig } from "@nova-ui/bits";
 
@@ -155,6 +155,8 @@ const ELEMENT_DATA: TableSelectModel[] = [
     standalone: false,
 })
 export class TableSelectTestComponent {
+    changeDetection = inject(ChangeDetectorRef);
+
     public displayedColumns = [
         "position",
         "item",
@@ -171,7 +173,6 @@ export class TableSelectTestComponent {
     @ViewChild(TableComponent, { static: true })
     tableComponent: TableComponent<any>;
     positionWidth = 100;
-    constructor(public changeDetection: ChangeDetectorRef) {}
 
     public onSelectorChange(selection: ISelection): void {
         this.selectedItems = selection;

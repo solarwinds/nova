@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, TemplateRef } from "@angular/core";
+import { Component, TemplateRef, inject } from "@angular/core";
 
 import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 
@@ -28,12 +28,10 @@ import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class DialogCustomClassExampleComponent {
-    private activeDialog: NuiDialogRef;
+    private dialogService = inject<DialogService>(DialogService);
+    private toastService = inject<ToastService>(ToastService);
 
-    constructor(
-        @Inject(DialogService) private dialogService: DialogService,
-        @Inject(ToastService) private toastService: ToastService
-    ) {}
+    private activeDialog: NuiDialogRef;
 
     public open(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, {

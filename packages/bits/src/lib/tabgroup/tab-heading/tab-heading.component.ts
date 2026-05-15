@@ -18,15 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    Output,
-} from "@angular/core";
+import { ChangeDetectorRef, Component,ElementRef, EventEmitter, HostBinding, Input, Output, inject } from "@angular/core";
 
 import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
 
@@ -39,6 +31,9 @@ import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
     standalone: false,
 })
 export class TabHeadingComponent {
+    private changeDetector = inject(ChangeDetectorRef);
+    private elementRef = inject(ElementRef);
+
     /** This adds 'disabled' class to the host component depending on the 'disabled' @Input to properly style disabled tabs */
     @HostBinding("class.disabled")
     get isDisabled(): boolean {
@@ -65,11 +60,6 @@ export class TabHeadingComponent {
     @Output() selected: EventEmitter<TabHeadingComponent> = new EventEmitter();
 
     protected _active: boolean;
-
-    constructor(
-        private changeDetector: ChangeDetectorRef,
-        private elementRef: ElementRef
-    ) {}
 
     public selectTab(): void {
         if (!this.disabled) {

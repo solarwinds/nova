@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { fakeAsync, flush, tick } from "@angular/core/testing";
+import { fakeAsync, flush, TestBed, tick } from "@angular/core/testing";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 
 import { EventBus, IEvent } from "@nova-ui/bits";
@@ -28,6 +28,7 @@ import { TableColumnsConverterService } from "./table-columns-converter.service"
 import { DynamicComponentCreator } from "../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";
 import { PreviewService } from "../../preview.service";
+import { PIZZAGNA_EVENT_BUS } from "../../../../types";
 
 class MockComponent {
     public static lateLoadKey = "MockComponent";
@@ -59,13 +60,20 @@ describe("TableColumnsConverterService >", () => {
     const formBuilder = new FormBuilder();
     const component = new MockComponent(formBuilder);
     const previewService = new PreviewService();
-    const dynamicComponentCreator = new DynamicComponentCreator();
-    const pizzagnaService = new PizzagnaService(
-        eventBus,
-        dynamicComponentCreator
-    );
+    let pizzagnaService: PizzagnaService;
 
     let service: TableColumnsConverterService;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [
+                PizzagnaService,
+                DynamicComponentCreator,
+                { provide: PIZZAGNA_EVENT_BUS, useValue: eventBus },
+            ],
+        });
+        pizzagnaService = TestBed.inject(PizzagnaService);
+    });
 
     beforeEach(fakeAsync(() => {
         spyOn(pizzagnaService, "createComponentsFromTemplate");

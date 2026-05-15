@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import _forEach from "lodash/forEach";
 import _get from "lodash/get";
 import _orderBy from "lodash/orderBy";
@@ -42,16 +42,14 @@ export class ClientSideDataSource<
     T,
     F extends INovaFilters = INovaFilters
 > extends DataSourceService<T, F> {
+    protected searchService = inject(SearchService);
+
     protected _allData: T[];
     protected _searchProps: string[] = [];
 
     // cache used to store our previous fetched results while scrolling
     // and more data is automatically fetched from the backend
     protected virtualScrollData: T[] = [];
-
-    constructor(protected searchService: SearchService) {
-        super();
-    }
 
     public setData(initialData: T[] = []): void {
         this._allData = initialData;

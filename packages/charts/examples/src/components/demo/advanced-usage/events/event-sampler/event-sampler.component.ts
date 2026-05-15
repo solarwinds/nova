@@ -22,6 +22,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    inject,
     OnInit,
     ViewEncapsulation,
 } from "@angular/core";
@@ -206,6 +207,7 @@ export class EventSamplerComponent implements OnInit {
     private renderer: Renderer<IAccessors>;
     private scales: Scales;
     private seriesProcessor?: SeriesProcessor<IBarAccessors> | SeriesProcessor;
+    private changeDetector = inject(ChangeDetectorRef);
 
     public onEventFilterChange(selectedEvent: IEventInfo): void {
         this.selectedEvent = selectedEvent;
@@ -217,8 +219,6 @@ export class EventSamplerComponent implements OnInit {
     public onInteractionTypeChange(type: InteractionType): void {
         this.selectedInteractionType = type;
     }
-
-    constructor(private changeDetector: ChangeDetectorRef) {}
 
     public ngOnInit(): void {
         this.valueAccessor = (i, j) => this.values[j][i];

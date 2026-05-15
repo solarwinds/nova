@@ -18,16 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    Component,
-    ElementRef,
-    Inject,
-    Input,
-    OnChanges,
-    OnInit,
-    SimpleChanges,
-    ViewChild,
-} from "@angular/core";
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild, inject } from "@angular/core";
 
 import { WindowToken } from "../helpers/window";
 import {
@@ -78,7 +69,9 @@ export class TextHighlightOverlayComponent<T extends QueryToken>
     }
 
     private window: Window;
-    constructor(@Inject(WindowToken) window: any) {
+    constructor() {
+        const window = inject(WindowToken);
+
         this.window = window as Window;
     }
 

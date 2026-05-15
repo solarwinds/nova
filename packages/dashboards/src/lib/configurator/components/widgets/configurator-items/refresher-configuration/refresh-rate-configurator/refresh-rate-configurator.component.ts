@@ -26,6 +26,7 @@ import {
     Input,
     OnDestroy,
     OnInit,
+    inject,
 } from "@angular/core";
 import {
     ControlValueAccessor,
@@ -85,7 +86,8 @@ export class RefreshRateConfiguratorComponent
     private onChange: (value: number | null) => void;
     private destroy$ = new Subject<void>();
 
-    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) {}
+    private fb = inject(FormBuilder);
+    private cd = inject(ChangeDetectorRef);
 
     public ngOnInit(): void {
         this.generateUnitItems();

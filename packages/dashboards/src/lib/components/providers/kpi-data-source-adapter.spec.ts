@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import { DecimalPipe } from "@angular/common";
+import { TestBed } from "@angular/core/testing";
 import { Subject } from "rxjs";
 
 import {
@@ -37,6 +38,7 @@ import { KpiWidgetThresholdColors } from "../../configurator/components/widgets/
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { IKpiData } from "../kpi-widget/types";
+import { PIZZAGNA_EVENT_BUS } from "../../types";
 
 class MockDataSource implements IDataSource {
     public outputsSubject = new Subject<IFilteringOutputs>();
@@ -60,18 +62,20 @@ describe("KpiDataSourceAdapter > ", () => {
     let pizzagnaService: PizzagnaService;
     let configuration: IKpiDataSourceAdapterConfiguration;
     let testData: IKpiData;
-    let dynamicComponentCreator: DynamicComponentCreator;
     let numberPipe: DecimalPipe;
 
     beforeEach(() => {
         eventBus = new EventBus();
         dataSource = new MockDataSource();
-        dynamicComponentCreator = new DynamicComponentCreator();
         numberPipe = new DecimalPipe("en-US");
-        pizzagnaService = new PizzagnaService(
-            eventBus,
-            dynamicComponentCreator
-        );
+        TestBed.configureTestingModule({
+            providers: [
+                PizzagnaService,
+                DynamicComponentCreator,
+                { provide: PIZZAGNA_EVENT_BUS, useValue: eventBus },
+            ],
+        });
+        pizzagnaService = TestBed.inject(PizzagnaService);
         adapter = new KpiDataSourceAdapter(
             eventBus,
             dataSource,

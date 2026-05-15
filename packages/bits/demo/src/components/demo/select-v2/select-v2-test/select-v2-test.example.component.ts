@@ -19,16 +19,7 @@
 //  THE SOFTWARE.
 
 import { OverlayConfig } from "@angular/cdk/overlay";
-import {
-    AfterViewInit,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -59,6 +50,9 @@ interface IExampleItem {
 export class SelectV2TestExampleComponent
     implements OnInit, AfterViewInit, OnDestroy
 {
+    private dialogService = inject<DialogService>(DialogService);
+    private formBuilder = inject(FormBuilder);
+
     public selectedItem: IExampleItem | null;
     public handleClicksOutside: boolean = false;
     public iconItems = [
@@ -110,10 +104,7 @@ export class SelectV2TestExampleComponent
     private activeDialog: NuiDialogRef;
     @ViewChild("custom_control") private select: SelectV2Component;
 
-    constructor(
-        @Inject(DialogService) private dialogService: DialogService,
-        private formBuilder: FormBuilder
-    ) {
+    constructor() {
         this.fancyForm = this.formBuilder.group({
             select: this.formBuilder.control("", Validators.required),
         });

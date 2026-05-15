@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { IToastService, ToastService } from "@nova-ui/bits";
 
@@ -28,6 +28,8 @@ import { IToastService, ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class ValueChangeRadioGroupExampleComponent {
+    private toastService = inject<IToastService>(ToastService);
+
     public colors = [$localize`Red`, $localize`Green`, $localize`Blue`];
     public colorHints = {
         Red: $localize`hot color`,
@@ -35,8 +37,6 @@ export class ValueChangeRadioGroupExampleComponent {
         Blue: $localize`color of sky`,
     };
     public selectedColor: string;
-
-    constructor(@Inject(ToastService) private toastService: IToastService) {}
 
     public showSelected(): void {
         this.toastService.success({

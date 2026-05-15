@@ -19,23 +19,7 @@
 //  THE SOFTWARE.
 
 import { OverlayConfig } from "@angular/cdk/overlay";
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    HostBinding,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, HostBinding, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import {
     ControlValueAccessor,
     FormControl,
@@ -97,6 +81,8 @@ export class DatePickerComponent
         AfterViewInit,
         OnDestroy
 {
+    private cd = inject(ChangeDetectorRef);
+
     /** sets date-picker inline mode */
     @HostBinding("class.nui-datepicker--inline")
     @Input()
@@ -207,8 +193,6 @@ export class DatePickerComponent
     private inputChanged: Subject<string> = new Subject<string>();
     private momentDateFormat: string;
     private calendarChanged: Subscription;
-
-    constructor(private cd: ChangeDetectorRef) {}
 
     public ngOnInit(): void {
         _defaults(this, datePickerDefaults);

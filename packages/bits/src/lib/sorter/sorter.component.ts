@@ -19,21 +19,7 @@
 //  THE SOFTWARE.
 
 import { OverlayConfig } from "@angular/cdk/overlay";
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    SimpleChanges,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import _assign from "lodash/assign";
 import _isEqual from "lodash/isEqual";
 import _values from "lodash/values";
@@ -69,6 +55,11 @@ import { OverlayComponent } from "../overlay/overlay-component/overlay.component
 export class SorterComponent
     implements OnChanges, OnInit, OnDestroy, AfterViewInit, IFilterPub
 {
+    private logger = inject(LoggerService);
+    private sorterKeyboardService = inject(SorterKeyboardService);
+    private elRef = inject(ElementRef);
+    private renderer = inject(Renderer2);
+
     @Input() appendToBody: boolean = false;
     @Input() caption: string;
 
@@ -109,13 +100,6 @@ export class SorterComponent
         [SorterDirection.descending]: "arrow-down",
     };
     private menuKeyControlListeners: Function[] = [];
-
-    constructor(
-        private logger: LoggerService,
-        private sorterKeyboardService: SorterKeyboardService,
-        private elRef: ElementRef,
-        private renderer: Renderer2
-    ) {}
 
     public ngOnInit(): void {
         this.onAppendToBodyChange(this.appendToBody);

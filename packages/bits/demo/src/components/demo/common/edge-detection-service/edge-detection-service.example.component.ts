@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, ViewChild, inject } from "@angular/core";
 import _set from "lodash/set";
 
 import { EdgeDetectionService, IEdgeDetectionResult } from "@nova-ui/bits";
@@ -30,6 +30,8 @@ import { EdgeDetectionService, IEdgeDetectionResult } from "@nova-ui/bits";
     standalone: false,
 })
 export class EdgeDetectionServiceExampleComponent implements AfterViewInit {
+    private edgeDetectionService = inject(EdgeDetectionService);
+
     @ViewChild("parent") private parentElement: ElementRef;
     @ViewChild("placementElement") private toBePlacedElement: ElementRef;
 
@@ -59,8 +61,6 @@ export class EdgeDetectionServiceExampleComponent implements AfterViewInit {
             left: false,
         },
     };
-
-    constructor(private edgeDetectionService: EdgeDetectionService) {}
 
     public ngAfterViewInit(): void {
         this.update();

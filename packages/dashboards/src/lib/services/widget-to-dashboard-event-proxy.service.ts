@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Inject, Injectable, OnDestroy, Optional } from "@angular/core";
+import { Injectable, OnDestroy, inject } from "@angular/core";
 import keyBy from "lodash/keyBy";
 import uniq from "lodash/uniq";
 import { Subject } from "rxjs";
@@ -68,20 +68,15 @@ export class WidgetToDashboardEventProxyService
     private readonly destroy$ = new Subject<void>();
     private component: { componentId: string };
 
+    private pizzagnaBus = inject<EventBus<IEvent>>(PIZZAGNA_EVENT_BUS);
+    private dashboardBus = inject<EventBus<IEvent>>(DASHBOARD_EVENT_BUS, { optional: true });
+    private widgetConfigurationService = inject(WidgetConfigurationService, { optional: true });
+    private eventRegistry = inject(EventRegistryService);
+    private pizzagnaService = inject(PizzagnaService);
+
     private upstreams?: string[];
     private downstreams?: string[];
     public providerKey: string;
-
-    constructor(
-        @Inject(PIZZAGNA_EVENT_BUS) private pizzagnaBus: EventBus<IEvent>,
-        @Optional()
-        @Inject(DASHBOARD_EVENT_BUS)
-        private dashboardBus: EventBus<IEvent>,
-        @Optional()
-        private widgetConfigurationService: WidgetConfigurationService,
-        private eventRegistry: EventRegistryService,
-        private pizzagnaService: PizzagnaService
-    ) {}
 
     public ngOnDestroy(): void {
         this.destroy$.next();

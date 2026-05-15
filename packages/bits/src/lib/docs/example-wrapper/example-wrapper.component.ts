@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, inject } from "@angular/core";
 import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
 import json from "highlight.js/lib/languages/json";
@@ -40,6 +40,9 @@ import { FileMetadata, SourcesService } from "../services/sources.service";
     standalone: false,
 })
 export class ExampleWrapperComponent implements OnInit {
+    private sourcesService = inject(SourcesService);
+    private codeSandboxService = inject(CodeSandboxService);
+
     // Prefix of the example component's filenames
     @Input() filenamePrefix: string = "";
 
@@ -51,10 +54,7 @@ export class ExampleWrapperComponent implements OnInit {
 
     public componentSources: FileMetadata[];
 
-    constructor(
-        private sourcesService: SourcesService,
-        private codeSandboxService: CodeSandboxService
-    ) {
+    constructor() {
         hljs.registerLanguage("typescript", typescript);
         hljs.registerLanguage("javascript", javascript);
         hljs.registerLanguage("xml", xml);

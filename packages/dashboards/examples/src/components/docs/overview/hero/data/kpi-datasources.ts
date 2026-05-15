@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Injectable, OnDestroy } from "@angular/core";
+import { inject, Injectable, OnDestroy } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { finalize } from "rxjs/operators";
 
@@ -36,10 +36,7 @@ export class HarryPotterAverageRatingDataSource
     public static providerId = "HarryPotterAverageRatingDataSource";
 
     public busy = new BehaviorSubject<boolean>(false);
-
-    constructor(private http: HttpClient) {
-        super();
-    }
+    private http = inject(HttpClient);
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
@@ -81,10 +78,7 @@ export class HarryPotterRatingsCountDataSource
     public static providerId = "HarryPotterRatingsCountDataSource";
 
     public busy = new BehaviorSubject<boolean>(false);
-
-    constructor(private http: HttpClient) {
-        super();
-    }
+    private http = inject(HttpClient);
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);

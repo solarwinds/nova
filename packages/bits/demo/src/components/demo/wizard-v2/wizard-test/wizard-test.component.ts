@@ -22,14 +22,7 @@ import {
     FlexibleConnectedPositionStrategy,
     OverlayRef,
 } from "@angular/cdk/overlay";
-import {
-    AfterViewInit,
-    Component,
-    Inject,
-    OnDestroy,
-    TemplateRef,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, TemplateRef, ViewChild, inject } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -54,6 +47,8 @@ interface IWizardStepData {
     standalone: false,
 })
 export class WizardV2TestComponent implements AfterViewInit, OnDestroy {
+    private dialogService = inject<DialogService>(DialogService);
+
     public onDestroy$ = new Subject<void>();
     public overlayTriggered$ = new Subject<void>();
     public responsiveSteps: Array<any> = Array.from({ length: 20 });
@@ -61,8 +56,6 @@ export class WizardV2TestComponent implements AfterViewInit, OnDestroy {
     private overlayRef: OverlayRef;
     public busy: boolean = false;
     public activeDialog: NuiDialogRef;
-
-    constructor(@Inject(DialogService) private dialogService: DialogService) {}
 
     public vegetables = [
         $localize`Cabbage`,

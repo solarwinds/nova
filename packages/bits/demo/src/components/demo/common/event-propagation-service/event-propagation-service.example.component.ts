@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import {
     EventPropagationService,
@@ -33,11 +33,9 @@ import {
     standalone: false,
 })
 export class EventPropagationServiceExampleComponent {
-    constructor(
-        @Inject(EventPropagationService)
-        private eventPropagationService: IEventPropagationService,
-        @Inject(ToastService) private toastService: IToastService
-    ) {}
+    private eventPropagationService = inject<IEventPropagationService>(EventPropagationService);
+    private toastService = inject<IToastService>(ToastService);
+
 
     public handleClick(event: Event): void {
         const target = <Element>event.target;

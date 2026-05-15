@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    QueryList,
-    ViewChildren,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, QueryList, ViewChildren, inject } from "@angular/core";
 import { Subject } from "rxjs";
 
 import {
@@ -44,13 +38,14 @@ interface IPicker {
 
 @Component({
     selector: "nui-time-frame-picker-multiple-custom-pickers",
-    templateUrl:
-        "./time-frame-picker-multiple-custom-pickers.example.component.html",
+    templateUrl: "./time-frame-picker-multiple-custom-pickers.example.component.html",
     standalone: false,
 })
 export class TimeFramePickerMultipleCustomPickersExampleComponent
     implements AfterViewInit
 {
+    private cdRef = inject(ChangeDetectorRef);
+
     @ViewChildren("scoper")
     private tfScopers: QueryList<TimeframeServiceScoperExampleComponent>;
 
@@ -118,8 +113,6 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent
     public closePopoverSubject = new Subject<void>();
     public openPopoverSubject = new Subject<void>();
 
-    constructor(private cdRef: ChangeDetectorRef) {}
-
     public updateTf(value: ITimeframe, index: number): void {
         const picker = this.pickers[index];
         picker.tf = value;
@@ -183,5 +176,6 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent
     standalone: false,
 })
 export class TimeframeServiceScoperExampleComponent {
-    constructor(public timeframeService: TimeframeService) {}
+    timeframeService = inject(TimeframeService);
+
 }

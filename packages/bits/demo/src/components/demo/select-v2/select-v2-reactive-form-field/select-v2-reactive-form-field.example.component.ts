@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
@@ -28,12 +28,14 @@ import { FormBuilder, Validators } from "@angular/forms";
     standalone: false,
 })
 export class SelectV2ReactiveFormFieldExampleComponent {
+    private formBuilder = inject(FormBuilder);
+
     public items = Array.from({ length: 100 }).map(
         (_, i) => $localize`Item ${i}`
     );
     public fancyForm;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor() {
         this.fancyForm = this.formBuilder.group({
             select: this.formBuilder.control("", Validators.required),
         });

@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { DOCUMENT } from "@angular/common";
-import { Inject, Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import _isNil from "lodash/isNil";
 
 /**
@@ -35,7 +35,8 @@ type OurCSS = CSSStyleDeclaration & { [key: string]: any };
  */
 @Injectable({ providedIn: "root" })
 export class PositionService {
-    constructor(@Inject(DOCUMENT) private document: Document) {}
+    private document = inject<Document>(DOCUMENT);
+
     /**
      * __Description:__
      * Takes two HTMLElements (hostElement and targetElement) and calculates a position for the targetElement.

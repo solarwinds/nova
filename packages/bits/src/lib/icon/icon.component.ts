@@ -60,7 +60,6 @@ export class IconComponent {
 
     private iconService = inject(IconService);
     private sanitizer = inject(DomSanitizer);
-
     public iconColor = input<string>();
     public brushType = input<string>("filled");
     public iconHoverColor = input<string>();

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { Subject } from "rxjs";
 
 import {
@@ -34,6 +34,8 @@ import {
     standalone: false,
 })
 export class TimeFramePickerCustomExampleComponent {
+    timeframeService = inject(TimeframeService);
+
     public presets: ITimeFramePresetDictionary = {
         last42Hours: {
             name: $localize`Last 42 hours`,
@@ -52,7 +54,7 @@ export class TimeFramePickerCustomExampleComponent {
 
     public showFooter: boolean = false;
 
-    constructor(public timeframeService: TimeframeService) {
+    constructor() {
         this.timeframeService.currentPresets = this.presets;
         this.acceptedTimeframe = this.timeframeService.getTimeframeByPresetId(
             this.selectedPresetKey

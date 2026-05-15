@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component } from "@angular/core";
+import { ChangeDetectorRef, Component, inject } from "@angular/core";
 
 @Component({
     selector: "nui-tab-heading-group-dynamic-example",
@@ -27,11 +27,13 @@ import { ChangeDetectorRef, Component } from "@angular/core";
     standalone: false,
 })
 export class TabHeadingGroupDynamicExampleComponent {
+    private changeDetector = inject(ChangeDetectorRef);
+
     public currentTabId: string;
 
     public tabsetContent: any[] = [];
 
-    constructor(private changeDetector: ChangeDetectorRef) {
+    constructor() {
         // "Dynamically" build first 2 tabs
         this.addTab();
         this.addTab();

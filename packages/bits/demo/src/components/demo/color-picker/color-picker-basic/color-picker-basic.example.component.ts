@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 
 const CHART_PALETTE_CS1: string[] = [
@@ -42,10 +42,9 @@ const CHART_PALETTE_CS1: string[] = [
     standalone: false,
 })
 export class ColorPickerBasicExampleComponent implements OnInit {
+    private formBuilder = inject(FormBuilder);
     public myForm: FormGroup<{ backgroundColor: FormControl<string | null> }>;
     public colors: string[] = CHART_PALETTE_CS1;
-
-    constructor(private formBuilder: FormBuilder) {}
 
     public ngOnInit(): void {
         this.myForm = this.formBuilder.group({

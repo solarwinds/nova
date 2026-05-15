@@ -23,6 +23,7 @@ import {
     Component,
     HostBinding,
     Input,
+    inject,
 } from "@angular/core";
 
 import { IFormatterData } from "../types";
@@ -35,7 +36,7 @@ import { IFormatterData } from "../types";
 export class RawFormatterComponent {
     static lateLoadKey = "RawFormatterComponent";
 
-    constructor(public changeDetector: ChangeDetectorRef) {}
+    public changeDetector = inject(ChangeDetectorRef);
 
     @Input() data: IFormatterData;
 

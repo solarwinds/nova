@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import {
     IDropEvent,
@@ -48,6 +48,8 @@ class IsObjectValidator implements IDropValidator {
     standalone: false,
 })
 export class DragdropBasicExampleComponent {
+    private toastService = inject<IToastService>(ToastService);
+
     public draggableString = "this is a string";
     public draggableObj = {
         imma: "little",
@@ -73,8 +75,6 @@ export class DragdropBasicExampleComponent {
         "</table>";
     public isStringValidator = new IsStringValidator();
     public isObjectValidator = new IsObjectValidator();
-
-    constructor(@Inject(ToastService) private toastService: IToastService) {}
 
     public onDropObject(dropEvent: IDropEvent): void {
         this.toastService.info({ message: $localize`Drop object!` });

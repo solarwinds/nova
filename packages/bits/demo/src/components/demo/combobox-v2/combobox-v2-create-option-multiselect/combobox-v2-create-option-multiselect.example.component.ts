@@ -18,11 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectionStrategy,
-    Component,
-    SecurityContext,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, SecurityContext, inject } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
 
@@ -34,13 +30,13 @@ import { DomSanitizer } from "@angular/platform-browser";
     standalone: false,
 })
 export class ComboboxV2CreateOptionMultiselectExampleComponent {
+    private domSanitizer = inject(DomSanitizer);
+
     public options = Array.from({ length: 3 }).map(
         (_, i) => $localize`Item ${i}`
     );
 
     public comboboxControl = new FormControl<string[] | null>(null);
-
-    constructor(private domSanitizer: DomSanitizer) {}
 
     public createOption(optionName: string): void {
         const sanitizedOption = this.domSanitizer

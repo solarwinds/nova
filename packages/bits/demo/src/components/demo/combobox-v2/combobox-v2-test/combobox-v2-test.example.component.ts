@@ -20,13 +20,7 @@
 
 import { OverlayConfig } from "@angular/cdk/overlay";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import {
-    AfterViewInit,
-    Component,
-    OnInit,
-    TemplateRef,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild, inject } from "@angular/core";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
 import { Observable, of, Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
@@ -57,6 +51,10 @@ const defaultContainerHeight: number = 300;
     standalone: false,
 })
 export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
+    private formBuilder = inject(FormBuilder);
+    private dialogService = inject(DialogService);
+    private toastService = inject(ToastService);
+
     public virtualItems = Array.from({ length: 100000 }).map(
         (_, i) => $localize`Item ${i}`
     );
@@ -135,11 +133,7 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
     private viewport: CdkVirtualScrollViewport;
     @ViewChild("virtual") private virtualCombobox: ComboboxV2Component;
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private dialogService: DialogService,
-        private toastService: ToastService
-    ) {
+    constructor() {
         this.fancyForm = this.formBuilder.group({
             combobox: this.formBuilder.control("", Validators.required),
         });

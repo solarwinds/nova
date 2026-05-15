@@ -18,17 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    ViewEncapsulation,
-} from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation, inject } from "@angular/core";
 import _cloneDeep from "lodash/cloneDeep";
 import { Moment } from "moment/moment";
 import moment from "moment/moment";
@@ -47,6 +37,9 @@ import { TimeframeService } from "./services/timeframe.service";
     standalone: false,
 })
 export class TimeFramePickerComponent implements OnChanges, OnInit {
+    private timeFrameService = inject(TimeframeService);
+    changeDetector = inject(ChangeDetectorRef);
+
     /**  earliest selectable date */
     @Input() minDate: Moment;
     /**  latest selectable date */
@@ -64,12 +57,7 @@ export class TimeFramePickerComponent implements OnChanges, OnInit {
     public isFocused: boolean;
     public modelDefault: any;
 
-    public distanceToEndDate: number; // to keep distance between start and end-date
-
-    constructor(
-        private timeFrameService: TimeframeService,
-        public changeDetector: ChangeDetectorRef
-    ) {}
+    public distanceToEndDate: number;
 
     public ngOnChanges(changes: any): void {
         if (changes["startModel"]) {

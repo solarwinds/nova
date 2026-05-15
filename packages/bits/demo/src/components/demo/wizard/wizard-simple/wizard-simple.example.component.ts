@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, TemplateRef, ViewChild } from "@angular/core";
+import { Component, TemplateRef, ViewChild, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 import {
@@ -37,6 +37,10 @@ import {
     standalone: false,
 })
 export class WizardSimpleExampleComponent {
+    private formBuilder = inject(FormBuilder);
+    private toastService = inject<ToastService>(ToastService);
+    private dialogService = inject<DialogService>(DialogService);
+
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;
     @ViewChild("wizardStep2") wizardStep2Component: WizardStepComponent;
     @ViewChild("wizardStep3") wizardStep3Component: WizardStepComponent;
@@ -63,11 +67,7 @@ export class WizardSimpleExampleComponent {
 
     private activeDialog: NuiDialogRef;
 
-    constructor(
-        private formBuilder: FormBuilder,
-        @Inject(ToastService) private toastService: ToastService,
-        @Inject(DialogService) private dialogService: DialogService
-    ) {
+    constructor() {
         this.myForm = this.formBuilder.group({
             name: ["", Validators.required],
             email: [

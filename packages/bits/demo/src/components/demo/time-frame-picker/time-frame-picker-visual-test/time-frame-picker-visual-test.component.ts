@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import _find from "lodash/find";
 import _isUndefined from "lodash/isUndefined";
 import moment, { Moment } from "moment/moment";
@@ -37,6 +37,8 @@ import {
     standalone: false,
 })
 export class TimeFramePickerVisualTestComponent {
+    timeframeService = inject(TimeframeService);
+
     public presets: ITimeFramePresetDictionary;
     public presetsDatePicker: IQuickPickPresetDictionary;
     public selectedPresetKey?: string = "lastHour";
@@ -47,7 +49,9 @@ export class TimeFramePickerVisualTestComponent {
 
     public showFooter: boolean = false;
 
-    constructor(public timeframeService: TimeframeService) {
+    constructor() {
+        const timeframeService = this.timeframeService;
+
         this.presets = timeframeService.getDefaultPresets();
         this.acceptedTimeframe = this.timeframeService.getTimeframeByPresetId(
             this.selectedPresetKey,

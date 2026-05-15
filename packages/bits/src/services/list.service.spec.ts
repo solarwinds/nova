@@ -18,6 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { TestBed } from "@angular/core/testing";
+
 import { INovaFilteringOutputs } from "./data-source/public-api";
 import { ListService } from "./list.service";
 import { ISelection, SelectionModel } from "./public-api";
@@ -59,7 +61,11 @@ describe("services >", () => {
         });
 
         beforeEach(() => {
-            listService = new ListService(new SelectorService());
+            TestBed.configureTestingModule({
+                providers: [ListService, SelectorService],
+            });
+
+            listService = TestBed.inject(ListService);
             state = {
                 repeat: {
                     itemsSource: FIRST_PAGE,

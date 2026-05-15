@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { TestBed } from "@angular/core/testing";
 import noop from "lodash/noop";
 
 import { LoggerService } from "./log-service";
@@ -34,11 +35,25 @@ describe("services >", () => {
         let subject: UnitConversionService;
 
         beforeEach(() => {
-            logger = new LoggerService();
+            logger = {
+                get error() {
+                    return noop;
+                },
+                get warn() {
+                    return noop;
+                },
+            } as LoggerService;
             spyOnProperty(logger, "error").and.returnValue(noop);
             spyOnProperty(logger, "warn").and.returnValue(noop);
 
-            subject = new UnitConversionService(logger);
+            TestBed.configureTestingModule({
+                providers: [
+                    UnitConversionService,
+                    { provide: LoggerService, useValue: logger },
+                ],
+            });
+
+            subject = TestBed.inject(UnitConversionService);
         });
 
         describe("convert > ", () => {

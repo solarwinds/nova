@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, Input } from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 
 import { IToastService, NuiActiveDialog, ToastService } from "@nova-ui/bits";
 
@@ -28,12 +28,10 @@ import { IToastService, NuiActiveDialog, ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class DialogContentExampleComponent {
-    @Input() name: string;
+    activeDialog = inject(NuiActiveDialog);
+    private toastService = inject<IToastService>(ToastService);
 
-    constructor(
-        @Inject(NuiActiveDialog) public activeDialog: any,
-        @Inject(ToastService) private toastService: IToastService
-    ) {}
+    @Input() name: string;
 
     public onButtonClick(title: string): void {
         title === "Action" ? this.actionDone() : this.actionCanceled();

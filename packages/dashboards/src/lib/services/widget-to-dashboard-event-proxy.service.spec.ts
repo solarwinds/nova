@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { TestBed } from "@angular/core/testing";
 import { Subscription } from "rxjs";
 
 import { EventBus, EventDefinition, IEvent } from "@nova-ui/bits";
@@ -26,7 +27,9 @@ import { EventRegistryService } from "./event-registry.service";
 import { WidgetConfigurationService } from "./widget-configuration.service";
 import { WidgetToDashboardEventProxyService } from "./widget-to-dashboard-event-proxy.service";
 import { IWidget } from "../components/widget/types";
+import { DynamicComponentCreator } from "../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../pizzagna/services/pizzagna.service";
+import { DASHBOARD_EVENT_BUS, PIZZAGNA_EVENT_BUS } from "../types";
 
 describe("WidgetToDashboardEventProxyService", () => {
     let service: WidgetToDashboardEventProxyService;
@@ -44,36 +47,31 @@ describe("WidgetToDashboardEventProxyService", () => {
     beforeEach(() => {
         pizzagnaBus = new EventBus<IEvent>();
         dashboardBus = new EventBus<IEvent>();
-        widgetConfigService = new WidgetConfigurationService();
-        // @ts-ignore: Suppressed for testing purposes
-        pizzagnaService = new PizzagnaService(null, null);
-
-        eventRegistry = new EventRegistryService();
+        TestBed.configureTestingModule({
+            providers: [
+                WidgetToDashboardEventProxyService,
+                EventRegistryService,
+                WidgetConfigurationService,
+                PizzagnaService,
+                DynamicComponentCreator,
+                { provide: PIZZAGNA_EVENT_BUS, useValue: pizzagnaBus },
+                { provide: DASHBOARD_EVENT_BUS, useValue: dashboardBus },
+            ],
+        });
+        widgetConfigService = TestBed.inject(WidgetConfigurationService);
+        pizzagnaService = TestBed.inject(PizzagnaService);
+        eventRegistry = TestBed.inject(EventRegistryService);
         eventRegistry.registerEvent(UPSTREAM_TEST_EVENT_1);
         eventRegistry.registerEvent(UPSTREAM_TEST_EVENT_2);
         eventRegistry.registerEvent(DOWNSTREAM_TEST_EVENT_1);
         eventRegistry.registerEvent(DOWNSTREAM_TEST_EVENT_2);
-
         widgetConfigService.updateWidget({ id: testWidgetId } as IWidget);
-        service = new WidgetToDashboardEventProxyService(
-            pizzagnaBus,
-            dashboardBus,
-            widgetConfigService,
-            eventRegistry,
-            pizzagnaService
-        );
+        service = TestBed.inject(WidgetToDashboardEventProxyService);
     });
 
     describe("updateConfiguration > ", () => {
         it("should not register subscriptions if the dashboard bus is not defined", () => {
-            service = new WidgetToDashboardEventProxyService(
-                pizzagnaBus,
-                // @ts-ignore: Suppressed for testing purposes
-                undefined,
-                widgetConfigService,
-                eventRegistry,
-                pizzagnaService
-            );
+            (<any>service).dashboardBus = undefined;
             service.updateConfiguration({
                 upstreams: [UPSTREAM_TEST_EVENT_1.id],
                 downstreams: [DOWNSTREAM_TEST_EVENT_1.id],

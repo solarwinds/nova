@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { ComponentPortal } from "@angular/cdk/portal";
-import { Injectable, Injector } from "@angular/core";
+import { Injectable, Injector, inject } from "@angular/core";
 
 import { LoggerService } from "@nova-ui/bits";
 
@@ -32,10 +32,8 @@ import { IPortalEnvironment } from "../../types";
     providedIn: "root",
 })
 export class ComponentPortalService {
-    constructor(
-        private componentRegistry: ComponentRegistryService,
-        private logger: LoggerService
-    ) {}
+    private componentRegistry = inject(ComponentRegistryService);
+    private logger = inject(LoggerService);
 
     public createComponentPortal(
         componentType: string | Function,

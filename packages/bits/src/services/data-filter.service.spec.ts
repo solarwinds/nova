@@ -18,6 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { TestBed } from "@angular/core/testing";
+
 import { DataFilterService } from "./data-filter.service";
 import {
     IFilter,
@@ -114,10 +116,12 @@ const expectedFiltersAfterUnregistering: IStubFilters = {
 describe("DataFilterService >", () => {
     let service: DataFilterService;
 
+    const createService = <T extends DataFilterService>(factory: () => T): T =>
+        TestBed.runInInjectionContext(factory);
+
     describe("without parent >", () => {
         it("should correctly register and get filters", () => {
-            // @ts-ignore: Suppressing error for testing purposes
-            service = new DataFilterService(null);
+            service = createService(() => new DataFilterService());
             const filterComponents = {
                 sorter: {
                     componentInstance: new SorterStub(),
@@ -134,8 +138,7 @@ describe("DataFilterService >", () => {
         });
 
         it("should correctly register, unregister and get filters", () => {
-            // @ts-ignore: Suppressing error for testing purposes
-            service = new DataFilterService(null);
+            service = createService(() => new DataFilterService());
             const filterComponents = {
                 sorter: {
                     componentInstance: new SorterStub(),
@@ -158,9 +161,9 @@ describe("DataFilterService >", () => {
 
     describe("with parent >", () => {
         it("should correctly register and get filters with one parent", () => {
-            service = new DataFilterService(
-                // @ts-ignore: Suppressing error for testing purposes
-                new DataFilterServiceSearchClassStub(null)
+            service = createService(() => new DataFilterService());
+            service.parent = createService(
+                () => new DataFilterServiceSearchClassStub()
             );
             const filterComponents = {
                 sorter: {
@@ -175,12 +178,15 @@ describe("DataFilterService >", () => {
         });
 
         it("should correctly register and get filters with multiple parents", () => {
-            service = new DataFilterService(
-                new DataFilterServiceSearchClassStub(
-                    // @ts-ignore: Suppressing error for testing purposes
-                    new DataFilterServicePaginatorClassStub(null)
-                )
+            const grandParent = createService(
+                () => new DataFilterServicePaginatorClassStub()
             );
+            const parent = createService(
+                () => new DataFilterServiceSearchClassStub()
+            );
+            parent.parent = grandParent;
+            service = createService(() => new DataFilterService());
+            service.parent = parent;
             const filterComponents = {
                 sorter: {
                     componentInstance: new SorterStub(),

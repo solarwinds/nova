@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { ListRange } from "@angular/cdk/collections";
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import isEqual from "lodash/isEqual";
 import orderBy from "lodash/orderBy";
 import { BehaviorSubject } from "rxjs";
@@ -72,9 +72,7 @@ export class RandomUserDataSource extends DataSourceService<IRandomUserTableMode
         { id: "cell", label: $localize`Cell`, dataType: "string" },
     ];
 
-    constructor(private logger: LoggerService) {
-        super();
-    }
+    private logger = inject(LoggerService);
 
     public async getFilteredData(
         filters: INovaFilters

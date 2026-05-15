@@ -25,6 +25,7 @@ import {
     Component,
     ElementRef,
     forwardRef,
+    inject,
     Input,
     NgZone,
     OnChanges,
@@ -67,15 +68,13 @@ export class ChartComponent
 {
     @Input() public chart: IChart;
 
+    private elRef = inject(ElementRef);
+    private ngZone = inject(NgZone);
+    private cd = inject(ChangeDetectorRef);
+
     public resizeObserver?: ResizeObserver;
     private resizeHandler: Function;
     private intersectionObserver: IntersectionObserver;
-
-    constructor(
-        private elRef: ElementRef,
-        private ngZone: NgZone,
-        private cd: ChangeDetectorRef
-    ) {}
 
     public ngOnInit(): void {
         this.intersectionObserver = new IntersectionObserver(

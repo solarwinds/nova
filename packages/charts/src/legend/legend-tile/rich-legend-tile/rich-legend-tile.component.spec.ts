@@ -72,9 +72,10 @@ describe("components >", () => {
             });
 
             testLegendComponent = new LegendComponent();
-            testLegendSeriesComponent = new LegendSeriesComponent(
-                testLegendComponent
-            );
+            testLegendSeriesComponent = {
+                hasInputDescription: () => false,
+                hasProjectedDescription: () => false,
+            } as unknown as LegendSeriesComponent;
         });
 
         describe("template conditionals >", () => {

@@ -18,18 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    Output,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 
 import { IChipsItem } from "../public-api";
 
@@ -48,6 +37,9 @@ import { IChipsItem } from "../public-api";
     standalone: false,
 })
 export class ChipComponent implements AfterViewInit {
+    host = inject(ElementRef);
+    private cdRef = inject(ChangeDetectorRef);
+
     /**
      * Value passed to display as a chip.
      */
@@ -72,8 +64,6 @@ export class ChipComponent implements AfterViewInit {
     public isContentProjected: boolean;
 
     @ViewChild("projection") private contentTemplate: TemplateRef<any>;
-
-    constructor(public host: ElementRef, private cdRef: ChangeDetectorRef) {}
 
     public ngAfterViewInit(): void {
         this.isContentProjected = Boolean(

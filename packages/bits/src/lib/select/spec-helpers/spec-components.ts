@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { ToastService } from "../../toast/toast.service";
@@ -45,16 +45,14 @@ import { ISelectChangedEvent } from "../public-api";
     standalone: false,
 })
 export class SelectReactiveFormTestComponent implements OnInit {
+    private formBuilder = inject(FormBuilder);
+    toastService = inject<ToastService>(ToastService);
+
     public myForm: FormGroup;
     public dataset = {
         items: ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"],
         selectedItem: "",
     };
-
-    constructor(
-        private formBuilder: FormBuilder,
-        @Inject(ToastService) public toastService: ToastService
-    ) {}
 
     public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
@@ -96,16 +94,14 @@ export class SelectReactiveFormTestComponent implements OnInit {
     standalone: false,
 })
 export class ComboboxReactiveFormTestComponent implements OnInit {
+    private formBuilder = inject(FormBuilder);
+    toastService = inject<ToastService>(ToastService);
+
     public myForm: FormGroup;
     public dataset = {
         items: ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"],
         selectedItem: "",
     };
-
-    constructor(
-        private formBuilder: FormBuilder,
-        @Inject(ToastService) public toastService: ToastService
-    ) {}
 
     public ngOnInit(): void {
         this.myForm = this.formBuilder.group({

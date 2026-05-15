@@ -18,16 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, inject } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
@@ -60,6 +51,9 @@ import { IServer } from "./types";
 export class TableWithSortComponent
     implements OnInit, OnDestroy, AfterViewInit
 {
+    private dataSource = inject(DataSourceService) as TableWithSortDataSource<IServer>;
+    private changeDetection = inject(ChangeDetectorRef);
+
     public items: IServer[] = [];
     public isBusy: boolean = false;
     // This value is obtained from the server and used to evaluate the total number of pages to display
@@ -82,12 +76,6 @@ export class TableWithSortComponent
     @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
 
     private readonly destroy$ = new Subject<void>();
-
-    constructor(
-        @Inject(DataSourceService)
-        private dataSource: TableWithSortDataSource<IServer>,
-        private changeDetection: ChangeDetectorRef
-    ) {}
 
     public ngOnInit(): void {
         this.dataSource.busy

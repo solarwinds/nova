@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { NgModule } from "@angular/core";
+import { inject, NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import {
@@ -78,7 +78,9 @@ const routes = [
     providers: [ProviderRegistryService],
 })
 export class TimeseriesTestModule {
-    constructor(private widgetTypesService: WidgetTypesService) {
+    private widgetTypesService = inject(WidgetTypesService);
+
+    constructor() {
         this.setupDataSourceProviders();
     }
 

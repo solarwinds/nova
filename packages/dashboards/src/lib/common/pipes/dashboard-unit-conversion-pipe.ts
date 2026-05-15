@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Pipe, PipeTransform } from "@angular/core";
+import { InjectionToken, Pipe, PipeTransform, inject } from "@angular/core";
 
 import {
     UnitConversionService,
@@ -27,6 +27,14 @@ import {
 } from "@nova-ui/bits";
 
 import { DEFAULT_UNIT_CONVERSION_THRESHOLD } from "../constants";
+
+export const UNIT_CONVERSION_SERVICE = new InjectionToken<UnitConversionService>(
+    "UNIT_CONVERSION_SERVICE",
+    {
+        providedIn: "root",
+        factory: () => inject(UnitConversionService),
+    }
+);
 
 /**
  * Pipe for transforming large values to their abbreviated counterparts.
@@ -37,7 +45,7 @@ import { DEFAULT_UNIT_CONVERSION_THRESHOLD } from "../constants";
     standalone: false,
 })
 export class DashboardUnitConversionPipe implements PipeTransform {
-    constructor(private unitConversionService: UnitConversionService) {}
+    private unitConversionService = inject(UNIT_CONVERSION_SERVICE);
 
     /**
      * Transforms a large number value to its abbreviated counterpart

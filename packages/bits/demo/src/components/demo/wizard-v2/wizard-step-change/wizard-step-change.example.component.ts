@@ -19,12 +19,7 @@
 //  THE SOFTWARE.
 
 import { StepperSelectionEvent } from "@angular/cdk/stepper";
-import {
-    AfterViewInit,
-    Component,
-    TemplateRef,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, Component, TemplateRef, ViewChild, inject } from "@angular/core";
 
 import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
 
@@ -39,12 +34,12 @@ interface IWizardStepData {
     standalone: false,
 })
 export class WizardStepChangeExampleComponent implements AfterViewInit {
+    private toastService = inject(ToastService);
+
     public steps: IWizardStepData[] = [];
 
     @ViewChild("normalStep") normalStep: TemplateRef<string>;
     @ViewChild("wizard") wizard: WizardHorizontalComponent;
-
-    constructor(private toastService: ToastService) {}
 
     public ngAfterViewInit(): void {
         this.addStep(this.normalStep, $localize`Normal step`);

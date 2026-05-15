@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from "@angular/core";
 import moment from "moment/moment";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -52,6 +52,7 @@ export class LineChartWith2YAxesExampleComponent implements OnInit, OnDestroy {
     public axesStyles: IAxesStyleChangeEventPayload;
 
     private readonly destroy$ = new Subject<void>();
+    public changeDetector = inject(ChangeDetectorRef);
 
     public get leftAxisStyles(): Record<string, any> {
         return this.axesStyles?.[this.yLeftScale.id] ?? {};
@@ -60,8 +61,6 @@ export class LineChartWith2YAxesExampleComponent implements OnInit, OnDestroy {
     public get rightAxisStyles(): Record<string, any> {
         return this.axesStyles?.[this.yRightScale.id] ?? {};
     }
-
-    constructor(public changeDetector: ChangeDetectorRef) {}
 
     public ngOnInit(): void {
         const xScale = new TimeScale();

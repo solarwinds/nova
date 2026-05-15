@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 
 @Component({
@@ -27,6 +27,8 @@ import { FormBuilder } from "@angular/forms";
     standalone: false,
 })
 export class CheckboxGroupTestComponent {
+    private formBuilder = inject(FormBuilder);
+
     public cabbage = "Cabbage";
     public potato = "Potato";
     public tomato = "Tomato";
@@ -37,7 +39,7 @@ export class CheckboxGroupTestComponent {
     public selectedVegetables = [this.potato, this.tomato, this.disabledOne];
     public testForm;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor() {
         this.testForm = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control({
                 value: this.selectedVegetables,

@@ -23,6 +23,7 @@ import {
     Component,
     ElementRef,
     EventEmitter,
+    inject,
     Input,
     OnChanges,
     OnDestroy,
@@ -56,13 +57,11 @@ export class ChartPopoverComponent implements OnChanges, OnInit, OnDestroy {
 
     @ViewChild(PopoverComponent) popover: PopoverComponent;
 
+    private changeDetector = inject(ChangeDetectorRef);
+    public element = inject(ElementRef);
+
     private readonly destroy$ = new Subject<void>();
     private initPlugin$ = new Subject<void>();
-
-    constructor(
-        private changeDetector: ChangeDetectorRef,
-        public element: ElementRef
-    ) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.plugin && !changes.plugin.isFirstChange()) {

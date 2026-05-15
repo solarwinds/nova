@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component, Inject } from "@angular/core";
+import { ChangeDetectorRef, Component, inject } from "@angular/core";
 
 import { ToastService } from "@nova-ui/bits";
 
@@ -28,6 +28,9 @@ import { ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class PanelHideOutsideControlExampleComponent {
+    private toastService = inject<ToastService>(ToastService);
+    private changeDetectorRef = inject(ChangeDetectorRef);
+
     public isHidden = false;
 
     public hide(): void {
@@ -47,9 +50,4 @@ export class PanelHideOutsideControlExampleComponent {
             title: $localize`Panel State`,
         });
     }
-
-    constructor(
-        @Inject(ToastService) private toastService: ToastService,
-        private changeDetectorRef: ChangeDetectorRef
-    ) {}
 }

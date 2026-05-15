@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { IImagesPresetItem, imagesPresetToken } from "@nova-ui/bits";
 
@@ -27,8 +27,6 @@ import { IImagesPresetItem, imagesPresetToken } from "@nova-ui/bits";
     templateUrl: "./image-list.example.component.html",
     standalone: false,
 })
-export class ImageListExampleComponent {
-    constructor(
-        @Inject(imagesPresetToken) public images: Array<IImagesPresetItem>
-    ) {}
+export class ImageListExampleComponent {    images = inject<Array<IImagesPresetItem>>(imagesPresetToken);
+
 }

@@ -19,6 +19,9 @@
 //  THE SOFTWARE.
 
 import { Injector } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
+
+import { LoggerService } from "@nova-ui/bits";
 
 import { ComponentPortalService } from "./component-portal.service";
 import { ComponentRegistryService } from "./component-registry.service";
@@ -38,10 +41,14 @@ describe("ComponentPortalService > ", () => {
 
     beforeEach(() => {
         componentRegistry = new ComponentRegistryService(mockLoggerService);
-        service = new ComponentPortalService(
-            componentRegistry,
-            mockLoggerService
-        );
+        TestBed.configureTestingModule({
+            providers: [
+                ComponentPortalService,
+                { provide: ComponentRegistryService, useValue: componentRegistry },
+                { provide: LoggerService, useValue: mockLoggerService },
+            ],
+        });
+        service = TestBed.inject(ComponentPortalService);
     });
 
     describe("createComponentPortal > ", () => {

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable, OnDestroy } from "@angular/core";
+import { Injectable, OnDestroy, inject } from "@angular/core";
 import get from "lodash/get";
 import { Observable, Subscription } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
@@ -39,7 +39,7 @@ export class PizzagnaBroadcasterService implements IConfigurable, OnDestroy {
     private componentId: string;
     private parentComponentId: string;
 
-    constructor(private pizzagnaService: PizzagnaService) {}
+    private pizzagnaService = inject(PizzagnaService);
 
     public setComponent(component: any, componentId: string): void {
         this.component = component;

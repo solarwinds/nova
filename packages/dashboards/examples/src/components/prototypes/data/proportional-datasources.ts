@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Injectable, OnDestroy } from "@angular/core";
+import { inject, Injectable, OnDestroy } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 import { finalize } from "rxjs/operators";
 
@@ -47,14 +47,11 @@ export class AcmeProportionalDataSource
     public static mockError = false;
 
     public busy = new Subject<boolean>();
+    private http = inject(HttpClient);
 
     public properties: IProperties = {
         isEuropeOnly: false,
     };
-
-    constructor(private http: HttpClient) {
-        super();
-    }
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);

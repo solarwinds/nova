@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Inject, Injectable } from "@angular/core";
+import { Inject, Injectable, inject } from "@angular/core";
 import isArray from "lodash/isArray";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { distinctUntilChanged, filter, takeUntil, tap } from "rxjs/operators";
@@ -40,16 +40,15 @@ export class KpiScaleSyncBroker implements IConfigurable {
     protected properties: IProperties;
     protected componentId: string;
 
+    private eventBus = inject<EventBus<IEvent>>(PIZZAGNA_EVENT_BUS);
+    private pizzagnaService = inject(PizzagnaService);
     private valuesObject: Record<string, Array<Partial<IBrokerValue>>>;
     private brokers: IBroker[] = [];
     private builder = new KpiScaleSyncBrokerBuilder(this.brokers);
     private destroySubscriptions$ = new Subject<void>();
     private tileNodes: string[];
 
-    constructor(
-        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
-        private pizzagnaService: PizzagnaService
-    ) {
+    constructor() {
         this.valuesObject = this.builder.valuesObject;
     }
 

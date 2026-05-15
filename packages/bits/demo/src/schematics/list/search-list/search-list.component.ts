@@ -18,16 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, inject } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
@@ -59,6 +50,9 @@ import { IServer, IServerFilters } from "./types";
     standalone: false,
 })
 export class SearchListComponent implements OnInit, AfterViewInit, OnDestroy {
+    private dataSource = inject(DataSourceService) as SearchListDataSource<IServer>;
+    private changeDetection = inject(ChangeDetectorRef);
+
     public listItems$ = new BehaviorSubject<IServer[]>([]);
 
     public filteringState: INovaFilteringOutputs = {};
@@ -80,12 +74,6 @@ export class SearchListComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(SearchComponent) search: SearchComponent;
 
     private readonly destroy$ = new Subject<void>();
-
-    constructor(
-        @Inject(DataSourceService)
-        private dataSource: SearchListDataSource<IServer>,
-        private changeDetection: ChangeDetectorRef
-    ) {}
 
     public ngOnInit(): void {
         this.dataSource.busy

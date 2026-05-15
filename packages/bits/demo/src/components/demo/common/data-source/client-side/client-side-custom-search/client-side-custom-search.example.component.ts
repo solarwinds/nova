@@ -18,14 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    Injectable,
-    OnDestroy,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, Injectable, OnDestroy, ViewChild, inject } from "@angular/core";
 import { Subscription } from "rxjs";
 
 import {
@@ -80,6 +73,9 @@ export class ClientSideCustomSearchService extends SearchService {
 export class DataSourceClientSideCustomSearchExampleComponent
     implements AfterViewInit, OnDestroy
 {
+    dataSourceService = inject<ClientSideDataSource<ExampleItem>>(ClientSideDataSource);
+    changeDetection = inject(ChangeDetectorRef);
+
     public searchTerm = "";
     public page = 1;
 
@@ -101,10 +97,9 @@ export class DataSourceClientSideCustomSearchExampleComponent
 
     private outputsSubscription: Subscription;
 
-    constructor(
-        public dataSourceService: ClientSideDataSource<ExampleItem>,
-        public changeDetection: ChangeDetectorRef
-    ) {
+    constructor() {
+        const dataSourceService = this.dataSourceService;
+
         dataSourceService.setData(RANDOM_ARRAY);
 
         this.filters = ["regular", "dark", "light"];

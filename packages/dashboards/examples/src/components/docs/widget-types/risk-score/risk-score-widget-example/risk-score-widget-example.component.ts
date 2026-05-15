@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
+import { Component, inject, Injectable, OnDestroy, OnInit } from "@angular/core";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { BehaviorSubject } from "rxjs";
 import { finalize } from "rxjs/operators";
@@ -56,10 +56,7 @@ export class AverageRatingRiskScoreDataSource
 
     // Use this subject to communicate the data source's busy state
     public busy = new BehaviorSubject<boolean>(false);
-
-    constructor(private http: HttpClient) {
-        super();
-    }
+    private http = inject(HttpClient);
 
     // In this example, getFilteredData is invoked every 10 minutes (Take a look at the refresher
     // provider definition in the widget configuration below to see how the interval is set)
@@ -116,13 +113,8 @@ export class RiskScoreWidgetExampleComponent implements OnInit {
     // Boolean passed as an input to the dashboard. When true, widgets can be moved, resized, removed, or edited
     public editMode: boolean = false;
 
-    constructor(
-        // WidgetTypesService provides the widget's necessary structure information
-        private widgetTypesService: WidgetTypesService,
-
-        // In general, the ProviderRegistryService is used for making entities available for injection into dynamically loaded components.
-        private providerRegistry: ProviderRegistryService
-    ) {}
+    private widgetTypesService = inject(WidgetTypesService);
+    private providerRegistry = inject(ProviderRegistryService);
 
     public ngOnInit(): void {
         // Grabbing the widget's default template which will be needed as a parameter for setNode

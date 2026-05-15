@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, inject } from "@angular/core";
 
 import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
 
@@ -28,11 +28,11 @@ import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
     standalone: false,
 })
 export class WizardResponsiveHeaderExampleComponent {
+    private toast = inject(ToastService);
+
     public steps: Array<any> = Array.from({ length: 20 });
 
     @ViewChild("nuiWizard") public wizard: WizardHorizontalComponent;
-
-    constructor(private toast: ToastService) {}
 
     public reset(): void {
         this.wizard.reset();

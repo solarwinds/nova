@@ -18,19 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    ContentChildren,
-    EventEmitter,
-    forwardRef,
-    Input,
-    OnDestroy,
-    Output,
-    QueryList,
-    Renderer2,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, ContentChildren, EventEmitter, forwardRef, Input, OnDestroy, Output, QueryList, Renderer2, inject } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _remove from "lodash/remove";
 import { Subscription } from "rxjs";
@@ -65,6 +53,8 @@ import { NuiFormFieldControl } from "../form-field/public-api";
 export class CheckboxGroupComponent
     implements AfterViewInit, OnDestroy, ControlValueAccessor
 {
+    private renderer = inject(Renderer2);
+
     /**
      * Sets "name" attribute for inner input element of nui-checkbox
      */
@@ -98,8 +88,6 @@ export class CheckboxGroupComponent
 
     private subscriptionsArray = new Array<Subscription>();
     private disabled: boolean = false;
-
-    constructor(private renderer: Renderer2) {}
 
     /**
      * Subscribe to nui-checkbox-group children values change

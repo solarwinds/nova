@@ -18,25 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    Component,
-    ContentChild,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    Input,
-    NgZone,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    SimpleChanges,
-    ViewChild,
-    ViewChildren,
-    ViewEncapsulation,
-} from "@angular/core";
+import { AfterViewInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone, OnChanges, OnDestroy, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren, ViewEncapsulation, inject } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import _size from "lodash/size";
 import { Subject } from "rxjs";
@@ -83,6 +65,9 @@ import {
 export class ChipsComponent
     implements OnInit, OnDestroy, OnChanges, AfterViewInit
 {
+    private zone = inject(NgZone);
+    private chipsOverflowService = inject(ChipsOverflowService);
+
     /**
      * Whether overflow mode turned on
      */
@@ -156,11 +141,6 @@ export class ChipsComponent
     get role(): string | null {
         return this.getItemsCount() ? "list" : null;
     }
-
-    constructor(
-        private zone: NgZone,
-        private chipsOverflowService: ChipsOverflowService
-    ) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.itemsSource) {

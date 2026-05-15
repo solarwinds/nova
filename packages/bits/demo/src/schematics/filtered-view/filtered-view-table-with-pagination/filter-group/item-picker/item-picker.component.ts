@@ -18,17 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    OnInit,
-    Output,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, inject } from "@angular/core";
 
 import {
     ClientSideDataSource,
@@ -58,6 +48,9 @@ export interface IItemPickerOption {
     standalone: false,
 })
 export class ItemPickerComponent implements OnInit, AfterViewInit {
+    dataSource = inject<DataSourceService<IFilterGroupOption>>(DataSourceService);
+    changeDetection = inject(ChangeDetectorRef);
+
     @Input() itemPickerOptions: IItemPickerOption[];
     @Input() selectedValues: string[] = [];
 
@@ -75,12 +68,6 @@ export class ItemPickerComponent implements OnInit, AfterViewInit {
         include: [],
         exclude: [],
     };
-
-    constructor(
-        @Inject(DataSourceService)
-        public dataSource: DataSourceService<IFilterGroupOption>,
-        public changeDetection: ChangeDetectorRef
-    ) {}
 
     public ngOnInit(): void {
         (this.dataSource as ClientSideDataSource<IFilterGroupOption>).setData(

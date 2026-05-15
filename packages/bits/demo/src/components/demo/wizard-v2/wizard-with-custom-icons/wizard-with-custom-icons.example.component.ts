@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, inject } from "@angular/core";
 
 import {
     IWizardConfig,
@@ -47,9 +47,9 @@ import {
     standalone: false,
 })
 export class WizardWithCustomIconsExampleComponent {
-    @ViewChild("wizard") wizard: WizardHorizontalComponent;
+    private toastService = inject(ToastService);
 
-    constructor(private toastService: ToastService) {}
+    @ViewChild("wizard") wizard: WizardHorizontalComponent;
 
     public secondStepIconConfig: Partial<WizardStepStateConfig> = {
         initial: {

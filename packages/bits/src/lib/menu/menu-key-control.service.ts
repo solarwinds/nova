@@ -27,6 +27,7 @@ import {
     QueryList,
     Renderer2,
     Inject,
+    inject,
 } from "@angular/core";
 import isNull from "lodash/isNull";
 import { Subject, Subscription } from "rxjs";
@@ -42,6 +43,9 @@ import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 
 @Injectable()
 export class MenuKeyControlService implements OnDestroy {
+    private live = inject(LiveAnnouncer);
+    private renderer = inject(Renderer2);
+
     public popup: PopupComponent;
     public menuGroups: QueryList<MenuGroupComponent>;
     public menuItems: QueryList<MenuItemBaseComponent>;
@@ -64,8 +68,6 @@ export class MenuKeyControlService implements OnDestroy {
     }
 
     constructor(
-        private live: LiveAnnouncer,
-        private renderer: Renderer2,
         @Inject(DOCUMENT) private document: Document
     ) {}
 

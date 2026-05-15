@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectionStrategy, Component, Inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 
 import { ToastService } from "@nova-ui/bits";
 
@@ -30,6 +30,8 @@ import { ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class SelectV2CustomContentExampleComponent {
+    private toastService = inject<ToastService>(ToastService);
+
     public items = [
         {
             headerName: $localize`Saved Data Filters`,
@@ -47,8 +49,6 @@ export class SelectV2CustomContentExampleComponent {
             ],
         },
     ];
-
-    constructor(@Inject(ToastService) private toastService: ToastService) {}
 
     public actionSimulation(event: Event): void {
         this.toastService.info({

@@ -23,6 +23,7 @@ import {
     ChangeDetectorRef,
     Component,
     Input,
+    inject,
 } from "@angular/core";
 
 import { ILinkDefinition } from "../../../../../components/types";
@@ -42,5 +43,5 @@ export class InfoMessageConfigurationComponent implements IHasChangeDetector {
     @Input() link: ILinkDefinition;
     @Input() allowDismiss: boolean;
 
-    constructor(public changeDetector: ChangeDetectorRef) {}
+    public changeDetector = inject(ChangeDetectorRef);
 }

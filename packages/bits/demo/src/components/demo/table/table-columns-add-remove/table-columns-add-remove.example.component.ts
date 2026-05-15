@@ -18,13 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectionStrategy,
-    Component,
-    Inject,
-    TemplateRef,
-    ViewChild,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 
 import { DialogService, TableComponent } from "@nova-ui/bits";
@@ -48,6 +42,9 @@ interface IExampleTableModel {
     standalone: false,
 })
 export class TableColumnsAddRemoveExampleComponent {
+    private dialogService = inject<DialogService>(DialogService);
+    private formBuilder = inject(FormBuilder);
+
     public availableColumns = [
         "issue",
         "project",
@@ -73,10 +70,7 @@ export class TableColumnsAddRemoveExampleComponent {
     public dataSource = getData();
     @ViewChild(TableComponent) table: TableComponent<IExampleTableModel>;
 
-    constructor(
-        @Inject(DialogService) private dialogService: DialogService,
-        private formBuilder: FormBuilder
-    ) {
+    constructor() {
         this.myForm = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control(this.displayedColumnsCopy, [
                 Validators.required,

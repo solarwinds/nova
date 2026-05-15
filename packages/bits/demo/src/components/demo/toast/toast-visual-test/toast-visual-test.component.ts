@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 
 import {
     IToastConfig,
@@ -33,11 +33,11 @@ import {
     standalone: false,
 })
 export class ToastVisualTestComponent implements OnInit {
+    private toastService = inject<IToastService>(ToastService);
+
     private errorMessage: string = `Something went wrong + in addition there is an extremely
     long line that verifies that the toast expands as more text comes into it. More or less text -
     Toast messages must look good either way!`;
-
-    constructor(@Inject(ToastService) private toastService: IToastService) {}
 
     public ngOnInit(): void {
         this.toastService.setConfig({}, "id");

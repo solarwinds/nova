@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { CdkFooterCellDef } from "@angular/cdk/table";
-import { Directive, TemplateRef } from "@angular/core";
+import { Directive, TemplateRef, inject } from "@angular/core";
 
 /**
  * @ignore
@@ -33,7 +33,13 @@ import { Directive, TemplateRef } from "@angular/core";
     standalone: false,
 })
 export class TableFooterCellDefDirective extends CdkFooterCellDef {
-    constructor(public template: TemplateRef<any>) {
+    template: TemplateRef<any>;
+
+    constructor() {
+        const template = inject<TemplateRef<any>>(TemplateRef);
+
         super(template);
+    
+        this.template = template;
     }
 }

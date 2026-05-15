@@ -21,16 +21,7 @@
 /// <reference path="./dialog-service.spec.d.ts" />
 
 import { CommonModule } from "@angular/common";
-import {
-    Component,
-    DebugElement,
-    getDebugNode,
-    Injectable,
-    Injector,
-    NgModule,
-    OnDestroy,
-    ViewChild,
-} from "@angular/core";
+import { Component, DebugElement, getDebugNode, Injectable, Injector, NgModule, OnDestroy, ViewChild, inject } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { Router } from "@angular/router";
 import _noop from "lodash/noop";
@@ -57,7 +48,8 @@ class CustomSpyService {
     standalone: false,
 })
 export class CustomInjectorComponent implements OnDestroy {
-    constructor(private _spyService: CustomSpyService) {}
+    private _spyService = inject(CustomSpyService);
+
 
     public ngOnDestroy(): void {
         this._spyService.called = true;
@@ -70,7 +62,8 @@ export class CustomInjectorComponent implements OnDestroy {
     standalone: false,
 })
 export class DestroyableComponent implements OnDestroy {
-    constructor(private _spyService: SpyService) {}
+    private _spyService = inject(SpyService);
+
 
     public ngOnDestroy(): void {
         this._spyService.called = true;
@@ -84,7 +77,8 @@ export class DestroyableComponent implements OnDestroy {
     standalone: false,
 })
 export class WithActiveDialogComponent {
-    constructor(public activeDialog: NuiActiveDialog) {}
+    activeDialog = inject(NuiActiveDialog);
+
 
     close(): void {
         this.activeDialog.close("from inside");
@@ -120,6 +114,8 @@ export class WithActiveDialogComponent {
     standalone: false,
 })
 class TestComponent {
+    dialogService = inject(DialogService);
+
     name = "World";
     openedDialog: NuiDialogRef;
     show = true;
@@ -130,8 +126,6 @@ class TestComponent {
     @ViewChild("contentWithDismiss", { static: true })
     tplContentWithDismiss: any;
     @ViewChild("contentWithIf", { static: true }) tplContentWithIf: any;
-
-    constructor(public dialogService: DialogService) {}
 
     open(content: string, options?: object): NuiDialogRef {
         this.openedDialog = this.dialogService.open(content, options);

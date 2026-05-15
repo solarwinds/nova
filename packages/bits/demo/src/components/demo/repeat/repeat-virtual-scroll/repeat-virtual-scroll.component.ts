@@ -18,16 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, inject } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
 import { filter, switchMap, takeUntil, tap } from "rxjs/operators";
@@ -62,6 +53,10 @@ import { IServer } from "./types";
 export class RepeatVirtualScrollComponent
     implements OnInit, AfterViewInit, OnDestroy
 {
+    private dataSource = inject(DataSourceService) as RepeatVirtualScrollDataSource<IServer>;
+    private changeDetection = inject(ChangeDetectorRef);
+    private viewportManager = inject(VirtualViewportManager);
+
     public listItems$ = new BehaviorSubject<IServer[]>([]);
 
     public filteringState: INovaFilteringOutputs = {};
@@ -76,13 +71,6 @@ export class RepeatVirtualScrollComponent
     @ViewChild(RepeatComponent) repeat: RepeatComponent;
 
     private readonly destroy$ = new Subject<void>();
-
-    constructor(
-        @Inject(DataSourceService)
-        private dataSource: RepeatVirtualScrollDataSource<IServer>,
-        private changeDetection: ChangeDetectorRef,
-        private viewportManager: VirtualViewportManager
-    ) {}
 
     public ngOnInit(): void {
         this.dataSource.busy

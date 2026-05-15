@@ -24,6 +24,7 @@ import {
     Input,
     OnChanges,
     SimpleChanges,
+    inject,
 } from "@angular/core";
 
 import { IHasChangeDetector } from "../../../../types";
@@ -54,12 +55,12 @@ import { ILinkFormatterData } from "../types";
 export class LinkFormatterComponent implements OnChanges, IHasChangeDetector {
     static lateLoadKey = "LinkFormatterComponent";
 
+    public changeDetector = inject(ChangeDetectorRef);
+
     @Input() data: ILinkFormatterData;
     @Input() targetSelf?: boolean;
 
     public isValid = false;
-
-    constructor(public changeDetector: ChangeDetectorRef) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         this.isValid = Boolean(this.data && this.data.value && this.data.link);

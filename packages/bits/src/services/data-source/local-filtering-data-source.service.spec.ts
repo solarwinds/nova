@@ -67,8 +67,8 @@ describe("LocalFilteringDataSource >", () => {
         loggerService = TestBed.inject(LoggerService);
         spyOnProperty(loggerService, "warn").and.returnValue(noop);
         datePipe = TestBed.inject(DatePipe);
-        service = new LocalFilteringDataSource<INovaFilteringOutputs>(
-            new SearchService(loggerService, datePipe)
+        service = TestBed.runInInjectionContext(
+            () => new LocalFilteringDataSource<INovaFilteringOutputs>()
         );
         service.setData(RANDOM_ARRAY);
         expectedFilters = new ExpectedFilters().expectedFilters;

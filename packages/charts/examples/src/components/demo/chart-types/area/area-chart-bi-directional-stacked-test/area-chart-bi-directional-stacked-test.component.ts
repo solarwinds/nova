@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, inject, Input, OnInit } from "@angular/core";
 import moment from "moment/moment";
 
 import {
@@ -45,6 +45,8 @@ import {
     standalone: false,
 })
 export class AreaChartBiDirectionalStackedTestComponent implements OnInit {
+    public changeDetector = inject(ChangeDetectorRef);
+
     @Input()
     public inverted = false; // cave mode!
 
@@ -53,8 +55,6 @@ export class AreaChartBiDirectionalStackedTestComponent implements OnInit {
 
     public chartBottom: Chart;
     public chartAssistBottom: ChartAssist;
-
-    constructor(public changeDetector: ChangeDetectorRef) {}
 
     public ngOnInit(): void {
         // areaGrid returns an XYGrid configured for displaying an area chart's axes and other grid elements.

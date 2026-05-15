@@ -18,15 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import {
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Inject,
-    Input,
-    OnInit,
-    Output,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject } from "@angular/core";
 
 import {
     DataSourceService,
@@ -55,6 +47,8 @@ export interface IItemPickerOption {
     standalone: false,
 })
 export class ItemPickerCompositeComponent implements OnInit {
+    dataSource = inject<DataSourceService<IFilterGroupOption>>(DataSourceService);
+
     @Input() itemPickerOptions: IFilterGroupOption[];
     @Input() selectedValues: string[] = [];
 
@@ -63,11 +57,6 @@ export class ItemPickerCompositeComponent implements OnInit {
 
     public selectionMode = RepeatSelectionMode.multi;
     public selectedOptions: IFilterGroupOption[] = [];
-
-    constructor(
-        @Inject(DataSourceService)
-        public dataSource: DataSourceService<IFilterGroupOption>
-    ) {}
 
     public ngOnInit(): void {
         (

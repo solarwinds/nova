@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import moment, { Moment } from "moment/moment";
 
@@ -30,6 +30,8 @@ import { IDatePickerDisabledDate } from "@nova-ui/bits";
     standalone: false,
 })
 export class DatePickerTestComponent {
+    private formBuilder = inject(FormBuilder);
+
     public dt: Moment;
     public dtPreserve: Moment;
     public minDate: Moment;
@@ -47,7 +49,7 @@ export class DatePickerTestComponent {
     public dateDisabled: IDatePickerDisabledDate[];
     public todayDateDisabled: IDatePickerDisabledDate[];
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor() {
         this.reactiveDatepickerForm = this.formBuilder.group({
             datePicker: this.formBuilder.control(moment()),
         });

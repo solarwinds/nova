@@ -34,6 +34,7 @@ import {
     SimpleChange,
     SimpleChanges,
     StaticProvider,
+    inject,
 } from "@angular/core";
 import isArray from "lodash/isArray";
 import values from "lodash/values";
@@ -64,20 +65,17 @@ export class ComponentPortalDirective
     @Output() public output = new EventEmitter<IEvent>();
 
     public portal: Portal<any>;
+    private injector = inject(Injector);
+    private logger = inject(LoggerService);
+    private portalService = inject(ComponentPortalService);
+    private renderer = inject(Renderer2);
+    private providerRegistry = inject(ProviderRegistryService);
     private component: any;
     private propertiesChanges = new ReplaySubject<SimpleChange>();
     private providerInstances: Record<string, any> = {};
     private readonly destroy$ = new Subject<void>();
     private changesSubscription?: Subscription;
     private listenerUnsubscriber?: () => void;
-
-    constructor(
-        private injector: Injector,
-        private logger: LoggerService,
-        private portalService: ComponentPortalService,
-        private renderer: Renderer2,
-        private providerRegistry: ProviderRegistryService
-    ) {}
 
     public ngOnInit(): void {
         this.logger.debug("Portal created:", this.componentId);

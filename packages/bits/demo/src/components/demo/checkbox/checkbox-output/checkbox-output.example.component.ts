@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { CheckboxChangeEvent, ToastService } from "@nova-ui/bits";
 
@@ -28,7 +28,8 @@ import { CheckboxChangeEvent, ToastService } from "@nova-ui/bits";
     standalone: false,
 })
 export class CheckboxOutputExampleComponent {
-    constructor(private toastService: ToastService) {}
+    private toastService = inject(ToastService);
+
 
     public onValueChanged($event: CheckboxChangeEvent): void {
         this.toastService.success({

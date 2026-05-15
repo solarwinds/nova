@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { DialogService } from "@nova-ui/bits";
 
@@ -30,7 +30,8 @@ import { DialogContentExampleComponent } from "./dialog-content.example.componen
     standalone: false,
 })
 export class ComponentAsContentExampleComponent {
-    constructor(@Inject(DialogService) private dialogService: DialogService) {}
+    private dialogService = inject<DialogService>(DialogService);
+
 
     public openWithComponent(): void {
         const dialogRef = this.dialogService.open(

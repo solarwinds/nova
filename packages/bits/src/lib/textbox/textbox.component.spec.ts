@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { CommonModule } from "@angular/common";
-import { Component, NO_ERRORS_SCHEMA, ViewChild } from "@angular/core";
+import { Component, NO_ERRORS_SCHEMA, ViewChild, inject } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
@@ -38,13 +38,13 @@ import { SpinnerComponent } from "../spinner/spinner.component";
     standalone: false,
 })
 class TextboxFormComponent {
+    private fb = inject(FormBuilder);
+
     @ViewChild(TextboxComponent) input: TextboxComponent;
 
     public form = this.fb.group({
         input: this.fb.control(""),
     });
-
-    constructor(private fb: FormBuilder) {}
 }
 
 describe("components >", () => {

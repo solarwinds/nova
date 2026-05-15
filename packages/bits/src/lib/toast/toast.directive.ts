@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Directive, ElementRef, Input, OnDestroy, OnInit } from "@angular/core";
+import { Directive, ElementRef, Input, OnDestroy, OnInit, inject } from "@angular/core";
 import find from "lodash/find";
 import isNil from "lodash/isNil";
 import { Subscription } from "rxjs";
@@ -42,6 +42,9 @@ import { NotificationService } from "../../services/notification-service";
  * Is used for highlighting elements
  */
 export class ToastDirective implements OnInit, OnDestroy {
+    private elRef = inject(ElementRef);
+    private notificationService = inject(NotificationService);
+
     /**
      * sets model for directive to check whether corresponding element should be highlighted or not
      */
@@ -56,11 +59,6 @@ export class ToastDirective implements OnInit, OnDestroy {
     }
     private isHighlighted: boolean;
     private status: string;
-
-    constructor(
-        private elRef: ElementRef,
-        private notificationService: NotificationService
-    ) {}
 
     public ngOnInit(): void {
         this.notificationSubscription = this.notificationService.subscribe(

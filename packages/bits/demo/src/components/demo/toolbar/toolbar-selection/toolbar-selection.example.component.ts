@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { LoggerService } from "@nova-ui/bits";
 
@@ -28,6 +28,8 @@ import { LoggerService } from "@nova-ui/bits";
     standalone: false,
 })
 export class ToolbarSelectionExampleComponent {
+    private logger = inject<LoggerService>(LoggerService);
+
     public selectionEnabled = true;
     public select = {
         current: 1,
@@ -46,8 +48,6 @@ export class ToolbarSelectionExampleComponent {
     private timerHandler: number;
 
     public noEmptyMessage = false;
-
-    public constructor(@Inject(LoggerService) private logger: LoggerService) {}
 
     public onCancel(value: string): void {
         this.logger.warn("Example onCancel fired. Value passed: " + value);

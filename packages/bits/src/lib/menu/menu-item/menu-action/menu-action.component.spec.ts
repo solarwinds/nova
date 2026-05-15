@@ -18,6 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ChangeDetectorRef } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
+
 import { MenuActionComponent } from "./menu-action.component";
 import { MockedChangeDetectorRef } from "../../../../spec-helpers/angular";
 import { MenuGroupComponent } from "../menu-group/menu-group.component";
@@ -33,9 +36,21 @@ describe("components >", () => {
                     "preventDefault",
                     "stopPropagation",
                 ]);
-                menuAction = new MenuActionComponent(
-                    new MenuGroupComponent(),
-                    new MockedChangeDetectorRef()
+                TestBed.configureTestingModule({
+                    providers: [
+                        {
+                            provide: MenuGroupComponent,
+                            useValue: new MenuGroupComponent(),
+                        },
+                        {
+                            provide: ChangeDetectorRef,
+                            useValue: new MockedChangeDetectorRef(),
+                        },
+                    ],
+                });
+
+                menuAction = TestBed.runInInjectionContext(
+                    () => new MenuActionComponent()
                 );
             });
 

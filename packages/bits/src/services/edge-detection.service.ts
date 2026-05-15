@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { DOCUMENT } from "@angular/common";
-import { Inject, Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import _capitalize from "lodash/capitalize";
 import _get from "lodash/get";
 import _isNil from "lodash/isNil";
@@ -51,14 +51,14 @@ import {
 
 @Injectable({ providedIn: "root" })
 export class EdgeDetectionService {
+    private domUtilService = inject<DomUtilService>(DomUtilService);
+    private document = inject<Document>(DOCUMENT);
+    private logger = inject(LoggerService);
+
     public edgeDefinerSelector = ".nui-edge-definer";
     public initialEdgeDetectionResult: IEdgeDetectionResult;
 
-    constructor(
-        @Inject(DomUtilService) private domUtilService: DomUtilService,
-        @Inject(DOCUMENT) private document: Document,
-        private logger: LoggerService
-    ) {
+    constructor() {
         this.initialEdgeDetectionResult = {
             placed: {
                 top: false,

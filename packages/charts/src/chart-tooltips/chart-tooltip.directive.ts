@@ -34,6 +34,7 @@ import { ComponentPortal } from "@angular/cdk/portal";
 import {
     Directive,
     ElementRef,
+    inject,
     Input,
     OnDestroy,
     OnInit,
@@ -61,12 +62,10 @@ export class ChartTooltipDirective implements OnInit, OnDestroy {
     private closeSubscription: Subscription;
     private positionStrategy: FlexibleConnectedPositionStrategy;
 
-    constructor(
-        private overlay: Overlay,
-        private overlayPositionBuilder: OverlayPositionBuilder,
-        private scrollStrategyOptions: ScrollStrategyOptions,
-        public elementRef: ElementRef<HTMLElement>
-    ) {}
+    private overlay = inject(Overlay);
+    private overlayPositionBuilder = inject(OverlayPositionBuilder);
+    private scrollStrategyOptions = inject(ScrollStrategyOptions);
+    public elementRef = inject(ElementRef<HTMLElement>);
 
     public ngOnInit(): void {
         this.positionStrategy = this.overlayPositionBuilder
