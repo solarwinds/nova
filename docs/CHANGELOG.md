@@ -1,5 +1,11 @@
 # Changelog
 
+## [20.0.5] 📅 2026-05-07
+
+### Added
+
+- `@nova-ui/dashboards` | Fixed display transforms on the chart
+
 ## [20.0.4] 📅 2026-03-24
 
 ### Added
