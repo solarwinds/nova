@@ -21,11 +21,11 @@
 import {
     Component,
     EventEmitter,
-    Inject,
     Input,
     OnChanges,
     Output,
     SimpleChanges,
+    inject,
 } from "@angular/core";
 
 import { EventBus, IEvent, immutableSet, LoggerService } from "@nova-ui/bits";
@@ -81,13 +81,12 @@ export class PizzagnaComponent implements OnChanges {
     @Output() output = new EventEmitter<IEvent>();
 
     public pizza: Record<string, IComponentConfiguration>;
+    public pizzagnaService = inject(PizzagnaService);
+    public logger = inject(LoggerService);
+    public eventBus = inject<EventBus<IEvent>>(PIZZAGNA_EVENT_BUS);
 
-    constructor(
-        public pizzagnaService: PizzagnaService,
-        public logger: LoggerService,
-        @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>
-    ) {
-        eventBus
+    constructor() {
+        this.eventBus
             .getStream(SET_PROPERTY_VALUE)
             .subscribe((event: IEvent<ISetPropertyPayload>) => {
                 // TODO: Ensure that payload is defined

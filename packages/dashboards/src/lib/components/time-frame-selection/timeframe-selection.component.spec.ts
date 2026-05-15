@@ -75,11 +75,7 @@ describe("TimeframeSelectionComponent", () => {
     let fixture: ComponentFixture<TimeframeSelectionComponent>;
     const tfSerializationService = new TimeframeSerializationService();
     const eventBus = new EventBus<IEvent>();
-    const dynamicComponentCreator = new DynamicComponentCreator();
-    const pizzagnaService = new PizzagnaService(
-        eventBus,
-        dynamicComponentCreator
-    );
+    let pizzagnaService: PizzagnaService;
     const dataSource = new MockDataSource();
 
     beforeEach(waitForAsync(() => {
@@ -87,6 +83,7 @@ describe("TimeframeSelectionComponent", () => {
             imports: [NuiDashboardsModule],
             providers: [
                 ProviderRegistryService,
+                DynamicComponentCreator,
                 {
                     provide: PIZZAGNA_EVENT_BUS,
                     useValue: eventBus,
@@ -95,10 +92,7 @@ describe("TimeframeSelectionComponent", () => {
                     provide: DATA_SOURCE,
                     useValue: dataSource,
                 },
-                {
-                    provide: PizzagnaService,
-                    useValue: pizzagnaService,
-                },
+                PizzagnaService,
             ],
         }).compileComponents();
     }));

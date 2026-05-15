@@ -67,11 +67,6 @@ describe("RiskScoreTileComponent", () => {
     let component: RiskScoreTileComponent;
     let fixture: ComponentFixture<RiskScoreTileComponent>;
     const eventBus = new EventBus<IEvent>();
-    const dynamicComponentCreator = new DynamicComponentCreator();
-    const pizzagnaService = new PizzagnaService(
-        eventBus,
-        dynamicComponentCreator
-    );
     let dataSource: IDataSource;
 
     beforeEach(waitForAsync(() => {
@@ -81,6 +76,7 @@ describe("RiskScoreTileComponent", () => {
             imports: [NuiDashboardsModule],
             providers: [
                 ProviderRegistryService,
+                DynamicComponentCreator,
                 {
                     provide: PIZZAGNA_EVENT_BUS,
                     useValue: eventBus,
@@ -89,10 +85,7 @@ describe("RiskScoreTileComponent", () => {
                     provide: DATA_SOURCE,
                     useValue: dataSource,
                 },
-                {
-                    provide: PizzagnaService,
-                    useValue: pizzagnaService,
-                },
+                PizzagnaService,
             ],
         }).compileComponents();
     }));

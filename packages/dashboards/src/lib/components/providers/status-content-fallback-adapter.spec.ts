@@ -18,6 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { TestBed } from "@angular/core/testing";
+
 import { EventBus, IEvent } from "@nova-ui/bits";
 
 import { StatusContentFallbackAdapter } from "./status-content-fallback-adapter";
@@ -26,22 +28,24 @@ import { DATA_SOURCE_OUTPUT } from "../../configurator/types";
 import { IPizzagnaProperty } from "../../pizzagna/functions/get-pizzagna-property-path";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
-import { PizzagnaLayer } from "../../types";
+import { PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../types";
 
 describe("StatusContentFallbackAdapter > ", () => {
     let adapter: StatusContentFallbackAdapter;
     let eventBus: EventBus<IEvent>;
     let pizzagnaService: PizzagnaService;
-    let dynamicComponentCreator: DynamicComponentCreator;
     let firstSetPropArg: IPizzagnaProperty;
 
     beforeEach(() => {
         eventBus = new EventBus();
-        dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(
-            eventBus,
-            dynamicComponentCreator
-        );
+        TestBed.configureTestingModule({
+            providers: [
+                PizzagnaService,
+                DynamicComponentCreator,
+                { provide: PIZZAGNA_EVENT_BUS, useValue: eventBus },
+            ],
+        });
+        pizzagnaService = TestBed.inject(PizzagnaService);
         adapter = new StatusContentFallbackAdapter(eventBus, pizzagnaService);
         (<any>adapter).componentId = "testId";
 

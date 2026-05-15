@@ -18,10 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef, Component, Input, OnChanges } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnChanges, inject } from "@angular/core";
 import sumBy from "lodash/sumBy";
 
-import { UnitConversionService } from "@nova-ui/bits";
+
 
 import { DEFAULT_UNIT_CONVERSION_THRESHOLD } from "../../../../common/constants";
 import { DashboardUnitConversionPipe } from "../../../../common/pipes/dashboard-unit-conversion-pipe";
@@ -54,19 +54,12 @@ import { IFormatterData } from "../types";
 export class DonutContentRawFormatterComponent implements OnChanges {
     static lateLoadKey = "DonutContentRawFormatterComponent";
 
+    public changeDetector = inject(ChangeDetectorRef);
     public sum: number;
     public convertedValue: string;
     public conversionThreshold = DEFAULT_UNIT_CONVERSION_THRESHOLD;
 
-    private unitConversionPipe: DashboardUnitConversionPipe;
-    constructor(
-        public changeDetector: ChangeDetectorRef,
-        unitConversionService: UnitConversionService
-    ) {
-        this.unitConversionPipe = new DashboardUnitConversionPipe(
-            unitConversionService
-        );
-    }
+    private unitConversionPipe = inject(DashboardUnitConversionPipe);
 
     @Input() data: IFormatterData[];
     @Input() config: IProportionalWidgetConfig;

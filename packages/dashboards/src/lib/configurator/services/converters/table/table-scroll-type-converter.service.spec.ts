@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { fakeAsync, tick } from "@angular/core/testing";
+import { fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { FormBuilder, FormGroup } from "@angular/forms";
 
 import { EventBus, IEvent } from "@nova-ui/bits";
@@ -29,6 +29,7 @@ import { TableScrollTypeConverterService } from "./table-scroll-type-converter.s
 import { DynamicComponentCreator } from "../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";
 import { PreviewService } from "../../preview.service";
+import { PIZZAGNA_EVENT_BUS } from "../../../../types";
 
 class MockComponent {
     public static lateLoadKey = "MockComponent";
@@ -56,13 +57,20 @@ describe("TableScrollTypeConverterService >", () => {
     const formBuilder = new FormBuilder();
     const component = new MockComponent(formBuilder);
     const previewService = new PreviewService();
-    const dynamicComponentCreator = new DynamicComponentCreator();
-    const pizzagnaService = new PizzagnaService(
-        eventBus,
-        dynamicComponentCreator
-    );
+    let pizzagnaService: PizzagnaService;
 
     let service: TableScrollTypeConverterService;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [
+                PizzagnaService,
+                DynamicComponentCreator,
+                { provide: PIZZAGNA_EVENT_BUS, useValue: eventBus },
+            ],
+        });
+        pizzagnaService = TestBed.inject(PizzagnaService);
+    });
 
     beforeEach(() => {
         previewService.preview =

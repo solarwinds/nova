@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectorRef } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
 import { FormBuilder } from "@angular/forms";
 
 import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
@@ -29,6 +30,7 @@ import { TitleAndDescriptionConfigurationComponent } from "../../configurator/co
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { SET_PROPERTY_VALUE } from "../../services/types";
+import { PIZZAGNA_EVENT_BUS } from "../../types";
 
 const cdRefMock: ChangeDetectorRef = {
     markForCheck() {},
@@ -42,16 +44,18 @@ describe("PizzagnaBroadcasterService > ", () => {
     let broadcaster: PizzagnaBroadcasterService;
     let eventBus: EventBus<IEvent>;
     let pizzagnaService: PizzagnaService;
-    let dynamicComponentCreator: DynamicComponentCreator;
     let mockComponent: TitleAndDescriptionConfigurationComponent;
 
     beforeEach(() => {
         eventBus = new EventBus();
-        dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(
-            eventBus,
-            dynamicComponentCreator
-        );
+        TestBed.configureTestingModule({
+            providers: [
+                PizzagnaService,
+                DynamicComponentCreator,
+                { provide: PIZZAGNA_EVENT_BUS, useValue: eventBus },
+            ],
+        });
+        pizzagnaService = TestBed.inject(PizzagnaService);
         broadcaster = new PizzagnaBroadcasterService(pizzagnaService);
 
         mockComponent = new TitleAndDescriptionConfigurationComponent(

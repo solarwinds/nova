@@ -18,12 +18,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { TestBed } from "@angular/core/testing";
+
 import { EventBus, IEvent } from "@nova-ui/bits";
 
 import { KpiSectionConverterService } from "./kpi-section-converter.service";
 import { DynamicComponentCreator } from "../../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
-import { IPizzagnaLayer, PizzagnaLayer } from "../../../../../types";
+import { IPizzagnaLayer, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../../../types";
 import { PreviewService } from "../../../preview.service";
 
 const testKey = "providerId";
@@ -40,17 +42,19 @@ describe("KpiSectionConverterService > ", () => {
     let eventBus: EventBus<IEvent>;
     let previewService: PreviewService;
     let pizzagnaService: PizzagnaService;
-    let dynamicComponentCreator: DynamicComponentCreator;
 
     beforeEach(() => {
         eventBus = new EventBus();
         previewService = new PreviewService();
         previewService.preview = {};
-        dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(
-            eventBus,
-            dynamicComponentCreator
-        );
+        TestBed.configureTestingModule({
+            providers: [
+                PizzagnaService,
+                DynamicComponentCreator,
+                { provide: PIZZAGNA_EVENT_BUS, useValue: eventBus },
+            ],
+        });
+        pizzagnaService = TestBed.inject(PizzagnaService);
         service = new KpiSectionConverterService(
             eventBus,
             previewService,

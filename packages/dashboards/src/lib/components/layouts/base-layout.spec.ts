@@ -59,7 +59,6 @@ describe("BaseLayout", () => {
     let component: TestLayoutComponent;
     let fixture: ComponentFixture<TestLayoutComponent>;
     let eventBus: EventBus<IEvent>;
-    let dynamicComponentCreator: DynamicComponentCreator;
     let pizzagnaService: PizzagnaService;
     const testComponents: IPizza = {
         component1: {
@@ -74,20 +73,12 @@ describe("BaseLayout", () => {
 
     beforeEach(waitForAsync(() => {
         eventBus = new EventBus();
-        dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(
-            eventBus,
-            dynamicComponentCreator
-        );
-        pizzagnaService.updateComponents(testComponents);
 
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
             providers: [
-                {
-                    provide: PizzagnaService,
-                    useValue: pizzagnaService,
-                },
+                DynamicComponentCreator,
+                PizzagnaService,
                 {
                     provide: PIZZAGNA_EVENT_BUS,
                     useValue: eventBus,
@@ -98,6 +89,8 @@ describe("BaseLayout", () => {
     }));
 
     beforeEach(() => {
+        pizzagnaService = TestBed.inject(PizzagnaService);
+        pizzagnaService.updateComponents(testComponents);
         fixture = TestBed.createComponent(TestLayoutComponent);
         component = fixture.componentInstance;
     });

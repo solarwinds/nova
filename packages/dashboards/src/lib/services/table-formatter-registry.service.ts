@@ -21,8 +21,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 
-import { LoggerService } from "@nova-ui/bits";
-
 import { RegistryService } from "./registry-service";
 import { IAddFormattersOptions } from "./types";
 import {
@@ -57,35 +55,35 @@ export abstract class FormatterRegistryService<
 
 @Injectable({ providedIn: "root" })
 export class TableFormatterRegistryService extends FormatterRegistryService<ITableFormatterDefinition> {
-    constructor(logger: LoggerService) {
-        super(logger, "TableFormatterRegistryService");
+    constructor() {
+        super("TableFormatterRegistryService");
     }
 }
 
 @Injectable({ providedIn: "root" })
 export class KpiFormattersRegistryService extends FormatterRegistryService<IFormatterDefinition> {
-    constructor(logger: LoggerService) {
-        super(logger, "KpiFormattersRegistryService");
+    constructor() {
+        super("KpiFormattersRegistryService");
     }
 }
 
 @Injectable({ providedIn: "root" })
 export class RiskScoreFormattersRegistryService extends FormatterRegistryService<IFormatterDefinition> {
-    constructor(logger: LoggerService) {
-        super(logger, "RiskScoreFormattersRegistryService");
+    constructor() {
+        super("RiskScoreFormattersRegistryService");
     }
 }
 
 @Injectable({ providedIn: "root" })
 export class ProportionalDonutContentFormattersRegistryService extends FormatterRegistryService<IFormatterDefinition> {
-    constructor(logger: LoggerService) {
-        super(logger, "ProportionalDonutContentFormattersRegistryService");
+    constructor() {
+        super("ProportionalDonutContentFormattersRegistryService");
     }
 }
 
 @Injectable({ providedIn: "root" })
 export class ProportionalLegendFormattersRegistryService extends FormatterRegistryService<IFormatterDefinition> {
-    constructor(logger: LoggerService) {
-        super(logger, "ProportionalLegendFormattersRegistryService");
+    constructor() {
+        super("ProportionalLegendFormattersRegistryService");
     }
 }

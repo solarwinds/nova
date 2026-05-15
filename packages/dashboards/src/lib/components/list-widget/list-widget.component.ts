@@ -23,13 +23,15 @@ import {
     Component,
     ElementRef,
     HostBinding,
-    Inject,
+    Injector,
     Input,
     NgZone,
     OnChanges,
     OnDestroy,
     OnInit,
     SimpleChanges,
+    inject,
+    runInInjectionContext,
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -61,13 +63,11 @@ export class ListWidgetComponent
     private itemFormatterProps = new Map();
     private readonly destroy$ = new Subject<void>();
     private widgetWidth: number;
-
-    constructor(
-        public changeDetector: ChangeDetectorRef,
-        private zone: NgZone,
-        private host: ElementRef,
-        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>
-    ) {}
+    public changeDetector = inject(ChangeDetectorRef);
+    private zone = inject(NgZone);
+    private host = inject(ElementRef);
+    private eventBus = inject<EventBus<IEvent>>(PIZZAGNA_EVENT_BUS);
+    private injector = inject(Injector);
 
     public ngOnInit(): void {
         this.initResizeObserver();
@@ -116,9 +116,9 @@ export class ListWidgetComponent
 
     // think of using eventBus to let widget entities know about it's width. - mb some formatters for widget doesn't care about it's width.
     private initResizeObserver() {
-        const resizeDirective = new ResizeObserverDirective(
-            this.host,
-            this.zone
+        const resizeDirective = runInInjectionContext(
+            this.injector,
+            () => new ResizeObserverDirective()
         );
         resizeDirective.debounceTime = RESIZE_DEBOUNCE_TIME;
         resizeDirective.ngAfterViewInit();

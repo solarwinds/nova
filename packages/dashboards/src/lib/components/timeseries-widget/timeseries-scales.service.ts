@@ -18,10 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { duration } from "moment/moment";
 
-import { UnitBase, UnitConversionService, UnitOption } from "@nova-ui/bits";
+import { UnitBase, UnitOption } from "@nova-ui/bits";
 import {
     IScale,
     LinearScale,
@@ -44,13 +44,7 @@ import { timeSeriesDatetimeFormatter } from "../../functions/timeseries-datetime
  */
 @Injectable()
 export class TimeseriesScalesService {
-    private unitConversionPipe: DashboardUnitConversionPipe;
-
-    constructor(private unitConversionService: UnitConversionService) {
-        this.unitConversionPipe = new DashboardUnitConversionPipe(
-            this.unitConversionService
-        );
-    }
+    private unitConversionPipe = inject(DashboardUnitConversionPipe);
 
     /**
      * Creates a scale based on given configuration

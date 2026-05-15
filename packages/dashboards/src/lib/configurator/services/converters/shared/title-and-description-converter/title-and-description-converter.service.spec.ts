@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { TestBed } from "@angular/core/testing";
 import get from "lodash/get";
 
 import { EventBus, IEvent } from "@nova-ui/bits";
@@ -26,7 +27,7 @@ import { EventBus, IEvent } from "@nova-ui/bits";
 import { TitleAndDescriptionConverterService } from "./title-and-description-converter.service";
 import { DynamicComponentCreator } from "../../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
-import { IPizzagnaLayer, IProperties } from "../../../../../types";
+import { IPizzagnaLayer, IProperties, PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { PreviewService } from "../../../preview.service";
 import { BaseConverter } from "../../base-converter";
 
@@ -37,16 +38,18 @@ describe("TitleAndDescriptionConverterService", () => {
     let pizzagnaService: PizzagnaService;
     let previewService: PreviewService;
     let form: FormGroup;
-    let dynamicComponentCreator: DynamicComponentCreator;
 
     beforeEach(() => {
         eventBus = new EventBus();
         previewService = new PreviewService();
-        dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(
-            eventBus,
-            dynamicComponentCreator
-        );
+        TestBed.configureTestingModule({
+            providers: [
+                PizzagnaService,
+                DynamicComponentCreator,
+                { provide: PIZZAGNA_EVENT_BUS, useValue: eventBus },
+            ],
+        });
+        pizzagnaService = TestBed.inject(PizzagnaService);
         service = new TitleAndDescriptionConverterService(
             eventBus,
             previewService,

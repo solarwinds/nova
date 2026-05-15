@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Inject, Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import isArray from "lodash/isArray";
 import omit from "lodash/omit";
 import { ReplaySubject } from "rxjs";
@@ -44,10 +44,8 @@ import {
  */
 @Injectable()
 export class PizzagnaService {
-    constructor(
-        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
-        private dynamicComponentCreator: DynamicComponentCreator
-    ) {}
+    private eventBus = inject<EventBus<IEvent>>(PIZZAGNA_EVENT_BUS);
+    private dynamicComponentCreator = inject(DynamicComponentCreator);
 
     public pizzagna: IPizzagna;
     public pizzaChanged = new ReplaySubject<IPizza>(1);

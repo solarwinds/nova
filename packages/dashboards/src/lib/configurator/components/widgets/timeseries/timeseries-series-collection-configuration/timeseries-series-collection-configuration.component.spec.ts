@@ -39,34 +39,24 @@ describe("TimeseriesSeriesCollectionConfigurationComponent", () => {
     let component: TimeseriesSeriesCollectionConfigurationComponent;
     let fixture: ComponentFixture<TimeseriesSeriesCollectionConfigurationComponent>;
     const eventBus = new EventBus();
-    const dynamicComponentCreator = new DynamicComponentCreator();
-    const pizzagnaService = new PizzagnaService(
-        // @ts-ignore: Suppressed for test purposes
-        eventBus,
-        dynamicComponentCreator
-    );
+    let pizzagnaService: PizzagnaService;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
             providers: [
-                {
-                    provide: DynamicComponentCreator,
-                    useValue: dynamicComponentCreator,
-                },
+                DynamicComponentCreator,
                 {
                     provide: PIZZAGNA_EVENT_BUS,
                     useValue: eventBus,
                 },
-                {
-                    provide: PizzagnaService,
-                    useValue: pizzagnaService,
-                },
+                PizzagnaService,
             ],
         }).compileComponents();
     }));
 
     beforeEach(() => {
+        pizzagnaService = TestBed.inject(PizzagnaService);
         fixture = TestBed.createComponent(
             TimeseriesSeriesCollectionConfigurationComponent
         );

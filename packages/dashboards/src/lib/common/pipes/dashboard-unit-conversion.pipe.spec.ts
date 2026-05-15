@@ -18,10 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { TestBed } from "@angular/core/testing";
+
 import { LoggerService, UnitBase, UnitConversionService } from "@nova-ui/bits";
 
 import { DEFAULT_UNIT_CONVERSION_THRESHOLD } from "../constants";
-import { DashboardUnitConversionPipe } from "./dashboard-unit-conversion-pipe";
+import {
+    DashboardUnitConversionPipe,
+    UNIT_CONVERSION_SERVICE,
+} from "./dashboard-unit-conversion-pipe";
 
 describe("DashboardUnitConversionPipe >", () => {
     let pipe: DashboardUnitConversionPipe;
@@ -30,7 +35,16 @@ describe("DashboardUnitConversionPipe >", () => {
     );
 
     beforeEach(() => {
-        pipe = new DashboardUnitConversionPipe(unitConversionService);
+        TestBed.configureTestingModule({
+            providers: [
+                DashboardUnitConversionPipe,
+                {
+                    provide: UNIT_CONVERSION_SERVICE,
+                    useValue: unitConversionService,
+                },
+            ],
+        });
+        pipe = TestBed.inject(DashboardUnitConversionPipe);
     });
 
     it(`should not abbreviate the value if it's less than DEFAULT_UNIT_CONVERSION_THRESHOLD`, () => {

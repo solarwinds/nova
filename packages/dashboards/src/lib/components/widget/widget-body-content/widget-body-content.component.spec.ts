@@ -33,16 +33,10 @@ describe("WidgetBodyContentComponent", () => {
     let component: WidgetBodyContentComponent;
     let fixture: ComponentFixture<WidgetBodyContentComponent>;
     let eventBus: EventBus<IEvent>;
-    let dynamicComponentCreator: DynamicComponentCreator;
     let pizzagnaService: PizzagnaService;
 
     beforeEach(waitForAsync(() => {
         eventBus = new EventBus();
-        dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(
-            eventBus,
-            dynamicComponentCreator
-        );
 
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
@@ -52,15 +46,13 @@ describe("WidgetBodyContentComponent", () => {
                     provide: PIZZAGNA_EVENT_BUS,
                     useValue: eventBus,
                 },
-                {
-                    provide: PizzagnaService,
-                    useValue: pizzagnaService,
-                },
+                PizzagnaService,
             ],
         }).compileComponents();
     }));
 
     beforeEach(() => {
+        pizzagnaService = TestBed.inject(PizzagnaService);
         fixture = TestBed.createComponent(WidgetBodyContentComponent);
         component = fixture.componentInstance;
         component.componentId = "bodyContent";

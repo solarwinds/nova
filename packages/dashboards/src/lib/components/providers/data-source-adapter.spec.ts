@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { fakeAsync, flush } from "@angular/core/testing";
+import { fakeAsync, flush, TestBed } from "@angular/core/testing";
 import { Subject } from "rxjs";
 
 import {
@@ -35,7 +35,7 @@ import { DATA_SOURCE_OUTPUT } from "../../configurator/types";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { REFRESH } from "../../services/types";
-import { IConfigurable, IProperties, PizzagnaLayer } from "../../types";
+import { IConfigurable, IProperties, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../types";
 
 class MockDataSource implements IDataSource, IConfigurable {
     public outputsSubject = new Subject<
@@ -61,16 +61,18 @@ describe("DataSourceAdapter > ", () => {
     let dataSource: MockDataSource;
     let eventBus: EventBus<IEvent>;
     let pizzagnaService: PizzagnaService;
-    let dynamicComponentCreator: DynamicComponentCreator;
 
     beforeEach(() => {
         eventBus = new EventBus();
         dataSource = new MockDataSource();
-        dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(
-            eventBus,
-            dynamicComponentCreator
-        );
+        TestBed.configureTestingModule({
+            providers: [
+                PizzagnaService,
+                DynamicComponentCreator,
+                { provide: PIZZAGNA_EVENT_BUS, useValue: eventBus },
+            ],
+        });
+        pizzagnaService = TestBed.inject(PizzagnaService);
         adapter = new DataSourceAdapter(eventBus, dataSource, pizzagnaService);
         (<any>adapter).componentId = "testId";
     });

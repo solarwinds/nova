@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Directive, Host, Input, OnDestroy, OnInit, Self } from "@angular/core";
+import { Directive, Input, OnDestroy, OnInit, inject } from "@angular/core";
 import cloneDeep from "lodash/cloneDeep";
 import { Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
@@ -44,13 +44,10 @@ export class WidgetEditorDirective implements OnInit, OnDestroy {
     dashboardPersistenceHandler: IDashboardPersistenceHandler;
 
     private readonly destroy$ = new Subject<void>();
-
-    constructor(
-        @Host() @Self() private dashboardComponent: DashboardComponent,
-        private widgetEditorService: WidgetEditorService,
-        private widgetRemovalService: WidgetRemovalService,
-        private widgetTypesService: WidgetTypesService
-    ) {}
+    private dashboardComponent = inject(DashboardComponent, { host: true, self: true });
+    private widgetEditorService = inject(WidgetEditorService);
+    private widgetRemovalService = inject(WidgetRemovalService);
+    private widgetTypesService = inject(WidgetTypesService);
 
     public ngOnInit(): void {
         this.dashboardComponent.eventBus

@@ -24,7 +24,6 @@ import {
     Component,
     ElementRef,
     HostBinding,
-    Inject,
     Input,
     KeyValueDiffer,
     KeyValueDiffers,
@@ -34,6 +33,7 @@ import {
     SimpleChanges,
     ViewChild,
     ViewEncapsulation,
+    inject,
 } from "@angular/core";
 import isEqual from "lodash/isEqual";
 import some from "lodash/some";
@@ -44,7 +44,6 @@ import {
     IDataSource,
     IEvent,
     LoggerService,
-    UnitConversionService,
 } from "@nova-ui/bits";
 import {
     Chart,
@@ -117,13 +116,19 @@ export class ProportionalWidgetComponent
 
     private differ: KeyValueDiffer<any, any>;
 
+    public changeDetector = inject(ChangeDetectorRef);
+    private ngZone = inject(NgZone);
+    private kvDiffers = inject(KeyValueDiffers);
+    private eventBus = inject<EventBus<IEvent>>(PIZZAGNA_EVENT_BUS);
+    private dataSource = inject<IDataSource>(DATA_SOURCE);
+    private logger = inject(LoggerService);
     private renderer: Renderer<IAccessors>;
     private scales: Scales;
     private chartPalette: IChartPalette = new ChartPalette(
         defaultColorProvider()
     );
     private proportionalWidgetResizeObserver: ResizeObserver;
-    private unitConversionPipe: DashboardUnitConversionPipe;
+    private unitConversionPipe = inject(DashboardUnitConversionPipe);
 
     @ViewChild("gridContainer", { static: true })
     private gridContainer: ElementRef;
@@ -140,19 +145,8 @@ export class ProportionalWidgetComponent
         );
     }
 
-    constructor(
-        public changeDetector: ChangeDetectorRef,
-        private ngZone: NgZone,
-        private kvDiffers: KeyValueDiffers,
-        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
-        @Inject(DATA_SOURCE) private dataSource: IDataSource,
-        private logger: LoggerService,
-        unitConversionService: UnitConversionService
-    ) {
+    constructor() {
         this.differ = this.kvDiffers.find(this.prioritizedGridRows).create();
-        this.unitConversionPipe = new DashboardUnitConversionPipe(
-            unitConversionService
-        );
     }
 
     // Note: Using this helper method to be able to use
