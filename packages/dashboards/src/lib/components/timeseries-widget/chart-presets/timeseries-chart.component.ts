@@ -211,6 +211,7 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
             } catch (e) {
                 serie.transformer = undefined;
                 serie.data = serie.rawData;
+                this.updateYAxisDomain();
                 console.error(e.message);
             }
         }
