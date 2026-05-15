@@ -31,7 +31,8 @@ describe("components >", () => {
 
         beforeEach(() => {
             inner = new DatePickerInnerComponent();
-            yearPicker = new YearPickerComponent(inner);
+            const cdRefStub = { detectChanges: () => {}, markForCheck: () => {} } as any;
+            yearPicker = new YearPickerComponent(inner, cdRefStub);
         });
 
         it("should check setting year step", () => {

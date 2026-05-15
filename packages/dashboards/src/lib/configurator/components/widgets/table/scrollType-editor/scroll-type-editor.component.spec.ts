@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -61,6 +61,10 @@ describe("TableScrollTypeEditorComponent", () => {
         fixture = TestBed.createComponent(TableScrollTypeEditorComponent);
         component = fixture.componentInstance;
         component.ngOnInit();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it("should create", () => {
@@ -135,9 +139,9 @@ describe("TableScrollTypeEditorComponent", () => {
 
             component.ngOnChanges(changes);
 
-            component.pageSizeSetOptions.forEach(option => {
+            component.pageSizeSetOptions.forEach((option) => {
                 component.paginatorConfiguration.pageSizeSet?.forEach(
-                    pageValue => {
+                    (pageValue) => {
                         if (option.value === pageValue) {
                             expect(option.checked).toBeTrue();
                         }
@@ -176,7 +180,7 @@ describe("TableScrollTypeEditorComponent", () => {
             expect(component.subtitle).toEqual(
                 "Scroll Type:  " +
                     component.scrollTypeEditorService.loadStrategies.find(
-                        ls => ls.id === ScrollType.virtual
+                        (ls) => ls.id === ScrollType.virtual
                     )?.title
             );
         });

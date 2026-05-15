@@ -20,7 +20,7 @@
 
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import { BehaviorSubject } from "rxjs";
 import { finalize } from "rxjs/operators";
 
@@ -64,7 +64,7 @@ export class BookRatingDataSource
     // provider definition in the widget configuration below to see how the interval is set)
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             // *** Make a resource request to an external API (if needed)
             this.http
                 .get("https://www.googleapis.com/books/v1/volumes/zpvysRGsBlwC")
@@ -167,7 +167,7 @@ export class KpiWidgetInteractiveExampleComponent implements OnInit {
         };
 
         // Setting the widget dimensions and position (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [kpiWidget.id]: {
                 cols: 4,
                 rows: 6,

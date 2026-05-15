@@ -38,11 +38,15 @@ import { NuiOverlayModule } from "../overlay.module";
 
 @Component({
     template: `
-        <nui-overlay [toggleReference]="elRef.nativeElement" *ngIf="!destroyed">
-            <nui-select-v2-option *ngFor="let item of items" [value]="item">
+        @if (!destroyed) {
+        <nui-overlay [toggleReference]="elRef.nativeElement">
+            @for (item of items; track item) {
+            <nui-select-v2-option [value]="item">
                 <span class="mr-3">{{ item }}</span>
             </nui-select-v2-option>
+            }
         </nui-overlay>
+        }
     `,
     standalone: false,
 })
@@ -110,14 +114,14 @@ describe("components >", () => {
 
         describe("ngAfterContentChecked()", () => {
             it("dropdown content should be empty", () => {
-                component.empty$.subscribe(isEmpty => {
+                component.empty$.subscribe((isEmpty) => {
                     expect(isEmpty).toBe(true);
                 });
                 component.ngAfterContentChecked();
             });
 
             it("dropdown content should not be empty", () => {
-                wrapperComponent.dropdown.empty$.subscribe(isEmpty => {
+                wrapperComponent.dropdown.empty$.subscribe((isEmpty) => {
                     expect(isEmpty).toBe(false);
                 });
                 component.ngAfterContentChecked();

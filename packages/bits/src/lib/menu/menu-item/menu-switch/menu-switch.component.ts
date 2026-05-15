@@ -45,17 +45,13 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
 @Component({
     selector: "nui-menu-switch",
     template: `
-        <div
-            class="nui-menu-item__switch"
-            #menuSwitch
-            tabindex="-1"
-            title
-        >
+        <div class="nui-menu-item__switch" #menuSwitch tabindex="-1" title>
             <nui-switch
                 [value]="checked"
                 [disabled]="disabled"
                 role="presentation"
-                tabindex="-1">
+                tabindex="-1"
+            >
                 <ng-content></ng-content>
             </nui-switch>
         </div>
@@ -69,7 +65,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     styleUrls: ["./menu-switch.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: {
-        "role": "menuitemcheckbox",
+        role: "menuitemcheckbox",
         "[attr.aria-checked]": "checked",
     },
     standalone: false,
@@ -89,6 +85,7 @@ export class MenuSwitchComponent extends MenuItemBaseComponent {
         if (!this.disabled) {
             event.preventDefault();
             this.checked = !this.checked;
+            this.refreshView();
             this.actionDone.emit(this.checked);
         }
     }
@@ -111,6 +108,7 @@ export class MenuSwitchComponent extends MenuItemBaseComponent {
 
     public doAction(): void {
         this.checked = !this.checked;
+        this.refreshView();
         this.actionDone.emit(this.checked);
     }
 }

@@ -35,7 +35,8 @@
                 class="previous"
                 nuiWizardPrevious
                 nui-button
-                icon="caret-left">
+                icon="caret-left"
+            >
                 Back
             </button>
         </ng-template>
@@ -48,7 +49,8 @@
                 nui-button
                 displayStyle="primary"
                 icon="caret-right"
-                iconRight="true">
+                iconRight="true"
+            >
                 Next
             </button>
         </ng-template>
@@ -64,13 +66,15 @@
                     <nui-dialog-header
                         i18n-title
                         title="Wizard dialog"
-                        (closed)="closeDialog()"></nui-dialog-header>
+                        (closed)="closeDialog()"
+                    ></nui-dialog-header>
                     <div class="dialog-body compact-mode">
                         <nui-wizard-horizontal
                             #wizard
                             id="nui-wizard-v2-horizontal-dialog"
                             [state]="state"
-                            (finished)="saveState($event)">
+                            (finished)="saveState($event)"
+                        >
                             <!--  This defines the first step of the wizard -->
                             <nui-wizard-step-v2 label="Completed">
                                 <!-- the current step content -->
@@ -86,13 +90,16 @@
                                         id="nui-wizard-busy-btn"
                                         type="button"
                                         nui-button
-                                        (click)="toggleBusy()">
+                                        (click)="toggleBusy()"
+                                    >
                                         Toggle busy
                                     </button>
                                     <ng-container
-                                        *ngTemplateOutlet="wizardCancelDialog"></ng-container>
+                                        *ngTemplateOutlet="wizardCancelDialog"
+                                    ></ng-container>
                                     <ng-container
-                                        *ngTemplateOutlet="wizardNextDialog"></ng-container>
+                                        *ngTemplateOutlet="wizardNextDialog"
+                                    ></ng-container>
                                 </ng-template>
                             </nui-wizard-step-v2>
 
@@ -105,11 +112,14 @@
                                 </div>
                                 <ng-template nuiWizardStepFooter>
                                     <ng-container
-                                        *ngTemplateOutlet="wizardCancelDialog"></ng-container>
+                                        *ngTemplateOutlet="wizardCancelDialog"
+                                    ></ng-container>
                                     <ng-container
-                                        *ngTemplateOutlet="wizardPreviousDialog"></ng-container>
+                                        *ngTemplateOutlet="wizardPreviousDialog"
+                                    ></ng-container>
                                     <ng-container
-                                        *ngTemplateOutlet="wizardNextDialog"></ng-container>
+                                        *ngTemplateOutlet="wizardNextDialog"
+                                    ></ng-container>
                                 </ng-template>
                             </nui-wizard-step-v2>
 
@@ -123,11 +133,14 @@
 
                                 <ng-template nuiWizardStepFooter>
                                     <ng-container
-                                        *ngTemplateOutlet="wizardCancelDialog"></ng-container>
+                                        *ngTemplateOutlet="wizardCancelDialog"
+                                    ></ng-container>
                                     <ng-container
-                                        *ngTemplateOutlet="wizardPreviousDialog"></ng-container>
+                                        *ngTemplateOutlet="wizardPreviousDialog"
+                                    ></ng-container>
                                     <ng-container
-                                        *ngTemplateOutlet="wizardNextDialog"></ng-container>
+                                        *ngTemplateOutlet="wizardNextDialog"
+                                    ></ng-container>
                                 </ng-template>
                             </nui-wizard-step-v2>
 
@@ -139,15 +152,18 @@
                                 </div>
                                 <ng-template nuiWizardStepFooter>
                                     <ng-container
-                                        *ngTemplateOutlet="wizardCancelDialog"></ng-container>
+                                        *ngTemplateOutlet="wizardCancelDialog"
+                                    ></ng-container>
                                     <ng-container
-                                        *ngTemplateOutlet="wizardPreviousDialog"></ng-container>
+                                        *ngTemplateOutlet="wizardPreviousDialog"
+                                    ></ng-container>
                                     <button
                                         class="complete"
                                         type="button"
                                         nui-button
                                         displayStyle="primary"
-                                        (click)="completeWizard(finalStep)">
+                                        (click)="completeWizard(finalStep)"
+                                    >
                                         Finish
                                     </button>
                                 </ng-template>
@@ -161,7 +177,8 @@
                                     nui-button
                                     (click)="
                                         openConfirmationOverlay(overlay, wizard)
-                                    ">
+                                    "
+                                >
                                     Cancel
                                 </button>
                             </ng-template>
@@ -171,7 +188,8 @@
                                     type="button"
                                     nuiWizardPrevious
                                     nui-button
-                                    icon="caret-left">
+                                    icon="caret-left"
+                                >
                                     Back
                                 </button>
                             </ng-template>
@@ -184,7 +202,8 @@
                                     nui-button
                                     displayStyle="primary"
                                     icon="caret-right"
-                                    iconRight="true">
+                                    iconRight="true"
+                                >
                                     Next
                                 </button>
                             </ng-template>
@@ -194,7 +213,8 @@
                 <nui-spinner
                     size="large"
                     i18n-message
-                    message="Data is loading from remote server..."></nui-spinner>
+                    message="Data is loading from remote server..."
+                ></nui-spinner>
             </div>
         </div>
         <nui-overlay #overlay [toggleReference]="dialog">
@@ -212,13 +232,15 @@
                             nui-button
                             displayStyle="action"
                             type="button"
-                            (click)="overlay.hide()">
+                            (click)="overlay.hide()"
+                        >
                             Cancel
                         </button>
                         <button
                             nui-button
                             type="button"
-                            (click)="overlay.hide(); closeDialog()">
+                            (click)="overlay.hide(); closeDialog()"
+                        >
                             Leave
                         </button>
                     </div>
@@ -232,42 +254,45 @@
         nui-button
         type="button"
         (click)="openDialog(dialogWizard)"
-        i18n>
+        i18n
+    >
         Open dialog wizard
     </button>
 </div>
 
 <div class="mb-3">
     <nui-wizard-horizontal #wizardDynamic id="nui-wizard-horizontal-dynamic">
-        <nui-wizard-step-v2
-            *ngFor="let step of steps; let i = index; let isLast = last">
+        @for (step of steps; track step; let i = $index; let isLast = $last) {
+        <nui-wizard-step-v2>
             <ng-template nuiWizardStepLabel>{{
                 step.title + " (" + i + ")"
             }}</ng-template>
             <ng-container *ngTemplateOutlet="step.templateRef"></ng-container>
             <ng-template nuiWizardStepFooter>
-                <ng-container *ngIf="i !== 0">
-                    <button
-                        icon="caret-left"
-                        nui-button
-                        nuiWizardPrevious
-                        type="button">
-                        Back
-                    </button>
-                </ng-container>
-                <ng-container *ngIf="!isLast">
-                    <button
-                        displayStyle="primary"
-                        icon="caret-right"
-                        iconRight="true"
-                        nui-button
-                        nuiWizardNext
-                        type="button">
-                        Next
-                    </button>
-                </ng-container>
+                @if (i !== 0) {
+                <button
+                    icon="caret-left"
+                    nui-button
+                    nuiWizardPrevious
+                    type="button"
+                >
+                    Back
+                </button>
+                } @if (!isLast) {
+                <button
+                    displayStyle="primary"
+                    icon="caret-right"
+                    iconRight="true"
+                    nui-button
+                    nuiWizardNext
+                    type="button"
+                >
+                    Next
+                </button>
+                }
             </ng-template>
         </nui-wizard-step-v2>
+        }
 
         <ng-template #dynamicStep>
             <p class="m-5" i18n>
@@ -285,7 +310,8 @@
                     class="add"
                     nui-button
                     type="button"
-                    id="nui-add-step-dynamically">
+                    id="nui-add-step-dynamically"
+                >
                     Add dynamic step w/template
                 </button>
             </div>
@@ -302,7 +328,8 @@
             <nui-textbox-number
                 #number
                 [minValue]="1"
-                [value]="1"></nui-textbox-number>
+                [value]="1"
+            ></nui-textbox-number>
         </div>
         <button
             (click)="removeStep(+number.value)"
@@ -312,7 +339,8 @@
             i18n
             id="nui-remove-wizard-step-button"
             nui-button
-            type="button">
+            type="button"
+        >
             Remove step dynamically
         </button>
     </div>
@@ -320,37 +348,40 @@
 
 <div class="mb-3">
     <nui-wizard-horizontal #nuiWizard id="nui-wizard-v2-responsive-headers">
-        <ng-container *ngFor="let step of responsiveSteps; let i = index">
-            <nui-wizard-step-v2 i18n-label [label]="'Step ' + (i + 1)">
-                <div class="m-5">
-                    <span i18n>This is the step #{{ i + 1 }}</span
-                    >.
-                </div>
-                <ng-template nuiWizardStepFooter>
-                    <ng-container
-                        *ngTemplateOutlet="wizardCancelResponsive"></ng-container>
-                    <ng-container *ngIf="i">
-                        <ng-container
-                            *ngTemplateOutlet="wizardPreviousResponsive"></ng-container>
-                    </ng-container>
-                    <ng-container *ngIf="i !== responsiveSteps.length - 1">
-                        <ng-container
-                            *ngTemplateOutlet="wizardNextResponsive"></ng-container>
-                    </ng-container>
-                    <ng-container *ngIf="i === responsiveSteps.length - 1">
-                        <ng-container
-                            *ngTemplateOutlet="wizardFinishResponsive"></ng-container>
-                    </ng-container>
-                </ng-template>
-            </nui-wizard-step-v2>
-        </ng-container>
+        @for (step of responsiveSteps; track step; let i = $index) {
+        <nui-wizard-step-v2 i18n-label [label]="'Step ' + (i + 1)">
+            <div class="m-5">
+                <span i18n>This is the step #{{ i + 1 }}</span
+                >.
+            </div>
+            <ng-template nuiWizardStepFooter>
+                <ng-container
+                    *ngTemplateOutlet="wizardCancelResponsive"
+                ></ng-container>
+                @if (i) {
+                <ng-container
+                    *ngTemplateOutlet="wizardPreviousResponsive"
+                ></ng-container>
+                } @if (i !== responsiveSteps.length - 1) {
+                <ng-container
+                    *ngTemplateOutlet="wizardNextResponsive"
+                ></ng-container>
+                } @if (i === responsiveSteps.length - 1) {
+                <ng-container
+                    *ngTemplateOutlet="wizardFinishResponsive"
+                ></ng-container>
+                }
+            </ng-template>
+        </nui-wizard-step-v2>
+        }
 
         <ng-template #wizardPreviousResponsive>
             <button
                 type="button"
                 nuiWizardPrevious
                 nui-button
-                icon="caret-left">
+                icon="caret-left"
+            >
                 Back
             </button>
         </ng-template>
@@ -362,7 +393,8 @@
                 nui-button
                 displayStyle="primary"
                 icon="caret-right"
-                iconRight="true">
+                iconRight="true"
+            >
                 Next
             </button>
         </ng-template>

@@ -2,8 +2,9 @@
     placeholder="Select Item"
     i18n-placeholder
     [overlayConfig]="overlayConfig"
-    [syncWidth]="false">
-    <nui-select-v2-option *ngFor="let item of items" [value]="item">{{
-        item
-    }}</nui-select-v2-option>
+    [syncWidth]="false"
+>
+    @for (item of items; track item) {
+    <nui-select-v2-option [value]="item">{{ item }}</nui-select-v2-option>
+    }
 </nui-select-v2>

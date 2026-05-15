@@ -1,59 +1,65 @@
 <div class="nui-progress" [class.nui-progress--shown]="show">
+    @if (message && !compactMode) {
     <div
         class="nui-progress__header"
-        *ngIf="message && !compactMode"
-        [ngClass]="{ 'nui-progress__header--stacked': stacked }">
+        [ngClass]="{ 'nui-progress__header--stacked': stacked }"
+    >
         <span
             class="nui-progress__message nui-text-label nui-progress__header-item"
             >{{ message }}</span
         >
     </div>
-
+    } @if (show && showProgress) {
     <div
-        *ngIf="show && showProgress"
         class="nui-progress__container"
         role="progressbar"
         aria-valuemin="0"
         aria-valuemax="100"
         [attr.aria-label]="ariaLabel"
-        [attr.aria-valuenow]="percent || null">
+        [attr.aria-valuenow]="percent || null"
+    >
         <div
             class="nui-progress__bar"
             [ngClass]="{
                 'nui-progress--indeterminate': isIndeterminate,
                 'nui-progress__bar--compact': compactMode
-            }">
+            }"
+        >
             <div
                 class="nui-progress__bar-value"
-                [ngStyle]="{ 'width.%': percent }"></div>
+                [ngStyle]="{ 'width.%': percent }"
+            ></div>
         </div>
-
+        @if (showNumber && !compactMode) {
         <div
-            *ngIf="showNumber && !compactMode"
-            class="nui-progress__number nui-progress__header-item nui-text-small">
+            class="nui-progress__number nui-progress__header-item nui-text-small"
+        >
             {{ percent }}%
         </div>
-
+        } @if (allowCancel && !compactMode) {
         <button
             nui-button
             type="button"
             class="nui-progress__cancel"
             icon="close"
-            *ngIf="allowCancel && !compactMode"
             (click)="cancelProgress()"
             displayStyle="action"
-            [nuiTooltip]="'Cancel'"></button>
+            [nuiTooltip]="'Cancel'"
+        ></button>
+        }
     </div>
-
+    } @if (!compactMode) {
     <div
-        *ngIf="!compactMode"
         class="nui-progress__hint"
-        [class.nui-progress__hint--stacked]="stacked">
+        [class.nui-progress__hint--stacked]="stacked"
+    >
         <ng-container
             [ngTemplateOutlet]="
                 helpTemplateRef ? helpTemplateRef : defaultHelpTemplateRef
-            "></ng-container>
+            "
+        ></ng-container>
     </div>
+    }
 </div>
 
 <ng-template #defaultHelpTemplateRef>

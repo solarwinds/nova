@@ -37,7 +37,7 @@ export class MarkerAtom extends Atom {
 
     public async getPosition(): Promise<{ x: number; y: number }> {
         const transform = await this.root.evaluate(
-            el => getComputedStyle(el).transform
+            (el) => getComputedStyle(el).transform
         );
         // looks like: "matrix(1, 0, 0, 1, 400, 15)"
         const values = transform.match(/(-?[0-9.]+)/g) || [];

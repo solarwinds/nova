@@ -43,7 +43,10 @@ import {
     IHasForm,
     PIZZAGNA_EVENT_BUS,
 } from "../../../../../types";
-import { LegendPlacement } from "../../../../../widget-types/common/widget/legend";
+import {
+    ILegendPlacementOption,
+    LegendPlacement,
+} from "../../../../../widget-types/common/widget/legend";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
 
 export interface ITimeseriesChartTypeOption {
@@ -67,7 +70,7 @@ export class TimeseriesMetadataConfigurationComponent
 {
     static lateLoadKey = "TimeseriesMetadataConfigurationComponent";
 
-    @Input() legendPlacements: LegendPlacement[] = [];
+    @Input() legendPlacements: ILegendPlacementOption[] = [];
     @Input() timeSpans: ITimeSpanOption[] = [];
     @Input() startingTimespan: any;
     @Input() legendPlacement: LegendPlacement;
@@ -111,7 +114,7 @@ export class TimeseriesMetadataConfigurationComponent
         this.form
             .get("startingTimespan")
             ?.valueChanges.pipe(takeUntil(this.destroy$))
-            .subscribe(value => {
+            .subscribe((value) => {
                 // this is to wait until the value of 'startingTimespan' is converted to the preview
                 setTimeout(() => {
                     this.eventBus.next(PREVIEW_EVENT, {

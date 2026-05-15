@@ -1,4 +1,5 @@
-<div *ngIf="isDisplayed; else notoast">
+@if (isDisplayed) {
+<div>
     <nui-message type="info" [allowDismiss]="false">
         <div i18n>ID of last toast shown: {{ lastShown }}</div>
     </nui-message>
@@ -8,17 +9,18 @@
         </div>
     </nui-message>
 </div>
-<ng-template #notoast
-    ><nui-message type="info" [allowDismiss]="false" i18n
-        >No toast displayed</nui-message
-    ></ng-template
+} @else {
+<nui-message type="info" [allowDismiss]="false" i18n
+    >No toast displayed</nui-message
 >
+}
 <nui-divider></nui-divider>
 <button
     nui-button
     type="button"
     id="nui-toast-events-example"
     (click)="onShowToast($event)"
-    i18n>
+    i18n
+>
     Show Toast
 </button>

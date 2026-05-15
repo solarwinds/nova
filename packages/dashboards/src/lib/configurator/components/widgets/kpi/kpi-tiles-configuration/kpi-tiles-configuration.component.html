@@ -2,13 +2,16 @@
     [items]="tiles"
     [nodes]="nodes"
     (itemsChange)="onItemsChange($event)"
-    (formReady)="onFormReady($event)"></nui-items-dynamic>
+    (formReady)="onFormReady($event)"
+></nui-items-dynamic>
 
-<div class="pl-4 pr-4" *ngIf="(emptyItems$ | async) && form.touched">
+@if ((emptyItems$ | async) && form.touched) {
+<div class="pl-4 pr-4">
     <nui-message type="critical" [allowDismiss]="false" i18n>
         <b>At least one value must be added.</b>
     </nui-message>
 </div>
+}
 
 <button
     nui-button
@@ -18,6 +21,7 @@
     type="button"
     class="ml-4 mb-4"
     (click)="addTile()"
-    i18n>
+    i18n
+>
     Add new value
 </button>

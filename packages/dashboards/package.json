@@ -6,13 +6,13 @@
     }
   ],
   "dependencies": {
-    "@nova-ui/bits": "~20.0.0",
-    "@nova-ui/charts": "~20.0.0"
+    "@nova-ui/bits": "~21.0.0",
+    "@nova-ui/charts": "~21.0.0"
   },
   "devDependencies": {
-    "@apollo/client": "3.13.9",
-    "angular-gridster2": "^20.0.0",
-    "apollo-angular": "11.0.0"
+    "@apollo/client": "4.1.7",
+    "angular-gridster2": "^21.0.0",
+    "apollo-angular": "13.0.0"
   },
   "exports": {
     "./sdk/*": "./sdk/*",
@@ -42,7 +42,7 @@
   "license": "Apache-2.0",
   "name": "@nova-ui/dashboards",
   "peerDependencies": {
-    "angular-gridster2": "^20.0.0"
+    "angular-gridster2": "^21.0.0"
   },
   "repository": {
     "type": "git",
@@ -91,5 +91,5 @@
     "test": "ng t lib -c coverage",
     "test:dev": "ng t lib -c dev"
   },
-  "version": "20.0.0"
+  "version": "21.0.0"
 }

@@ -1,92 +1,112 @@
 <div class="w-100 h-100" nui-busy [busy]="busy">
-    <ng-container *ngIf="widgetData?.link">
-        <a class="nui-kpi-indicator" [href]="widgetData.link">
-            <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
-        </a>
-    </ng-container>
-
-    <ng-container *ngIf="!widgetData?.link">
-        <div class="nui-kpi-indicator" (click)="onInteraction()">
-            <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
-        </div>
-    </ng-container>
+    @if (widgetData?.link) {
+    <a class="nui-kpi-indicator" [href]="widgetData.link">
+        <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
+    </a>
+    } @if (!widgetData?.link) {
+    <div class="nui-kpi-indicator" (click)="onInteraction()">
+        <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
+    </div>
+    }
 </div>
 
 <ng-template #kpiContent>
     <div
         class="nui-kpi-indicator__background"
         [class.nui-kpi-indicator--interactive]="interactive"
-        [ngStyle]="{'background-color': backgroundColor || widgetData?.backgroundColor}">
-    </div>
+        [ngStyle]="{
+            'background-color': backgroundColor || widgetData?.backgroundColor
+        }"
+    ></div>
     <div
         class="nui-kpi-indicator__text"
-        [ngStyle]="{'color': widgetData?.textColor || backgroundColor ||  widgetData?.backgroundColor || defaultColor}">
+        [ngStyle]="{
+            color:
+                widgetData?.textColor ||
+                backgroundColor ||
+                widgetData?.backgroundColor ||
+                defaultColor
+        }"
+    >
         <div class="nui-kpi-indicator__zoom-container">
             <div
                 class="nui-kpi-indicator__description nui-kpi-indicator__zoom-container__row"
-                [title]="widgetData?.label">
+                [title]="widgetData?.label"
+            >
                 <span
                     nuiZoomContent
                     [useZoom]="false"
                     [minScale]="0.5"
                     [scaleIN$]="getScaleBroker('label')?.out$"
                     [scaleOUT$]="getScaleBroker('label')?.in$"
-                    >{{widgetData?.label}}</span
+                    >{{ widgetData?.label }}</span
                 >
             </div>
 
+            @if (configuration?.formatters?.Value) {
             <ng-container
-                *ngIf="configuration?.formatters?.Value; else kpiValueRaw"
                 nuiComponentPortal
                 #componentPortal="nuiComponentPortal"
                 componentId="KpiValueFormatter"
-                [componentType]="configuration?.formatters?.Value?.formatter?.componentType"
-                [properties]="formattersProperties.Value">
+                [componentType]="
+                    configuration?.formatters?.Value?.formatter?.componentType
+                "
+                [properties]="formattersProperties.Value"
+            >
                 <div
-                    class="nui-kpi-indicator__value nui-kpi-indicator__zoom-container__row">
+                    class="nui-kpi-indicator__value nui-kpi-indicator__zoom-container__row"
+                >
                     <span
                         nuiZoomContent
-                        [ngClass]="configuration?.formatters?.Value?.formatter?.componentType === 'IconFormatterComponent' ? 'without-filter' : ''"
+                        [ngClass]="
+                            configuration?.formatters?.Value?.formatter
+                                ?.componentType === 'IconFormatterComponent'
+                                ? 'without-filter'
+                                : ''
+                        "
                         [useZoom]="false"
                         [margin]="widgetData?.margin ?? 2"
                         [scaleIN$]="getScaleBroker('value')?.out$"
-                        [scaleOUT$]="getScaleBroker('value')?.in$">
+                        [scaleOUT$]="getScaleBroker('value')?.in$"
+                    >
                         <ng-template
                             [cdkPortalOutlet]="componentPortal.portal"
-                            (attached)="componentPortal.attached($event)"></ng-template>
+                            (attached)="componentPortal.attached($event)"
+                        ></ng-template>
                     </span>
                 </div>
             </ng-container>
-
+            } @else {
+            <div
+                class="nui-kpi-indicator__value nui-kpi-indicator__zoom-container__row"
+                [style.font-size]="widgetData?.fontSize"
+                [title]="widgetData?.value"
+            >
+                <span
+                    nuiZoomContent
+                    [useZoom]="false"
+                    [margin]="widgetData?.margin ?? 2"
+                    [scaleIN$]="getScaleBroker('value')?.out$"
+                    [scaleOUT$]="getScaleBroker('value')?.in$"
+                >
+                    {{ widgetData?.value }}</span
+                >
+            </div>
+            } @if (widgetData?.units) {
             <div
                 class="nui-kpi-indicator__units nui-kpi-indicator__zoom-container__row"
-                *ngIf="widgetData?.units"
-                [title]="widgetData?.units">
+                [title]="widgetData?.units"
+            >
                 <span
                     nuiZoomContent
                     [useZoom]="false"
                     [scaleIN$]="getScaleBroker('units')?.out$"
                     [scaleOUT$]="getScaleBroker('units')?.in$"
                     [minScale]="0.5"
-                    >{{widgetData?.units}}</span
+                    >{{ widgetData?.units }}</span
                 >
             </div>
+            }
         </div>
-    </div>
-</ng-template>
-
-<ng-template #kpiValueRaw>
-    <div
-        class="nui-kpi-indicator__value nui-kpi-indicator__zoom-container__row"
-        [style.font-size]="widgetData?.fontSize"
-        [title]="widgetData?.value">
-        <span
-            nuiZoomContent
-            [useZoom]="false"
-            [margin]="widgetData?.margin ?? 2"
-            [scaleIN$]="getScaleBroker('value')?.out$"
-            [scaleOUT$]="getScaleBroker('value')?.in$">
-            {{widgetData?.value}}</span
-        >
     </div>
 </ng-template>

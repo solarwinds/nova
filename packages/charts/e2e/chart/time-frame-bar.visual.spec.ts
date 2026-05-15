@@ -56,6 +56,7 @@ test.describe(`Visual tests: Charts - ${name}`, () => {
             { x: 50, y: 50 },
             { x: 200, y: 50 }
         );
+
         await camera.say.cheese(`${name} - After zoom`);
 
         await camera.turn.off();

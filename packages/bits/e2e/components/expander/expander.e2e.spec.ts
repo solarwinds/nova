@@ -110,7 +110,7 @@ test.describe("USERCONTROL expander", () => {
         await menu.toggleMenu();
         await menu.getMenuItemByIndex(1).clickItem();
 
-        page.on("dialog", async dialog => {
+        page.on("dialog", async (dialog) => {
             expect(dialog.message()).toEqual("hello");
             await dialog.accept();
         });

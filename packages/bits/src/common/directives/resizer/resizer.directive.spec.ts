@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, DebugElement } from "@angular/core";
+import { Component, DebugElement, Input } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
@@ -42,7 +42,7 @@ import { UtilService } from "../../../services/util.service";
 class ResizeSplitTestingComponent {
     public resizeDirection = ResizeDirection.right;
     public unitsValue = ResizeUnit.percent;
-    public disabled = false;
+    @Input() public disabled = false;
 
     public containerResizeHandler(entry: any) {
         return entry;
@@ -82,7 +82,7 @@ describe("directives >", () => {
         });
         it("should have correct class have when nuiResizerDisabled input is set to true", () => {
             fixture.detectChanges();
-            component.disabled = true;
+            fixture.componentRef.setInput("disabled", true);
             fixture.detectChanges();
             const resizeElement =
                 resizeSplitDebugElement.nativeElement.firstChild;

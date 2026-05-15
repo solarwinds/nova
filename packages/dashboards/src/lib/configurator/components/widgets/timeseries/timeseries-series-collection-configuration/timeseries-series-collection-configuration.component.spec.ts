@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -73,6 +73,10 @@ describe("TimeseriesSeriesCollectionConfigurationComponent", () => {
         component = fixture.componentInstance;
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it("should create", () => {
         expect(component).toBeTruthy();
     });
@@ -94,7 +98,7 @@ describe("TimeseriesSeriesCollectionConfigurationComponent", () => {
 
             expect(spy).toHaveBeenCalledWith(
                 "series",
-                component.series.map(config => config.id)
+                component.series.map((config) => config.id)
             );
         });
 

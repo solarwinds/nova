@@ -1,50 +1,59 @@
-<div *ngIf="form" [formGroup]="form">
+@if (form) {
+<div [formGroup]="form">
     <div class="mb-4">
         <nui-form-field
             caption="Default Metric"
             i18n-caption
             class="mb-4"
-            [control]="form.controls['activeMetricId']">
+            [control]="form.controls['activeMetricId']"
+        >
             <nui-select-v2
                 formControlName="activeMetricId"
                 #metricsSelect
                 placeholder="Select Value"
-                i18n-placeholder>
+                i18n-placeholder
+            >
                 <nui-overlay-item
                     (click)="unsetMetric()"
                     class="nui-combobox-v2__popup-box"
                     style="cursor: pointer"
                     >Unset</nui-overlay-item
                 >
+                @for (metric of metrics; track metric) {
                 <nui-select-v2-option
-                    *ngFor="let metric of metrics"
                     [displayValueContext]="metric.label"
-                    [value]="metric.id">
+                    [value]="metric.id"
+                >
                     {{ metric.label }}
                 </nui-select-v2-option>
+                }
             </nui-select-v2>
             <nui-validation-message for="required" i18n>
                 This field is required
             </nui-validation-message>
         </nui-form-field>
     </div>
-
     <div class="mb-4">
         <nui-form-field
             caption="Chart Series Data Field"
             i18n-caption
             class="mb-4"
-            [control]="form.controls['chartSeriesDataFieldId']">
+            [control]="form.controls['chartSeriesDataFieldId']"
+        >
             <nui-select-v2
                 formControlName="chartSeriesDataFieldId"
                 placeholder="Select Value"
-                i18n-placeholder>
+                i18n-placeholder
+            >
+                @for (chartSeriesDataField of chartSeriesDataFields; track
+                chartSeriesDataField) {
                 <nui-select-v2-option
-                    *ngFor="let chartSeriesDataField of chartSeriesDataFields"
                     [displayValueContext]="chartSeriesDataField.label"
-                    [value]="chartSeriesDataField.id">
+                    [value]="chartSeriesDataField.id"
+                >
                     {{ chartSeriesDataField.label }}
                 </nui-select-v2-option>
+                }
             </nui-select-v2>
             <nui-validation-message for="required" i18n>
                 This field is required
@@ -52,3 +61,4 @@
         </nui-form-field>
     </div>
 </div>
+}

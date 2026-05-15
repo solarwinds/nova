@@ -165,7 +165,11 @@ export class TextboxComponent
     _onTouched(): void {}
 
     public writeValue(value: string): void {
-        this.value = value;
+        this.value = value ?? "";
+
+        if (this.textboxInput?.nativeElement) {
+            this.textboxInput.nativeElement.value = this.value;
+        }
     }
 
     public registerOnChange(fn: () => void): void {

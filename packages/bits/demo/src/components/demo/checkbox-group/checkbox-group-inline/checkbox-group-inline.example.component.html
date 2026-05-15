@@ -2,8 +2,11 @@
     id="nui-demo-checkbox-group-inline"
     class="nui-checkbox-group-inline"
     [values]="selectedVegetables"
-    name="vegetable">
-    <nui-checkbox *ngFor="let vegetable of vegetables" [value]="vegetable">
+    name="vegetable"
+>
+    @for (vegetable of vegetables; track vegetable) {
+    <nui-checkbox [value]="vegetable">
         {{ vegetable }}
     </nui-checkbox>
+    }
 </nui-checkbox-group>

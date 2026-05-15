@@ -26,7 +26,7 @@ import {
     OnDestroy,
     OnInit,
 } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import { Apollo, gql } from "apollo-angular";
 import groupBy from "lodash/groupBy";
 import { BehaviorSubject, Observable, of } from "rxjs";
@@ -114,7 +114,7 @@ export class DrilldownDataSourceRealApi<T = any>
         return of(data)
             .pipe(
                 filter(() => !!this.drillState),
-                map(countries => {
+                map((countries) => {
                     const lastHistory = () => getLast(this.groupedDataHistory);
 
                     if (!this.drillState.length && !this.groupBy.length) {
@@ -139,7 +139,7 @@ export class DrilldownDataSourceRealApi<T = any>
 
                     for (const drill of drillToGroup) {
                         const drillIdx = fullDrillState.findIndex(
-                            v => v === drill
+                            (v) => v === drill
                         );
                         const group = this.groupBy[drillIdx];
 
@@ -182,11 +182,12 @@ export class DrilldownDataSourceRealApi<T = any>
         return mainRequest.valueChanges.pipe(
             // mock delay
             delay(300),
+            filter((res) => !res.loading && !!res.data),
             // data mapping, !DS specific!
-            map(res => res.data.countries),
+            map((res) => res.data!.countries),
             // adds mock icons to be displayed on leaf nodes !DS specific!
             map((res: any[]) =>
-                res.map(v => ({
+                res.map((v) => ({
                     ...v,
                     icon: "virtual-host",
                     icon_status: IconStatus.Up,
@@ -196,7 +197,7 @@ export class DrilldownDataSourceRealApi<T = any>
                         v.subregion?.region?.name || "No Region Specified",
                 }))
             ),
-            catchError(e => {
+            catchError((e) => {
                 this.logger.error(e);
                 return of({} as any);
             })
@@ -252,7 +253,7 @@ export class DrilldownDataSourceRealApi<T = any>
     }
 
     private getGroupsWidgetData(groupByObj: Record<string, T[]>) {
-        return Object.keys(groupByObj).map(property => ({
+        return Object.keys(groupByObj).map((property) => ({
             id: property,
             label: property,
             // statuses that will be displayed on group item
@@ -359,7 +360,7 @@ export class DrilldownWidgetExampleComponent implements OnInit {
         };
 
         // Setting the widget dimensions and position (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [drilldownWidget.id]: {
                 cols: 10,
                 rows: 10,

@@ -1,7 +1,8 @@
 <nui-breadcrumb
     id="nui-demo-breadcrumb-basic"
     [items]="breadcrumbSource"
-    (navigation)="onNavigation($event)"></nui-breadcrumb>
+    (navigation)="onNavigation($event)"
+></nui-breadcrumb>
 <div class="container">
     <div i18n class="nui-text-default">
         Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
@@ -19,7 +20,8 @@
         nui-button
         type="button"
         (click)="relativeNavigation('countries')"
-        i18n>
+        i18n
+    >
         Show countries
     </button>
     <button
@@ -28,7 +30,8 @@
         class="ml-1"
         type="button"
         (click)="relativeNavigation('offices')"
-        i18n>
+        i18n
+    >
         Show offices
     </button>
     <router-outlet></router-outlet>

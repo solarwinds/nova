@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { Component, OnInit } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 
 import {
     IDashboard,
@@ -60,7 +60,7 @@ export class HelloDashboardsExampleComponent implements OnInit {
                 this.widgetTypesService.mergeWithWidgetType(kpiWidget),
         };
         // Setting widget position and dimensions (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [kpiWidget.id]: {
                 cols: 4,
                 rows: 6,

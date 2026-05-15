@@ -25,11 +25,16 @@ import { ChartAtom } from "../atoms/chart.atom";
 export class DonutChartContentBooster {
     public static getContentElement(chart: ChartAtom): Locator {
         // `nui-chart-donut-content` is a sibling of the chart host (`nui-chart`).
-        // The chart atom locator points to the inner `.nui-chart` element, so
-        // walk up to the host first and then select the sibling.
+        // Depending on the page object, the chart atom can point to:
+        // - a wrapper containing `nui-chart`
+        // - the `nui-chart` host itself
+        // - an inner chart descendant inside `nui-chart`
+        // Resolve the nearest relevant chart host in all of those cases.
         const host = chart
             .getLocator()
-            .locator("xpath=ancestor-or-self::nui-chart[1]");
+            .locator(
+                "xpath=(ancestor-or-self::nui-chart[1] | descendant::nui-chart[1])[1]"
+            );
         return host.locator("xpath=following-sibling::nui-chart-donut-content");
     }
 

@@ -5,7 +5,8 @@
     (timeFrameChange)="onChange($event)"
     [historyIndex]="history.index"
     (undo)="onUndo()"
-    (clear)="onChange()">
+    (clear)="onChange()"
+>
     <!-- content for default projection slot -->
     <nui-icon icon="calendar" class="pr-3"></nui-icon>
     {{ timeFrame | timeFrame }}
@@ -24,6 +25,7 @@
     icon="zoom-in"
     displayStyle="primary"
     (click)="onZoomIn()"
-    [disabled]="!canZoom()">
+    [disabled]="!canZoom()"
+>
     Zoom In
 </button>

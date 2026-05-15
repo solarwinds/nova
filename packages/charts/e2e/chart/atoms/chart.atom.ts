@@ -84,12 +84,13 @@ export class ChartAtom extends Atom {
         seriesId: string
     ): Promise<MarkerSeriesAtom | undefined> {
         const [layer] = await this.getLayer("foreground");
-        return layer
-            ? Atom.findIn<MarkerSeriesAtom>(
-                  MarkerSeriesAtom,
-                  layer.locator(`#foreground-${seriesId}`),
-                  true
-              )
+        if (!layer) {
+            return undefined;
+        }
+
+        const markerSeries = layer.locator(`#foreground-${seriesId}`);
+        return (await markerSeries.count()) > 0
+            ? new MarkerSeriesAtom(markerSeries.first())
             : undefined;
     }
 
@@ -126,7 +127,7 @@ export class ChartAtom extends Atom {
         for (let i = 0; i < count; i++) {
             const candidate = allSeries.nth(i);
             if (await this.isVisible(candidate)) {
-                result.push(Atom.findIn<T>(atomClass, candidate, true));
+                result.push(new atomClass(candidate));
             }
         }
 
@@ -175,9 +176,9 @@ export class ChartAtom extends Atom {
 
     private async isVisible(el: Locator): Promise<boolean> {
         const visibility = await el.evaluate(
-            e => getComputedStyle(e).visibility
+            (e) => getComputedStyle(e).visibility
         );
-        const opacity = await el.evaluate(e =>
+        const opacity = await el.evaluate((e) =>
             parseFloat(getComputedStyle(e).opacity || "0")
         );
         return visibility !== "hidden" && opacity > 0;

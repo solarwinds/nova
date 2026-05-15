@@ -89,9 +89,13 @@ describe("LegendSeries >", () => {
                 fixture.detectChanges();
                 expect(hostElement.classList).toContain(activeClass);
 
-                mockLegend.active = false;
-                mockLegend.ngOnChanges({
-                    active: new SimpleChange(null, null, mockLegend.active),
+                // Wrap in ngZone.run so Angular marks the view dirty for the UPDATE pass
+                // in Angular 21's synchronizeOnce() (needed for non-signal state changes).
+                fixture.ngZone!.run(() => {
+                    mockLegend.active = false;
+                    mockLegend.ngOnChanges({
+                        active: new SimpleChange(null, null, mockLegend.active),
+                    });
                 });
                 fixture.detectChanges();
                 expect(hostElement.classList).not.toContain(activeClass);
@@ -99,7 +103,7 @@ describe("LegendSeries >", () => {
 
             it("should be applied if the legend is active and the series render state is anything but 'hidden'", () => {
                 prepareComponent(new MockLegendComponent({ active: true }));
-                Object.keys(RenderState).forEach(state => {
+                Object.keys(RenderState).forEach((state) => {
                     if (state !== RenderState.hidden) {
                         series.seriesRenderState = <RenderState>state;
                         fixture.detectChanges();

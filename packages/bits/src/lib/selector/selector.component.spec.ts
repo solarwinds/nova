@@ -18,35 +18,30 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { DebugElement } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { By } from "@angular/platform-browser";
-
 import { SelectorComponent } from "./selector.component";
 
 describe("components >", () => {
     describe("selector >", () => {
-        let fixture: ComponentFixture<SelectorComponent>;
         let componentInstance: SelectorComponent;
-        let debugElement: DebugElement;
 
-        // ToDo: Reimplement these tests in scope of NUI-2098
         beforeEach(() => {
-            TestBed.configureTestingModule({});
-
-            fixture = TestBed.createComponent(SelectorComponent);
-            componentInstance = fixture.componentInstance;
-            debugElement = fixture.debugElement;
-
-            fixture.detectChanges();
+            componentInstance = new SelectorComponent();
         });
 
         it("can be created", () => {
             expect(componentInstance).toBeTruthy();
-            const bnCheck = debugElement.query(
-                By.css("button.nui-selector__checkbox-button")
-            );
-            expect(bnCheck).toBeTruthy("checkbox");
+            expect(componentInstance.checkboxChecked).toBeFalse();
+        });
+
+        it("should hide the overlay after selecting a menu item", () => {
+            componentInstance.overlay = jasmine.createSpyObj("overlay", ["hide"]);
+
+            componentInstance.handleItemClick({
+                title: "Select all items on all pages",
+                value: "Select all items on all pages",
+            });
+
+            expect(componentInstance.overlay.hide).toHaveBeenCalled();
         });
     });
 });

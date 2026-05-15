@@ -25,7 +25,7 @@ import {
     Injectable,
     OnInit,
 } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import { BehaviorSubject, firstValueFrom, Observable, of, Subject } from "rxjs";
@@ -148,8 +148,8 @@ export class AcmeTableGBooksDataSource
 
         this.applyFilters$
             // eslint-disable-next-line import/no-deprecated
-            .pipe(switchMap(filters => this.getData(filters)))
-            .subscribe(async res => {
+            .pipe(switchMap((filters) => this.getData(filters)))
+            .subscribe(async (res) => {
                 this.outputsSubject.next(await this.getFilteredData(res));
             });
     }
@@ -159,10 +159,10 @@ export class AcmeTableGBooksDataSource
     ): Promise<IDataSourceOutput<INovaFilteringOutputs>> {
         return firstValueFrom(
             of(booksData).pipe(
-                tap(response => {
+                tap((response) => {
                     this.cache = this.cache.concat(response.books);
                 }),
-                map(response => ({
+                map((response) => ({
                     result: {
                         repeat: { itemsSource: this.cache },
                         paginator: { total: response.totalItems },
@@ -186,16 +186,16 @@ export class AcmeTableGBooksDataSource
             .pipe(
                 tap(() => this.busy.next(true)),
                 delay(300), // mock
-                map(response => ({
+                map((response) => ({
                     books:
-                        response.items?.map(volume => ({
+                        response.items?.map((volume) => ({
                             title: volume.volumeInfo.title,
                             authors:
                                 volume.volumeInfo.authors?.join(", ") || "",
                         })) || [],
                     totalItems: response.totalItems,
                 })),
-                catchError(e => {
+                catchError((e) => {
                     this.logger.error(e);
                     return of({
                         books: [],
@@ -301,7 +301,7 @@ export class TableWidgetSearchExampleComponent implements OnInit {
                 this.widgetTypesService.mergeWithWidgetType(tableWidget),
         };
 
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [tableWidget.id]: {
                 cols: 12,
                 rows: 6,

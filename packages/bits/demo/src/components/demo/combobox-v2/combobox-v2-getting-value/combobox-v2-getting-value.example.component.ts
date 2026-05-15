@@ -49,7 +49,8 @@ export class ComboboxV2GettingValueExampleComponent implements AfterViewInit {
             .pipe(
                 // eslint-disable-next-line import/no-deprecated
                 tap(
-                    value => (this.comboboxValueSelectedValue = value as string)
+                    (value) =>
+                        (this.comboboxValueSelectedValue = value as string)
                 ),
                 takeUntil(this.destroy$)
             )
@@ -59,7 +60,8 @@ export class ComboboxV2GettingValueExampleComponent implements AfterViewInit {
             .pipe(
                 // eslint-disable-next-line import/no-deprecated
                 tap(
-                    value => (this.comboboxValueChangedValue = value as string)
+                    (value) =>
+                        (this.comboboxValueChangedValue = value as string)
                 ),
                 takeUntil(this.destroy$)
             )

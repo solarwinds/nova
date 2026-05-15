@@ -6,7 +6,8 @@
             #toggleButton2
             type="button"
             (click)="overlay1.toggle()"
-            i18n>
+            i18n
+        >
             Click
         </button>
     </div>
@@ -17,7 +18,8 @@
             #toggleButton1
             type="button"
             (click)="overlay2.toggle()"
-            i18n>
+            i18n
+        >
             Click
         </button>
     </div>
@@ -27,18 +29,20 @@
     #overlay1
     [toggleReference]="toggleButton2['el'].nativeElement"
     [customContainer]="'.customContainer'"
-    [overlayConfig]="overlayConfig">
-    <ng-container *ngFor="let item of itemsSource">
-        <nui-overlay-item class="list-item">{{ item }}</nui-overlay-item>
-    </ng-container>
+    [overlayConfig]="overlayConfig"
+>
+    @for (item of itemsSource; track item) {
+    <nui-overlay-item class="list-item">{{ item }}</nui-overlay-item>
+    }
 </nui-overlay>
 
 <nui-overlay
     #overlay2
     [toggleReference]="toggleButton1['el'].nativeElement"
     [customContainer]="customContainer"
-    [overlayConfig]="overlayConfig">
-    <ng-container *ngFor="let item of itemsSource">
-        <nui-overlay-item class="list-item">{{ item }}</nui-overlay-item>
-    </ng-container>
+    [overlayConfig]="overlayConfig"
+>
+    @for (item of itemsSource; track item) {
+    <nui-overlay-item class="list-item">{{ item }}</nui-overlay-item>
+    }
 </nui-overlay>

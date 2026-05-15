@@ -35,11 +35,10 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import {
-    GridsterComponent,
+    Gridster,
     GridsterConfig,
     GridsterItem,
-    GridsterItemComponent,
-    GridsterItemComponentInterface,
+    GridsterItemConfig,
 } from "angular-gridster2";
 import _defaultsDeep from "lodash/defaultsDeep";
 
@@ -98,11 +97,11 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
         return true;
     }
 
-    @ViewChild(GridsterComponent)
-    public gridster: GridsterComponent;
+    @ViewChild(Gridster)
+    public gridster: Gridster;
 
-    @ViewChildren(GridsterItemComponent)
-    public gridsterItems: QueryList<GridsterItemComponent>;
+    @ViewChildren(GridsterItem)
+    public gridsterItems: QueryList<GridsterItem>;
 
     public gridsterItemsVisibilityMap: Record<string, boolean> = {};
 
@@ -142,9 +141,7 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
                 this.gridsterConfigChange.emit(gridsterConfig);
             }
 
-            if (this.gridsterConfig?.api) {
-                this.gridsterConfig.api.optionsChanged?.();
-            }
+            this.gridster?.api?.calculateLayout?.();
         }
 
         if (changes.editMode) {
@@ -201,9 +198,9 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
 
     public updateWidget(widget: IWidget): void {
         let dashboard: IDashboard = this.dashboard;
-        if (!this.dashboard.positions[widget.id] && this.gridsterConfig?.api) {
+        if (!this.dashboard.positions[widget.id] && this.gridster?.api) {
             const gridsterItem =
-                this.gridsterConfig.api.getFirstPossiblePosition?.({
+                this.gridster.api.getFirstPossiblePosition({
                     x: 0,
                     y: 0,
                     rows: this.gridsterConfig?.defaultItemRows as number,
@@ -247,8 +244,8 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
     }
 
     private updateWidgetPosition = (
-        item: GridsterItem,
-        itemComponent: GridsterItemComponentInterface
+        item: GridsterItemConfig,
+        itemComponent: GridsterItem
     ): void => {
         const widgetId = String((itemComponent as any).widgetId);
         const dashboard = immutableSet(
@@ -266,8 +263,8 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
     };
 
     private emitWidgetResize = (
-        item: GridsterItem,
-        itemComponent: GridsterItemComponentInterface
+        item: GridsterItemConfig,
+        itemComponent: GridsterItem
     ): void => {
         const widgetId = (itemComponent as any).widgetId;
 
@@ -285,14 +282,14 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
         options: GridsterConfig,
         eventName: string,
         invoke: (
-            item: GridsterItem,
-            itemComponent: GridsterItemComponentInterface
+            item: GridsterItemConfig,
+            itemComponent: GridsterItem
         ) => void
     ) {
         const prevEvent = options[eventName];
         options[eventName] = (
-            item: GridsterItem,
-            itemComponent: GridsterItemComponentInterface
+            item: GridsterItemConfig,
+            itemComponent: GridsterItem
         ) => {
             invoke(item, itemComponent);
 

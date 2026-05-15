@@ -166,7 +166,7 @@ export class Helpers {
 
     static async switchDarkTheme(mode: "on" | "off"): Promise<void> {
         await test.step(`Switch dark theme: ${mode}`, async () => {
-            await Helpers.page.evaluate(themeMode => {
+            await Helpers.page.evaluate((themeMode) => {
                 const html = document.getElementsByTagName("html")[0];
                 if (themeMode === "on") {
                     html.classList.add("dark-nova-theme");
@@ -185,7 +185,7 @@ export class Helpers {
     static async browserZoom(percent: number): Promise<void> {
         await test.step(`browserZoom(${percent}%)`, async () => {
             await Helpers.page.evaluate(
-                num => (document.body.style.zoom = `${num}%`),
+                (num) => (document.body.style.zoom = `${num}%`),
                 percent
             );
         });

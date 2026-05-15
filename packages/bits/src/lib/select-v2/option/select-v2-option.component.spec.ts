@@ -85,7 +85,7 @@ describe("components >", () => {
                 component.active = false;
             });
 
-            ["hidden", "selected"].forEach(className => {
+            ["hidden", "selected"].forEach((className) => {
                 it(`is not have ${className} class name by default`, () => {
                     expect(
                         debug.nativeElement.classList.value.includes(className)
@@ -94,7 +94,7 @@ describe("components >", () => {
             });
 
             it(`the "hidden" class is added`, () => {
-                component.outfiltered = true;
+                fixture.componentRef.setInput("outfiltered", true);
                 fixture.detectChanges();
                 expect(
                     debug.nativeElement.classList.value.includes("hidden")
@@ -114,7 +114,7 @@ describe("components >", () => {
 
                 it("should select if current option is the one being selected", () => {
                     component["select"].selectedOptions.push(component);
-                    fixture.detectChanges();
+                    fixture.changeDetectorRef.detectChanges();
                     expect(component.selected).toBe(true);
                     expect(
                         debug.nativeElement.classList.value.includes("selected")
@@ -126,7 +126,7 @@ describe("components >", () => {
                         TestBed.createComponent(SelectV2OptionComponent)
                             .componentInstance
                     );
-                    fixture.detectChanges();
+                    fixture.changeDetectorRef.detectChanges();
                     expect(component.selected).toBe(false);
                     expect(
                         debug.nativeElement.classList.value.includes("selected")
@@ -136,7 +136,7 @@ describe("components >", () => {
                 it("should select if current option is the one being selected", () => {
                     component.index = 0;
                     component["select"].selectedOptions.push(component);
-                    fixture.detectChanges();
+                    fixture.changeDetectorRef.detectChanges();
                     expect(component.selected).toBe(true);
                     expect(
                         debug.nativeElement.classList.value.includes("selected")
@@ -151,7 +151,7 @@ describe("components >", () => {
                     component.index = 0;
                     anotherComponent.index = 1;
                     component["select"].selectedOptions.push(anotherComponent);
-                    fixture.detectChanges();
+                    fixture.changeDetectorRef.detectChanges();
 
                     expect(component.selected).toBe(false);
                     expect(

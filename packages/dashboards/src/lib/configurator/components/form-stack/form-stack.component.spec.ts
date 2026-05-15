@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -66,6 +66,10 @@ describe("FormStackComponent", () => {
         fixture = TestBed.createComponent(FormStackComponent);
         component = fixture.componentInstance;
         component.nodes = [];
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it("should create", () => {

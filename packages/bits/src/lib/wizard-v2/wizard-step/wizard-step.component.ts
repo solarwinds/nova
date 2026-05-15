@@ -54,10 +54,11 @@ import { WizardStepLabelDirective } from "../wizard-step-label.directive";
     exportAs: "nuiWizardStep",
     template: `
         <ng-template>
-            <ng-content *ngIf="!template"></ng-content>
-            <ng-container *ngIf="template">
-                <ng-container *ngTemplateOutlet="template"></ng-container>
-            </ng-container>
+            @if (!template) {
+            <ng-content></ng-content>
+            } @if (template) {
+            <ng-container *ngTemplateOutlet="template"></ng-container>
+            }
         </ng-template>
     `,
     providers: [
@@ -130,7 +131,7 @@ export class WizardStepV2Component
         if (this.stepControl) {
             this.stepControl.statusChanges
                 .pipe(takeUntil(this.destroy$))
-                .subscribe(status => {
+                .subscribe((status) => {
                     if (status === "INVALID") {
                         this.completed = false;
                     }

@@ -21,6 +21,7 @@
 import {
     AfterContentInit,
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ElementRef,
     EventEmitter,
@@ -130,6 +131,21 @@ export class LegendSeriesComponent implements AfterContentInit {
     @HostBinding(`class.${LEGEND_SERIES_CLASS_NAME}--horizontal`)
     public isHorizontalClassApplied = false;
 
+    @HostBinding(`class.${LEGEND_SERIES_CLASS_NAME}--deselected`)
+    public get isDeselectedClassApplied(): boolean {
+        return !this.isSelected;
+    }
+
+    @HostBinding(`class.${LEGEND_SERIES_CLASS_NAME}--state-deemphasized`)
+    public get isDeemphasizedClassApplied(): boolean {
+        return this.seriesRenderState === RenderState.deemphasized;
+    }
+
+    @HostBinding(`class.${LEGEND_SERIES_CLASS_NAME}--state-hidden`)
+    public get isHiddenStateClassApplied(): boolean {
+        return this.seriesRenderState === RenderState.hidden;
+    }
+
     @HostBinding(`class.inverse`)
     public get isActiveClassApplied(): boolean {
         return this._active && this.seriesRenderState !== RenderState.hidden;
@@ -139,13 +155,17 @@ export class LegendSeriesComponent implements AfterContentInit {
     private _active = false;
     private _interactive: boolean;
 
-    constructor(@Optional() @Host() private legend: LegendComponent) {}
+    constructor(
+        @Optional() @Host() private legend: LegendComponent,
+        private cd: ChangeDetectorRef
+    ) {}
 
     public ngAfterContentInit(): void {
         if (this.legend) {
-            this.legend.activeChanged.subscribe(
-                (active: boolean) => (this._active = active)
-            );
+            this.legend.activeChanged.subscribe((active: boolean) => {
+                this._active = active;
+                this.cd.markForCheck();
+            });
 
             this.icon = this.icon || this.legend.seriesIcon;
             this._active = this.legend.active;

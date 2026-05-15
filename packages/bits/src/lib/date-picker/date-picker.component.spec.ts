@@ -101,6 +101,7 @@ describe("components >", () => {
             componentInstance.value = moment();
             debugElement = fixture.debugElement;
             fixture.detectChanges();
+            fixture.detectChanges();
         });
 
         it("should contain nui-overlay when not inline option", () => {
@@ -112,7 +113,7 @@ describe("components >", () => {
         });
 
         it("should NOT contain nui-overlay when inline option is set", () => {
-            componentInstance.inline = true;
+            fixture.componentRef.setInput("inline", true);
             fixture.detectChanges();
             const noOverlay =
                 debugElement.queryAll(By.css("nui-overlay")).length === 0;
@@ -120,10 +121,10 @@ describe("components >", () => {
         });
 
         it("should have only 10 elements for the year mode", () => {
-            componentInstance.datepickerMode = "year";
-            componentInstance.yearRange = 10;
+            fixture.componentRef.setInput("inline", true);
+            fixture.componentRef.setInput("datepickerMode", "year");
+            fixture.componentRef.setInput("yearRange", 10);
             fixture.detectChanges();
-            componentInstance.overlay.toggle();
             fixture.detectChanges();
             const numberOfYearTiles = debugElement.queryAll(
                 By.css("table .year")
@@ -133,7 +134,7 @@ describe("components >", () => {
 
         it("should load with selected date being today", () => {
             const activeDate = moment();
-            componentInstance.writeValue(activeDate);
+            fixture.componentRef.setInput("value", activeDate);
             componentInstance.overlay.toggle();
             fixture.detectChanges();
             const activeDateTile = debugElement.query(
@@ -170,8 +171,8 @@ describe("components >", () => {
         }));
 
         it("should set innerDatePicker.value to 'undefined' if popup is closed", () => {
-            componentInstance.ngOnInit();
-            componentInstance.value = moment("");
+            // Use setInput so Angular marks the view dirty before detectChanges (Angular 21 NG0100 fix)
+            fixture.componentRef.setInput("value", moment(""));
             fixture.detectChanges();
             componentInstance.overlay.hide$.next();
             expect(componentInstance._datePicker.value).toBeUndefined();
@@ -201,10 +202,10 @@ describe("components >", () => {
             const australiaTimezone = "Australia/Sydney";
             const marchDateISO = "2020-03-01T11:00:00.000+11:00";
 
-            componentInstance.ngOnInit();
-            componentInstance.value = momentTz().tz(
-                australiaTimezone
-            ) as unknown as moment.Moment;
+            fixture.componentRef.setInput(
+                "value",
+                momentTz().tz(australiaTimezone) as unknown as moment.Moment
+            );
             fixture.detectChanges();
 
             componentInstance._datePicker.select(marchDateISO, eventMock);
@@ -216,8 +217,7 @@ describe("components >", () => {
         it("should keep timezone value if 'handleTimezone' set to 'true'", () => {
             const dateISO = "2020-03-18T11:00:00.000+11:00";
 
-            componentInstance.ngOnInit();
-            componentInstance.handleTimezone = true;
+            fixture.componentRef.setInput("handleTimezone", true);
             fixture.detectChanges();
 
             componentInstance._datePicker.select(dateISO, eventMock);
@@ -235,8 +235,7 @@ describe("components >", () => {
             const dateISOMoment = moment("2020-03-18T11:00:00.000+11:00");
             const invalidMoment = moment.invalid();
 
-            componentInstance.ngAfterViewInit();
-            componentInstance.value = invalidMoment;
+            fixture.componentRef.setInput("value", invalidMoment);
             fixture.detectChanges();
 
             componentInstance._datePicker.selectionDone.next(dateISOMoment);
@@ -264,7 +263,7 @@ describe("components >", () => {
                 componentInstance.ngOnInit();
             });
 
-            validDatesTestCases.forEach(date => {
+            validDatesTestCases.forEach((date) => {
                 it(`${date} should be a valid date`, fakeAsync(() => {
                     const dateMoment = moment(
                         date,
@@ -282,7 +281,7 @@ describe("components >", () => {
                 }));
             });
 
-            invalidDatesTestCases.forEach(date => {
+            invalidDatesTestCases.forEach((date) => {
                 it(`${date} should be an invalid date`, fakeAsync(() => {
                     componentInstance.onInputActiveDateChanged(date);
                     tick(inputChangeDebounceTime);
@@ -298,7 +297,7 @@ describe("components >", () => {
             const invalidDateFormatsTestCases =
                 DatePickerSpecHelpers.getInvalidDateFormatsTestCases();
 
-            validDateFormatsTestCases.forEach(format => {
+            validDateFormatsTestCases.forEach((format) => {
                 it(`${format} should be a valid date format`, () => {
                     componentInstance.dateFormat = format;
                     componentInstance.ngOnInit();
@@ -308,7 +307,7 @@ describe("components >", () => {
                 });
             });
 
-            invalidDateFormatsTestCases.forEach(format => {
+            invalidDateFormatsTestCases.forEach((format) => {
                 it(`${format} should be an invalid date format`, () => {
                     componentInstance.dateFormat = format;
                     componentInstance.ngOnInit();
@@ -320,6 +319,42 @@ describe("components >", () => {
                     );
                 });
             });
+        });
+
+        describe("typed input formatting >", () => {
+            const inputChangeDebounceTime = 500;
+
+            it("should reformat a valid typed date in the textbox", fakeAsync(() => {
+                componentInstance.ngOnInit();
+
+                componentInstance.onInputActiveDateChanged("05/07/26");
+                tick(inputChangeDebounceTime);
+                fixture.detectChanges();
+
+                const textboxInput = debugElement.query(
+                    By.css("input.form-control")
+                ).nativeElement as HTMLInputElement;
+
+                expect(textboxInput.value).toBe("07 May 2026");
+                expect(componentInstance.isInErrorState).toBe(false);
+            }));
+
+            it("should apply error styling for an invalid typed date", fakeAsync(() => {
+                componentInstance.ngOnInit();
+
+                componentInstance.onInputActiveDateChanged("20189-50.Nov2");
+                tick(inputChangeDebounceTime);
+                fixture.detectChanges();
+
+                const textbox = debugElement.query(By.css(".nui-textbox"));
+                const textboxInput = debugElement.query(
+                    By.css("input.form-control")
+                ).nativeElement as HTMLInputElement;
+
+                expect(componentInstance.isInErrorState).toBe(true);
+                expect(textbox.nativeElement.classList).toContain("has-error");
+                expect(textboxInput.getAttribute("aria-invalid")).toBe("true");
+            }));
         });
     });
 });

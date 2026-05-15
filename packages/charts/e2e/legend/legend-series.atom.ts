@@ -114,14 +114,14 @@ export class LegendSeriesAtom extends Atom {
 
         const opacity = await deemphasizedElement
             .first()
-            .evaluate(el => getComputedStyle(el).opacity);
+            .evaluate((el) => getComputedStyle(el).opacity);
         return parseFloat(opacity) === this.deemphasizedOpacity;
     }
 
     public async isDescriptionDeemphasized(): Promise<boolean> {
         const opacity = await this.getLocator()
             .locator(".description-container")
-            .evaluate(el => getComputedStyle(el).opacity);
+            .evaluate((el) => getComputedStyle(el).opacity);
         return parseFloat(opacity) === this.deemphasizedOpacity;
     }
 }

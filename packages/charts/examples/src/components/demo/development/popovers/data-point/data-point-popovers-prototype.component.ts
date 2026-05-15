@@ -104,12 +104,14 @@ export class DataPointPopoversPrototypeComponent implements OnInit {
     }
 
     private updateChart() {
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(s => ({
-            ...s,
-            scales: this.scales,
-            renderer: this.renderer,
-            accessors: this.accessors,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (s) => ({
+                ...s,
+                scales: this.scales,
+                renderer: this.renderer,
+                accessors: this.accessors,
+            })
+        );
 
         this.chartAssist.update(seriesSet);
     }

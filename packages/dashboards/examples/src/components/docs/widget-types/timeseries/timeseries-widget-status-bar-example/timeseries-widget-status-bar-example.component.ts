@@ -24,7 +24,7 @@ import {
     Injectable,
     OnInit,
 } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import keyBy from "lodash/keyBy";
 import moment, { Moment } from "moment/moment";
 import { BehaviorSubject } from "rxjs";
@@ -258,7 +258,7 @@ export class TimeseriesWidgetStatusBarExampleComponent implements OnInit {
     public initializeDashboard(): void {
         // We're using a static configuration object for this example, but this is where
         // the widget's configuration could potentially be populated from a database
-        const widgetsWithStructure = widgetConfigs.map(w =>
+        const widgetsWithStructure = widgetConfigs.map((w) =>
             this.widgetTypesService.mergeWithWidgetType(w)
         );
         const widgetsIndex = keyBy(widgetsWithStructure, (w: IWidget) => w.id);
@@ -761,7 +761,7 @@ const statusColors: Record<Status, string> = {
 };
 
 // Setting the widget dimensions and position (this is for gridster)
-const positions: Record<string, GridsterItem> = {
+const positions: Record<string, GridsterItemConfig> = {
     [widgetConfigs[0].id]: {
         cols: 12,
         rows: 4,

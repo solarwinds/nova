@@ -53,7 +53,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
                 [name]="name"
                 [value]="value"
                 [checked]="checked"
-                [disabled]="disabled"
+                [disabled]="!!disabled"
             >
                 <ng-content></ng-content>
             </nui-checkbox>
@@ -92,6 +92,7 @@ export class MenuOptionComponent extends MenuItemBaseComponent {
         if (!this.disabled) {
             event.preventDefault();
             this.checked = !this.checked;
+            this.refreshView();
             this.actionDone.emit(this.checked);
         }
     }
@@ -122,6 +123,7 @@ export class MenuOptionComponent extends MenuItemBaseComponent {
 
     public doAction(): void {
         this.checked = !this.checked;
+        this.refreshView();
         this.actionDone.emit(this.checked);
     }
 }

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, ChangeDetectorRef } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
@@ -59,6 +59,10 @@ describe("components >", () => {
             ).nativeElement;
 
             fixture.autoDetectChanges();
+            // Double detectChanges to settle nested changeDetector.detectChanges() calls
+            // in ngAfterContentInit (Angular 21 NG0100 prevention pattern).
+            fixture.detectChanges();
+            fixture.detectChanges();
         };
 
         beforeEach(() => {
@@ -73,7 +77,8 @@ describe("components >", () => {
 
             testLegendComponent = new LegendComponent();
             testLegendSeriesComponent = new LegendSeriesComponent(
-                testLegendComponent
+                testLegendComponent,
+                { markForCheck: () => {} } as unknown as ChangeDetectorRef
             );
         });
 
@@ -129,7 +134,9 @@ describe("components >", () => {
                     testLegendComponent,
                     testLegendSeriesComponent
                 );
-                tile.unitLabel = seriesSpecificUnitLabel;
+                // Use setInput so Angular marks the view dirty before detectChanges (Angular 21 NG0100 fix)
+                fixture.componentRef.setInput("unitLabel", seriesSpecificUnitLabel);
+                fixture.detectChanges();
                 fixture.detectChanges();
 
                 expect(tile.unitLabel).toEqual(seriesSpecificUnitLabel);
@@ -151,7 +158,9 @@ describe("components >", () => {
                     testLegendComponent,
                     testLegendSeriesComponent
                 );
-                tile.backgroundColor = seriesSpecificColor;
+                // Use setInput so Angular marks the view dirty before detectChanges (Angular 21 NG0100 fix)
+                fixture.componentRef.setInput("backgroundColor", seriesSpecificColor);
+                fixture.detectChanges();
                 fixture.detectChanges();
 
                 expect(tile.backgroundColor).toEqual(seriesSpecificColor);

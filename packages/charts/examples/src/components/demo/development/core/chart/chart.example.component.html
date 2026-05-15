@@ -14,12 +14,11 @@
             seriesUnitLabel="Mbps"
             [active]="statusChartAssist.isLegendActive"
             [interactive]="true"
-            (mouseleave)="statusChartAssist.resetVisibleSeries()">
+            (mouseleave)="statusChartAssist.resetVisibleSeries()"
+        >
+            @for ( legendSeries of statusChartAssist.legendSeriesSet; track
+            statusChartAssist.seriesTrackByFn($index, legendSeries)) {
             <nui-legend-series
-                *ngFor="
-                    let legendSeries of statusChartAssist.legendSeriesSet;
-                    trackBy: statusChartAssist.seriesTrackByFn
-                "
                 [descriptionPrimary]="legendSeries['name']"
                 [seriesRenderState]="
                     statusChartAssist.renderStatesIndex[legendSeries.id]?.state
@@ -32,7 +31,8 @@
                 "
                 (isSelectedChange)="
                     statusChartAssist.toggleSeries(legendSeries.id, $event)
-                ">
+                "
+            >
                 <nui-rich-legend-tile
                     [backgroundColor]="
                         statusPalette.backgroundColors.get(
@@ -41,7 +41,8 @@
                                 'y'
                             )
                         )
-                    ">
+                    "
+                >
                     <div
                         class="tilebox__value"
                         [class.tilebox__value--emphasized]="
@@ -52,7 +53,8 @@
                                 )
                             )
                         "
-                        top>
+                        top
+                    >
                         {{
                             statusChartAssist.getHighlightedValue(
                                 legendSeries,
@@ -69,7 +71,8 @@
                                 'y'
                             )
                         "
-                        leftEdge></nui-icon>
+                        leftEdge
+                    ></nui-icon>
                     <nui-chart-marker
                         [marker]="
                             statusChartAssist.markers.get(legendSeries.id)
@@ -79,9 +82,11 @@
                                 legendSeries.id
                             )
                         "
-                        rightEdge></nui-chart-marker>
+                        rightEdge
+                    ></nui-chart-marker>
                 </nui-rich-legend-tile>
             </nui-legend-series>
+            }
         </nui-legend>
     </div>
 </div>

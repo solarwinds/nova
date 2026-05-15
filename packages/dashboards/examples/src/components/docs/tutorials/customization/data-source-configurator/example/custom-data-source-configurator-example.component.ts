@@ -29,7 +29,7 @@ import {
     OnInit,
 } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import { BehaviorSubject } from "rxjs";
 import { finalize } from "rxjs/operators";
 
@@ -108,13 +108,14 @@ import {
                         "
                         formControlName="bookId"
                     >
+                        @for (book of books; track book) {
                         <nui-select-v2-option
-                            *ngFor="let book of books"
                             [value]="book.id"
                             [displayValueContext]="book"
                         >
                             {{ book.title }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                 </nui-form-field>
             </div>
@@ -134,12 +135,11 @@ import {
                         i18n-placeholder
                         formControlName="metric"
                     >
-                        <nui-select-v2-option
-                            *ngFor="let metric of metrics"
-                            [value]="metric.id"
-                        >
+                        @for (metric of metrics; track metric) {
+                        <nui-select-v2-option [value]="metric.id">
                             {{ metric.label }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                 </nui-form-field>
             </div>
@@ -217,7 +217,7 @@ export class HarryPotterDataSourceConfiguratorComponent
         // Here we set the providerId to our only data source so when a new tile gets created it will default to it.
         this.form.get("providerId")?.setValue(AcmeKpiDataSource.providerId);
         // Here we subscribe to the form and if there are any changes we invoke the data source
-        this.form.valueChanges.subscribe(value => {
+        this.form.valueChanges.subscribe((value) => {
             if (!value.providerId) {
                 return;
             }
@@ -257,7 +257,7 @@ export class AcmeKpiDataSource
     public async getFilteredData(): Promise<IFilteringOutputs> {
         // For loading indicator to show
         this.busy.next(true);
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             // *** Make a resource request to an external API (if needed)
             this.http
                 .get(
@@ -364,7 +364,7 @@ export class CustomDataSourceConfiguratorExampleComponent implements OnInit {
         };
 
         // Setting the widget dimensions and position (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [kpiWidget.id]: {
                 cols: 4,
                 rows: 6,

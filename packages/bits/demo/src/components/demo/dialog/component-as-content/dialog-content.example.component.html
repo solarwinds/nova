@@ -1,6 +1,7 @@
 <nui-dialog-header
     [title]="name"
-    (closed)="activeDialog.close()"></nui-dialog-header>
+    (closed)="activeDialog.close()"
+></nui-dialog-header>
 <div class="dialog-body">
     <p i18n>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam maximus
@@ -18,7 +19,8 @@
         type="button"
         [isEmpty]="false"
         (click)="onButtonClick('Cancel')"
-        i18n>
+        i18n
+    >
         Cancel
     </button>
     <button
@@ -27,7 +29,8 @@
         displayStyle="primary"
         [isEmpty]="false"
         (click)="onButtonClick('Action')"
-        i18n>
+        i18n
+    >
         Action
     </button>
 </nui-dialog-footer>

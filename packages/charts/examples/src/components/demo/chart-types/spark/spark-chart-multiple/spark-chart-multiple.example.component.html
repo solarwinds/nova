@@ -1,6 +1,9 @@
-<div *ngFor="let spark of chartAssist.sparks; trackBy: chartAssist.trackByFn">
+@for (spark of chartAssist.sparks; track spark.id) {
+<div>
     <nui-chart
         class="d-flex"
         [chart]="spark.chart"
-        nuiChartCollectionId="example-collection-id"></nui-chart>
+        nuiChartCollectionId="example-collection-id"
+    ></nui-chart>
 </div>
+}

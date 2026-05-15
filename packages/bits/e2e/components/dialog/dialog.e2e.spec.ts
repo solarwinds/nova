@@ -277,7 +277,7 @@ test.describe("USERCONTROL Dialog", () => {
                     throw new Error("The overlay is not defined");
                 }
                 await page.waitForFunction(
-                    el => window.getComputedStyle(el).zIndex === "1000",
+                    (el) => window.getComputedStyle(el).zIndex === "1000",
                     overlay
                 );
 
@@ -289,7 +289,7 @@ test.describe("USERCONTROL Dialog", () => {
                     throw new Error("The overlayB is not defined");
                 }
                 await page.waitForFunction(
-                    el => window.getComputedStyle(el).zIndex === "1000",
+                    (el) => window.getComputedStyle(el).zIndex === "1000",
                     overlayB
                 );
             });

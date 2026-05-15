@@ -57,7 +57,7 @@ export enum TableVirtualScrollHeaderPosition {
     selector: "cdk-virtual-scroll-viewport[tableStickyHeader]",
     host: {
         "[class.sticky-table-header]": "true",
-        "style": "overflow-y:overlay",
+        style: "overflow-y:overlay",
     },
     standalone: false,
 })
@@ -275,7 +275,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         // Disable animation for resizable sticky header cells to prevent a lagging effect during width changes.
         if (!this.table.resizable) {
             Array.from(this.headRef?.getElementsByTagName("th") || []).forEach(
-                th => th.classList.add("virtual-sticky")
+                (th) => th.classList.add("virtual-sticky")
             );
         }
         this.bodyRef =
@@ -318,17 +318,29 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             tap(() => this.updateNativeHeaderPlaceholder())
         );
 
-        if (!this.virtualFor) {
-            throw new Error("Unable to find CdkVirtualForOf");
-        }
+        // Note: When cdkVirtualFor is present, use its dataStream.
+        // When it is absent (e.g. after Angular CDK v21 migration where cdkVirtualFor was
+        // removed from the table row template), fall back to the viewport's renderedRangeStream which
+        // fires whenever the visible item range changes (data loads, sorting, filtering, etc.).
+        const dataSource = this.virtualFor?.dataStream ?? this.viewport.renderedRangeStream;
+        // const resolvedDataStream: Observable<unknown> =
+        //     rawDataSource != null && typeof (rawDataSource as any).pipe === "function"
+        //         ? (rawDataSource as Observable<unknown>)
+        //         : this.viewport.renderedRangeStream;
 
-        const dataStream$ = this.virtualFor.dataStream.pipe(
-            // give CDK some time to render rows after a change
-            delay(0, asyncScheduler),
-            tap(() => this.updateNativeHeaderPlaceholder())
+
+        const dataStream$ = dataSource.pipe(
+          // give CDK some time to render rows after a change
+          delay(0, asyncScheduler),
+          tap(() => this.updateNativeHeaderPlaceholder())
         );
 
-        merge(onScroll$, onResize$, tableColumnsUpdate$, dataStream$)
+        merge(
+            onScroll$,
+            onResize$,
+            tableColumnsUpdate$,
+            dataStream$
+        )
             .pipe(
                 // Note: Preventing function to be invoked multiple times
                 // by merging new observable only if the previous one was completed
@@ -346,7 +358,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             .pipe(
                 map(() => this.viewportEl.scrollLeft),
                 // Note: Filtering out vertical scroll events
-                filter(scrollLeft => scrollLeft !== previousScrollLeft),
+                filter((scrollLeft) => scrollLeft !== previousScrollLeft),
                 tap((scrollLeft: number) => {
                     previousScrollLeft = scrollLeft;
                     // Note: Simulating horizontal scroll by assigning margin-left to be equal to scrolled distance
@@ -374,7 +386,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             this.tableElRef?.classList || []
         );
         originalTableClasses.push("sticky-table-header-container");
-        originalTableClasses.forEach(cssClass =>
+        originalTableClasses.forEach((cssClass) =>
             this.renderer.addClass(this.stickyHeadContainer, cssClass)
         );
 

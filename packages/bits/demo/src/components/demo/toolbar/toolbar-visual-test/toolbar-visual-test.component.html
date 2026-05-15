@@ -7,7 +7,8 @@
                 displayStyle="main"
                 type="primary"
                 icon="edit"
-                title="Edit">
+                title="Edit"
+            >
             </nui-toolbar-item>
             <nui-toolbar-item type="primary" icon="filter" title="Filter">
             </nui-toolbar-item>
@@ -39,7 +40,8 @@
                 displayStyle="destructive"
                 type="secondary"
                 icon="delete"
-                title="Delete">
+                title="Delete"
+            >
             </nui-toolbar-item>
         </nui-toolbar-group>
     </nui-toolbar>
@@ -54,7 +56,8 @@
                 displayStyle="main"
                 type="primary"
                 icon="edit"
-                title="Edit">
+                title="Edit"
+            >
             </nui-toolbar-item>
             <nui-toolbar-item type="primary" icon="filter" title="Filter">
             </nui-toolbar-item>
@@ -68,7 +71,8 @@
                 id="nui-toolbar-embedded-test-button"
                 type="primary"
                 icon="clear"
-                title="Clear">
+                title="Clear"
+            >
             </nui-toolbar-item>
             <nui-toolbar-item type="primary" icon="download" title="Download">
             </nui-toolbar-item>
@@ -91,21 +95,24 @@
                 displayStyle="destructive"
                 type="secondary"
                 icon="delete"
-                title="Delete">
+                title="Delete"
+            >
             </nui-toolbar-item>
         </nui-toolbar-group>
         <div class="nui-toolbar-embedded">
             <nui-search
                 class="mr-1"
                 id="nui-toolbar-embedded-test-search"
-                (search)="search()"></nui-search>
+                (search)="search()"
+            ></nui-search>
             <nui-menu
                 id="nui-toolbar-embedded-test-menu"
                 displayStyle="action"
                 [itemsSource]="itemsSource"
                 [icon]="'menu'"
                 [ariaLabel]="'More options'"
-                i18n-ariaLabel></nui-menu>
+                i18n-ariaLabel
+            ></nui-menu>
         </div>
     </nui-toolbar>
 </div>
@@ -115,14 +122,16 @@
     <nui-toolbar
         id="nui-toolbar-test-selected"
         [selectionEnabled]="true"
-        [selectedItems]="select">
+        [selectedItems]="select"
+    >
         <nui-toolbar-group title="g1">
             <nui-toolbar-item
                 id="nui-toolbar-selected-test-button-primary"
                 displayStyle="main"
                 type="primary"
                 icon="edit"
-                title="Edit">
+                title="Edit"
+            >
             </nui-toolbar-item>
             <nui-toolbar-item type="primary" icon="filter" title="Filter">
             </nui-toolbar-item>
@@ -136,7 +145,8 @@
                 id="nui-toolbar-selected-test-button"
                 type="primary"
                 icon="clear"
-                title="Clear">
+                title="Clear"
+            >
             </nui-toolbar-item>
             <nui-toolbar-item type="primary" icon="download" title="Download">
             </nui-toolbar-item>
@@ -159,21 +169,24 @@
                 displayStyle="destructive"
                 type="secondary"
                 icon="delete"
-                title="Delete">
+                title="Delete"
+            >
             </nui-toolbar-item>
         </nui-toolbar-group>
         <div class="nui-toolbar-embedded">
             <nui-search
                 class="mr-1"
                 id="nui-toolbar-selected-test-search"
-                (search)="search()"></nui-search>
+                (search)="search()"
+            ></nui-search>
             <nui-menu
                 id="nui-toolbar-selected-test-menu"
                 displayStyle="action"
                 [itemsSource]="itemsSource"
                 [icon]="'menu'"
                 [ariaLabel]="'More options'"
-                i18n-ariaLabel></nui-menu>
+                i18n-ariaLabel
+            ></nui-menu>
         </div>
     </nui-toolbar>
 </div>
@@ -185,7 +198,8 @@
                 displayStyle="main"
                 type="primary"
                 icon="add"
-                title="Add">
+                title="Add"
+            >
             </nui-toolbar-item>
             <nui-toolbar-item type="primary" icon="edit" title="Edit">
             </nui-toolbar-item>
@@ -195,7 +209,8 @@
                 displayStyle="destructive"
                 type="primary"
                 icon="delete"
-                title="Delete">
+                title="Delete"
+            >
             </nui-toolbar-item>
         </nui-toolbar-group>
         <div class="nui-toolbar-embedded">
@@ -211,14 +226,16 @@
         id="nui-toolbar-with-selection-no-menu-with-search"
         [selectionEnabled]="true"
         [selectedItems]="select"
-        #toolbar>
+        #toolbar
+    >
         <nui-toolbar-group>
             <nui-toolbar-item type="primary" icon="deselect" title="Deselect">
             </nui-toolbar-item>
             <nui-toolbar-item
                 type="primary"
                 icon="deselect-all"
-                title="Deselect All">
+                title="Deselect All"
+            >
             </nui-toolbar-item>
         </nui-toolbar-group>
         <nui-toolbar-group>
@@ -226,7 +243,8 @@
                 displayStyle="destructive"
                 type="primary"
                 icon="delete"
-                title="Delete">
+                title="Delete"
+            >
             </nui-toolbar-item>
         </nui-toolbar-group>
         <div class="nui-toolbar-embedded">
@@ -244,7 +262,8 @@
                 displayStyle="main"
                 type="primary"
                 icon="add"
-                title="Add">
+                title="Add"
+            >
             </nui-toolbar-item>
             <nui-toolbar-item type="primary" icon="edit" title="Edit">
             </nui-toolbar-item>
@@ -254,7 +273,8 @@
                 displayStyle="destructive"
                 type="primary"
                 icon="delete"
-                title="Delete">
+                title="Delete"
+            >
             </nui-toolbar-item>
         </nui-toolbar-group>
     </nui-toolbar>
@@ -265,14 +285,16 @@
     <nui-toolbar
         id="nui-toolbar-with-selection-no-menu"
         [selectionEnabled]="true"
-        #toolbar>
+        #toolbar
+    >
         <nui-toolbar-group>
             <nui-toolbar-item type="primary" icon="deselect" title="Deselect">
             </nui-toolbar-item>
             <nui-toolbar-item
                 type="primary"
                 icon="deselect-all"
-                title="Deselect All">
+                title="Deselect All"
+            >
             </nui-toolbar-item>
         </nui-toolbar-group>
         <nui-toolbar-group>
@@ -280,7 +302,8 @@
                 displayStyle="destructive"
                 type="primary"
                 icon="delete"
-                title="Delete">
+                title="Delete"
+            >
             </nui-toolbar-item>
         </nui-toolbar-group>
     </nui-toolbar>

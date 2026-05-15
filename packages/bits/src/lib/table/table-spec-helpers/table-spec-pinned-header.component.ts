@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 
 import { TableSpecHelpers } from "./table-spec-helpers";
 
@@ -57,7 +57,7 @@ import { TableSpecHelpers } from "./table-spec-helpers";
 export class PinnedHeaderTableComponent {
     public displayedColumns = ["position", "name", "asset", "location"];
     public dataSource = TableSpecHelpers.getTableInitialData();
-    public isSticky = true;
+    @Input() public isSticky = true;
 
     public setStickyFalse(): void {
         this.isSticky = false;

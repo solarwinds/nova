@@ -50,12 +50,14 @@ export class RendererMarkersCustomAccessorExampleComponent implements OnInit {
         // Custom marker accessor
         accessors.series.marker = () => CHART_MARKERS[2];
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
-            ...d,
-            scales,
-            renderer,
-            accessors,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                scales,
+                renderer,
+                accessors,
+            })
+        );
 
         this.chart.update(seriesSet);
     }

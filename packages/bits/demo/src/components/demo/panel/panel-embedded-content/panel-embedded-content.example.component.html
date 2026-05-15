@@ -41,10 +41,8 @@
                 laoreet dui a mollis.
             </p>
         </div>
-        <div
-            *ngIf="displayFooter"
-            nuiPanelEmbeddedFooter
-            class="d-flex justify-content-between">
+        @if (displayFooter) {
+        <div nuiPanelEmbeddedFooter class="d-flex justify-content-between">
             <button nui-button type="button" (click)="onClickCancel()" i18n>
                 Cancel
             </button>
@@ -53,9 +51,11 @@
                 type="button"
                 displayStyle="primary"
                 (click)="onClickConfirm()"
-                i18n>
+                i18n
+            >
                 Confirm
             </button>
         </div>
+        }
     </nui-panel>
 </div>

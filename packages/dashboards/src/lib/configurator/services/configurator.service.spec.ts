@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -36,7 +36,7 @@ import {
 } from "@angular/core/testing";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
-import { GridsterModule } from "angular-gridster2";
+import { Gridster, GridsterItem } from "angular-gridster2";
 import { of } from "rxjs";
 
 import { NuiPanelModule } from "@nova-ui/bits";
@@ -110,7 +110,7 @@ describe("ConfiguratorService > ", () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                GridsterModule,
+                Gridster, GridsterItem,
                 PortalModule,
                 NuiPanelModule,
                 RouterTestingModule.withRoutes([]),
@@ -157,6 +157,10 @@ describe("ConfiguratorService > ", () => {
                 portal: {} as ComponentPortal<any>,
             },
         };
+    });
+
+    afterEach(() => {
+        configComponentFixture.destroy();
     });
 
     afterEach(() => {

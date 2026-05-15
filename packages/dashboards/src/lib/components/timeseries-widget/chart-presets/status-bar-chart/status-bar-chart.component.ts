@@ -149,7 +149,7 @@ export class StatusBarChartComponent
                   )
                 : undefined;
 
-        this.accessors.data.y = d => d.value;
+        this.accessors.data.y = (d) => d.value;
 
         // disable pointer events on bars to ensure the zoom drag target is the mouse interactive area rather than the bars
         this.renderer = new BarRenderer({
@@ -226,12 +226,14 @@ export class StatusBarChartComponent
                     this.configuration?.projectType ===
                     TimeseriesWidgetProjectType.PerfstackApp
                 ) {
+                    const zoomPlugin = this.zoomPlugins[i];
                     if (
                         !(spark?.chart as Chart)?.hasPlugin(
                             TimeseriesZoomPlugin
-                        )
+                        ) &&
+                        zoomPlugin
                     ) {
-                        spark?.chart?.addPlugin(this.zoomPlugins[i]);
+                        spark?.chart?.addPlugin(zoomPlugin);
                     }
                 } else {
                     if (!(spark?.chart as Chart)?.hasPlugin(ZoomPlugin)) {

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, DebugElement } from "@angular/core";
+import { Component, DebugElement, Input } from "@angular/core";
 import {
     ComponentFixture,
     fakeAsync,
@@ -76,18 +76,19 @@ const PANE_HEADER = "DEFAULT HEADER";
     standalone: false,
 })
 class TestAppComponent {
-    paneSize = PanelComponent.SIZE_VALUES.width.DEFAULT_VALUE;
-    paneCollapsedSize = PanelComponent.SIZE_VALUES.width.COLLAPSED_VALUE;
-    panelMode = PanelModes.static;
-    isCollapsed: boolean = false;
-    headerIcon: string;
-    orientation = "left";
-    heading: string;
-    headerIconCounter: number;
-    displacePrimaryContent: boolean;
-    darkBorder: boolean;
-    headerPadding: boolean;
-    panelBackgroundColor: PanelBackgroundColor;
+    @Input() paneSize = PanelComponent.SIZE_VALUES.width.DEFAULT_VALUE;
+    @Input() paneCollapsedSize =
+        PanelComponent.SIZE_VALUES.width.COLLAPSED_VALUE;
+    @Input() panelMode = PanelModes.static;
+    @Input() isCollapsed: boolean = false;
+    @Input() headerIcon: string;
+    @Input() orientation = "left";
+    @Input() heading: string;
+    @Input() headerIconCounter: number;
+    @Input() displacePrimaryContent: boolean;
+    @Input() darkBorder: boolean;
+    @Input() headerPadding: boolean;
+    @Input() panelBackgroundColor: PanelBackgroundColor;
 
     public onCollapse(event: boolean) {
         return event;
@@ -120,6 +121,8 @@ describe("components >", () => {
             testComponent.heading = PANE_HEADER;
             testComponent.headerIconCounter = 5;
             testComponent.headerIcon = "filter";
+            fixture.detectChanges();
+            fixture.detectChanges();
         });
 
         it("should have content in left pane and center pane", () => {
@@ -145,7 +148,8 @@ describe("components >", () => {
                 `${PanelComponent.SIZE_VALUES.width.DEFAULT_VALUE}`
             );
 
-            testComponent.paneSize = PANE_WIDTH;
+            fixture.componentRef.setInput("paneSize", PANE_WIDTH);
+            fixture.detectChanges();
             fixture.detectChanges();
 
             expect(leftPaneContainer.style.width).toBe(`${PANE_WIDTH}`);
@@ -153,8 +157,9 @@ describe("components >", () => {
 
         it("should change width to min value if isCollapsible and collapsed", fakeAsync(() => {
             fixture.detectChanges();
-            testComponent.panelMode = PanelModes.collapsible;
-            testComponent.isCollapsed = true;
+            fixture.componentRef.setInput("panelMode", PanelModes.collapsible);
+            fixture.componentRef.setInput("isCollapsed", true);
+            fixture.detectChanges();
             fixture.detectChanges();
             tick();
             const leftPaneContainer = fixture.debugElement.query(
@@ -167,9 +172,10 @@ describe("components >", () => {
 
         it("should set width in percents when allowPercentageSize is true and is not collapsed", () => {
             fixture.detectChanges();
-            testComponent.panelMode = PanelModes.collapsible;
-            testComponent.isCollapsed = false;
-            testComponent.paneSize = PANE_WIDTH_PERCENTS;
+            fixture.componentRef.setInput("panelMode", PanelModes.collapsible);
+            fixture.componentRef.setInput("isCollapsed", false);
+            fixture.componentRef.setInput("paneSize", PANE_WIDTH_PERCENTS);
+            fixture.detectChanges();
             fixture.detectChanges();
 
             const leftPaneContainer = fixture.debugElement.query(
@@ -181,11 +187,12 @@ describe("components >", () => {
         });
 
         it("should change height in top pane container if collapsible and not collapsed", () => {
-            testComponent.orientation = "top";
+            fixture.componentRef.setInput("orientation", "top");
             fixture.detectChanges();
-            testComponent.panelMode = PanelModes.collapsible;
-            testComponent.isCollapsed = false;
-            testComponent.paneSize = PANE_HEIGHT;
+            fixture.componentRef.setInput("panelMode", PanelModes.collapsible);
+            fixture.componentRef.setInput("isCollapsed", false);
+            fixture.componentRef.setInput("paneSize", PANE_HEIGHT);
+            fixture.detectChanges();
             fixture.detectChanges();
 
             const topPaneContainer = fixture.debugElement.query(
@@ -195,9 +202,10 @@ describe("components >", () => {
         });
 
         it("should have set height in top pane container", () => {
-            testComponent.orientation = "top";
+            fixture.componentRef.setInput("orientation", "top");
             fixture.detectChanges();
-            testComponent.paneSize = PANE_HEIGHT;
+            fixture.componentRef.setInput("paneSize", PANE_HEIGHT);
+            fixture.detectChanges();
             fixture.detectChanges();
 
             const topPaneContainer = fixture.debugElement.query(
@@ -208,9 +216,10 @@ describe("components >", () => {
 
         it("should have default min height when panel is collapsed", fakeAsync(() => {
             fixture.detectChanges();
-            testComponent.orientation = "top";
-            testComponent.panelMode = PanelModes.collapsible;
-            testComponent.isCollapsed = true;
+            fixture.componentRef.setInput("orientation", "top");
+            fixture.componentRef.setInput("panelMode", PanelModes.collapsible);
+            fixture.componentRef.setInput("isCollapsed", true);
+            fixture.detectChanges();
             fixture.detectChanges();
             tick();
             const topPaneContainer = fixture.debugElement.query(
@@ -228,7 +237,8 @@ describe("components >", () => {
             );
             expect(collapseButtonDebugElement).toBeNull();
 
-            testComponent.panelMode = PanelModes.collapsible;
+            fixture.componentRef.setInput("panelMode", PanelModes.collapsible);
+            fixture.detectChanges();
             fixture.detectChanges();
             collapseButtonDebugElement = fixture.debugElement.query(
                 By.css(".nui-panel__header-btn")
@@ -263,7 +273,8 @@ describe("components >", () => {
 
             it("when not collapsible and collapsed", fakeAsync(() => {
                 fixture.detectChanges();
-                testComponent.isCollapsed = true;
+                // Use setInput() so Angular marks the view dirty (Angular 21 NG0100 fix)
+                fixture.componentRef.setInput("isCollapsed", true);
                 tick();
                 fixture.detectChanges();
                 panelContainer = fixture.debugElement.query(
@@ -286,8 +297,12 @@ describe("components >", () => {
             }));
 
             it("when collapsible and not collapsed", () => {
-                testComponent.isCollapsed = false;
-                testComponent.panelMode = PanelModes.collapsible;
+                fixture.componentRef.setInput("isCollapsed", false);
+                fixture.componentRef.setInput(
+                    "panelMode",
+                    PanelModes.collapsible
+                );
+                fixture.detectChanges();
                 fixture.detectChanges();
 
                 panelContainer = fixture.debugElement.query(
@@ -319,8 +334,12 @@ describe("components >", () => {
 
             it("when collapsible and collapsed", fakeAsync(() => {
                 fixture.detectChanges();
-                testComponent.panelMode = PanelModes.collapsible;
-                testComponent.isCollapsed = true;
+                // Use setInput() so Angular marks the view dirty (Angular 21 NG0100 fix)
+                fixture.componentRef.setInput(
+                    "panelMode",
+                    PanelModes.collapsible
+                );
+                fixture.componentRef.setInput("isCollapsed", true);
                 fixture.detectChanges();
                 tick();
                 fixture.detectChanges();
@@ -356,7 +375,7 @@ describe("components >", () => {
             );
         });
         it("should have embedded header icon", () => {
-            testComponent.headerIcon = "filter";
+            fixture.componentRef.setInput("headerIcon", "filter");
             fixture.detectChanges();
             const embeddedHeaderIconDebugElement = fixture.debugElement.query(
                 By.css(".nui-panel__header-embedded-icon")
@@ -370,7 +389,7 @@ describe("components >", () => {
         });
         describe("position >", () => {
             it("should have correct classes when position is right", () => {
-                testComponent.orientation = "right";
+                fixture.componentRef.setInput("orientation", "right");
                 fixture.detectChanges();
 
                 const leftPaneBody = fixture.debugElement.query(
@@ -383,10 +402,16 @@ describe("components >", () => {
                 expect(rightPaneBody).not.toBeNull();
             });
             it("should have correct margin when position is right and displacePrimaryContent is true", () => {
-                testComponent.orientation = "right";
+                fixture.componentRef.setInput("orientation", "right");
                 fixture.detectChanges();
-                testComponent.panelMode = PanelModes.collapsible;
-                testComponent.displacePrimaryContent = true;
+                fixture.detectChanges();
+                // Use setInput() + two detectChanges() for Angular 21 NG0100 fix
+                fixture.componentRef.setInput(
+                    "panelMode",
+                    PanelModes.collapsible
+                );
+                fixture.componentRef.setInput("displacePrimaryContent", true);
+                fixture.detectChanges();
                 fixture.detectChanges();
 
                 const panelBodyDebugElement = fixture.debugElement.query(
@@ -397,11 +422,17 @@ describe("components >", () => {
                 ).toBe(`${PanelComponent.SIZE_VALUES.width.COLLAPSED_VALUE}`);
             });
             it("should have correct classes and margin when position is top and displacePrimaryContent is true", () => {
-                testComponent.orientation = "top";
+                fixture.componentRef.setInput("orientation", "top");
                 fixture.detectChanges();
-                testComponent.panelMode = PanelModes.collapsible;
-                testComponent.isCollapsed = false;
-                testComponent.displacePrimaryContent = true;
+                fixture.detectChanges();
+                // Use setInput() + two detectChanges() for Angular 21 NG0100 fix
+                fixture.componentRef.setInput(
+                    "panelMode",
+                    PanelModes.collapsible
+                );
+                fixture.componentRef.setInput("isCollapsed", false);
+                fixture.componentRef.setInput("displacePrimaryContent", true);
+                fixture.detectChanges();
                 fixture.detectChanges();
 
                 const panelContainer = fixture.debugElement.query(
@@ -422,11 +453,17 @@ describe("components >", () => {
                 ).toBe(`${PanelComponent.SIZE_VALUES.height.COLLAPSED_VALUE}`);
             });
             it("should have correct classes and margin when position is bottom and displacePrimaryContent is true", () => {
-                testComponent.orientation = "bottom";
+                fixture.componentRef.setInput("orientation", "bottom");
                 fixture.detectChanges();
-                testComponent.panelMode = PanelModes.collapsible;
-                testComponent.isCollapsed = false;
-                testComponent.displacePrimaryContent = true;
+                fixture.detectChanges();
+                // Use setInput() + two detectChanges() for Angular 21 NG0100 fix
+                fixture.componentRef.setInput(
+                    "panelMode",
+                    PanelModes.collapsible
+                );
+                fixture.componentRef.setInput("isCollapsed", false);
+                fixture.componentRef.setInput("displacePrimaryContent", true);
+                fixture.detectChanges();
                 fixture.detectChanges();
 
                 const panelContainer = fixture.debugElement.query(
@@ -448,9 +485,13 @@ describe("components >", () => {
             });
             it("should display correct button icons when collapse is toggled", fakeAsync(() => {
                 fixture.detectChanges();
-                testComponent.orientation = "top";
-                testComponent.panelMode = PanelModes.collapsible;
-                testComponent.isCollapsed = true;
+                // Use setInput() so Angular marks the view dirty (Angular 21 NG0100 fix)
+                fixture.componentRef.setInput("orientation", "top");
+                fixture.componentRef.setInput(
+                    "panelMode",
+                    PanelModes.collapsible
+                );
+                fixture.componentRef.setInput("isCollapsed", true);
                 fixture.detectChanges();
                 tick();
                 fixture.detectChanges();
@@ -461,7 +502,7 @@ describe("components >", () => {
                     "double-caret-down"
                 );
 
-                testComponent.isCollapsed = false;
+                fixture.componentRef.setInput("isCollapsed", false);
                 fixture.detectChanges();
                 tick();
                 fixture.detectChanges();
@@ -470,8 +511,8 @@ describe("components >", () => {
                 );
             }));
             it("should display correct button icon when closable", () => {
-                testComponent.orientation = "left";
-                testComponent.panelMode = PanelModes.closable;
+                fixture.componentRef.setInput("orientation", "left");
+                fixture.componentRef.setInput("panelMode", PanelModes.closable);
                 fixture.detectChanges();
 
                 const closableIconDebugElement = fixture.debugElement.query(
@@ -483,7 +524,8 @@ describe("components >", () => {
         });
         describe("should have correct style classes", () => {
             it("should have correct class when darkBorder input set to true", () => {
-                testComponent.darkBorder = true;
+                fixture.componentRef.setInput("darkBorder", true);
+                fixture.detectChanges();
                 fixture.detectChanges();
                 const paneContainer = fixture.debugElement.query(
                     By.css(".nui-panel__side-pane")
@@ -493,7 +535,8 @@ describe("components >", () => {
                 );
             });
             it("should have correct class when headerPadding input set to false", () => {
-                testComponent.headerPadding = false;
+                fixture.componentRef.setInput("headerPadding", false);
+                fixture.detectChanges();
                 fixture.detectChanges();
                 const paneHeader = fixture.debugElement.query(
                     By.css(".nui-panel__header")
@@ -503,8 +546,11 @@ describe("components >", () => {
                 );
             });
             it("should have correct class when panelBackgroundColor input set to colorBgSecondary", () => {
-                testComponent.panelBackgroundColor =
-                    PanelBackgroundColor.colorBgSecondary;
+                fixture.componentRef.setInput(
+                    "panelBackgroundColor",
+                    PanelBackgroundColor.colorBgSecondary
+                );
+                fixture.detectChanges();
                 fixture.detectChanges();
                 const paneContainer = fixture.debugElement.query(
                     By.css(".nui-panel__side-pane")
@@ -514,7 +560,8 @@ describe("components >", () => {
         });
         it("should emit 'collapsed' event when collapsible panel is expanded/collapsed", fakeAsync(() => {
             const spy = spyOn(testComponent, "onCollapse");
-            testComponent.panelMode = PanelModes.collapsible;
+            fixture.componentRef.setInput("panelMode", PanelModes.collapsible);
+            fixture.detectChanges();
             fixture.detectChanges();
             const toggleButton = fixture.debugElement.query(
                 By.css(".nui-panel__header-btn")
@@ -529,7 +576,8 @@ describe("components >", () => {
         }));
         it("should emit 'hidden' event when closable panel is shown/hidden", () => {
             const spy = spyOn(testComponent, "onHide");
-            testComponent.panelMode = PanelModes.closable;
+            fixture.componentRef.setInput("panelMode", PanelModes.closable);
+            fixture.detectChanges();
             fixture.detectChanges();
             const closeButton = fixture.debugElement.query(
                 By.css(".nui-panel__header-btn--close")

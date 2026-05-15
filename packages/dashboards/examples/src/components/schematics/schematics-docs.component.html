@@ -11,7 +11,8 @@
     </p>
 
     <h3>Options:</h3>
-    <div *ngFor="let key of objectKeys(addJsonScheme)">
+    @for (key of objectKeys(addJsonScheme); track key) {
+    <div>
         <nui-expander [header]="key">
             <div>
                 <i>Description: </i
@@ -20,15 +21,20 @@
             <div>
                 <i>Type: </i><span>{{ addJsonScheme[key].type }}</span>
             </div>
-            <div *ngIf="addJsonScheme[key].enum">
+            @if (addJsonScheme[key].enum) {
+            <div>
                 <i>Enum: </i><span>{{ addJsonScheme[key].enum }}</span>
             </div>
-            <div *ngIf="addJsonScheme[key].alias">
+            } @if (addJsonScheme[key].alias) {
+            <div>
                 <i>Alias: </i><span>{{ addJsonScheme[key].alias }}</span>
             </div>
-            <div *ngIf="addJsonScheme[key].default">
+            } @if (addJsonScheme[key].default) {
+            <div>
                 <i>Default: </i><span>{{ addJsonScheme[key].default }}</span>
             </div>
+            }
         </nui-expander>
     </div>
+    }
 </div>

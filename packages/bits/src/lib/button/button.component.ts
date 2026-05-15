@@ -46,7 +46,7 @@ import { LoggerService } from "../../services/log-service";
     templateUrl: "./button.component.html",
     host: {
         "[attr.aria-busy]": "isBusy || null",
-        "class": "nui-button btn",
+        class: "nui-button btn",
     },
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./button.component.less"],
@@ -164,8 +164,8 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
     }
 
     @HostBinding("attr.aria-label")
-    public get ariaIconLabel(): string {
-        return this.ariaLabel || this.getAriaLabel();
+    public get ariaIconLabel(): string | null {
+        return this.ariaLabel || this.getAriaLabel() || null;
     }
 
     @ViewChild("contentContainer", { static: true, read: ViewContainerRef })
@@ -231,16 +231,19 @@ should be set explicitly: `,
         };
     }
 
-    private getAriaLabel() {
+    private getAriaLabel(): string | null {
         // In chrome once innerText gets touched in a native element this caused issues in table-sticky-header NUI-6033
-        return this._isContentEmpty
-            ? this.icon
-            : this.contentContainer.element.nativeElement.textContent.trim();
+        const projectedText =
+            this.contentContainer?.element.nativeElement.textContent.trim();
+
+        return projectedText || this.icon || null;
     }
 
     private setIsContentEmptyValue() {
-        const innerHTML = this.contentContainer.element.nativeElement.innerHTML;
-        this._isContentEmpty = !innerHTML || !innerHTML.trim();
+        const projectedText =
+            this.contentContainer?.element.nativeElement.textContent.trim();
+
+        this._isContentEmpty = !projectedText;
     }
 
     private setupRepeatEvent() {

@@ -64,7 +64,9 @@ export class WidgetSearchComponent implements OnInit, OnDestroy, OnChanges {
     ) {}
 
     public ngOnInit(): void {
-        if (this.dataSource.features?.getSupportedFeatures()?.search?.enabled) {
+        if (
+            this.dataSource?.features?.getSupportedFeatures()?.search?.enabled
+        ) {
             this.enabled = true;
         }
         this.registerFilters();
@@ -122,7 +124,7 @@ export class WidgetSearchComponent implements OnInit, OnDestroy, OnChanges {
                         WidgetSearchComponent.defaultSearchDebounce
                 )
             )
-            .subscribe(searchTerm => {
+            .subscribe((searchTerm) => {
                 this.eventBus.getStream(REFRESH).next({});
                 this.eventBus.getStream(WIDGET_SEARCH).next({
                     payload: searchTerm,

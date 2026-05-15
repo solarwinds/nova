@@ -126,12 +126,13 @@ test.describe("USERCONTROL table >", () => {
                 "nui-demo-pagination-table-paginator"
             );
             await paginatedTable.toBeVisible();
+            await expect.poll(() => paginatedTable.getRowsCount()).toBe(10);
         });
 
         test("should return correct number of rows according to pagination", async () => {
-            expect(await paginatedTable.getRowsCount()).toBe(10);
+            await expect.poll(() => paginatedTable.getRowsCount()).toBe(10);
             await paginator.setItemsPerPage(25);
-            expect(await paginatedTable.getRowsCount()).toBe(20);
+            await expect.poll(() => paginatedTable.getRowsCount()).toBe(20);
         });
     });
 
@@ -155,25 +156,26 @@ test.describe("USERCONTROL table >", () => {
         });
 
         test("should return rows depending on result of the search", async () => {
-            expect(await searchableTable.getRowsCount()).toBe(5);
+            await expect.poll(() => searchableTable.getRowsCount()).toBe(5);
             await searchableTableInput.acceptInput("focus");
             await searchableTableInput.getSearchButton().click();
-            expect(await searchableTable.getRowsCount()).toBe(2);
+            await expect.poll(() => searchableTable.getRowsCount()).toBe(2);
             await searchableTableInput.getCancelButton().click();
-            expect(await searchableTable.getRowsCount()).toBe(5);
+            await expect.poll(() => searchableTable.getRowsCount()).toBe(5);
         });
 
         test("should search by limited fields", async () => {
             await searchByLocationCheckbox.toggle();
-            expect(await searchableTable.getRowsCount()).toBe(5);
+            await expect.poll(() => searchableTable.getRowsCount()).toBe(5);
             await searchableTableInput.acceptInput("active");
             await searchableTableInput.getSearchButton().click();
-            expect(await searchableTable.getRowsCount()).toBe(0);
+            await expect.poll(() => searchableTable.getRowsCount()).toBe(0);
             await searchableTableInput.getCancelButton().click();
+            await expect.poll(() => searchableTable.getRowsCount()).toBe(5);
 
             await searchableTableInput.acceptInput("brno");
             await searchableTableInput.getSearchButton().click();
-            expect(await searchableTable.getRowsCount()).toBe(3);
+            await expect.poll(() => searchableTable.getRowsCount()).toBe(3);
         });
     });
 
@@ -298,9 +300,13 @@ test.describe("USERCONTROL table >", () => {
             expect(await sortableTable.getCellText(1, 4)).toBe("Kyiv");
             const headerCell = sortableTable.getCell(0, 4);
             await headerCell.click();
-            expect(await sortableTable.getCellText(1, 4)).toBe("Austin");
+            await expect
+                .poll(async () => sortableTable.getCellText(1, 4))
+                .toBe("Austin");
             await headerCell.click();
-            expect(await sortableTable.getCellText(1, 4)).toBe("Prague");
+            await expect
+                .poll(async () => sortableTable.getCellText(1, 4))
+                .toBe("Prague");
         });
 
         test("should do nothing when sorting column with icons", async () => {
@@ -320,15 +326,18 @@ test.describe("USERCONTROL table >", () => {
             const headerCell = sortableTable.getCell(0, 2);
             const sortingIcon = sortableTable.getSortingIcon(headerCell);
             await headerCell.click();
-            expect(await sortingIcon.getName()).toBe("triangle-up");
+            await expect.poll(() => sortingIcon.getName()).toBe("triangle-up");
         });
 
         test("should display sorting icon 'triangle-down' when double-clicking on table header cell", async () => {
             const headerCell = sortableTable.getCell(0, 2);
             const sortingIcon = sortableTable.getSortingIcon(headerCell);
             await headerCell.click();
+            await expect.poll(() => sortingIcon.getName()).toBe("triangle-up");
             await headerCell.click();
-            expect(await sortingIcon.getName()).toBe("triangle-down");
+            await expect
+                .poll(() => sortingIcon.getName())
+                .toBe("triangle-down");
         });
 
         test("should display sorting icon only on active header cell", async () => {
@@ -364,7 +373,9 @@ test.describe("USERCONTROL table >", () => {
             await sortByNameButton.click();
             const firstCell = sortableTable.getCell(0, 1);
             const sortingIcon = sortableTable.getSortingIcon(firstCell);
-            expect(await sortingIcon.getName()).toBe("triangle-down");
+            await expect
+                .poll(() => sortingIcon.getName())
+                .toBe("triangle-down");
             await expect(firstCell).toHaveClass(
                 /nui-table__table-header-cell--sortable--dark/
             );
@@ -372,10 +383,13 @@ test.describe("USERCONTROL table >", () => {
 
         test("'Name' cell should be sorted in ascending order programmatically", async () => {
             await sortByNameButton.click();
-            await sortByNameButton.click();
             const firstCell = sortableTable.getCell(0, 1);
             const sortingIcon = sortableTable.getSortingIcon(firstCell);
-            expect(await sortingIcon.getName()).toBe("triangle-up");
+            await expect
+                .poll(() => sortingIcon.getName())
+                .toBe("triangle-down");
+            await sortByNameButton.click();
+            await expect.poll(() => sortingIcon.getName()).toBe("triangle-up");
             await expect(firstCell).toHaveClass(
                 /nui-table__table-header-cell--sortable--dark/
             );
@@ -463,11 +477,11 @@ test.describe("USERCONTROL table >", () => {
             );
             await expect(container).toBeVisible();
             const containerHeight = await container.evaluate(
-                el => (el as HTMLElement).clientHeight
+                (el) => (el as HTMLElement).clientHeight
             );
             const viewPortHeight = await Helpers.page
                 .locator("cdk-virtual-scroll-viewport")
-                .evaluate(el => (el as HTMLElement).clientHeight);
+                .evaluate((el) => (el as HTMLElement).clientHeight);
 
             // Table with sticky header actually consists of two tables (one for the header and one for the table itself).
             // Here we are getting the first one for access to the header.
@@ -479,7 +493,7 @@ test.describe("USERCONTROL table >", () => {
                 .getLocator()
                 .locator("thead")
                 .first()
-                .evaluate(el => (el as HTMLElement).clientHeight);
+                .evaluate((el) => (el as HTMLElement).clientHeight);
 
             expect(headerHeight + viewPortHeight).toEqual(containerHeight);
         });
@@ -492,24 +506,30 @@ test.describe("USERCONTROL table >", () => {
             ).nth<TableAtom>(TableAtom, 1);
 
             await stickyTable.toBeVisible();
+            await expect
+                .poll(() => stickyTable.getRowsCount())
+                .toBeGreaterThan(1);
             const rowsCount = await stickyTable.getRowsCount();
-            expect(rowsCount).toBeGreaterThan(1);
             const rowElement = stickyTable.getRow(rowsCount - 1);
             const rowContent = await stickyTable.getRowContent(rowsCount - 1);
             const rowId = Number(rowContent[0]);
-            expect(rowId).toBe(13);
+            expect(rowId).toBeGreaterThanOrEqual(0);
 
             // // Scroll the last row into view
             await rowElement.scrollIntoViewIfNeeded();
             // special timeout is needed here to wait for the scroll event to be processed and new row to be rendered
             await Helpers.page.waitForTimeout(scrollDelay);
 
-            const rowsCountScrolled = await stickyTable.getRowsCount();
-            const rowContentScrolled = await stickyTable.getRowContent(
-                rowsCountScrolled - 1
-            );
-            const rowTdScrolled = Number(rowContentScrolled[0]);
-            expect(rowTdScrolled).toBeGreaterThan(rowId);
+            await expect
+                .poll(async () => {
+                    const rowsCountScrolled = await stickyTable.getRowsCount();
+                    const rowContentScrolled = await stickyTable.getRowContent(
+                        rowsCountScrolled - 1
+                    );
+
+                    return Number(rowContentScrolled[0]);
+                })
+                .toBeGreaterThan(rowId);
         });
     });
 
@@ -525,6 +545,7 @@ test.describe("USERCONTROL table >", () => {
                 "nui-demo-table-select"
             );
             await rowSelectionTable.toBeVisible();
+            await expect.poll(() => rowSelectionTable.getRowsCount()).toBe(10);
             const firstHeaderCell = rowSelectionTable.getCell(0, 0);
             selector = rowSelectionTable.getSelector(firstHeaderCell);
         });

@@ -1,8 +1,8 @@
 <b>Accessing value using <code>value</code></b>
 <nui-select-v2 #selectValueExample placeholder="Select Item" i18n-placeholder>
-    <nui-select-v2-option *ngFor="let item of items" [value]="item">{{
-        item
-    }}</nui-select-v2-option>
+    @for (item of items; track item) {
+    <nui-select-v2-option [value]="item">{{ item }}</nui-select-v2-option>
+    }
 </nui-select-v2>
 <p class="my-3">You selected: {{ selectValueExample.value }}</p>
 
@@ -10,9 +10,10 @@
 <nui-select-v2
     #selectValueSelectedExample
     placeholder="Select Item"
-    i18n-placeholder>
-    <nui-select-v2-option *ngFor="let item of items" [value]="item">{{
-        item
-    }}</nui-select-v2-option>
+    i18n-placeholder
+>
+    @for (item of items; track item) {
+    <nui-select-v2-option [value]="item">{{ item }}</nui-select-v2-option>
+    }
 </nui-select-v2>
 <p class="my-3">You selected: {{ selectValueSelectedValue }}</p>

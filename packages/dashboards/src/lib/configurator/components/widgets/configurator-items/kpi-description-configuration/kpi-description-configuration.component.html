@@ -1,10 +1,12 @@
 <nui-widget-editor-accordion
     [formGroup]="form"
-    [state]="form | nuiWidgetEditorAccordionFormState | async">
+    [state]="form | nuiWidgetEditorAccordionFormState | async"
+>
     <div accordionHeader class="d-flex align-items-center px-4 py-2">
         <nui-icon
             class="align-self-start pt-2"
-            [icon]="form | nuiFormHeaderIconPipe : 'widget_list' | async"></nui-icon>
+            [icon]="form | nuiFormHeaderIconPipe : 'widget_list' | async"
+        ></nui-icon>
         <div class="d-flex flex-column ml-4 pt-1">
             <span class="nui-text-label" i18n>Description</span>
             <div class="nui-text-secondary" [title]="subtitle$ | async">
@@ -18,11 +20,13 @@
                 caption="Label"
                 i18n-caption
                 [control]="form.get('label')"
-                class="form-group">
+                class="form-group"
+            >
                 <nui-textbox
                     formControlName="label"
                     placeholder="Set label"
-                    i18n-placeholder></nui-textbox>
+                    i18n-placeholder
+                ></nui-textbox>
             </nui-form-field>
         </div>
 
@@ -30,25 +34,31 @@
             caption="Background Color"
             i18n-caption
             [control]="form.get('backgroundColor')"
-            class="form-group">
+            class="form-group"
+        >
             <nui-color-picker
                 class="kpi-description-configuration__accordion-content__color-picker"
                 formControlName="backgroundColor"
-                [colorPalette]="backgroundColors">
+                [colorPalette]="backgroundColors"
+            >
             </nui-color-picker>
         </nui-form-field>
 
-        <div class="mt-4" *ngIf="configurableUnits">
+        @if (configurableUnits) {
+        <div class="mt-4">
             <nui-form-field
                 caption="Units"
                 i18n-caption
                 [control]="form.get('units')"
-                class="form-group">
+                class="form-group"
+            >
                 <nui-textbox
                     formControlName="units"
                     placeholder="Units"
-                    i18n-placeholder></nui-textbox>
+                    i18n-placeholder
+                ></nui-textbox>
             </nui-form-field>
         </div>
+        }
     </div>
 </nui-widget-editor-accordion>

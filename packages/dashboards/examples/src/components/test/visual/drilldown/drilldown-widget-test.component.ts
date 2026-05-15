@@ -26,7 +26,7 @@ import {
     OnInit,
     ViewChild,
 } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import groupBy from "lodash/groupBy";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
@@ -79,8 +79,8 @@ export class DrilldownDataSource
         super();
         this.applyFilters$
             // eslint-disable-next-line import/no-deprecated
-            .pipe(switchMap(filters => this.getData(filters)))
-            .subscribe(async res => {
+            .pipe(switchMap((filters) => this.getData(filters)))
+            .subscribe(async (res) => {
                 this.outputsSubject.next(await this.getFilteredData(res));
             });
     }
@@ -124,17 +124,17 @@ export class DrilldownDataSource
         return of(this.cache || GRAPH_DATA_MOCK).pipe(
             // delay(1000),
             // eslint-disable-next-line import/no-deprecated
-            tap(data => (this.cache = data)),
+            tap((data) => (this.cache = data)),
             // eslint-disable-next-line import/no-deprecated
-            map(data => data.data.countries),
-            catchError(e => of([])),
+            map((data) => data.data.countries),
+            catchError((e) => of([])),
             finalize(() => this.busy.next(false))
         );
     }
 
     private getTransformedDataForGroup(data: any, groupName: string) {
         const groupedDict = groupBy(data, groupName);
-        const dataArr = Object.keys(groupedDict).map(property => ({
+        const dataArr = Object.keys(groupedDict).map((property) => ({
             id: property,
             label: property,
             // TODO: apply groups mapping here
@@ -248,7 +248,7 @@ export class DrilldownWidgetTestComponent implements OnInit {
         };
 
         // Setting the widget dimensions and position (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [drilldownWidget.id]: {
                 cols: 10,
                 rows: 10,

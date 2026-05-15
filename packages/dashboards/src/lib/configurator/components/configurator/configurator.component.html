@@ -8,25 +8,30 @@
         isResizable="true"
         class="h-100"
         [headerPadding]="false"
-        [sidePaneBodyPadding]="false">
+        [sidePaneBodyPadding]="false"
+    >
         <div
-            class="nui-configurator__preview d-flex align-items-center justify-content-center">
+            class="nui-configurator__preview d-flex align-items-center justify-content-center"
+        >
             <div class="nui-configurator__preview-area">
                 <nui-preview-overlay></nui-preview-overlay>
+                @if (previewWidget?.pizzagna) {
                 <nui-pizzagna
-                    *ngIf="previewWidget?.pizzagna"
                     #previewPizzagnaComponent
                     class="flex-grow-1 w-100"
                     [rootNode]="previewWidget | nuiPizzagnaRoot : 'widget'"
                     [pizzagna]="previewWidget?.pizzagna"
-                    (pizzagnaChange)="onPizzagnaChange($event)">
+                    (pizzagnaChange)="onPizzagnaChange($event)"
+                >
                 </nui-pizzagna>
+                }
             </div>
         </div>
         <div nuiPanelEmbeddedBody class="nui-configurator__body">
             <ng-container
                 [cdkPortalOutlet]="formPortal"
-                (attached)="onFormPortalAttached($event)"></ng-container>
+                (attached)="onFormPortalAttached($event)"
+            ></ng-container>
         </div>
     </nui-panel>
 </div>

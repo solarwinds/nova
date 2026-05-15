@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -149,6 +149,10 @@ describe("Pizzagna", () => {
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it("should create", () => {
         expect(component).toBeTruthy();
     });
@@ -280,11 +284,11 @@ describe("Pizzagna", () => {
                             nodes: ["header", "tiles"],
                         },
                     },
-                    "header": {
+                    header: {
                         id: "header",
                         componentType: WidgetHeaderComponent.lateLoadKey,
                     },
-                    "tiles": {
+                    tiles: {
                         id: "tiles",
                         componentType: TilesComponent.lateLoadKey,
                         properties: {
@@ -311,18 +315,18 @@ describe("Pizzagna", () => {
                             nodes: ["header", "stack"],
                         },
                     },
-                    "header": {
+                    header: {
                         id: "header",
                         componentType: WidgetHeaderComponent.lateLoadKey,
                     },
-                    "stack": {
+                    stack: {
                         id: "stack",
                         componentType: StackComponent.lateLoadKey,
                         properties: {
                             nodes: ["table"],
                         },
                     },
-                    "table": {
+                    table: {
                         id: "table",
                         componentType: TableWidgetComponent.lateLoadKey,
                         properties: {

@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -58,6 +58,10 @@ describe("PresentationConfigurationComponent", () => {
         component = fixture.componentInstance;
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it("should create", () => {
         expect(component).toBeTruthy();
     });
@@ -90,9 +94,9 @@ describe("PresentationConfigurationComponent", () => {
                 ],
                 expectedFormatters: [rawFormatter, linkFormatter],
             },
-        ].forEach(testData => {
+        ].forEach((testData) => {
             const dataTypes = testData.providedDataFields.map(
-                df => df.dataType
+                (df) => df.dataType
             );
             it(`- case ${dataTypes}`, () => {
                 component.formatters = [rawFormatter, linkFormatter];

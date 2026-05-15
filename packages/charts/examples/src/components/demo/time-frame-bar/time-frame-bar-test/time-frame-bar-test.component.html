@@ -4,7 +4,8 @@
             class="m-5"
             nui-busy
             [busy]="busy"
-            style="border: 1px solid lightgrey">
+            style="border: 1px solid lightgrey"
+        >
             <nui-time-frame-bar
                 [timeFrame]="timeFrame"
                 (timeFrameChange)="updateTimeFrame($event)"
@@ -14,7 +15,8 @@
                 (undo)="zoomUndo()"
                 (clear)="updateTimeFrame()"
                 style="display: block; border-bottom: 1px solid lightgrey"
-                class="time-frame-bar">
+                class="time-frame-bar"
+            >
                 <nui-icon icon="calendar" class="pr-3"></nui-icon>
                 {{ timeFrame | timeFrame }}
                 <nui-quick-picker timeFrameSelection>
@@ -33,12 +35,11 @@
                         seriesUnitLabel="%"
                         [active]="chartAssist.isLegendActive"
                         [interactive]="true"
-                        (mouseleave)="chartAssist.resetVisibleSeries()">
+                        (mouseleave)="chartAssist.resetVisibleSeries()"
+                    >
+                        @for (legendSeries of chartAssist.legendSeriesSet; track
+                        legendSeries.id) {
                         <nui-legend-series
-                            *ngFor="
-                                let legendSeries of chartAssist.legendSeriesSet;
-                                trackBy: chartAssist.seriesTrackByFn
-                            "
                             [descriptionPrimary]="legendSeries['name']"
                             (mouseenter)="
                                 chartAssist.emphasizeSeries(legendSeries.id)
@@ -55,7 +56,8 @@
                                     legendSeries.id,
                                     $event
                                 )
-                            ">
+                            "
+                        >
                             <nui-rich-legend-tile
                                 [value]="
                                     chartAssist.getHighlightedValue(
@@ -72,7 +74,8 @@
                                     chartAssist.palette.textColors.get(
                                         legendSeries.id
                                     )
-                                ">
+                                "
+                            >
                                 <nui-chart-marker
                                     rightEdge
                                     [marker]="
@@ -82,10 +85,12 @@
                                         chartAssist.palette.standardColors.get(
                                             legendSeries.id
                                         )
-                                    ">
+                                    "
+                                >
                                 </nui-chart-marker>
                             </nui-rich-legend-tile>
                         </nui-legend-series>
+                        }
                     </nui-legend>
                 </div>
             </div>
@@ -96,7 +101,8 @@
                 name="delay"
                 type="checkbox"
                 [checked]="addDelay"
-                (change)="addDelay = !addDelay" />
+                (change)="addDelay = !addDelay"
+            />
             <label for="delay" class="pl-2">Add delay to server requests</label>
         </div>
     </div>

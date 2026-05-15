@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -58,16 +58,16 @@ import { REFRESH, SCROLL_NEXT_PAGE } from "../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
 
 interface BasicTableModel {
-    "position": number;
-    "name": string;
-    "features": any;
-    "status": string;
-    "checks": any;
+    position: number;
+    name: string;
+    features: any;
+    status: string;
+    checks: any;
     "cpu-load": number;
-    "firstUrl": string;
-    "firstUrlLabel": string;
-    "secondUrl": string;
-    "secondUrlLabel": string;
+    firstUrl: string;
+    firstUrlLabel: string;
+    secondUrl: string;
+    secondUrlLabel: string;
 }
 
 class MockDatasource extends ClientSideDataSource<any> {
@@ -137,54 +137,54 @@ const configuration: ITableWidgetConfig = {
 
 const tableData: BasicTableModel[] = [
     {
-        "position": 1,
-        "name": "FOCUS-SVR-02258",
-        "features": ["remote-access-vpn-tunnel", "patch-manager01"],
-        "status": "Active",
-        "checks": {
+        position: 1,
+        name: "FOCUS-SVR-02258",
+        features: ["remote-access-vpn-tunnel", "patch-manager01"],
+        status: "Active",
+        checks: {
             icon: "status_up",
             num: 25,
         },
         "cpu-load": 86,
-        "firstUrl": "https://en.wikipedia.org/wiki/Brno",
-        "firstUrlLabel": "Brno",
-        "secondUrl": "https://en.wikipedia.org/wiki/VMware_Workstation",
-        "secondUrlLabel": "Workstation",
+        firstUrl: "https://en.wikipedia.org/wiki/Brno",
+        firstUrlLabel: "Brno",
+        secondUrl: "https://en.wikipedia.org/wiki/VMware_Workstation",
+        secondUrlLabel: "Workstation",
     },
     {
-        "position": 2,
-        "name": "FOCUS-SVR-03312",
-        "features": ["tools", "database", "orion-ape-backup"],
-        "status": "Active",
-        "checks": {
+        position: 2,
+        name: "FOCUS-SVR-03312",
+        features: ["tools", "database", "orion-ape-backup"],
+        status: "Active",
+        checks: {
             icon: "status_critical",
             num: 25,
         },
         "cpu-load": 47,
-        "firstUrl": "https://en.wikipedia.org/wiki/Brno",
-        "firstUrlLabel": "Brno",
-        "secondUrl": "https://en.wikipedia.org/wiki/VMware_Workstation",
-        "secondUrlLabel": "Workstation",
+        firstUrl: "https://en.wikipedia.org/wiki/Brno",
+        firstUrlLabel: "Brno",
+        secondUrl: "https://en.wikipedia.org/wiki/VMware_Workstation",
+        secondUrlLabel: "Workstation",
     },
     {
-        "position": 3,
-        "name": "FOCUS-SVR-02258",
-        "features": [
+        position: 3,
+        name: "FOCUS-SVR-02258",
+        features: [
             "remote-access-vpn-tunnel",
             "database",
             "orion-ape-backup",
             "patch-manager01",
         ],
-        "status": "Active",
-        "checks": {
+        status: "Active",
+        checks: {
             icon: "status_down",
             num: 25,
         },
         "cpu-load": 53,
-        "firstUrl": "https://en.wikipedia.org/wiki/Kyiv",
-        "firstUrlLabel": "Kyiv",
-        "secondUrl": "https://en.wikipedia.org/wiki/VMware_Workstation",
-        "secondUrlLabel": "Workstation",
+        firstUrl: "https://en.wikipedia.org/wiki/Kyiv",
+        firstUrlLabel: "Kyiv",
+        secondUrl: "https://en.wikipedia.org/wiki/VMware_Workstation",
+        secondUrlLabel: "Workstation",
     },
 ];
 
@@ -364,6 +364,10 @@ describe("TableWidgetComponent", () => {
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     describe("basic tests >", () => {
         it("should display table if widgetData and columns are available", () => {
             configuration.columns = oneDataFieldColumns;
@@ -440,7 +444,7 @@ describe("TableWidgetComponent", () => {
                 createSimpleChanges(configuration, tableData, dataFields)
             );
             const expectedSortableSet: any = {};
-            dataFields.forEach(df => {
+            dataFields.forEach((df) => {
                 expectedSortableSet[df.id] = df.sortable;
             });
             expect((<any>component).sortableSet).toEqual(expectedSortableSet);
@@ -453,7 +457,7 @@ describe("TableWidgetComponent", () => {
                 createSimpleChanges(configuration, tableData, dataFields)
             );
             const expectedColumns: ITableWidgetColumnConfig[] =
-                configuration.columns.map(c => ({
+                configuration.columns.map((c) => ({
                     ...c,
                     sortable: (<any>component).sortableSet[
                         c?.formatter?.properties?.dataFieldIds?.value
@@ -475,6 +479,21 @@ describe("TableWidgetComponent", () => {
                 "500px";
             component.vscrollViewport.checkViewportSize();
             fixture.detectChanges();
+        });
+
+        it("should expose the full loaded table length to the viewport", () => {
+            configuration.columns = oneDataFieldColumns;
+            component.range = 2;
+
+            component.ngOnChanges(
+                createSimpleChanges(configuration, tableData, dataFields)
+            );
+            fixture.detectChanges();
+
+            expect(component.tableData.length).toBe(3);
+            expect(component.vscrollViewport?.getDataLength()).toBe(
+                component.tableData.length
+            );
         });
 
         // TODO: Add back after NUI-5893

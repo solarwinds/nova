@@ -5,21 +5,30 @@
     "
     [class.nui-rich-legend-tile--series-has-additional-content]="
         seriesHasAdditionalContent
-    ">
+    "
+>
     <div
         class="nui-rich-legend-tile__tilebox d-flex justify-content-center align-items-end flex-column"
         [ngStyle]="{ 'background-color': backgroundColor }"
-        [style.color]="color">
+        [style.color]="color"
+    >
+        @if (hasInputValue()) {
         <div
-            *ngIf="hasInputValue(); else projectedTopContent"
-            class="nui-rich-legend-tile__tilebox-value nui-rich-legend-tile__ellipsified">
+            class="nui-rich-legend-tile__tilebox-value nui-rich-legend-tile__ellipsified"
+        >
             {{ value }}
         </div>
+        } @else {
+        <ng-content select="[top]"></ng-content>
+        } @if (hasInputUnitLabel()) {
         <div
-            *ngIf="hasInputUnitLabel(); else projectedBottomContent"
-            class="nui-rich-legend-tile__tilebox-unit nui-rich-legend-tile__ellipsified">
+            class="nui-rich-legend-tile__tilebox-unit nui-rich-legend-tile__ellipsified"
+        >
             {{ unitLabel }}
         </div>
+        } @else {
+        <ng-content select="[bottom]"></ng-content>
+        }
         <ng-content></ng-content>
     </div>
     <div class="nui-rich-legend-tile__icon" #icon>
@@ -29,9 +38,3 @@
         <ng-content select="[rightEdge]"></ng-content>
     </div>
 </div>
-<ng-template #projectedTopContent>
-    <ng-content select="[top]"></ng-content>
-</ng-template>
-<ng-template #projectedBottomContent>
-    <ng-content select="[bottom]"></ng-content>
-</ng-template>

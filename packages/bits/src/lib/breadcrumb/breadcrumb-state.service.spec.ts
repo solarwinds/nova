@@ -58,10 +58,12 @@ describe("services >", () => {
 
         it("should return correct breadcrumb state", () => {
             const state = service.getBreadcrumbState(routerState);
-            expect(state.map(item => [item.routerState, item.title])).toEqual([
-                ["root/", "Root"],
-                ["root/first-level/", "First Level"],
-            ]);
+            expect(state.map((item) => [item.routerState, item.title])).toEqual(
+                [
+                    ["root/", "Root"],
+                    ["root/first-level/", "First Level"],
+                ]
+            );
         });
     });
 });

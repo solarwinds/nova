@@ -30,7 +30,7 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
@@ -137,7 +137,7 @@ export class CustomDonutContentFormatterComponent
             // If current metric is not in the list of metrics any more we fall back to the very first one from the list we get from the datasource
             this.currentMetricData =
                 this.data.find(
-                    item => item.id === this.properties?.currentMetric
+                    (item) => item.id === this.properties?.currentMetric
                 )?.data[0] || this.data[0].data[0];
 
             // We either take the selected value, or fall back to the preselected default one
@@ -155,7 +155,7 @@ export class CustomDonutContentFormatterComponent
                 tap(
                     (data: IChartAssistEvent) =>
                         (this.emphasizedSeriesData = this.data.find(
-                            item => item.id === data.payload.seriesId
+                            (item) => item.id === data.payload.seriesId
                         ))
                 ),
                 tap(() => this.setContentValue()),
@@ -194,7 +194,7 @@ export class CustomDonutContentFormatterComponent
     public setMetricValue(): void {
         this.chartMetric = this.emphasizedSeriesData
             ? this.data.find(
-                  item =>
+                  (item) =>
                       this.getConvertedData(item.data[0]) ===
                       this.getConvertedData(this.emphasizedSeriesData?.data[0])
               )?.id
@@ -230,12 +230,11 @@ export class CustomDonutContentFormatterComponent
                             configuratorHeading.height$ | async
                         "
                     >
-                        <nui-select-v2-option
-                            *ngFor="let itemValue of dsOutput?.result"
-                            [value]="itemValue?.id"
-                        >
+                        @for (itemValue of dsOutput?.result; track itemValue) {
+                        <nui-select-v2-option [value]="itemValue?.id">
                             {{ itemValue?.name }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                     <nui-validation-message for="required" i18n>
                         This field is required
@@ -256,12 +255,11 @@ export class CustomDonutContentFormatterComponent
                             configuratorHeading.height$ | async
                         "
                     >
-                        <nui-select-v2-option
-                            *ngFor="let itemValue of availableUnits"
-                            [value]="itemValue"
-                        >
+                        @for (itemValue of availableUnits; track itemValue) {
+                        <nui-select-v2-option [value]="itemValue">
                             {{ itemValue }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                     <nui-validation-message for="required" i18n>
                         This field is required
@@ -418,7 +416,7 @@ export class CustomDonutContentFormatterExampleComponent implements OnInit {
         };
 
         // Setting the widget dimensions and position (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [proportionalWidget.id]: {
                 cols: 12,
                 rows: 6,
@@ -490,7 +488,7 @@ export class StatusesExampleDatasource
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
 
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             setTimeout(() => {
                 resolve({
                     result: randomStatusesWidgetData,

@@ -109,12 +109,12 @@ export class RepeatAtom extends Atom {
                 const first = await this.items
                     .first()
                     .evaluate(
-                        el => window.getComputedStyle(el).backgroundColor
+                        (el) => window.getComputedStyle(el).backgroundColor
                     );
                 const second = await this.items
                     .nth(1)
                     .evaluate(
-                        el => window.getComputedStyle(el).backgroundColor
+                        (el) => window.getComputedStyle(el).backgroundColor
                     );
                 return first !== second;
             })

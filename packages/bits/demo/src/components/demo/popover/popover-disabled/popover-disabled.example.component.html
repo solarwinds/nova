@@ -4,7 +4,8 @@
     id="nui-demo-popover-disabled"
     trigger="click"
     [disabled]="disabled"
-    [template]="popoverDisabled">
+    [template]="popoverDisabled"
+>
     <button nui-button type="button">
         <span i18n>Click me!</span>
     </button>
@@ -15,7 +16,8 @@
         id="nui-disable-popover-toggle"
         nui-button
         type="button"
-        (click)="changeStatus()">
+        (click)="changeStatus()"
+    >
         {{ buttonName }}
     </button>
 </div>

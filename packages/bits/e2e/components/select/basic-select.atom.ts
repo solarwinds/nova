@@ -42,7 +42,7 @@ export class BasicSelectAtom extends Atom {
         await this.toggleMenu();
         const matcher =
             typeof title === "string"
-                ? new RegExp(`^${this.escapeRegExp(title)}$`)
+                ? new RegExp(`^\\s*${this.escapeRegExp(title)}\\s*$`)
                 : title;
         await this.getMenu()
             .getMenuItemByContainingText(matcher)

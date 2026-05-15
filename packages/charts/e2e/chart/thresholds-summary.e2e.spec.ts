@@ -74,11 +74,13 @@ test.describe("Thresholds summary", () => {
             return;
         }
 
-        const opacity = series.getComputedOpacity
-            ? await series.getComputedOpacity()
-            : await series.getOpacity();
-        await Helpers.page.waitForTimeout(100); // Wait for any potential animations to complete
-        expect(opacity).toBeLessThanOrEqual(0.6);
+        await expect
+            .poll(async () =>
+                series.getComputedOpacity
+                    ? await series.getComputedOpacity()
+                    : await series.getOpacity()
+            )
+            .toBeLessThanOrEqual(0.2);
     };
 
     test.beforeEach(async ({ page }) => {
@@ -100,12 +102,7 @@ test.describe("Thresholds summary", () => {
                 ).toEqual(nonBackgroundSeriesCountMulti);
 
                 for (const id in multiSeriesData) {
-                    if (
-                        Object.prototype.hasOwnProperty.call(
-                            multiSeriesData,
-                            id
-                        )
-                    ) {
+                    if (Object.prototype.hasOwnProperty.call(multiSeriesData, id)) {
                         const seriesId = ThresholdSeriesAtom.buildSeriesId(id);
                         const backgroundSeries =
                             await pageObject.mainChart.getDataSeriesById(
@@ -125,12 +122,7 @@ test.describe("Thresholds summary", () => {
                 ).toEqual(multiSeriesCount);
 
                 for (const id in multiSeriesData) {
-                    if (
-                        Object.prototype.hasOwnProperty.call(
-                            multiSeriesData,
-                            id
-                        )
-                    ) {
+                    if (Object.prototype.hasOwnProperty.call(multiSeriesData, id)) {
                         const seriesId = ThresholdSeriesAtom.buildSeriesId(id);
                         const backgroundSeries =
                             await pageObject.summaryChart.getDataSeriesById(
@@ -145,12 +137,7 @@ test.describe("Thresholds summary", () => {
 
             test("should have only semi-transparent series", async () => {
                 for (const id in multiSeriesData) {
-                    if (
-                        Object.prototype.hasOwnProperty.call(
-                            multiSeriesData,
-                            id
-                        )
-                    ) {
+                    if (Object.prototype.hasOwnProperty.call(multiSeriesData, id)) {
                         const seriesId = ThresholdSeriesAtom.buildSeriesId(id);
                         const series =
                             await pageObject.summaryChart.getDataSeriesById(
@@ -182,36 +169,28 @@ test.describe("Thresholds summary", () => {
                 }
 
                 for (const id in multiSeriesData) {
-                    if (
-                        Object.prototype.hasOwnProperty.call(
-                            multiSeriesData,
-                            id
-                        )
-                    ) {
+                    if (Object.prototype.hasOwnProperty.call(multiSeriesData, id)) {
                         const seriesId = ThresholdSeriesAtom.buildSeriesId(id);
                         const mainChartSeries =
-                            (await pageObject.mainChart.getDataSeriesById(
+                            await pageObject.mainChart.getDataSeriesById(
                                 ThresholdSeriesAtom,
                                 seriesId
-                            )) as ThresholdSeriesAtom;
+                            ) as ThresholdSeriesAtom;
                         const summaryChartSeries =
-                            (await pageObject.summaryChart.getDataSeriesById(
+                            await pageObject.summaryChart.getDataSeriesById(
                                 ThresholdSeriesAtom,
                                 seriesId
-                            )) as ThresholdSeriesAtom;
+                            ) as ThresholdSeriesAtom;
 
-                        expect(
-                            await mainChartSeries?.getDataPointCount()
-                        ).toEqual(mainRectangles.length);
-                        expect(
-                            await summaryChartSeries?.getDataPointCount()
-                        ).toEqual(summaryRectangles.length);
+                        expect(await mainChartSeries?.getDataPointCount()).toEqual(
+                            mainRectangles.length
+                        );
+                        expect(await summaryChartSeries?.getDataPointCount()).toEqual(
+                            summaryRectangles.length
+                        );
 
                         if (mainChartSeries) {
-                            await checkDataPoints(
-                                mainChartSeries,
-                                mainRectangles
-                            );
+                            await checkDataPoints(mainChartSeries, mainRectangles);
                         }
                         if (summaryChartSeries) {
                             await checkDataPoints(
@@ -232,23 +211,19 @@ test.describe("Thresholds summary", () => {
                 let summaryChartSeries: ThresholdSeriesAtom;
 
                 test.beforeEach(async () => {
-                    mainChartSeries =
-                        (await pageObject.mainChart.getDataSeriesById(
-                            ThresholdSeriesAtom,
-                            backgroundSeriesId
-                        )) as any;
-                    summaryChartSeries =
-                        (await pageObject.summaryChart.getDataSeriesById(
-                            ThresholdSeriesAtom,
-                            backgroundSeriesId
-                        )) as any;
+                    mainChartSeries = (await pageObject.mainChart.getDataSeriesById(
+                        ThresholdSeriesAtom,
+                        backgroundSeriesId
+                    )) as any;
+                    summaryChartSeries = (await pageObject.summaryChart.getDataSeriesById(
+                        ThresholdSeriesAtom,
+                        backgroundSeriesId
+                    )) as any;
                 });
 
                 test.describe("is hovered", () => {
                     test.beforeEach(async () => {
-                        await pageObject.legend
-                            .getSeriesByIndex(seriesIndex)
-                            .hover();
+                        await pageObject.legend.getSeriesByIndex(seriesIndex).hover();
                     });
 
                     test.afterEach(async () => {
@@ -257,7 +232,9 @@ test.describe("Thresholds summary", () => {
 
                     test("should be backgrounds and threshold lines displayed on the chart", async () => {
                         const expectedCount =
-                            multiSeriesCount + 1 + zones.length;
+                            multiSeriesCount +
+                            1 +
+                            zones.length;
                         expect(
                             await pageObject.mainChart.getNumberOfVisibleDataSeries()
                         ).toEqual(expectedCount);
@@ -268,22 +245,22 @@ test.describe("Thresholds summary", () => {
 
                     test("should be fully opaque on both charts", async () => {
                         expect(await mainChartSeries?.getOpacity()).toEqual(1);
-                        expect(await summaryChartSeries?.getOpacity()).toEqual(
-                            1
-                        );
+                        expect(await summaryChartSeries?.getOpacity()).toEqual(1);
                     });
                 });
 
                 test.describe("is clicked", () => {
                     test.beforeEach(async () => {
-                        await pageObject.legend
+                        await pageObject
+                            .legend
                             .getSeriesByIndex(seriesIndex)
                             .getLocator()
                             .click();
                     });
 
                     test.afterEach(async () => {
-                        await pageObject.legend
+                        await pageObject
+                            .legend
                             .getSeriesByIndex(seriesIndex)
                             .getLocator()
                             .click();
@@ -332,7 +309,9 @@ test.describe("Thresholds summary", () => {
 
                     test("should be only one background series displayed per chart", async () => {
                         const expectedCount =
-                            nonBackgroundSeriesCountSingle + 1 + zones.length;
+                            nonBackgroundSeriesCountSingle +
+                            1 +
+                            zones.length;
                         expect(
                             await pageObject.mainChart.getNumberOfVisibleDataSeries()
                         ).toEqual(expectedCount);
@@ -343,9 +322,7 @@ test.describe("Thresholds summary", () => {
 
                     test("should be fully opaque on both charts", async () => {
                         expect(await mainChartSeries?.getOpacity()).toEqual(1);
-                        expect(await summaryChartSeries?.getOpacity()).toEqual(
-                            1
-                        );
+                        expect(await summaryChartSeries?.getOpacity()).toEqual(1);
                     });
                 });
             });
@@ -361,15 +338,14 @@ test.describe("Thresholds summary", () => {
                 const seriesId = ThresholdSeriesAtom.buildSeriesId(
                     Object.keys(singleSeriesData)[0]
                 );
-                mainChartSeries = (await pageObject.mainChart.getDataSeriesById(
+                mainChartSeries = await pageObject.mainChart.getDataSeriesById(
                     ThresholdSeriesAtom,
                     seriesId
-                )) as ThresholdSeriesAtom;
-                summaryChartSeries =
-                    (await pageObject.summaryChart.getDataSeriesById(
-                        ThresholdSeriesAtom,
-                        seriesId
-                    )) as ThresholdSeriesAtom;
+                ) as ThresholdSeriesAtom;
+                summaryChartSeries = await pageObject.summaryChart.getDataSeriesById(
+                    ThresholdSeriesAtom,
+                    seriesId
+                ) as ThresholdSeriesAtom;
             });
 
             test.describe("by default", () => {
@@ -405,17 +381,11 @@ test.describe("Thresholds summary", () => {
 
             test.describe("when clicked on legend", () => {
                 test.beforeEach(async () => {
-                    await pageObject.legend
-                        .getSeriesByIndex(0)
-                        .getLocator()
-                        .click();
+                    await pageObject.legend.getSeriesByIndex(0).getLocator().click();
                 });
 
                 test.afterEach(async () => {
-                    await pageObject.legend
-                        .getSeriesByIndex(0)
-                        .getLocator()
-                        .click();
+                    await pageObject.legend.getSeriesByIndex(0).getLocator().click();
                 });
 
                 test("should be hidden on both charts", async () => {

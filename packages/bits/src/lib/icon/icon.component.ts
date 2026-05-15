@@ -44,7 +44,7 @@ import { computeA11yForGraphic } from "../../functions/a11y-graphics.util";
     templateUrl: "./icon.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        "class": "nui-icon-wrapper",
+        class: "nui-icon-wrapper",
         "[attr.role]": "computedRole()",
         "[attr.aria-hidden]": "computedAriaHidden()",
         "[attr.aria-label]": "computedAriaLabel()",
@@ -74,7 +74,7 @@ export class IconComponent {
         string | number | undefined,
         string | number | undefined
     >(undefined, {
-        transform: value => {
+        transform: (value) => {
             if (value == null) {
                 return undefined;
             }

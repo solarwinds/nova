@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -152,6 +152,10 @@ describe("ComponentPortalDirective >", () => {
             fixture.debugElement.childNodes[0].injector.get<ComponentPortalDirective>(
                 ComponentPortalDirective
             );
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it("should create", () => {
@@ -524,6 +528,7 @@ describe("ComponentPortalDirective >", () => {
                 "applyPropertiesChange"
             );
             componentPortalDirective.ngOnChanges(changes);
+            fixture.changeDetectorRef.markForCheck();
             fixture.detectChanges();
             expect(recreateSpy).toHaveBeenCalledTimes(1);
             expect(applyPropertiesChangeSpy).toHaveBeenCalledTimes(1);
@@ -571,11 +576,13 @@ describe("ComponentPortalDirective >", () => {
             // set up the initial component
             fixture.detectChanges();
             componentPortalDirective.ngOnChanges(changes1);
+            fixture.changeDetectorRef.markForCheck();
             fixture.detectChanges();
 
             // change out the component
             const oldComponent = (<any>componentPortalDirective).component;
             componentPortalDirective.ngOnChanges(changes2);
+            fixture.changeDetectorRef.markForCheck();
             fixture.detectChanges();
             expect((<any>componentPortalDirective).component).not.toBe(
                 oldComponent

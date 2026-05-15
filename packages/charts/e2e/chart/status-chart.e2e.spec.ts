@@ -40,7 +40,7 @@ test.describe("Status chart", () => {
         );
 
         statusChartWithIcons = new StatusChartAtom(
-            page.locator("#nui-status-chart-with-icons")
+            page.locator("#nui-status-chart-with-icons svg.nui-chart")
         );
     });
 
@@ -128,7 +128,7 @@ test.describe("Status chart", () => {
                     bar
                         .getLocator()
                         .boundingBox()
-                        .then(b => b?.height ?? 0)
+                        .then((b) => b?.height ?? 0)
                 )
                 .toBeLessThan(minIconSize);
 

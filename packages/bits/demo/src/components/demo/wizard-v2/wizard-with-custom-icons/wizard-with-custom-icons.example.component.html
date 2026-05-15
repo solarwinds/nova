@@ -16,7 +16,8 @@
     <nui-wizard-step-v2
         i18n-label
         label="Second step"
-        [stepStateConfig]="secondStepIconConfig">
+        [stepStateConfig]="secondStepIconConfig"
+    >
         <div class="p-5">
             <span i18n>This is the second step of our wizard.</span>
         </div>
@@ -39,7 +40,8 @@
                 displayStyle="primary"
                 nui-button
                 (click)="finishWizard()"
-                i18n>
+                i18n
+            >
                 Finish
             </button>
         </ng-template>
@@ -51,7 +53,8 @@
             displayStyle="action"
             nui-button
             (click)="resetWizard()"
-            i18n>
+            i18n
+        >
             Cancel
         </button>
     </ng-template>
@@ -62,7 +65,8 @@
             nuiWizardPrevious
             nui-button
             icon="caret-left"
-            i18n>
+            i18n
+        >
             Back
         </button>
     </ng-template>
@@ -75,7 +79,8 @@
             displayStyle="primary"
             icon="caret-right"
             iconRight="true"
-            i18n>
+            i18n
+        >
             Next
         </button>
     </ng-template>

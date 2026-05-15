@@ -1,8 +1,9 @@
+@if (datePicker.datepickerMode === 'day') {
 <table
-    *ngIf="datePicker.datepickerMode === 'day'"
     role="grid"
     [attr.aria-labelledby]="datePicker.uniqueId + '-title'"
-    aria-activedescendant="activeDateId">
+    aria-activedescendant="activeDateId"
+>
     <thead>
         <tr>
             <th>
@@ -12,7 +13,8 @@
                     displayStyle="action"
                     icon="caret-left"
                     (click)="datePicker.move(-1, $event)"
-                    tabindex="-1"></button>
+                    tabindex="-1"
+                ></button>
             </th>
             <th [attr.colspan]="5 + (datePicker.showWeeks ? 1 : 0)">
                 <button
@@ -29,7 +31,8 @@
                             datePicker.datepickerMode === datePicker.maxMode
                     }"
                     (click)="datePicker.toggleMode($event)"
-                    tabindex="-1">
+                    tabindex="-1"
+                >
                     <span>{{ title }}</span>
                 </button>
             </th>
@@ -40,56 +43,58 @@
                     displayStyle="action"
                     icon="caret-right"
                     (click)="datePicker.move(1, $event)"
-                    tabindex="-1"></button>
+                    tabindex="-1"
+                ></button>
             </th>
         </tr>
         <tr>
-            <th *ngIf="datePicker.showWeeks"></th>
-            <th *ngFor="let label of labels" class="text-center">
+            @if (datePicker.showWeeks) {
+            <th></th>
+            } @for (label of labels; track label) {
+            <th class="text-center">
                 <div class="day-label">
                     <span aria-label="label.full">{{ label.abbr }}</span>
                 </div>
             </th>
+            }
         </tr>
     </thead>
     <tbody>
-        <ng-template
-            ngFor
-            [ngForOf]="rows"
-            let-row="$implicit"
-            let-index="index">
-            <tr *ngIf="row.isRowVisible">
-                <td *ngIf="datePicker.showWeeks" class="h6 text-center">
-                    <em>{{ weekNumbers[index] }}</em>
-                </td>
-                <td
-                    *ngFor="let cell of row.days"
-                    class="text-center day"
-                    [id]="cell.uid">
-                    <button
-                        *ngIf="cell.isCellVisible"
-                        nui-button
-                        type="button"
-                        displayStyle="action"
+        @for (row of rows; track $index; let index = $index) { @if (row.isRowVisible) {
+        <tr>
+            @if (datePicker.showWeeks) {
+            <td class="h6 text-center">
+                <em>{{ weekNumbers[index] }}</em>
+            </td>
+            } @for (cell of row.days; track cell) {
+            <td class="text-center day" [id]="cell.uid">
+                @if (cell.isCellVisible) {
+                <button
+                    nui-button
+                    type="button"
+                    displayStyle="action"
+                    [ngClass]="{
+                        selected: cell.selected,
+                        disabled: cell.disabled
+                    }"
+                    [disabled]="cell.disabled"
+                    (click)="datePicker.select(cell.date, $event)"
+                    tabindex="-1"
+                >
+                    <span
                         [ngClass]="{
-                            selected: cell.selected,
-                            disabled: cell.disabled
+                            'text-muted': cell.secondary,
+                            'text-info': cell.current,
+                            today: cell.today
                         }"
-                        [disabled]="cell.disabled"
-                        (click)="datePicker.select(cell.date, $event)"
-                        tabindex="-1">
-                        <span
-                            [ngClass]="{
-                                'text-muted': cell.secondary,
-                                'text-info': cell.current,
-                                today: cell.today
-                            }"
-                            >{{ cell.label }}</span
-                        >
-                    </button>
-                </td>
-            </tr>
-        </ng-template>
+                        >{{ cell.label }}</span
+                    >
+                </button>
+                }
+            </td>
+            }
+        </tr>
+        } }
         <tr>
             <td [attr.colspan]="7 + (datePicker.showWeeks ? 1 : 0)">
                 <button
@@ -99,10 +104,12 @@
                     displayStyle="action"
                     [disabled]="datePicker.isTodayButtonDisabled"
                     (click)="datePicker.select(todayDate, $event)"
-                    i18n>
+                    i18n
+                >
                     Today
                 </button>
             </td>
         </tr>
     </tbody>
 </table>
+}

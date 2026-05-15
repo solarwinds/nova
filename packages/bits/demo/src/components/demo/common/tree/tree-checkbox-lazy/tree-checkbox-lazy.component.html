@@ -5,7 +5,8 @@
             displayStyle="action"
             type="button"
             title="action"
-            disabled></button>
+            disabled
+        ></button>
         <nui-checkbox
             class="leaf-control"
             [checked]="isParentNodeCheckedOn(node)"
@@ -16,18 +17,21 @@
     <cdk-nested-tree-node
         #nestedNode="cdkNestedTreeNode"
         *cdkTreeNodeDef="let node; when: hasChild"
-        class="nui-tree">
+        class="nui-tree"
+    >
         <div
             class="nui-tree__header"
             cdkTreeNodeToggle
-            (click)="loadMore(node, nestedNode)">
+            (click)="loadMore(node, nestedNode)"
+        >
             <nui-icon
                 class="nui-tree__header-icon"
                 icon="{{
                     treeControl.isExpanded(node)
                         ? 'triangle-down'
                         : 'triangle-right'
-                }}"></nui-icon>
+                }}"
+            ></nui-icon>
             <nui-checkbox
                 class="branch-control"
                 (click)="$event.stopPropagation()"
@@ -35,7 +39,8 @@
                     descendantsAllSelected(node) || isParentNodeCheckedOn(node)
                 "
                 [indeterminate]="descendantsPartiallySelected(node)"
-                (valueChange)="branchItemSelectionToggle(node)">
+                (valueChange)="branchItemSelectionToggle(node)"
+            >
                 <span class="nui-tree__header-title"
                     >{{ node.name }} ({{ node.length }})</span
                 >
@@ -46,11 +51,11 @@
             [class.nui-tree__body--collapsed]="!treeControl.isExpanded(node)"
             [@expandedState]="
                 treeControl.isExpanded(node) ? 'expanded' : 'collapsed'
-            ">
-            <nui-spinner
-                *ngIf="node.isLoading"
-                [show]="node.isLoading"
-                [delay]="0"></nui-spinner>
+            "
+        >
+            @if (node.isLoading) {
+            <nui-spinner [show]="node.isLoading" [delay]="0"></nui-spinner>
+            }
             <ng-container cdkTreeNodeOutlet></ng-container>
         </div>
     </cdk-nested-tree-node>

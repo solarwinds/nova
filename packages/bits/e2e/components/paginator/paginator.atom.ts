@@ -69,16 +69,16 @@ export class PaginatorAtom extends Atom {
     }
 
     public async pageLinkVisible(pageNumber: number): Promise<boolean> {
-        const li = this.getLocator().locator(
-            `.nui-paginator__list li[value='${pageNumber}']`
-        );
-        return await li.isVisible();
+        const pageButton = this.getPageLinkButton(pageNumber);
+        return await pageButton.isVisible();
     }
 
     public async ellipsedPageLinkClick(pageNumber: number): Promise<void> {
         const page = this.getLocator()
-            .locator(".nui-paginator__page-cell")
-            .filter({ hasText: String(pageNumber) });
+            .locator(".nui-popup__area:visible .nui-paginator__page-cell")
+            .filter({ hasText: new RegExp(`^\\s*${pageNumber}\\s*$`) })
+            .first();
+        await page.waitFor({ state: "visible" });
         await page.click();
     }
 
@@ -123,19 +123,10 @@ export class PaginatorAtom extends Atom {
     }
 
     public async pageCount(): Promise<number> {
-        const lis = this.getLocator().locator(".nui-paginator__list li");
-        const count = await lis.count();
-        let max = 0;
-        for (let i = 0; i < count; i++) {
-            const value = await lis.nth(i).getAttribute("value");
-            if (value) {
-                const num = parseInt(value, 10);
-                if (num > max) {
-                    max = num;
-                }
-            }
-        }
-        return max;
+        const total = await this.getTotal();
+        const pageSize = parseInt(await this.getItemsRange(), 10);
+
+        return pageSize > 0 ? Math.ceil(total / pageSize) : 0;
     }
 
     public async ellipsisHasTopClass(): Promise<boolean> {
@@ -164,5 +155,11 @@ export class PaginatorAtom extends Atom {
         return this.getLocator().locator(
             `button.nui-button:has-text('${pageNumber}')`
         );
+    }
+
+    private getPageLinkButton(pageNumber: number): Locator {
+        return this.getLocator()
+            .locator(".nui-paginator__list > li > button.nui-button")
+            .filter({ hasText: new RegExp(`^\\s*${pageNumber}\\s*$`) });
     }
 }

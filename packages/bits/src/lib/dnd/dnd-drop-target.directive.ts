@@ -123,7 +123,7 @@ export class DndDropTargetDirective implements AfterContentInit, OnDestroy {
 
         // Merging observables to obtain reliable draggedItem reference
         const draggedItem$: Observable<CdkDrag> = merge(
-            this.targetDropList.entered.pipe(map(event => event.item)),
+            this.targetDropList.entered.pipe(map((event) => event.item)),
             this.itemDragStarted$
         ).pipe(shareReplay());
 

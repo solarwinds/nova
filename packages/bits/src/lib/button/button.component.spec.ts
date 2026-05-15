@@ -62,9 +62,11 @@ class TestAppButtonOnDivNoTypeComponent {}
     selector: "nui-button-in-repeater",
     template: `
         <ul>
-            <li *ngFor="let label of buttonLabels">
+            @for (label of buttonLabels; track label) {
+            <li>
                 <button nui-button type="button">{{ label }}</button>
             </li>
+            }
         </ul>
     `,
     standalone: false,
@@ -168,7 +170,7 @@ describe("components >", () => {
             });
             it(`should have text content`, () => {
                 de.queryAll(By.css(".nui-button__content")).forEach(
-                    debugElement => {
+                    (debugElement) => {
                         expect(debugElement.nativeElement.textContent).toEqual(
                             "testText"
                         );

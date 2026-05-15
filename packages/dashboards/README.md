@@ -13,10 +13,10 @@ absorb into your product's code base.
 
 ## Prerequisites
 
-- The consumer app must be Angular-based
-- Your development environment includes Node.js®, a package manager such as npm, and the Angular CLI
-- Your package manager registries are set
-- Nova Bits has been installed using the following command:
+-   The consumer app must be Angular-based
+-   Your development environment includes Node.js®, a package manager such as npm, and the Angular CLI
+-   Your package manager registries are set
+-   Nova Bits has been installed using the following command:
 
 ```sh
 ng add @nova-ui/bits
@@ -58,10 +58,10 @@ ng add @nova-ui/dashboards
 
 Tasks performed by this command:
 
-- Adds the `@nova-ui/dashboards` package and its associated dependencies to your package.json
-- Performs an `npm install`
-- Adds the necessary imports to your app's main module
-- Adds the necessary style definitions to your app's angular.json file.
+-   Adds the `@nova-ui/dashboards` package and its associated dependencies to your package.json
+-   Performs an `npm install`
+-   Adds the necessary imports to your app's main module
+-   Adds the necessary style definitions to your app's angular.json file.
 
 ### Manual Installation and Setup
 

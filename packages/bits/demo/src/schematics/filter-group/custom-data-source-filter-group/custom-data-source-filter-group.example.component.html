@@ -1,10 +1,3 @@
-<ng-template #emptyListTemplate>
-    <div class="d-flex flex-column align-items-center">
-        <nui-image [isWatermark]="true" image="no-data-to-show"></nui-image>
-        <p class="nui-text-small">No data to show</p>
-    </div>
-</ng-template>
-
 <ng-template #listRepeatItemTemplate let-item="item">
     <div>{{ item.color }}</div>
     <div>{{ item.status }}</div>
@@ -13,20 +6,30 @@
 <nui-panel>
     <div nuiPanelEmbeddedBody>
         <app-custom-data-source-filter-groups-wrapper>
+            @for (filterGroupItem of filterGroupItems; track filterGroupItem) {
             <app-custom-data-source-filter-group
-                *ngFor="let filterGroupItem of filterGroupItems"
                 [filterGroupItem]="filterGroupItem"
-                (filterChanged)="changeFilters($event)"></app-custom-data-source-filter-group>
+                (filterChanged)="changeFilters($event)"
+            ></app-custom-data-source-filter-group>
+            }
         </app-custom-data-source-filter-groups-wrapper>
     </div>
     <div>
-        <div *ngIf="hasItems(); else emptyListTemplate">
+        @if (hasItems()) {
+        <div>
             <nui-repeat
                 id="nui-composites-demo-repeat"
                 [itemsSource]="filteringState.repeat.itemsSource"
                 [repeatItemTemplateRef]="listRepeatItemTemplate"
-                paddingSize="normal">
+                paddingSize="normal"
+            >
             </nui-repeat>
         </div>
+        } @else {
+        <div class="d-flex flex-column align-items-center">
+            <nui-image [isWatermark]="true" image="no-data-to-show"></nui-image>
+            <p class="nui-text-small">No data to show</p>
+        </div>
+        }
     </div>
 </nui-panel>

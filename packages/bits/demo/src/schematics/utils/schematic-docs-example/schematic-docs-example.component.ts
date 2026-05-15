@@ -94,7 +94,7 @@ export class SchematicDocsExampleComponent implements OnInit {
 
     private getSourcesByFilenamePrefix(prefix: string) {
         const matchingFilePaths = this.context.files
-            .map(f => f.path)
+            .map((f) => f.path)
             .filter((filePath: string) => {
                 const prefixIndex = filePath.indexOf(prefix);
                 const nextChar =
@@ -128,7 +128,7 @@ export class SchematicDocsExampleComponent implements OnInit {
         const regExResultArray = this.fileExtensionsRegex.exec(fileName);
         if (regExResultArray) {
             fileContent = await this.context.files
-                .find(f => f.path.includes(fileName))
+                .find((f) => f.path.includes(fileName))
                 ?.content();
 
             const extension = <string>fileName.split(".").pop();

@@ -106,12 +106,14 @@ export class ThresholdsPrototypeComponent implements OnInit {
         const reversedZoneDefinitions: ISimpleThresholdZone[] =
             getReversedZoneDefinitions();
         // Here we define the main data series on the chart which will be visualized as lines
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
-            ...d,
-            accessors,
-            renderer,
-            scales,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                accessors,
+                renderer,
+                scales,
+            })
+        );
 
         const thresholds: IChartAssistSeries<IAccessors>[] = [];
         for (const s of seriesSet) {
@@ -146,7 +148,7 @@ export class ThresholdsPrototypeComponent implements OnInit {
         }
 
         const reversedThresholdsSeriesSet: IChartSeries<ILineAccessors>[] =
-            getData().map(d => ({
+            getData().map((d) => ({
                 ...d,
                 accessors,
                 renderer,

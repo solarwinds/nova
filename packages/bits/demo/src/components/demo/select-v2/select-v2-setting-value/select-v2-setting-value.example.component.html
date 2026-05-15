@@ -1,8 +1,8 @@
 <b>Setting value using <code>value</code> input</b>
 <nui-select-v2 [value]="items[0]" placeholder="Select Item" i18n-placeholder>
-    <nui-select-v2-option *ngFor="let item of items" [value]="item">{{
-        item
-    }}</nui-select-v2-option>
+    @for (item of items; track item) {
+    <nui-select-v2-option [value]="item">{{ item }}</nui-select-v2-option>
+    }
 </nui-select-v2>
 
 <br />
@@ -11,8 +11,9 @@
 <nui-select-v2
     placeholder="Select Item"
     i18n-placeholder
-    [formControl]="selectControl">
-    <nui-select-v2-option *ngFor="let item of items" [value]="item">{{
-        item
-    }}</nui-select-v2-option>
+    [formControl]="selectControl"
+>
+    @for (item of items; track item) {
+    <nui-select-v2-option [value]="item">{{ item }}</nui-select-v2-option>
+    }
 </nui-select-v2>

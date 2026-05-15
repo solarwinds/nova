@@ -69,5 +69,7 @@ export class MonthPickerComponent implements OnInit {
             },
             "month"
         );
+
+        this.datePicker.refreshView();
     }
 }

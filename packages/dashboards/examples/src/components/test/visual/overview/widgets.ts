@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { GridsterItem } from "angular-gridster2";
+import { GridsterItemConfig } from "angular-gridster2";
 
 import {
     DEFAULT_PIZZAGNA_ROOT,
@@ -49,7 +49,7 @@ import { TestTableDataSource } from "../../data/table-datasources";
 import { TestTimeseriesDataSource } from "../../data/timeseries-data-sources";
 import { frozenTime } from "../../data/widget-data";
 
-export const positions: Record<string, GridsterItem> = {
+export const positions: Record<string, GridsterItemConfig> = {
     widget1: {
         cols: 6,
         rows: 6,

@@ -1,11 +1,9 @@
 <div>
     <ul id="nui-repeat-item-example-repeat">
-        <nui-repeat-item
-            [clickable]="false"
-            [nowrap]="true"
-            [selected]="false"
-            *ngFor="let item of items">
+        @for (item of items; track item) {
+        <nui-repeat-item [clickable]="false" [nowrap]="true" [selected]="false">
             {{ item }}
         </nui-repeat-item>
+        }
     </ul>
 </div>

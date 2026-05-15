@@ -56,6 +56,7 @@ export class ZoomContentDirective
     implements OnDestroy, AfterViewInit, OnChanges
 {
     private readonly destroy$ = new Subject<void>();
+    private zoomRefreshFrame?: number;
 
     @HostBinding("style.zoom")
     public zoom = 1;
@@ -103,7 +104,7 @@ export class ZoomContentDirective
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.scaleOUT$ && this.scaleOUT$) {
-            this.scaleIN$.pipe(takeUntil(this.destroy$)).subscribe(data => {
+            this.scaleIN$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
                 this.latestDataFromBroker = { ...data };
                 this.element.style.transform = `scale(${data.targetValue})`;
                 this.checkScaleBoundaries(data.targetValue);
@@ -120,11 +121,16 @@ export class ZoomContentDirective
         });
 
         this.resizeObserver = resizeObserver;
+        this.onResize();
     }
 
     public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
+
+        if (this.zoomRefreshFrame) {
+            cancelAnimationFrame(this.zoomRefreshFrame);
+        }
 
         if (this.resizeObserver) {
             this.resizeObserver.unobserve(this.element);
@@ -151,9 +157,21 @@ export class ZoomContentDirective
         }
     }
 
-    private applyZoom() {
-        const widthZoom = this.parentRect.width / this.elementRect.width;
-        const heightZoom = this.parentRect.height / this.elementRect.height;
+    private applyZoom(): void {
+        if (!this.elementRect || !this.parentRect) {
+            return;
+        }
+
+        const currentZoom = this.zoom || 1;
+        const normalizedElementWidth = this.elementRect.width / currentZoom;
+        const normalizedElementHeight = this.elementRect.height / currentZoom;
+
+        if (!normalizedElementWidth || !normalizedElementHeight) {
+            return;
+        }
+
+        const widthZoom = this.parentRect.width / normalizedElementWidth;
+        const heightZoom = this.parentRect.height / normalizedElementHeight;
 
         let zoom = Math.min(widthZoom, heightZoom) * this.zoomRatio;
         if (this.minZoom) {
@@ -166,7 +184,21 @@ export class ZoomContentDirective
         if (Math.abs(zoom - this.zoom) > this.minZoomDifference) {
             this.zoom = zoom;
             this.cdRef.detectChanges(); // running inside an angular zone doesn't always work
+            this.scheduleZoomRefresh();
         }
+    }
+
+    private scheduleZoomRefresh(): void {
+        if (this.zoomRefreshFrame) {
+            cancelAnimationFrame(this.zoomRefreshFrame);
+        }
+
+        this.zoomRefreshFrame = this.ngZone.runOutsideAngular(() =>
+            requestAnimationFrame(() => {
+                this.zoomRefreshFrame = undefined;
+                this.onResize();
+            })
+        );
     }
 
     private applyScale() {

@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 
 import {
     DATA_SOURCE,
@@ -85,7 +85,7 @@ export class KpiErrorTestComponent implements OnInit {
             TestKpiDataSource,
             TestKpiDataSource2,
             TestKpiDataSourceBigNumber,
-        ].forEach(dataSource => {
+        ].forEach((dataSource) => {
             dataSource.mockError = true;
         });
         this.providerRegistry.setProviders({
@@ -127,7 +127,7 @@ export class KpiErrorTestComponent implements OnInit {
             [kpiWidget.id]:
                 this.widgetTypesService.mergeWithWidgetType(kpiWidget),
         };
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [kpiWidget.id]: {
                 cols: 4,
                 rows: 6,

@@ -19,18 +19,11 @@
 //  THE SOFTWARE.
 
 import { Directionality } from "@angular/cdk/bidi";
-import {
-    _DisposeViewRepeaterStrategy,
-    _VIEW_REPEATER_STRATEGY,
-    _ViewRepeater,
-} from "@angular/cdk/collections";
 import { Platform } from "@angular/cdk/platform";
-import { CdkVirtualForOf, ViewportRuler } from "@angular/cdk/scrolling";
+import { CdkVirtualScrollViewport, ViewportRuler } from "@angular/cdk/scrolling";
 import {
     CDK_TABLE,
     CdkTable,
-    RenderRow,
-    RowContext,
     STICKY_POSITIONING_LISTENER,
     StickyPositioningListener,
 } from "@angular/cdk/table";
@@ -56,6 +49,7 @@ import {
     Output,
     SkipSelf,
     ViewEncapsulation,
+    inject,
 } from "@angular/core";
 import _isEqual from "lodash/isEqual";
 import _keys from "lodash/keys";
@@ -108,10 +102,6 @@ import { ISortedItem, SorterDirection } from "../sorter/public-api";
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         TableStateHandlerService,
-        {
-            provide: _VIEW_REPEATER_STRATEGY,
-            useClass: _DisposeViewRepeaterStrategy,
-        },
         { provide: CdkTable, useExisting: TableComponent },
         { provide: CDK_TABLE, useExisting: TableComponent },
     ],
@@ -162,7 +152,11 @@ export class TableComponent<T>
     private stickyChangedSubscription: Subscription;
     private tableColumnsWidthSubscription: Subscription;
     @HostBinding("class.nui-table__table-fixed") layoutFixed = false;
-    @ContentChild(CdkVirtualForOf) public virtualFor?: CdkVirtualForOf<unknown>;
+
+    private readonly virtualScrollViewport = inject(CdkVirtualScrollViewport, {
+        optional: true,
+        skipSelf: true,
+    });
 
     constructor(
         protected _differs: IterableDiffers,
@@ -173,16 +167,13 @@ export class TableComponent<T>
         private tableStateHandlerService: TableStateHandlerService,
         @Inject(DOCUMENT) private document: Document,
         private platform: Platform,
-        @Inject(_VIEW_REPEATER_STRATEGY)
-        viewRepeater: _ViewRepeater<T, RenderRow<T>, RowContext<T>>,
         viewportRuler: ViewportRuler,
         @Optional()
         @SkipSelf()
         @Inject(STICKY_POSITIONING_LISTENER)
         stickyPositioningListener: StickyPositioningListener
     ) {
-        // The _ViewRepeater and _CoalescedStyleScheduler parameters were optional before Angular v12.
-        // They're included here for compatibility with Angular v12 and later.
+        // CdkTable in CDK 21 uses inject() internally; pass remaining known args.
         super(
             _differs,
             _changeDetectorRef,
@@ -191,7 +182,6 @@ export class TableComponent<T>
             _dir,
             document,
             platform,
-            viewRepeater,
             viewportRuler,
             stickyPositioningListener
         );
@@ -263,7 +253,7 @@ export class TableComponent<T>
         const columns: string[] = _keys(firstRow);
         this.tableStateHandlerService.tableColumns = columns;
 
-        columns.forEach(column => {
+        columns.forEach((column) => {
             const alignment = this.tableStateHandlerService.defineAlignment(
                 firstRow[column as keyof T]
             );
@@ -278,12 +268,10 @@ export class TableComponent<T>
                     }
                 );
             const parentWidth =
-                this._elementRef.nativeElement.parentElement.getBoundingClientRect()
-                    .width
-                    ? this._elementRef.nativeElement.parentElement.getBoundingClientRect()
-                          .width
-                    : this._elementRef.nativeElement.parentElement.parentElement.getBoundingClientRect()
-                          .width;
+                this._elementRef.nativeElement.parentElement.getBoundingClientRect().width ?
+                    this._elementRef.nativeElement.parentElement.getBoundingClientRect()
+                        .width : this._elementRef.nativeElement.parentElement.parentElement.getBoundingClientRect()
+                        .width;
             this.layoutFixed = true;
             this.tableStateHandlerService.tableParentWidth = parentWidth;
         }
@@ -416,7 +404,6 @@ export class TableComponent<T>
         // @ts-ignore: Call parent method in case cdk adds it later
         super.ngAfterContentInit?.();
         // Note: Identifying if table is using virtual scroll.
-        this.tableStateHandlerService.hasVirtualScroll =
-            !!this.virtualFor && !this.paginatorUsed;
+        this.tableStateHandlerService.hasVirtualScroll = !!this.virtualScrollViewport && !this.paginatorUsed;
     }
 }

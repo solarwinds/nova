@@ -33,7 +33,7 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 // eslint-disable-next-line import/no-deprecated
 import { BehaviorSubject, combineLatest, Observable } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
@@ -117,7 +117,8 @@ import {
                 </div>
                 <!-- End custom layout content -->
 
-                <div class="mt-4" *ngIf="configurableUnits">
+                @if (configurableUnits) {
+                <div class="mt-4">
                     <nui-form-field
                         caption="Units"
                         i18n-caption
@@ -131,6 +132,7 @@ import {
                         ></nui-textbox>
                     </nui-form-field>
                 </div>
+                }
             </div>
         </nui-widget-editor-accordion>
     `,
@@ -176,8 +178,8 @@ export class CustomKpiDescriptionConfigurationComponent
 
         // eslint-disable-next-line import/no-deprecated
         this.subtitle$ = combineLatest([
-            labelValue?.pipe(map(t => t || $localize`no label`)),
-        ]).pipe(map(labels => labels.join(", ")));
+            labelValue?.pipe(map((t) => t || $localize`no label`)),
+        ]).pipe(map((labels) => labels.join(", ")));
 
         this.formReady.emit(this.form);
     }
@@ -214,7 +216,7 @@ export class AverageRatingKpiDataSource
     // provider definition in the widget configuration below to see how the interval is set)
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             // *** Make a resource request to an external API (if needed)
             this.http
                 .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
@@ -263,7 +265,7 @@ export class RatingsCountKpiDataSource
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             this.http
                 .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
                 .pipe(finalize(() => this.busy.next(false)))
@@ -394,7 +396,7 @@ export class CustomConfiguratorSectionExampleComponent implements OnInit {
         };
 
         // Setting the widget dimensions and position (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [kpiWidget.id]: {
                 cols: 4,
                 rows: 6,

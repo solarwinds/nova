@@ -93,7 +93,7 @@ test.describe(`Visual tests: ${name}`, () => {
         await Helpers.pressKey("Escape");
         await example2
             .getLocator()
-            .evaluate(el => el.scrollTo({ top: el.scrollHeight }));
+            .evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
         await camera.say.cheese("Example 2");
 
         await example3.type(threeTypeValuesInput);

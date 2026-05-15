@@ -7,7 +7,8 @@
             <button
                 nui-button
                 type="button"
-                (click)="addStep(dynamicTemplate2)">
+                (click)="addStep(dynamicTemplate2)"
+            >
                 Add dynamic step w/template
             </button>
         </div>
@@ -18,26 +19,25 @@
         </ng-template>
     </nui-wizard-step-v2>
 
-    <nui-wizard-step-v2
-        *ngIf="enableDynamicStepWithButton"
-        i18n-label
-        label="Added dynamically">
+    @if (enableDynamicStepWithButton) {
+    <nui-wizard-step-v2 i18n-label label="Added dynamically">
         <ng-template nuiWizardStepLabel>Dynamic w/button</ng-template>
         <p class="m-5" i18n>
             Hi! I'm dynamic step that can be enabled/disabled programmatically
             via the toggle button under the wizard!
         </p>
-
         <ng-template nuiWizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
             <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
         </ng-template>
     </nui-wizard-step-v2>
+    }
 
     <ng-container
         *ngTemplateOutlet="dynamicStepWithTemplate"
-        ngProjectAs="nui-wizard-step-v2"></ng-container>
+        ngProjectAs="nui-wizard-step-v2"
+    ></ng-container>
     <ng-template #dynamicStepWithTemplate>
         <nui-wizard-step-v2>
             <ng-template nuiWizardStepLabel>Dynamic w/template</ng-template>
@@ -51,26 +51,30 @@
         </nui-wizard-step-v2>
     </ng-template>
 
-    <nui-wizard-step-v2 *ngFor="let step of steps; let isLast = last">
+    @for (step of steps; track step; let isLast = $last) {
+    <nui-wizard-step-v2>
         <ng-template nuiWizardStepLabel>{{ step.title }}</ng-template>
         <ng-container *ngTemplateOutlet="step.templateRef"></ng-container>
         <ng-template nuiWizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
             <ng-container
-                *ngTemplateOutlet="!isLast && wizardNext"></ng-container>
-            <ng-container *ngIf="isLast && i >= 1">
-                <button
-                    type="button"
-                    displayStyle="primary"
-                    nui-button
-                    (click)="finishWizard()"
-                    i18n>
-                    Finish
-                </button>
-            </ng-container>
+                *ngTemplateOutlet="!isLast && wizardNext"
+            ></ng-container>
+            @if (isLast && i >= 1) {
+            <button
+                type="button"
+                displayStyle="primary"
+                nui-button
+                (click)="finishWizard()"
+                i18n
+            >
+                Finish
+            </button>
+            }
         </ng-template>
     </nui-wizard-step-v2>
+    }
 
     <ng-template #dynamicTemplate1>
         <p class="m-5" i18n>
@@ -92,7 +96,8 @@
             displayStyle="action"
             nui-button
             (click)="resetWizard()"
-            i18n>
+            i18n
+        >
             Cancel
         </button>
     </ng-template>
@@ -110,7 +115,8 @@
             nui-button
             displayStyle="primary"
             icon="caret-right"
-            iconRight="true">
+            iconRight="true"
+        >
             Next
         </button>
     </ng-template>

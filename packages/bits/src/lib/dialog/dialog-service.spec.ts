@@ -100,7 +100,9 @@ export class WithActiveDialogComponent {
             ><nui-destroyable-cmpt></nui-destroyable-cmpt
         ></ng-template>
         <ng-template #contentWithClose let-close="close">
-            <button type="button" id="close" (click)="close('myResult')">Close me</button>
+            <button type="button" id="close" (click)="close('myResult')">
+                Close me
+            </button>
         </ng-template>
         <ng-template #contentWithDismiss let-dismiss="dismiss">
             <button type="button" id="dismiss" (click)="dismiss('myReason')">
@@ -108,11 +110,15 @@ export class WithActiveDialogComponent {
             </button>
         </ng-template>
         <ng-template #contentWithIf>
-            <ng-template [ngIf]="show">
-                <button type="button" id="if" (click)="show = false">Click me</button>
-            </ng-template>
+            @if (show) {
+            <button type="button" id="if" (click)="show = false">
+                Click me
+            </button>
+            }
         </ng-template>
-        <button type="button" id="open" (click)="open('from button')">Open</button>
+        <button type="button" id="open" (click)="open('from button')">
+            Open
+        </button>
         <div id="open-no-focus" (click)="open('from non focusable element')">
             Open
         </div>
@@ -391,7 +397,7 @@ describe("nui-dialog", () => {
             let resolvedResult: any;
             fixture.componentInstance
                 .openTplClose()
-                .result.then(result => (resolvedResult = result));
+                .result.then((result) => (resolvedResult = result));
 
             // const resolvedResult = await fixture.componentInstance.openTplClose().result;
             fixture.detectChanges();
@@ -409,7 +415,7 @@ describe("nui-dialog", () => {
             let rejectReason: any;
             fixture.componentInstance
                 .openTplDismiss()
-                .result.catch(reason => (rejectReason = reason));
+                .result.catch((reason) => (rejectReason = reason));
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog();
 

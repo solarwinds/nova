@@ -26,7 +26,7 @@ import {
     OnDestroy,
     OnInit,
 } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import { Apollo, gql } from "apollo-angular";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
@@ -98,8 +98,8 @@ export class DrilldownDataSource
 
         this.applyFilters$
             // eslint-disable-next-line import/no-deprecated
-            .pipe(switchMap(filters => this.getData(filters)))
-            .subscribe(async res => {
+            .pipe(switchMap((filters) => this.getData(filters)))
+            .subscribe(async (res) => {
                 this.outputsSubject.next(await this.getFilteredData(res));
             });
     }
@@ -111,7 +111,7 @@ export class DrilldownDataSource
     public async getFilteredData(data: any): Promise<any> {
         return of(data)
             .pipe(
-                map(entries => {
+                map((entries) => {
                     if (this.isDrillDown()) {
                         const activeDrillLvl = this.drillState.length;
                         const group = this.groupBy[activeDrillLvl];
@@ -178,7 +178,7 @@ export class DrilldownDataSource
 
         if (this.cache && (isDrillUp || this.isHome())) {
             return of(this.cache).pipe(
-                map(data => data.data[group]),
+                map((data) => data.data[group]),
                 finalize(() => this.busy.next(false))
             );
         } else {
@@ -192,12 +192,12 @@ export class DrilldownDataSource
                 })
                 .pipe(
                     tap(
-                        data =>
+                        (data) =>
                             (this.cache = {
                                 data: { ...this.cache?.data, ...data?.data },
                             })
                     ),
-                    map(data => data.data[group || this.leafGroup]),
+                    map((data) => data.data[group || this.leafGroup]),
                     finalize(() => this.busy.next(false))
                 );
         }
@@ -320,7 +320,7 @@ export class DrilldownMultiRequestWidgetExampleComponent implements OnInit {
         };
 
         // Setting the widget dimensions and position (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [drilldownWidget.id]: {
                 cols: 10,
                 rows: 10,

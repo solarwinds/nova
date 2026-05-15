@@ -18,11 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ListRange } from "@angular/cdk/collections";
 import { Injectable } from "@angular/core";
-// eslint-disable-next-line import/no-deprecated
 import { merge } from "rxjs";
-import { filter, map, takeUntil, tap } from "rxjs/operators";
+import { auditTime, filter, takeUntil, tap } from "rxjs/operators";
 
 import { INovaFilters, nameof } from "@nova-ui/bits";
 
@@ -32,8 +30,6 @@ import { TableWidgetComponent } from "../public-api";
 @Injectable()
 export class VirtualScrollFeatureAddonService {
     private widget: TableWidgetComponent; // TODO: generic widget
-
-    public visibleItems: unknown[] = [];
 
     public initWidget(widget: TableWidgetComponent): void {
         this.widget = widget;
@@ -77,47 +73,36 @@ export class VirtualScrollFeatureAddonService {
             return;
         }
 
-        // Note: Using this additional stream to pass the visible range to
-        // the table and trigger change detection on range change and table data update.
-        // eslint-disable-next-line import/no-deprecated
+        this.widget.viewportManager.setViewport(this.widget.vscrollViewport);
+        this.widget.viewportManager.observeNextPage$({
+            pageSize: this.widget.range,
+            emitFirstPage: false,
+        });
+
         merge(
-            this.widget.vscrollViewport.renderedRangeStream,
-            this.widget.tableUpdate$.pipe(
-                map(() => this.widget.vscrollViewport?.getRenderedRange())
-            )
+            this.widget.vscrollViewport.elementScrolled(),
+            this.widget.tableUpdate$
         )
             .pipe(
-                tap((range: ListRange | undefined) => {
-                    this.visibleItems = this.widget.tableData.slice(
-                        range?.start,
-                        range?.end
-                    );
-                    // Since we're using onPush strategy we should trigger CD manually to ensure that visible items are updated properly
-                    this.widget.changeDetector.detectChanges();
-                }),
-                takeUntil(this.widget.onDestroy$)
-            )
-            .subscribe();
-
-        this.widget.viewportManager
-            .setViewport(this.widget.vscrollViewport)
-            .observeNextPage$({
-                pageSize: this.widget.range,
-                emitFirstPage: true,
-            })
-            .pipe(
-                // Note: A special check to keep our server-client-side sorting in place
-                filter(
-                    range =>
-                        range.end >=
-                        (this.widget.vscrollViewport?.getDataLength() ?? 0)
-                ),
-                tap(range =>
+                auditTime(0),
+                filter(() => !this.widget.isBusy),
+                filter(() => this.shouldLoadNextPage()),
+                tap(() =>
                     this.widget.zone.run(() => {
+                        const currentPageRange =
+                            this.widget.viewportManager.currentPageRange;
+
+                        (this.widget.viewportManager as any).updateCurrentPage({
+                            start: currentPageRange.end,
+                            end: currentPageRange.end + this.widget.range,
+                        });
+
                         // TODO: Remove "page" in V10. Compute page on datasource level. - NUI-5830
                         // @ts-ignore: Provide a proper interface to DS
                         this.widget.dataSource.page =
-                            range.end / (range.end - range.start);
+                            this.widget.viewportManager.currentPageRange.end /
+                            (this.widget.viewportManager.currentPageRange.end -
+                                this.widget.viewportManager.currentPageRange.start);
                         this.widget.eventBus
                             .getStream(SCROLL_NEXT_PAGE)
                             .next({});
@@ -127,5 +112,30 @@ export class VirtualScrollFeatureAddonService {
                 takeUntil(this.widget.onDestroy$)
             )
             .subscribe();
+    }
+
+    private shouldLoadNextPage(): boolean {
+        const viewport = this.widget.vscrollViewport;
+        const viewportElement = viewport?.elementRef.nativeElement;
+        const dataLength = viewport?.getDataLength() ?? 0;
+
+        if (!viewport || !viewportElement || dataLength === 0) {
+            return false;
+        }
+
+        if (this.widget.totalItems && dataLength >= this.widget.totalItems) {
+            return false;
+        }
+
+        if (this.widget.viewportManager.currentPageRange.end > dataLength) {
+            return false;
+        }
+
+        const remainingScrollDistance =
+            viewportElement.scrollHeight -
+            viewportElement.clientHeight -
+            viewportElement.scrollTop;
+
+        return remainingScrollDistance <= this.widget.rowHeight;
     }
 }

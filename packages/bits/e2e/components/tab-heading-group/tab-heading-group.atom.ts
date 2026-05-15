@@ -27,9 +27,8 @@ export class TabHeadingGroupAtom extends Atom {
     public static CSS_CLASS = "nui-tab-headings__holder";
 
     public async getTabs(): Promise<TabHeadingAtom[]> {
-        const tabLocator = this.getLocator().locator(
-            `.${TabHeadingAtom.CSS_CLASS}`
-        );
+        const tabLocator = this.getTabsLocator();
+        await tabLocator.first().waitFor({ state: "visible" });
         const count = await tabLocator.count();
         const tabs: TabHeadingAtom[] = [];
         for (let i = 0; i < count; i++) {
@@ -86,9 +85,9 @@ export class TabHeadingGroupAtom extends Atom {
     }
 
     public async getNumberOfTabs(): Promise<number> {
-        return this.getLocator()
-            .locator(`.${TabHeadingAtom.CSS_CLASS}`)
-            .count();
+        const tabLocator = this.getTabsLocator();
+        await tabLocator.first().waitFor({ state: "visible" });
+        return tabLocator.count();
     }
 
     public async getActiveTab(): Promise<TabHeadingAtom> {
@@ -107,5 +106,9 @@ export class TabHeadingGroupAtom extends Atom {
 
     private getCaretRight(): Locator {
         return this.getLocator().locator(".btn-caret-right");
+    }
+
+    private getTabsLocator(): Locator {
+        return this.getLocator().locator(`.${TabHeadingAtom.CSS_CLASS}`);
     }
 }

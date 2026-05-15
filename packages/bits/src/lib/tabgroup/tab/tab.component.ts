@@ -35,8 +35,9 @@ import { TabGroupComponent } from "../tab-group/tab-group.component";
     selector: "nui-tab",
     template: `
         <div [hidden]="!active"><ng-content></ng-content></div>
-        <ng-template *ngIf="active" [ngTemplateOutlet]="templateRef">
-        </ng-template>
+        @if (active) {
+        <ng-template [ngTemplateOutlet]="templateRef"> </ng-template>
+        }
     `,
     encapsulation: ViewEncapsulation.None,
     standalone: false,

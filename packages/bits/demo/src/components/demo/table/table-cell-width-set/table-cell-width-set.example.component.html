@@ -4,7 +4,8 @@
             id="position-input"
             [value]="positionWidth"
             customBoxWidth="150px"
-            (valueChange)="onOptionChange($event)">
+            (valueChange)="onOptionChange($event)"
+        >
         </nui-textbox-number>
     </section>
 
@@ -15,7 +16,8 @@
                 nui-header-cell
                 *nuiHeaderCellDef
                 [style.width.px]="positionWidth"
-                i18n>
+                i18n
+            >
                 No.
             </th>
             <td nui-cell *nuiCellDef="let element">{{ element.position }}</td>
@@ -33,7 +35,8 @@
             <td
                 nui-cell
                 *nuiCellDef="let element"
-                [tooltipText]="element.description">
+                [tooltipText]="element.description"
+            >
                 {{ element.description }}
             </td>
         </ng-container>

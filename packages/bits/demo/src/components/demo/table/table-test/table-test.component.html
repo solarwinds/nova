@@ -6,7 +6,8 @@
             nui-button
             icon="edit"
             (click)="open(parameters)"
-            i18n>
+            i18n
+        >
             Table parameters
         </button>
 
@@ -14,7 +15,8 @@
             <nui-dialog-header
                 i18n-title
                 title="Table parameters"
-                (closed)="close()"></nui-dialog-header>
+                (closed)="close()"
+            ></nui-dialog-header>
             <form [formGroup]="optionsForm">
                 <div class="form-group">
                     <div class="dialog-body">
@@ -35,7 +37,8 @@
                             [itemsSource]="alignmentsArray"
                             id="nui-demo-table-test-columns-alignment-select"
                             placeholder="Select alignment"
-                            formControlName="alignment">
+                            formControlName="alignment"
+                        >
                         </nui-select>
 
                         <h5 i18n>Change rows density</h5>
@@ -43,14 +46,16 @@
                             [itemsSource]="densitiesArray"
                             id="nui-demo-table-test-columns-density-select"
                             placeholder="Select row density"
-                            formControlName="density">
+                            formControlName="density"
+                        >
                         </nui-select>
 
                         <h5 i18n>Change columns width</h5>
                         <nui-textbox-number
                             placeholder="Set columns width"
                             id="nui-demo-table-test-column-width"
-                            formControlName="positionWidth">
+                            formControlName="positionWidth"
+                        >
                         </nui-textbox-number>
                     </div>
 
@@ -61,7 +66,8 @@
                             type="button"
                             displayStyle="primary"
                             (click)="close('Cancel')"
-                            i18n>
+                            i18n
+                        >
                             Close
                         </button>
                     </nui-dialog-footer>
@@ -77,7 +83,8 @@
             nui-button
             icon="edit"
             (click)="open(content)"
-            i18n>
+            i18n
+        >
             Edit columns
         </button>
 
@@ -87,7 +94,8 @@
             id="nui-demo-table-test-limit-search-btn"
             nui-button
             (click)="limitSearch()"
-            i18n>
+            i18n
+        >
             Toggle search by outages
         </button>
 
@@ -97,7 +105,8 @@
             type="button"
             id="nui-demo-table-test-disable-column-sorting-btn"
             (click)="disableSorting()"
-            i18n>
+            i18n
+        >
             Disable features column for sorting
         </button>
 
@@ -105,19 +114,17 @@
             <nui-dialog-header
                 i18n-title
                 title="Edit columns"
-                (closed)="close()"></nui-dialog-header>
+                (closed)="close()"
+            ></nui-dialog-header>
             <form [formGroup]="myForm">
                 <div class="form-group">
                     <div class="dialog-body">
-                        <nui-message
-                            [allowDismiss]="true"
-                            type="critical"
-                            *ngIf="
-                                !myForm.controls['checkboxGroup'].valid &&
-                                myForm.controls['checkboxGroup'].touched
-                            ">
+                        @if ( !myForm.controls['checkboxGroup'].valid &&
+                        myForm.controls['checkboxGroup'].touched ) {
+                        <nui-message [allowDismiss]="true" type="critical">
                             <b i18n>Select minimum 3 checkboxes!</b>
                         </nui-message>
+                        }
 
                         <h5 i18n>Available columns</h5>
                         <nui-checkbox-group
@@ -125,14 +132,18 @@
                             [values]="displayedColumnsCopy"
                             (valuesChange)="columnsChanged($event)"
                             formControlName="checkboxGroup"
-                            required>
+                            required
+                        >
+                            @for (availableColumn of availableColumns; track
+                            availableColumn) {
                             <nui-checkbox
-                                *ngFor="let availableColumn of availableColumns"
                                 [value]="availableColumn"
                                 class="text-capitalize"
-                                [checked]="isChecked(availableColumn)">
+                                [checked]="isChecked(availableColumn)"
+                            >
                                 {{ availableColumn }}
                             </nui-checkbox>
+                            }
                         </nui-checkbox-group>
 
                         <nui-divider></nui-divider>
@@ -145,7 +156,8 @@
                                     [value]="newColumn"
                                     (textChange)="updateNewColumnValue($event)"
                                     i18n-placeholder
-                                    placeholder="Enter new column title">
+                                    placeholder="Enter new column title"
+                                >
                                 </nui-textbox>
                             </div>
                             <div class="col col-auto">
@@ -156,7 +168,8 @@
                                     id="nui-demo-table-test-add-remove-new-column-btn"
                                     class="ml-3"
                                     (click)="addNewColumn()"
-                                    i18n>
+                                    i18n
+                                >
                                     Add new column
                                 </button>
                             </div>
@@ -167,7 +180,8 @@
                             nui-button
                             type="button"
                             (click)="close('Cancel')"
-                            i18n>
+                            i18n
+                        >
                             Cancel
                         </button>
                         <button
@@ -179,7 +193,8 @@
                             [disabled]="
                                 myForm.controls['checkboxGroup'].invalid
                             "
-                            i18n>
+                            i18n
+                        >
                             Update columns
                         </button>
                     </nui-dialog-footer>
@@ -194,7 +209,8 @@
             [value]="searchTerm"
             (search)="onSearch($event)"
             (cancel)="onSearchCancel()"
-            #filteringSearch>
+            #filteringSearch
+        >
         </nui-search>
     </div>
 </div>
@@ -212,7 +228,8 @@
         [reorderable]="reorderable"
         [selectionConfig]="selectionConfig"
         [totalItems]="paginationTotal"
-        (columnsOrderChange)="toastColumns($event)">
+        (columnsOrderChange)="toastColumns($event)"
+    >
         <ng-container nuiColumnDef="position" [columnWidth]="positionWidth">
             <th nui-header-cell *nuiHeaderCellDef i18n [alignment]="alignment">
                 No.
@@ -237,15 +254,14 @@
                 [isColumnSortingDisabled]="isFeatureColumnDisabled"
                 *nuiHeaderCellDef
                 i18n
-                [alignment]="alignment">
+                [alignment]="alignment"
+            >
                 Features
             </th>
             <td nui-cell *nuiCellDef="let element" [alignment]="alignment">
-                <nui-icon
-                    *ngFor="let icon of element.features"
-                    [icon]="icon"
-                    class="icon-margin">
-                </nui-icon>
+                @for (icon of element.features; track icon) {
+                <nui-icon [icon]="icon" class="icon-margin"> </nui-icon>
+                }
             </td>
         </ng-container>
 
@@ -290,21 +306,23 @@
                 Checks
             </th>
             <td nui-cell *nuiCellDef="let element" [alignment]="alignment">
-                <ng-container *ngFor="let check of element.checks">
-                    <nui-icon [icon]="check.icon"></nui-icon>
-                    {{ check.num }}
-                </ng-container>
+                @for (check of element.checks; track check) {
+                <nui-icon [icon]="check.icon"></nui-icon>
+                {{ check.num }}
+                }
             </td>
         </ng-container>
 
         <tr
             nui-header-row
-            *nuiHeaderRowDef="displayedColumns; sticky: true"></tr>
+            *nuiHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
         <tr
             nui-row
             *nuiRowDef="let row; columns: displayedColumns"
             [density]="density"
-            [rowObject]="row"></tr>
+            [rowObject]="row"
+        ></tr>
     </table>
 </div>
 
@@ -317,5 +335,6 @@
     disabledClass="disabled"
     showPrevNext="true"
     (pagerAction)="changePagination()"
-    #filteringPaginator>
+    #filteringPaginator
+>
 </nui-paginator>

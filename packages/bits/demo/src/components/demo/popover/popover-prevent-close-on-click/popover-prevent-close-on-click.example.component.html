@@ -5,7 +5,8 @@
     trigger="click"
     [template]="popoverPreventClose"
     [closePopover]="closePopoverSubject"
-    [preventClosing]="true">
+    [preventClosing]="true"
+>
     <button nui-button type="button">
         <span i18n>Click me!</span>
     </button>
@@ -20,7 +21,8 @@
             id="nui-demo-popover-combobox"
             [itemsSource]="dataset.items"
             placeholder="Select item"
-            i18n-placeholder></nui-combobox>
+            i18n-placeholder
+        ></nui-combobox>
         <div class="mt-2 d-flex justify-content-end">
             <button
                 id="nui-demo-custom-close-popover"
@@ -28,7 +30,8 @@
                 type="button"
                 displayStyle="action"
                 (click)="closePopover()"
-                i18n>
+                i18n
+            >
                 Close
             </button>
             <button
@@ -37,7 +40,8 @@
                 type="button"
                 displayStyle="primary"
                 (click)="closePopover()"
-                i18n>
+                i18n
+            >
                 Confirm
             </button>
         </div>

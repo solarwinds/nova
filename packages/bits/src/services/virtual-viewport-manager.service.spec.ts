@@ -109,6 +109,11 @@ class ViewportInRepeatComponent implements AfterViewInit, OnDestroy {
         this.items$.next(this.getMockData(this.pageSize));
     }
 
+    public resetWithoutEmitFirstPage(): void {
+        this.viewportManager.reset({ emitFirstPage: false });
+        this.items$.next(this.getMockData(this.pageSize));
+    }
+
     public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
@@ -160,7 +165,7 @@ describe("services >", () => {
             component.repeat.viewportRef.scrollToIndex(
                 component.repeat.viewportRef.getDataLength()
             );
-            component.items$.pipe(skip(1), take(1)).subscribe(r => {
+            component.items$.pipe(skip(1), take(1)).subscribe((r) => {
                 expect(component.items$.getValue().length).toEqual(
                     component.pageSize * 2
                 );
@@ -183,7 +188,7 @@ describe("services >", () => {
                     // Taking last emission to perform check
                     skip(pagesToScroll - 1),
                     take(1),
-                    tap(users => {
+                    tap((users) => {
                         expect(users.length).toEqual(
                             component.pageSize * pagesToScroll
                         );
@@ -193,7 +198,7 @@ describe("services >", () => {
                 .subscribe();
         });
 
-        it(`should not try to load more data if the last loaded page is not complete`, done => {
+        it(`should not try to load more data if the last loaded page is not complete`, (done) => {
             const pages = 6;
             component.pageSize = 10;
             component.totalItems = component.pageSize * pages + 9;
@@ -228,7 +233,7 @@ describe("services >", () => {
                 .subscribe();
         });
 
-        it("should start over on reset call", done => {
+        it("should start over on reset call", (done) => {
             const pagesToScroll = 5;
             component.items$
                 .pipe(
@@ -242,7 +247,7 @@ describe("services >", () => {
                     }),
                     skip(pagesToScroll - 1),
                     take(1),
-                    switchMap(users => {
+                    switchMap((users) => {
                         expect(users.length).toEqual(
                             component.pageSize * pagesToScroll
                         );
@@ -261,6 +266,45 @@ describe("services >", () => {
                                 expect(range.end).toEqual(
                                     component.pageSize * 2
                                 );
+                                done();
+                            })
+                        );
+                    })
+                )
+                .subscribe();
+        });
+
+        it("should keep the first page after reset when emitFirstPage is false", (done) => {
+            const pagesToScroll = 5;
+
+            component.items$
+                .pipe(
+                    tap(() => {
+                        fixture.detectChanges();
+                        component.repeat.viewportRef.scrollToIndex(
+                            component.repeat.viewportRef.getDataLength()
+                        );
+                    }),
+                    skip(pagesToScroll - 1),
+                    take(1),
+                    tap((users) => {
+                        expect(users.length).toEqual(
+                            component.pageSize * pagesToScroll
+                        );
+                    }),
+                    switchMap(() => {
+                        component.resetWithoutEmitFirstPage();
+                        fixture.detectChanges();
+
+                        return component.nextPage$.pipe(
+                            take(1),
+                            tap(() => {
+                                expect(
+                                    component.viewportManager.currentPageRange
+                                ).toEqual({
+                                    start: 0,
+                                    end: component.pageSize,
+                                });
                                 done();
                             })
                         );

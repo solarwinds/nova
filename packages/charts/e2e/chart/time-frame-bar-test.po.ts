@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import type { Locator, Page } from "@playwright/test";
+import { expect, type Locator, type Page } from "@playwright/test";
 
 import { TimeFrameBarAtom } from "@nova-ui/bits/sdk/atoms-playwright";
 
@@ -27,10 +27,14 @@ import { ChartAtom } from "./atoms/chart.atom";
 export class TimeFrameBarTestPage {
     private readonly root: Locator;
     private readonly delayCheckbox: Locator;
+    private readonly busyOverlay: Locator;
+    private readonly chartSeries: Locator;
 
     constructor(private readonly page: Page) {
         this.root = page.locator(".nui-time-frame-bar-test");
         this.delayCheckbox = this.root.locator("#delay");
+        this.busyOverlay = this.root.locator(".nui-nova-busy__overlay--align");
+        this.chartSeries = this.root.locator(".chart .data-series-container");
     }
 
     public get chart(): ChartAtom {
@@ -45,5 +49,18 @@ export class TimeFrameBarTestPage {
         if (await this.delayCheckbox.isChecked()) {
             await this.delayCheckbox.click();
         }
+    }
+
+    public async waitUntilReady(): Promise<void> {
+        await expect(this.chartSeries.first()).toBeVisible({ timeout: 15000 });
+        await this.page.waitForTimeout(1500);
+        await this.busyOverlay.evaluateAll((elements) => {
+            for (const element of elements) {
+                const overlay = element as HTMLElement;
+                overlay.style.visibility = "hidden";
+                overlay.style.opacity = "0";
+                overlay.style.pointerEvents = "none";
+            }
+        });
     }
 }

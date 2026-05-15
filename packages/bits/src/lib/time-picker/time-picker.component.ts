@@ -172,7 +172,7 @@ export class TimePickerComponent
         }
 
         this.itemToSelect = this.getItemToSelect();
-        this.inputChanged.pipe(debounceTime(500)).subscribe(value => {
+        this.inputChanged.pipe(debounceTime(500)).subscribe((value) => {
             this.updateInnerModel(value);
             this.itemToSelect = this.getItemToSelect();
             this.timeChanged.emit(this.innerModel);
@@ -191,7 +191,7 @@ export class TimePickerComponent
     public ngAfterViewInit(): void {
         this.overlay.clickOutside
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(_ => this.overlay.hide());
+            .subscribe((_) => this.overlay.hide());
 
         this.initPopupUtilities();
         this.keyboardService.initService(
@@ -199,7 +199,7 @@ export class TimePickerComponent
             this.overlay,
             this.menuTrigger.nativeElement
         );
-        this.cdr.detectChanges();
+        this.cdr.markForCheck();
     }
 
     onChange(value: any): void {}
@@ -272,6 +272,7 @@ export class TimePickerComponent
     writeValue(value: any): void {
         this.textbox.writeValue(this.formatValue(value));
         this.updateInnerModel(this.formatValue(value));
+        this.cdr.markForCheck();
     }
 
     setErrorState(value: string): void {

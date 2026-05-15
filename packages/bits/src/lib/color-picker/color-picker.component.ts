@@ -144,17 +144,17 @@ export class ColorPickerComponent
         }
 
         this.palette =
-            this.colorPalette || this.colors.map(color => ({ color }));
+            this.colorPalette || this.colors.map((color) => ({ color }));
 
         this.initOverlayUtilities();
 
         this.select.valueSelected
             .pipe(
-                tap(value => this.writeValue(value as any)),
-                tap(value => this.onChange(value)),
+                tap((value) => this.writeValue(value as any)),
+                tap((value) => this.onChange(value)),
                 takeUntil(this.destroy$)
             )
-            .subscribe(value => {
+            .subscribe((value) => {
                 if (value) {
                     this.isBlackTick = this.determineBlackTick(
                         value.toString()

@@ -83,7 +83,7 @@ export class ExampleWrapperComponent implements OnInit {
     public getExampleComponents(fileType: string): string {
         return (
             this.componentSources?.find(
-                component =>
+                (component) =>
                     component.fileName.includes(this.filenamePrefix) &&
                     component.fileType === fileType
             )?.fileContent ?? ""

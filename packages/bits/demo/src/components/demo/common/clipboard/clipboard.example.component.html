@@ -19,7 +19,8 @@
             [value]="textToCopy"
             customBoxWidth="360px"
             (textChange)="onValueChange($event)"
-            required="true">
+            required="true"
+        >
         </nui-textbox>
         <button
             id="clipboardButton"
@@ -28,19 +29,20 @@
             (clipboardSuccess)="onClipboardSuccess()"
             (clipboardError)="onClipboardError()"
             type="button"
-            icon="copy">
+            icon="copy"
+        >
             Copy
         </button>
     </div>
     <div class="message-box">
-        <nui-message type="ok" [allowDismiss]="true" *ngIf="copiedSuccessfully">
+        @if (copiedSuccessfully) {
+        <nui-message type="ok" [allowDismiss]="true">
             <b i18n>Text was copied to the clipboard!</b>
         </nui-message>
-        <nui-message
-            type="critical"
-            [allowDismiss]="true"
-            *ngIf="copiedWithError">
+        } @if (copiedWithError) {
+        <nui-message type="critical" [allowDismiss]="true">
             <b i18n>Failed to copy text!</b>
         </nui-message>
+        }
     </div>
 </div>

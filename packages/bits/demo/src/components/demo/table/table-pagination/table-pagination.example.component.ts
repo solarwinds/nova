@@ -18,7 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    OnDestroy,
+    ViewChild,
+} from "@angular/core";
 import { Subscription } from "rxjs";
 
 import {
@@ -64,7 +70,8 @@ export class TablePaginationExampleComponent
     private outputsSubscription: Subscription;
 
     constructor(
-        public dataSourceService: ClientSideDataSource<IExampleTableModel>
+        public dataSourceService: ClientSideDataSource<IExampleTableModel>,
+        private changeDetector: ChangeDetectorRef
     ) {
         dataSourceService.setData(getData());
     }
@@ -80,6 +87,7 @@ export class TablePaginationExampleComponent
                 (data: INovaFilteringOutputs) => {
                     this.dataSource = data.repeat?.itemsSource;
                     this.paginationTotal = data.paginator?.total;
+                    this.changeDetector.detectChanges();
                 }
             );
 

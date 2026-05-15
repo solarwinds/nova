@@ -58,12 +58,14 @@ export class LineChartWithPopoverExampleComponent implements OnInit {
             this.chartAssist.markers
         );
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(s => ({
-            ...s,
-            scales,
-            renderer,
-            accessors,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (s) => ({
+                ...s,
+                scales,
+                renderer,
+                accessors,
+            })
+        );
 
         // plugin setup
         this.chart.addPlugin(this.popoverPlugin);

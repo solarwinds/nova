@@ -192,7 +192,7 @@ describe("components >", () => {
                 );
                 expect(menuLinks.length).toBeGreaterThan(0);
 
-                menuLinks.forEach(linkDebugEl => {
+                menuLinks.forEach((linkDebugEl) => {
                     // Host element should have role="none"
                     expect(linkDebugEl.attributes["role"]).toBe("none");
 

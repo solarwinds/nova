@@ -3,10 +3,12 @@
         class="app-filtered-view-table-with-virtual-scroll-table-scrolling-container"
         tableStickyHeader
         #viewportRef
-        [itemSize]="rowHeight">
+        [itemSize]="rowHeight"
+    >
         <table
             nui-table
-            [dataSource]="items | sliceRange : viewportRef.getRenderedRange()">
+            [dataSource]="items | sliceRange : viewportRef.getRenderedRange()"
+        >
             <ng-container nuiColumnDef="name">
                 <th nui-header-cell [style.width.%]="30" *nuiHeaderCellDef i18n>
                     Name
@@ -30,44 +32,45 @@
 
             <tr
                 nui-header-row
-                *nuiHeaderRowDef="displayedColumns; sticky: true"></tr>
+                *nuiHeaderRowDef="displayedColumns; sticky: true"
+            ></tr>
             <ng-template
                 nuiRowDef
                 cdkVirtualFor
                 let-context
                 [nuiRowDefColumns]="displayedColumns"
-                [cdkVirtualForOf]="items">
+                [cdkVirtualForOf]="items"
+            >
                 <tr nui-row></tr>
             </ng-template>
         </table>
     </cdk-virtual-scroll-viewport>
 
     <footer
-        class="app-filtered-view-table-with-virtual-scroll-table-scrolling-footer">
-        <div *ngIf="isBusy; else defaultText">
+        class="app-filtered-view-table-with-virtual-scroll-table-scrolling-footer"
+    >
+        @if (isBusy) {
+        <div>
             <nui-progress [show]="true" [compactMode]="true"></nui-progress>
             <div class="d-flex justify-content-center align-items-center">
                 Loading next {{ pageSize }} items...
             </div>
         </div>
-        <ng-template #defaultText>
-            <div class="d-flex justify-content-center align-items-center">
-                <div class="p-1 d-flex">
-                    <div class="d-flex pt-3 pb-3" i18n>
-                        Showing {{ items.length }} of {{ totalItems }}
-                    </div>
-                    <div class="d-flex pt-3 pb-3">
-                        <ng-container
-                            i18n
-                            *ngIf="items.length !== totalItems; else endOfData"
-                            >, scroll down for more.</ng-container
-                        >
-                        <ng-template #endOfData
-                            ><strong>. All items loaded.</strong></ng-template
-                        >
-                    </div>
+        } @else {
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="p-1 d-flex">
+                <div class="d-flex pt-3 pb-3" i18n>
+                    Showing {{ items.length }} of {{ totalItems }}
+                </div>
+                <div class="d-flex pt-3 pb-3">
+                    @if (items.length !== totalItems) {
+                    <ng-container i18n>, scroll down for more.</ng-container>
+                    } @else {
+                    <strong>. All items loaded.</strong>
+                    }
                 </div>
             </div>
-        </ng-template>
+        </div>
+        }
     </footer>
 </div>

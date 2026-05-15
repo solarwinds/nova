@@ -102,7 +102,7 @@ export class UnitConversionService {
             a > b ? -1 : a < b ? 1 : 0
         );
         const highestFactorIndex = sortedFactors.findIndex(
-            factor => value / factor >= 1
+            (factor) => value / factor >= 1
         );
         const highestFactor = factors[highestFactorIndex];
 

@@ -119,11 +119,11 @@ test.describe("Spark chart", () => {
         });
     });
 
-    test.describe("after hovering second data point in first chart", () => {
+    test.describe("after selecting the second data point in the first chart", () => {
         const pointIndex = 1;
 
-        test.beforeEach(async ({ page }) => {
-            await InteractiveBooster.hover(pageObject.getChart(0), {
+        test.beforeEach(async () => {
+            await InteractiveBooster.click(pageObject.getChart(0), {
                 x: xTicks[pointIndex],
                 y: getYCoordinate(10),
             });

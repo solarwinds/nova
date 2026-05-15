@@ -80,7 +80,9 @@ export class TreeLoadMoreExampleComponent {
     public pageSize = 10;
     public remainingItemsCount: { [key: string]: number } = {};
 
-    public treeControl = new NestedTreeControl<FoodNode>(node => node.children);
+    public treeControl = new NestedTreeControl<FoodNode>(
+        (node) => node.children
+    );
     public dataSource = new ArrayDataSource(TREE_DATA);
 
     @ViewChild(CdkTree) private cdkTree: CdkTree<FoodNode>;

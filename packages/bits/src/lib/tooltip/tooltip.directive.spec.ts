@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { OverlayModule } from "@angular/cdk/overlay";
-import { Component, DebugElement } from "@angular/core";
+import { Component, DebugElement, Input } from "@angular/core";
 import {
     ComponentFixture,
     fakeAsync,
@@ -43,8 +43,8 @@ import { NuiButtonModule } from "../button/button.module";
     standalone: false,
 })
 class TooltipTestComponent {
-    public tooltipValue? = "test tooltip";
-    public isDisabled = false;
+    @Input() public tooltipValue? = "test tooltip";
+    @Input() public isDisabled = false;
 }
 
 @Component({
@@ -58,9 +58,9 @@ class TooltipTestComponent {
     standalone: false,
 })
 class TooltipWithPositionTestComponent {
-    public tooltipValue = "test tooltip";
-    public isDisabled = false;
-    public position: TooltipPosition = "top";
+    @Input() public tooltipValue = "test tooltip";
+    @Input() public isDisabled = false;
+    @Input() public position: TooltipPosition = "top";
 }
 
 @Component({
@@ -256,7 +256,7 @@ describe("directives >", () => {
 
                 it("should call hide() if disabled", () => {
                     hideSpy = spyOn(tooltipDirective, "hide");
-                    fixture.componentInstance.isDisabled = true;
+                    fixture.componentRef.setInput("isDisabled", true);
                     fixture.detectChanges();
                     expect(hideSpy).toHaveBeenCalled();
                     expect(hideSpy).toHaveBeenCalledTimes(1);
@@ -265,7 +265,7 @@ describe("directives >", () => {
                 it("should convert to string and return empty string on negative values", () => {
                     const values = <any>[null, undefined];
                     for (const value of values) {
-                        fixture.componentInstance.tooltipValue = value;
+                        fixture.componentRef.setInput("tooltipValue", value);
                         fixture.detectChanges();
                         expect(typeof tooltipDirective.message).toBe("string");
                         expect(tooltipDirective.message).toEqual("");
@@ -275,7 +275,8 @@ describe("directives >", () => {
                 it("should convert numbers to string and return string", () => {
                     const values = <any>[0, 123456789, NaN];
                     for (const value of values) {
-                        fixture.componentInstance.tooltipValue = value;
+                        fixture.componentRef.setInput("tooltipValue", value);
+                        fixture.detectChanges();
                         fixture.detectChanges();
                         expect(typeof tooltipDirective.message).toBe("string");
                         expect(tooltipDirective.message).toEqual(`${value}`);
@@ -289,7 +290,7 @@ describe("directives >", () => {
                     expect(
                         tooltipDirective._tooltipInstance?.isVisible()
                     ).toBeTruthy();
-                    fixture.componentInstance.tooltipValue = undefined;
+                    fixture.componentRef.setInput("tooltipValue", undefined);
                     fixture.detectChanges();
                     tick(200);
 
@@ -328,7 +329,7 @@ describe("directives >", () => {
                 }));
 
                 it("should be able to set position", fakeAsync(() => {
-                    positionFixture.componentInstance.position = "bottom";
+                    positionFixture.componentRef.setInput("position", "bottom");
                     positionFixture.detectChanges();
                     tick();
                     tooltipDirective.show();

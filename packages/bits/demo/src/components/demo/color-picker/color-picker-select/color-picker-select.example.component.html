@@ -2,11 +2,12 @@
     <nui-color-picker
         formControlName="backgroundColor"
         [colorPalette]="colorPalette"
-        [isSelect]="true">
+        [isSelect]="true"
+    >
     </nui-color-picker>
 </form>
 
-<p class="my-3"
-    >You selected: {{ myForm.get('backgroundColor')?.value.label}} ->
-    {{ myForm.get('backgroundColor')?.value.color}}</p
->
+<p class="my-3">
+    You selected: {{ myForm.get("backgroundColor")?.value.label }} ->
+    {{ myForm.get("backgroundColor")?.value.color }}
+</p>

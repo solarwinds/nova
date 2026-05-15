@@ -33,10 +33,11 @@ import { ToastService } from "../../toast/toast.service";
         <form [formGroup]="myForm" (submit)="onSubmit()">
             <div class="form-group">
                 <nui-time-picker
-                    formControlName="testTime"
+                    formControlName="testTimePicker"
                     [isInErrorState]="
-                        myForm.controls['testTime'].invalid &&
-                        myForm.controls['testTime'].touched
+                        myForm && myForm.controls['testTimePicker'] &&
+                        myForm.controls['testTimePicker'].invalid &&
+                        myForm.controls['testTimePicker'].touched
                     "
                     (timeChanged)="valueChange($event)"
                 ></nui-time-picker>

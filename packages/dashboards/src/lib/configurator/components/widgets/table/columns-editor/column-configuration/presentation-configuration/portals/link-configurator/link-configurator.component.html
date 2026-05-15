@@ -8,13 +8,14 @@
                     html label property
                 "
                 class="mb-3"
-                [control]="dataFieldIds.controls['value']">
+                [control]="dataFieldIds.controls['value']"
+            >
                 <nui-select-v2 formControlName="value">
-                    <nui-select-v2-option
-                        *ngFor="let itemValue of dropdownItems.value"
-                        [value]="itemValue.id">
+                    @for (itemValue of dropdownItems.value; track itemValue) {
+                    <nui-select-v2-option [value]="itemValue.id">
                         {{ itemValue.label }}
                     </nui-select-v2-option>
+                    }
                 </nui-select-v2>
                 <nui-validation-message for="required" i18n>
                     This field is required
@@ -29,13 +30,14 @@
                     url html property
                 "
                 class="mb-3"
-                [control]="dataFieldIds.controls['link']">
+                [control]="dataFieldIds.controls['link']"
+            >
                 <nui-select-v2 formControlName="link">
-                    <nui-select-v2-option
-                        *ngFor="let itemLink of dropdownItems.link"
-                        [value]="itemLink.id">
+                    @for (itemLink of dropdownItems.link; track itemLink) {
+                    <nui-select-v2-option [value]="itemLink.id">
                         {{ itemLink.label }}
                     </nui-select-v2-option>
+                    }
                 </nui-select-v2>
                 <nui-validation-message for="required" i18n>
                     This field is required
@@ -51,7 +53,8 @@
                 should open in new window/tab
             "
             class="mb-3"
-            [control]="form.controls.targetSelf">
+            [control]="form.controls.targetSelf"
+        >
             <nui-switch id="nui-switch-target" formControlName="targetSelf">
             </nui-switch>
         </nui-form-field>

@@ -159,7 +159,7 @@ export class ImageComponent {
         effect(() => {
             const h = this.height();
             const w = this.width();
-            [h, w].forEach(item => {
+            [h, w].forEach((item) => {
                 if (item !== undefined && !this.isImageSizeValid(item)) {
                     this.logger.error(
                         "Image size should be specified in 'px', '%', or 'auto"
@@ -198,14 +198,16 @@ export class ImageComponent {
     }
 
     private getImage = (imageName: string): IImagesPresetItem | undefined =>
-        this.images.find(img => img.name === imageName);
+        this.images.find((img) => img.name === imageName);
 
     private isImageSizeValid(value: string): boolean {
+        if (value === "auto") {
+            return true;
+        }
+
         return (
             !isNaN(parseFloat(value)) &&
-            (value.includes("px") ||
-                value.includes("%") ||
-                value.includes("auto"))
+            (value.includes("px") || value.includes("%"))
         );
     }
 }

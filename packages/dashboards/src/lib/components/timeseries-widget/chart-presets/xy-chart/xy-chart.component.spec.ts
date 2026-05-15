@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -109,6 +109,10 @@ describe("XYChartComponent", () => {
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it("should create", () => {
@@ -391,7 +395,7 @@ describe("XYChartComponent", () => {
                 component.widgetData.series[0].data;
             component.transformData("42", TimeseriesTransformer.Linear);
 
-            expect(component.widgetData.series[0].data.map(d => d.y)).toEqual(
+            expect(component.widgetData.series[0].data.map((d) => d.y)).toEqual(
                 transformedY
             );
             expect(component.widgetData.series[0].transformer?.name).toEqual(
@@ -432,9 +436,9 @@ describe("XYChartComponent", () => {
             ];
             component.transformData("42", TimeseriesTransformer.None);
 
-            expect(component.widgetData.series[0].data.map(d => d.y)).toEqual([
-                1, 2,
-            ]);
+            expect(component.widgetData.series[0].data.map((d) => d.y)).toEqual(
+                [1, 2]
+            );
             expect(component.widgetData.series[0].transformer).toBeUndefined();
         });
     });

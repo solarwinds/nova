@@ -2,36 +2,42 @@
     <nui-radio-group
         id="basic-radio-group"
         name="fruit"
-        [(value)]="selectedFruit">
+        [(value)]="selectedFruit"
+    >
+        @for (fruit of fruits; track fruit) {
         <nui-radio
-            *ngFor="let fruit of fruits"
             [value]="fruit"
             [checked]="fruit === 'Orange'"
-            [disabled]="fruit === 'Banana'">
+            [disabled]="fruit === 'Banana'"
+        >
             {{ fruit }}
         </nui-radio>
+        }
     </nui-radio-group>
 
     <form [formGroup]="disabledForm">
         <nui-form-field
             caption="Radio Group"
-            [control]="disabledForm.controls['radioGroup']">
+            [control]="disabledForm.controls['radioGroup']"
+        >
             <nui-radio-group
                 id="disabled-radio-group"
                 formControlName="radioGroup"
-                name="vegetable">
-                <nui-radio
-                    *ngFor="let vegetable of vegetables"
-                    [value]="vegetable">
+                name="vegetable"
+            >
+                @for (vegetable of vegetables; track vegetable) {
+                <nui-radio [value]="vegetable">
                     {{ vegetable }}
                 </nui-radio>
+                }
             </nui-radio-group>
         </nui-form-field>
     </form>
     <nui-checkbox
         id="toggle-disabled-group-checkbox"
-        [checked]="true"
-        (valueChange)="toggleDisabled($event)">
+        [checked]="isDisabledGroup"
+        (valueChange)="toggleDisabled()"
+    >
         Disabled
     </nui-checkbox>
 </div>

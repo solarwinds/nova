@@ -81,7 +81,7 @@ export const getAppModule = (
         .filter((source: FileMetadata) => source.fileType === "ts")
         .filter((source: FileMetadata) => source.fileName !== `routes.ts`)
         .map(
-            source =>
+            (source) =>
                 `import { ${getComponentName(
                     source
                 )} } from "./${source.filePath.slice(

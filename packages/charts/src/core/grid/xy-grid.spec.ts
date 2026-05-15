@@ -124,7 +124,10 @@ describe("XYGrid >", () => {
                 const plugins = grid.buildPlugins(chart);
 
                 expect(
-                    find(plugins, p => p instanceof MouseInteractiveAreaPlugin)
+                    find(
+                        plugins,
+                        (p) => p instanceof MouseInteractiveAreaPlugin
+                    )
                 ).toBeDefined();
             });
 
@@ -134,7 +137,10 @@ describe("XYGrid >", () => {
                 const plugins = grid.buildPlugins(chart);
 
                 expect(
-                    find(plugins, p => p instanceof MouseInteractiveAreaPlugin)
+                    find(
+                        plugins,
+                        (p) => p instanceof MouseInteractiveAreaPlugin
+                    )
                 ).not.toBeDefined();
             });
         });
@@ -146,10 +152,10 @@ describe("XYGrid >", () => {
                 const plugins = grid.buildPlugins(chart);
 
                 expect(
-                    find(plugins, p => p instanceof InteractionLinePlugin)
+                    find(plugins, (p) => p instanceof InteractionLinePlugin)
                 ).toBeDefined();
                 expect(
-                    find(plugins, p => p instanceof InteractionLabelPlugin)
+                    find(plugins, (p) => p instanceof InteractionLabelPlugin)
                 ).toBeDefined();
             });
 
@@ -159,10 +165,10 @@ describe("XYGrid >", () => {
                 const plugins = grid.buildPlugins(chart);
 
                 expect(
-                    find(plugins, p => p instanceof InteractionLinePlugin)
+                    find(plugins, (p) => p instanceof InteractionLinePlugin)
                 ).not.toBeDefined();
                 expect(
-                    find(plugins, p => p instanceof InteractionLabelPlugin)
+                    find(plugins, (p) => p instanceof InteractionLabelPlugin)
                 ).not.toBeDefined();
             });
         });

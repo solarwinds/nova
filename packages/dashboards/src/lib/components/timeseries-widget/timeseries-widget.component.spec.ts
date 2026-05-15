@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+﻿import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { TimeseriesWidgetComponent } from "@nova-ui/dashboards";
 
@@ -9,6 +9,10 @@ describe(TimeseriesWidgetComponent.name, () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(TimeseriesWidgetComponent);
         component = fixture.componentInstance;
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it("should create", () => {

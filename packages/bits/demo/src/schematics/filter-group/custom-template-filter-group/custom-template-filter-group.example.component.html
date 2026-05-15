@@ -10,16 +10,9 @@
         <span class="mr-2">
             <b>{{ expander.title }}</b>
         </span>
-        <span class="mr-2" *ngIf="!expander.expanded">{{
-            expander.count
-        }}</span>
-    </div>
-</ng-template>
-
-<ng-template #emptyListTemplate>
-    <div class="d-flex flex-column align-items-center">
-        <nui-image [isWatermark]="true" image="no-data-to-show"></nui-image>
-        <p class="nui-text-small">No data to show</p>
+        @if (!expander.expanded) {
+        <span class="mr-2">{{ expander.count }}</span>
+        }
     </div>
 </ng-template>
 
@@ -31,22 +24,32 @@
 <nui-panel>
     <div nuiPanelEmbeddedBody>
         <app-custom-template-filter-groups-wrapper>
+            @for (filterGroupItem of filterGroupItems; track filterGroupItem) {
             <app-custom-template-filter-group
-                *ngFor="let filterGroupItem of filterGroupItems"
                 [filterGroupItem]="filterGroupItem"
                 [checkboxTemplateRef]="customCheckboxTemplate"
                 [expanderTemplateRef]="customExpanderTemplate"
-                (filterChanged)="changeFilters($event)"></app-custom-template-filter-group>
+                (filterChanged)="changeFilters($event)"
+            ></app-custom-template-filter-group>
+            }
         </app-custom-template-filter-groups-wrapper>
     </div>
     <div>
-        <div *ngIf="hasItems(); else emptyListTemplate">
+        @if (hasItems()) {
+        <div>
             <nui-repeat
                 id="nui-composites-demo-repeat"
                 [itemsSource]="filteringState.repeat.itemsSource"
                 [repeatItemTemplateRef]="listRepeatItemTemplate"
-                paddingSize="normal">
+                paddingSize="normal"
+            >
             </nui-repeat>
         </div>
+        } @else {
+        <div class="d-flex flex-column align-items-center">
+            <nui-image [isWatermark]="true" image="no-data-to-show"></nui-image>
+            <p class="nui-text-small">No data to show</p>
+        </div>
+        }
     </div>
 </nui-panel>

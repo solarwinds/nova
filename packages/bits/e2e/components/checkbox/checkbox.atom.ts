@@ -41,7 +41,7 @@ export class CheckboxAtom extends Atom {
         !(await this.getInputElement.isEnabled());
 
     public isChecked = async (): Promise<boolean> =>
-        (await this.getInputElement.getAttribute("checked")) === "true";
+        this.getInputElement.isChecked();
 
     public toBeChecked = async (): Promise<void> => {
         await expect(this.getInputElement).toBeChecked();
@@ -56,7 +56,8 @@ export class CheckboxAtom extends Atom {
      *
      * @returns {Promise<void>}
      */
-    public toggle = async (): Promise<void> => this.getMark().click();
+    public toggle = async (): Promise<void> =>
+        this.getInputElement.evaluate((input: HTMLInputElement) => input.click());
 
     /**
      * Sets the checkbox value to the given value
@@ -66,13 +67,16 @@ export class CheckboxAtom extends Atom {
      */
     public async setChecked(checked: boolean): Promise<void> {
         if ((await this.isChecked()) !== checked) {
-            return await this.toggle();
+            await this.toggle();
+        }
+
+        if (checked) {
+            await this.toBeChecked();
+        } else {
+            await this.toNotBeChecked();
         }
     }
 
-    private getMark(): Locator {
-        return super.getLocator().locator(".nui-checkbox__mark");
-    }
 
     private getLink(): Locator {
         return super.getLocator().locator(".link-in-checkbox");

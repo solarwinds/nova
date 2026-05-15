@@ -2,19 +2,23 @@
     id="nui-demo-wizard-confirmation-dialog"
     (cancel)="openConfirmationDialog($event, content)"
     finishText="Finish"
-    i18n-finishText>
+    i18n-finishText
+>
     <nui-wizard-step
         i18n-title
         title="First"
-        [stepTemplate]="step1"></nui-wizard-step>
+        [stepTemplate]="step1"
+    ></nui-wizard-step>
     <nui-wizard-step
         i18n-title
         title="Second"
-        [stepTemplate]="step1"></nui-wizard-step>
+        [stepTemplate]="step1"
+    ></nui-wizard-step>
     <nui-wizard-step
         i18n-title
         title="Third"
-        [stepTemplate]="step1"></nui-wizard-step>
+        [stepTemplate]="step1"
+    ></nui-wizard-step>
 </nui-wizard>
 <ng-template #step1>
     <p i18n>Wizard cancel method behavior</p>
@@ -23,7 +27,8 @@
     <nui-dialog-header
         i18n-title
         title="Really want to leave?"
-        (close)="onButtonClick()"></nui-dialog-header>
+        (close)="onButtonClick()"
+    ></nui-dialog-header>
     <div class="dialog-body">
         <p i18n>
             There is at least one completed step in this wizard. Are you sure
@@ -39,7 +44,8 @@
             type="button"
             displayStyle="primary"
             (click)="onButtonClick('Leave')"
-            i18n>
+            i18n
+        >
             Leave
         </button>
     </nui-dialog-footer>

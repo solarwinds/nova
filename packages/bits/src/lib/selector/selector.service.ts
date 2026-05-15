@@ -349,8 +349,8 @@ export class SelectorService {
         selectedItems: any[]
     ): any[] {
         const unselectedItems = _differenceWith(items, selectedItems, _isEqual);
-        const includedItems = _reject(prevSelection.include, includedItem =>
-            unselectedItems.some(unselectedItem =>
+        const includedItems = _reject(prevSelection.include, (includedItem) =>
+            unselectedItems.some((unselectedItem) =>
                 _isEqual(includedItem, unselectedItem)
             )
         );
@@ -362,8 +362,8 @@ export class SelectorService {
         items: any[],
         selectedItems: any[]
     ): any[] {
-        const excludedItems = _reject(prevSelection.exclude, excludedItem =>
-            selectedItems.some(item => _isEqual(excludedItem, item))
+        const excludedItems = _reject(prevSelection.exclude, (excludedItem) =>
+            selectedItems.some((item) => _isEqual(excludedItem, item))
         );
         const unselectedItemsOnPage = _differenceWith(
             items,
@@ -372,7 +372,7 @@ export class SelectorService {
         );
 
         return unselectedItemsOnPage.reduce((memo, item) => {
-            const isItemExcluded = excludedItems.some(excludedItem =>
+            const isItemExcluded = excludedItems.some((excludedItem) =>
                 _isEqual(excludedItem, item)
             );
             if (!isItemExcluded) {

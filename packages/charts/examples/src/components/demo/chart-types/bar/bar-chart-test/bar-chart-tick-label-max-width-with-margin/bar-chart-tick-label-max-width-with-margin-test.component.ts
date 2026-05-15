@@ -62,7 +62,7 @@ export class BarChartTickLabelMaxWidthWithMarginTestComponent
         gridConfig.dimension.margin.left = 100;
         gridConfig.axis.left.tickLabel.maxWidth = 50;
 
-        const seriesSet: IChartSeries<IBarAccessors>[] = getData().map(d => ({
+        const seriesSet: IChartSeries<IBarAccessors>[] = getData().map((d) => ({
             ...d,
             accessors,
             renderer,

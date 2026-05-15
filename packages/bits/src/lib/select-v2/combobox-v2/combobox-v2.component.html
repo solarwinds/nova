@@ -1,6 +1,7 @@
 <div
     class="w-100 d-flex flex-wrap align-items-center pt-2"
-    [attr.role]="multiselect && selectedOptions.length ? 'list' : null">
+    [attr.role]="multiselect && selectedOptions.length ? 'list' : null"
+>
     <ng-content select="[selectedItems]"></ng-content>
 
     <input
@@ -14,21 +15,23 @@
         (input)="handleInput(input.value)"
         (keydown)="onKeyDown($event)"
         (click)="selectTextInInput()"
-        #input />
+        #input
+    />
 </div>
+@if (isRemoveValueEnabled && (selectedOptions[0] || inputValue)) {
 <button
     tabindex="0"
-    *ngIf="isRemoveValueEnabled && (selectedOptions[0] || inputValue)"
     nui-button
     class="nui-combobox-v2__remove-value action"
     (click)="clearValue($event)"
     [isEmpty]="true"
     icon="remove"
     type="button"
-    [ariaLabel]="'Remove selected value'"
     [nuiTooltip]="clearValueButtonTooltip"
     [class.disabled]="isDisabled"
-    [disabled]="isDisabled"></button>
+    [disabled]="isDisabled"
+></button>
+}
 <button
     tabindex="-1"
     class="nui-combobox-v2__toggle action"
@@ -36,15 +39,16 @@
     type="button"
     [isEmpty]="true"
     icon="caret-down"
-    [ariaLabel]="'Toggle dropdown menu'"
     [class.rotate]="isDropdownOpen"
     [class.disabled]="isDisabled"
     [disabled]="isDisabled"
-    (click)="selectTextInInput()"></button>
+    (click)="selectTextInInput()"
+></button>
 <nui-overlay
     roleAttr="listbox"
     [toggleReference]="elRef.nativeElement"
     [viewportMargin]="popupViewportMargin"
-    [overlayConfig]="overlayConfig">
+    [overlayConfig]="overlayConfig"
+>
     <ng-content></ng-content>
 </nui-overlay>

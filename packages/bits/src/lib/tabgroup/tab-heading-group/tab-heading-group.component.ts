@@ -82,7 +82,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
 
     public ngAfterViewInit(): void {
         // Observing the size of the component to check traverse
-        this._ro = new ResizeObserver(entries =>
+        this._ro = new ResizeObserver((entries) =>
             entries.forEach(() => this.checkTraverse())
         );
         this.ngZone.runOutsideAngular(() => {
@@ -90,18 +90,21 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
             this._ro.observe(this.el.nativeElement);
         });
 
-        // Making the first tab in group active by default
-        this.setActiveTab();
-        this.subscribeToSelection();
+        queueMicrotask(() => {
+            this.setActiveTab();
+            this.subscribeToSelection();
+            this.checkTraverse();
+        });
 
         this._changesSubscription = this._tabs.changes.subscribe(
             (changedTabs: any) => {
                 this.setActiveTab();
-                this._tabSelectedSubscriptions.forEach(sub =>
+                this._tabSelectedSubscriptions.forEach((sub) =>
                     sub.unsubscribe()
                 );
                 this._tabSelectedSubscriptions = [];
                 this.subscribeToSelection();
+                this.checkTraverse();
             }
         );
     }
@@ -246,7 +249,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
 
     public ngOnDestroy(): void {
         this._changesSubscription.unsubscribe();
-        this._tabSelectedSubscriptions.forEach(sub => sub.unsubscribe());
+        this._tabSelectedSubscriptions.forEach((sub) => sub.unsubscribe());
         this._ro.disconnect();
     }
 }

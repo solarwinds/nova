@@ -1,7 +1,8 @@
 <nui-breadcrumb
     id="nui-demo-breadcrumb-visual-test"
     [items]="breadcrumbSource"
-    (navigation)="onNavigation($event)"></nui-breadcrumb>
+    (navigation)="onNavigation($event)"
+></nui-breadcrumb>
 <div class="container">
     <div>
         Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
@@ -16,7 +17,8 @@
     </div>
     <button
         id="nui-demo-breadcrumb-show-second-view"
-        (click)="relativeNavigation('first-subroute')">
+        (click)="relativeNavigation('first-subroute')"
+    >
         Show first level
     </button>
     <router-outlet></router-outlet>

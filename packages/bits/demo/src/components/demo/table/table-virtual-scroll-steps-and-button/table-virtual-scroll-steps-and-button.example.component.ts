@@ -100,7 +100,6 @@ export class TableVirtualScrollStepsAndButtonExampleComponent
                 if (!outputs) {
                     return;
                 }
-
                 this.users.next(outputs.repeat.itemsSource);
                 this._loadedItems = outputs.itemsToLoad;
                 this.totalItems = outputs.totalItems;
@@ -139,7 +138,7 @@ export class TableVirtualScrollStepsAndButtonExampleComponent
         );
         this.dataSource.applyFilters();
 
-        this.dataSource.busy.subscribe(busy => {
+        this.dataSource.busy.subscribe((busy) => {
             this._isBusy = busy;
         });
     }

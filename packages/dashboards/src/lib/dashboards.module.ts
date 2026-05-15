@@ -26,7 +26,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 // noinspection ES6UnusedImports
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { LocalizeFn } from "@angular/localize/init";
-import { GridsterModule } from "angular-gridster2";
+import { Gridster, GridsterItem } from "angular-gridster2";
 
 import {
     NuiBusyModule,
@@ -191,7 +191,8 @@ const entryComponents: IComponentWithLateLoadKey[] = [
 @NgModule({
     imports: [
         NuiDashboardsCommonModule,
-        GridsterModule,
+        Gridster,
+        GridsterItem,
         NuiBusyModule,
         NuiButtonModule,
         NuiChartsModule,

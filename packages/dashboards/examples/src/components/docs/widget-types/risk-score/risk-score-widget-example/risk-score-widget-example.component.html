@@ -2,25 +2,28 @@
     <nui-switch class="ml-3 py-2" [(value)]="editMode" i18n>
         Edit Mode
     </nui-switch>
+    @if (!dashboard?.widgets['riskScoreWidgetId']) {
     <button
-        *ngIf="!dashboard?.widgets['riskScoreWidgetId']"
         type="button"
         displayStyle="action"
         (click)="initializeDashboard()"
-        nui-button>
+        nui-button
+    >
         Restore Widget
     </button>
+    }
 </div>
 
 <div class="w-100 dashboard">
     <!--
-        Note: The dashboard and gridsterConfig input assignments must use banana-in-a-box notation to keep
-        the dashboard state updated with changes to the pizzagna.
-    -->
+  Note: The dashboard and gridsterConfig input assignments must use banana-in-a-box notation to keep
+  the dashboard state updated with changes to the pizzagna.
+  -->
     <nui-dashboard
         [(dashboard)]="dashboard"
         [editMode]="editMode"
         [(gridsterConfig)]="gridsterConfig"
-        nuiWidgetEditor>
+        nuiWidgetEditor
+    >
     </nui-dashboard>
 </div>

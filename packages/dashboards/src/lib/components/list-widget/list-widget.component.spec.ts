@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+﻿import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { EventBus, IEvent } from "@nova-ui/bits";
 import {
@@ -27,6 +27,10 @@ describe(ListWidgetComponent.name, () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ListWidgetComponent);
         component = fixture.componentInstance;
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it("should create", () => {

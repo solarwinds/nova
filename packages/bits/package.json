@@ -8,9 +8,9 @@
   ],
   "description": "SolarWinds Nova Framework",
   "devDependencies": {
-    "@apollo/client": "3.13.9",
+    "@apollo/client": "4.1.7",
     "animate.css": "4.1.1",
-    "apollo-angular": "11.0.0",
+    "apollo-angular": "13.0.0",
     "bootstrap-less-port": "0.3.0",
     "graphql": "16.8.1",
     "modernizr": "3.12.0",
@@ -104,5 +104,5 @@
     "test:dev": "ng test lib -c dev"
   },
   "typings": "public_api.d.ts",
-  "version": "20.0.0"
+  "version": "21.0.0"
 }

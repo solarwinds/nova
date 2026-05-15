@@ -6,19 +6,21 @@
             [itemsSource]="sorterItems"
             [selectedItem]="sortBy"
             [sortDirection]="initialSortDirection"
-            (sorterAction)="onSorterAction($event)">
+            (sorterAction)="onSorterAction($event)"
+        >
         </nui-sorter>
         <nui-search
             class="d-flex justify-content-end app-paginated-list-search"
             (search)="onSearch()"
-            (cancel)="onCancelSearch()">
+            (cancel)="onCancelSearch()"
+        >
         </nui-search>
     </div>
 
     <div class="d-flex flex-row">
-        <ng-container *ngIf="!isBusy && (listItems$ | async).length === 0">
-            <span i18n>No results</span>
-        </ng-container>
+        @if (!isBusy && (listItems$ | async).length === 0) {
+        <span i18n>No results</span>
+        }
 
         <nui-repeat
             class="app-paginated-list-repeat"
@@ -26,7 +28,8 @@
             [itemConfig]="itemConfig"
             [repeatItemTemplateRef]="listRepeatItemTemplate"
             [selection]="filteringState.repeat?.selectedItems"
-            [itemsSource]="filteringState.repeat?.itemsSource">
+            [itemsSource]="filteringState.repeat?.itemsSource"
+        >
         </nui-repeat>
     </div>
 
@@ -37,7 +40,8 @@
             [pageSize]="pageSize"
             [pageSizeSet]="[10, 20, 30, 40]"
             [total]="filteringState.paginator?.total"
-            (pagerAction)="applyFilters()">
+            (pagerAction)="applyFilters()"
+        >
         </nui-paginator>
     </div>
 </div>
@@ -45,9 +49,11 @@
 <ng-template #listRepeatItemTemplate let-item="item">
     <div class="container">
         <div class="row">
-            <div *ngFor="let field of item | keyvalue" class="col-sm">
+            @for (field of item | keyvalue; track field) {
+            <div class="col-sm">
                 {{ field.value }}
             </div>
+            }
         </div>
     </div>
 </ng-template>

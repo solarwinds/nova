@@ -2,36 +2,38 @@
     class="nui-items-dynamic"
     cdkDropList
     (cdkDropListDropped)="drop($event)"
-    [formGroup]="form">
+    [formGroup]="form"
+>
+    @for (node of nodeConfigs; track trackBy(i, node); let i = $index) {
     <div
         cdkDrag
         class="nui-items-dynamic__node-item"
         (cdkDragStarted)="cdkDragStarted($event)"
-        *ngFor="let node of nodeConfigs; let i = index; trackBy: trackBy">
+    >
         <nui-drop-area
             class="nui-items-dynamic__drop-area"
             *cdkDragPlaceholder
-            [style.height.px]="height"></nui-drop-area>
-
+            [style.height.px]="height"
+        ></nui-drop-area>
         <ng-template #headerText>
-            <ng-container *ngIf="moveButtons">
-                <div class="nui-items-dynamic__drag-handler" cdkDragHandle>
-                    <nui-icon icon="drag"></nui-icon>
-                </div>
-            </ng-container>
+            @if (moveButtons) {
+            <div class="nui-items-dynamic__drag-handler" cdkDragHandle>
+                <nui-icon icon="drag"></nui-icon>
+            </div>
+            }
             <span
                 [title]="
                     headerMap.get(node.id)
                         | nuiWidgetConfiguratorSectionHeader : i : headerPrefix
                 "
-                class="nui-items-dynamic__header-text">
+                class="nui-items-dynamic__header-text"
+            >
                 {{
                     headerMap.get(node.id)
                         | nuiWidgetConfiguratorSectionHeader : i : headerPrefix
                 }}
             </span>
         </ng-template>
-
         <ng-template #headerButtons>
             <div class="d-flex">
                 <!-- TODO: remove "kpi" prefix in v11 - NUI-5833 -->
@@ -41,10 +43,10 @@
                     type="button"
                     icon="delete"
                     displayStyle="action"
-                    (click)="removeItem(getItemForNode(node), i)"></button>
+                    (click)="removeItem(getItemForNode(node), i)"
+                ></button>
             </div>
         </ng-template>
-
         <ng-container
             nuiComponentPortal
             #componentPortal="nuiComponentPortal"
@@ -57,11 +59,14 @@
                     | nuiAddData : headerButtons : 'headerButtonsTemplate'
             "
             [outputs]="['formReady', 'formDestroy']"
-            (output)="onEvent(node.id, $event)">
+            (output)="onEvent(node.id, $event)"
+        >
             <ng-template
                 [cdkPortalOutlet]="componentPortal.portal"
-                (attached)="componentPortal.attached($event)">
+                (attached)="componentPortal.attached($event)"
+            >
             </ng-template>
         </ng-container>
     </div>
+    }
 </div>

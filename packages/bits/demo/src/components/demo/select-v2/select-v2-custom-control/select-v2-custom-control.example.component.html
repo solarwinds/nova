@@ -2,10 +2,13 @@
     placeholder="Select Item"
     i18n-placeholder
     [manualDropdownControl]="true"
-    class="w-25">
-    <nui-select-v2-option *ngFor="let item of items" [value]="item">
+    class="w-25"
+>
+    @for (item of items; track item) {
+    <nui-select-v2-option [value]="item">
         {{ item }}
     </nui-select-v2-option>
+    }
 </nui-select-v2>
 
 <div class="ml-4 d-flex w-75">

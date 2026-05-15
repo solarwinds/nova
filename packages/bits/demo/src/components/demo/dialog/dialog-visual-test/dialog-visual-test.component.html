@@ -4,7 +4,8 @@
             <nui-dialog-header
                 title="Dialog title"
                 [severity]="severity"
-                (closed)="close()">
+                (closed)="close()"
+            >
             </nui-dialog-header>
             <div class="dialog-body">
                 <p>
@@ -24,7 +25,8 @@
                     nui-button
                     type="button"
                     [isEmpty]="false"
-                    (click)="onButtonClick('Cancel')">
+                    (click)="onButtonClick('Cancel')"
+                >
                     Cancel
                 </button>
                 <button
@@ -32,7 +34,8 @@
                     type="button"
                     displayStyle="primary"
                     [isEmpty]="false"
-                    (click)="onButtonClick('Action')">
+                    (click)="onButtonClick('Action')"
+                >
                     Action
                 </button>
             </nui-dialog-footer>
@@ -42,7 +45,8 @@
             <h3>Basic Dialog</h3>
             <button
                 id="nui-visual-test-default-dialog-btn"
-                (click)="open(content)">
+                (click)="open(content)"
+            >
                 Click me!
             </button>
             <hr />
@@ -52,17 +56,20 @@
             <h3>Dialogs with Different Severity</h3>
             <button
                 id="nui-visual-test-critical-dialog-btn"
-                (click)="open(content, 'critical')">
+                (click)="open(content, 'critical')"
+            >
                 Show Critical
             </button>
             <button
                 id="nui-visual-test-warning-dialog-btn"
-                (click)="open(content, 'warning')">
+                (click)="open(content, 'warning')"
+            >
                 Show Warning
             </button>
             <button
                 id="nui-visual-test-info-dialog-btn"
-                (click)="open(content, 'info')">
+                (click)="open(content, 'info')"
+            >
                 Show Info
             </button>
             <hr />
@@ -72,17 +79,20 @@
             <h3>Dialogs with Different Sizes</h3>
             <button
                 id="nui-visual-test-small-dialog-btn"
-                (click)="openSizes(content, 'sm')">
+                (click)="openSizes(content, 'sm')"
+            >
                 Show Small Dialog
             </button>
             <button
                 id="nui-visual-test-medium-dialog-btn"
-                (click)="openSizes(content, 'md')">
+                (click)="openSizes(content, 'md')"
+            >
                 Show Medium Dialog
             </button>
             <button
                 id="nui-visual-test-large-dialog-btn"
-                (click)="openSizes(content, 'lg')">
+                (click)="openSizes(content, 'lg')"
+            >
                 Show Large Dialog
             </button>
             <hr />
@@ -96,19 +106,22 @@
                     nui-button
                     type="button"
                     displayStyle="action"
-                    icon="fullscreen"></button>
+                    icon="fullscreen"
+                ></button>
                 <button
                     nui-button
                     type="button"
                     displayStyle="action"
-                    icon="menu"></button>
+                    icon="menu"
+                ></button>
             </nui-dialog-header>
             <div class="dialog-body">
                 <p>
                     <nui-select
                         id="nui-visual-basic-select"
                         [itemsSource]="dataset.items"
-                        placeholder="Select item"></nui-select>
+                        placeholder="Select item"
+                    ></nui-select>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Nullam maximus faucibus bibendum. Aenean feugiat interdum
                     leo sed posuere. Etiam at pulvinar enim, nec interdum purus.
@@ -124,14 +137,16 @@
                 <button
                     nui-button
                     type="button"
-                    (click)="onButtonClick('Cancel')">
+                    (click)="onButtonClick('Cancel')"
+                >
                     Cancel
                 </button>
                 <button
                     nui-button
                     type="button"
                     displayStyle="primary"
-                    (click)="onButtonClick('Action')">
+                    (click)="onButtonClick('Action')"
+                >
                     Action
                 </button>
             </nui-dialog-footer>
@@ -141,7 +156,8 @@
             <h3>Custom Dialog Header</h3>
             <button
                 id="nui-visual-test-custom-actions-dialog-btn"
-                (click)="open(headerButtonsContent)">
+                (click)="open(headerButtonsContent)"
+            >
                 More actions
             </button>
             <hr />
@@ -152,12 +168,14 @@
         <h3>Confirmation Dialogs with Defaults and Overrides</h3>
         <button
             id="nui-visual-test-confirmation-dialog-defaults-btn"
-            (click)="confirmationDefaults()">
+            (click)="confirmationDefaults()"
+        >
             Show Confirmation with defaults
         </button>
         <button
             id="nui-visual-test-confirmation-dialog-overrides-btn"
-            (click)="confirmationOverrides()">
+            (click)="confirmationOverrides()"
+        >
             Show Confirmation with overrides
         </button>
         <hr />
@@ -167,10 +185,12 @@
         <ng-template #contentResponsiveMode let-close="close">
             <nui-dialog-header
                 title="Dialog title"
-                (closed)="close()"></nui-dialog-header>
+                (closed)="close()"
+            ></nui-dialog-header>
             <div
                 class="dialog-body"
-                [ngClass]="{ 'responsive-mode': isResponsiveMode }">
+                [ngClass]="{ 'responsive-mode': isResponsiveMode }"
+            >
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Nullam maximus faucibus bibendum. Aenean feugiat interdum
@@ -305,14 +325,16 @@
                 <button
                     (click)="onButtonClick('Cancel')"
                     nui-button
-                    type="button">
+                    type="button"
+                >
                     Cancel
                 </button>
                 <button
                     displayStyle="primary"
                     (click)="onButtonClick('Action')"
                     nui-button
-                    type="button">
+                    type="button"
+                >
                     Action
                 </button>
             </nui-dialog-footer>
@@ -326,7 +348,8 @@
                     openResponsive(contentResponsiveMode, {
                         isResponsiveMode: false
                     })
-                ">
+                "
+            >
                 Default mode
             </button>
             <button
@@ -335,7 +358,8 @@
                     openResponsive(contentResponsiveMode, {
                         isResponsiveMode: true
                     })
-                ">
+                "
+            >
                 Responsive mode
             </button>
             <hr />

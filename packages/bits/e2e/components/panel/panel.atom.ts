@@ -60,7 +60,7 @@ export class PanelAtom extends Atom {
         const wasCollapsed = await this.getLocator()
             .first()
             .getAttribute("class")
-            .then(cls => (cls ?? "").includes(PanelAtom.COLLAPSED_CSS));
+            .then((cls) => (cls ?? "").includes(PanelAtom.COLLAPSED_CSS));
 
         await this.toggleButton.first().click();
 

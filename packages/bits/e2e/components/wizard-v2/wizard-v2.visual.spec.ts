@@ -39,7 +39,8 @@ test.describe(`Visual tests: ${name}`, () => {
 
         wizard = Atom.find<WizardV2Atom>(
             WizardV2Atom,
-            "nui-wizard-v2-horizontal"
+            "nui-wizard-v2-horizontal",
+            true
         );
         wizardInDialog = Atom.find<WizardV2Atom>(
             WizardV2Atom,

@@ -18,10 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Atom } from "../../atom";
-import { ButtonAtom } from "../button/button.atom";
 import { SearchAtom } from "./search.atom";
+import { Atom } from "../../atom";
 import { test, expect, Helpers } from "../../setup";
+import { ButtonAtom } from "../button/button.atom";
 
 test.describe("USERCONTROL search", () => {
     const expectedFocusedDelay = 2000;
@@ -91,6 +91,8 @@ test.describe("USERCONTROL search", () => {
     });
 
     test("should reflect error when isInErrorState is true", async () => {
-        await expect(searchField.hasError()).resolves.toBe(true);
+        await expect(
+            searchField.getLocator().locator(".nui-search__group")
+        ).toHaveClass(/has-error/);
     });
 });

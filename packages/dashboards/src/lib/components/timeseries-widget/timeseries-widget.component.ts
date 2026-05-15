@@ -81,28 +81,37 @@ export class TimeseriesWidgetComponent
             this.configuration?.projectType ===
             TimeseriesWidgetProjectType.PerfstackApp
         ) {
-            if (this.configuration.type === TimeseriesChartTypes.alert) {
-                // adds timeseries zoom plugin for each subcharts to make the synchronization working for the alert chart
-                this.widgetData?.series.forEach(() =>
-                    this.zoomPlugins.push(this.getTimeseriesZoomPlugin())
+            if (this.usesMultiSparkZoomPlugins()) {
+                Array.from({ length: this.getPerfstackZoomPluginCount() }).forEach(
+                    () => this.zoomPlugins.push(this.getTimeseriesZoomPlugin())
                 );
-
-                // doesn't add zoom plugin for a summary serie when there are no sub charts and only sumary serie will be displayed
-                if (
-                    !(
-                        this.widgetData?.series.length === 1 &&
-                        this.widgetData.series[0].id ===
-                            this.widgetData.summarySerie?.id
-                    )
-                ) {
-                    this.zoomPlugins.push(this.getTimeseriesZoomPlugin());
-                }
             } else {
                 this.zoomPlugins.push(this.getTimeseriesZoomPlugin());
             }
         } else {
             this.zoomPlugins.push(new ZoomPlugin());
         }
+    }
+
+    private usesMultiSparkZoomPlugins(): boolean {
+        return (
+            this.configuration?.type === TimeseriesChartTypes.alert ||
+            this.configuration?.preset === TimeseriesChartPreset.StatusBar
+        );
+    }
+
+    private getPerfstackZoomPluginCount(): number {
+        const seriesCount = this.widgetData?.series.length ?? 0;
+        const hasSummarySerie = !!this.widgetData?.summarySerie;
+        const summaryIsOnlyDisplayedSerie =
+            seriesCount === 1 &&
+            this.widgetData?.series[0].id === this.widgetData?.summarySerie?.id;
+
+        if (summaryIsOnlyDisplayedSerie) {
+            return 1;
+        }
+
+        return Math.max(1, seriesCount + (hasSummarySerie ? 1 : 0));
     }
 
     private getTimeseriesZoomPlugin(): TimeseriesZoomPlugin {

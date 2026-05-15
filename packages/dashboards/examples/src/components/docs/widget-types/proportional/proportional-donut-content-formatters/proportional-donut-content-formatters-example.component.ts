@@ -25,7 +25,7 @@ import {
     OnDestroy,
     OnInit,
 } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import { BehaviorSubject } from "rxjs";
 
 import {
@@ -152,7 +152,7 @@ export class BeerReviewCountsByCityMockDataSource
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             setTimeout(() => {
                 this.outputsSubject.next({
                     result: getMockBeerReviewCountsByCity(),
@@ -269,7 +269,7 @@ export class ProportionalWidgetDonutContentFormattersExampleComponent
         };
 
         // Setting the widget dimensions and position (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [widgetConfig.id]: {
                 cols: 6,
                 rows: 6,

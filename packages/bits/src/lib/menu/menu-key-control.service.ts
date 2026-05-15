@@ -138,7 +138,7 @@ export class MenuKeyControlService implements OnDestroy {
 
     private initKeyManagerHandlers(): void {
         this.keyboardEventsSubscription =
-            this.keyboardEventsManager.change.subscribe(activeIndex => {
+            this.keyboardEventsManager.change.subscribe((activeIndex) => {
                 // when the navigation item changes, we get new activeIndex
                 if (this.popup.isOpen && this.hasActiveItem()) {
                     this.scrollActiveOptionIntoView({

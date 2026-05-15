@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -118,6 +118,10 @@ describe(StatusBarChartComponent.name, () => {
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it("should create", () => {
         expect(component).toBeTruthy();
     });
@@ -126,7 +130,7 @@ describe(StatusBarChartComponent.name, () => {
         it("should add the default zoom plugin to each spark if zoom is enabled", () => {
             component.configuration.enableZoom = true;
             (<any>component).updateChartData();
-            component.chartAssist.sparks.forEach(spark => {
+            component.chartAssist.sparks.forEach((spark) => {
                 expect((spark?.chart as Chart)?.hasPlugin(ZoomPlugin)).toEqual(
                     true
                 );
@@ -141,7 +145,7 @@ describe(StatusBarChartComponent.name, () => {
             (<any>component).updateChartData();
 
             spyOn(ZoomPlugin.prototype, "destroy");
-            component.chartAssist.sparks.forEach(spark => {
+            component.chartAssist.sparks.forEach((spark) => {
                 expect((spark?.chart as Chart)?.hasPlugin(ZoomPlugin)).toEqual(
                     true
                 );
@@ -155,7 +159,7 @@ describe(StatusBarChartComponent.name, () => {
         it("should not add the default zoom plugin to each spark if zoom is disabled", () => {
             component.configuration.enableZoom = false;
             (<any>component).updateChartData();
-            component.chartAssist.sparks.forEach(spark => {
+            component.chartAssist.sparks.forEach((spark) => {
                 expect((spark?.chart as Chart)?.hasPlugin(ZoomPlugin)).toEqual(
                     false
                 );
@@ -167,7 +171,7 @@ describe(StatusBarChartComponent.name, () => {
             component.configuration.projectType =
                 TimeseriesWidgetProjectType.PerfstackApp;
             (<any>component).updateChartData();
-            component.chartAssist.sparks.forEach(spark => {
+            component.chartAssist.sparks.forEach((spark) => {
                 expect(
                     (spark?.chart as Chart)?.hasPlugin(TimeseriesZoomPlugin)
                 ).toEqual(true);
@@ -184,7 +188,7 @@ describe(StatusBarChartComponent.name, () => {
             (<any>component).updateChartData();
 
             spyOn(TimeseriesZoomPlugin.prototype, "destroy");
-            component.chartAssist.sparks.forEach(spark => {
+            component.chartAssist.sparks.forEach((spark) => {
                 expect(
                     (spark?.chart as Chart)?.hasPlugin(TimeseriesZoomPlugin)
                 ).toEqual(true);
@@ -195,6 +199,15 @@ describe(StatusBarChartComponent.name, () => {
             });
         });
 
+        it("should not throw if a perfstack spark has no matching zoom plugin", () => {
+            component.configuration.enableZoom = true;
+            component.configuration.projectType =
+                TimeseriesWidgetProjectType.PerfstackApp;
+            component.zoomPlugins = [new TimeseriesZoomPlugin()];
+
+            expect(() => (<any>component).updateChartData()).not.toThrow();
+        });
+
         it("should subscribe to only the first spark's SET_DOMAIN_EVENT", () => {
             component.configuration.enableZoom = true;
             const expectedDomain = [5, 10];
@@ -203,7 +216,7 @@ describe(StatusBarChartComponent.name, () => {
                 (<any>component).eventBus.getStream(SET_TIMEFRAME),
                 "next"
             );
-            component.chartAssist.sparks.forEach(spark => {
+            component.chartAssist.sparks.forEach((spark) => {
                 spark.chart
                     ?.getEventBus()
                     .getStream(SET_DOMAIN_EVENT)
@@ -231,7 +244,7 @@ describe(StatusBarChartComponent.name, () => {
                 (<any>component).eventBus.getStream(SET_TIMEFRAME),
                 "next"
             );
-            component.chartAssist.sparks.forEach(spark => {
+            component.chartAssist.sparks.forEach((spark) => {
                 spark.chart
                     ?.getEventBus()
                     .getStream(SET_DOMAIN_EVENT)

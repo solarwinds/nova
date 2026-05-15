@@ -1,13 +1,17 @@
 <nui-example-wrapper>
     <h3>XSS + self highlight</h3>
-    <p *ngFor="let item of xss" [innerHTML]="item | nuiHighlight : item"></p>
+    @for (item of xss; track item) {
+    <p [innerHTML]="item | nuiHighlight : item"></p>
+    }
     <nui-divider></nui-divider>
     <h3>XSS + search</h3>
     <label for="search" i18n>Search Term:</label><br />
     <input [(ngModel)]="search" id="search" /><br />
     <nui-divider></nui-divider>
     search = {{ search }}
-    <p *ngFor="let item of xss" [innerHTML]="item | nuiHighlight : search"></p>
+    @for (item of xss; track item) {
+    <p [innerHTML]="item | nuiHighlight : search"></p>
+    }
     <nui-divider></nui-divider>
     <p [innerHTML]="contentString | nuiHighlight : search"></p>
     <section class="nui-ignore-highlight">

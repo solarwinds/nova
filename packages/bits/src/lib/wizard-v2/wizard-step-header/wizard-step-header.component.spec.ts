@@ -45,6 +45,15 @@ describe("components >", () => {
             component.step = fakeStep;
         });
 
+        // Destroy the fixture after each test to remove it from ApplicationRef.
+        // Angular 21's synchronizeOnce() processes ALL registered views (including
+        // views from other specs) when any fixture calls detectChanges(). If this
+        // fixture is left registered with a fake {} TemplateRef as component.label,
+        // synchronizeOnce() calls ngTemplateOutlet.createEmbeddedViewImpl on {} → crash.
+        afterEach(() => {
+            fixture.destroy();
+        });
+
         describe("ngAfterViewInit", () => {
             it("should call _focusMonitor 'monitor' method", () => {
                 const spy = spyOn(component["_focusMonitor"], "monitor");

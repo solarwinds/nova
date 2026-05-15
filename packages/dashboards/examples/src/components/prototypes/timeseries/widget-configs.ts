@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { GridsterItem } from "angular-gridster2";
+import { GridsterItemConfig } from "angular-gridster2";
 import moment from "moment/moment";
 
 import {
@@ -42,8 +42,8 @@ import {
     AcmeTimeseriesStatusIntervalDataSource,
 } from "../data/timeseries-data-sources";
 
-export const positions: Record<string, GridsterItem> = {
-    "widget1": {
+export const positions: Record<string, GridsterItemConfig> = {
+    widget1: {
         cols: 6,
         rows: 6,
         y: 0,
@@ -55,7 +55,7 @@ export const positions: Record<string, GridsterItem> = {
         y: 0,
         x: 6,
     },
-    "widget2": {
+    widget2: {
         cols: 6,
         rows: 6,
         y: 6,
@@ -67,7 +67,7 @@ export const positions: Record<string, GridsterItem> = {
         y: 6,
         x: 6,
     },
-    "widget3": {
+    widget3: {
         cols: 6,
         rows: 6,
         y: 12,
@@ -79,7 +79,7 @@ export const positions: Record<string, GridsterItem> = {
         y: 12,
         x: 6,
     },
-    "widget4": {
+    widget4: {
         cols: 6,
         rows: 6,
         y: 18,
@@ -91,7 +91,7 @@ export const positions: Record<string, GridsterItem> = {
         y: 18,
         x: 6,
     },
-    "widget5": {
+    widget5: {
         cols: 6,
         rows: 6,
         y: 24,

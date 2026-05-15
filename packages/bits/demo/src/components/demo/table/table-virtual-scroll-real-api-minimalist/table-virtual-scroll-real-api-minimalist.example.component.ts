@@ -135,7 +135,7 @@ export class TableVirtualScrollRealApiMinimalistExampleComponent
             }
         );
 
-        this.dataSource.busy.subscribe(busy => {
+        this.dataSource.busy.subscribe((busy) => {
             this._isBusy = busy;
         });
     }
@@ -148,7 +148,7 @@ export class TableVirtualScrollRealApiMinimalistExampleComponent
 
         this.viewport.renderedRangeStream
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(value => {
+            .subscribe((value) => {
                 // There is no use to proceed if we've already fetched all the items
                 if (this.users.length === this._totalItems) {
                     return;

@@ -101,7 +101,7 @@ export class TimeseriesTileIndicatorDataConfigurationComponent
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.allSeries) {
             this.selectedSeries = this.allSeries.find(
-                s => this.selectedSeriesId === s.id
+                (s) => this.selectedSeriesId === s.id
             );
         }
 
@@ -110,7 +110,7 @@ export class TimeseriesTileIndicatorDataConfigurationComponent
                 return;
             }
             this.selectedSeries = this.allSeries.find(
-                s => this.selectedSeriesId === s.id
+                (s) => this.selectedSeriesId === s.id
             );
         }
     }

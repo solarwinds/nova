@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -156,8 +156,12 @@ describe("SiUnitsFormatterComponent", () => {
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     describe("value formatting > ", () => {
-        TEST_DATA.forEach(test => {
+        TEST_DATA.forEach((test) => {
             it("should correctly format Si units", () => {
                 const data = new SimpleChange(undefined, test.input, false);
 

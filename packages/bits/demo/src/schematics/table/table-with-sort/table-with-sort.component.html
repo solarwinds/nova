@@ -4,7 +4,8 @@
         [dataSource]="items"
         [sortable]="true"
         [sortedColumn]="sortedColumn"
-        (sortOrderChanged)="sortData($event)">
+        (sortOrderChanged)="sortData($event)"
+    >
         <ng-container nuiColumnDef="name">
             <th nui-header-cell *nuiHeaderCellDef i18n>Name</th>
             <td nui-cell *nuiCellDef="let element">{{ element.name }}</td>
@@ -22,26 +23,28 @@
 
         <tr
             nui-header-row
-            *nuiHeaderRowDef="displayedColumns; sticky: true"></tr>
+            *nuiHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
         <tr nui-row *nuiRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
     <footer class="app-table-with-sort-scrolling-footer">
-        <div *ngIf="isBusy; else defaultText">
+        @if (isBusy) {
+        <div>
             <nui-progress [show]="true" [compactMode]="true"></nui-progress>
             <div class="d-flex justify-content-center align-items-center">
                 Loading next {{ pageSize }} items...
             </div>
         </div>
-        <ng-template #defaultText>
-            <div class="d-flex justify-content-center align-items-center">
-                <div class="p-1 d-flex">
-                    <div class="d-flex pt-3 pb-3" i18n>
-                        Showing {{ items.length }} of {{ totalItems }}
-                    </div>
+        } @else {
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="p-1 d-flex">
+                <div class="d-flex pt-3 pb-3" i18n>
+                    Showing {{ items.length }} of {{ totalItems }}
                 </div>
             </div>
-        </ng-template>
+        </div>
+        }
     </footer>
 </div>
 
@@ -50,5 +53,6 @@
     [pageSize]="pageSize"
     [pageSizeSet]="[10, 20, 50, 100]"
     [total]="totalItems"
-    (pagerAction)="changePagination($event)">
+    (pagerAction)="changePagination($event)"
+>
 </nui-paginator>

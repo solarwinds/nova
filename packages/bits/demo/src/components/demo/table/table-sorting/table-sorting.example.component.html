@@ -4,7 +4,8 @@
         type="button"
         class="mb-2"
         id="nui-demo-sortable-table-btn"
-        (click)="sortByName()">
+        (click)="sortByName()"
+    >
         Sort By Name ({{ nameSortedDesc ? "Ascending" : "Descending" }})
     </button>
 
@@ -16,7 +17,8 @@
         [sortable]="true"
         [sortedColumn]="sortedColumn"
         #sortableTable
-        (sortOrderChanged)="sortData($event)">
+        (sortOrderChanged)="sortData($event)"
+    >
         <ng-container nuiColumnDef="position">
             <th nui-header-cell *nuiHeaderCellDef i18n>No.</th>
             <td nui-cell *nuiCellDef="let element">{{ element.position }}</td>
@@ -30,10 +32,9 @@
         <ng-container nuiColumnDef="features">
             <th nui-header-cell *nuiHeaderCellDef i18n>Features</th>
             <td nui-cell *nuiCellDef="let element">
-                <nui-icon
-                    *ngFor="let icon of element.features"
-                    [icon]="icon"
-                    class="icon-margin"></nui-icon>
+                @for (icon of element.features; track icon) {
+                <nui-icon [icon]="icon" class="icon-margin"></nui-icon>
+                }
             </td>
         </ng-container>
 
@@ -62,14 +63,15 @@
                 nui-header-cell
                 [isColumnSortingDisabled]="true"
                 *nuiHeaderCellDef
-                i18n>
+                i18n
+            >
                 Checks
             </th>
             <td nui-cell *nuiCellDef="let element">
-                <ng-container *ngFor="let check of element.checks">
-                    <nui-icon [icon]="check.icon"></nui-icon>
-                    {{ check.num }}
-                </ng-container>
+                @for (check of element.checks; track check) {
+                <nui-icon [icon]="check.icon"></nui-icon>
+                {{ check.num }}
+                }
             </td>
         </ng-container>
         <tr nui-header-row *nuiHeaderRowDef="displayedColumns"></tr>

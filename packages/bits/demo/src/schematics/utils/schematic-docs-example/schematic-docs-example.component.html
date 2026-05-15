@@ -1,16 +1,19 @@
 <div class="d-flex">
     <div class="p-0 col-4 schematic-docs-example__files">
         <h2 class="mt-4">Source files</h2>
-        <div *ngFor="let item of componentSources | keyvalue">
+        @for (item of componentSources | keyvalue; track item) {
+        <div>
             <nui-expander [header]="item.key" icon="group">
                 <nui-recursive-object-view
                     [object]="item.value"
                     [objectTemplate]="objectTemplate"
-                    [notObjectTemplate]="notObjectTemplate">
+                    [notObjectTemplate]="notObjectTemplate"
+                >
                     {{ item.key }}
                 </nui-recursive-object-view>
             </nui-expander>
         </div>
+        }
     </div>
 
     <div class="col-8">
@@ -18,7 +21,8 @@
         <nui-expander
             [disabled]="!selectedFile"
             [open]="isSelectedFileOpen()"
-            (openChange)="onSelectedFileOpenChange($event)">
+            (openChange)="onSelectedFileOpenChange($event)"
+        >
             <div nuiExpanderHeader>
                 <h5 class="m-0">
                     Selected file:
@@ -28,9 +32,9 @@
                 </h5>
             </div>
             <div class="nui-source-inspector-code">
-                <nui-example-code
-                    *ngIf="shouldCodeRender"
-                    [code]="getSource(selectedFile)" />
+                @if (shouldCodeRender) {
+                <nui-example-code [code]="getSource(selectedFile)" />
+                }
             </div>
         </nui-expander>
     </div>
@@ -51,7 +55,8 @@
         type="button"
         displayStyle="action"
         icon="xml-file"
-        (click)="selectFile(key)">
+        (click)="selectFile(key)"
+    >
         {{ key }}
     </button>
 </ng-template>

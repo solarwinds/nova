@@ -10,11 +10,13 @@
             <div class="d-flex">
                 <nui-chart
                     class="d-flex w-100"
-                    [chart]="element.chartAssist.sparks[0].chart"></nui-chart>
+                    [chart]="element.chartAssist.sparks[0].chart"
+                ></nui-chart>
                 <div class="d-flex flex-column pl-2">
                     <nui-legend-series
                         [interactive]="false"
-                        [active]="element.chartAssist.isLegendActive">
+                        [active]="element.chartAssist.isLegendActive"
+                    >
                         <nui-rich-legend-tile
                             unitLabel="sec"
                             i18n-unitLabel
@@ -37,7 +39,8 @@
                                     element.chartAssist.sparks[0]
                                         .chartSeriesSet[0].id
                                 )
-                            ">
+                            "
+                        >
                             <nui-chart-marker
                                 [marker]="
                                     element.chartAssist.markers.get(
@@ -51,7 +54,8 @@
                                             .chartSeriesSet[0].id
                                     )
                                 "
-                                rightEdge>
+                                rightEdge
+                            >
                             </nui-chart-marker>
                         </nui-rich-legend-tile>
                     </nui-legend-series>
@@ -59,10 +63,11 @@
             </div>
 
             <!-- this plugin component has to be placed in the table cell template as every chart
-                 will have separate positioning data provided through it's plugin -->
+      will have separate positioning data provided through it's plugin -->
             <nui-chart-popover
                 [plugin]="element.popoverPlugin"
-                [template]="popoverTemplate"></nui-chart-popover>
+                [template]="popoverTemplate"
+            ></nui-chart-popover>
         </td>
     </ng-container>
 
@@ -73,9 +78,11 @@
 <!-- It is sufficient to provide a single template definition if the table is using the same popover template for all rows -->
 <ng-template #popoverTemplate let-dataPoints="dataPoints">
     <div class="p-3">
-        <div *ngFor="let item of dataPoints | keyvalue">
+        @for (item of dataPoints | keyvalue; track item) {
+        <div>
             <strong>{{ item.key }}: </strong>
             <code>{{ item.value.data | json }}</code>
         </div>
+        }
     </div>
 </ng-template>

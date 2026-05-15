@@ -53,9 +53,10 @@ describe("components >", () => {
         };
 
         const mockItemConfig: IRepeatItemConfig<IColorRepeatItem> = {
-            isDraggable: item =>
+            isDraggable: (item) =>
                 item.name === BLUE_COLOR.name || item.name === BLACK_COLOR.name,
-            isDisabled: item => item.name === GREEN_COLOR.name || item.disabled,
+            isDisabled: (item) =>
+                item.name === GREEN_COLOR.name || item.disabled,
             trackBy: (index, item) => item.name,
         };
 
@@ -193,7 +194,7 @@ describe("components >", () => {
 
         describe("getFilters > ", () => {
             it("should report that the selection has changed for single selection modes after an item is clicked", () => {
-                Object.values(RepeatSelectionMode).forEach(selectionMode => {
+                Object.values(RepeatSelectionMode).forEach((selectionMode) => {
                     if (
                         selectionMode !== RepeatSelectionMode.none &&
                         selectionMode !== RepeatSelectionMode.multi
@@ -235,12 +236,12 @@ describe("components >", () => {
                 it("> from individual item config", () => {
                     component.itemConfig = mockItemConfig;
 
-                    [BLUE_COLOR, GREEN_COLOR].forEach(color => {
+                    [BLUE_COLOR, GREEN_COLOR].forEach((color) => {
                         expect(component.isItemDisabled(color)).toBeTruthy(
                             `Color '${color.name}' should be disabled`
                         );
                     });
-                    [BLACK_COLOR].forEach(color => {
+                    [BLACK_COLOR].forEach((color) => {
                         expect(component.isItemDisabled(color)).toBeFalsy(
                             `Color '${color.name}' should NOT be disabled`
                         );
@@ -258,12 +259,12 @@ describe("components >", () => {
             it("should report correctly draggable items", () => {
                 component.itemConfig = mockItemConfig;
 
-                [BLUE_COLOR, GREEN_COLOR].forEach(color => {
+                [BLUE_COLOR, GREEN_COLOR].forEach((color) => {
                     expect(component.isItemDraggable(color)).toBeFalsy(
                         `Color '${color.name}' should NOT be draggable`
                     );
                 });
-                [BLACK_COLOR].forEach(color => {
+                [BLACK_COLOR].forEach((color) => {
                     expect(component.isItemDraggable(color)).toBeTruthy(
                         `Color '${color.name}' should be draggable`
                     );
