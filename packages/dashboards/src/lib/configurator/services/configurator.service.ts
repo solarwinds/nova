@@ -156,9 +156,6 @@ export class ConfiguratorService {
                         let widgetToSet: IWidget;
                         const dashboardWidget =
                             dashboardComponent.dashboard.widgets[widget.id];
-                        const originalPositions = cloneDeep(
-                            dashboardComponent.dashboard.positions
-                        );
 
                         if (dashboardWidget) {
                             widgetToSet = {
