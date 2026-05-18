@@ -33,11 +33,12 @@ import {
     fakeAsync,
     flush,
     TestBed,
+    tick,
 } from "@angular/core/testing";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
-import { Gridster, GridsterItem } from "angular-gridster2";
-import { of } from "rxjs";
+import { CompactType, Gridster, GridsterItem } from "angular-gridster2";
+import { of, Subject } from "rxjs";
 
 import { NuiPanelModule } from "@nova-ui/bits";
 
@@ -45,6 +46,7 @@ import { ConfiguratorService } from "./configurator.service";
 import { IConfigurator } from "./types";
 import { PreviewOverlayComponent } from "../../common/components/preview-overlay/preview-overlay.component";
 import { DashboardComponent } from "../../components/dashboard/dashboard.component";
+import { DEFAULT_GRIDSTER_CONFIG } from "../../components/dashboard/default-gridster-config";
 import { WidgetComponent } from "../../components/widget/widget.component";
 import { GridsterItemWidgetIdDirective } from "../../directives/gridster-item-widget-id/gridster-item-widget-id.directive";
 import { mockLoggerService } from "../../mocks.spec";
@@ -99,18 +101,72 @@ class MockRendererFactory {
     }
 }
 
+const getOriginalWidget = () => ({
+    id: "id",
+    type: "proportional",
+    pizzagna: {
+        structure: {
+            structureComponent: {
+                id: "structureComponent",
+                componentType: "StructureComponentType",
+            },
+        },
+        configuration: {
+            configurationComponent: {
+                id: "configurationComponent",
+                componentType: "ConfigurationComponentType",
+            },
+        },
+        data: {
+            dataComponent: {
+                id: "dataComponent",
+                componentType: "DataComponentType",
+            },
+        },
+    },
+    version: 1,
+});
+
+const getUpdatedWidget = () => ({
+    id: "id",
+    type: "table",
+    pizzagna: {
+        structure: {
+            structureComponent: {
+                id: "structureComponent2",
+                componentType: "StructureComponentType2",
+            },
+        },
+        configuration: {
+            configurationComponent: {
+                id: "configurationComponent2",
+                componentType: "ConfigurationComponentType2",
+            },
+        },
+        data: {
+            dataComponent: {
+                id: "dataComponent2",
+                componentType: "DataComponentType2",
+            },
+        },
+    },
+    version: 2,
+});
+
 describe("ConfiguratorService > ", () => {
     let service: ConfiguratorService;
     let dashboardComponent: DashboardComponent;
-    let configuratorNativeElement: any;
+    let dashboardFixture: ComponentFixture<DashboardComponent>;
     let configuratorArgs: IConfigurator;
     let widgetTypesService: WidgetTypesService;
-    let configComponentFixture: ComponentFixture<ConfiguratorComponent>;
+    let configuratorHostElement: HTMLElement;
+    let configuratorComponentRef: ComponentRef<ConfiguratorComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                Gridster, GridsterItem,
+                Gridster,
+                GridsterItem,
                 PortalModule,
                 NuiPanelModule,
                 RouterTestingModule.withRoutes([]),
@@ -126,14 +182,30 @@ describe("ConfiguratorService > ", () => {
             ],
             providers: [WidgetTypesService],
         });
-        dashboardComponent =
-            TestBed.createComponent(DashboardComponent).componentInstance;
-        configComponentFixture = TestBed.createComponent(ConfiguratorComponent);
-        configuratorNativeElement =
-            configComponentFixture.debugElement.nativeElement;
+        dashboardFixture = TestBed.createComponent(DashboardComponent);
+        dashboardComponent = dashboardFixture.componentInstance;
+        dashboardComponent.dashboard = { widgets: {}, positions: {} };
+        dashboardComponent.gridsterConfig = { ...DEFAULT_GRIDSTER_CONFIG };
+        dashboardFixture.detectChanges();
         const appRef = TestBed.inject(ApplicationRef) as ApplicationRef;
         const router = TestBed.inject(Router);
         appRef.attachView = (): void => {};
+
+        configuratorHostElement = document.createElement("div");
+        configuratorComponentRef = {
+            instance: {
+                changeDetector: {
+                    detectChanges: () => {},
+                },
+                result: new Subject<any>(),
+                formPortalAttached: new Subject<any>(),
+                handleSubmitError: () => {},
+            } as ConfiguratorComponent,
+            hostView: {
+                rootNodes: [configuratorHostElement],
+            } as any,
+            destroy: () => {},
+        } as ComponentRef<ConfiguratorComponent>;
 
         widgetTypesService = TestBed.inject(WidgetTypesService);
         widgetTypesService.registerWidgetType("table", 2, table);
@@ -141,7 +213,7 @@ describe("ConfiguratorService > ", () => {
 
         service = new ConfiguratorService(
             new MockComponentFactoryResolver(
-                configComponentFixture.componentRef
+                configuratorComponentRef
             ) as ComponentFactoryResolver,
             widgetTypesService,
             new MockInjector(),
@@ -160,11 +232,10 @@ describe("ConfiguratorService > ", () => {
     });
 
     afterEach(() => {
-        configComponentFixture.destroy();
-    });
-
-    afterEach(() => {
-        document.body.removeChild(configuratorNativeElement);
+        dashboardFixture.destroy();
+        if (document.body.contains(configuratorHostElement)) {
+            document.body.removeChild(configuratorHostElement);
+        }
     });
 
     describe("open > ", () => {
@@ -180,57 +251,8 @@ describe("ConfiguratorService > ", () => {
 
     describe("handleSubmit >", () => {
         it("should update widget on dashboard", fakeAsync(() => {
-            const originalWidget = {
-                id: "id",
-                type: "proportional",
-                pizzagna: {
-                    structure: {
-                        structureComponent: {
-                            id: "structureComponent",
-                            componentType: "StructureComponentType",
-                        },
-                    },
-                    configuration: {
-                        configurationComponent: {
-                            id: "configurationComponent",
-                            componentType: "ConfigurationComponentType",
-                        },
-                    },
-                    data: {
-                        dataComponent: {
-                            id: "dataComponent",
-                            componentType: "DataComponentType",
-                        },
-                    },
-                },
-                version: 1,
-            };
-
-            const newWidget = {
-                id: "id",
-                type: "table",
-                pizzagna: {
-                    structure: {
-                        structureComponent: {
-                            id: "structureComponent2",
-                            componentType: "StructureComponentType2",
-                        },
-                    },
-                    configuration: {
-                        configurationComponent: {
-                            id: "configurationComponent2",
-                            componentType: "ConfigurationComponentType2",
-                        },
-                    },
-                    data: {
-                        dataComponent: {
-                            id: "dataComponent2",
-                            componentType: "DataComponentType2",
-                        },
-                    },
-                },
-                version: 2,
-            };
+            const originalWidget = getOriginalWidget();
+            const newWidget = getUpdatedWidget();
 
             dashboardComponent.dashboard = {
                 positions: {
@@ -245,6 +267,7 @@ describe("ConfiguratorService > ", () => {
                     [originalWidget.id]: originalWidget,
                 },
             };
+            dashboardComponent.gridsterConfig = { ...DEFAULT_GRIDSTER_CONFIG };
 
             // we don't want anything to happen here
             service.close = () => {};
@@ -269,32 +292,157 @@ describe("ConfiguratorService > ", () => {
 
             flush();
 
-            configComponentFixture.whenStable().then(() => {
-                expect(removeWidgetSpy).toHaveBeenCalledWith("id", false);
+            expect(removeWidgetSpy).toHaveBeenCalledWith("id", false);
 
-                const dashboardWidget =
-                    dashboardComponent.dashboard.widgets["id"];
+            const dashboardWidget = dashboardComponent.dashboard.widgets["id"];
 
-                expect(dashboardWidget.type).toBe(newWidget.type);
-                expect(dashboardWidget.version).toBe(newWidget.version);
+            expect(dashboardWidget.type).toBe(newWidget.type);
+            expect(dashboardWidget.version).toBe(newWidget.version);
 
-                expect(dashboardWidget.pizzagna.data).toBeUndefined(
-                    "data to be erased"
-                );
+            expect(dashboardWidget.pizzagna.data).toBeUndefined(
+                "data to be erased"
+            );
 
-                expect(dashboardWidget.pizzagna.configuration).toBe(
-                    newWidget.pizzagna.configuration,
-                    "configuration to be taken from the updated widget"
-                );
+            expect(dashboardWidget.pizzagna.configuration).toBe(
+                newWidget.pizzagna.configuration,
+                "configuration to be taken from the updated widget"
+            );
 
-                expect(dashboardWidget.pizzagna.structure).toBe(
-                    widgetTypesService.getWidgetType(
-                        newWidget.type,
-                        newWidget.version
-                    ).widget.structure,
-                    "structure to be taken from the new widget's type"
-                );
-            });
+            expect(dashboardWidget.pizzagna.structure).toBe(
+                widgetTypesService.getWidgetType(
+                    newWidget.type,
+                    newWidget.version
+                ).widget.structure,
+                "structure to be taken from the new widget's type"
+            );
+        }));
+
+        it("should temporarily disable compacting and then restore the original compactType", fakeAsync(() => {
+            const originalWidget = getOriginalWidget();
+            const newWidget = getUpdatedWidget();
+
+            dashboardComponent.dashboard = {
+                positions: {
+                    [originalWidget.id]: {
+                        x: 0,
+                        y: 0,
+                        rows: 1,
+                        cols: 1,
+                    },
+                },
+                widgets: {
+                    [originalWidget.id]: originalWidget,
+                },
+            };
+            dashboardComponent.gridsterConfig = {
+                ...DEFAULT_GRIDSTER_CONFIG,
+                compactType: CompactType.CompactLeft,
+            };
+
+            service.close = () => {};
+
+            const removeWidgetSpy = spyOn(
+                dashboardComponent,
+                "removeWidget"
+            ).and.callThrough();
+            const updateWidgetSpy = spyOn(
+                dashboardComponent,
+                "updateWidget"
+            ).and.callThrough();
+
+            of(newWidget)
+                .pipe(
+                    service.handleSubmit(
+                        {
+                            widget: originalWidget,
+                            dashboardComponent,
+                        },
+                        // @ts-ignore: Suppressed for test purposes
+                        undefined
+                    )
+                )
+                .subscribe();
+
+            expect(removeWidgetSpy).toHaveBeenCalledWith("id", false);
+            expect(dashboardComponent.gridsterConfig.compactType).toBe(
+                CompactType.None
+            );
+
+            tick(0, { processNewMacroTasksSynchronously: false });
+
+            expect(updateWidgetSpy).toHaveBeenCalledWith(
+                jasmine.objectContaining({
+                    id: newWidget.id,
+                })
+            );
+            expect(dashboardComponent.gridsterConfig.compactType).toBe(
+                CompactType.None
+            );
+
+            tick();
+
+            expect(dashboardComponent.gridsterConfig.compactType).toBe(
+                CompactType.CompactLeft
+            );
+        }));
+
+        it("should preserve other gridsterConfig fields while toggling compactType", fakeAsync(() => {
+            const originalWidget = getOriginalWidget();
+            const newWidget = getUpdatedWidget();
+            const draggable = {
+                enabled: true,
+                ignoreContent: false,
+                dragHandleClass: "drag-handle",
+            };
+
+            dashboardComponent.dashboard = {
+                positions: {
+                    [originalWidget.id]: {
+                        x: 0,
+                        y: 0,
+                        rows: 1,
+                        cols: 1,
+                    },
+                },
+                widgets: {
+                    [originalWidget.id]: originalWidget,
+                },
+            };
+            dashboardComponent.gridsterConfig = {
+                ...DEFAULT_GRIDSTER_CONFIG,
+                compactType: CompactType.CompactUp,
+                margin: 24,
+                draggable,
+            };
+
+            service.close = () => {};
+
+            of(newWidget)
+                .pipe(
+                    service.handleSubmit(
+                        {
+                            widget: originalWidget,
+                            dashboardComponent,
+                        },
+                        // @ts-ignore: Suppressed for test purposes
+                        undefined
+                    )
+                )
+                .subscribe();
+
+            expect(dashboardComponent.gridsterConfig.margin).toBe(24);
+            expect(dashboardComponent.gridsterConfig.draggable).toBe(draggable);
+            expect(dashboardComponent.gridsterConfig.compactType).toBe(
+                CompactType.None
+            );
+
+            flush();
+
+            expect(dashboardComponent.gridsterConfig.margin).toBe(24);
+            expect(dashboardComponent.gridsterConfig.draggable).toBe(draggable);
+            expect(dashboardComponent.gridsterConfig.compactType).toBe(
+                CompactType.CompactUp
+            );
         }));
     });
 });
