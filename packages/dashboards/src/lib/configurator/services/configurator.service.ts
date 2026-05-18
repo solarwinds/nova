@@ -43,6 +43,7 @@ import { IWidget } from "../../components/widget/types";
 import { WidgetUpdateOperation } from "../../configurator/services/types";
 import { WidgetTypesService } from "../../services/widget-types.service";
 import { ConfiguratorComponent } from "../components/configurator/configurator.component";
+import { CompactType } from "angular-gridster2";
 
 @Injectable()
 export class ConfiguratorService {
@@ -155,6 +156,7 @@ export class ConfiguratorService {
                         let widgetToSet: IWidget;
                         const dashboardWidget =
                             dashboardComponent.dashboard.widgets[widget.id];
+
                         if (dashboardWidget) {
                             widgetToSet = {
                                 ...widget,
@@ -171,6 +173,13 @@ export class ConfiguratorService {
                             widgetToSet = widget;
                         }
 
+                        // keeping original CompactType and setting it to None to prevent gridster realign widgets after update
+                        const originalCompactType =
+                            dashboardComponent.gridsterConfig.compactType;
+                        dashboardComponent.gridsterConfig = {
+                            ...dashboardComponent.gridsterConfig,
+                            compactType: CompactType.None,
+                        };
                         // first we remove the widget so that we can recreate it from scratch
                         dashboardComponent.removeWidget(
                             widgetToSet.id,
@@ -180,6 +189,13 @@ export class ConfiguratorService {
                         // then we wait for the removal to take effect and we create the widget again
                         setTimeout(() => {
                             dashboardComponent.updateWidget(widgetToSet);
+                            setTimeout(() => {
+                                // returning original CompactType after update
+                                dashboardComponent.gridsterConfig = {
+                                    ...dashboardComponent.gridsterConfig,
+                                    compactType: originalCompactType,
+                                };
+                            });
                         });
                     }
 

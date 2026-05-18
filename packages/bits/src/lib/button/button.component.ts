@@ -240,10 +240,9 @@ should be set explicitly: `,
     }
 
     private setIsContentEmptyValue() {
-        const projectedText =
-            this.contentContainer?.element.nativeElement.textContent.trim();
-
-        this._isContentEmpty = !projectedText;
+        const innerHTML =
+            this.contentContainer?.element.nativeElement.innerHTML;
+        this._isContentEmpty = !innerHTML || !innerHTML.trim();
     }
 
     private setupRepeatEvent() {
