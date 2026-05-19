@@ -1,6 +1,7 @@
 <div
     tabindex="0"
     #input
+    [id]="triggerId"
     class="nui-select-v2__container"
     [attr.aria-label]="ariaLabel"
     (keydown)="onKeyDown($event)"
@@ -33,7 +34,7 @@
 </div>
 <nui-overlay
     roleAttr="listbox"
-    [ariaLabel]="ariaLabel"
+    [ariaLabelledBy]="triggerId"
     [toggleReference]="elRef.nativeElement"
     [viewportMargin]="popupViewportMargin"
     [overlayConfig]="overlayConfig"
