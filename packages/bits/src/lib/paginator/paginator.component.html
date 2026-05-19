@@ -1,9 +1,10 @@
 <div class="nui-paginator" *ngIf="showPaginator()">
     <div class="nui-paginator__items">
+        <nav aria-label="Pagination" i18n-aria-label>
         <ul
             class="nui-paginator__list"
-            role="list"
             aria-label="List of pages"
+            i18n-aria-label
         >
             <li
                 title="{{ item.title }}"
@@ -43,7 +44,7 @@
                         displayStyle="action"
                         [ngClass]="item.imageClass"
                         [isEmpty]="false"
-                        aria-haspopup="true"
+                        aria-haspopup="menu"
                         (click)="handleDotsClick()"
                         class="nui-paginator__dots"
                     >
@@ -95,6 +96,7 @@
                 </nui-popup>
             </li>
         </ul>
+        </nav>
     </div>
     <div class="nui-paginator__options">
         <div class="nui-paginator__info" i18n>
