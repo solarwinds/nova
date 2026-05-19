@@ -1,7 +1,8 @@
 <div class="d-flex">
     <div class="p-0 col-4 schematic-docs-example__files">
         <h2 class="mt-4">Source files</h2>
-        <div *ngFor="let item of componentSources | keyvalue">
+        @for (item of componentSources | keyvalue; track item) {
+        <div>
             <nui-expander [header]="item.key" icon="group">
                 <nui-recursive-object-view
                     [object]="item.value"
@@ -12,6 +13,7 @@
                 </nui-recursive-object-view>
             </nui-expander>
         </div>
+        }
     </div>
 
     <div class="col-8">
@@ -30,7 +32,9 @@
                 </h5>
             </div>
             <div class="nui-source-inspector-code">
-                <nui-example-code *ngIf="shouldCodeRender" [code]="getSource(selectedFile)" />
+                @if (shouldCodeRender) {
+                <nui-example-code [code]="getSource(selectedFile)" />
+                }
             </div>
         </nui-expander>
     </div>

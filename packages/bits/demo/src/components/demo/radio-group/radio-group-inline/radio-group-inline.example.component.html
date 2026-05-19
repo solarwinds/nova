@@ -5,11 +5,9 @@
     class="nui-radio-group-inline"
     [(value)]="selectedFruit"
 >
-    <nui-radio
-        *ngFor="let fruit of fruits"
-        [value]="fruit"
-        [checked]="fruit === 'Orange'"
-    >
+    @for (fruit of fruits; track fruit) {
+    <nui-radio [value]="fruit" [checked]="fruit === 'Orange'">
         {{ fruit }}
     </nui-radio>
+    }
 </nui-radio-group>

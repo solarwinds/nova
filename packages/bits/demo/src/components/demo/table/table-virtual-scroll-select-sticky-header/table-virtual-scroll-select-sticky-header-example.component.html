@@ -3,42 +3,32 @@
         tableStickyHeader
         class="h-100"
         [itemSize]="itemSize"
+        [maxBufferPx]="1200"
+        [minBufferPx]="400"
     >
-        <!-- IMPORTANT Bind only visible rows to the table, otherwise, the table will render all rows in the DOM -->
         <table
             nui-table
-            [dataSource]="visibleItems$ | async"
+            [dataSource]="items"
             [trackBy]="trackByNo"
             [sortable]="true"
             [selectionConfig]="selectionConfig"
             [(selection)]="selection"
         >
-            <!--         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  -->
-            <ng-container
-                *ngFor="let column of displayedColumns"
-                [nuiColumnDef]="column"
-            >
+            @for (column of displayedColumns; track column) {
+            <ng-container [nuiColumnDef]="column">
                 <th nui-header-cell *nuiHeaderCellDef>{{ column }}</th>
                 <td nui-cell *nuiCellDef="let element">
                     {{ element[column] }}
                 </td>
             </ng-container>
+            }
 
             <tr nui-header-row *nuiHeaderRowDef="displayedColumns"></tr>
-            <!-- IMPORTANT The actual difference between normal table and virtualized one-->
-            <!--∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨ -->
-            <ng-template
-                nuiRowDef
-                cdkVirtualFor
-                let-context
-                [nuiRowDefColumns]="displayedColumns"
-                [cdkVirtualForOf]="placeholderItems"
-                [cdkVirtualForTemplateCacheSize]="10"
-                [cdkVirtualForTrackBy]="trackByNo"
-            >
-                <tr nui-row [rowObject]="context"></tr>
-            </ng-template>
-            <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
+            <tr
+                nui-row
+                *nuiRowDef="let row; columns: displayedColumns"
+                [rowObject]="row"
+            ></tr>
         </table>
     </cdk-virtual-scroll-viewport>
 </div>

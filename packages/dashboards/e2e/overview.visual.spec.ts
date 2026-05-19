@@ -18,7 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Atom, Camera, Helpers, test } from "@nova-ui/bits/sdk/atoms-playwright";
+import {
+    Atom,
+    Camera,
+    Helpers,
+    test,
+} from "@nova-ui/bits/sdk/atoms-playwright";
 
 import { DashboardAtom } from "./dashboard.atom";
 

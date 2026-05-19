@@ -181,6 +181,7 @@ export class SelectorComponent
             ? SelectionType.All
             : SelectionType.None;
         this.status = selection;
+        this.selectionHasChanged = true;
 
         this.selectionChange.emit(selection);
     }
@@ -215,5 +216,6 @@ export class SelectorComponent
 
         // propagate selection
         this.selectionChange.emit(selection);
+        this.overlay.hide();
     }
 }

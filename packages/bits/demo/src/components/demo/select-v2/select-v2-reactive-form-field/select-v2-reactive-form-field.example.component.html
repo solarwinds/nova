@@ -12,9 +12,11 @@
             i18n-placeholder
             formControlName="select"
         >
-            <nui-select-v2-option *ngFor="let item of items" [value]="item">{{
+            @for (item of items; track item) {
+            <nui-select-v2-option [value]="item">{{
                 item
             }}</nui-select-v2-option>
+            }
         </nui-select-v2>
         <nui-validation-message for="required">
             This field is required

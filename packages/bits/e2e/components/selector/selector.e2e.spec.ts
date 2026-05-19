@@ -77,7 +77,7 @@ test.describe("USERCONTROL Selector", () => {
         expect(await isIndeterminate()).toBe(false);
 
         await makeIndeterminate();
-        expect(await isIndeterminate()).toBe(true);
+        await expect.poll(isIndeterminate).toBe(true);
     });
 
     test("should get 'SelectionType' (All, None) by clicking on selector button", async () => {

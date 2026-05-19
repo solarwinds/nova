@@ -14,12 +14,11 @@
             i18n-placeholder
             [formControl]="selectControl"
         >
-            <nui-select-v2-option
-                *ngFor="let item of items"
-                [value]="item"
-                i18n
-                >{{ item }}</nui-select-v2-option
-            >
+            @for (item of items; track item) {
+            <nui-select-v2-option [value]="item" i18n>{{
+                item
+            }}</nui-select-v2-option>
+            }
         </nui-select-v2>
     </div>
     <div class="col">
@@ -39,11 +38,11 @@
                     id="reactive-form"
                     formControlName="select"
                 >
-                    <ng-container *ngFor="let item of items">
-                        <nui-select-v2-option [value]="item" i18n>
-                            {{ item }}
-                        </nui-select-v2-option>
-                    </ng-container>
+                    @for (item of items; track item) {
+                    <nui-select-v2-option [value]="item" i18n>
+                        {{ item }}
+                    </nui-select-v2-option>
+                    }
                 </nui-select-v2>
                 <nui-validation-message for="required" i18n>
                     This field is required
@@ -56,12 +55,11 @@
     <div class="col">
         <h4>Basic</h4>
         <nui-select-v2 placeholder="Select Item" i18n-placeholder id="basic">
-            <nui-select-v2-option
-                *ngFor="let item of items"
-                [value]="item"
-                i18n
-                >{{ item }}</nui-select-v2-option
-            >
+            @for (item of items; track item) {
+            <nui-select-v2-option [value]="item" i18n>{{
+                item
+            }}</nui-select-v2-option>
+            }
         </nui-select-v2>
     </div>
 </div>
@@ -74,13 +72,12 @@
             [style.max-width.px]="200"
             id="display-value-mw200"
         >
-            <nui-select-v2-option
-                *ngFor="let item of itemsWithIconsOnly"
-                [value]="item"
-            >
+            @for (item of itemsWithIconsOnly; track item) {
+            <nui-select-v2-option [value]="item">
                 String can't get long, can it?:)
                 <nui-icon [icon]="item.icon"></nui-icon
             ></nui-select-v2-option>
+            }
         </nui-select-v2>
     </div>
     <div class="col">
@@ -91,8 +88,8 @@
             [displayValueTemplate]="temp"
             id="display-value"
         >
+            @for (item of itemsDisplayValue; track item) {
             <nui-select-v2-option
-                *ngFor="let item of itemsDisplayValue"
                 [value]="item"
                 i18n
                 [isDisabled]="item.disabled"
@@ -100,6 +97,7 @@
                 Name is {{ item.name }} and icon is
                 <nui-icon [icon]="item.icon"></nui-icon
             ></nui-select-v2-option>
+            }
         </nui-select-v2>
     </div>
     <div class="col">
@@ -110,22 +108,21 @@
             [displayValueTemplate]="displayValueTemplate"
             id="grouped"
         >
-            <ng-container
-                *ngFor="let itemGroup of groupedItems; let last = last"
-            >
-                <nui-select-v2-option-group>
-                    <span class="nui-select-v2-option-group--header">{{
-                        itemGroup.header
-                    }}</span>
-                    <nui-select-v2-option
-                        *ngFor="let item of itemGroup.items"
-                        [value]="item"
-                    >
-                        {{ item.name }}
-                    </nui-select-v2-option>
-                    <nui-divider *ngIf="!last" size="extra-small"></nui-divider>
-                </nui-select-v2-option-group>
-            </ng-container>
+            @for (itemGroup of groupedItems; track itemGroup; let last = $last)
+            {
+            <nui-select-v2-option-group>
+                <span class="nui-select-v2-option-group--header">{{
+                    itemGroup.header
+                }}</span>
+                @for (item of itemGroup.items; track item) {
+                <nui-select-v2-option [value]="item">
+                    {{ item.name }}
+                </nui-select-v2-option>
+                } @if (!last) {
+                <nui-divider size="extra-small"></nui-divider>
+                }
+            </nui-select-v2-option-group>
+            }
         </nui-select-v2>
     </div>
 </div>
@@ -139,11 +136,11 @@
                 placeholder="Select Item"
                 i18n-placeholder
             >
-                <ng-container *ngFor="let item of items">
-                    <nui-select-v2-option [value]="item" i18n>
-                        {{ item }}
-                    </nui-select-v2-option>
-                </ng-container>
+                @for (item of items; track item) {
+                <nui-select-v2-option [value]="item" i18n>
+                    {{ item }}
+                </nui-select-v2-option>
+                }
             </nui-select-v2>
             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             Massa id neque aliquam vestibulum morbi. Vestibulum rhoncus est
@@ -154,11 +151,11 @@
                 placeholder="Select Item"
                 i18n-placeholder
             >
-                <ng-container *ngFor="let item of items">
-                    <nui-select-v2-option [value]="item" i18n>
-                        {{ item }}
-                    </nui-select-v2-option>
-                </ng-container>
+                @for (item of items; track item) {
+                <nui-select-v2-option [value]="item" i18n>
+                    {{ item }}
+                </nui-select-v2-option>
+                }
             </nui-select-v2>
             At erat pellentesque adipiscing commodo. Justo donec enim diam
             vulputate. Libero volutpat sed cras ornare arcu.
@@ -173,11 +170,11 @@
             id="overlay-styles"
             [overlayConfig]="customStylesOverlayConfig"
         >
-            <ng-container *ngFor="let item of items">
-                <nui-select-v2-option [value]="item" i18n>
-                    {{ item }}
-                </nui-select-v2-option>
-            </ng-container>
+            @for (item of items; track item) {
+            <nui-select-v2-option [value]="item" i18n>
+                {{ item }}
+            </nui-select-v2-option>
+            }
         </nui-select-v2>
     </div>
     <div class="col">
@@ -188,12 +185,11 @@
             i18n-placeholder
             id="disabled"
         >
-            <nui-select-v2-option
-                *ngFor="let item of items"
-                [value]="item"
-                i18n
-                >{{ item }}</nui-select-v2-option
-            >
+            @for (item of items; track item) {
+            <nui-select-v2-option [value]="item" i18n>{{
+                item
+            }}</nui-select-v2-option>
+            }
         </nui-select-v2>
     </div>
 </div>
@@ -213,13 +209,11 @@
             #custom_control
             id="custom-control"
         >
-            <nui-select-v2-option
-                *ngFor="let item of items"
-                [value]="item"
-                i18n
-            >
+            @for (item of items; track item) {
+            <nui-select-v2-option [value]="item" i18n>
                 {{ item }}
             </nui-select-v2-option>
+            }
         </nui-select-v2>
 
         <div class="row m-auto align-items-center">
@@ -262,13 +256,14 @@
 
 <ng-template #temp let-item let-open="open">
     <div class="nui-select-v2__value">
-        <div
-            *ngIf="item; else empty"
-            class="d-flex align-items-center nui-select-v2__value-content"
-        >
+        @if (item) {
+        <div class="d-flex align-items-center nui-select-v2__value-content">
             <nui-icon class="mr-2" [icon]="item.icon"></nui-icon>
             {{ item.name }}
         </div>
+        } @else {
+        <span class="nui-select-v2__placeholder">Select Item</span>
+        }
 
         <nui-icon
             [style.transform]="open ? 'rotate(180deg)' : ''"
@@ -279,13 +274,14 @@
 
 <ng-template #iconsOnly let-item let-open="open">
     <div class="nui-select-v2__value">
-        <div
-            *ngIf="item; else empty"
-            class="d-flex align-items-center nui-select-v2__value-content"
-        >
+        @if (item) {
+        <div class="d-flex align-items-center nui-select-v2__value-content">
             <nui-icon class="mr-2" [icon]="item.icon"></nui-icon>
             {{ item.name }}
         </div>
+        } @else {
+        <span class="nui-select-v2__placeholder">Select Item</span>
+        }
 
         <nui-icon
             [style.transform]="open ? 'rotate(180deg)' : ''"
@@ -296,12 +292,13 @@
 
 <ng-template #displayValueTemplate let-item let-open="open">
     <div class="nui-select-v2__value">
-        <div
-            *ngIf="item; else empty"
-            class="d-flex align-items-center nui-select-v2__value-content"
-        >
+        @if (item) {
+        <div class="d-flex align-items-center nui-select-v2__value-content">
             {{ item.name }}
         </div>
+        } @else {
+        <span class="nui-select-v2__placeholder">Select Item</span>
+        }
 
         <nui-icon
             [style.transform]="open ? 'rotate(180deg)' : ''"
@@ -322,12 +319,11 @@
             i18n-placeholder
             id="inside-dialog"
         >
-            <nui-select-v2-option
-                *ngFor="let item of items"
-                [value]="item"
-                i18n
-                >{{ item }}</nui-select-v2-option
-            >
+            @for (item of items; track item) {
+            <nui-select-v2-option [value]="item" i18n>{{
+                item
+            }}</nui-select-v2-option>
+            }
         </nui-select-v2>
         <p i18n>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
@@ -352,8 +348,4 @@
             Action
         </button>
     </nui-dialog-footer>
-</ng-template>
-
-<ng-template #empty>
-    <span class="nui-select-v2__placeholder">Select Item</span>
 </ng-template>

@@ -37,11 +37,9 @@
                 treeControl.isExpanded(node) ? 'expanded' : 'collapsed'
             "
         >
-            <nui-spinner
-                *ngIf="node.isLoading"
-                [show]="node.isLoading"
-                [delay]="0"
-            ></nui-spinner>
+            @if (node.isLoading) {
+            <nui-spinner [show]="node.isLoading" [delay]="0"></nui-spinner>
+            }
             <ng-container cdkTreeNodeOutlet></ng-container>
         </div>
     </cdk-nested-tree-node>

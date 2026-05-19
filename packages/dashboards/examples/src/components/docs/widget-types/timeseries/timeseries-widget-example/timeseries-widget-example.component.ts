@@ -24,7 +24,7 @@ import {
     Injectable,
     OnInit,
 } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import cloneDeep from "lodash/cloneDeep";
 import keyBy from "lodash/keyBy";
 import moment, { Moment } from "moment/moment";
@@ -543,7 +543,7 @@ export const getData = (): ITimeseriesWidgetData[] => [
 ];
 
 // Setting the widget dimensions and position (this is for gridster)
-const positions: Record<string, GridsterItem> = {
+const positions: Record<string, GridsterItemConfig> = {
     [widgetConfigs[0].id]: {
         cols: 6,
         rows: 6,

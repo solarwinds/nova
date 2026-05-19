@@ -318,22 +318,33 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             tap(() => this.updateNativeHeaderPlaceholder())
         );
 
-        if (!this.virtualFor) {
-            throw new Error("Unable to find CdkVirtualForOf");
-        }
+        // Note: When cdkVirtualFor is present, use its dataStream.
+        // When it is absent (e.g. after Angular CDK v21 migration where cdkVirtualFor was
+        // removed from the table row template), fall back to a MutationObserver on the table
+        // body to detect row additions/removals. This is more reliable than renderedRangeStream
+        // which does not fire when the CDK table renders rows without cdkVirtualFor.
+        const dataSource: Observable<unknown> =
+            this.virtualFor?.dataStream ??
+            merge(
+                this.viewport.renderedRangeStream,
+                // MutationObserver fires whenever rows are added or removed from tbody
+                new Observable<void>((observer) => {
+                    if (!this.bodyRef) {
+                        return;
+                    }
+                    const mo = new MutationObserver(() => observer.next());
+                    mo.observe(this.bodyRef, { childList: true });
+                    return () => mo.disconnect();
+                })
+            );
 
-        const dataStream$ = this.virtualFor.dataStream.pipe(
-          // give CDK some time to render rows after a change
-          delay(0, asyncScheduler),
-          tap(() => this.updateNativeHeaderPlaceholder())
+        const dataStream$ = dataSource.pipe(
+            // give CDK some time to render rows after a change
+            delay(0, asyncScheduler),
+            tap(() => this.updateNativeHeaderPlaceholder())
         );
 
-        merge(
-            onScroll$,
-            onResize$,
-            tableColumnsUpdate$,
-            dataStream$
-        )
+        merge(onScroll$, onResize$, tableColumnsUpdate$, dataStream$)
             .pipe(
                 // Note: Preventing function to be invoked multiple times
                 // by merging new observable only if the previous one was completed

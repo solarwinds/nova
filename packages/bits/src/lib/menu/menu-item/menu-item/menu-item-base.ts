@@ -67,7 +67,7 @@ export abstract class MenuItemBaseComponent
 
     constructor(
         @Optional() readonly group: MenuGroupComponent,
-        private cd: ChangeDetectorRef
+        protected cd: ChangeDetectorRef
     ) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -82,13 +82,18 @@ export abstract class MenuItemBaseComponent
     }
 
     public setActiveStyles(): void {
-        this.cd.markForCheck();
         this.isActive = true;
+        this.refreshView();
     }
 
     public setInactiveStyles(): void {
-        this.cd.markForCheck();
         this.isActive = false;
+        this.refreshView();
+    }
+
+    protected refreshView(): void {
+        this.cd.markForCheck();
+        this.cd.detectChanges();
     }
 
     abstract doAction(event?: any): void;

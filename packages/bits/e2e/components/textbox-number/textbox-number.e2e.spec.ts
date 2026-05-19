@@ -70,6 +70,7 @@ test.describe("USERCONTROL textbox-number >", () => {
             component = basic;
             await component.toBeVisible();
             await component.clearText();
+            await expect.poll(() => component.getValue()).toBe("");
         });
 
         test("should be enabled and editable by default", async () => {
@@ -79,9 +80,9 @@ test.describe("USERCONTROL textbox-number >", () => {
 
         test("should increase the value when numeric up button is pressed", async () => {
             await component.upButton.click();
-            expect(await component.getValue()).toBe("1");
+            await expect.poll(() => component.getValue()).toBe("1");
             await component.upButton.click();
-            expect(await component.getValue()).toBe("2");
+            await expect.poll(() => component.getValue()).toBe("2");
         });
         // TODO: add back after NUI-5779 is finished
         test.skip("should decrease the value when numeric down button is pressed", async () => {
@@ -129,29 +130,40 @@ test.describe("USERCONTROL textbox-number >", () => {
         test.beforeEach(async () => {
             component = minMax;
             await component.clearText();
+            await expect.poll(() => component.getValue()).toBe("");
         });
 
         test.describe("up button ", () => {
             test("should be disabled if value equals to maxValue", async () => {
                 await component.acceptText("10");
-                expect(await component.upButton.isDisabled()).toBe(true);
+                await expect.poll(() => component.getValue()).toBe("10");
+                await expect
+                    .poll(() => component.upButton.isDisabled())
+                    .toBe(true);
             });
 
             test("should be disabled if value exceeds maxValue", async () => {
                 await component.acceptText("100");
-                expect(await component.upButton.isDisabled()).toBe(true);
+                await expect
+                    .poll(() => component.upButton.isDisabled())
+                    .toBe(true);
             });
         });
 
         test.describe("down button ", () => {
             test("should be disabled if value equals to minValue", async () => {
                 await component.acceptText("1");
-                expect(await component.downButton.isDisabled()).toBe(true);
+                await expect.poll(() => component.getValue()).toBe("1");
+                await expect
+                    .poll(() => component.downButton.isDisabled())
+                    .toBe(true);
             });
 
             test("should be disabled if value exceeds minValue", async () => {
                 await component.acceptText("-1");
-                expect(await component.downButton.isDisabled()).toBe(true);
+                await expect
+                    .poll(() => component.downButton.isDisabled())
+                    .toBe(true);
             });
         });
     });

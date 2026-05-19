@@ -44,17 +44,17 @@
                     },
                     "defaultConfiguration": "",
                     "options": {
-                        "loader": {
-                            ".html": "text",
-                            ".less": "text"
-                        },
                         "allowedCommonJsDependencies": [
                             "lodash",
                             "moment/moment"
                         ],
+                        "browser": "./demo/src/index.ts",
                         "extractLicenses": false,
                         "index": "./demo/src/index.html",
-                        "browser": "./demo/src/index.ts",
+                        "loader": {
+                            ".html": "text",
+                            ".less": "text"
+                        },
                         "namedChunks": true,
                         "optimization": false,
                         "outputPath": {
@@ -76,6 +76,24 @@
                             "./src/styles/styles-font-roboto.less"
                         ],
                         "tsConfig": "./demo/src/tsconfig.json"
+                    }
+                },
+                "e2e": {
+                    "builder": "playwright-ng-schematics:playwright",
+                    "configurations": {
+                        "full": {
+                            "devServerTarget": "demo:serve:e2e",
+                            "protractorConfig": "./protractor-gui.conf.js"
+                        },
+                        "gui": {
+                            "protractorConfig": "./protractor-gui.conf.js"
+                        },
+                        "serve": {
+                            "devServerTarget": "demo:serve:e2e"
+                        }
+                    },
+                    "options": {
+                        "devServerTarget": "demo:serve"
                     }
                 },
                 "extract-i18n": {
@@ -124,24 +142,6 @@
                             "./src/component-styles.less",
                             "./demo/src/demostyles.less"
                         ]
-                    }
-                },
-                "e2e": {
-                    "builder": "playwright-ng-schematics:playwright",
-                    "options": {
-                        "devServerTarget": "demo:serve"
-                    },
-                    "configurations": {
-                        "full": {
-                            "devServerTarget": "demo:serve:e2e",
-                            "protractorConfig": "./protractor-gui.conf.js"
-                        },
-                        "gui": {
-                            "protractorConfig": "./protractor-gui.conf.js"
-                        },
-                        "serve": {
-                            "devServerTarget": "demo:serve:e2e"
-                        }
                     }
                 }
             },

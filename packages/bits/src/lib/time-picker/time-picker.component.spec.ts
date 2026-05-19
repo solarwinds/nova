@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { DebugElement, NO_ERRORS_SCHEMA } from "@angular/core";
+import { DebugElement } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
@@ -68,11 +68,15 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [ReactiveFormsModule, FormsModule, NuiOverlayModule],
+                imports: [
+                    ReactiveFormsModule,
+                    FormsModule,
+                    NuiOverlayModule,
+                    IconComponent,
+                ],
                 declarations: [
                     CheckboxComponent,
                     TimePickerComponent,
-                    IconComponent,
                     MenuPopupComponent,
                     MenuActionComponent,
                     MenuItemComponent,
@@ -118,7 +122,9 @@ describe("components >", () => {
         });
 
         it("should change selected element", () => {
-            componentInstance.overlay.toggle();
+            // Wrap overlay.toggle in zone.run so Angular marks the view dirty (Angular 21 NG0100 fix)
+            fixture.ngZone!.run(() => componentInstance.overlay.toggle());
+            fixture.detectChanges();
             fixture.detectChanges();
             const initialState = debugElement.query(
                 By.css(".nui-menu-item--selected")
@@ -138,7 +144,9 @@ describe("components >", () => {
                 componentInstance.timeFormat
             );
             expect(movedTimeFormatted).not.toBe(initialState);
-            componentInstance.writeValue(movedTime);
+            // Wrap writeValue in zone.run so Angular marks the view dirty (Angular 21 NG0100 fix)
+            fixture.ngZone!.run(() => componentInstance.writeValue(movedTime));
+            fixture.detectChanges();
             fixture.detectChanges();
             const changedState = debugElement
                 .query(By.css(".nui-menu-item--selected"))
@@ -205,9 +213,13 @@ describe("components >", () => {
         });
 
         it("should check if item is selected", () => {
-            componentInstance.writeValue(
-                componentInstance.itemsSource[0].itemsSource[0].title
+            // Wrap writeValue in zone.run so Angular marks the view dirty (Angular 21 NG0100 fix)
+            fixture.ngZone!.run(() =>
+                componentInstance.writeValue(
+                    componentInstance.itemsSource[0].itemsSource[0].title
+                )
             );
+            fixture.detectChanges();
             fixture.detectChanges();
             const isSelected =
                 componentInstance.itemsSource[0].itemsSource[4].isSelected;
@@ -284,14 +296,46 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [FormsModule, ReactiveFormsModule],
-                declarations: [TimePickerReactiveFormTestComponent],
-                providers: [
-                    ToastService,
-                    ToastContainerService,
-                    NotificationService,
+                imports: [
+                    FormsModule,
+                    ReactiveFormsModule,
+                    NuiOverlayModule,
+                    IconComponent,
                 ],
-                schemas: [NO_ERRORS_SCHEMA],
+                declarations: [
+                    ButtonComponent,
+                    CheckboxComponent,
+                    DividerComponent,
+                    FormFieldComponent,
+                    MenuActionComponent,
+                    MenuItemComponent,
+                    MenuLinkComponent,
+                    MenuOptionComponent,
+                    MenuPopupComponent,
+                    MenuSwitchComponent,
+                    PopoverComponent,
+                    PopupComponent,
+                    PopupToggleDirective,
+                    SpinnerComponent,
+                    SwitchComponent,
+                    TextboxComponent,
+                    TimePickerComponent,
+                    TooltipDirective,
+                    ValidationMessageComponent,
+                    TimePickerReactiveFormTestComponent,
+                ],
+                providers: [
+                    DomUtilService,
+                    EdgeDetectionService,
+                    FormBuilder,
+                    IconService,
+                    LoggerService,
+                    NotificationService,
+                    TimePickerKeyboardService,
+                    ToastContainerService,
+                    ToastService,
+                    UtilService,
+                ],
             });
 
             fixture = TestBed.createComponent(

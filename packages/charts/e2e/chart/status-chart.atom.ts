@@ -19,7 +19,6 @@
 //  THE SOFTWARE.
 
 import { ChartAtom } from "./atoms/chart.atom";
-import { SeriesAtom } from "./atoms/series.atom";
 import { StatusBarDataPointAtom } from "./atoms/status-bar-data-point.atom";
 
 export class StatusChartAtom extends ChartAtom {
@@ -27,19 +26,13 @@ export class StatusChartAtom extends ChartAtom {
         seriesID: string,
         barIndex: number
     ): Promise<StatusBarDataPointAtom> {
-        const series: SeriesAtom | undefined = await this.getDataSeriesById(
-            SeriesAtom,
-            seriesID
-        );
+        const series = this.getLocator().page().locator(`#data-${seriesID}`);
+        await series.waitFor({ state: "attached" });
 
-        if (!series) {
-            throw new Error("series are not defined");
-        }
+        const bars = series.locator(`.${StatusBarDataPointAtom.CSS_CLASS}`);
+        await bars.first().waitFor({ state: "attached" });
 
-        const barLocator = series
-            .getLocator()
-            .locator(`.${StatusBarDataPointAtom.CSS_CLASS}`)
-            .nth(barIndex);
+        const barLocator = bars.nth(barIndex);
 
         return new StatusBarDataPointAtom(barLocator);
     }
@@ -47,17 +40,15 @@ export class StatusChartAtom extends ChartAtom {
     public async getAllBarDataPointsBySeriesID(
         seriesID: string
     ): Promise<StatusBarDataPointAtom[]> {
-        const seriesById: SeriesAtom | undefined = await this.getDataSeriesById(
-            SeriesAtom,
-            seriesID
-        );
-        if (!seriesById) {
-            throw new Error(`Series '${seriesID}' was not found in the chart`);
-        }
+        const seriesById = this.getLocator()
+            .page()
+            .locator(`#data-${seriesID}`);
+        await seriesById.waitFor({ state: "attached" });
 
-        const barsLocator = seriesById
-            .getLocator()
-            .locator(`.${StatusBarDataPointAtom.CSS_CLASS}`);
+        const barsLocator = seriesById.locator(
+            `.${StatusBarDataPointAtom.CSS_CLASS}`
+        );
+        await barsLocator.first().waitFor({ state: "attached" });
 
         const count = await barsLocator.count();
         const result: StatusBarDataPointAtom[] = [];

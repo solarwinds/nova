@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { DebugElement, NO_ERRORS_SCHEMA, SimpleChange } from "@angular/core";
+import { DebugElement, SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
@@ -83,14 +83,18 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [FormsModule, ReactiveFormsModule, PopupAdapterModule],
+                imports: [
+                    FormsModule,
+                    ReactiveFormsModule,
+                    PopupAdapterModule,
+                    IconComponent,
+                ],
                 declarations: [
                     ButtonComponent,
                     CheckboxComponent,
                     ComboboxComponent,
                     DividerComponent,
                     HighlightPipe,
-                    IconComponent,
                     MenuActionComponent,
                     MenuComponent,
                     MenuGroupComponent,
@@ -398,14 +402,47 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [FormsModule, ReactiveFormsModule],
-                declarations: [ComboboxReactiveFormTestComponent],
+                imports: [
+                    FormsModule,
+                    ReactiveFormsModule,
+                    PopupAdapterModule,
+                    IconComponent,
+                ],
+                declarations: [
+                    ButtonComponent,
+                    CheckboxComponent,
+                    ComboboxComponent,
+                    DividerComponent,
+                    HighlightPipe,
+                    MenuActionComponent,
+                    MenuComponent,
+                    MenuGroupComponent,
+                    MenuItemComponent,
+                    MenuLinkComponent,
+                    MenuOptionComponent,
+                    MenuPopupComponent,
+                    MenuSwitchComponent,
+                    PopoverComponent,
+                    PopupComponent,
+                    PopupToggleDirective,
+                    RepeatItemComponent,
+                    SpinnerComponent,
+                    SwitchComponent,
+                    TextboxComponent,
+                    TooltipDirective,
+                    ValidationMessageComponent,
+                    ComboboxReactiveFormTestComponent,
+                ],
                 providers: [
+                    UtilService,
+                    EdgeDetectionService,
+                    DomUtilService,
+                    LoggerService,
+                    IconService,
                     ToastService,
                     ToastContainerService,
                     NotificationService,
                 ],
-                schemas: [NO_ERRORS_SCHEMA],
             });
 
             fixture = TestBed.createComponent(

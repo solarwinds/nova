@@ -1,4 +1,5 @@
-<div class="list-nav-bar" *ngIf="navBarConfig && !navBarConfig?.isRoot">
+@if (navBarConfig && !navBarConfig?.isRoot) {
+<div class="list-nav-bar">
     <button
         nui-button
         type="button"
@@ -8,7 +9,6 @@
         [disabled]="!navBarConfig?.buttons?.back?.disabled"
         (click)="onBack()"
     ></button>
-
     <button
         nui-button
         type="button"
@@ -19,3 +19,4 @@
     ></button>
     <div class="list-nav-bar__label">{{ navBarConfig?.label }}</div>
 </div>
+}

@@ -1,6 +1,7 @@
 <ng-content></ng-content>
 <div class="ml-3 mt-3">
-    <div class="d-flex align-items-center" *ngIf="editMode !== undefined">
+    @if (editMode !== undefined) {
+    <div class="d-flex align-items-center">
         <input
             class="mb-2"
             type="checkbox"
@@ -10,7 +11,8 @@
         />
         <label class="px-3" for="edit-mode">Edit Mode</label>
     </div>
-    <div class="d-flex align-items-center" *ngIf="dsError !== undefined">
+    } @if (dsError !== undefined) {
+    <div class="d-flex align-items-center">
         <input
             class="mb-2"
             type="checkbox"
@@ -20,6 +22,7 @@
         />
         <label class="px-3" for="ds-error">Force Data Source Errors</label>
     </div>
+    }
     <div class="d-flex align-items-center">
         <input
             class="mb-2"

@@ -49,9 +49,20 @@ import {
     CustomFormatterConfiguratorComponent,
     CustomFormatterExampleComponent,
 } from "./formatter-example/custom-formatter-example.component";
+import { FormatterOverviewDocsComponent } from "./formatter-overview-docs.component";
 import { getDemoFiles } from "../../../../../demo-files-factory";
 
 const routes: Routes = [
+    {
+        path: "",
+        component: FormatterOverviewDocsComponent,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+            showThemeSwitcher: true,
+        },
+    },
     {
         path: "table-formatter",
         component: CustomFormatterDocComponent,
@@ -90,6 +101,7 @@ const routes: Routes = [
         ReactiveFormsModule,
     ],
     declarations: [
+        FormatterOverviewDocsComponent,
         CustomDonutContentFormatterComponent,
         CustomDonutContentFormatterExampleComponent,
         CustomDonutContentFormatterConfiguratorComponent,

@@ -53,8 +53,8 @@ export class SelectAtom extends BasicSelectAtom {
     }
 
     public async selectedToContainText(text: string): Promise<void> {
-       return await expect(
-           this.getMenu().getMenuButton().getLocator()
-       ).toContainText(text);
+        return await expect(
+            this.getMenu().getMenuButton().getLocator()
+        ).toContainText(text);
     }
 }

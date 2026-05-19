@@ -1,4 +1,5 @@
-<table *ngIf="datePicker.datepickerMode === 'year'" role="grid">
+@if (datePicker.datepickerMode === 'year') {
+<table role="grid">
     <thead>
         <tr>
             <th>
@@ -44,8 +45,10 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let row of rows">
-            <td *ngFor="let cell of row" class="text-center year">
+        @for (row of rows; track row) {
+        <tr>
+            @for (cell of row; track cell) {
+            <td class="text-center year">
                 <button
                     nui-button
                     type="button"
@@ -63,6 +66,9 @@
                     }}</span>
                 </button>
             </td>
+            }
         </tr>
+        }
     </tbody>
 </table>
+}

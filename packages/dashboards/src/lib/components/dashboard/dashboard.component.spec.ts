@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -20,7 +20,7 @@
 
 import { SimpleChange, SimpleChanges } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { GridsterItem } from "angular-gridster2";
+import { GridsterItemConfig } from "angular-gridster2";
 
 import { DashboardComponent } from "./dashboard.component";
 import { DEFAULT_GRIDSTER_CONFIG } from "./default-gridster-config";
@@ -45,6 +45,10 @@ describe("DashboardComponent", () => {
         component.gridsterConfig = DEFAULT_GRIDSTER_CONFIG;
         component.dashboard = { widgets: {}, positions: {} };
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it("should create", () => {
@@ -85,20 +89,15 @@ describe("DashboardComponent", () => {
             expect(component.gridsterConfigChange.emit).toHaveBeenCalled();
         });
 
-        it("should invoke optionsChanged on gridsterConfig.api", () => {
-            spyOn(
-                component.gridsterConfig.api ?? {},
-                "optionsChanged" as never
-            );
+        it("should invoke calculateLayout on gridster.api when config changes", () => {
+            spyOn(component.gridster.api, "calculateLayout");
             component.ngOnChanges(changes);
-            expect(
-                component.gridsterConfig.api?.optionsChanged
-            ).toHaveBeenCalled();
+            expect(component.gridster.api.calculateLayout).toHaveBeenCalled();
         });
     });
 
     describe("orderWidgets > ", () => {
-        const testPositions: Record<string, GridsterItem> = {
+        const testPositions: Record<string, GridsterItemConfig> = {
             widget_1: { x: 2, y: 0, cols: 2, rows: 3 },
             widget_2: { x: 1, y: 0, cols: 2, rows: 3 },
             widget_3: { x: 8, y: 0, cols: 2, rows: 3 },
@@ -161,7 +160,7 @@ describe("DashboardComponent", () => {
     });
 
     describe("updateWidgetPosition > ", () => {
-        const testGridsterItem: GridsterItem = {
+        const testGridsterItem: GridsterItemConfig = {
             x: 0,
             y: 0,
             rows: 10,
@@ -241,12 +240,12 @@ describe("DashboardComponent", () => {
             const expectedPositions = {
                 x: 0,
                 y: 0,
-                rows: DEFAULT_GRIDSTER_CONFIG.defaultItemRows,
-                cols: DEFAULT_GRIDSTER_CONFIG.defaultItemCols,
+                rows: DEFAULT_GRIDSTER_CONFIG.defaultItemRows as number,
+                cols: DEFAULT_GRIDSTER_CONFIG.defaultItemCols as number,
             };
 
             const spy = spyOn(
-                (component as any).gridsterConfig.api ?? {},
+                component.gridster.api,
                 "getFirstPossiblePosition"
             );
 

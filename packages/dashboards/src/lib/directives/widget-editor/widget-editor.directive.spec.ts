@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -22,7 +22,7 @@ import { PortalModule } from "@angular/cdk/portal";
 import { Component, Injectable } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
-import { GridsterModule } from "angular-gridster2";
+import { Gridster, GridsterItem } from "angular-gridster2";
 import { Observable } from "rxjs";
 
 import { LoggerService } from "@nova-ui/bits";
@@ -112,7 +112,8 @@ describe("WidgetEditorDirective >", () => {
 
         TestBed.configureTestingModule({
             imports: [
-                GridsterModule,
+                Gridster,
+                GridsterItem,
                 PortalModule,
                 RouterTestingModule.withRoutes([]),
             ],
@@ -146,6 +147,10 @@ describe("WidgetEditorDirective >", () => {
             fixture.debugElement.childNodes[0].injector.get<DashboardComponent>(
                 DashboardComponent
             );
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     afterEach(() => {

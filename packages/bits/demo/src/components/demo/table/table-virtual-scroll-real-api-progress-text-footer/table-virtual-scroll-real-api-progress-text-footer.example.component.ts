@@ -43,7 +43,8 @@ import { RandomuserTableDataSource } from "../table-virtual-scroll-datasource";
 
 @Component({
     selector: "nui-table-virtual-scroll-real-api-progress-text-footer-example",
-    templateUrl: "./table-virtual-scroll-real-api-progress-text-footer.example.component.html",
+    templateUrl:
+        "./table-virtual-scroll-real-api-progress-text-footer.example.component.html",
     styleUrls: [
         "./table-virtual-scroll-real-api-progress-text-footer.example.component.less",
     ],

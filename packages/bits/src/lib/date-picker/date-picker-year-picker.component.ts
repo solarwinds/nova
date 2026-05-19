@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import moment from "moment/moment";
 import { Moment } from "moment/moment";
 
@@ -33,7 +33,10 @@ export class YearPickerComponent implements OnInit {
     title: string;
     rows: any[] = [];
 
-    constructor(public datePicker: DatePickerInnerComponent) {
+    constructor(
+        public datePicker: DatePickerInnerComponent,
+        private cdRef: ChangeDetectorRef
+    ) {
         this.datePicker = datePicker;
     }
 
@@ -70,6 +73,9 @@ export class YearPickerComponent implements OnInit {
                 date1.year() - date2.year(),
             "year"
         );
+
+        this.datePicker.refreshView();
+        this.cdRef.markForCheck();
     }
 
     protected getStartingYear(year: number): number {

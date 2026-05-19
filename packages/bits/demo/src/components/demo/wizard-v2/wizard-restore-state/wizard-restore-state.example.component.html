@@ -5,7 +5,8 @@
         (closed)="closeDialog()"
     >
     </nui-dialog-header>
-    <form class="dialog-body compact-mode" [formGroup]="form" *ngIf="form">
+    @if (form) {
+    <form class="dialog-body compact-mode" [formGroup]="form">
         <nui-wizard-horizontal [state]="state" (finished)="saveState($event)">
             <nui-wizard-step-v2
                 label="Person Details"
@@ -20,38 +21,27 @@
                         caption="Name"
                     >
                         <nui-textbox formControlName="name"></nui-textbox>
-                        <nui-validation-message
-                            for="required"
-                            *ngIf="
-                                form.get(['personDetails', 'name'])?.errors
-                                    ?.required
-                            "
-                            i18n
-                        >
+                        @if ( form.get(['personDetails', 'name'])?.errors
+                        ?.required ) {
+                        <nui-validation-message for="required" i18n>
                             This is required
                         </nui-validation-message>
+                        }
                     </nui-form-field>
-
                     <nui-form-field
                         [control]="form.get(['personDetails', 'privacy'])"
                     >
                         <nui-checkbox formControlName="privacy" [value]="true">
                             Privacy Policy
                         </nui-checkbox>
-
-                        <nui-validation-message
-                            for="required"
-                            *ngIf="
-                                form.get(['personDetails', 'privacy'])?.errors
-                                    ?.required
-                            "
-                            i18n
-                        >
+                        @if ( form.get(['personDetails', 'privacy'])?.errors
+                        ?.required ) {
+                        <nui-validation-message for="required" i18n>
                             This is required
                         </nui-validation-message>
+                        }
                     </nui-form-field>
                 </div>
-
                 <ng-template nuiWizardStepFooter>
                     <ng-container
                         *ngTemplateOutlet="wizardCancel"
@@ -64,7 +54,6 @@
                     ></ng-container>
                 </ng-template>
             </nui-wizard-step-v2>
-
             <nui-wizard-step-v2
                 label="Organization"
                 formGroupName="organization"
@@ -78,16 +67,12 @@
                         caption="Organization"
                     >
                         <nui-textbox formControlName="title"></nui-textbox>
-                        <nui-validation-message
-                            for="required"
-                            *ngIf="
-                                form.get(['organization', 'title'])?.errors
-                                    ?.required
-                            "
-                            i18n
-                        >
+                        @if ( form.get(['organization', 'title'])?.errors
+                        ?.required ) {
+                        <nui-validation-message for="required" i18n>
                             This is required
                         </nui-validation-message>
+                        }
                     </nui-form-field>
                     <nui-form-field
                         caption="Date"
@@ -98,16 +83,12 @@
                             formControlName="date"
                             i18n
                         ></nui-date-picker>
-                        <nui-validation-message
-                            for="required"
-                            *ngIf="
-                                form.get(['organization', 'date'])?.errors
-                                    ?.required
-                            "
-                            i18n
-                        >
+                        @if ( form.get(['organization', 'date'])?.errors
+                        ?.required ) {
+                        <nui-validation-message for="required" i18n>
                             This is required
                         </nui-validation-message>
+                        }
                     </nui-form-field>
                     <nui-form-field
                         [control]="
@@ -136,7 +117,6 @@
                         </nui-checkbox>
                     </nui-form-field>
                 </div>
-
                 <ng-template nuiWizardStepFooter>
                     <ng-container
                         *ngTemplateOutlet="wizardCancel"
@@ -152,8 +132,8 @@
                     ></ng-container>
                 </ng-template>
             </nui-wizard-step-v2>
-
-            <nui-wizard-step-v2 *ngFor="let step of dynamicSteps">
+            @for (step of dynamicSteps; track step) {
+            <nui-wizard-step-v2>
                 <ng-template nuiWizardStepLabel>{{ step.title }}</ng-template>
                 <div class="p-5">
                     <ng-container
@@ -167,7 +147,7 @@
                     <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
                 </ng-template>
             </nui-wizard-step-v2>
-
+            }
             <nui-wizard-step-v2
                 formGroupName="contactDetails"
                 [stepControl]="form.get(['contactDetails'])"
@@ -176,7 +156,6 @@
                 <ng-template nuiWizardStepLabel>
                     <span>Contact Details</span>
                 </ng-template>
-
                 <div class="px-5 pb-5">
                     <nui-form-field
                         [control]="form.get(['contactDetails', 'email'])"
@@ -188,29 +167,18 @@
                             type="email"
                             formControlName="email"
                         ></nui-textbox>
-                        <nui-validation-message
-                            for="required"
-                            *ngIf="
-                                form.get(['contactDetails', 'email'])?.errors
-                                    ?.required
-                            "
-                            i18n
-                        >
+                        @if ( form.get(['contactDetails', 'email'])?.errors
+                        ?.required ) {
+                        <nui-validation-message for="required" i18n>
                             This is required
                         </nui-validation-message>
-
-                        <nui-validation-message
-                            for="email"
-                            *ngIf="
-                                form.get(['contactDetails', 'email'])?.errors
-                                    ?.email
-                            "
-                            i18n
-                        >
+                        } @if ( form.get(['contactDetails', 'email'])?.errors
+                        ?.email ) {
+                        <nui-validation-message for="email" i18n>
                             Invalid email
                         </nui-validation-message>
+                        }
                     </nui-form-field>
-
                     <nui-form-field
                         caption="Select"
                         [control]="form.get(['contactDetails', 'options'])"
@@ -225,7 +193,6 @@
                         </nui-select-v2>
                     </nui-form-field>
                 </div>
-
                 <ng-template nuiWizardStepFooter>
                     <button
                         nui-button
@@ -252,7 +219,6 @@
                     </button>
                 </ng-template>
             </nui-wizard-step-v2>
-
             <ng-template #wizardPrevious>
                 <button
                     type="button"
@@ -263,7 +229,6 @@
                     Back
                 </button>
             </ng-template>
-
             <ng-template #wizardNext let-form="form">
                 <button
                     nuiWizardNext
@@ -277,7 +242,6 @@
                     Next
                 </button>
             </ng-template>
-
             <ng-template #wizardCancel>
                 <button
                     type="button"
@@ -290,6 +254,7 @@
             </ng-template>
         </nui-wizard-horizontal>
     </form>
+    }
 </ng-template>
 
 <ng-template #dynamicTemplate1>
@@ -304,7 +269,9 @@
     <button type="button" nui-button class="mb-3" (click)="awesome = !awesome">
         Click if you're awesome
     </button>
-    <nui-message *ngIf="awesome" type="ok">You are awesome!</nui-message>
+    @if (awesome) {
+    <nui-message type="ok">You are awesome!</nui-message>
+    }
 </ng-template>
 
 <button nui-button type="button" (click)="openDialog(dialogWizard)" i18n>

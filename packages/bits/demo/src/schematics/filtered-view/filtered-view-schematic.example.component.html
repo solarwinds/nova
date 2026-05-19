@@ -125,9 +125,9 @@
             <nui-schematic-docs-example
                 exampleFolderName="filtered-view-table-with-virtual-scroll"
             >
-                <app-filtered-view-table-with-virtual-scroll
-                    *ngIf="vs.active"
-                ></app-filtered-view-table-with-virtual-scroll>
+                @if (vs.active) {
+                <app-filtered-view-table-with-virtual-scroll></app-filtered-view-table-with-virtual-scroll>
+                }
             </nui-schematic-docs-example>
         </nui-tab>
         <nui-tab heading="Table with Virtual Scroll and Selection" #vss>
@@ -141,9 +141,9 @@
             <nui-schematic-docs-example
                 exampleFolderName="filtered-view-table-with-virtual-scroll-selection"
             >
-                <app-filtered-view-table-with-virtual-scroll-selection
-                    *ngIf="vss.active"
-                ></app-filtered-view-table-with-virtual-scroll-selection>
+                @if (vss.active) {
+                <app-filtered-view-table-with-virtual-scroll-selection></app-filtered-view-table-with-virtual-scroll-selection>
+                }
             </nui-schematic-docs-example>
         </nui-tab>
         <nui-tab heading="Table with Custom Virtual Scroll" #cvs>
@@ -160,9 +160,9 @@
             <nui-schematic-docs-example
                 exampleFolderName="filtered-view-table-with-custom-virtual-scroll"
             >
-                <app-filtered-view-table-with-custom-virtual-scroll
-                    *ngIf="cvs.active"
-                ></app-filtered-view-table-with-custom-virtual-scroll>
+                @if (cvs.active) {
+                <app-filtered-view-table-with-custom-virtual-scroll></app-filtered-view-table-with-custom-virtual-scroll>
+                }
             </nui-schematic-docs-example>
         </nui-tab>
         <nui-tab heading="Tree" #tree>
@@ -170,9 +170,9 @@
             <nui-schematic-docs-example
                 exampleFolderName="filtered-view-with-tree"
             >
-                <app-filtered-view-with-tree
-                    *ngIf="tree.active"
-                ></app-filtered-view-with-tree>
+                @if (tree.active) {
+                <app-filtered-view-with-tree></app-filtered-view-with-tree>
+                }
             </nui-schematic-docs-example>
         </nui-tab>
     </nui-tab-group>

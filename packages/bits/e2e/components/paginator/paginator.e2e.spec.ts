@@ -40,6 +40,21 @@ test.describe("USERCONTROL paginator", () => {
         return `${startItem}-${endItem} of ${totalItems}`;
     };
 
+    const getVisiblePageNumbers = async (
+        paginator: PaginatorAtom
+    ): Promise<number[]> => {
+        const buttonTexts = await paginator
+            .getLocator()
+            .locator(".nui-paginator__list > li > button.nui-button")
+            .evaluateAll((buttons) =>
+                buttons
+                    .map((button) => (button.textContent || "").trim())
+                    .filter((text) => /^\d+$/.test(text))
+            );
+
+        return buttonTexts.map((text) => parseInt(text, 10));
+    };
+
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("paginator/paginator-test", page);
         basicPaginator = Atom.find<PaginatorAtom>(
@@ -153,37 +168,29 @@ test.describe("USERCONTROL paginator", () => {
             await adjacentPaginator.ellipsisLink(1).click();
             await adjacentPaginator.ellipsedPageLinkClick(pageTwenty);
 
-            expect(await adjacentPaginator.isActivePage(pageTwenty)).toBe(true);
-            expect(await adjacentPaginator.pageLinkVisible(pageTwenty)).toBe(
-                true
-            );
+            await expect
+                .poll(() => adjacentPaginator.activePage())
+                .toBe(pageTwenty);
+            const expectedVisiblePageNumbers = [
+                1,
+                pageTwenty - adjacent,
+                pageTwenty - 1,
+                pageTwenty,
+                pageTwenty + 1,
+                pageTwenty + adjacent,
+                pageCountAdjacent,
+            ];
 
-            // left adjacent
-            expect(
-                await adjacentPaginator.pageLinkVisible(pageTwenty - adjacent)
-            ).toBe(true);
-            expect(await adjacentPaginator.pageLinkVisible(1)).toBe(true);
-            for (let i = pageTwenty - adjacent - 1; i > 1; --i) {
-                expect(await adjacentPaginator.pageLinkVisible(i)).toBe(false);
-            }
-            // right adjacent
-            expect(
-                await adjacentPaginator.pageLinkVisible(pageTwenty + adjacent)
-            ).toBe(true);
-            expect(
-                await adjacentPaginator.pageLinkVisible(pageCountAdjacent)
-            ).toBe(true);
-            for (
-                let i = pageTwenty + adjacent + 1;
-                i < pageCountAdjacent;
-                ++i
-            ) {
-                expect(await adjacentPaginator.pageLinkVisible(i)).toBe(false);
-            }
+            await expect
+                .poll(() => getVisiblePageNumbers(adjacentPaginator))
+                .toEqual(expectedVisiblePageNumbers);
+
+            expect(await adjacentPaginator.isActivePage(pageTwenty)).toBe(true);
 
             // Return to initial state
             await adjacentPaginator.ellipsisLink(0).click();
             await adjacentPaginator.ellipsedPageLinkClick(10);
+            await expect.poll(() => adjacentPaginator.activePage()).toBe(10);
             expect(await adjacentPaginator.isActivePage(10)).toBe(true);
         }
     );

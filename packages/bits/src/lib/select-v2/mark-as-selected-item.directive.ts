@@ -31,7 +31,7 @@ import {
     standalone: false,
 })
 export class MarkAsSelectedItemDirective implements Highlightable {
-    @HostBinding("class.active") private isActive: boolean = false;
+    @HostBinding("class.active") protected isActive: boolean = false;
 
     constructor(public elRef: ElementRef, private cdRef: ChangeDetectorRef) {}
 

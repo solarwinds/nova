@@ -18,23 +18,21 @@
                 }}
             </p>
             <p>
-                Symptoms:
-                <ng-container
-                    [ngSwitch]="form.get(['personDetails', 'symptoms'])?.value"
-                >
-                    <ng-container *ngSwitchCase="true">
-                        {{
-                            form.get(["diseaseDetails", "date"]).valid
-                                ? "Since " +
-                                  form
-                                      .get(["diseaseDetails", "date"])
-                                      ?.value.format("D MMM YYYY")
-                                : "Yes"
-                        }}
-                    </ng-container>
-                    <ng-container *ngSwitchCase="false" i18n>No</ng-container>
-                    <ng-container *ngSwitchDefault i18n>Unknown</ng-container>
-                </ng-container>
+                Symptoms: @switch (form.get(['personDetails',
+                'symptoms'])?.value) { @case (true) {
+                {{
+                    form.get(["diseaseDetails", "date"]).valid
+                        ? "Since " +
+                          form
+                              .get(["diseaseDetails", "date"])
+                              ?.value.format("D MMM YYYY")
+                        : "Yes"
+                }}
+                } @case (false) {
+                <ng-container i18n>No</ng-container>
+                } @default {
+                <ng-container i18n>Unknown</ng-container>
+                } }
             </p>
             <p>
                 Email:
@@ -59,25 +57,16 @@
                 caption="Name"
             >
                 <nui-textbox formControlName="name"></nui-textbox>
-                <nui-validation-message
-                    for="required"
-                    *ngIf="
-                        form.get(['personDetails', 'name'])?.errors?.required
-                    "
-                    i18n
-                >
+                @if ( form.get(['personDetails', 'name'])?.errors?.required ) {
+                <nui-validation-message for="required" i18n>
                     This is required
                 </nui-validation-message>
-                <nui-validation-message
-                    for="minlength"
-                    *ngIf="
-                        form.get(['personDetails', 'name'])?.errors
-                            ?.['minlength']
-                    "
-                    i18n
-                >
+                } @if ( form.get(['personDetails', 'name'])?.errors
+                ?.['minlength'] ) {
+                <nui-validation-message for="minlength" i18n>
                     Minimum length is 3
                 </nui-validation-message>
+                }
             </nui-form-field>
 
             <nui-form-field
@@ -94,16 +83,12 @@
                 >
                     Diseases symptoms
                 </nui-checkbox>
-                <nui-validation-message
-                    for="required"
-                    *ngIf="
-                        form.get(['personDetails', 'symptoms'])?.errors
-                            ?.required
-                    "
-                    i18n
-                >
+                @if ( form.get(['personDetails', 'symptoms'])?.errors ?.required
+                ) {
+                <nui-validation-message for="required" i18n>
                     This is required
                 </nui-validation-message>
+                }
             </nui-form-field>
 
             <!-- content of the footer -->
@@ -113,8 +98,8 @@
         </nui-wizard-step-v2>
 
         <!--  content of the optional step -->
+        @if (form.get(['personDetails', 'symptoms'])?.value) {
         <nui-wizard-step-v2
-            *ngIf="form.get(['personDetails', 'symptoms'])?.value"
             i18n-label
             label="Disease Details"
             formName="diseaseDetails"
@@ -129,21 +114,18 @@
                 caption="When did you noticed your first symptoms ?"
             >
                 <nui-date-picker formControlName="date" i18n></nui-date-picker>
-                <nui-validation-message
-                    for="required"
-                    *ngIf="
-                        form.get(['diseaseDetails', 'date'])?.errors?.required
-                    "
-                    i18n
-                >
+                @if ( form.get(['diseaseDetails', 'date'])?.errors?.required ) {
+                <nui-validation-message for="required" i18n>
                     Date when disease manifested is required
                 </nui-validation-message>
+                }
             </nui-form-field>
             <ng-template nuiWizardStepFooter>
                 <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                 <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
             </ng-template>
         </nui-wizard-step-v2>
+        }
 
         <!--  content of the 2nd step -->
         <nui-wizard-step-v2
@@ -159,26 +141,17 @@
                 caption="Email"
             >
                 <nui-textbox type="email" formControlName="email"></nui-textbox>
-                <nui-validation-message
-                    for="required"
-                    *ngIf="
-                        form.get(['contactDetails', 'email'])?.errors?.required
-                    "
-                    i18n
-                >
+                @if ( form.get(['contactDetails', 'email'])?.errors?.required )
+                {
+                <nui-validation-message for="required" i18n>
                     This is required
                 </nui-validation-message>
-
-                <nui-validation-message
-                    for="email"
-                    *ngIf="
-                        form.get(['contactDetails', 'email'])?.errors
-                            ?.['email']
-                    "
-                    i18n
-                >
+                } @if ( form.get(['contactDetails', 'email'])?.errors
+                ?.['email'] ) {
+                <nui-validation-message for="email" i18n>
                     Invalid email
                 </nui-validation-message>
+                }
             </nui-form-field>
             <nui-form-field
                 [control]="form.get(['contactDetails', 'phone'])"

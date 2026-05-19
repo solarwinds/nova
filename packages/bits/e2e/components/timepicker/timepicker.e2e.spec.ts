@@ -112,9 +112,16 @@ test.describe("USERCONTROL timepicker", () => {
                 const timeToType = TimepickerAtom.createTimeString(3, 33);
                 const expectedTime = TimepickerAtom.createTimeString(3, 30);
                 await basicTimePicker.textbox.acceptText(timeToType);
-                const highlightedValue =
-                    await basicTimePicker.getHighlightedMenuValue();
-                await expect(highlightedValue).toContainText(expectedTime);
+                await Helpers.page.waitForTimeout(600);
+                await basicTimePicker.toggle();
+                await expect
+                    .poll(async () => {
+                        const highlightedValue =
+                            await basicTimePicker.menuPopup.selectedItem.textContent();
+
+                        return highlightedValue?.trim() || "";
+                    })
+                    .toBe(expectedTime);
             });
 
             /**

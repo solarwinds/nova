@@ -19,7 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import _noop from "lodash/noop";
 
@@ -140,22 +145,19 @@ describe("directives >", () => {
             expect(dragAndDropServiceMock.resetPayload).toHaveBeenCalled();
         });
 
-        it("should create overlay of draggable element", async () => {
+        it("should create overlay of draggable element", fakeAsync(() => {
             emitEvent("dragstart", draggableElement.nativeElement);
             expect(
                 draggableDirective["dragsourceOverlay"]?.classList.contains(
                     "nui-drag__drag-source--overlay"
                 )
             ).toBeTruthy();
-            await fixture.whenStable().then(() => {
-                const firstChild = draggableElement.nativeElement.firstChild;
-                expect(
-                    firstChild.classList.contains(
-                        "nui-drag__drag-source--overlay"
-                    )
-                ).toBeTruthy();
-            });
-        });
+            tick(0);
+            const firstChild = draggableElement.nativeElement.firstChild;
+            expect(
+                firstChild.classList.contains("nui-drag__drag-source--overlay")
+            ).toBeTruthy();
+        }));
 
         it("should create adorner element", () => {
             emitEvent("dragstart", draggableElement.nativeElement);

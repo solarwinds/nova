@@ -7,11 +7,13 @@
     (formReady)="onFormReady($event)"
 ></nui-items-dynamic>
 
-<div class="pl-4 pr-4" *ngIf="(emptyColumns$ | async) && form.touched">
+@if ((emptyColumns$ | async) && form.touched) {
+<div class="pl-4 pr-4">
     <nui-message type="critical" [allowDismiss]="false" i18n>
         <b>At least one column must be added.</b>
     </nui-message>
 </div>
+}
 
 <button
     nui-button

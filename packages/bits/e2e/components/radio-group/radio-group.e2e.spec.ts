@@ -30,8 +30,14 @@ test.describe("USERCONTROL Radio group", () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("radio-group/radio-group-test", page);
-        basicGroup = Atom.find<RadioGroupAtom>(RadioGroupAtom, "basic-radio-group");
-        disabledGroup = Atom.find<RadioGroupAtom>(RadioGroupAtom, "disabled-radio-group");
+        basicGroup = Atom.find<RadioGroupAtom>(
+            RadioGroupAtom,
+            "basic-radio-group"
+        );
+        disabledGroup = Atom.find<RadioGroupAtom>(
+            RadioGroupAtom,
+            "disabled-radio-group"
+        );
         toggleDisabledGroupCheckbox = Atom.find<CheckboxAtom>(
             CheckboxAtom,
             "toggle-disabled-group-checkbox"
@@ -62,6 +68,7 @@ test.describe("USERCONTROL Radio group", () => {
     });
 
     test("should initialize a disabled state and be able to handle dynamic disabled state change", async () => {
+        await disabledGroup.toHaveItemsCount(4);
         const totalItems = await disabledGroup.items.count();
         await disabledGroup.toHaveDisabledItemsCount(totalItems);
 

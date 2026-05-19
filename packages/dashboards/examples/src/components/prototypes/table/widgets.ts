@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { GridsterItem } from "angular-gridster2";
+import { GridsterItemConfig } from "angular-gridster2";
 import moment from "moment/moment";
 
 import {
@@ -45,7 +45,7 @@ import { AcmeProportionalDataSource } from "../data/proportional-datasources";
 import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-source.service";
 import { AcmeTimeseriesDataSource } from "../data/timeseries-data-sources";
 
-export const positions: Record<string, GridsterItem> = {
+export const positions: Record<string, GridsterItemConfig> = {
     widget1: {
         cols: 5,
         rows: 6,
@@ -396,7 +396,8 @@ export const widgets: IWidget[] = [
                                 descendantSorting: false,
                                 sortBy: "column1",
                             },
-                            hasVirtualScroll: true,
+                            // hasVirtualScroll: false,
+                            scrollType: "virtual",
                             searchConfiguration: {
                                 enabled: true,
                             },

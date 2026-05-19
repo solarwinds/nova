@@ -4,15 +4,13 @@
     [appendToBody]="true"
     i18n-title
 >
-    <nui-menu-group
-        *ngFor="let group of dataset.itemsInGroups"
-        [header]="group.header"
-    >
-        <nui-menu-action
-            *ngFor="let item of group.items"
-            (actionDone)="actionDone(item)"
-        >
+    @for (group of dataset.itemsInGroups; track group) {
+    <nui-menu-group [header]="group.header">
+        @for (item of group.items; track item) {
+        <nui-menu-action (actionDone)="actionDone(item)">
             {{ item }}
         </nui-menu-action>
+        }
     </nui-menu-group>
+    }
 </nui-menu>

@@ -33,29 +33,23 @@
                         (click)="handleClick($event)"
                     >
                         <div class="form-group">
-                            <nui-message
-                                [allowDismiss]="false"
-                                type="critical"
-                                *ngIf="
-                                    !demoFormGroup.controls['checkboxGroup']
-                                        .valid &&
-                                    demoFormGroup.controls['checkboxGroup']
-                                        .touched
-                                "
-                            >
+                            @if ( !demoFormGroup.controls['checkboxGroup']
+                            .valid && demoFormGroup.controls['checkboxGroup']
+                            .touched ) {
+                            <nui-message [allowDismiss]="false" type="critical">
                                 <b i18n>Select minimum 3 checkboxes!</b>
                             </nui-message>
+                            }
                             <nui-checkbox-group
                                 formControlName="checkboxGroup"
                                 name="item"
                                 required
                             >
-                                <nui-checkbox
-                                    *ngFor="let item of itemsSource"
-                                    [value]="item"
-                                >
+                                @for (item of itemsSource; track item) {
+                                <nui-checkbox [value]="item">
                                     {{ item }}
                                 </nui-checkbox>
+                                }
                             </nui-checkbox-group>
                         </div>
                         <button

@@ -1,41 +1,41 @@
 <div class="nui-datepicker">
-    <ng-container *ngIf="!inline">
-        <div
-            #toggleRef
-            class="nui-datepicker__container"
-            [class.disabled]="isDisabled"
-            (click)="!isDisabled && overlay.toggle()"
+    @if (!inline) {
+    <div
+        #toggleRef
+        class="nui-datepicker__container"
+        [class.disabled]="isDisabled"
+        (click)="!isDisabled && overlay.toggle()"
+    >
+        <nui-textbox
+            #date
+            autocomplete="off"
+            [disabled]="isDisabled"
+            [isInErrorState]="isInErrorState"
+            (textChange)="onInputActiveDateChanged($event)"
+            (blurred)="updateTouchedState()"
+            [ariaLabel]="ariaLabel"
         >
-            <nui-textbox
-                #date
-                autocomplete="off"
-                [disabled]="isDisabled"
-                [isInErrorState]="isInErrorState"
-                (textChange)="onInputActiveDateChanged($event)"
-                (blurred)="updateTouchedState()"
-                [ariaLabel]="ariaLabel"
-            >
-            </nui-textbox>
-            <nui-icon
-                class="nui-datepicker__icon"
-                icon="calendar"
-                aria-hidden="true"
-                [iconColor]="getIconColor()"
-            ></nui-icon>
-        </div>
-        <nui-overlay
-            #overlay
-            [toggleReference]="toggleRef"
-            [overlayConfig]="overlayConfig"
-            [customContainer]="customContainer"
-        >
-            <ng-container *ngTemplateOutlet="datePickerInner"></ng-container>
-        </nui-overlay>
-    </ng-container>
-
-    <div *ngIf="inline">
+        </nui-textbox>
+        <nui-icon
+            class="nui-datepicker__icon"
+            icon="calendar"
+            aria-hidden="true"
+            [iconColor]="getIconColor()"
+        ></nui-icon>
+    </div>
+    <nui-overlay
+        #overlay
+        [toggleReference]="toggleRef"
+        [overlayConfig]="overlayConfig"
+        [customContainer]="customContainer"
+    >
+        <ng-container *ngTemplateOutlet="datePickerInner"></ng-container>
+    </nui-overlay>
+    } @if (inline) {
+    <div>
         <ng-container *ngTemplateOutlet="datePickerInner"></ng-container>
     </div>
+    }
 
     <div #popupArea></div>
 </div>

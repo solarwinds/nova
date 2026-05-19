@@ -71,7 +71,7 @@ import {
         { provide: CdkHeaderRowDef, useExisting: TableHeaderRowDefDirective },
     ],
     host: { role: "row" },
-    standalone: false
+    standalone: false,
 })
 export class TableHeaderRowDefDirective
     extends CdkHeaderRowDef
@@ -131,7 +131,7 @@ export class TableHeaderRowDefDirective
 @Directive({
     selector: "[nuiRowDef]",
     providers: [{ provide: CdkRowDef, useExisting: TableRowDefDirective }],
-    standalone: false
+    standalone: false,
 })
 export class TableRowDefDirective<T>
     extends CdkRowDef<T>
@@ -185,7 +185,7 @@ export class TableRowDefDirective<T>
     providers: [
         { provide: CdkFooterRowDef, useExisting: TableFooterRowDefDirective },
     ],
-    standalone: false
+    standalone: false,
 })
 export class TableFooterRowDefDirective
     extends CdkFooterRowDef
@@ -235,12 +235,9 @@ export class TableFooterRowDefDirective
  */
 
 @Component({
-    template: ` <th
-            *ngIf="
-                selectable ||
-                selectionMode === 'multi' ||
-                selectionMode === 'radio'
-            "
+    template: ` @if ( selectable || selectionMode === 'multi' || selectionMode
+        === 'radio' ) {
+        <th
             nuiClickInterceptor
             class="nui-table__table-header-cell nui-table__table-header-cell--selectable"
             [ngClass]="{ 'no-options': !hasOptions }"
@@ -256,6 +253,7 @@ export class TableFooterRowDefDirective
             >
             </nui-selector>
         </th>
+        }
         <ng-container cdkCellOutlet></ng-container>`,
     host: {
         role: "row",
@@ -268,7 +266,7 @@ export class TableFooterRowDefDirective
     providers: [
         { provide: CdkHeaderRow, useExisting: TableHeaderRowComponent },
     ],
-    standalone: false
+    standalone: false,
 })
 export class TableHeaderRowComponent
     extends CdkHeaderRow
@@ -388,16 +386,11 @@ export class TableHeaderRowComponent
 /** Data row template container that contains the cell outlet. Adds the right class and role. */
 @Component({
     selector: "nui-row, tr[nui-row]",
-    template: ` <td
-            *ngIf="
-                selectable ||
-                (selectionMode &&
-                    (selectionMode === 'multi' || selectionMode === 'radio'))
-            "
-            class="nui-table__table-cell nui-table__table-cell--selectable"
-        >
+    template: ` @if ( selectable || (selectionMode && (selectionMode === 'multi'
+        || selectionMode === 'radio')) ) {
+        <td class="nui-table__table-cell nui-table__table-cell--selectable">
+            @if (selectionMode === 'radio') {
             <nui-radio
-                *ngIf="selectionMode === 'radio'"
                 class="nui-table__table-cell__checkbox d-inline-block"
                 [checked]="isRowSelected()"
                 (valueChange)="rowSelected()"
@@ -405,8 +398,8 @@ export class TableHeaderRowComponent
                 #rowSelectionElement
             >
             </nui-radio>
+            } @if (selectionMode === 'multi') {
             <nui-checkbox
-                *ngIf="selectionMode === 'multi'"
                 class="nui-table__table-cell__checkbox d-inline-block"
                 [checked]="isRowSelected()"
                 (valueChange)="rowSelected()"
@@ -414,7 +407,9 @@ export class TableHeaderRowComponent
                 #rowSelectionElement
             >
             </nui-checkbox>
+            }
         </td>
+        }
         <ng-container cdkCellOutlet></ng-container>`,
     host: {
         role: "row",
@@ -424,7 +419,7 @@ export class TableHeaderRowComponent
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: "nuiRow",
     providers: [{ provide: CdkRow, useExisting: TableRowComponent }],
-    standalone: false
+    standalone: false,
 })
 export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     @Input() density: RowHeightOptions = "default";
@@ -591,6 +586,6 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     providers: [
         { provide: CdkFooterRow, useExisting: TableFooterRowComponent },
     ],
-    standalone: false
+    standalone: false,
 })
 export class TableFooterRowComponent extends CdkFooterRow {}

@@ -33,7 +33,7 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 // eslint-disable-next-line import/no-deprecated
 import { BehaviorSubject, combineLatest, Observable } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
@@ -117,7 +117,8 @@ import {
                 </div>
                 <!-- End custom layout content -->
 
-                <div class="mt-4" *ngIf="configurableUnits">
+                @if (configurableUnits) {
+                <div class="mt-4">
                     <nui-form-field
                         caption="Units"
                         i18n-caption
@@ -131,6 +132,7 @@ import {
                         ></nui-textbox>
                     </nui-form-field>
                 </div>
+                }
             </div>
         </nui-widget-editor-accordion>
     `,
@@ -394,7 +396,7 @@ export class CustomConfiguratorSectionExampleComponent implements OnInit {
         };
 
         // Setting the widget dimensions and position (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [kpiWidget.id]: {
                 cols: 4,
                 rows: 6,

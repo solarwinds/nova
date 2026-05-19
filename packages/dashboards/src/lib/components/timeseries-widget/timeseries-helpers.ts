@@ -27,7 +27,19 @@ export function metricsSeriesMeasurementsMinMax(
     axisUnits: UnitOption
 ): { min: number; max: number } {
     if (axisUnits === "percent") {
-        return { min: 0, max: 100 };
+        const percentMetrics = series.filter(
+            (metric) => metric.metricUnits === "percent" && metric.data?.length
+        );
+        const percentMax =
+            percentMetrics.length > 0
+                ? percentMetrics
+                      .flatMap((m) => m.data ?? [])
+                      .reduce(
+                          (acc, measurement) => Math.max(acc, measurement.y),
+                          0
+                      )
+                : 0;
+        return { min: 0, max: Math.max(100, percentMax) };
     }
     // skips percent measurements as they are displayed on the left y-axis and would affect right y-axis domain
     const nonPercentMetrics = series.filter(

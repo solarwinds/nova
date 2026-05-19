@@ -46,8 +46,8 @@
                 (click)="$event.stopPropagation()"
             >
                 <ng-container cdkTreeNodeOutlet></ng-container>
+                @if (node.hasPagination && nodesTotalItems[node.name]) {
                 <nui-paginator
-                    *ngIf="node.hasPagination && nodesTotalItems[node.name]"
                     [id]="
                         'nui-tree-paginator-component-' +
                         node.name.toLowerCase()
@@ -58,6 +58,7 @@
                     [total]="nodesTotalItems[node.name]"
                 >
                 </nui-paginator>
+                }
             </div>
         </div>
     </cdk-nested-tree-node>

@@ -48,16 +48,16 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
             href="#"
             role="button"
             (click)="handleClick($event)"
+            (keydown.enter)="handleClick($event)"
+            (keydown.space)="handleClick($event)"
             [ngClass]="'nui-menu-item__action-' + type"
             #menuAction
             tabindex="-1"
             title
         >
-            <nui-icon
-                *ngIf="icon"
-                [icon]="icon"
-                [iconColor]="getIconColor()"
-            ></nui-icon>
+            @if (icon) {
+            <nui-icon [icon]="icon" [iconColor]="getIconColor()"></nui-icon>
+            }
             <ng-content></ng-content>
         </a>
     `,

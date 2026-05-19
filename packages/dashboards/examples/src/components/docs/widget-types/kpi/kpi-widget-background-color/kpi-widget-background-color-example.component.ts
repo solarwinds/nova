@@ -26,7 +26,7 @@ import {
     OnDestroy,
     OnInit,
 } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import { BehaviorSubject } from "rxjs";
 import { finalize } from "rxjs/operators";
 
@@ -218,7 +218,7 @@ export class KpiWidgetBackgroundColorExampleComponent implements OnInit {
                 this.widgetTypesService.mergeWithWidgetType(kpiWidget),
         };
 
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [kpiWidget.id]: {
                 cols: 4,
                 rows: 6,

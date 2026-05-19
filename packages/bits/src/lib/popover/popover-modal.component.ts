@@ -26,14 +26,12 @@ import {
     ElementRef,
     HostListener,
     Input,
-    NgZone,
     OnDestroy,
     OnInit,
     TemplateRef,
 } from "@angular/core";
 import _isBoolean from "lodash/isBoolean";
 import { Subject, Subscription } from "rxjs";
-import { take } from "rxjs/operators";
 
 import { IPopoverModalContext } from "./popover-modal.service";
 import { PopoverPlacement } from "./public-api";
@@ -101,6 +99,7 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
     public popoverModalEventSubject: Subject<PopoverModalEvents>;
 
     private popoverModalSubscriptions: Subscription[] = [];
+    private fadeInTimeout?: ReturnType<typeof setTimeout>;
 
     @HostListener("click", ["$event"])
     onClick(event: MouseEvent): void {
@@ -117,11 +116,7 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
         this.popoverModalEventSubject.next("mouse-leave");
     }
 
-    constructor(
-        public elRef: ElementRef,
-        private zone: NgZone,
-        private cdRef: ChangeDetectorRef
-    ) {}
+    constructor(public elRef: ElementRef, private cdRef: ChangeDetectorRef) {}
 
     public ngOnInit(): void {
         const displayChangeSubscription = this.displayChange.subscribe(
@@ -139,14 +134,13 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
 
     public ngAfterViewInit(): void {
         // To prevent from exception 'expression was changed after check'
-        const zoneSubscription = this.zone.onStable
-            .asObservable()
-            .pipe(take(1))
-            .subscribe(() => {
-                // To be sure, that change detection mechanism was invoked and placement was updated
-                this.zone.run(() => (this.fadeIn = true));
-            });
-        this.popoverModalSubscriptions.push(zoneSubscription);
+        // Angular 21 no longer guarantees an NgZone.onStable emission here for dynamically
+        // created views, so we schedule the state flip explicitly after the initial render.
+        this.fadeInTimeout = setTimeout(() => {
+            this.fadeIn = true;
+            this.cdRef.detectChanges();
+            this.fadeInTimeout = undefined;
+        });
     }
 
     public onAnimationEnd(event: AnimationEvent): void {
@@ -156,6 +150,10 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
+        if (this.fadeInTimeout) {
+            clearTimeout(this.fadeInTimeout);
+            this.fadeInTimeout = undefined;
+        }
         this.popoverModalSubscriptions.forEach((sub) => {
             sub.unsubscribe();
         });

@@ -18,9 +18,9 @@
         #input
     />
 </div>
+@if (isRemoveValueEnabled && (selectedOptions[0] || inputValue)) {
 <button
     tabindex="0"
-    *ngIf="isRemoveValueEnabled && (selectedOptions[0] || inputValue)"
     nui-button
     class="nui-combobox-v2__remove-value action"
     (click)="clearValue($event)"
@@ -31,6 +31,7 @@
     [class.disabled]="isDisabled"
     [disabled]="isDisabled"
 ></button>
+}
 <button
     tabindex="-1"
     class="nui-combobox-v2__toggle action"

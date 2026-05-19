@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -133,8 +133,7 @@ describe("Pizzagna", () => {
                 // locale id that you're using (default en-US)
                 { provide: LOCALE_ID, useValue: "fr" },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -148,6 +147,10 @@ describe("Pizzagna", () => {
         };
         component.ngOnChanges(changes);
         fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it("should create", () => {

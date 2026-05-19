@@ -7,14 +7,15 @@
                 name="vegetable"
                 [values]="selectedVegetables"
             >
+                @for (vegetable of vegetables; track vegetable) {
                 <nui-checkbox
-                    *ngFor="let vegetable of vegetables"
                     [value]="vegetable"
                     hint="This is some help text"
                     [checked]="isChecked(vegetable)"
                 >
                     {{ vegetable }}
                 </nui-checkbox>
+                }
                 <nui-checkbox
                     hint="If it's not disabled ring the alarm!"
                     id="nui-demo-checkbox-group-1-disabled-checkbox"
@@ -34,12 +35,11 @@
                 [values]="selectedVegetables"
                 name="vegetable"
             >
-                <nui-checkbox
-                    *ngFor="let vegetable of vegetables"
-                    [value]="vegetable"
-                >
+                @for (vegetable of vegetables; track vegetable) {
+                <nui-checkbox [value]="vegetable">
                     {{ vegetable }}
                 </nui-checkbox>
+                }
             </nui-checkbox-group>
             <hr />
         </div>
@@ -51,14 +51,15 @@
                 name="vegetable"
                 [values]="selectedVegetables"
             >
+                @for (vegetable of vegetables; track vegetable) {
                 <nui-checkbox
-                    *ngFor="let vegetable of vegetables"
                     [value]="vegetable"
                     [checked]="isChecked(vegetable)"
                     class="nui-checkbox--justified"
                 >
                     {{ vegetable }}
                 </nui-checkbox>
+                }
             </nui-checkbox-group>
             <hr />
         </div>
@@ -110,13 +111,14 @@
                 name="vegetable"
                 formControlName="disabledCheckboxGroup"
             >
+                @for (vegetable of vegetables; track vegetable) {
                 <nui-checkbox
-                    *ngFor="let vegetable of vegetables"
                     [value]="vegetable"
                     [checked]="isChecked(vegetable)"
                 >
                     {{ vegetable }}
                 </nui-checkbox>
+                }
             </nui-checkbox-group>
         </form>
     </div>

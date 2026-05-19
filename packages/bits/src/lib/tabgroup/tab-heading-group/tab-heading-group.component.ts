@@ -90,9 +90,11 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
             this._ro.observe(this.el.nativeElement);
         });
 
-        // Making the first tab in group active by default
-        this.setActiveTab();
-        this.subscribeToSelection();
+        queueMicrotask(() => {
+            this.setActiveTab();
+            this.subscribeToSelection();
+            this.checkTraverse();
+        });
 
         this._changesSubscription = this._tabs.changes.subscribe(
             (changedTabs: any) => {
@@ -102,6 +104,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
                 );
                 this._tabSelectedSubscriptions = [];
                 this.subscribeToSelection();
+                this.checkTraverse();
             }
         );
     }

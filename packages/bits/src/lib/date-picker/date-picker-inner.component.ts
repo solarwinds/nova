@@ -134,7 +134,10 @@ export class DatePickerInnerComponent
 
     // this.refreshView should be called here to reflect the changes on the fly
     public ngOnChanges(changes: SimpleChanges): void {
-        if (this.shouldRefreshViewOnChanges(changes)) {
+        if (
+            changes["datepickerMode"] ||
+            this.shouldRefreshViewOnChanges(changes)
+        ) {
             this.refreshView();
         }
     }

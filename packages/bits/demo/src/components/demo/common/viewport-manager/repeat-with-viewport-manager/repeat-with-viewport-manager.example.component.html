@@ -9,9 +9,7 @@
     </nui-search>
 </div>
 
-<ng-container *ngIf="!busy && (books$ | async).length === 0">
-    No results
-</ng-container>
+@if (!busy && (books$ | async).length === 0) { No results }
 
 <!-- Note that the height is defined in order to accommodate virtual scrolling -->
 <nui-repeat

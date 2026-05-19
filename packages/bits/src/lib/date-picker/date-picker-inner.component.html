@@ -1,3 +1,5 @@
-<div *ngIf="datepickerMode" class="nui-datepicker-inner" [attr.role]="role">
+@if (datepickerMode) {
+<div class="nui-datepicker-inner" [attr.role]="role">
     <ng-content></ng-content>
 </div>
+}

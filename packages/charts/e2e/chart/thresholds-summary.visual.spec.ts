@@ -45,7 +45,11 @@ test.describe(`Visual tests: Charts - ${name}`, () => {
 
         // Construct atoms directly from locators to avoid mixed Atom typing across installs
         singleSeriesChart = new ChartAtom(
-            page.locator(".nui-thresholds-summary-single-1 .nui-chart").first()
+            page
+                .locator(
+                    ".nui-thresholds-summary-single-1 .thresholds-main-chart .nui-chart"
+                )
+                .first()
         );
         multiSeriesChart1Legend = new LegendAtom(
             page.locator(".nui-thresholds-summary-multiple-1 .nui-legend")
@@ -62,22 +66,16 @@ test.describe(`Visual tests: Charts - ${name}`, () => {
 
         await camera.turn.on();
 
-        await multiSeriesChart1Legend
-            .getSeriesByIndex(0)
-            .clickTile();
+        await singleSeriesChart.hover();
+        await camera.say.cheese(`${name} - Hover over main chart`);
+
+        await multiSeriesChart1Legend.getSeriesByIndex(0).clickTile();
         await multiSeriesChart2Legend.getSeriesByIndex(0).hoverTile();
         await camera.say.cheese(`${name} - Default`);
 
-        await multiSeriesChart1Legend
-            .getSeriesByIndex(1)
-            .clickTile();
-        await multiSeriesChart2Legend
-            .getSeriesByIndex(0)
-            .clickTile();
+        await multiSeriesChart1Legend.getSeriesByIndex(1).clickTile();
+        await multiSeriesChart2Legend.getSeriesByIndex(0).clickTile();
         await camera.say.cheese(`${name} - Hover over unselected legend`);
-
-        await singleSeriesChart.hover();
-        await camera.say.cheese(`${name} - Hover over main chart`);
 
         await testPage.enableDarkTheme();
         await camera.say.cheese(`${name} - Dark theme`);

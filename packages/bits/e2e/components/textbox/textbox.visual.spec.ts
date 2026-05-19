@@ -36,8 +36,13 @@ test.describe(`Visual tests: ${name}`, () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("textbox/textbox-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
-        basicTextbox = Atom.find<TextboxAtom>(TextboxAtom, "nui-visual-test-textbox-item");
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
+        basicTextbox = Atom.find<TextboxAtom>(
+            TextboxAtom,
+            "nui-visual-test-textbox-item"
+        );
         placeholderTextbox = Atom.find<TextboxAtom>(
             TextboxAtom,
             "nui-visual-test-placeholder-textbox-item"

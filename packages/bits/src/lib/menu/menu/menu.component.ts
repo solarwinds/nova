@@ -36,8 +36,10 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
+import _uniqueId from "lodash/uniqueId";
 import { Subject, Subscription } from "rxjs";
 
+import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
 import { ButtonSizeType } from "../../../lib/button/public-api";
 import { PopupComponent } from "../../popup-adapter/popup-adapter.component";
 import { MenuGroupComponent } from "../menu-item/menu-group/menu-group.component";
@@ -118,8 +120,12 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     @ViewChild(MenuPopupComponent) menuPopup: MenuPopupComponent;
     @ViewChild("menuToggle", { read: ElementRef }) menuToggle: ElementRef;
 
+    public readonly menuTriggerId = _uniqueId("nui-menu-trigger-");
+    public readonly popupContentId = _uniqueId("nui-menu-content-");
+
     private menuKeyControlListeners: Function[] = [];
     private focusMonitorSubscription: Subscription;
+    private suppressNextToggleClick = false;
     constructor(
         private keyControlService: MenuKeyControlService,
         private renderer: Renderer2,
@@ -149,23 +155,41 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
                 "keydown",
                 (event: KeyboardEvent) => {
                     if (!this.popup.popupToggle.disabled) {
+                        if (
+                            event.code === KEYBOARD_CODE.ENTER ||
+                            event.code === KEYBOARD_CODE.SPACE
+                        ) {
+                            this.suppressNextToggleClick = true;
+                        }
+
                         this.keyControlService.handleKeydown(event);
                     }
                 }
             )
         );
-        // opening menu on focusin
-        // The FocusMonitor is an injectable service that can be used to listen for changes in the focus state of an element.
-        // It's more powerful than just listening for focus or blur events because it tells you how the element was focused
-        // (via mouse, keyboard, touch, or programmatically).
+        this.menuKeyControlListeners.push(
+            this.renderer.listen(
+                this.menuToggle.nativeElement,
+                "click",
+                (event: MouseEvent) => {
+                    if (this.suppressNextToggleClick) {
+                        this.suppressNextToggleClick = false;
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                    }
+                }
+            )
+        );
+        // Monitor focus changes for accessibility purposes
+        // The FocusMonitor tracks how the element was focused (mouse, keyboard, touch, programmatically)
+        // For keyboard accessibility, we only monitor focus but don't auto-open the menu
+        // Menu opening is handled by specific key events (ENTER, SPACE, ARROW_DOWN, ARROW_UP) in the keyboard service
         this.focusMonitorSubscription = this.focusMonitor
             .monitor(this.menuToggle)
             .subscribe((origin: FocusOrigin) => {
-                if (origin === "keyboard") {
-                    if (!this.popup.popupToggle.disabled) {
-                        this.popup.toggleOpened(new FocusEvent("focusin"));
-                    }
-                }
+                // We track focus origin for accessibility purposes but don't auto-open menu
+                // TAB key should only move focus, not open menu (violates WCAG 2.1 guidelines)
+                // Menu opens only on explicit activation keys: ENTER, SPACE, ARROW_DOWN, ARROW_UP
             });
     }
 
@@ -181,7 +205,20 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.blurred.emit(event);
     }
 
-    public onMenuOpen(): void {
+    public onMenuOpen(isOpen: boolean): void {
+        if (!isOpen) {
+            return;
+        }
+
+        if (
+            this.keyControlService.keyControlItemsSource &&
+            !this.keyControlService.keyboardEventsManager &&
+            this.menuPopup
+        ) {
+            this.setKeyboardManagerServiceData();
+            this.keyControlService.initKeyboardManager();
+        }
+
         this.menuOpenStream.next();
     }
 

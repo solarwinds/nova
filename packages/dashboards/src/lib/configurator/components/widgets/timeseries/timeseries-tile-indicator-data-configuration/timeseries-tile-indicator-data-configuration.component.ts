@@ -44,7 +44,8 @@ import { ConfiguratorHeadingService } from "../../../../services/configurator-he
 
 @Component({
     selector: "nui-timeseries-tile-indicator-data-configuration",
-    templateUrl: "./timeseries-tile-indicator-data-configuration.component.html",
+    templateUrl:
+        "./timeseries-tile-indicator-data-configuration.component.html",
     styleUrls: [
         "./timeseries-tile-indicator-data-configuration.component.less",
     ],

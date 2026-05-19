@@ -140,11 +140,19 @@ test.describe("USERCONTROL Select V2 >", () => {
             });
 
             test("should navigate with UP and DOWN buttons", async () => {
-                await Helpers.pressKey("ArrowDown", 5);
+                const input = selectErrorState
+                    .getLocator()
+                    .locator(".nui-select-v2__container");
+
+                await selectErrorState.toBeOpened();
+
+                for (let i = 0; i < 5; i++) {
+                    await input.press("ArrowDown");
+                }
                 const option5 = await selectErrorState.getOption(5);
                 await option5.toBeActive();
 
-                await Helpers.page.keyboard.press("ArrowUp");
+                await input.press("ArrowUp");
                 const option4 = await selectErrorState.getOption(4);
                 await option4.toBeActive();
             });

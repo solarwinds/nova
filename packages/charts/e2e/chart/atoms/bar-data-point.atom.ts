@@ -33,7 +33,9 @@ export class BarDataPointAtom extends Atom {
     }
 
     public async getOpacity(): Promise<number> {
-        const opacity = await this.getLocator().evaluate((el) => getComputedStyle(el).opacity);
+        const opacity = await this.getLocator().evaluate(
+            (el) => getComputedStyle(el).opacity
+        );
         return parseFloat(opacity);
     }
 

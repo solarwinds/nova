@@ -210,7 +210,9 @@
         title="Menu"
         class="clickable-visual-item"
     >
-        <nui-menu-action *ngFor="let item of items">{{ item }}</nui-menu-action>
+        @for (item of items; track item) {
+        <nui-menu-action>{{ item }}</nui-menu-action>
+        }
     </nui-menu>
 </ng-template>
 
@@ -229,13 +231,13 @@
             Popup
         </button>
         <div popupAreaContent>
-            <ng-container *ngFor="let item of items">
-                <nui-menu-item
-                    tabindex="0"
-                    nuiTooltip="This tooltip is part of a menu item"
-                    >{{ item }}</nui-menu-item
-                >
-            </ng-container>
+            @for (item of items; track item) {
+            <nui-menu-item
+                tabindex="0"
+                nuiTooltip="This tooltip is part of a menu item"
+                >{{ item }}</nui-menu-item
+            >
+            }
         </div>
     </nui-popup>
 </ng-template>
@@ -255,11 +257,11 @@
         class="clickable-visual-item d-inline-flex"
         placeholder="Select v2"
     >
-        <ng-container *ngFor="let item of items">
-            <nui-select-v2-option [value]="item" i18n>{{
-                item
-            }}</nui-select-v2-option>
-        </ng-container>
+        @for (item of items; track item) {
+        <nui-select-v2-option [value]="item" i18n>{{
+            item
+        }}</nui-select-v2-option>
+        }
     </nui-select-v2>
 </ng-template>
 
@@ -277,13 +279,13 @@
         class="clickable-visual-item d-inline-flex"
         placeholder="Combobox v2"
     >
-        <ng-container *ngFor="let item of items">
-            <nui-select-v2-option [value]="item">
-                <div class="d-flex align-items-center">
-                    <span [nuiComboboxV2OptionHighlight]="item"></span>
-                </div>
-            </nui-select-v2-option>
-        </ng-container>
+        @for (item of items; track item) {
+        <nui-select-v2-option [value]="item">
+            <div class="d-flex align-items-center">
+                <span [nuiComboboxV2OptionHighlight]="item"></span>
+            </div>
+        </nui-select-v2-option>
+        }
     </nui-combobox-v2>
 </ng-template>
 

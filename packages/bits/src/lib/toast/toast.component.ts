@@ -19,11 +19,13 @@
 //  THE SOFTWARE.
 
 import {
+    ChangeDetectorRef,
     Component,
     HostBinding,
     HostListener,
     NgZone,
     OnDestroy,
+    ViewRef,
     ViewEncapsulation,
 } from "@angular/core";
 import { SafeHtml } from "@angular/platform-browser";
@@ -94,6 +96,7 @@ export class ToastComponent implements OnDestroy {
     };
 
     constructor(
+        private changeDetector: ChangeDetectorRef,
         private toastService: ToastServiceBase,
         private toastPackage: ToastPackage,
         private ngZone: NgZone
@@ -109,7 +112,11 @@ export class ToastComponent implements OnDestroy {
             .afterActivate()
             .subscribe(() => {
                 this.display = "block";
-                setTimeout(() => this.activateToast()); // Is needed to make "display: none" & "opacity" transitions working
+                this.detectChanges();
+                setTimeout(() => {
+                    this.activateToast();
+                    this.detectChanges();
+                }); // Is needed to make "display: none" & "opacity" transitions working
             });
 
         const closeSubscription = this.toastPackage.toastRef
@@ -127,6 +134,7 @@ export class ToastComponent implements OnDestroy {
     public activateToast(): void {
         this.state = ToastState.Active;
         this.fadeOut = false;
+        this.detectChanges();
 
         if (this.options.timeOut) {
             this.ngZone.runOutsideAngular(() => {
@@ -155,6 +163,7 @@ export class ToastComponent implements OnDestroy {
         clearTimeout(this.timeout);
         this.state = ToastState.Removed;
         this.fadeOut = true;
+        this.detectChanges();
         this.timeout = setTimeout(
             () => this.toastService.remove(this.toastPackage.toastId),
             this.animationFadeOutLength
@@ -192,6 +201,7 @@ export class ToastComponent implements OnDestroy {
         // disable progressBar
         clearInterval(this.intervalId);
         this.width = 0;
+        this.detectChanges();
     }
 
     /**
@@ -215,6 +225,7 @@ export class ToastComponent implements OnDestroy {
         this.options.timeOut = this.options.extendedTimeOut;
         this.hideTime = new Date().getTime() + (this.options.timeOut || 0);
         this.width = 100;
+        this.detectChanges();
 
         if (this.options.progressBar) {
             this.intervalId = this.repeatProgressBarChange();
@@ -260,6 +271,18 @@ export class ToastComponent implements OnDestroy {
 
         if (this.width >= 100) {
             this.width = 100;
+        }
+
+        this.detectChanges();
+    }
+
+    private detectChanges(): void {
+        const changeDetector =
+            this.toastPackage.toastRef.componentInstance?.changeDetectorRef ??
+            this.changeDetector;
+
+        if (!(changeDetector as ViewRef).destroyed) {
+            changeDetector.detectChanges();
         }
     }
 

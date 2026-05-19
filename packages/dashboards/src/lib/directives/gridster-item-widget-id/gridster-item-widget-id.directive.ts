@@ -26,7 +26,7 @@ import {
     Self,
     SimpleChanges,
 } from "@angular/core";
-import { GridsterItemComponent } from "angular-gridster2";
+import { GridsterItem } from "angular-gridster2";
 
 /**
  * This directive assigns a "widgetId" property to host gridster item. We need it there because moving and resizing the widget with gridster only contains
@@ -39,7 +39,7 @@ import { GridsterItemComponent } from "angular-gridster2";
 export class GridsterItemWidgetIdDirective implements OnChanges {
     @Input() nuiGridsterItemWidgetId: string;
 
-    constructor(@Host() @Self() private gridsterItem: GridsterItemComponent) {}
+    constructor(@Host() @Self() private gridsterItem: GridsterItem) {}
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.nuiGridsterItemWidgetId) {

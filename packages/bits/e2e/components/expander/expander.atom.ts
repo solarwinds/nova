@@ -106,9 +106,7 @@ export class ExpanderAtom extends Atom {
             .toBe(true);
     }
 
-    public async toHaveHeadingText(
-        expected: string | RegExp
-    ): Promise<void> {
+    public async toHaveHeadingText(expected: string | RegExp): Promise<void> {
         await expect(this.headingContent).toHaveText(expected);
     }
 
@@ -123,10 +121,7 @@ export class ExpanderAtom extends Atom {
     public async toHaveBodyLeftBorderWidth(
         expected: string | RegExp
     ): Promise<void> {
-        await expect(this.bodyElement).toHaveCSS(
-            "border-left-width",
-            expected
-        );
+        await expect(this.bodyElement).toHaveCSS("border-left-width", expected);
     }
 
     public async toHaveContentVisible(
@@ -147,9 +142,7 @@ export class ExpanderAtom extends Atom {
             ? cssSelectorSet
             : [cssSelectorSet];
         for (const selector of selectors) {
-            await expect(
-                this.getLocator().locator(selector)
-            ).toBeAttached();
+            await expect(this.getLocator().locator(selector)).toBeAttached();
         }
     }
 }

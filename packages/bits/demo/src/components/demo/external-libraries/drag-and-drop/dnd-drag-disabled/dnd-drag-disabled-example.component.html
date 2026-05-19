@@ -3,8 +3,8 @@
     class="draggable-container"
     (cdkDropListDropped)="onItemDropped($event)"
 >
+    @for (item of listItems; track item) {
     <div
-        *ngFor="let item of listItems"
         class="draggable-item"
         cdkDrag
         [cdkDragDisabled]="!item.enabled"
@@ -12,4 +12,5 @@
     >
         {{ item.title }} - {{ translatedStatus(item.enabled) }}
     </div>
+    }
 </div>

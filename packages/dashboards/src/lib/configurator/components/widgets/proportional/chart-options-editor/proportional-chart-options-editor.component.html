@@ -22,14 +22,14 @@
                     placeholder="Select chart type"
                     i18n-placeholder
                 >
+                    @for ( chartTypeSelectViewModel of chartTypeSelectViewModels
+                    ; track chartTypeSelectViewModel) {
                     <nui-select-v2-option
-                        *ngFor="
-                            let chartTypeSelectViewModel of chartTypeSelectViewModels
-                        "
                         [value]="chartTypeSelectViewModel.value"
                     >
                         {{ chartTypeSelectViewModel.label }}
                     </nui-select-v2-option>
+                    }
                 </nui-select-v2>
                 <nui-validation-message for="required" i18n>
                     This field is required
@@ -39,10 +39,8 @@
 
         <!-- Donut chart content formatter -->
         <div class="mb-4">
-            <ng-container
-                formGroupName="contentFormatter"
-                *ngIf="form.get('type')?.value === 'DonutChart'"
-            >
+            @if (form.get('type')?.value === 'DonutChart') {
+            <ng-container formGroupName="contentFormatter">
                 <nui-form-field
                     caption="Content format"
                     i18n-caption
@@ -56,21 +54,22 @@
                             configuratorHeading.height$ | async
                         "
                     >
+                        @for (contentFormatter of contentFormatters; track
+                        contentFormatter) {
                         <nui-select-v2-option
-                            *ngFor="let contentFormatter of contentFormatters"
                             [value]="contentFormatter.componentType"
                         >
                             {{ contentFormatter.label }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                     <nui-validation-message for="required" i18n>
                         This field is required
                     </nui-validation-message>
                 </nui-form-field>
-
                 <!-- Donut formatter configurator's portal goes here. Make form working in scope of NUI-5014 -->
+                @if (!!this.getConfigurationComponent()) {
                 <ng-container
-                    *ngIf="!!this.getConfigurationComponent()"
                     nuiComponentPortal
                     [componentId]="this.getConfigurationComponent()"
                     [componentType]="this.getConfigurationComponent()"
@@ -84,7 +83,9 @@
                         (attached)="componentPortal.attached($event)"
                     ></ng-template>
                 </ng-container>
+                }
             </ng-container>
+            }
         </div>
 
         <div class="mb-4">
@@ -98,14 +99,12 @@
                     formControlName="legendPlacement"
                     [popupViewportMargin]="configuratorHeading.height$ | async"
                 >
-                    <nui-select-v2-option
-                        *ngFor="
-                            let option of chartOptions.legendPlacementOptions
-                        "
-                        [value]="option.id"
-                    >
+                    @for ( option of chartOptions.legendPlacementOptions ; track
+                    option) {
+                    <nui-select-v2-option [value]="option.id">
                         {{ option.label }}
                     </nui-select-v2-option>
+                    }
                 </nui-select-v2>
                 <nui-validation-message for="required" i18n>
                     This field is required
@@ -123,12 +122,14 @@
                     formControlName="componentType"
                     [popupViewportMargin]="configuratorHeading.height$ | async"
                 >
+                    @for (legendFormatter of legendFormatters; track
+                    legendFormatter) {
                     <nui-select-v2-option
-                        *ngFor="let legendFormatter of legendFormatters"
                         [value]="legendFormatter.componentType"
                     >
                         {{ legendFormatter.label }}
                     </nui-select-v2-option>
+                    }
                 </nui-select-v2>
                 <nui-validation-message for="required" i18n>
                     This field is required

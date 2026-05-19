@@ -25,7 +25,6 @@ import { test, Helpers } from "../../setup";
 import { Camera } from "../../virtual-camera/Camera";
 import { SelectorAtom } from "../selector/selector.atom";
 
-
 const name: string = "Table";
 
 test.describe(`Visual tests: ${name}`, () => {
@@ -138,9 +137,11 @@ test.describe(`Visual tests: ${name}`, () => {
 
         await expanders.selectPinnedHeader.click();
         await selectPinnedHeaderTable.getCell(1, 0).click();
-        await Helpers.page.evaluate(()=>{
-            const tableContainer = document.getElementById("table-select-pinned-header")?.getElementsByClassName("nui-table__container")[0];
-            if(tableContainer){
+        await Helpers.page.evaluate(() => {
+            const tableContainer = document
+                .getElementById("table-select-pinned-header")
+                ?.getElementsByClassName("nui-table__container")[0];
+            if (tableContainer) {
                 tableContainer.scrollTop = 20;
             }
         });

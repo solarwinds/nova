@@ -34,9 +34,6 @@ describe("OverlayItemComponent", () => {
             imports: [],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
-        TestBed.configureTestingModule({
-            declarations: [OverlayItemComponent],
-        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -90,7 +87,8 @@ describe("OverlayItemComponent", () => {
         });
 
         it(`the "disabled" class is added`, () => {
-            component.isDisabled = true;
+            fixture.componentRef.setInput("isDisabled", true);
+            fixture.detectChanges();
             fixture.detectChanges();
             expect(
                 debug.nativeElement.classList.value.includes("disabled")
@@ -98,8 +96,10 @@ describe("OverlayItemComponent", () => {
         });
 
         it(`the "active" class is added`, () => {
+            // `active` is a @HostBinding (not @Input), so with OnPush CD we must force
+            // a local detectChanges via the component's own ChangeDetectorRef.
             component.active = true;
-            fixture.detectChanges();
+            fixture.changeDetectorRef.detectChanges();
             expect(debug.nativeElement.classList.value.includes("active")).toBe(
                 true
             );

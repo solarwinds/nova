@@ -1,15 +1,13 @@
 <div class="w-100 h-100" nui-busy [busy]="busy">
-    <ng-container *ngIf="widgetData?.link">
-        <a class="nui-risk-score-tile-indicator" [href]="widgetData.link">
-            <ng-container [ngTemplateOutlet]="riskScoreContent"></ng-container>
-        </a>
-    </ng-container>
-
-    <ng-container *ngIf="!widgetData?.link">
-        <div class="nui-risk-score-tile-indicator" (click)="onInteraction()">
-            <ng-container [ngTemplateOutlet]="riskScoreContent"></ng-container>
-        </div>
-    </ng-container>
+    @if (widgetData?.link) {
+    <a class="nui-risk-score-tile-indicator" [href]="widgetData.link">
+        <ng-container [ngTemplateOutlet]="riskScoreContent"></ng-container>
+    </a>
+    } @if (!widgetData?.link) {
+    <div class="nui-risk-score-tile-indicator" (click)="onInteraction()">
+        <ng-container [ngTemplateOutlet]="riskScoreContent"></ng-container>
+    </div>
+    }
 </div>
 
 <ng-template #riskScoreContent>

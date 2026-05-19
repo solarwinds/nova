@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { GridsterItem } from "angular-gridster2";
+import { GridsterItemConfig } from "angular-gridster2";
 
 import { IWidget, PizzagnaLayer } from "@nova-ui/dashboards";
 
@@ -30,7 +30,7 @@ import {
     TestKpiDataSourceSmallNumber,
 } from "../../data/kpi-data-sources";
 
-export const positions: Record<string, GridsterItem> = {
+export const positions: Record<string, GridsterItemConfig> = {
     widget0: { cols: 12, rows: 2, x: 0, y: 0 },
     // ----------------------------------------------------
     widget1_1: { cols: 6, rows: 3, x: 0, y: 0 },

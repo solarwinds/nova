@@ -27,9 +27,8 @@ export class TabHeadingGroupAtom extends Atom {
     public static CSS_CLASS = "nui-tab-headings__holder";
 
     public async getTabs(): Promise<TabHeadingAtom[]> {
-        const tabLocator = this.getLocator().locator(
-            `.${TabHeadingAtom.CSS_CLASS}`
-        );
+        const tabLocator = this.getTabsLocator();
+        await tabLocator.first().waitFor({ state: "visible" });
         const count = await tabLocator.count();
         const tabs: TabHeadingAtom[] = [];
         for (let i = 0; i < count; i++) {
@@ -39,13 +38,19 @@ export class TabHeadingGroupAtom extends Atom {
     }
 
     public async getFirstTab(): Promise<TabHeadingAtom> {
-        const tabs = await this.getTabs();
-        return tabs[0];
+        const firstLocator = this.getLocator()
+            .locator(`.${TabHeadingAtom.CSS_CLASS}`)
+            .first();
+        await firstLocator.waitFor({ state: "attached" });
+        return new TabHeadingAtom(firstLocator);
     }
 
     public async getLastTab(): Promise<TabHeadingAtom> {
-        const tabs = await this.getTabs();
-        return tabs[tabs.length - 1];
+        const lastLocator = this.getLocator()
+            .locator(`.${TabHeadingAtom.CSS_CLASS}`)
+            .last();
+        await lastLocator.waitFor({ state: "attached" });
+        return new TabHeadingAtom(lastLocator);
     }
 
     public async getTabByText(text: string): Promise<TabHeadingAtom> {
@@ -80,9 +85,9 @@ export class TabHeadingGroupAtom extends Atom {
     }
 
     public async getNumberOfTabs(): Promise<number> {
-        return this.getLocator()
-            .locator(`.${TabHeadingAtom.CSS_CLASS}`)
-            .count();
+        const tabLocator = this.getTabsLocator();
+        await tabLocator.first().waitFor({ state: "visible" });
+        return tabLocator.count();
     }
 
     public async getActiveTab(): Promise<TabHeadingAtom> {
@@ -101,5 +106,9 @@ export class TabHeadingGroupAtom extends Atom {
 
     private getCaretRight(): Locator {
         return this.getLocator().locator(".btn-caret-right");
+    }
+
+    private getTabsLocator(): Locator {
+        return this.getLocator().locator(`.${TabHeadingAtom.CSS_CLASS}`);
     }
 }

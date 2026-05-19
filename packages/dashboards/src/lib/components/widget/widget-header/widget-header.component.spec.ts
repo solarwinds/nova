@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -70,6 +70,10 @@ describe("WidgetHeaderComponent", () => {
         bannerElement = fixture.nativeElement;
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it("should create", () => {
         expect(component).toBeTruthy();
     });
@@ -78,6 +82,7 @@ describe("WidgetHeaderComponent", () => {
         [true, false].forEach((removable) => {
             it(`is removable button shown ${removable}`, () => {
                 component.removable = removable;
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
                 const removeEl = bannerElement.querySelector(
                     ".nui-widget-header__action-remove"
@@ -98,6 +103,7 @@ describe("WidgetHeaderComponent", () => {
         [true, false].forEach((editable) => {
             it(`is edit button shown ${editable}`, () => {
                 component.editable = editable;
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
                 const pencilEl = bannerElement.querySelector(
                     ".nui-widget-header__action-edit"

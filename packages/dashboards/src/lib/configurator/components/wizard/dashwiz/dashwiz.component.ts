@@ -67,7 +67,8 @@ import { IDashwizComponent } from "./model";
     standalone: false,
 })
 export class DashwizComponent
-    implements OnInit,
+    implements
+        OnInit,
         AfterContentInit,
         AfterViewChecked,
         OnDestroy,

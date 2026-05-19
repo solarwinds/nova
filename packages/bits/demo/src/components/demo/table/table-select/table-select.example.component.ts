@@ -18,7 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    OnDestroy,
+    ViewChild,
+} from "@angular/core";
 import { Subscription } from "rxjs";
 
 import {
@@ -72,7 +78,8 @@ export class TableSelectExampleComponent implements AfterViewInit, OnDestroy {
 
     constructor(
         public dataSourceService: ClientSideDataSource<IExampleTableModel>,
-        public selectorService: SelectorService
+        public selectorService: SelectorService,
+        private changeDetector: ChangeDetectorRef
     ) {}
 
     public ngAfterViewInit(): void {
@@ -86,6 +93,7 @@ export class TableSelectExampleComponent implements AfterViewInit, OnDestroy {
                 (data: INovaFilteringOutputs) => {
                     this.dataSource = data.repeat?.itemsSource;
                     this.paginationTotal = data.paginator?.total;
+                    this.changeDetector.detectChanges();
                 }
             );
         this.applyFilters();

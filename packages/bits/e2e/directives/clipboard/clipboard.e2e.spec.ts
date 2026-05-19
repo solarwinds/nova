@@ -22,7 +22,6 @@ test.describe("USERCONTROL Clipboard", () => {
         await textbox.toHaveValue("");
         await expect(textbox.input).toHaveValue("");
 
-
         await textbox.input.press("Control+V");
         await textbox.toHaveValue(textToCopy);
         await expect(textbox.input).toHaveValue(textToCopy);

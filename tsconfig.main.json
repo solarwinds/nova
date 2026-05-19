@@ -9,7 +9,7 @@
         "importHelpers": true,
         "lib": ["ES2019", "DOM"],
         "module": "ESNext",
-        "moduleResolution": "Node",
+        "moduleResolution": "bundler",
         "noImplicitAny": true,
         "noImplicitThis": true,
         "preserveSymlinks": true,

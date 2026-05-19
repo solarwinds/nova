@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { GridsterItem } from "angular-gridster2";
+import { GridsterItemConfig } from "angular-gridster2";
 
 import { IWidget } from "@nova-ui/dashboards";
 
@@ -27,7 +27,7 @@ import { proportionalConfig } from "../widget-configs/proportional";
 import { tableConfig } from "../widget-configs/table";
 import { timeseriesConfig } from "../widget-configs/timeseries";
 
-export const positions: Record<string, GridsterItem> = {
+export const positions: Record<string, GridsterItemConfig> = {
     [tableConfig.id]: {
         cols: 7,
         rows: 7,

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { GridsterItem } from "angular-gridster2";
+import { GridsterItemConfig } from "angular-gridster2";
 
 import {
     DEFAULT_PIZZAGNA_ROOT,
@@ -51,7 +51,7 @@ export interface IImageDef {
     code: string;
 }
 
-export const positions: Record<string, GridsterItem> = {
+export const positions: Record<string, GridsterItemConfig> = {
     widget1: {
         cols: 6,
         rows: 7,

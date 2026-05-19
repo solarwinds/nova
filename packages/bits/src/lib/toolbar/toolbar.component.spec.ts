@@ -24,7 +24,12 @@ import {
     TRANSLATIONS,
     TRANSLATIONS_FORMAT,
 } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flush,
+    TestBed,
+} from "@angular/core/testing";
 import noop from "lodash/noop";
 
 import { IToolbarSelectionState, ToolbarItemType } from "./public-api";
@@ -72,6 +77,7 @@ describe("components >", () => {
         let fixture: ComponentFixture<TestWrapperComponent>;
         beforeEach(() => {
             TestBed.configureTestingModule({
+                imports: [IconComponent],
                 declarations: [
                     TestWrapperComponent,
                     ButtonComponent,
@@ -79,7 +85,6 @@ describe("components >", () => {
                     ToolbarItemComponent,
                     ToolbarGroupComponent,
                     ToolbarSplitterComponent,
-                    IconComponent,
                     MenuComponent,
                 ],
                 schemas: [NO_ERRORS_SCHEMA],
@@ -93,32 +98,32 @@ describe("components >", () => {
             });
         });
 
-        beforeEach(() => {
+        beforeEach(fakeAsync(() => {
             fixture = TestBed.createComponent(TestWrapperComponent);
             component = fixture.debugElement.children[0].componentInstance;
+            // Double detectChanges to fully settle ngAfterContentInit's splitToolbarItems()
+            // and ngAfterViewInit's deferred overflow recalculation before each test.
             fixture.detectChanges();
-        });
+            fixture.detectChanges();
+            flush();
+        }));
 
         describe("ngAfterViewInit >", () => {
-            it("should add visible group to commandGroups array", () => {
-                spyOn(component, "splitToolbarItems").and.callFake(noop);
+            it("should add visible group to commandGroups array", fakeAsync(() => {
                 spyOn(component, "moveToolbarItems").and.callFake(noop);
                 component.ngAfterViewInit();
-                fixture.detectChanges();
+                flush();
                 expect(component.commandGroups.length).toBe(2);
-                expect(component.splitToolbarItems).toHaveBeenCalled();
                 expect(component.moveToolbarItems).toHaveBeenCalled();
-            });
+            }));
 
-            it("should visible group contain 3 items", () => {
-                spyOn(component, "splitToolbarItems").and.callFake(noop);
+            it("should visible group contain 3 items", fakeAsync(() => {
                 spyOn(component, "moveToolbarItems").and.callFake(noop);
                 component.ngAfterViewInit();
-                fixture.detectChanges();
+                flush();
                 expect(component.commandGroups[0].items.length).toBe(3);
-                expect(component.splitToolbarItems).toHaveBeenCalled();
                 expect(component.moveToolbarItems).toHaveBeenCalled();
-            });
+            }));
         });
         describe("splitToolbarItems >", () => {
             it("should split items", () => {

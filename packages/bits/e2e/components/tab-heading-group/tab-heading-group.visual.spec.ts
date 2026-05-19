@@ -70,9 +70,7 @@ test.describe(`Visual tests: ${name}`, () => {
         await lastIconTab.click();
         const firstIconTab = await tabGroupWithIcons.getFirstTab();
         await firstIconTab.hover();
-        await camera.say.cheese(
-            "Hover on inactive tab + switching active tab"
-        );
+        await camera.say.cheese("Hover on inactive tab + switching active tab");
 
         await tabGroupResponsive.clickCaretRight(15);
         const lastResponsiveTab = await tabGroupResponsive.getLastTab();

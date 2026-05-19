@@ -25,6 +25,7 @@ import {
     ElementRef,
     getDebugNode,
     Injectable,
+    Input,
     ViewChild,
 } from "@angular/core";
 import { ComponentFixture, inject, TestBed } from "@angular/core/testing";
@@ -50,7 +51,7 @@ import { TooltipDirective } from "../tooltip/tooltip.directive";
     standalone: false,
 })
 class TestBusyWithTabNavigatableChildrensComponent {
-    public busy: boolean;
+    @Input() public busy: boolean;
     @ViewChild("ref", { read: ElementRef }) busyComponentElRef: ElementRef;
 }
 
@@ -156,6 +157,13 @@ describe("components >", () => {
                 componentTabNavigationService = getDebugNode(
                     debugElement.nativeElement
                 )?.injector.get(TabNavigationService);
+
+                // Pre-initialize with detectChanges so SpinnerComponent (created via @if in BusyComponent
+                // template's ngAfterContentInit) is stable before tests run — Angular 21 NG0100 fix
+                fixture.detectChanges();
+                // Second detectChanges to settle isDefaultTemplate=true set in ngAfterContentInit
+                // so the NOCHANGES PASS sees stable values before the test body runs
+                fixture.detectChanges();
             });
 
             it("should inject TabNavigationService", () => {
@@ -185,8 +193,8 @@ describe("components >", () => {
                     "disableTabNavigation"
                 );
 
-                // enable busy
-                hostComponent.busy = true;
+                // Use setInput so Angular marks the view dirty via input mechanism (Angular 21 NG0100 fix)
+                fixture.componentRef.setInput("busy", true);
                 fixture.detectChanges();
 
                 expect(spy).toHaveBeenCalledTimes(1);
@@ -206,12 +214,11 @@ describe("components >", () => {
                     "restoreTabNavigation"
                 );
 
-                // enable busy in order to trigger automatically ngOnChanges
-                hostComponent.busy = true;
+                // Use setInput so Angular marks the view dirty via input mechanism (Angular 21 NG0100 fix)
+                fixture.componentRef.setInput("busy", true);
                 fixture.detectChanges();
 
-                // disable busy
-                hostComponent.busy = false;
+                fixture.componentRef.setInput("busy", false);
                 fixture.detectChanges();
 
                 expect(spy).toHaveBeenCalled();

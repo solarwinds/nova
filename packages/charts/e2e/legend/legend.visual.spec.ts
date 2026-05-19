@@ -64,7 +64,10 @@ test.describe(`Visual tests: ${name}`, () => {
 
         const selectedLegendSeries =
             seriesRenderStatesLegend.getSeriesByIndex(3);
-        await seriesRenderStatesLegend.hover(selectedLegendSeries.getLocator(), true);
+        await seriesRenderStatesLegend.hover(
+            selectedLegendSeries.getLocator(),
+            true
+        );
         await camera.say.cheese(`${name} - Check selected series on hover`);
 
         await seriesRenderStatesLegend.hover(

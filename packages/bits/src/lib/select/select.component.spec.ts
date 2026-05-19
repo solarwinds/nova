@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { DebugElement, NO_ERRORS_SCHEMA, SimpleChange } from "@angular/core";
+import { DebugElement, SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
@@ -72,13 +72,17 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [FormsModule, ReactiveFormsModule, NuiOverlayModule],
+                imports: [
+                    FormsModule,
+                    ReactiveFormsModule,
+                    NuiOverlayModule,
+                    IconComponent,
+                ],
                 declarations: [
                     ButtonComponent,
                     CheckboxComponent,
                     DividerComponent,
                     HighlightPipe,
-                    IconComponent,
                     MenuActionComponent,
                     MenuComponent,
                     MenuGroupComponent,
@@ -157,7 +161,9 @@ describe("components >", () => {
         });
 
         it("should respect 'disabled' attribute", () => {
-            componentInstance.isDisabled = true;
+            // Use setInput + two detectChanges() for Angular 21 NG0100 fix
+            fixture.componentRef.setInput("isDisabled", true);
+            fixture.detectChanges();
             fixture.detectChanges();
             const button = debugElement.query(By.css(".menu-button[disabled]"));
             expect(button).toBeDefined();
@@ -202,19 +208,25 @@ describe("components >", () => {
         });
 
         it("should has 'nui-select--inline' class if 'inline' attribute is set to 'true'", () => {
-            componentInstance.inline = true;
+            // Use setInput + two detectChanges() for Angular 21 NG0100 fix
+            fixture.componentRef.setInput("inline", true);
+            fixture.detectChanges();
             fixture.detectChanges();
             expect(debugElement.classes["nui-select--inline"]).toEqual(true);
         });
 
         it("should has 'nui-select--justified' class if 'justified' attribute is set to 'true'", () => {
-            componentInstance.justified = true;
+            // Use setInput + two detectChanges() for Angular 21 NG0100 fix
+            fixture.componentRef.setInput("justified", true);
+            fixture.detectChanges();
             fixture.detectChanges();
             expect(debugElement.classes["nui-select--justified"]).toEqual(true);
         });
 
         it("should add 'has-error' class if 'isInErrorState' is 'true' and value is not selected", () => {
-            componentInstance.isInErrorState = true;
+            // Use setInput + two detectChanges() for Angular 21 NG0100 fix
+            fixture.componentRef.setInput("isInErrorState", true);
+            fixture.detectChanges();
             fixture.detectChanges();
             const button = debugElement.query(By.css(".menu-button.has-error"));
             expect(button).toBeDefined();
@@ -246,14 +258,47 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [FormsModule, ReactiveFormsModule],
-                declarations: [SelectReactiveFormTestComponent],
+                imports: [
+                    FormsModule,
+                    ReactiveFormsModule,
+                    NuiOverlayModule,
+                    IconComponent,
+                ],
+                declarations: [
+                    ButtonComponent,
+                    CheckboxComponent,
+                    DividerComponent,
+                    HighlightPipe,
+                    MenuActionComponent,
+                    MenuComponent,
+                    MenuGroupComponent,
+                    MenuItemComponent,
+                    MenuLinkComponent,
+                    MenuOptionComponent,
+                    MenuPopupComponent,
+                    MenuSwitchComponent,
+                    PopoverComponent,
+                    PopupComponent,
+                    PopupToggleDirective,
+                    RepeatItemComponent,
+                    SelectComponent,
+                    SelectReactiveFormTestComponent,
+                    SpinnerComponent,
+                    SwitchComponent,
+                    TextboxComponent,
+                    TooltipDirective,
+                    ValidationMessageComponent,
+                ],
                 providers: [
+                    UtilService,
+                    EdgeDetectionService,
+                    DomUtilService,
+                    LoggerService,
+                    IconService,
                     ToastService,
                     ToastContainerService,
                     NotificationService,
                 ],
-                schemas: [NO_ERRORS_SCHEMA],
             });
 
             fixture = TestBed.createComponent(SelectReactiveFormTestComponent);

@@ -20,7 +20,7 @@
 
 import { Locator } from "@playwright/test";
 
-import { Atom, Helpers } from "@nova-ui/bits/sdk/atoms-playwright";
+import { Helpers } from "@nova-ui/bits/sdk/atoms-playwright";
 
 import { ChartAtom } from "./atoms/chart.atom";
 
@@ -32,6 +32,6 @@ export class DonutChartTestPage {
     }
 
     public get chart(): ChartAtom {
-        return Atom.findIn<ChartAtom>(ChartAtom, this.root);
+        return new ChartAtom(this.root);
     }
 }

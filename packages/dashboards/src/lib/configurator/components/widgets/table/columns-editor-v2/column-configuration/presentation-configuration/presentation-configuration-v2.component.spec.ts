@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -69,6 +69,10 @@ describe("PresentationConfigurationV2Component", () => {
         component = fixture.componentInstance;
         formBuilder = new FormBuilder();
         component.formControl = formBuilder.control({});
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it("should create", () => {

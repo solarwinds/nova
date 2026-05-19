@@ -30,7 +30,7 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
@@ -230,12 +230,11 @@ export class CustomDonutContentFormatterComponent
                             configuratorHeading.height$ | async
                         "
                     >
-                        <nui-select-v2-option
-                            *ngFor="let itemValue of dsOutput?.result"
-                            [value]="itemValue?.id"
-                        >
+                        @for (itemValue of dsOutput?.result; track itemValue) {
+                        <nui-select-v2-option [value]="itemValue?.id">
                             {{ itemValue?.name }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                     <nui-validation-message for="required" i18n>
                         This field is required
@@ -256,12 +255,11 @@ export class CustomDonutContentFormatterComponent
                             configuratorHeading.height$ | async
                         "
                     >
-                        <nui-select-v2-option
-                            *ngFor="let itemValue of availableUnits"
-                            [value]="itemValue"
-                        >
+                        @for (itemValue of availableUnits; track itemValue) {
+                        <nui-select-v2-option [value]="itemValue">
                             {{ itemValue }}
                         </nui-select-v2-option>
+                        }
                     </nui-select-v2>
                     <nui-validation-message for="required" i18n>
                         This field is required
@@ -418,7 +416,7 @@ export class CustomDonutContentFormatterExampleComponent implements OnInit {
         };
 
         // Setting the widget dimensions and position (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [proportionalWidget.id]: {
                 cols: 12,
                 rows: 6,

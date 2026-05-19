@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -364,6 +364,10 @@ describe("TableWidgetComponent", () => {
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     describe("basic tests >", () => {
         it("should display table if widgetData and columns are available", () => {
             configuration.columns = oneDataFieldColumns;
@@ -475,6 +479,21 @@ describe("TableWidgetComponent", () => {
                 "500px";
             component.vscrollViewport.checkViewportSize();
             fixture.detectChanges();
+        });
+
+        it("should expose the full loaded table length to the viewport", () => {
+            configuration.columns = oneDataFieldColumns;
+            component.range = 2;
+
+            component.ngOnChanges(
+                createSimpleChanges(configuration, tableData, dataFields)
+            );
+            fixture.detectChanges();
+
+            expect(component.tableData.length).toBe(3);
+            expect(component.vscrollViewport?.getDataLength()).toBe(
+                component.tableData.length
+            );
         });
 
         // TODO: Add back after NUI-5893
@@ -831,17 +850,15 @@ describe("TableWidgetComponent", () => {
 
     describe("search max length", () => {
         const getSearchQueryLimitWarningElement = () =>
-            fixture.debugElement.query(By.css(".nui-table-search-limit-warning"))?.nativeElement;
+            fixture.debugElement.query(
+                By.css(".nui-table-search-limit-warning")
+            )?.nativeElement;
 
         beforeEach(() => {
             spyOn(component.searchTerm$, "next");
             component.isSearchEnabled = true;
             component.ngOnChanges(
-                createSimpleChanges(
-                    configuration,
-                    tableData,
-                    dataFields
-                )
+                createSimpleChanges(configuration, tableData, dataFields)
             );
             fixture.detectChanges();
         });

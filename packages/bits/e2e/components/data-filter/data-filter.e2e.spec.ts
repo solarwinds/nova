@@ -102,16 +102,29 @@ test.describe("USERCONTROL data-filter-service >", () => {
                 ButtonAtom,
                 "nui-data-filter-basic-time-frame-picker-apply-btn",
                 true
-
             );
-            basicRepeat = Atom.find<RepeatAtom>(RepeatAtom, "nui-data-filter-basic-repeat");
-            basicTable = Atom.find<TableAtom>(TableAtom, "nui-data-filter-basic-table", true);
-            basicSorter = Atom.find<SorterAtom>(SorterAtom, "nui-data-filter-basic-sorter", true);
-            basicSearch = Atom.find<SearchAtom>(SearchAtom, "nui-data-filter-basic-search", true);
+            basicRepeat = Atom.find<RepeatAtom>(
+                RepeatAtom,
+                "nui-data-filter-basic-repeat"
+            );
+            basicTable = Atom.find<TableAtom>(
+                TableAtom,
+                "nui-data-filter-basic-table",
+                true
+            );
+            basicSorter = Atom.find<SorterAtom>(
+                SorterAtom,
+                "nui-data-filter-basic-sorter",
+                true
+            );
+            basicSearch = Atom.find<SearchAtom>(
+                SearchAtom,
+                "nui-data-filter-basic-search",
+                true
+            );
             sorterButton = basicSorter.sorterButton;
-            basicEndTimeFramePicker = basicTimeFramePicker
-                .getEndDatetimePicker()
-                .datePicker;
+            basicEndTimeFramePicker =
+                basicTimeFramePicker.getEndDatetimePicker().datePicker;
         });
 
         test("should filter table and repeat from global time-frame-picker", async () => {
@@ -121,18 +134,24 @@ test.describe("USERCONTROL data-filter-service >", () => {
             await basicTimeFramePickerApplyButton.click();
             await basicTimeFramePickerPopover.waitForClosed();
 
-            const expectedRepeat = expectedResultsRepeatBasic.globalTimeFramePicker;
-            const expectedTable = expectedResultsTableBasic.globalTimeFramePicker;
+            const expectedRepeat =
+                expectedResultsRepeatBasic.globalTimeFramePicker;
+            const expectedTable =
+                expectedResultsTableBasic.globalTimeFramePicker;
 
             await expect(basicRepeat.items).toHaveCount(expectedRepeat.length);
             expect(await basicTable.getRowsCount()).toBe(expectedTable.length);
 
             for (let i = 0; i < expectedRepeat.length; i++) {
-                await expect(basicRepeat.getItem(i)).toHaveText(expectedRepeat[i]);
+                await expect(basicRepeat.getItem(i)).toHaveText(
+                    expectedRepeat[i]
+                );
             }
 
             for (let i = 0; i < expectedTable.length; i++) {
-                await expect(basicTable.getCell(i + 1, 1)).toHaveText(expectedTable[i]);
+                await expect(basicTable.getCell(i + 1, 1)).toHaveText(
+                    expectedTable[i]
+                );
             }
         });
 
@@ -144,11 +163,15 @@ test.describe("USERCONTROL data-filter-service >", () => {
             const expectedTable = expectedResultsTableBasic.descOrderSorter;
 
             for (let i = 0; i < expectedRepeat.length; i++) {
-                await expect(basicRepeat.getItem(i)).toHaveText(expectedRepeat[i]);
+                await expect(basicRepeat.getItem(i)).toHaveText(
+                    expectedRepeat[i]
+                );
             }
 
             for (let i = 0; i < expectedTable.length; i++) {
-                await expect(basicTable.getCell(i + 1, 1)).toHaveText(expectedTable[i]);
+                await expect(basicTable.getCell(i + 1, 1)).toHaveText(
+                    expectedTable[i]
+                );
             }
         });
 
@@ -159,11 +182,15 @@ test.describe("USERCONTROL data-filter-service >", () => {
             const expectedTable = expectedResultsTableBasic.searchResult;
 
             for (let i = 0; i < expectedRepeat.length; i++) {
-                await expect(basicRepeat.getItem(i)).toHaveText(expectedRepeat[i]);
+                await expect(basicRepeat.getItem(i)).toHaveText(
+                    expectedRepeat[i]
+                );
             }
 
             for (let i = 0; i < expectedTable.length; i++) {
-                await expect(basicTable.getCell(i + 1, 1)).toHaveText(expectedTable[i]);
+                await expect(basicTable.getCell(i + 1, 1)).toHaveText(
+                    expectedTable[i]
+                );
             }
         });
     });
@@ -212,9 +239,8 @@ test.describe("USERCONTROL data-filter-service >", () => {
                 "nui-data-filter-isolated-list-search",
                 true
             );
-            isolatedEndTimeFramePicker = isolatedTimeFramePicker
-                .getEndDatetimePicker()
-                .datePicker;
+            isolatedEndTimeFramePicker =
+                isolatedTimeFramePicker.getEndDatetimePicker().datePicker;
         });
 
         test("should filter table and repeat from global time-frame-picker", async () => {
@@ -223,18 +249,28 @@ test.describe("USERCONTROL data-filter-service >", () => {
             await isolatedEndTimeFramePicker.acceptText("04 Feb 2019");
             await isolatedTimeFramePickerApplyButton.click();
 
-            const expectedRepeat = expectedResultsRepeatIsolated.globalTimeFramePicker;
-            const expectedTable = expectedResultsTableIsolated.globalTimeFramePicker;
+            const expectedRepeat =
+                expectedResultsRepeatIsolated.globalTimeFramePicker;
+            const expectedTable =
+                expectedResultsTableIsolated.globalTimeFramePicker;
 
-            await expect(isolatedRepeat.items).toHaveCount(expectedRepeat.length);
-            await expect(isolatedTable.getLocator().locator("tr")).toHaveCount(expectedTable.length + 1);
+            await expect(isolatedRepeat.items).toHaveCount(
+                expectedRepeat.length
+            );
+            await expect(isolatedTable.getLocator().locator("tr")).toHaveCount(
+                expectedTable.length + 1
+            );
 
             for (let i = 0; i < expectedRepeat.length; i++) {
-                await expect(isolatedRepeat.getItem(i)).toHaveText(expectedRepeat[i]);
+                await expect(isolatedRepeat.getItem(i)).toHaveText(
+                    expectedRepeat[i]
+                );
             }
 
             for (let i = 0; i < expectedTable.length; i++) {
-                await expect(isolatedTable.getCell(i + 1, 1)).toHaveText(expectedTable[i]);
+                await expect(isolatedTable.getCell(i + 1, 1)).toHaveText(
+                    expectedTable[i]
+                );
             }
         });
 
@@ -246,11 +282,15 @@ test.describe("USERCONTROL data-filter-service >", () => {
             const expectedTable = expectedResultsTableIsolated.allData;
 
             for (let i = 0; i < expectedRepeat.length; i++) {
-                await expect(isolatedRepeat.getItem(i)).toHaveText(expectedRepeat[i]);
+                await expect(isolatedRepeat.getItem(i)).toHaveText(
+                    expectedRepeat[i]
+                );
             }
 
             for (let i = 0; i < expectedTable.length; i++) {
-                await expect(isolatedTable.getCell(i + 1, 1)).toHaveText(expectedTable[i]);
+                await expect(isolatedTable.getCell(i + 1, 1)).toHaveText(
+                    expectedTable[i]
+                );
             }
         });
 
@@ -262,11 +302,15 @@ test.describe("USERCONTROL data-filter-service >", () => {
             const expectedRepeat = expectedResultsRepeatIsolated.allData;
 
             for (let i = 0; i < expectedTable.length; i++) {
-                await expect(isolatedTable.getCell(i + 1, 1)).toHaveText(expectedTable[i]);
+                await expect(isolatedTable.getCell(i + 1, 1)).toHaveText(
+                    expectedTable[i]
+                );
             }
 
             for (let i = 0; i < expectedRepeat.length; i++) {
-                await expect(isolatedRepeat.getItem(i)).toHaveText(expectedRepeat[i]);
+                await expect(isolatedRepeat.getItem(i)).toHaveText(
+                    expectedRepeat[i]
+                );
             }
         });
     });

@@ -47,14 +47,17 @@
                     },
                     "defaultConfiguration": "",
                     "options": {
+                        "allowedCommonJsDependencies": [
+                            "lodash",
+                            "moment/moment"
+                        ],
+                        "browser": "./examples/src/index.ts",
+                        "extractLicenses": false,
+                        "index": "./examples/src/index.html",
                         "loader": {
                             ".html": "text",
                             ".less": "text"
                         },
-                        "allowedCommonJsDependencies": ["lodash", "moment/moment"],
-                        "extractLicenses": false,
-                        "index": "./examples/src/index.html",
-                        "browser": "./examples/src/index.ts",
                         "namedChunks": true,
                         "optimization": false,
                         "outputPath": {

@@ -7,85 +7,70 @@
     [manualDropdownControl]="true"
     [displayValueTemplate]="customTemplate"
 >
-    <ng-container
-        *ngFor="
-            let item of readonly ? [] : currentHelp;
-            let idx = index;
-            let last = last;
-            let first = first
-        "
+    @for ( item of readonly ? [] : currentHelp; track item; let idx = $index;
+    let last = $last; let first = $first) { @if (!item.items) {
+    <nui-select-v2-option
+        tabindex="-1"
+        [displayValueContext]="item"
+        [value]="item"
     >
+        <div class="d-inline-flex align-items-center">
+            @if (item.icon) {
+            <nui-icon class="mr-2" [icon]="item.icon"></nui-icon>
+            }
+            <span
+                tabindex="-1"
+                [innerHTML]="
+                    item.displayValue || '' | nuiHighlight : focusedTokenValue
+                "
+            ></span>
+        </div>
+    </nui-select-v2-option>
+    } @if (item.items && item.items !== []) {
+    <nui-select-v2-option-group tabindex="-1">
+        @if (last && idx > 1) {
+        <nui-divider size="extra-small"></nui-divider>
+        } @if (item.header) {
+        <span class="nui-select-v2-option-group--header">{{
+            item.header
+        }}</span>
+        } @if (!item.notice) { @for (groupedItem of item.items; track
+        groupedItem) {
         <nui-select-v2-option
             tabindex="-1"
-            *ngIf="!item.items"
-            [displayValueContext]="item"
-            [value]="item"
+            [displayValueContext]="groupedItem"
+            [value]="groupedItem"
         >
-            <div class="d-inline-flex align-items-center">
-                <nui-icon
-                    class="mr-2"
-                    *ngIf="item.icon"
-                    [icon]="item.icon"
-                ></nui-icon>
-                <span
-                    tabindex="-1"
-                    [innerHTML]="
-                        item.displayValue | nuiHighlight : focusedTokenValue
-                    "
-                ></span>
-            </div>
-        </nui-select-v2-option>
-        <nui-select-v2-option-group
-            tabindex="-1"
-            *ngIf="item.items && item.items !== []"
-        >
-            <nui-divider
-                *ngIf="last && idx > 1"
-                size="extra-small"
-            ></nui-divider>
+            @if (!customTemplate) {
             <span
-                *ngIf="item.header"
-                class="nui-select-v2-option-group--header"
-                >{{ item.header }}</span
-            >
-            <ng-container *ngIf="!item.notice">
-                <nui-select-v2-option
-                    *ngFor="let groupedItem of item.items"
-                    tabindex="-1"
-                    [displayValueContext]="groupedItem"
-                    [value]="groupedItem"
-                >
-                    <span
-                        tabindex="-1"
-                        *ngIf="!customTemplate"
-                        [innerHTML]="
-                            groupedItem.displayValue
-                                | nuiHighlight : focusedTokenValue
-                        "
-                    ></span>
-                </nui-select-v2-option>
-            </ng-container>
-            <ng-container *ngIf="item.notice">
-                <ng-container *ngFor="let groupedItem of item.items">
-                    <div class="options-group">
-                        <nui-icon
-                            iconSize="small"
-                            icon="{{
-                                'severity_' +
-                                    (groupedItem['severity']
-                                        ? groupedItem['severity']
-                                        : 'info')
-                            }}"
-                        ></nui-icon>
-                        <span class="options-group__item" tabindex="-1">{{
-                            groupedItem.message.displayValue
-                        }}</span>
-                    </div>
-                </ng-container>
-            </ng-container>
-            <nui-divider *ngIf="!last" size="extra-small"></nui-divider>
-        </nui-select-v2-option-group>
-    </ng-container>
+                tabindex="-1"
+                [innerHTML]="
+                    groupedItem.displayValue | nuiHighlight : focusedTokenValue
+                "
+            ></span>
+            }
+        </nui-select-v2-option>
+        } } @if (item.notice) { @for (groupedItem of item.items; track
+        groupedItem) {
+        <div class="options-group">
+            <nui-icon
+                iconSize="small"
+                icon="{{
+                    'severity_' +
+                        (groupedItem['severity']
+                            ? groupedItem['severity']
+                            : 'info')
+                }}"
+            ></nui-icon>
+            <span class="options-group__item" tabindex="-1">{{
+                groupedItem.message.displayValue
+            }}</span>
+        </div>
+        } } @if (!last) {
+        <nui-divider size="extra-small"></nui-divider>
+        }
+    </nui-select-v2-option-group>
+    } }
 </nui-select-v2>
 
 <ng-template #customTemplate let-context>

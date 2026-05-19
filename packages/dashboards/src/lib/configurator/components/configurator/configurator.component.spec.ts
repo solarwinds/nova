@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -20,7 +20,7 @@
 
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { EventBus } from "@nova-ui/bits";
+import { EventBus, PanelComponent } from "@nova-ui/bits";
 
 import { ConfiguratorComponent } from "./configurator.component";
 import { NuiDashboardsModule } from "../../../dashboards.module";
@@ -46,10 +46,12 @@ describe("ConfiguratorComponent", () => {
                 },
             ],
         })
-            .overrideComponent(ConfiguratorComponent, {
-                // disable styles to prevent configurator backdrop from covering the karma browser gui
+            // PanelComponent.ngAfterViewInit mutates displayPanelHeader after the
+            // first change detection, causing NG0100. We stub only its template so
+            // ConfiguratorComponent still uses its real template.
+            .overrideComponent(PanelComponent, {
                 set: {
-                    styles: [],
+                    template: `<div #headerContent></div><ng-content></ng-content>`,
                 },
             })
             .compileComponents();
@@ -63,10 +65,15 @@ describe("ConfiguratorComponent", () => {
             [PizzagnaLayer.Structure]: {},
         };
         fixture = TestBed.createComponent(ConfiguratorComponent);
+        fixture.changeDetectorRef.markForCheck();
         fixture.detectChanges();
         component = fixture.componentInstance;
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         detectChangesSpy = spyOn(component.changeDetector, "detectChanges");
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it("should create", () => {

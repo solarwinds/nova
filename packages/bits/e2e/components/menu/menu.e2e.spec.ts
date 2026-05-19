@@ -72,26 +72,94 @@ test.describe("USERCONTROL Menu", () => {
         });
     });
 
+    test.describe("accessibility", () => {
+        test("should have correct aria attributes", async () => {
+            const button = menu.getMenuButton().getLocator();
+            await expect(button).toHaveAttribute("aria-haspopup", "true");
+            await expect(button).toHaveAttribute("aria-expanded", "false");
+
+            await menu.toggleMenu();
+            await expect(button).toHaveAttribute("aria-expanded", "true");
+
+            // Check aria-controls
+            const ariaControlsId = await button.getAttribute("aria-controls");
+            expect(ariaControlsId).toBeTruthy();
+
+            // Verify the content exists
+            const content = Helpers.page.locator(`#${ariaControlsId}`);
+            await expect(content).toBeVisible();
+
+            await menu.toggleMenu();
+            await expect(button).toHaveAttribute("aria-expanded", "false");
+        });
+    });
+
     test.describe("> key navigation", () => {
         test.describe("> basic", () => {
-            test("should open menu immediately if focused by TAB key", async () => {
-                // Focus the menu button using TAB
+            test("should NOT open menu when focused by TAB key", async () => {
+                // Focus the menu button using TAB - should only move focus, not open menu
                 await Helpers.pressKey("Tab");
-                await menu.isMenuOpened();
+                await menu.isMenuClosed();
             });
 
             test("should close menu when navigating from it by TAB key", async () => {
-                await Helpers.pressKey("Tab");
+                await menu.toggleMenu();
                 await menu.isMenuOpened();
                 await Helpers.pressKey("Tab");
                 await menu.isMenuClosed();
             });
 
-            test("should NOT open and close menu by ENTER key if focused on toggle", async () => {
+            test("should open menu and focus first item by ENTER key", async () => {
+                // Focus the toggle first
+                await Helpers.pressKey("Tab");
+                await Helpers.pressKey("Enter");
+                await menu.isMenuOpened();
+                // First menu item should be active
+                await expect
+                    .poll(() => menu.getMenuItemByIndex(0).isActiveItem())
+                    .toBe(true);
+                // ENTER on active menu item should close menu
                 await Helpers.pressKey("Enter");
                 await menu.isMenuClosed();
-                await Helpers.pressKey("Enter");
+            });
+
+            test("should open menu and focus first item by SPACE key", async () => {
+                // Focus the toggle first
+                await Helpers.pressKey("Tab");
+                await Helpers.pressKey("Space");
+                await menu.isMenuOpened();
+                // First menu item should be active
+                await expect
+                    .poll(() => menu.getMenuItemByIndex(0).isActiveItem())
+                    .toBe(true);
+                // SPACE on active menu item should close menu
+                await Helpers.pressKey("Space");
                 await menu.isMenuClosed();
+            });
+
+            test("should open menu and focus first item by ARROW_DOWN key", async () => {
+                // Focus the toggle first
+                await menu.getMenuButton().getLocator().focus();
+                await Helpers.pressKey("ArrowDown");
+                await menu.isMenuOpened();
+                // First menu item should be active
+                expect(await menu.getMenuItemByIndex(0).isActiveItem()).toBe(
+                    true
+                );
+                await menu.toggleMenu(); // cleanup
+            });
+
+            test("should open menu and focus last item by ARROW_UP key", async () => {
+                // Focus the toggle first
+                await menu.getMenuButton().getLocator().focus();
+                await Helpers.pressKey("ArrowUp");
+                await menu.isMenuOpened();
+                // Last menu item should be active
+                const itemCount = await menu.getAllMenuItems().count();
+                expect(
+                    await menu.getMenuItemByIndex(itemCount - 1).isActiveItem()
+                ).toBe(true);
+                await menu.toggleMenu(); // cleanup
             });
 
             test("should open and NOT close menu by Shift + DOWN-ARROW key if focused on toggle", async () => {
@@ -106,10 +174,13 @@ test.describe("USERCONTROL Menu", () => {
                 await menu.isMenuOpened();
             });
 
-            test("should close menu on ESC key", async () => {
+            test("should close menu on ESC key and return focus to button", async () => {
                 await menu.toggleMenu();
+                await menu.isMenuOpened();
                 await Helpers.pressKey("Escape");
                 await menu.isMenuClosed();
+                // Focus should return to the menu button
+                await expect(menu.getMenuButton().getLocator()).toBeFocused();
             });
 
             test.describe("arrow navigation and menu item types >", async () => {
@@ -127,20 +198,28 @@ test.describe("USERCONTROL Menu", () => {
 
                 test("should check and uncheck menu-switch using Enter", async () => {
                     await Helpers.pressKey("ArrowDown", 3);
-                    expect(await menu.getSelectedSwitchesCount()).toEqual(1);
+                    await expect
+                        .poll(() => menu.getSelectedSwitchesCount())
+                        .toBe(1);
 
                     await Helpers.pressKey("Enter");
-                    expect(await menu.getSelectedSwitchesCount()).toEqual(0);
+                    await expect
+                        .poll(() => menu.getSelectedSwitchesCount())
+                        .toBe(0);
 
                     await Helpers.pressKey("Enter");
                     await Helpers.pressKey("ArrowDown");
                     await Helpers.pressKey("Enter");
-                    expect(await menu.getSelectedSwitchesCount()).toEqual(2);
+                    await expect
+                        .poll(() => menu.getSelectedSwitchesCount())
+                        .toBe(2);
                     // Return to initial state
                     await Helpers.pressKey("Enter");
                     await Helpers.pressKey("ArrowUp");
                     await Helpers.pressKey("Enter");
-                    expect(await menu.getSelectedSwitchesCount()).toEqual(0);
+                    await expect
+                        .poll(() => menu.getSelectedSwitchesCount())
+                        .toBe(0);
                 });
 
                 test("should select and close menu when selecting menu action item", async () => {
@@ -153,10 +232,14 @@ test.describe("USERCONTROL Menu", () => {
                     await Helpers.pressKey("ArrowDown", 5);
                     await Helpers.pressKey("Enter");
                     await menu.isMenuOpened();
-                    expect(await menu.getSelectedCheckboxesCount()).toBe(1);
+                    await expect
+                        .poll(() => menu.getSelectedCheckboxesCount())
+                        .toBe(1);
                     await Helpers.pressKey("Enter");
                     await menu.isMenuOpened();
-                    expect(await menu.getSelectedCheckboxesCount()).toBe(0);
+                    await expect
+                        .poll(() => menu.getSelectedCheckboxesCount())
+                        .toBe(0);
                 });
 
                 test("should close menu when clicking TAB from active menu item", async () => {
@@ -165,7 +248,7 @@ test.describe("USERCONTROL Menu", () => {
                     await menu.isMenuClosed();
                 });
 
-                test.skip("should jump to the last item on END, PAGE_DOWN, or Command + ARROW_DOWN key chords", async () => {
+                test("should jump to the last item on END, PAGE_DOWN, or Command + ARROW_DOWN key chords", async () => {
                     await assertStartAndEndKeyboardShortcuts(
                         moveDownKeyboardInputs,
                         menu,
@@ -173,7 +256,7 @@ test.describe("USERCONTROL Menu", () => {
                     );
                 });
 
-                test.skip("should jump to the last item on HOME, PAGE_UP, or Command + ARROW_UP key chords", async () => {
+                test("should jump to the last item on HOME, PAGE_UP, or Command + ARROW_UP key chords", async () => {
                     await assertStartAndEndKeyboardShortcuts(
                         moveUpKeyboardInputs,
                         menu,
@@ -186,22 +269,27 @@ test.describe("USERCONTROL Menu", () => {
         test.describe("> append-to-body", () => {
             test("should check and uncheck checkbox in menu item", async () => {
                 await appendToBody.toggleMenu();
+                await appendToBody.getPopupBox().isOpenedAppendToBody();
                 await Helpers.pressKey("ArrowDown");
                 // Find the first checkbox in the appendToBody menu
-                const menuLocator = appendToBody.getAppendToBodyMenu();
+                const menuLocator = appendToBody
+                    .getPopupBox()
+                    .getPopupBoxDetachedArea();
                 const checkboxes = menuLocator.locator("nui-checkbox");
                 const firstCheckbox = checkboxes.first();
-                // Check class for checked state
-                const isChecked = async () =>
-                    (await firstCheckbox.getAttribute("class")).includes(
-                        "nui-checkbox--checked"
-                    );
-                expect(await isChecked()).toBe(false);
+                await expect(firstCheckbox).toBeVisible();
+                await expect(firstCheckbox).not.toHaveClass(
+                    /nui-checkbox--checked/
+                );
                 await Helpers.pressKey("Enter");
-                expect(await isChecked()).toBe(true);
+                await expect(firstCheckbox).toHaveClass(
+                    /nui-checkbox--checked/
+                );
                 // Return to initial state
                 await Helpers.pressKey("Enter");
-                expect(await isChecked()).toBe(false);
+                await expect(firstCheckbox).not.toHaveClass(
+                    /nui-checkbox--checked/
+                );
             });
         });
     });
@@ -214,7 +302,6 @@ async function assertStartAndEndKeyboardShortcuts(
 ) {
     for (const key of keys) {
         await menu.isMenuOpened();
-        await menu.toggleMenu();
         // Use instance method to get menu items
         const itemsLocator = menu.getAllMenuItems();
         const itemCount = await itemsLocator.count();
@@ -225,6 +312,5 @@ async function assertStartAndEndKeyboardShortcuts(
         await Helpers.pressKey(key);
         // Check if the item is active (assume MenuItemAtom has isActiveItem method)
         expect(await targetItem.isActiveItem()).toBe(true);
-        await menu.toggleMenu();
     }
 }

@@ -4,28 +4,29 @@
     class="draggable-container"
     (cdkDropListDropped)="onItemDropped($event)"
 >
-    <ng-container *ngFor="let item of listItems; let i = index">
+    @for (item of listItems; track item; let i = $index) {
+    <div
+        cdkDrag
+        cdkDragPreviewClass="dnd-drag-preview"
+        [cdkDragDisabled]="!item.enabled"
+        class="draggable-item"
+        [ngClass]="{
+            'with-handle': item.hasHandle,
+            'nui-dnd-raised-state': item.withHandle && mousedOver[i]
+        }"
+    >
+        <!-- raised state style is applied ONLY when the mouse is over the handle -->
+        @if (item.withHandle) {
         <div
-            cdkDrag
-            cdkDragPreviewClass="dnd-drag-preview"
-            [cdkDragDisabled]="!item.enabled"
-            class="draggable-item"
-            [ngClass]="{
-                'with-handle': item.hasHandle,
-                'nui-dnd-raised-state': item.withHandle && mousedOver[i]
-            }"
+            cdkDragHandle
+            class="drag-handle"
+            (mouseover)="mousedOver[i] = true"
+            (mouseout)="mousedOver[i] = false"
         >
-            <!-- raised state style is applied ONLY when the mouse is over the handle -->
-            <div
-                *ngIf="item.withHandle"
-                cdkDragHandle
-                class="drag-handle"
-                (mouseover)="mousedOver[i] = true"
-                (mouseout)="mousedOver[i] = false"
-            >
-                <nui-icon icon="drag"></nui-icon>
-            </div>
-            {{ item.title }}
+            <nui-icon icon="drag"></nui-icon>
         </div>
-    </ng-container>
+        }
+        {{ item.title }}
+    </div>
+    }
 </div>

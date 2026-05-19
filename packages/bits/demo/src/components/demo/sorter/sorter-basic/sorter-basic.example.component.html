@@ -12,12 +12,11 @@
     <div repeatHeaderTemplate>
         <div class="sorter-flex-header">
             <div class="sorter-flex-row">
-                <div
-                    class="sorter-flex-item header-item"
-                    *ngFor="let col of columns"
-                >
+                @for (col of columns; track col) {
+                <div class="sorter-flex-item header-item">
                     {{ col.title }}
                 </div>
+                }
             </div>
         </div>
     </div>

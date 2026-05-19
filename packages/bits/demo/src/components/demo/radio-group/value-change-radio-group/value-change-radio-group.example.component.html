@@ -4,11 +4,9 @@
     [(value)]="selectedColor"
     (valueChange)="showSelected()"
 >
-    <nui-radio
-        *ngFor="let color of colors"
-        [value]="color"
-        [hint]="colorHints[color]"
-    >
+    @for (color of colors; track color) {
+    <nui-radio [value]="color" [hint]="colorHints[color]">
         {{ color }}
     </nui-radio>
+    }
 </nui-radio-group>

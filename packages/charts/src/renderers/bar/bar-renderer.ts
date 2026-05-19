@@ -202,6 +202,14 @@ export class BarRenderer extends XYRenderer<IRectangleAccessors> {
                     }, ${barAttrs.y + barAttrs.height / 2})`;
                 });
         }
+
+        if (this.config.highlightStrategy) {
+            this.config.highlightStrategy.draw(
+                this,
+                renderSeries,
+                rendererSubject
+            );
+        }
     }
 
     /** See {@link Renderer#getDataPointIndex} */

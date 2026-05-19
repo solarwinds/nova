@@ -28,15 +28,17 @@ describe("components >", () => {
             let mockEvent: MouseEvent;
             let spyForSwitchEmit: jasmine.Spy;
             let menuSwitch: MenuSwitchComponent;
+            let changeDetector: MockedChangeDetectorRef;
 
             beforeEach(() => {
                 mockEvent = jasmine.createSpyObj("event", [
                     "preventDefault",
                     "stopPropagation",
                 ]);
+                changeDetector = new MockedChangeDetectorRef();
                 menuSwitch = new MenuSwitchComponent(
                     new MenuGroupComponent(),
-                    new MockedChangeDetectorRef()
+                    changeDetector
                 );
                 spyForSwitchEmit = spyOn(menuSwitch.actionDone, "emit");
             });
@@ -57,6 +59,20 @@ describe("components >", () => {
                 expect(mockEvent.preventDefault).toHaveBeenCalled();
                 expect(mockEvent.stopPropagation).toHaveBeenCalled();
                 expect(spyForSwitchEmit).toHaveBeenCalledWith(true);
+            });
+
+            it("should refresh the view and emit when toggled through doAction", () => {
+                const detectChangesSpy = spyOn(changeDetector, "detectChanges");
+                const markForCheckSpy = spyOn(changeDetector, "markForCheck");
+
+                menuSwitch.checked = true;
+
+                menuSwitch.doAction();
+
+                expect(menuSwitch.checked).toBe(false);
+                expect(markForCheckSpy).toHaveBeenCalled();
+                expect(detectChangesSpy).toHaveBeenCalled();
+                expect(spyForSwitchEmit).toHaveBeenCalledWith(false);
             });
         });
     });

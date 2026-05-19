@@ -20,7 +20,7 @@
 
 import { HttpClient } from "@angular/common/http";
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 
 import { LoggerService } from "@nova-ui/bits";
 import {
@@ -108,7 +108,7 @@ export class TableWidgetPaginatorExampleComponent implements OnInit {
                 ),
         };
 
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [tableWithPaginator.id]: {
                 cols: 6,
                 rows: 6,

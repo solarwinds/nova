@@ -4,10 +4,10 @@
     [class.has-error]="isInErrorState"
 >
     <div class="has-feedback" [ngStyle]="{ width: customBoxWidth }">
+        @if (!rows || rows <= 1) {
         <input
-            *ngIf="!rows || rows <= 1"
             class="form-control input-control nui-textbox__input"
-            value="{{ value }}"
+            [value]="value || ''"
             [autocomplete]="autocomplete"
             [disabled]="disabled"
             [attr.name]="name"
@@ -21,11 +21,10 @@
             [attr.aria-invalid]="isInErrorState"
             #textboxInput
         />
-
+        } @if (rows > 1) {
         <textarea
-            *ngIf="rows > 1"
             class="form-control input-control nui-textbox__input"
-            value="{{ value }}"
+            [value]="value || ''"
             [rows]="rows"
             [disabled]="disabled"
             [attr.name]="name"
@@ -38,6 +37,7 @@
             [attr.aria-invalid]="isInErrorState"
             #textboxInput
         ></textarea>
+        }
 
         <div class="form-control-feedback nui-textbox__busy">
             <nui-spinner [show]="isBusy"></nui-spinner>

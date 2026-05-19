@@ -20,6 +20,7 @@
 
 import {
     Overlay,
+    OVERLAY_DEFAULT_CONFIG,
     OverlayConfig,
     OverlayContainer,
     OverlayRef,
@@ -62,7 +63,7 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
 /* @dynamic */
 @Component({
     selector: "nui-overlay",
-    template: ` <ng-template cdk-portal>
+    template: ` <ng-template cdkPortal>
         <div
             id="nui-overlay"
             class="nui-overlay"
@@ -78,6 +79,7 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
         OverlayService,
         OverlayPositionService,
         { provide: OverlayContainer, useClass: OverlayCustomContainer },
+        { provide: OVERLAY_DEFAULT_CONFIG, useValue: { usePopover: false } },
     ],
     styleUrls: ["overlay.component.less"],
     encapsulation: ViewEncapsulation.None,

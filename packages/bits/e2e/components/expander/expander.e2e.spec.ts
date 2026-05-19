@@ -87,7 +87,9 @@ test.describe("USERCONTROL expander", () => {
         await initiallyExpandedExpander.toggle();
     });
 
-    test("should change button text when it's dynamically changed by openChange", async ({ page }) => {
+    test("should change button text when it's dynamically changed by openChange", async ({
+        page,
+    }) => {
         const dynamicButton = page.locator(
             ".nui-demo-expander-open-change-button"
         );

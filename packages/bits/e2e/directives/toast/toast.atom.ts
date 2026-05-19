@@ -66,7 +66,8 @@ export class ToastAtom extends Atom {
 
     public isInfoType = async (): Promise<boolean> => this.isToastType("info");
 
-    public isErrorType = async (): Promise<boolean> => this.isToastType("error");
+    public isErrorType = async (): Promise<boolean> =>
+        this.isToastType("error");
 
     /** Wait for countdown timeout and extended timeout only. */
     public waitUntilNotDisplayed = async (

@@ -14,8 +14,8 @@
 
 <ng-template #popoverTemplate>
     <div class="inspection-menu">
+        @if (exploringEnabled) {
         <button
-            *ngIf="exploringEnabled"
             nui-button
             type="button"
             icon="details"
@@ -23,8 +23,8 @@
             i18n-title
             (click)="explore(true)"
         ></button>
+        } @if (isZoomInAllowed()) {
         <button
-            *ngIf="isZoomInAllowed()"
             nui-button
             type="button"
             icon="zoom-in"
@@ -32,6 +32,7 @@
             i18n-title
             (click)="zoomIn()"
         ></button>
+        }
         <button
             nui-button
             type="button"

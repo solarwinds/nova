@@ -12,8 +12,10 @@
         [formControl]="selectedZone"
         (valueSelected)="changeZone($event)"
     >
-        <nui-select-v2-option *ngFor="let o of zonesS()" [value]="o">
+        @for (o of zonesS(); track o) {
+        <nui-select-v2-option [value]="o">
             {{ o }}
         </nui-select-v2-option>
+        }
     </nui-combobox-v2>
 </section>

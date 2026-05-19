@@ -20,7 +20,7 @@
 
 import { HttpClient } from "@angular/common/http";
 import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 
 import { LoggerService, TableSelectionMode } from "@nova-ui/bits";
 import {
@@ -107,7 +107,7 @@ export class TableWidgetSelectableExampleComponent implements OnInit {
                 this.widgetTypesService.mergeWithWidgetType(tableWidget),
         };
 
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [tableWidget.id]: {
                 cols: 12,
                 rows: 6,

@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+﻿// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -55,14 +55,13 @@ describe("components >", () => {
         let fixture: ComponentFixture<TestWrapperComponent>;
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [PortalModule],
+                imports: [PortalModule, IconComponent],
                 declarations: [
                     TestWrapperComponent,
                     ButtonComponent,
                     DashwizComponent,
                     DashwizButtonsComponent,
                     DashwizStepComponent,
-                    IconComponent,
                     ComponentPortalDirective,
                     TemplateLoadErrorComponent,
                 ],
@@ -82,6 +81,10 @@ describe("components >", () => {
             fixture = TestBed.createComponent(TestWrapperComponent);
             component = fixture.debugElement.children[0].componentInstance;
             fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
         });
 
         describe("stepNavigated >", () => {

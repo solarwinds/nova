@@ -1,16 +1,16 @@
-<div
-    class="h-100 d-flex justify-content-center align-items-center"
-    *ngIf="!shouldDisplayTable()"
->
+@if (!shouldDisplayTable()) {
+<div class="h-100 d-flex justify-content-center align-items-center">
     <nui-image image="no-data-to-show"></nui-image>
 </div>
+}
 <!-- h-100 gets added only when there's data to show to prevent an extra scrollbar when the table is empty -->
 <!-- Using invisible class instead of *ngIf as an non-virtual-scroll breakable way to hide the content. -->
 <div
     class="nui-table-widget d-flex flex-column"
     [ngClass]="shouldDisplayTable() ? 'h-100' : 'invisible'"
 >
-    <div class="mr-2 mb-2 flex-row" *ngIf="isSearchEnabled">
+    @if (isSearchEnabled) {
+    <div class="mr-2 mb-2 flex-row">
         <nui-search
             class="unlimited-width d-flex justify-content-end flex-grow-1"
             [value]="searchValue"
@@ -19,15 +19,17 @@
         >
         </nui-search>
         @if (isSearchLimitWarningDisplayed()) {
-            <nui-message
-                class="nui-table-search-limit-warning"
-                type="warning"
-                [allowDismiss]="false"
-                i18n>
-                Search query limit is {{ searchLimitMaxLength }} characters.
-            </nui-message>
+        <nui-message
+            class="nui-table-search-limit-warning"
+            type="warning"
+            [allowDismiss]="false"
+            i18n
+        >
+            Search query limit is {{ searchLimitMaxLength }} characters.
+        </nui-message>
         }
     </div>
+    }
     <div
         class="flex-row h-100 nui-table-widget-container"
         [nuiDelayedMousePresenceDetection]="
@@ -42,6 +44,8 @@
             style="height: calc(100% - 2px)"
             tableStickyHeader
             [itemSize]="rowHeight"
+            [maxBufferPx]="1200"
+            [minBufferPx]="400"
             [ngClass]="{
                 'virtual-scroll-disabled':
                     (mousePresent$ | async) === false &&
@@ -56,18 +60,19 @@
                 [selection]="selection"
                 [selectionConfig]="configuration?.selectionConfiguration"
                 [totalItems]="totalItems"
-                [paginatorUsed]="hasPaginator && configuration?.selectionConfiguration?.allPages"
-                [dataSource]="hasVirtualScroll ? virtualScrollAddon.visibleItems : tableData"
+                [paginatorUsed]="
+                    hasPaginator &&
+                    configuration?.selectionConfiguration?.allPages
+                "
+                [dataSource]="tableData"
                 [sortedColumn]="sortedColumn"
                 (sortOrderChanged)="onSortOrderChanged($event)"
                 (selectionChange)="onSelectionChange($event)"
                 [trackBy]="dataTrackBy()"
                 #widgetTable
             >
-                <ng-container
-                    nuiColumnDef="{{ column.id }}"
-                    *ngFor="let column of columns; trackBy: columnTrackBy"
-                >
+                @for (column of columns; track columnTrackBy($index, column)) {
+                <ng-container nuiColumnDef="{{ column.id }}">
                     <th
                         nui-header-cell
                         [isColumnSortingDisabled]="!column.sortable"
@@ -96,10 +101,10 @@
                             "
                             [alignment]="getColumnAlignment(column)"
                         >
+                            @if (element[column.id] && column.formatter) {
                             <ng-container
                                 nuiComponentPortal
                                 componentId="formatter"
-                                *ngIf="element[column.id] && column.formatter"
                                 [componentType]="
                                     column.formatter?.componentType
                                 "
@@ -113,28 +118,39 @@
                                     "
                                 ></ng-template>
                             </ng-container>
+                            }
                         </td>
                     </ng-container>
                 </ng-container>
+                }
                 <tr nui-header-row *nuiHeaderRowDef="headers"></tr>
-                <ng-template
-                    nuiRowDef
-                    cdkVirtualFor
-                    let-row
-                    [nuiRowDefColumns]="headers"
-                    [cdkVirtualForOf]="tableData"
-                    [cdkVirtualForTemplateCacheSize]="10"
-                    [cdkVirtualForTrackBy]="dataTrackBy()"
-                >
-                    <tr
-                        nui-row
-                        (click)="onInteraction(row, $event)"
-                        [attr.role]="interactive ? 'button' : ''"
-                        density="tiny"
-                        [rowObject]="row.__record"
-                        [clickableRow]="clickableRow"
-                    ></tr>
-                </ng-template>
+                <tr
+                    nui-row
+                    *nuiRowDef="let row; columns: headers"
+                    (click)="onInteraction(row, $event)"
+                    [attr.role]="interactive ? 'button' : ''"
+                    density="tiny"
+                    [rowObject]="row.__record"
+                    [clickableRow]="clickableRow"
+                ></tr>
+                <!--                <ng-template-->
+                <!--                    nuiRowDef-->
+                <!--                    cdkVirtualFor-->
+                <!--                    let-row-->
+                <!--                    [nuiRowDefColumns]="headers"-->
+                <!--                    [cdkVirtualForOf]="tableData"-->
+                <!--                    [cdkVirtualForTemplateCacheSize]="10"-->
+                <!--                    [cdkVirtualForTrackBy]="dataTrackBy()"-->
+                <!--                >-->
+                <!--                    <tr-->
+                <!--                        nui-row-->
+                <!--                        (click)="onInteraction(row, $event)"-->
+                <!--                        [attr.role]="interactive ? 'button' : ''"-->
+                <!--                        density="tiny"-->
+                <!--                        [rowObject]="row.__record"-->
+                <!--                        [clickableRow]="clickableRow"-->
+                <!--                    ></tr>-->
+                <!--                </ng-template>-->
             </table>
         </cdk-virtual-scroll-viewport>
     </div>

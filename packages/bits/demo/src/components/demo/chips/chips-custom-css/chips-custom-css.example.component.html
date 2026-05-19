@@ -1,17 +1,13 @@
 <h3>Standalone chips</h3>
 <div id="standalone-chips" class="mb-5">
-    <nui-chip
-        *ngFor="let chip of standaloneChips"
-        [item]="chip"
-        [customClass]="chip.customClass"
-        ><nui-icon
-            *ngIf="chip.icon"
-            [icon]="chip.icon"
-            iconSize="small"
-            class="mr-1"
-        ></nui-icon>
+    @for (chip of standaloneChips; track chip) {
+    <nui-chip [item]="chip" [customClass]="chip.customClass"
+        >@if (chip.icon) {
+        <nui-icon [icon]="chip.icon" iconSize="small" class="mr-1"></nui-icon>
+        }
         {{ chip.label }}
     </nui-chip>
+    }
 </div>
 
 <h3>nui-chips Group set</h3>
@@ -28,9 +24,7 @@
 
 <h3>Unset Width</h3>
 <div id="chips-width-example" class="mb-5">
-    <nui-chip
-        *ngFor="let chip of widthChips"
-        [item]="chip"
-        [customClass]="chip.customClass"
-    ></nui-chip>
+    @for (chip of widthChips; track chip) {
+    <nui-chip [item]="chip" [customClass]="chip.customClass"></nui-chip>
+    }
 </div>

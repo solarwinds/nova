@@ -61,7 +61,7 @@ const FOCUSABLE_SELECTOR =
     encapsulation: ViewEncapsulation.None,
     standalone: false,
 })
-export class DialogComponent implements OnInit, AfterViewInit, OnDestroy  {
+export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
     private elWithFocus: any;
     /**
      * Whether a backdrop element should be created for a given dialog (true by default).

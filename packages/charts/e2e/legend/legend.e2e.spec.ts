@@ -35,7 +35,6 @@ test.describe("Legend", () => {
     let richLegendInteractive: LegendAtom;
     let richLegendWithProjectedDescription: LegendAtom;
 
-
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("advanced-usage/legend/test", page);
         basicLegendDefault = Atom.find<LegendAtom>(
@@ -59,7 +58,6 @@ test.describe("Legend", () => {
             "rich-tile-legend-with-projected-description-default-state"
         );
         await basicLegendDefault.toBeVisible();
-
     });
 
     test.describe("basic tile legend", () => {
@@ -85,9 +83,17 @@ test.describe("Legend", () => {
             });
 
             test("shouldn't show checkbox on tile hover", async () => {
-                await expect(series.getLocator().locator(".nui-legend-series__checkbox-wrapper")).toBeHidden();
+                await expect(
+                    series
+                        .getLocator()
+                        .locator(".nui-legend-series__checkbox-wrapper")
+                ).toBeHidden();
                 await series.hoverTile();
-                await expect(series.getLocator().locator(".nui-legend-series__checkbox-wrapper")).toBeHidden();
+                await expect(
+                    series
+                        .getLocator()
+                        .locator(".nui-legend-series__checkbox-wrapper")
+                ).toBeHidden();
             });
         });
 
@@ -103,49 +109,93 @@ test.describe("Legend", () => {
             });
 
             test("series should show checkbox on tile hover", async () => {
-                await expect(firstInteractiveSeries.getLocator().locator(".nui-legend-series__checkbox-wrapper")).toBeHidden();
+                await expect(
+                    firstInteractiveSeries
+                        .getLocator()
+                        .locator(".nui-legend-series__checkbox-wrapper")
+                ).toBeHidden();
                 await firstInteractiveSeries.hoverTile();
-                await expect(firstInteractiveSeries.getLocator().locator(".nui-legend-series__checkbox-wrapper")).toBeVisible();
+                await expect(
+                    firstInteractiveSeries
+                        .getLocator()
+                        .locator(".nui-legend-series__checkbox-wrapper")
+                ).toBeVisible();
             });
 
             test("series should not show checkbox on series hover", async () => {
-                await expect(firstInteractiveSeries.getLocator().locator(".nui-legend-series__checkbox-wrapper")).toBeHidden();
+                await expect(
+                    firstInteractiveSeries
+                        .getLocator()
+                        .locator(".nui-legend-series__checkbox-wrapper")
+                ).toBeHidden();
                 await firstInteractiveSeries.hover();
-                await expect(firstInteractiveSeries.getLocator().locator(".nui-legend-series__checkbox-wrapper")).toBeHidden();
+                await expect(
+                    firstInteractiveSeries
+                        .getLocator()
+                        .locator(".nui-legend-series__checkbox-wrapper")
+                ).toBeHidden();
             });
 
             test("series should not show its tile on tile hover", async () => {
-                await expect(firstInteractiveSeries.getLocator().locator(".nui-legend-series__tile")).toBeVisible();
+                await expect(
+                    firstInteractiveSeries
+                        .getLocator()
+                        .locator(".nui-legend-series__tile")
+                ).toBeVisible();
                 await firstInteractiveSeries.hoverTile();
-                await expect(firstInteractiveSeries.getLocator().locator(".nui-legend-series__tile")).toBeHidden();
+                await expect(
+                    firstInteractiveSeries
+                        .getLocator()
+                        .locator(".nui-legend-series__tile")
+                ).toBeHidden();
             });
 
             test("series should show unchecked checkbox instead of tile", async () => {
-                expect(await firstInteractiveSeries.isCheckboxChecked()).toEqual(true);
+                expect(
+                    await firstInteractiveSeries.isCheckboxChecked()
+                ).toEqual(true);
                 await firstInteractiveSeries.clickTile();
                 await basicLegendDefault.hover();
-                expect(await firstInteractiveSeries.isCheckboxChecked()).toEqual(false);
-                await expect(firstInteractiveSeries.getLocator().locator(".nui-legend-series__tile")).toBeHidden();
+                expect(
+                    await firstInteractiveSeries.isCheckboxChecked()
+                ).toEqual(false);
+                await expect(
+                    firstInteractiveSeries
+                        .getLocator()
+                        .locator(".nui-legend-series__tile")
+                ).toBeHidden();
             });
 
             test("entire series should not be deemphasized when series is deselected", async () => {
-                expect(await firstInteractiveSeries.isDeemphasized()).toEqual(false);
+                expect(await firstInteractiveSeries.isDeemphasized()).toEqual(
+                    false
+                );
                 await firstInteractiveSeries.clickTile();
                 await basicLegendDefault.hover();
-                expect(await firstInteractiveSeries.isDeemphasized()).toEqual(false);
+                expect(await firstInteractiveSeries.isDeemphasized()).toEqual(
+                    false
+                );
             });
 
             test("series description should be deemphasized when series is deselected", async () => {
-                expect(await firstInteractiveSeries.isDescriptionDeemphasized()).toEqual(false);
+                expect(
+                    await firstInteractiveSeries.isDescriptionDeemphasized()
+                ).toEqual(false);
                 await firstInteractiveSeries.clickTile();
                 await basicLegendDefault.hover();
-                expect(await firstInteractiveSeries.isDescriptionDeemphasized()).toEqual(true);
+                expect(
+                    await firstInteractiveSeries.isDescriptionDeemphasized()
+                ).toEqual(true);
             });
 
             test("entire series should be deemphasized when another series is hovered", async () => {
-                expect(await secondInteractiveSeries.isDeemphasized()).toEqual(false);
+                expect(await secondInteractiveSeries.isDeemphasized()).toEqual(
+                    false
+                );
                 await firstInteractiveSeries.hover();
-                expect(await secondInteractiveSeries.isDeemphasized()).toEqual(true);
+                expect(await secondInteractiveSeries.isDeemphasized()).toEqual(
+                    true
+                );
             });
         });
     });
@@ -172,9 +222,9 @@ test.describe("Legend", () => {
             });
 
             test(`should display the correct secondary description`, async () => {
-                expect(
-                    await series.getSecondaryDescriptionText()
-                ).toEqual("Secondary Description 1");
+                expect(await series.getSecondaryDescriptionText()).toEqual(
+                    "Secondary Description 1"
+                );
             });
 
             test(`should display correct descriptions when they're set via content projection`, async () => {
@@ -202,15 +252,21 @@ test.describe("Legend", () => {
             });
 
             test(`should display the correct unit label`, async () => {
-                expect(await series.richTile.getUnitLabel()).toEqual(
-                    "Kbps"
-                );
+                expect(await series.richTile.getUnitLabel()).toEqual("Kbps");
             });
 
             test("should not show checkbox on hover", async () => {
-                await expect(series.getLocator().locator(".nui-legend-series__checkbox-wrapper")).toBeHidden();
+                await expect(
+                    series
+                        .getLocator()
+                        .locator(".nui-legend-series__checkbox-wrapper")
+                ).toBeHidden();
                 await series.hoverTile();
-                await expect(series.getLocator().locator(".nui-legend-series__checkbox-wrapper")).toBeHidden();
+                await expect(
+                    series
+                        .getLocator()
+                        .locator(".nui-legend-series__checkbox-wrapper")
+                ).toBeHidden();
             });
         });
 
@@ -226,33 +282,73 @@ test.describe("Legend", () => {
             });
 
             test("should show checkbox on tile hover", async () => {
-                await expect(firstInteractiveSeries.getLocator().locator(".nui-legend-series__checkbox-wrapper")).toBeHidden();
+                await expect(
+                    firstInteractiveSeries
+                        .getLocator()
+                        .locator(".nui-legend-series__checkbox-wrapper")
+                ).toBeHidden();
                 await firstInteractiveSeries.hoverTile();
-                await expect(firstInteractiveSeries.getLocator().locator(".nui-legend-series__checkbox-wrapper")).toBeVisible();
+                await expect(
+                    firstInteractiveSeries
+                        .getLocator()
+                        .locator(".nui-legend-series__checkbox-wrapper")
+                ).toBeVisible();
             });
 
             test("should not show marker or icon on tile hover", async () => {
-                await expect(firstInteractiveSeries.richTile.getLocator().locator(".nui-rich-legend-tile__point-marker")).toBeVisible();
-                await expect(firstInteractiveSeries.richTile.getLocator().locator(".nui-rich-legend-tile__icon")).toBeVisible();
+                await expect(
+                    firstInteractiveSeries.richTile
+                        .getLocator()
+                        .locator(".nui-rich-legend-tile__point-marker")
+                ).toBeVisible();
+                await expect(
+                    firstInteractiveSeries.richTile
+                        .getLocator()
+                        .locator(".nui-rich-legend-tile__icon")
+                ).toBeVisible();
                 await firstInteractiveSeries.hoverTile();
-                await expect(firstInteractiveSeries.richTile.getLocator().locator(".nui-rich-legend-tile__point-marker")).toBeHidden();
-                await expect(firstInteractiveSeries.richTile.getLocator().locator(".nui-rich-legend-tile__icon")).toBeHidden();
+                await expect(
+                    firstInteractiveSeries.richTile
+                        .getLocator()
+                        .locator(".nui-rich-legend-tile__point-marker")
+                ).toBeHidden();
+                await expect(
+                    firstInteractiveSeries.richTile
+                        .getLocator()
+                        .locator(".nui-rich-legend-tile__icon")
+                ).toBeHidden();
             });
 
             test("should show unchecked checkbox instead of marker or icon", async () => {
-                expect(await firstInteractiveSeries.isCheckboxChecked()).toEqual(true);
+                expect(
+                    await firstInteractiveSeries.isCheckboxChecked()
+                ).toEqual(true);
                 await firstInteractiveSeries.clickTile();
                 await secondInteractiveSeries.hover();
-                expect(await firstInteractiveSeries.isCheckboxChecked()).toEqual(false);
-                await expect(firstInteractiveSeries.richTile.getLocator().locator(".nui-rich-legend-tile__point-marker")).toBeHidden();
-                await expect(firstInteractiveSeries.richTile.getLocator().locator(".nui-rich-legend-tile__icon")).toBeHidden();
+                expect(
+                    await firstInteractiveSeries.isCheckboxChecked()
+                ).toEqual(false);
+                await expect(
+                    firstInteractiveSeries.richTile
+                        .getLocator()
+                        .locator(".nui-rich-legend-tile__point-marker")
+                ).toBeHidden();
+                await expect(
+                    firstInteractiveSeries.richTile
+                        .getLocator()
+                        .locator(".nui-rich-legend-tile__icon")
+                ).toBeHidden();
             });
 
             test("series description should be deemphasized when series is deselected", async () => {
-                expect(await firstInteractiveSeries.isDescriptionDeemphasized()).toEqual(false);
+                expect(
+                    await firstInteractiveSeries.isDescriptionDeemphasized()
+                ).toEqual(false);
                 await firstInteractiveSeries.clickTile();
                 await secondInteractiveSeries.hover();
-                expect(await firstInteractiveSeries.isDescriptionDeemphasized()).toEqual(true);
+                expect(
+                    await firstInteractiveSeries.isDescriptionDeemphasized()
+                ).toEqual(true);
             });
         });
     });

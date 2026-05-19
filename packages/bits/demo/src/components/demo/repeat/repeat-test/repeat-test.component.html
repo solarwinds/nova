@@ -2,12 +2,11 @@
     id="repeat-test-tab-group"
     (selected)="currentTabId = $event"
 >
-    <nui-tab-heading
-        *ngFor="let tab of tabs"
-        [tabId]="tab.id"
-        [active]="currentTabId === tab.id"
-        >{{ tab.title }}</nui-tab-heading
-    >
+    @for (tab of tabs; track tab) {
+    <nui-tab-heading [tabId]="tab.id" [active]="currentTabId === tab.id">{{
+        tab.title
+    }}</nui-tab-heading>
+    }
 </nui-tab-heading-group>
 <div [style.display]="getTabDisplayMode(tabs[0].id)">
     No content in this tab. See other tab(s) for content.

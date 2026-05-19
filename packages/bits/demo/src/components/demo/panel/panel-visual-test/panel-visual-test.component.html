@@ -195,23 +195,22 @@
                     (collapsed)="onCollapseChange($event)"
                 >
                     <div nuiPanelEmbeddedIcon>
+                        @if (isCollapsed) {
                         <nui-icon
-                            *ngIf="isCollapsed"
                             [icon]="headerIcon"
                             [counter]="headerIconCounter"
                         >
                         </nui-icon>
+                        }
                     </div>
                     <div
                         nuiPanelEmbeddedHeading
                         class="d-flex flex-row align-items-center"
                     >
-                        <nui-icon
-                            *ngIf="!isCollapsed"
-                            [icon]="headerIcon"
-                            iconColor="gray"
-                        >
+                        @if (!isCollapsed) {
+                        <nui-icon [icon]="headerIcon" iconColor="gray">
                         </nui-icon>
+                        }
                         <span>
                             <h4 class="my-0">TRANSCLUDED</h4>
                         </span>
@@ -251,8 +250,8 @@
                             mollis.
                         </p>
                     </div>
+                    @if (displayFooter) {
                     <div
-                        *ngIf="displayFooter"
                         nuiPanelEmbeddedFooter
                         class="d-flex justify-content-between"
                     >
@@ -261,6 +260,7 @@
                             Confirm
                         </button>
                     </div>
+                    }
                 </nui-panel>
             </div>
         </div>

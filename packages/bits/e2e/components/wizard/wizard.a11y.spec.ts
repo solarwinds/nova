@@ -32,11 +32,15 @@ test.describe("a11y: wizard", () => {
         basicWizard = Atom.find<WizardAtom>(WizardAtom, "nui-demo-wizard");
     });
 
-    test("should check a11y of wizard on first step", async ({ runA11yScan }) => {
+    test("should check a11y of wizard on first step", async ({
+        runA11yScan,
+    }) => {
         await runA11yScan(WizardAtom, rulesToDisable);
     });
 
-    test("should check a11y of wizard on second step", async ({ runA11yScan }) => {
+    test("should check a11y of wizard on second step", async ({
+        runA11yScan,
+    }) => {
         await basicWizard.next();
         await runA11yScan(WizardAtom, rulesToDisable);
     });

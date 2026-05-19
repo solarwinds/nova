@@ -22,15 +22,12 @@
                     [popupViewportMargin]="configuratorHeading.height$ | async"
                     (valueSelected)="onSelect($event)"
                 >
-                    <nui-select-v2-option
-                        *ngFor="
-                            let series of availableSeries
-                                | nuiAddData : selectedSeries
-                        "
-                        [value]="series"
-                    >
+                    @for ( series of availableSeries | nuiAddData :
+                    selectedSeries ; track series) {
+                    <nui-select-v2-option [value]="series">
                         {{ series.description }}
                     </nui-select-v2-option>
+                    }
                 </nui-select-v2>
                 <nui-validation-message for="required" i18n>
                     This field is required

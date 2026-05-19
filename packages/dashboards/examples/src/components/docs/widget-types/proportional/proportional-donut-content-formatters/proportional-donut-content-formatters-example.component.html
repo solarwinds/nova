@@ -2,8 +2,8 @@
     <nui-switch class="ml-3 py-2" [(value)]="editMode" i18n>
         Edit Mode
     </nui-switch>
+    @if (!dashboard?.widgets['proportionalWidgetId']) {
     <button
-        *ngIf="!dashboard?.widgets['proportionalWidgetId']"
         type="button"
         displayStyle="action"
         (click)="reInitializeDashboard()"
@@ -11,19 +11,21 @@
     >
         Restore Widget
     </button>
+    }
 </div>
 
 <div class="w-100 dashboard">
     <!--
-        Note: The dashboard and gridsterConfig input assignments must use banana-in-a-box notation to keep
-        the dashboard state updated with changes to the pizzagna.
-    -->
+  Note: The dashboard and gridsterConfig input assignments must use banana-in-a-box notation to keep
+  the dashboard state updated with changes to the pizzagna.
+  -->
+    @if (dashboard) {
     <nui-dashboard
-        *ngIf="dashboard"
         [(dashboard)]="dashboard"
         [editMode]="editMode"
         [(gridsterConfig)]="gridsterConfig"
         nuiWidgetEditor
     >
     </nui-dashboard>
+    }
 </div>

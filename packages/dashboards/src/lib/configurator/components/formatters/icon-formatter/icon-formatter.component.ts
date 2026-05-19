@@ -28,23 +28,20 @@ import { IFormatterData } from "../types";
 @Component({
     selector: "nui-dashboards-icon-formatter",
     template: `
-        <div
-            *ngIf="isValid"
-            class="d-flex align-items-center justify-content-center"
-        >
-            <nui-icon
-                *ngIf="iconFound; else iconNotFound"
-                [icon]="data?.value"
-            ></nui-icon>
-        </div>
-        <ng-template #iconNotFound>
+        @if (isValid) {
+        <div class="d-flex align-items-center justify-content-center">
+            @if (iconFound) {
+            <nui-icon [icon]="data?.value"></nui-icon>
+            } @else {
             <nui-icon
                 title="Unknown icon"
                 i18n-title
                 iconColor="disabled-gray"
                 icon="help"
             ></nui-icon>
-        </ng-template>
+            }
+        </div>
+        }
     `,
     standalone: false,
 })

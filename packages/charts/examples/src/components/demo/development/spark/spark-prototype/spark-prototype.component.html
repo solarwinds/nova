@@ -1,8 +1,7 @@
 <button nui-button (click)="update()" type="button">Refresh</button>
 <div class="spark-container mt-5 p-3">
-    <div
-        *ngFor="let spark of chartAssist.sparks; trackBy: chartAssist.trackByFn"
-    >
+    @for (spark of chartAssist.sparks; track spark.id) {
+    <div>
         <div class="d-flex">
             <nui-chart
                 class="w-100"
@@ -50,4 +49,5 @@
             </div>
         </div>
     </div>
+    }
 </div>

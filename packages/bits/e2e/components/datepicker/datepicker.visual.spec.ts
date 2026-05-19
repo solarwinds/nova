@@ -30,8 +30,13 @@ test.describe(`Visual tests: ${name}`, () => {
     let datepickerBasic: DatepickerAtom;
 
     test.beforeEach(async ({ page }) => {
-        await Helpers.prepareBrowser("date-picker/date-picker-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.prepareBrowser(
+            "date-picker/date-picker-visual-test",
+            page
+        );
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
         datepickerBasic = Atom.find<DatepickerAtom>(
             DatepickerAtom,
             "nui-basic-usage-datepicker"

@@ -2,14 +2,11 @@
     <div class="d-flex flex-column mr-5">
         <h4 i18n>Selected position:</h4>
         <nui-radio-group name="positions" [(value)]="selectedPosition">
-            <nui-radio
-                *ngFor="let position of positions"
-                [value]="position"
-                [checked]="position === 'top'"
-                i18n
-            >
+            @for (position of positions; track position) {
+            <nui-radio [value]="position" [checked]="position === 'top'" i18n>
                 {{ position }}
             </nui-radio>
+            }
         </nui-radio-group>
     </div>
     <div class="d-flex ml-5">

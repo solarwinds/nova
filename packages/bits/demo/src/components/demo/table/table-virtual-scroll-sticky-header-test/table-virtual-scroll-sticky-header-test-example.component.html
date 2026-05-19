@@ -19,60 +19,52 @@
         tableStickyHeader
         class="h-100"
         [itemSize]="itemSize"
+        [maxBufferPx]="1200"
+        [minBufferPx]="400"
     >
-        <!-- IMPORTANT Bind only visible rows to the table, otherwise, the table will render all rows in the DOM -->
         <table
             nui-table
-            [dataSource]="visibleItems$ | async"
+            [dataSource]="items$ | async"
             [trackBy]="trackByNo"
             [sortable]="true"
         >
             <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
+            @for (column of displayedColumns; track column) {
             <ng-container
-                *ngFor="let column of displayedColumns"
                 [nuiColumnDef]="column"
                 [type]="column === 'icon' ? 'icon' : 'default'"
             >
                 <th nui-header-cell *nuiHeaderCellDef>
-                    <span *ngIf="column !== 'icon'; else headerIcon">{{
-                        column
-                    }}</span>
-                    <ng-template #headerIcon>
-                        <div
-                            class="d-flex align-items-center justify-content-center"
-                        >
-                            <nui-icon icon="enable"></nui-icon>
-                        </div>
-                    </ng-template>
+                    @if (column !== 'icon') {
+                    <span>{{ column }}</span>
+                    } @else {
+                    <div
+                        class="d-flex align-items-center justify-content-center"
+                    >
+                        <nui-icon icon="enable"></nui-icon>
+                    </div>
+                    }
                 </th>
                 <td nui-cell *nuiCellDef="let element">
-                    <span *ngIf="column !== 'icon'; else icon">{{
-                        element[column]
-                    }}</span>
-                    <ng-template #icon>
-                        <div
-                            class="d-flex align-items-center justify-content-center"
-                        >
-                            <nui-icon [icon]="element[column]"></nui-icon>
-                        </div>
-                    </ng-template>
+                    @if (column !== 'icon') {
+                    <span>{{ element[column] }}</span>
+                    } @else {
+                    <div
+                        class="d-flex align-items-center justify-content-center"
+                    >
+                        <nui-icon [icon]="element[column]"></nui-icon>
+                    </div>
+                    }
                 </td>
             </ng-container>
+            }
 
             <tr nui-header-row *nuiHeaderRowDef="displayedColumns"></tr>
-            <!-- IMPORTANT The actual difference between normal table and virtualized one-->
-            <!-- ∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨ -->
-            <ng-template
-                nuiRowDef
-                cdkVirtualFor
-                let-context
-                [nuiRowDefColumns]="displayedColumns"
-                [cdkVirtualForOf]="placeholderItems"
-                [cdkVirtualForTrackBy]="trackByNo"
-            >
-                <tr nui-row [rowObject]="context"></tr>
-            </ng-template>
-            <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
+            <tr
+                nui-row
+                *nuiRowDef="let row; columns: displayedColumns"
+                [rowObject]="row"
+            ></tr>
         </table>
     </cdk-virtual-scroll-viewport>
 </div>

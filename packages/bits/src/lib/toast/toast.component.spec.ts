@@ -38,6 +38,10 @@ describe("components >", () => {
             "run",
             "runOutsideAngular",
         ]);
+        const mockChangeDetector = jasmine.createSpyObj("mockChangeDetector", [
+            "detectChanges",
+        ]);
+        mockChangeDetector.destroyed = false;
         mockNgZone.run.and.callFake(() => false);
         mockNgZone.runOutsideAngular.and.callFake(() => {});
 
@@ -77,7 +81,7 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [IconComponent],
+                imports: [IconComponent],
                 providers: [
                     NotificationService,
                     ToastContainerService,
@@ -93,6 +97,7 @@ describe("components >", () => {
         it("Title and body of a component should be set correctly", fakeAsync(() => {
             // @ts-ignore: Suppressing error for testing purposes
             const componentInstance = new ToastComponent(
+                mockChangeDetector,
                 toastService,
                 toastPackage,
                 mockNgZone
@@ -106,6 +111,7 @@ describe("components >", () => {
         it("Class 'success' should be put on success toast", fakeAsync(() => {
             // @ts-ignore: Suppressing error for testing purposes
             const componentInstance = new ToastComponent(
+                mockChangeDetector,
                 toastService,
                 toastPackage,
                 mockNgZone
@@ -121,6 +127,7 @@ describe("components >", () => {
             toastPackage.toastType = "info";
             // @ts-ignore: Suppressing error for testing purposes
             const componentInstance = new ToastComponent(
+                mockChangeDetector,
                 toastService,
                 toastPackage,
                 mockNgZone
@@ -136,6 +143,7 @@ describe("components >", () => {
             toastPackage.toastType = "error";
             // @ts-ignore: Suppressing error for testing purposes
             const componentInstance = new ToastComponent(
+                mockChangeDetector,
                 toastService,
                 toastPackage,
                 mockNgZone
@@ -151,6 +159,7 @@ describe("components >", () => {
             toastPackage.toastType = "warning";
             // @ts-ignore: Suppressing error for testing purposes
             const componentInstance = new ToastComponent(
+                mockChangeDetector,
                 toastService,
                 toastPackage,
                 mockNgZone
@@ -166,6 +175,7 @@ describe("components >", () => {
         xit("After activation toast should be shown", () => {
             // @ts-ignore: Suppressing error for testing purposes
             const componentInstance = new ToastComponent(
+                mockChangeDetector,
                 toastService,
                 toastPackage,
                 mockNgZone
@@ -180,6 +190,7 @@ describe("components >", () => {
         xit("After remove toast should be removed", fakeAsync(() => {
             // @ts-ignore: Suppressing error for testing purposes
             const componentInstance = new ToastComponent(
+                mockChangeDetector,
                 toastService,
                 toastPackage,
                 mockNgZone

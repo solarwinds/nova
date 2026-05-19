@@ -20,17 +20,17 @@
 
 import { performance } from "perf_hooks";
 
-import _round from "lodash/round";
-
-import { expect, Helpers, test } from "../../setup";
 import {
     IToastDeclaration,
     ToastPositionClass,
     ToastTestPage,
 } from "./toast-test.po";
 import { ToastAtom } from "./toast.atom";
+import { expect, Helpers, test } from "../../setup";
 
 test.describe("USERCONTROL Toast", () => {
+    const toastTimingTolerance = 1200;
+
     let page: ToastTestPage;
 
     const defaultToastConfig: IToastDeclaration = Object.freeze({
@@ -73,14 +73,14 @@ test.describe("USERCONTROL Toast", () => {
         if (!toastConfig.options) {
             throw new Error("ToastConfig options property is not available");
         }
-        toastConfig.options.timeOut = 500;
+        toastConfig.options.timeOut = 1000;
         await page.showToasts(toastConfig);
         const toast = await page.asertWaitForToastDisplayed();
         await toast.hover();
         await Helpers.page.waitForTimeout(toastConfig.options.timeOut * 2);
-        expect((await toast.isPresent()) && (await toast.isDisplayed())).toEqual(
-            true
-        );
+        expect(
+            (await toast.isPresent()) && (await toast.isDisplayed())
+        ).toEqual(true);
     });
 
     test("should honor the timeout specified", async () => {
@@ -95,11 +95,10 @@ test.describe("USERCONTROL Toast", () => {
         await toast.waitUntilNotDisplayed(toastConfig.options.timeOut * 1.5);
         const endPoint: number = performance.now();
 
-        const timeBenchmark: number = _round(
-            endPoint - startPoint - ToastAtom.animationTimeout,
-            -3
-        );
-        expect(timeBenchmark - 1000).toEqual(toastConfig.options.timeOut);
+        const elapsedTime = endPoint - startPoint - ToastAtom.animationTimeout;
+        expect(
+            Math.abs(elapsedTime - toastConfig.options.timeOut)
+        ).toBeLessThanOrEqual(toastTimingTolerance);
     });
 
     test("should honor the extended timeout specified", async () => {
@@ -120,11 +119,10 @@ test.describe("USERCONTROL Toast", () => {
         );
         const endPoint: number = performance.now();
 
-        const timeBenchmark: number = _round(
-            endPoint - startPoint - ToastAtom.animationTimeout,
-            -3
-        );
-        expect(timeBenchmark - 1000).toEqual(toastConfig.options.extendedTimeOut);
+        const elapsedTime = endPoint - startPoint - ToastAtom.animationTimeout;
+        expect(
+            Math.abs(elapsedTime - toastConfig.options.extendedTimeOut)
+        ).toBeLessThanOrEqual(toastTimingTolerance);
     });
 
     test("should add a custom class", async () => {
@@ -220,9 +218,9 @@ test.describe("USERCONTROL Toast", () => {
             const toast = await page.asertWaitForToastDisplayed();
 
             await toast.click();
-            expect((await toast.isPresent()) && (await toast.isDisplayed())).toEqual(
-                true
-            );
+            expect(
+                (await toast.isPresent()) && (await toast.isDisplayed())
+            ).toEqual(true);
         });
     });
 

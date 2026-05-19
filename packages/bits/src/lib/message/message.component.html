@@ -13,7 +13,8 @@
         </span>
     </div>
 
-    <div class="nui-message-dismiss-button" *ngIf="allowDismiss">
+    @if (allowDismiss) {
+    <div class="nui-message-dismiss-button">
         <button
             nui-button
             type="button"
@@ -23,4 +24,5 @@
             (click)="dismissMessage()"
         ></button>
     </div>
+    }
 </div>

@@ -27,9 +27,7 @@ import {
     ViewChild,
 } from "@angular/core";
 import sample from "lodash/sample";
-import { Observable } from "rxjs";
-// eslint-disable-next-line import/no-deprecated
-import { map, startWith, switchMap, tap } from "rxjs/operators";
+import { BehaviorSubject } from "rxjs";
 
 import {
     ClientSideDataSource,
@@ -61,11 +59,6 @@ export class TableVirtualScrollStickyHeaderExampleComponent
     @ViewChild(TableStickyHeaderDirective)
     public stickyHeaderDirective: TableStickyHeaderDirective;
 
-    // Note: Mock items list is used to fake that the data is already loaded
-    // and let CDK Viewport perform the scrolling on a known number of items
-    public placeholderItems: undefined[] = [];
-    public visibleItems$: Observable<IRandomUserTableModel[]>;
-    // The dynamically changed array of items to render by the table
     public displayedColumns: string[] = [
         "no",
         "nameFirst",
@@ -73,11 +66,11 @@ export class TableVirtualScrollStickyHeaderExampleComponent
         "city",
         "postcode",
     ];
+    public items$ = new BehaviorSubject<IRandomUserTableModel[]>([]);
 
     public makeSticky: boolean = true;
     public itemSize: number = 40;
     public gridHeight = 400;
-    // trackBy handler used to identify uniquely each item in the table
     public trackByNo: TrackByFunction<IRandomUserTableModel> = (
         index: number,
         item: IRandomUserTableModel
@@ -86,48 +79,17 @@ export class TableVirtualScrollStickyHeaderExampleComponent
     constructor(
         public dataSourceService: ClientSideDataSource<IRandomUserTableModel>
     ) {
-        // Note: Initiating data source with data to be displayed
         this.dataSourceService.setData(generateUsers(100000));
     }
 
     public ngAfterViewInit(): void {
-        this.dataSourceService.componentTree = {
-            // Note: Using paginator as filter to be able to get specific range
-            paginator: {
-                componentInstance: {
-                    getFilters: () => ({
-                        value: this.viewport.getRenderedRange(),
-                    }),
-                },
-            },
-        };
-
-        // Note: Creating a stream of visible items to be bound to the table and increase the performance
-        this.visibleItems$ = this.viewport.renderedRangeStream.pipe(
-            // eslint-disable-next-line import/no-deprecated
-            startWith({ start: 0, end: 10 }),
-            // Note: On range change applying filters
-            tap(async () => this.dataSourceService.applyFilters()),
-            // Subscribing to the filter results transforming and merging them into the stream
-            // eslint-disable-next-line import/no-deprecated
-            switchMap(() =>
-                this.dataSourceService.outputsSubject.pipe(
-                    map((result: IFilteringOutputs) => {
-                        // Updating mock items list
-                        if (
-                            this.placeholderItems.length !==
-                            result.paginator.total
-                        ) {
-                            this.placeholderItems = Array.from({
-                                length: result.paginator.total,
-                            });
-                        }
-                        // Mapping the values to array to be able to bind them to the table dataSource
-                        return result.repeat.itemsSource;
-                    })
-                )
-            )
+        this.dataSourceService.outputsSubject.subscribe(
+            (outputs: IFilteringOutputs) => {
+                this.items$.next(outputs.repeat.itemsSource);
+            }
         );
+
+        this.dataSourceService.applyFilters();
     }
 
     // Note: Used only for demo purposes

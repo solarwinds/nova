@@ -35,10 +35,10 @@ export class AccordionAtom extends Atom {
     }
 
     public getSelectByIndex(index: number): SelectV2Atom {
-        return Atom.findIn<SelectV2Atom>(SelectV2Atom, this.getLocator()).nth<SelectV2Atom>(
+        return Atom.findIn<SelectV2Atom>(
             SelectV2Atom,
-            index
-        );
+            this.getLocator()
+        ).nth<SelectV2Atom>(SelectV2Atom, index);
     }
 
     public getSelect(className: string): SelectV2Atom {
@@ -49,7 +49,9 @@ export class AccordionAtom extends Atom {
 
     public getTextBoxNumberInput(className: string): TextboxNumberAtom {
         return new TextboxNumberAtom(
-            this.getLocator().locator(`.${className}`).locator(`.nui-textbox-number`)
+            this.getLocator()
+                .locator(`.${className}`)
+                .locator(`.nui-textbox-number`)
         );
     }
 }

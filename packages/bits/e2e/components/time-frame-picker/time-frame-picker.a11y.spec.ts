@@ -43,16 +43,15 @@ test.describe("a11y: time-frame-picker", () => {
         await runA11yScan(TimeFramePickerAtom, rulesToDisable);
     });
 
-    test(
-        "should check a11y of time-frame-picker with date picker",
-        async ({ runA11yScan }) => {
-            const popoverWithDatePicker = Atom.find<PopoverAtom>(
-                PopoverAtom,
-                "nui-demo-visual-complex-popover"
-            );
+    test("should check a11y of time-frame-picker with date picker", async ({
+        runA11yScan,
+    }) => {
+        const popoverWithDatePicker = Atom.find<PopoverAtom>(
+            PopoverAtom,
+            "nui-demo-visual-complex-popover"
+        );
 
-            await popoverWithDatePicker.open();
-            await runA11yScan(TimeFramePickerAtom, rulesToDisable);
-        }
-    );
+        await popoverWithDatePicker.open();
+        await runA11yScan(TimeFramePickerAtom, rulesToDisable);
+    });
 });

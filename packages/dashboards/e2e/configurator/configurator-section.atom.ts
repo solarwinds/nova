@@ -26,10 +26,10 @@ export class ConfiguratorSectionAtom extends Atom {
     public static CSS_CLASS = "nui-widget-configurator-section";
 
     public getAccordionByIndex(index: number): AccordionAtom {
-        return Atom.findIn<AccordionAtom>(AccordionAtom, this.getLocator()).nth<AccordionAtom>(
+        return Atom.findIn<AccordionAtom>(
             AccordionAtom,
-            index
-        );
+            this.getLocator()
+        ).nth<AccordionAtom>(AccordionAtom, index);
     }
 
     public async getAccordionByLabel(
@@ -42,9 +42,7 @@ export class ConfiguratorSectionAtom extends Atom {
 
         for (let i = 0; i < count; i++) {
             const accordion = accordions.nth(i);
-            const text = await accordion
-                .locator(".nui-text-label")
-                .innerText();
+            const text = await accordion.locator(".nui-text-label").innerText();
             if (text === label) {
                 return new AccordionAtom(accordion);
             }

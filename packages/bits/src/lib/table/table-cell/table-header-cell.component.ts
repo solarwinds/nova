@@ -61,19 +61,20 @@ import { NonResizableColumnTypes, TableAlignmentOptions } from "../types";
         class: "nui-table__table-header-cell",
     },
     template: ` <ng-content></ng-content>
+        @if (sortingState.isColumnSorted) {
         <nui-icon
-            *ngIf="sortingState.isColumnSorted"
             class="nui-table__sorting-icon"
             [icon]="sortingState.sortingIcon"
             iconColor="gray"
         ></nui-icon>
+        } @if (isColumnResizable()) {
         <span
-            *ngIf="isColumnResizable()"
             (click)="$event.stopPropagation()"
             nuiTableResizer
             [columnIndex]="currentCellIndex"
             (resizerMovement)="onColumnWidthChange($event)"
-        ></span>`,
+        ></span>
+        }`,
     standalone: false,
 })
 export class TableHeaderCellComponent
@@ -301,7 +302,11 @@ export class TableHeaderCellComponent
                         this.columnDef.name
                     );
                 if (columnWidth > 45) {
-                    this.renderer.setStyle(this.elementRef.nativeElement, "width", columnWidth + "px");
+                    this.renderer.setStyle(
+                        this.elementRef.nativeElement,
+                        "width",
+                        columnWidth + "px"
+                    );
                 }
             })
         );
@@ -368,7 +373,9 @@ export class TableHeaderCellComponent
     }
 
     public onColumnWidthChange(offset: number): void {
-        const currentWidth = this.tableStateHandlerService.getColumnWidth(this.columnDef.name);
+        const currentWidth = this.tableStateHandlerService.getColumnWidth(
+            this.columnDef.name
+        );
         const resultWidth = currentWidth + offset;
 
         // resultWidth must be more than 45 because minimum width of the column is 46px

@@ -1,4 +1,5 @@
-<div *ngIf="form" [formGroup]="form">
+@if (form) {
+<div [formGroup]="form">
     <div>
         <nui-form-field
             caption="Default Metric"
@@ -18,13 +19,14 @@
                     style="cursor: pointer"
                     >Unset</nui-overlay-item
                 >
+                @for (metric of metrics; track metric) {
                 <nui-select-v2-option
-                    *ngFor="let metric of metrics"
                     [displayValueContext]="metric.label"
                     [value]="metric.id"
                 >
                     {{ metric.label }}
                 </nui-select-v2-option>
+                }
             </nui-select-v2>
             <nui-validation-message for="required" i18n>
                 This field is required
@@ -32,3 +34,4 @@
         </nui-form-field>
     </div>
 </div>
+}

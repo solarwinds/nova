@@ -37,7 +37,9 @@ import debounce from "lodash/debounce";
 import {
     CHART_COMPONENT,
     CHART_VIEW_STATUS_EVENT,
+    MOUSE_ACTIVE_EVENT,
     REFRESH_EVENT,
+    SERIES_STATE_CHANGE_EVENT,
 } from "../constants";
 import {
     IChart,
@@ -99,12 +101,19 @@ export class ChartComponent
     }
 
     public ngAfterContentInit(): void {
-        this.chart
-            .getEventBus()
-            .getStream(REFRESH_EVENT)
-            .subscribe(() => {
-                this.chart.updateDimensions();
+        const eventBus = this.chart.getEventBus();
+
+        eventBus.getStream(REFRESH_EVENT).subscribe(() => {
+            this.chart.updateDimensions();
+        });
+
+        [MOUSE_ACTIVE_EVENT, SERIES_STATE_CHANGE_EVENT].forEach((eventName) => {
+            eventBus.getStream(eventName).subscribe(() => {
+                this.ngZone.run(() => {
+                    this.cd.markForCheck();
+                });
             });
+        });
     }
 
     public ngAfterViewInit(): void {

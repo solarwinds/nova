@@ -19,7 +19,12 @@
 //  THE SOFTWARE.
 
 import { DebugElement } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 import { BehaviorSubject, Subject } from "rxjs";
 
 import {
@@ -41,11 +46,8 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [
-                    PopoverModalComponent,
-                    IconComponent,
-                    OverlayArrowComponent,
-                ],
+                imports: [IconComponent],
+                declarations: [PopoverModalComponent, OverlayArrowComponent],
                 providers: [
                     EdgeDetectionService,
                     LoggerService,
@@ -55,6 +57,19 @@ describe("components >", () => {
             });
             fixture = TestBed.createComponent(PopoverModalComponent);
             subject = fixture.componentInstance;
+            // Set required inputs so ngOnInit/template doesn't crash if Angular triggers CD
+            // via zone events (e.g., from zone.run() in ngAfterViewInit test)
+            subject.displayChange = new BehaviorSubject<boolean>(true);
+            subject.popoverBeforeHiddenSubject = new Subject<void>();
+            subject.popoverModalEventSubject =
+                new Subject<PopoverModalEvents>();
+            subject.context = {
+                arrowMarginTop: 0,
+                icon: "add",
+                popoverPosition: "left",
+                title: "title",
+                placement: "left",
+            };
             debugElement = fixture.debugElement;
         });
 
@@ -92,7 +107,7 @@ describe("components >", () => {
         });
 
         describe("ngAfterViewInit>", () => {
-            it("should update fadeIn in zoneSubscription", () => {
+            it("should update fadeIn asynchronously after initial render", fakeAsync(() => {
                 subject.fadeIn = false;
                 subject.context = {
                     arrowMarginTop: 0,
@@ -102,9 +117,9 @@ describe("components >", () => {
                     placement: "left",
                 };
                 subject.ngAfterViewInit();
-                (subject as any).zone.onStable.next();
+                tick();
                 expect(subject.fadeIn).toBe(true);
-            });
+            }));
         });
     });
 });

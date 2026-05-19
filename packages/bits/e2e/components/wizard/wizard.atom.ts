@@ -28,19 +28,27 @@ export class WizardAtom extends Atom {
     public static CSS_CLASS = "nui-wizard";
 
     public get backButton(): ButtonAtom {
-        return new ButtonAtom(this.getLocator().locator(".nui-wizard__back-button"));
+        return new ButtonAtom(
+            this.getLocator().locator(".nui-wizard__back-button")
+        );
     }
 
     public get nextButton(): ButtonAtom {
-        return new ButtonAtom(this.getLocator().locator(".nui-wizard__next-button"));
+        return new ButtonAtom(
+            this.getLocator().locator(".nui-wizard__next-button")
+        );
     }
 
     public get finishButton(): ButtonAtom {
-        return new ButtonAtom(this.getLocator().locator(".nui-wizard__finish-button"));
+        return new ButtonAtom(
+            this.getLocator().locator(".nui-wizard__finish-button")
+        );
     }
 
     public get cancelButton(): ButtonAtom {
-        return new ButtonAtom(this.getLocator().locator(".nui-wizard__cancel-button"));
+        return new ButtonAtom(
+            this.getLocator().locator(".nui-wizard__cancel-button")
+        );
     }
 
     public get header(): Locator {
@@ -76,7 +84,11 @@ export class WizardAtom extends Atom {
         const count = await steps.count();
         const titles: string[] = [];
         for (let i = 0; i < count; i++) {
-            const title = await steps.nth(i).locator(".nui-wizard__header-step-title").first().textContent();
+            const title = await steps
+                .nth(i)
+                .locator(".nui-wizard__header-step-title")
+                .first()
+                .textContent();
             titles.push(title ?? "");
         }
         return titles;

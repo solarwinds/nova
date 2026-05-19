@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { GridsterItem } from "angular-gridster2";
+import { GridsterItemConfig } from "angular-gridster2";
 
 import {
     IProportionalWidgetChartOptions,
@@ -41,7 +41,7 @@ import {
     TestProportionalDataSource4,
 } from "../../data/proportional-data-sources";
 
-export const positions: Record<string, GridsterItem> = {
+export const positions: Record<string, GridsterItemConfig> = {
     widget1: {
         cols: 4,
         rows: 4,

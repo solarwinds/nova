@@ -26,7 +26,7 @@ import {
     OnDestroy,
     OnInit,
 } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import { Apollo, gql } from "apollo-angular";
 import groupBy from "lodash/groupBy";
 import { BehaviorSubject, Observable, of } from "rxjs";
@@ -182,8 +182,9 @@ export class DrilldownDataSourceRealApi<T = any>
         return mainRequest.valueChanges.pipe(
             // mock delay
             delay(300),
+            filter((res) => !res.loading && !!res.data),
             // data mapping, !DS specific!
-            map((res) => res.data.countries),
+            map((res) => res.data!.countries),
             // adds mock icons to be displayed on leaf nodes !DS specific!
             map((res: any[]) =>
                 res.map((v) => ({
@@ -359,7 +360,7 @@ export class DrilldownWidgetExampleComponent implements OnInit {
         };
 
         // Setting the widget dimensions and position (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [drilldownWidget.id]: {
                 cols: 10,
                 rows: 10,

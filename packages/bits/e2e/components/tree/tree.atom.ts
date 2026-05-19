@@ -27,22 +27,23 @@ export class TreeAtom extends Atom {
     public static CSS_CLASS = "cdk-tree";
     private static NESTED_NODE_TAG = "cdk-nested-tree-node";
 
-    public getNestedNodes(context?: Locator, onlyBranches: boolean = false): Locator {
+    public getNestedNodes(
+        context?: Locator,
+        onlyBranches: boolean = false
+    ): Locator {
         if (onlyBranches) {
             return (context ?? this.getLocator()).locator(
                 `${TreeAtom.NESTED_NODE_TAG}:not(.nui-tree__leaf)`
             );
-        } else{
+        } else {
             return (context ?? this.getLocator()).locator(
-            TreeAtom.NESTED_NODE_TAG
-        );
+                TreeAtom.NESTED_NODE_TAG
+            );
         }
     }
 
     public get visibleNodes(): Locator {
-        return this.getLocator().locator(
-            `${TreeAtom.NESTED_NODE_TAG}:visible`
-        );
+        return this.getLocator().locator(`${TreeAtom.NESTED_NODE_TAG}:visible`);
     }
 
     public get branchCheckboxNodes(): Locator {
@@ -54,9 +55,7 @@ export class TreeAtom extends Atom {
     }
 
     public getAllHeaders(context?: Locator): Locator {
-        return (context ?? this.getLocator()).locator(
-            "[cdkTreeNodeToggle]"
-        );
+        return (context ?? this.getLocator()).locator("[cdkTreeNodeToggle]");
     }
 
     public getNodesByName(name: string): Locator {
@@ -83,7 +82,9 @@ export class TreeAtom extends Atom {
                 const expanded = ariaExpanded === "true";
                 if (!expanded) {
                     await node.click();
-                    await this.getNestedNodes(node).first().waitFor({ state: "visible" });
+                    await this.getNestedNodes(node)
+                        .first()
+                        .waitFor({ state: "visible" });
                     await this.expandAll(node);
                 }
             }
@@ -102,9 +103,7 @@ export class TreeAtom extends Atom {
 
     public async toHaveVisibleNodesCount(expected: number): Promise<void> {
         await expect(
-            this.getLocator().locator(
-                `${TreeAtom.NESTED_NODE_TAG}:visible`
-            )
+            this.getLocator().locator(`${TreeAtom.NESTED_NODE_TAG}:visible`)
         ).toHaveCount(expected);
     }
 

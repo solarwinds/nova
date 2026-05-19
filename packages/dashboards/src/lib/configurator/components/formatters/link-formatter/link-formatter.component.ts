@@ -32,14 +32,15 @@ import { ILinkFormatterData } from "../types";
 @Component({
     // selector: "nui-dashboards-link-formatter",
     template: `<div class="link-formatter-container">
+        @if (isValid) {
         <a
-            *ngIf="isValid"
             class="nui-text-ellipsis"
             [href]="data?.link"
             [target]="targetSelf ? '_self' : '_blank'"
         >
             {{ data?.value }}
         </a>
+        }
     </div>`,
     styles: [
         `

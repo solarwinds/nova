@@ -36,12 +36,22 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [WizardStepHeaderComponent, IconComponent],
+                declarations: [WizardStepHeaderComponent],
+                imports: [IconComponent],
             });
 
             fixture = TestBed.createComponent(WizardStepHeaderComponent);
             component = fixture.componentInstance;
             component.step = fakeStep;
+        });
+
+        // Destroy the fixture after each test to remove it from ApplicationRef.
+        // Angular 21's synchronizeOnce() processes ALL registered views (including
+        // views from other specs) when any fixture calls detectChanges(). If this
+        // fixture is left registered with a fake {} TemplateRef as component.label,
+        // synchronizeOnce() calls ngTemplateOutlet.createEmbeddedViewImpl on {} → crash.
+        afterEach(() => {
+            fixture.destroy();
         });
 
         describe("ngAfterViewInit", () => {
@@ -94,10 +104,7 @@ describe("components >", () => {
             });
 
             it("should call createStepStateConfigMap method", () => {
-                const spy = spyOn(
-                    component as any,
-                    "createStepStateConfigMap"
-                );
+                const spy = spyOn(component as any, "createStepStateConfigMap");
 
                 component.ngOnChanges(config);
                 expect(spy).toHaveBeenCalled();

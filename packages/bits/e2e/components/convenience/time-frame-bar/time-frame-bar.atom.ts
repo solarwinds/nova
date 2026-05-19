@@ -40,7 +40,9 @@ export class TimeFrameBarAtom extends Atom {
     public timeFramePickerCancelButton: ButtonAtom;
     public timeFramePickerUseButton: ButtonAtom;
 
-    constructor(rootElement = Atom.getFromRoot(`.${TimeFrameBarAtom.CSS_CLASS}`)) {
+    constructor(
+        rootElement = Atom.getFromRoot(`.${TimeFrameBarAtom.CSS_CLASS}`)
+    ) {
         super(rootElement);
 
         // ButtonAtom/PopoverAtom have their own CSS selectors, so we pass the button element itself
@@ -53,7 +55,10 @@ export class TimeFrameBarAtom extends Atom {
         this.popover = new PopoverAtom(rootElement.locator(".picker-label"));
 
         const popoverBody = this.popover.getPopoverBody();
-        this.quickPicker = Atom.findIn(QuickPickerAtom, popoverBody) as QuickPickerAtom;
+        this.quickPicker = Atom.findIn(
+            QuickPickerAtom,
+            popoverBody
+        ) as QuickPickerAtom;
         this.timeFramePicker = Atom.findIn(
             TimeFramePickerAtom,
             popoverBody
@@ -80,18 +85,12 @@ export class TimeFrameBarAtom extends Atom {
 
         await this.popover.open();
 
-        const startDate = this.timeFramePicker
-            .getStartDatetimePicker()
-            .datePicker;
-        const startTime = this.timeFramePicker
-            .getStartDatetimePicker()
-            .timePicker;
-        const endDate = this.timeFramePicker
-            .getEndDatetimePicker()
-            .datePicker;
-        const endTime = this.timeFramePicker
-            .getEndDatetimePicker()
-            .timePicker;
+        const startDate =
+            this.timeFramePicker.getStartDatetimePicker().datePicker;
+        const startTime =
+            this.timeFramePicker.getStartDatetimePicker().timePicker;
+        const endDate = this.timeFramePicker.getEndDatetimePicker().datePicker;
+        const endTime = this.timeFramePicker.getEndDatetimePicker().timePicker;
 
         await startDate.textbox.clearText();
         await startDate.textbox.acceptText(start.format(date));

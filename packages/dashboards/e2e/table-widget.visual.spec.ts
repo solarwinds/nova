@@ -18,7 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Atom, Camera, Helpers, test } from "@nova-ui/bits/sdk/atoms-playwright";
+import {
+    Atom,
+    Camera,
+    Helpers,
+    test,
+} from "@nova-ui/bits/sdk/atoms-playwright";
 
 import { ConfiguratorAtom } from "./configurator/configurator.atom";
 import { DashboardAtom } from "./dashboard.atom";
@@ -49,7 +54,9 @@ test.describe(`Visual tests: Dashboards - ${name}`, () => {
         await page.locator("#edit-mode").click();
 
         // Step 4: Open configurator for widget titled "Table Widget!"
-        const tableWidget = await dashboard.getWidgetByHeaderTitleText("Table Widget!");
+        const tableWidget = await dashboard.getWidgetByHeaderTitleText(
+            "Table Widget!"
+        );
         await tableWidget?.hover();
         await tableWidget?.header.clickEdit();
 
@@ -71,12 +78,16 @@ test.describe(`Visual tests: Dashboards - ${name}`, () => {
 
         // Step 9: Submit configurator and wait for it to close
         await page.locator(".nui-dashwiz-buttons__finish-button").click();
-        await page.locator(`.${ConfiguratorAtom.CSS_CLASS}`).waitFor({ state: "hidden" });
+        await page
+            .locator(`.${ConfiguratorAtom.CSS_CLASS}`)
+            .waitFor({ state: "hidden" });
 
         // Step 10: Disable edit mode
         await page.locator("#edit-mode").click();
 
-        await camera.say.cheese(`${name} - Column width update after configurator submit`);
+        await camera.say.cheese(
+            `${name} - Column width update after configurator submit`
+        );
 
         await camera.turn.off();
     });

@@ -42,7 +42,9 @@ export class FreetypeQueryBuilderAtom extends BaseSelectV2Atom {
     public getQueryText = async (): Promise<string> =>
         (await this.getLocator().textContent()) ?? "";
 
-    public toHaveQueryText = async (expected: string | RegExp): Promise<void> => {
+    public toHaveQueryText = async (
+        expected: string | RegExp
+    ): Promise<void> => {
         await expect(this.getLocator()).toHaveText(expected);
     };
 }

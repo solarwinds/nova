@@ -16,16 +16,15 @@
             [overlayConfig]="overlayConfig"
             #comboboxError
         >
-            <nui-select-v2-option
-                *ngFor="let item of customizedItems"
-                [value]="item"
-            >
+            @for (item of customizedItems; track item) {
+            <nui-select-v2-option [value]="item">
                 <span
                     class="mr-3"
                     [nuiComboboxV2OptionHighlight]="item.name"
                 ></span>
                 <nui-icon [icon]="item.icon"></nui-icon>
             </nui-select-v2-option>
+            }
         </nui-combobox-v2>
     </div>
     <div class="col">
@@ -40,12 +39,11 @@
                     [overlayConfig]="overlayConfig"
                     #comboboxReactive
                 >
-                    <nui-select-v2-option
-                        *ngFor="let item of items"
-                        [value]="item"
-                    >
+                    @for (item of items; track item) {
+                    <nui-select-v2-option [value]="item">
                         <span [nuiComboboxV2OptionHighlight]="item"></span>
                     </nui-select-v2-option>
+                    }
                 </nui-combobox-v2>
                 <nui-validation-message for="required" i18n>
                     This field is required
@@ -64,9 +62,11 @@
             [overlayConfig]="overlayConfig"
             #comboboxBasic
         >
-            <nui-select-v2-option *ngFor="let item of items" [value]="item">
+            @for (item of items; track item) {
+            <nui-select-v2-option [value]="item">
                 <span [nuiComboboxV2OptionHighlight]="item"></span>
             </nui-select-v2-option>
+            }
         </nui-combobox-v2>
     </div>
 </div>
@@ -81,8 +81,8 @@
             [overlayConfig]="overlayConfig"
             #comboboxSingle
         >
+            @for (option of options; track option) {
             <nui-select-v2-option
-                *ngFor="let option of options; index"
                 [value]="option"
                 [isDisabled]="isDisabled(option)"
             >
@@ -93,21 +93,18 @@
                     ></span>
                 </div>
             </nui-select-v2-option>
-
+            } @if (comboboxSingle.canCreateOption | async) {
             <nui-overlay-item
-                *ngIf="comboboxSingle.canCreateOption | async"
                 class="nui-combobox-v2__create-option"
                 (click)="createOption(comboboxSingle.inputValue)"
             >
                 Create option "{{ comboboxSingle.inputValue }}"
             </nui-overlay-item>
-            <div
-                *ngIf="comboboxSingle.searchEmpty | async"
-                class="nui-combobox-v2__empty-search"
-                i18n
-            >
+            } @if (comboboxSingle.searchEmpty | async) {
+            <div class="nui-combobox-v2__empty-search" i18n>
                 No other existing item available
             </div>
+            }
         </nui-combobox-v2>
     </div>
     <div class="col">
@@ -123,9 +120,9 @@
             #combobox
         >
             <ng-container selectedItems>
+                @for (item of combobox?.value; track item) {
                 <nui-chip
                     nuiMarkAsSelectedItem
-                    *ngFor="let item of combobox?.value"
                     class="ml-2"
                     closeButtonTooltip="Remove"
                     [item]="convertToChip(item)"
@@ -133,10 +130,11 @@
                     (mouseup)="$event.stopPropagation()"
                 >
                 </nui-chip>
+                }
             </ng-container>
 
+            @for (option of optionsMulti; track option) {
             <nui-select-v2-option
-                *ngFor="let option of optionsMulti"
                 [value]="option"
                 class="d-flex align-items-center"
             >
@@ -145,21 +143,18 @@
                     [nuiComboboxV2OptionHighlight]="option.name"
                 ></span>
             </nui-select-v2-option>
-
+            } @if (combobox.canCreateOption | async) {
             <nui-overlay-item
-                *ngIf="combobox.canCreateOption | async"
                 class="nui-combobox-v2__create-option"
                 (click)="createOptionMulti(combobox.inputValue)"
             >
                 Create option "{{ combobox.inputValue }}"
             </nui-overlay-item>
-            <div
-                *ngIf="combobox.searchEmpty | async"
-                class="nui-combobox-v2__empty-search"
-                i18n
-            >
+            } @if (combobox.searchEmpty | async) {
+            <div class="nui-combobox-v2__empty-search" i18n>
                 No other existing item available
             </div>
+            }
         </nui-combobox-v2>
     </div>
     <div class="col">
@@ -174,13 +169,14 @@
                 class="flex-grow-1"
                 #comboboxDisabled
             >
+                @for (item of optionsMulti.slice(); track item) {
                 <nui-select-v2-option
-                    *ngFor="let item of optionsMulti.slice()"
                     [value]="item"
                     [isDisabled]="item.disabled"
                 >
                     <span [nuiComboboxV2OptionHighlight]="item.name"></span>
                 </nui-select-v2-option>
+                }
             </nui-combobox-v2>
             <button
                 id="trigger-disabled"
@@ -203,9 +199,11 @@
             [overlayConfig]="overlayConfig"
             #comboboxValueRemoval
         >
-            <nui-select-v2-option *ngFor="let item of items" [value]="item">
+            @for (item of items; track item) {
+            <nui-select-v2-option [value]="item">
                 <span [nuiComboboxV2OptionHighlight]="item"></span>
             </nui-select-v2-option>
+            }
         </nui-combobox-v2>
     </div>
     <div class="col"></div>
@@ -224,19 +222,20 @@
         #comboboxMultiDimensions
     >
         <ng-container selectedItems>
+            @for (item of comboboxMultiDimensions?.value; track item) {
             <nui-chip
                 nuiMarkAsSelectedItem
                 class="ml-2"
-                *ngFor="let item of comboboxMultiDimensions?.value"
                 closeButtonTooltip="Remove"
                 [item]="convertToChip(item)"
                 (remove)="comboboxMultiDimensions.deselectItem(item)"
                 (mouseup)="$event.stopPropagation()"
             >
             </nui-chip>
+            }
         </ng-container>
+        @for (option of optionsMultiDimensions; track option) {
         <nui-select-v2-option
-            *ngFor="let option of optionsMultiDimensions"
             [value]="option"
             class="d-flex align-items-center"
         >
@@ -245,6 +244,7 @@
                 [nuiComboboxV2OptionHighlight]="option.name"
             ></span>
         </nui-select-v2-option>
+        }
     </nui-combobox-v2>
     <button id="show" class="ml-3" (click)="showList($event)">Show</button>
     <button id="hide" class="ml-3" (click)="hideList($event)">Hide</button>
@@ -294,20 +294,21 @@
         #comboboxWithDialog
     >
         <ng-container selectedItems>
+            @for (item of comboboxWithDialog?.value; track item) {
             <nui-chip
                 nuiMarkAsSelectedItem
                 class="ml-2"
-                *ngFor="let item of comboboxWithDialog?.value"
                 closeButtonTooltip="Remove"
                 [item]="convertToChip(item)"
                 (remove)="comboboxWithDialog.deselectItem(item)"
                 (mouseup)="$event.stopPropagation()"
             >
             </nui-chip>
+            }
         </ng-container>
 
+        @for (option of optionsMultiDimensions; track option) {
         <nui-select-v2-option
-            *ngFor="let option of optionsMultiDimensions"
             [value]="option"
             class="d-flex align-items-center"
             (click)="openInOverlay(headerButtonsContent)"
@@ -317,6 +318,7 @@
                 [nuiComboboxV2OptionHighlight]="option.name"
             ></span>
         </nui-select-v2-option>
+        }
     </nui-combobox-v2>
     <button class="ml-3" (click)="comboboxWithDialog.toggleDropdown()">
         Toggle
@@ -380,10 +382,8 @@
     <div class="dialog-body">
         <p>
             <nui-select-v2 placeholder="Select Item">
-                <nui-select-v2-option
-                    *ngFor="let item of dataset.items; let i = index"
-                    [value]="item"
-                >
+                @for (item of dataset.items; track item; let i = $index) {
+                <nui-select-v2-option [value]="item">
                     <div class="d-flex align-items-center">
                         <button
                             nui-button
@@ -405,7 +405,6 @@
                         >
                             Hover over me!
                         </nui-popover>
-
                         <nui-popover
                             popoverTitle="Modal Popover"
                             i18n-popoverTitle
@@ -425,7 +424,6 @@
                                 Show modal popover
                             </button>
                         </nui-popover>
-
                         <ng-template #popoverModal>
                             <span i18n
                                 >A modal popover can be used to grab the user's
@@ -454,17 +452,21 @@
                                 </button>
                             </div>
                         </ng-template>
-
                         <ng-template #popoverWithContainerTemplate i18n>
                             I'm appended to a container!
                         </ng-template>
-                        <nui-menu icon="menu" *ngIf="!i">
-                            <nui-menu-action *ngFor="let item of items">
+                        @if (!i) {
+                        <nui-menu icon="menu">
+                            @for (item of items; track item) {
+                            <nui-menu-action>
                                 {{ item }}
                             </nui-menu-action>
+                            }
                         </nui-menu>
+                        }
                     </div>
                 </nui-select-v2-option>
+                }
             </nui-select-v2>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
             maximus faucibus bibendum. Aenean feugiat interdum leo sed posuere.

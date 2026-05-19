@@ -37,7 +37,9 @@ export class WizardV2StepHeaderAtom extends Atom {
     public getLabelText = async (): Promise<string> =>
         (await this.label.textContent()) ?? "";
 
-    public toHaveLabelText = async (expected: string | RegExp): Promise<void> => {
+    public toHaveLabelText = async (
+        expected: string | RegExp
+    ): Promise<void> => {
         await expect(this.label).toHaveText(expected);
     };
 }

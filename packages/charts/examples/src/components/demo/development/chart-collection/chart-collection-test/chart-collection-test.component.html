@@ -1,4 +1,5 @@
-<div [style.min-height]="150" *ngFor="let myChart of myCharts; let i = index">
+@for (myChart of myCharts; track myChart; let i = $index) {
+<div [style.min-height]="150">
     <div class="d-flex w-100 h-100">
         <nui-chart
             class="w-100"
@@ -6,5 +7,8 @@
             [chart]="myChart.chart"
         ></nui-chart>
     </div>
-    <nui-divider *ngIf="myCharts.length - 1 > i"></nui-divider>
+    @if (myCharts.length - 1 > i) {
+    <nui-divider></nui-divider>
+    }
 </div>
+}

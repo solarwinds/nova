@@ -25,7 +25,7 @@ import {
     OnDestroy,
     OnInit,
 } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import keyBy from "lodash/keyBy";
 import { BehaviorSubject } from "rxjs";
 
@@ -165,7 +165,7 @@ export class ProportionalWidgetInteractiveExampleComponent implements OnInit {
         const widgetsIndex = keyBy(widgetsWithStructure, (w: IWidget) => w.id);
 
         // Setting the widget dimensions and position (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [widgetConfigs[0].id]: {
                 cols: 6,
                 rows: 6,

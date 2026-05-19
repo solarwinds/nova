@@ -1,8 +1,9 @@
+@if (enabled) {
 <nui-search
     class="unlimited-width"
-    *ngIf="enabled"
     [value]="searchValue"
     (inputChange)="onSearchInputChanged($event)"
     (cancel)="onSearch($event)"
     (search)="onSearch($event)"
 ></nui-search>
+}

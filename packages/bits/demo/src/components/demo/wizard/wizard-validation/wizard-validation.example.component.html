@@ -20,27 +20,19 @@
                     id="stepInputEmail"
                     formControlName="email"
                 ></nui-textbox>
-                <nui-validation-message
-                    for="required"
-                    *ngIf="myForm.controls['email'].errors?.required"
-                    i18n
-                >
+                @if (myForm.controls['email'].errors?.required) {
+                <nui-validation-message for="required" i18n>
                     This is required
                 </nui-validation-message>
-                <nui-validation-message
-                    for="pattern"
-                    *ngIf="myForm.controls['email'].errors?.pattern"
-                    i18n
-                >
+                } @if (myForm.controls['email'].errors?.pattern) {
+                <nui-validation-message for="pattern" i18n>
                     Please put at least "&#64;" to pass this validator
                 </nui-validation-message>
-                <nui-validation-message
-                    for="email"
-                    *ngIf="myForm.controls['email'].errors?.email"
-                    i18n
-                >
+                } @if (myForm.controls['email'].errors?.email) {
+                <nui-validation-message for="email" i18n>
                     This should be a valid email
                 </nui-validation-message>
+                }
                 <nui-validation-message [show]="true" i18n>
                     This message is always here
                 </nui-validation-message>

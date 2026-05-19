@@ -48,10 +48,12 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
         <div class="nui-menu-item__option" #menuOption tabindex="-1" title>
             <nui-checkbox
                 class="nui-menu-item__checkbox"
+                [attr.tabindex]="-1"
+                role="presentation"
                 [name]="name"
                 [value]="value"
                 [checked]="checked"
-                [disabled]="disabled"
+                [disabled]="!!disabled"
             >
                 <ng-content></ng-content>
             </nui-checkbox>
@@ -90,6 +92,7 @@ export class MenuOptionComponent extends MenuItemBaseComponent {
         if (!this.disabled) {
             event.preventDefault();
             this.checked = !this.checked;
+            this.refreshView();
             this.actionDone.emit(this.checked);
         }
     }
@@ -97,6 +100,11 @@ export class MenuOptionComponent extends MenuItemBaseComponent {
     @HostBinding("class.checked")
     public get checkedClass(): boolean {
         return this.checked;
+    }
+
+    @HostBinding("attr.aria-checked")
+    public get ariaChecked(): string {
+        return `${!!this.checked}`;
     }
 
     constructor(
@@ -115,6 +123,7 @@ export class MenuOptionComponent extends MenuItemBaseComponent {
 
     public doAction(): void {
         this.checked = !this.checked;
+        this.refreshView();
         this.actionDone.emit(this.checked);
     }
 }

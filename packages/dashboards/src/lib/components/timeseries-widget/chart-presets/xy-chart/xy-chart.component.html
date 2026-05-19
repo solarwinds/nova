@@ -2,12 +2,11 @@
     class="nui-chart-layout h-100"
     [class.layout-fixed]="configuration.gridConfig?.fixedLayout"
 >
-    <div
-        *ngIf="!configuration.gridConfig?.hideYAxisLabel"
-        class="axis-label-left nui-text-small"
-    >
+    @if (!configuration.gridConfig?.hideYAxisLabel) {
+    <div class="axis-label-left nui-text-small">
         <strong>{{ configuration.leftAxisLabel }}</strong>
     </div>
+    }
     <div class="chart">
         <nui-chart
             [nuiChartCollectionId]="collectionId"
@@ -15,9 +14,9 @@
             [chart]="chartAssist.chart"
         ></nui-chart>
     </div>
+    @if (hasLegend()) {
     <div
         class="d-flex"
-        *ngIf="hasLegend()"
         [ngClass]="[
             legendShouldBeAlignedRight() ? 'legend scrollable' : 'legend-bottom'
         ]"
@@ -30,8 +29,8 @@
                 legendShouldBeAlignedRight() ? 'vertical' : 'horizontal'
             "
         >
+            @if (widgetData.summarySerie && summarySerie) {
             <nui-legend-series
-                *ngIf="widgetData.summarySerie && summarySerie"
                 class="summary-serie"
                 [interactive]="false"
                 (mouseenter)="chartAssist.resetVisibleSeries()"
@@ -48,7 +47,6 @@
                     [color]="summaryLegendColor"
                 >
                 </nui-rich-legend-tile>
-
                 <div description class="description-container">
                     <div class="description-text nui-text-small">
                         <div
@@ -60,7 +58,6 @@
                         >
                             {{ summarySerie.legendDescriptionPrimary }}
                         </div>
-
                         <div
                             class="description description-secondary"
                             [title]="summarySerie.legendDescriptionSecondary"
@@ -69,28 +66,25 @@
                         </div>
                     </div>
                 </div>
-
+                @if (displayDeleteButton()) {
                 <button
                     nui-button
                     legendMenu
                     icon="remove"
                     type="button"
                     displayStyle="action"
-                    *ngIf="displayDeleteButton()"
                     (click)="removeMetric(summarySerie.id)"
                     displayStyle="action"
                 ></button>
+                }
             </nui-legend-series>
-
+            } @for ( legendSeries of chartAssist.legendSeriesSet; track
+            legendSeries.id) {
             <nui-legend-series
                 class="xy-chart__legend-series"
                 [ngClass]="
                     'xy-chart__legend-series--state-' +
                     chartAssist.renderStatesIndex[legendSeries.id]?.state
-                "
-                *ngFor="
-                    let legendSeries of chartAssist.legendSeriesSet;
-                    trackBy: chartAssist.seriesTrackByFn
                 "
                 [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                 (isSelectedChange)="
@@ -127,8 +121,8 @@
                     class="description-container d-flex nui-text-small justify-content-center"
                 >
                     <div class="descriptions">
+                        @if (!legendSeries.link) {
                         <div
-                            *ngIf="!legendSeries.link"
                             class="description description-primary"
                             [ngClass]="{
                                 'nui-text-link-small link': seriesInteractive
@@ -138,54 +132,52 @@
                         >
                             {{ legendSeries.legendDescriptionPrimary }}
                         </div>
+                        } @if (legendSeries.link) {
                         <a
                             class="description description-primary nui-text-link-small link"
                             (click)="$event.stopPropagation()"
-                            *ngIf="legendSeries.link"
                             [href]="legendSeries.link"
                             rel="noopener noreferrer"
                             [title]="legendSeries.legendDescriptionPrimary"
                         >
                             {{ legendSeries.legendDescriptionPrimary }}
                         </a>
+                        } @if ( !legendSeries.secondaryLink &&
+                        !widgetData.summarySerie ) {
                         <div
                             class="description description-secondary"
-                            *ngIf="
-                                !legendSeries.secondaryLink &&
-                                !widgetData.summarySerie
-                            "
                             [title]="legendSeries.legendDescriptionSecondary"
                         >
                             {{ legendSeries.legendDescriptionSecondary }}
                         </div>
+                        } @if ( legendSeries.secondaryLink &&
+                        !widgetData.summarySerie ) {
                         <a
                             class="description description-secondary nui-text-link-small link"
                             (click)="$event.stopPropagation()"
-                            *ngIf="
-                                legendSeries.secondaryLink &&
-                                !widgetData.summarySerie
-                            "
                             [href]="legendSeries.secondaryLink"
                             rel="noopener noreferrer"
                             [title]="legendSeries.legendDescriptionSecondary"
                         >
                             {{ legendSeries.legendDescriptionSecondary }}
                         </a>
+                        }
                     </div>
+                    @if (legendSeries.realtime) {
                     <nui-icon
-                        *ngIf="legendSeries.realtime"
                         icon="fast-poll"
                         iconColor="primary-blue"
                     ></nui-icon>
+                    } @if (legendSeries.transformer) {
                     <nui-icon
-                        *ngIf="legendSeries.transformer"
                         icon="performance"
                         iconColor="primary-blue"
                     ></nui-icon>
+                    }
                 </div>
+                @if (displayLegendMenu()) {
                 <nui-menu
                     legendMenu
-                    *ngIf="displayLegendMenu()"
                     icon="menu"
                     displayStyle="action"
                     [appendToBody]="true"
@@ -198,8 +190,8 @@
                         >
                     </nui-menu-group>
                     <nui-menu-group header="Display Transforms" i18n-header>
+                        @for (tr of transformers | nuiMapKeyValue; track tr) {
                         <nui-menu-action
-                            *ngFor="let tr of transformers | nuiMapKeyValue"
                             [class.selected]="
                                 legendSeries.transformer?.name ===
                                 tr.value.transformer?.name
@@ -210,9 +202,13 @@
                         >
                             {{ tr.value.displayName }}
                         </nui-menu-action>
+                        }
                     </nui-menu-group>
                 </nui-menu>
+                }
             </nui-legend-series>
+            }
         </nui-legend>
     </div>
+    }
 </div>

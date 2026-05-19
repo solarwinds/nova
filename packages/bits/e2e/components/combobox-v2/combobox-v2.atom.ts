@@ -42,9 +42,7 @@ export class ComboboxV2Atom extends BaseSelectV2Atom {
     );
 
     public get createOption(): Locator {
-        return this.getPopupElement.locator(
-            ".nui-combobox-v2__create-option"
-        );
+        return this.getPopupElement.locator(".nui-combobox-v2__create-option");
     }
 
     public toggleButton: Locator = this.getLocator().locator(
@@ -89,17 +87,23 @@ export class ComboboxV2Atom extends BaseSelectV2Atom {
     }
 
     public async getSelectionStart(): Promise<number> {
-        const start = await this.input.evaluate((el: HTMLInputElement) => el.selectionStart);
+        const start = await this.input.evaluate(
+            (el: HTMLInputElement) => el.selectionStart
+        );
         return isNil(start) ? 0 : start;
     }
 
     public async getSelectionEnd(): Promise<number> {
-        const end = await this.input.evaluate((el: HTMLInputElement) => el.selectionEnd);
+        const end = await this.input.evaluate(
+            (el: HTMLInputElement) => el.selectionEnd
+        );
         return isNil(end) ? 0 : end;
     }
 
     public async getSelectionRange(): Promise<number> {
-        return (await this.getSelectionEnd()) - (await this.getSelectionStart());
+        return (
+            (await this.getSelectionEnd()) - (await this.getSelectionStart())
+        );
     }
 
     public async waitElementVisible(): Promise<void> {

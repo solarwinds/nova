@@ -8,26 +8,20 @@
         icon="{{ toastIcon }}"
     ></nui-icon>
     <div class="nui-toast__content-message flex-grow-1">
-        <span
-            *ngIf="title"
-            class="nui-toast__content-title"
-            [attr.aria-label]="title"
-            >{{ title }}</span
-        >
-        <span
-            *ngIf="body && options.enableHtml"
-            class="nui-toast__content-body"
-            [innerHTML]="body"
-        ></span>
-        <span
-            *ngIf="body && !options.enableHtml"
-            class="nui-toast__content-body"
-            [attr.aria-label]="body"
-            >{{ body }}</span
-        >
+        @if (title) {
+        <span class="nui-toast__content-title" [attr.aria-label]="title">{{
+            title
+        }}</span>
+        } @if (body && options.enableHtml) {
+        <span class="nui-toast__content-body" [innerHTML]="body"></span>
+        } @if (body && !options.enableHtml) {
+        <span class="nui-toast__content-body" [attr.aria-label]="body">{{
+            body
+        }}</span>
+        }
     </div>
+    @if (options.closeButton) {
     <button
-        *ngIf="options.closeButton"
         nui-button
         type="button"
         class="nui-toast__dismiss-button"
@@ -36,9 +30,8 @@
         icon="close"
         (click)="remove()"
     ></button>
+    }
 </div>
-<div
-    *ngIf="options.progressBar"
-    class="nui-toast__progress"
-    [style.width.%]="width"
-></div>
+@if (options.progressBar) {
+<div class="nui-toast__progress" [style.width.%]="width"></div>
+}

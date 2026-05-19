@@ -6,15 +6,15 @@
     (formReady)="onFormReady($event)"
 ></nui-items-dynamic>
 
-<div class="pl-4 pr-4" *ngIf="(emptySeries$ | async) && form.touched">
+@if ((emptySeries$ | async) && form.touched) {
+<div class="pl-4 pr-4">
     <nui-message type="critical" [allowDismiss]="false" i18n>
         <b>At least one series must be added.</b>
     </nui-message>
 </div>
-
+} @if (isPossibleToAddSeries()) {
 <button
     nui-button
-    *ngIf="isPossibleToAddSeries()"
     icon="add"
     displayStyle="action"
     type="button"
@@ -24,3 +24,4 @@
 >
     Add new series
 </button>
+}

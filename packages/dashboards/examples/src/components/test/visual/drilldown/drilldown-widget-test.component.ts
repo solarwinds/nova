@@ -26,7 +26,7 @@ import {
     OnInit,
     ViewChild,
 } from "@angular/core";
-import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import { GridsterConfig, GridsterItemConfig } from "angular-gridster2";
 import groupBy from "lodash/groupBy";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
@@ -248,7 +248,7 @@ export class DrilldownWidgetTestComponent implements OnInit {
         };
 
         // Setting the widget dimensions and position (this is for gridster)
-        const positions: Record<string, GridsterItem> = {
+        const positions: Record<string, GridsterItemConfig> = {
             [drilldownWidget.id]: {
                 cols: 10,
                 rows: 10,

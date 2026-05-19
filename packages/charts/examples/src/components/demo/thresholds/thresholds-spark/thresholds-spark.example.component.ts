@@ -23,6 +23,7 @@ import { rgb } from "d3-color";
 import get from "lodash/get";
 import moment, { Duration, Moment } from "moment/moment";
 
+import { getColorValueByName } from "@nova-ui/bits";
 import {
     BandScale,
     CHART_MARKERS,
@@ -41,7 +42,6 @@ import {
     ThresholdsService,
     TimeScale,
 } from "@nova-ui/charts";
-import { getColorValueByName } from "@nova-ui/bits";
 
 enum Status {
     Error = "error",

@@ -49,10 +49,7 @@ import { AnimationsModule } from "./environments/environment";
         NuiSwitchModule,
     ],
     declarations: [AppComponent],
-    providers: [
-        DatePipe,
-        LocalFilteringDataSource,
-    ],
+    providers: [DatePipe, LocalFilteringDataSource],
     bootstrap: [AppComponent],
 })
 export class DashboardsDemoModule {}

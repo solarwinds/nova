@@ -16,7 +16,8 @@
         ></ng-template>
     </ng-container>
 </div>
-<div class="d-flex h-100" *ngIf="fallbackKey">
+@if (fallbackKey) {
+<div class="d-flex h-100">
     <ng-container
         nuiComponentPortal
         #componentPortal="nuiComponentPortal"
@@ -31,3 +32,4 @@
         ></ng-template>
     </ng-container>
 </div>
+}

@@ -24,12 +24,21 @@ import { Subject } from "rxjs";
 
 import {
     DATA_POINT_INTERACTION_RESET,
+    DATA_POINT_NOT_FOUND,
     HIGHLIGHT_SERIES_EVENT,
 } from "../../../constants";
 import { IXYScales, Scales } from "../../../core/common/scales/types";
-import { IDataSeries, IRendererEventPayload } from "../../../core/common/types";
+import {
+    IDataPoint,
+    IDataSeries,
+    IRendererEventPayload,
+} from "../../../core/common/types";
 import { IRectangleAccessors } from "../../accessors/rectangle-accessors";
-import { IHighlightStrategy, IRenderSeries } from "../../types";
+import {
+    IHighlightStrategy,
+    IRenderSeries,
+    RenderLayerName,
+} from "../../types";
 import { BarRenderer } from "../bar-renderer";
 
 export class BarSeriesHighlightStrategy
@@ -129,5 +138,29 @@ export class BarSeriesHighlightStrategy
         renderer: BarRenderer,
         renderSeries: IRenderSeries<IRectangleAccessors>,
         rendererSubject: Subject<IRendererEventPayload>
-    ): void {}
+    ): void {
+        renderSeries.containers[RenderLayerName.data]
+            .selectAll<SVGRectElement, any>(
+                `g.${renderer.barContainerClass} rect.${BarRenderer.BAR_RECT_CLASS}`
+            )
+            .on("mouseenter", (d: any, i: number) => {
+                rendererSubject.next({
+                    eventName: HIGHLIGHT_SERIES_EVENT,
+                    data: renderer.getDataPoint(renderSeries, d, i),
+                });
+            })
+            .on("mouseleave", () => {
+                const dataPoint: IDataPoint = {
+                    seriesId: renderSeries.dataSeries.id,
+                    dataSeries: renderSeries.dataSeries,
+                    index: DATA_POINT_NOT_FOUND,
+                    data: undefined,
+                };
+
+                rendererSubject.next({
+                    eventName: HIGHLIGHT_SERIES_EVENT,
+                    data: dataPoint,
+                });
+            });
+    }
 }

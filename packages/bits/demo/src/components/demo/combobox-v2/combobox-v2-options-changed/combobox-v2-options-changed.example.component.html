@@ -6,9 +6,11 @@
     [formControl]="comboboxControl"
     #combobox
 >
-    <nui-select-v2-option *ngFor="let item of items" [value]="item">
+    @for (item of items; track item) {
+    <nui-select-v2-option [value]="item">
         <span [nuiComboboxV2OptionHighlight]="item"></span>
     </nui-select-v2-option>
+    }
 </nui-combobox-v2>
 
 <button
@@ -40,21 +42,24 @@
     #multiselect
 >
     <ng-container selectedItems>
+        @for (option of multiselect?.value; track option) {
         <nui-chip
             nuiMarkAsSelectedItem
             class="ml-2"
-            *ngFor="let option of multiselect?.value"
             closeButtonTooltip="Remove"
             [item]="convertToChip(option)"
             (remove)="multiselect.deselectItem(option)"
             (mouseup)="$event.stopPropagation()"
         >
         </nui-chip>
+        }
     </ng-container>
 
-    <nui-select-v2-option *ngFor="let item of items" [value]="item">
+    @for (item of items; track item) {
+    <nui-select-v2-option [value]="item">
         <span [nuiComboboxV2OptionHighlight]="item"></span>
     </nui-select-v2-option>
+    }
 </nui-combobox-v2>
 <button
     nui-button

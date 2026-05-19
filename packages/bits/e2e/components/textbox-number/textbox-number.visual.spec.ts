@@ -32,8 +32,13 @@ test.describe(`Visual tests: ${name}`, () => {
     let disabledTextboxNumber: TextboxNumberAtom;
 
     test.beforeEach(async ({ page }) => {
-        await Helpers.prepareBrowser("textbox/textbox-number-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.prepareBrowser(
+            "textbox/textbox-number-visual-test",
+            page
+        );
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
         basicTextboxNumber = Atom.find<TextboxNumberAtom>(
             TextboxNumberAtom,
             "nui-visual-test-textbox-number"

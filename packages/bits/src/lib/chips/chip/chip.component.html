@@ -4,9 +4,11 @@
         [title]="!isContentProjected ? item?.label : ''"
         [ngClass]="{ projected: isContentProjected }"
     >
-        <ng-container *ngIf="isContentProjected; else itemLabel">
-            <ng-container *ngTemplateOutlet="projection"></ng-container>
-        </ng-container>
+        @if (isContentProjected) {
+        <ng-container *ngTemplateOutlet="projection"></ng-container>
+        } @else {
+        {{ item?.label }}
+        }
     </span>
     <nui-icon
         (click)="onRemove()"

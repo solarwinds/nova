@@ -6,11 +6,9 @@
             type="button"
             disabled
         ></button>
-        <nui-icon
-            class="nui-tree__icon"
-            *ngIf="node.icon"
-            [icon]="node.icon"
-        ></nui-icon>
+        @if (node.icon) {
+        <nui-icon class="nui-tree__icon" [icon]="node.icon"></nui-icon>
+        }
         <span class="{{ node.textStyle || textStyles.DEFAULT }}">{{
             node.name
         }}</span>
@@ -28,11 +26,9 @@
                         : 'triangle-right'
                 }}"
             ></nui-icon>
-            <nui-icon
-                class="nui-tree__icon"
-                *ngIf="node.icon"
-                [icon]="node.icon"
-            ></nui-icon>
+            @if (node.icon) {
+            <nui-icon class="nui-tree__icon" [icon]="node.icon"></nui-icon>
+            }
             <span
                 i18n
                 class="nui-tree__header-title {{

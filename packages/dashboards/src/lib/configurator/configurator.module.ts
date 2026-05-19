@@ -24,7 +24,7 @@ import { PortalModule } from "@angular/cdk/portal";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
-import { GridsterModule } from "angular-gridster2";
+import { Gridster, GridsterItem } from "angular-gridster2";
 
 import {
     NuiBusyModule,
@@ -215,7 +215,8 @@ const exportedDeclarations = [
         ScrollingModule,
         NuiDashboardsCommonModule,
         ReactiveFormsModule,
-        GridsterModule,
+        Gridster,
+        GridsterItem,
         DragDropModule,
         PortalModule,
         NuiBusyModule,

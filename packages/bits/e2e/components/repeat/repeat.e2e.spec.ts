@@ -25,20 +25,19 @@ import { SwitchAtom } from "../switch/switch.atom";
 import { TabHeadingGroupAtom } from "../tab-heading-group/tab-heading-group.atom";
 import { TabHeadingAtom } from "../tab-heading-group/tab-heading.atom";
 
-
 test.describe("USERCONTROL Repeat", () => {
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("repeat/repeat-test", page);
     });
 
-    const getTabByText = async (text: string): Promise<TabHeadingAtom> =>
-        {
-            const s = Atom.find<TabHeadingGroupAtom>(TabHeadingGroupAtom, "repeat-test-tab-group")
-            await expect(s.getLocator()).toBeVisible();
-            return s.getTabByText(
-                    text
-                );
-        };
+    const getTabByText = async (text: string): Promise<TabHeadingAtom> => {
+        const s = Atom.find<TabHeadingGroupAtom>(
+            TabHeadingGroupAtom,
+            "repeat-test-tab-group"
+        );
+        await expect(s.getLocator()).toBeVisible();
+        return s.getTabByText(text);
+    };
     const getList = (id: string) => Atom.find<RepeatAtom>(RepeatAtom, id);
 
     const expectSelection = async (
@@ -53,8 +52,10 @@ test.describe("USERCONTROL Repeat", () => {
         const vScrollList = getList("repeat-test-vscroll");
         await expect
             .poll(async () => {
-                const viewport = await vScrollList.vScrollViewport.boundingBox();
-                const content = await vScrollList.vScrollViewportContent.boundingBox();
+                const viewport =
+                    await vScrollList.vScrollViewport.boundingBox();
+                const content =
+                    await vScrollList.vScrollViewportContent.boundingBox();
                 return (
                     viewport != null &&
                     content != null &&

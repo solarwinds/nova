@@ -20,7 +20,6 @@
 
 import { test, Helpers, Animations } from "../../setup";
 
-
 test.describe("a11y: badge", () => {
     const rulesToDisable = [
         "label",
@@ -31,7 +30,9 @@ test.describe("a11y: badge", () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("common/badge/badge-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
     });
 
     test("should check a11y of badge", async ({ runA11yScan }) => {

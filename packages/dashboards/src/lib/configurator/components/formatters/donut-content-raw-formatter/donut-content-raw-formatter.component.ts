@@ -31,23 +31,24 @@ import { IFormatterData } from "../types";
 @Component({
     selector: "nui-donut-content-raw-formatter",
     template: `<ng-container>
+        @if (config?.chartDonutContentIcon) {
         <nui-icon
-            *ngIf="config?.chartDonutContentIcon"
             [icon]="config?.chartDonutContentIcon"
             iconSize="medium"
         ></nui-icon>
+        }
         <div class="nui-text-page">
-            <span
-                *ngIf="sum < conversionThreshold; else convertedValueDisplay"
-                >{{ sum | number : "1.0-3" }}</span
-            >
-            <ng-template #convertedValueDisplay>{{
-                convertedValue
-            }}</ng-template>
+            @if (sum < conversionThreshold) {
+            <span>{{ sum | number : "1.0-3" }}</span>
+            } @else {
+            {{ convertedValue }}
+            }
         </div>
-        <div *ngIf="config?.chartDonutContentLabel" class="nui-text-secondary">
+        @if (config?.chartDonutContentLabel) {
+        <div class="nui-text-secondary">
             {{ config?.chartDonutContentLabel }}
         </div>
+        }
     </ng-container>`,
     standalone: false,
 })

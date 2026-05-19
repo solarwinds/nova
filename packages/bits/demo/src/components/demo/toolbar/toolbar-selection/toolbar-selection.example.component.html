@@ -7,67 +7,65 @@
         [noEmptyMessage]="noEmptyMessage"
         #toolbar
     >
-        <ng-container *ngIf="selectionEnabled">
-            <nui-toolbar-group>
-                <nui-toolbar-item
-                    type="primary"
-                    icon="deselect"
-                    i18n-title
-                    title="Deselect"
-                >
-                </nui-toolbar-item>
-                <nui-toolbar-item
-                    type="primary"
-                    icon="deselect-all"
-                    i18n-title
-                    title="Deselect All"
-                >
-                </nui-toolbar-item>
-            </nui-toolbar-group>
-            <nui-toolbar-group>
-                <nui-toolbar-item
-                    displayStyle="destructive"
-                    type="primary"
-                    icon="delete"
-                    i18n-title
-                    title="Delete"
-                >
-                </nui-toolbar-item>
-            </nui-toolbar-group>
-        </ng-container>
-
-        <ng-container *ngIf="!selectionEnabled">
-            <nui-toolbar-group>
-                <nui-toolbar-item
-                    type="primary"
-                    icon="enable"
-                    i18n-title
-                    title="Enable"
-                >
-                </nui-toolbar-item>
-                <nui-toolbar-item
-                    type="primary"
-                    icon="export"
-                    i18n-title
-                    title="Execute"
-                >
-                </nui-toolbar-item>
-                <nui-toolbar-item
-                    type="primary"
-                    icon="hide"
-                    i18n-title
-                    title="Hide"
-                >
-                </nui-toolbar-item>
-                <nui-toolbar-item
-                    type="primary"
-                    icon="edit"
-                    i18n-title
-                    title="Edit"
-                >
-                </nui-toolbar-item>
-            </nui-toolbar-group>
-        </ng-container>
+        @if (selectionEnabled) {
+        <nui-toolbar-group>
+            <nui-toolbar-item
+                type="primary"
+                icon="deselect"
+                i18n-title
+                title="Deselect"
+            >
+            </nui-toolbar-item>
+            <nui-toolbar-item
+                type="primary"
+                icon="deselect-all"
+                i18n-title
+                title="Deselect All"
+            >
+            </nui-toolbar-item>
+        </nui-toolbar-group>
+        <nui-toolbar-group>
+            <nui-toolbar-item
+                displayStyle="destructive"
+                type="primary"
+                icon="delete"
+                i18n-title
+                title="Delete"
+            >
+            </nui-toolbar-item>
+        </nui-toolbar-group>
+        } @if (!selectionEnabled) {
+        <nui-toolbar-group>
+            <nui-toolbar-item
+                type="primary"
+                icon="enable"
+                i18n-title
+                title="Enable"
+            >
+            </nui-toolbar-item>
+            <nui-toolbar-item
+                type="primary"
+                icon="export"
+                i18n-title
+                title="Execute"
+            >
+            </nui-toolbar-item>
+            <nui-toolbar-item
+                type="primary"
+                icon="hide"
+                i18n-title
+                title="Hide"
+            >
+            </nui-toolbar-item>
+            <nui-toolbar-item
+                type="primary"
+                icon="edit"
+                i18n-title
+                title="Edit"
+            >
+            </nui-toolbar-item>
+        </nui-toolbar-group>
+        }
         <div class="nui-toolbar-embedded">
             <nui-search
                 [value]="value"

@@ -59,34 +59,35 @@
     </cdk-virtual-scroll-viewport>
 
     <footer class="app-table-with-custom-virtual-scroll-scrolling-footer">
-        <div *ngIf="isBusy; else defaultText">
+        @if (isBusy) {
+        <div>
             <nui-progress [show]="true" [compactMode]="true"></nui-progress>
             <div class="d-flex justify-content-center align-items-center">
                 Loading next {{ pageSize }} items...
             </div>
         </div>
-        <ng-template #defaultText>
-            <div class="d-flex justify-content-center align-items-center">
-                <div class="p-1 d-flex">
-                    <div class="d-flex pt-3 pb-3" i18n>
-                        Showing {{ items.length }}
-                        item(s).
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <button
-                            btn
-                            nui-button
-                            i18n
-                            type="button"
-                            size="default"
-                            displayStyle="action"
-                            (click)="applyFilters(false)"
-                        >
-                            Load another {{ pageSize }} items
-                        </button>
-                    </div>
+        } @else {
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="p-1 d-flex">
+                <div class="d-flex pt-3 pb-3" i18n>
+                    Showing {{ items.length }}
+                    item(s).
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button
+                        btn
+                        nui-button
+                        i18n
+                        type="button"
+                        size="default"
+                        displayStyle="action"
+                        (click)="applyFilters(false)"
+                    >
+                        Load another {{ pageSize }} items
+                    </button>
                 </div>
             </div>
-        </ng-template>
+        </div>
+        }
     </footer>
 </div>

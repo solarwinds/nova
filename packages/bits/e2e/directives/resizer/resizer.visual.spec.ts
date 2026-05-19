@@ -32,7 +32,9 @@ test.describe(`Visual tests: ${name}`, () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("resizer/resizer-visual-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
 
         resizerNested1 = Atom.find<ResizerAtom>(
             ResizerAtom,

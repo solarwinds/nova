@@ -1,7 +1,7 @@
 <div class="nui-filter-groups-wrapper">
     <ng-content></ng-content>
+    @if (emptyFilterGroupsExist()) {
     <div
-        *ngIf="emptyFilterGroupsExist()"
         class="nui-filter-groups-wrapper__hidden-filters d-flex align-items-center"
     >
         <nui-popover [template]="hiddenFiltersPopover">
@@ -10,6 +10,7 @@
             }}
         </nui-popover>
     </div>
+    }
 </div>
 
 <ng-template #hiddenFiltersPopover>

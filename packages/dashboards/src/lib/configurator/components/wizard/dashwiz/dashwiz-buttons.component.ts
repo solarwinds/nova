@@ -41,8 +41,8 @@ import { IDashwizButtonsComponent } from "../types";
             >
                 <span i18n>Cancel</span>
             </button>
+            @if (!isFirstStepActive) {
             <button
-                *ngIf="!isFirstStepActive"
                 class="ml-3 nui-dashwiz-buttons__back-button"
                 nui-button
                 icon="caret-left"
@@ -52,8 +52,8 @@ import { IDashwizButtonsComponent } from "../types";
             >
                 <span i18n>Back</span>
             </button>
+            } @if (!isLastStepActive && canProceed) {
             <button
-                *ngIf="!isLastStepActive && canProceed"
                 class="ml-3 nui-dashwiz-buttons__next-button"
                 nui-button
                 type="button"
@@ -63,8 +63,8 @@ import { IDashwizButtonsComponent } from "../types";
             >
                 <span>{{ nextText }}</span>
             </button>
+            } @if (canFinish || isLastStepActive) {
             <button
-                *ngIf="canFinish || isLastStepActive"
                 class="ml-3 nui-dashwiz-buttons__finish-button"
                 nui-button
                 type="button"
@@ -75,6 +75,7 @@ import { IDashwizButtonsComponent } from "../types";
             >
                 <span>{{ finishText }}</span>
             </button>
+            }
         </div>
     `,
     standalone: false,

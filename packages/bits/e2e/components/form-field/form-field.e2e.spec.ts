@@ -66,7 +66,10 @@ test.describe("USERCONTROL form-field >", () => {
             FormFieldAtom,
             "nui-demo-form-field-with-template"
         );
-        textbox = Atom.find<TextboxAtom>(TextboxAtom, "nui-form-field-test-textbox");
+        textbox = Atom.find<TextboxAtom>(
+            TextboxAtom,
+            "nui-form-field-test-textbox"
+        );
         textboxNumber = Atom.find<TextboxNumberAtom>(
             TextboxNumberAtom,
             "nui-form-field-test-textbox-number"
@@ -80,15 +83,30 @@ test.describe("USERCONTROL form-field >", () => {
             "nui-form-field-test-toggle-disable-state-button",
             true
         );
-        radioGroup = Atom.find<RadioGroupAtom>(RadioGroupAtom, "nui-form-field-test-radio");
-        select = Atom.find<SelectV2Atom>(SelectV2Atom, "nui-form-field-test-select");
-        combobox = Atom.find<ComboboxV2Atom>(ComboboxV2Atom, "nui-form-field-test-combobox");
-        switchElement = Atom.find<SwitchAtom>(SwitchAtom, "nui-form-field-test-switch");
+        radioGroup = Atom.find<RadioGroupAtom>(
+            RadioGroupAtom,
+            "nui-form-field-test-radio"
+        );
+        select = Atom.find<SelectV2Atom>(
+            SelectV2Atom,
+            "nui-form-field-test-select"
+        );
+        combobox = Atom.find<ComboboxV2Atom>(
+            ComboboxV2Atom,
+            "nui-form-field-test-combobox"
+        );
+        switchElement = Atom.find<SwitchAtom>(
+            SwitchAtom,
+            "nui-form-field-test-switch"
+        );
         timepicker = Atom.find<TimepickerAtom>(
             TimepickerAtom,
             "nui-form-field-test-timepicker"
         );
-        checkbox = Atom.find<CheckboxAtom>(CheckboxAtom, "nui-form-field-test-checkbox");
+        checkbox = Atom.find<CheckboxAtom>(
+            CheckboxAtom,
+            "nui-form-field-test-checkbox"
+        );
         checkboxGroup = Atom.find<CheckboxGroupAtom>(
             CheckboxGroupAtom,
             "nui-form-field-test-checkbox-group"
@@ -108,7 +126,10 @@ test.describe("USERCONTROL form-field >", () => {
 
     test("should display info from template", async () => {
         const iconAtom = atomWithTemplate.getInfoIcon();
-        await expect(iconAtom.getLocator()).toHaveAttribute("icon", "severity_info");
+        await expect(iconAtom.getLocator()).toHaveAttribute(
+            "icon",
+            "severity_info"
+        );
 
         const iconPopover = atomWithTemplate.getInfoPopover();
         await iconPopover.openByHover();
@@ -241,7 +262,9 @@ test.describe("USERCONTROL form-field >", () => {
         });
 
         test("should dynamically enable checkbox-group", async () => {
-            await expect(checkboxGroup.getCheckboxByIndex(0).getInputElement).toBeEnabled();
+            await expect(
+                checkboxGroup.getCheckboxByIndex(0).getInputElement
+            ).toBeEnabled();
         });
 
         test("should dynamically enable select", async () => {

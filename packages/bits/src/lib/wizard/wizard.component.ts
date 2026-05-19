@@ -151,7 +151,7 @@ export class WizardComponent
         if (activeTabs.length === 0) {
             this.currentStep = this.steps.first;
             this.selectStep(this.currentStep);
-            this.changeDetector.detectChanges();
+            this.changeDetector.markForCheck();
         }
         this.steps.toArray().forEach((step: WizardStepComponent) => {
             step.valid.subscribe((event: any) => {
@@ -177,8 +177,11 @@ export class WizardComponent
 
     public ngAfterViewChecked(): void {
         if (this.stretchStepLines) {
-            this.stepLineWidth = Math.round(this.getLargestLabelWidth() / 2);
-            this.changeDetector.detectChanges();
+            const newWidth = Math.round(this.getLargestLabelWidth() / 2);
+            if (newWidth !== this.stepLineWidth) {
+                this.stepLineWidth = newWidth;
+                this.changeDetector.markForCheck();
+            }
         }
     }
 
@@ -193,7 +196,8 @@ export class WizardComponent
         wizardStep: IWizardStepComponent,
         indexToInsert: number
     ): IWizardStepComponent {
-        const componentRef = this.dynamicStep.createComponent(WizardStepComponent);
+        const componentRef =
+            this.dynamicStep.createComponent(WizardStepComponent);
         const instance: IWizardStepComponent = componentRef.instance;
         const wizardStepInputs = this.getInputsAndOutputs(wizardStep);
 
@@ -214,6 +218,7 @@ export class WizardComponent
         this.arraySteps.splice(indexToInsert, 0, componentRef.instance);
         this.steps.reset([]);
         this.steps.reset(this.arraySteps);
+        this.changeDetector.markForCheck();
         return componentRef.instance;
     }
 
@@ -243,14 +248,14 @@ export class WizardComponent
         const indexOfStep = this.arraySteps.indexOf(step);
         const toDisable = this.arraySteps[indexOfStep];
         toDisable.disabled = true;
-        this.changeDetector.detectChanges();
+        this.changeDetector.markForCheck();
     }
 
     public enableStep(step: WizardStepComponent): void {
         const indexOfStep = this.arraySteps.indexOf(step);
         const toDisable = this.arraySteps[indexOfStep];
         toDisable.disabled = false;
-        this.changeDetector.detectChanges();
+        this.changeDetector.markForCheck();
     }
 
     public hideStep(step: WizardStepComponent): void {

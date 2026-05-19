@@ -53,19 +53,25 @@
 <p>And here is how it's going to look:</p>
 <div class="nui-chart-layout highlight-areas m-5">
     <div class="chart"><strong>Chart</strong></div>
-    <div class="legend" *ngIf="hasLegend"><strong>Legend</strong></div>
-    <div class="legend-bottom" *ngIf="hasLegendBottom">
+    @if (hasLegend) {
+    <div class="legend"><strong>Legend</strong></div>
+    } @if (hasLegendBottom) {
+    <div class="legend-bottom">
         <strong>Bottom legend</strong>
     </div>
-    <div class="axis-label-left" *ngIf="hasAxisLabelLeft">
+    } @if (hasAxisLabelLeft) {
+    <div class="axis-label-left">
         <strong>Left axis label</strong>
     </div>
-    <div class="axis-label-right" *ngIf="hasAxisLabelRight">
+    } @if (hasAxisLabelRight) {
+    <div class="axis-label-right">
         <strong>Right axis label</strong>
     </div>
-    <div class="axis-label-bottom" *ngIf="hasAxisLabelBottom">
+    } @if (hasAxisLabelBottom) {
+    <div class="axis-label-bottom">
         <strong>Bottom axis label</strong>
     </div>
+    }
 </div>
 <nui-example-code language="html" [code]="intro" />
 <div class="d-flex align-items-center code-line px-3">

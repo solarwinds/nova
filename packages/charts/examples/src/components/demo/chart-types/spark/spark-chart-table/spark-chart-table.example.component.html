@@ -63,7 +63,7 @@
             </div>
 
             <!-- this plugin component has to be placed in the table cell template as every chart
-                 will have separate positioning data provided through it's plugin -->
+      will have separate positioning data provided through it's plugin -->
             <nui-chart-popover
                 [plugin]="element.popoverPlugin"
                 [template]="popoverTemplate"
@@ -78,9 +78,11 @@
 <!-- It is sufficient to provide a single template definition if the table is using the same popover template for all rows -->
 <ng-template #popoverTemplate let-dataPoints="dataPoints">
     <div class="p-3">
-        <div *ngFor="let item of dataPoints | keyvalue">
+        @for (item of dataPoints | keyvalue; track item) {
+        <div>
             <strong>{{ item.key }}: </strong>
             <code>{{ item.value.data | json }}</code>
         </div>
+        }
     </div>
 </ng-template>

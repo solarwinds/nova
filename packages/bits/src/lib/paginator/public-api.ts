@@ -28,4 +28,5 @@ export interface IPaginatorItem {
     action?: (event: any) => boolean;
     popupWidth?: number;
     useVirtualScroll?: boolean;
+    imageClass?: string | string[] | Record<string, boolean>;
 }

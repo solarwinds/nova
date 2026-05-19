@@ -49,28 +49,29 @@
     </div>
     <div class="right-content d-flex pl-4">
         <div class="pr-3">
+            @if (historyIndex > 1) {
             <button
                 nui-button
                 class="undo ml-1"
                 type="button"
                 displayStyle="action"
                 icon="undo"
-                *ngIf="historyIndex > 1"
                 (click)="onUndo()"
                 nuiTooltip="Undo"
                 i18n-nuiTooltip
             ></button>
+            } @if (historyIndex > 0) {
             <button
                 nui-button
                 class="clear ml-1"
                 type="button"
                 displayStyle="action"
                 icon="reset"
-                *ngIf="historyIndex > 0"
                 (click)="onClear()"
                 nuiTooltip="Reset to default"
                 i18n-nuiTooltip
             ></button>
+            }
         </div>
         <ng-content select="[rightContent]"></ng-content>
     </div>
@@ -80,7 +81,8 @@
     <div [ngClass]="{ 'px-3 py-2': !quickPicker }">
         <ng-content select="[timeFrameSelection]"></ng-content>
     </div>
-    <nui-dialog-footer *ngIf="changed">
+    @if (changed) {
+    <nui-dialog-footer>
         <button
             nui-button
             type="button"
@@ -105,4 +107,5 @@
             Use
         </button>
     </nui-dialog-footer>
+    }
 </ng-template>

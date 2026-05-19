@@ -16,12 +16,13 @@
 
 <ng-template #step1>
     <div [formGroup]="form">
+        @if (formPizzagna) {
         <nui-pizzagna
-            *ngIf="formPizzagna"
             #formPizzagnaComponent
             [rootNode]="formRoot"
             [(pizzagna)]="formPizzagna"
         >
         </nui-pizzagna>
+        }
     </div>
 </ng-template>

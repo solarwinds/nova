@@ -4,8 +4,8 @@
     [values]="selectedVegetables"
     (valuesChange)="onValueChange($event)"
 >
+    @for (vegetable of vegetables; track vegetable) {
     <nui-checkbox
-        *ngFor="let vegetable of vegetables"
         [value]="vegetable"
         i18n-hint
         hint="This is some help text"
@@ -13,4 +13,5 @@
     >
         {{ vegetable }}
     </nui-checkbox>
+    }
 </nui-checkbox-group>

@@ -7,10 +7,9 @@
     (valueChanged)="onValueChange($event)"
     #combobox
 >
-    <nui-select-v2-option
-        *ngFor="let item of filteredItems$ | async"
-        [value]="item"
-    >
+    @for (item of filteredItems$ | async; track item) {
+    <nui-select-v2-option [value]="item">
         <span [nuiComboboxV2OptionHighlight]="item.name"></span>
     </nui-select-v2-option>
+    }
 </nui-combobox-v2>

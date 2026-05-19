@@ -52,17 +52,20 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [ScrollingModule, OverlayModule],
+                imports: [
+                    ScrollingModule,
+                    OverlayModule,
+                    IconComponent,
+                    ImageComponent,
+                ],
                 declarations: [
                     ButtonComponent,
                     SorterComponent,
                     OverlayComponent,
                     RepeatComponent,
                     RepeatItemComponent,
-                    IconComponent,
                     CheckboxComponent,
                     RadioComponent,
-                    ImageComponent,
                 ],
                 schemas: [NO_ERRORS_SCHEMA],
                 providers: [
@@ -263,7 +266,8 @@ describe("components >", () => {
                 };
                 component.selectedItem = expectedSortConfig.sortBy;
                 component.sortDirection = expectedSortConfig.direction;
-                fixture.detectChanges();
+                // No fixture.detectChanges() needed — only sortConfig is asserted (not DOM).
+                // Calling detectChanges after changing sortDirection causes NG0100 in Angular 21.
                 component.ngAfterViewInit();
                 expect((<any>component).sortConfig).toEqual(expectedSortConfig);
             });

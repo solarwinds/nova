@@ -67,7 +67,12 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [ReactiveFormsModule, FormsModule, NuiOverlayModule],
+                imports: [
+                    ReactiveFormsModule,
+                    FormsModule,
+                    NuiOverlayModule,
+                    IconComponent,
+                ],
                 declarations: [
                     DateTimePickerComponent,
                     DatePickerComponent,
@@ -75,7 +80,6 @@ describe("components >", () => {
                     DayPickerComponent,
                     MonthPickerComponent,
                     YearPickerComponent,
-                    IconComponent,
                     PopupComponent,
                     PopupToggleDirective,
                     TextboxComponent,

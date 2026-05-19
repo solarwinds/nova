@@ -54,7 +54,10 @@ export class PopoverAtom extends Atom {
         const wasDisplayed = await this.isPopoverDisplayed();
         const hasBackdrop = await this.modalBackdrop.isVisible();
         if (hasBackdrop) {
-            await this.modalBackdrop.click({ force: true, position: { x: 0, y: 0 } });
+            await this.modalBackdrop.click({
+                force: true,
+                position: { x: 0, y: 0 },
+            });
         } else {
             await this.clickTarget();
         }
@@ -103,7 +106,8 @@ export class PopoverAtom extends Atom {
     public isPopoverDisplayed = async (): Promise<boolean> =>
         this.getPopoverBody().isVisible();
 
-    public getTitle = (): Locator => Helpers.page.locator(".nui-popover-container__title");
+    public getTitle = (): Locator =>
+        Helpers.page.locator(".nui-popover-container__title");
 
     public isDisplayedRight = async (): Promise<boolean> =>
         this.bodyHasClass("nui-popover-container--right");
