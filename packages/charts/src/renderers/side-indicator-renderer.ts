@@ -123,14 +123,18 @@ export class SideIndicatorRenderer extends XYRenderer<ISideIndicatorAccessors> {
             !isActive && accessors.series.inactiveColor
                 ? accessors.series.inactiveColor
                 : accessors.series.activeColor;
+        const shouldApplyGrayscale = !isActive && !accessors.series.inactiveColor;
         if (rect.empty()) {
-            rect = target.append("rect").attrs({
-                fill: colorAccessor(dataSeries.id, dataSeries),
-            });
+            rect = target.append("rect");
+        }
 
-            if (!isActive && !accessors.series.inactiveColor) {
-                rect.style("filter", GRAYSCALE_FILTER);
-            }
+        rect.attrs({
+            fill: colorAccessor(dataSeries.id, dataSeries),
+        });
+        if (shouldApplyGrayscale) {
+            rect.style("filter", GRAYSCALE_FILTER);
+        } else {
+            rect.style("filter", null);
         }
 
         const start = accessors.series.start(dataSeries.id, dataSeries);
