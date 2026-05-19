@@ -8,6 +8,7 @@
         cdkScrollable
         class="h-100 overflow-auto configurator-scrollable"
         tabindex="0"
+        [attr.aria-label]="title || null"
     >
         <ng-container *ngTemplateOutlet="stepTemplate"></ng-container>
     </div>
