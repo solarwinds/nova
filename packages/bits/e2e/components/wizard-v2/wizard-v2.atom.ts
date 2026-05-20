@@ -86,7 +86,9 @@ export class WizardV2Atom extends Atom {
         while (selectedIndex < finalStepIndex) {
             const nextIndex = selectedIndex + 1;
             await this.footer.nextButton.click();
-            await expect.poll(async () => this.getSelectedIndex()).toBe(nextIndex);
+            await expect
+                .poll(async () => this.getSelectedIndex())
+                .toBe(nextIndex);
             selectedIndex = nextIndex;
         }
     };

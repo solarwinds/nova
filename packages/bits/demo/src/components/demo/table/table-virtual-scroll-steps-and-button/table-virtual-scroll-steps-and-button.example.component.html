@@ -11,7 +11,11 @@
     </div>
 </div>
 
-<div [style.height.px]="gridHeight" [style.max-width.px]="1300" [style.overflow]="'hidden'">
+<div
+    [style.height.px]="gridHeight"
+    [style.max-width.px]="1300"
+    [style.overflow]="'hidden'"
+>
     <cdk-virtual-scroll-viewport
         class="h-100"
         [itemSize]="24"
@@ -93,7 +97,11 @@
             </ng-container>
 
             <tr nui-header-row *nuiHeaderRowDef="displayedColumns"></tr>
-            <tr nui-row density="tiny" *nuiRowDef="let row; columns: displayedColumns"></tr>
+            <tr
+                nui-row
+                density="tiny"
+                *nuiRowDef="let row; columns: displayedColumns"
+            ></tr>
         </table>
         @if (!makeSticky) {
         <div>

@@ -40,10 +40,14 @@ export class StatusChartAtom extends ChartAtom {
     public async getAllBarDataPointsBySeriesID(
         seriesID: string
     ): Promise<StatusBarDataPointAtom[]> {
-        const seriesById = this.getLocator().page().locator(`#data-${seriesID}`);
+        const seriesById = this.getLocator()
+            .page()
+            .locator(`#data-${seriesID}`);
         await seriesById.waitFor({ state: "attached" });
 
-        const barsLocator = seriesById.locator(`.${StatusBarDataPointAtom.CSS_CLASS}`);
+        const barsLocator = seriesById.locator(
+            `.${StatusBarDataPointAtom.CSS_CLASS}`
+        );
         await barsLocator.first().waitFor({ state: "attached" });
 
         const count = await barsLocator.count();

@@ -23,9 +23,13 @@ import type { Locator } from "@playwright/test";
 import { ChartAtom } from "../atoms/chart.atom";
 
 export class InteractiveBooster {
-    private static async getInteractiveTarget(chart: ChartAtom): Promise<Locator> {
+    private static async getInteractiveTarget(
+        chart: ChartAtom
+    ): Promise<Locator> {
         const [layer] = await chart.getLayer("rendering-area");
-        return layer ? layer.locator(".mouse-interactive-area") : chart.getLocator();
+        return layer
+            ? layer.locator(".mouse-interactive-area")
+            : chart.getLocator();
     }
 
     private static async getAbsolutePosition(
@@ -36,12 +40,18 @@ export class InteractiveBooster {
 
         const box = await target.boundingBox();
         if (!box) {
-            throw new Error("Could not resolve interactive chart area for interaction");
+            throw new Error(
+                "Could not resolve interactive chart area for interaction"
+            );
         }
 
         return {
-            x: box.x + Math.min(Math.max(location.x, 1), Math.max(box.width - 1, 1)),
-            y: box.y + Math.min(Math.max(location.y, 1), Math.max(box.height - 1, 1)),
+            x:
+                box.x +
+                Math.min(Math.max(location.x, 1), Math.max(box.width - 1, 1)),
+            y:
+                box.y +
+                Math.min(Math.max(location.y, 1), Math.max(box.height - 1, 1)),
         };
     }
 

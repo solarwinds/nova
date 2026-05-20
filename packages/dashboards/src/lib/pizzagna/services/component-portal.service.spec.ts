@@ -49,7 +49,6 @@ describe("ComponentPortalService > ", () => {
             componentRegistry.registerByLateLoadKey(MockComponent);
         });
 
-
         it("should return a component portal for the specified string argument", () => {
             const portal = service.createComponentPortal(
                 MockComponent.lateLoadKey,

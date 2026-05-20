@@ -74,7 +74,10 @@ describe("Components >", () => {
         });
 
         it("should have correct classes", () => {
-            fixture.componentRef.setInput("resizeDirection", ResizeDirection.right);
+            fixture.componentRef.setInput(
+                "resizeDirection",
+                ResizeDirection.right
+            );
             fixture.detectChanges();
             fixture.detectChanges();
             const layoutResizer = fixture.elementRef.nativeElement;
@@ -83,7 +86,10 @@ describe("Components >", () => {
             );
         });
         it("should have correct classes", () => {
-            fixture.componentRef.setInput("resizeDirection", ResizeDirection.bottom);
+            fixture.componentRef.setInput(
+                "resizeDirection",
+                ResizeDirection.bottom
+            );
             fixture.detectChanges();
             fixture.detectChanges();
             const layoutResizer = fixture.elementRef.nativeElement;

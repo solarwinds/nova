@@ -35,7 +35,8 @@ import { ToastService } from "../../toast/toast.service";
                 <nui-time-picker
                     formControlName="testTimePicker"
                     [isInErrorState]="
-                        myForm && myForm.controls['testTimePicker'] &&
+                        myForm &&
+                        myForm.controls['testTimePicker'] &&
                         myForm.controls['testTimePicker'].invalid &&
                         myForm.controls['testTimePicker'].touched
                     "

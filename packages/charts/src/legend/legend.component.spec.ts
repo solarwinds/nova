@@ -64,7 +64,10 @@ describe("components >", () => {
 
         it("should remove 'flex-column' class if orientation is horizaontal", () => {
             // Use setInput so Angular marks the view dirty before detectChanges (Angular 21 NG0100 fix)
-            fixture.componentRef.setInput("orientation", LegendOrientation.horizontal);
+            fixture.componentRef.setInput(
+                "orientation",
+                LegendOrientation.horizontal
+            );
             fixture.detectChanges();
             fixture.detectChanges();
             expect(element.classList).not.toContain("flex-column");

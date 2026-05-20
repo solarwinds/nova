@@ -168,9 +168,9 @@ test.describe("USERCONTROL paginator", () => {
             await adjacentPaginator.ellipsisLink(1).click();
             await adjacentPaginator.ellipsedPageLinkClick(pageTwenty);
 
-            await expect.poll(() => adjacentPaginator.activePage()).toBe(
-                pageTwenty
-            );
+            await expect
+                .poll(() => adjacentPaginator.activePage())
+                .toBe(pageTwenty);
             const expectedVisiblePageNumbers = [
                 1,
                 pageTwenty - adjacent,
@@ -181,9 +181,9 @@ test.describe("USERCONTROL paginator", () => {
                 pageCountAdjacent,
             ];
 
-            await expect.poll(() => getVisiblePageNumbers(adjacentPaginator)).toEqual(
-                expectedVisiblePageNumbers
-            );
+            await expect
+                .poll(() => getVisiblePageNumbers(adjacentPaginator))
+                .toEqual(expectedVisiblePageNumbers);
 
             expect(await adjacentPaginator.isActivePage(pageTwenty)).toBe(true);
 

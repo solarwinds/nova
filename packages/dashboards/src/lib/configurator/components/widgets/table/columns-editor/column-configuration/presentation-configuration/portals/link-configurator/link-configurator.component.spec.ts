@@ -53,11 +53,14 @@ describe(LinkConfiguratorComponent.name, () => {
                 FormBuilder,
                 {
                     provide: LoggerService,
-                    useValue: { warn: () => {}, error: () => {}, debug: () => {} },
+                    useValue: {
+                        warn: () => {},
+                        error: () => {},
+                        debug: () => {},
+                    },
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
         fixture = TestBed.createComponent(LinkConfiguratorComponent);
         component = fixture.componentInstance;
         component.initForm();

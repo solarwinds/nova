@@ -24,7 +24,11 @@
             }
 
             <tr nui-header-row *nuiHeaderRowDef="displayedColumns"></tr>
-            <tr nui-row *nuiRowDef="let row; columns: displayedColumns" [rowObject]="row"></tr>
+            <tr
+                nui-row
+                *nuiRowDef="let row; columns: displayedColumns"
+                [rowObject]="row"
+            ></tr>
         </table>
     </cdk-virtual-scroll-viewport>
 </div>

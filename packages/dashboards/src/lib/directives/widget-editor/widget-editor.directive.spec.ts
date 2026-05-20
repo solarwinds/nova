@@ -112,7 +112,8 @@ describe("WidgetEditorDirective >", () => {
 
         TestBed.configureTestingModule({
             imports: [
-                Gridster, GridsterItem,
+                Gridster,
+                GridsterItem,
                 PortalModule,
                 RouterTestingModule.withRoutes([]),
             ],
