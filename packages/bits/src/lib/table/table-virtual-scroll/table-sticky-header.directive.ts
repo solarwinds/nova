@@ -407,11 +407,11 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
 
         const theadPlaceholder: Node = this.headRef.cloneNode(true);
 
-        // Note: Visually hiding the placeholder but keeping it accessible to screen readers.
-        // cdk-visually-hidden uses position:absolute which removes it from table layout
-        // (no visual double-header) while keeping it in the accessibility tree so
-        // screen readers can announce proper column headers within the original table.
-        this.renderer.addClass(theadPlaceholder, "cdk-visually-hidden");
+        // Note: Collapsing the placeholder visually while keeping it in the table
+        // layout flow so column widths remain aligned with the sticky header above.
+        // visibility:collapse on <thead> hides the rows but still participates in
+        // the table column-width algorithm, unlike position:absolute (cdk-visually-hidden).
+        (theadPlaceholder as HTMLElement).style.visibility = "collapse";
         // Note: Adding an identifier for the header placeholder to avoid confusion
         this.renderer.addClass(theadPlaceholder, "sticky-header-placeholder");
         // Note: Appending head placeholder to the table
