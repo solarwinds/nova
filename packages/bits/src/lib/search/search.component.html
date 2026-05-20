@@ -15,7 +15,6 @@
             [(ngModel)]="value"
             [placeholder]="resolvedPlaceholder()"
             [attr.aria-labelledby]="resolvedInputId() + '-label'"
-            i18n-aria-labelledby
             [attr.aria-invalid]="isInErrorState()"
             [nuiSetFocus]="captureFocus()"
             (focusChange)="onFocusChange($event)"
