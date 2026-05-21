@@ -45,12 +45,12 @@ npm info "$PACKAGE_NAME@$PACKAGE_VERSION" version --registry "$REGISTRY_URL" 2>/
 case $CIRCLE_BRANCH in
       "release/"*)
           echo "Publishing release package | $PACKAGE_NAME @ $PACKAGE_VERSION"
-            npm publish ./dist --registry "$REGISTRY_URL" --access public
+            npm publish ./dist --registry "$REGISTRY_URL" --access public --userconfig "$PWD/.npmrc"
             ;;
 
       "main" | "next" | "hotfix/"* | "cci/"*)
           echo "Publishing $CIRCLE_BRANCH package | $PACKAGE_NAME @ $PACKAGE_VERSION"
-            npm publish ./dist --registry "$REGISTRY_URL" --tag $CIRCLE_BRANCH --access public
+            npm publish ./dist --registry "$REGISTRY_URL" --tag $CIRCLE_BRANCH --access public --userconfig "$PWD/.npmrc"
             ;;
       *)
           echo "Feature branch build - publish skipped"
