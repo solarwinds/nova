@@ -10,7 +10,7 @@
         nui-button
         nuiPopupToggle
         [disabled]="isDisabled"
-        aria-haspopup="true"
+        aria-haspopup="menu"
         type="button"
         (blur)="onBlur($event)"
         [displayStyle]="displayStyle"
@@ -22,7 +22,7 @@
     >
         <span>{{ title }}</span>
     </button>
-    <div popupAreaContent>
+    <div popupAreaContent role="menu">
         <nui-menu-popup
             *ngIf="itemsSource"
             [itemsSource]="itemsSource"

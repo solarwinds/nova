@@ -2,11 +2,10 @@
     <div class="nui-paginator__items">
         <ul
             class="nui-paginator__list"
-            role="listbox"
             aria-label="List of pages"
+            i18n-aria-label
         >
             <li
-                role="option"
                 title="{{ item.title }}"
                 [ngClass]="item.style"
                 *ngFor="let item of itemsList"
@@ -44,7 +43,7 @@
                         displayStyle="action"
                         [ngClass]="item.imageClass"
                         [isEmpty]="false"
-                        aria-haspopup="true"
+                        aria-haspopup="menu"
                         (click)="handleDotsClick()"
                         class="nui-paginator__dots"
                     >

@@ -383,6 +383,8 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             this.renderer.addClass(this.stickyHeadContainer, cssClass)
         );
 
+        this.renderer.setAttribute(this.stickyHeadContainer, "aria-hidden", "true");
+
         this.renderer.insertBefore(
             this.viewportEl.parentElement,
             wrapper,
@@ -405,8 +407,11 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
 
         const theadPlaceholder: Node = this.headRef.cloneNode(true);
 
-        // Note: making header invisible
-        this.renderer.setStyle(theadPlaceholder, "visibility", "collapse");
+        // Note: Collapsing the placeholder visually while keeping it in the table
+        // layout flow so column widths remain aligned with the sticky header above.
+        // visibility:collapse on <thead> hides the rows but still participates in
+        // the table column-width algorithm, unlike position:absolute (cdk-visually-hidden).
+        (theadPlaceholder as HTMLElement).style.visibility = "collapse";
         // Note: Adding an identifier for the header placeholder to avoid confusion
         this.renderer.addClass(theadPlaceholder, "sticky-header-placeholder");
         // Note: Appending head placeholder to the table

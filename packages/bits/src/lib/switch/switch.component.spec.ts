@@ -71,5 +71,38 @@ describe("components >", () => {
                 expect(touched).not.toHaveBeenCalled();
             });
         });
+
+        describe("accessibility >", () => {
+            it("should set aria-labelledby when ariaLabel is not provided", () => {
+                switchFixture.detectChanges();
+
+                const switchBar = switchFixture.nativeElement.querySelector(
+                    ".nui-switch__bar"
+                ) as HTMLElement;
+                const label = switchFixture.nativeElement.querySelector(
+                    ".nui-switch__label"
+                ) as HTMLElement;
+
+                expect(switchBar.getAttribute("aria-label")).toBeNull();
+                expect(switchBar.getAttribute("aria-labelledby")).toBe(
+                    label.getAttribute("id")
+                );
+                expect(label.getAttribute("id")).toContain("nui-switch-label-");
+            });
+
+            it("should set aria-label when ariaLabel is provided", () => {
+                nuiSwitch.ariaLabel = "Refresh widget periodically";
+                switchFixture.detectChanges();
+
+                const switchBar = switchFixture.nativeElement.querySelector(
+                    ".nui-switch__bar"
+                ) as HTMLElement;
+
+                expect(switchBar.getAttribute("aria-label")).toBe(
+                    "Refresh widget periodically"
+                );
+                expect(switchBar.getAttribute("aria-labelledby")).toBeNull();
+            });
+        });
     });
 });
