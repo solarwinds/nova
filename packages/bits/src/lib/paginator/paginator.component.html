@@ -3,12 +3,11 @@
     <div class="nui-paginator__items">
         <ul
             class="nui-paginator__list"
-            role="listbox"
             aria-label="List of pages"
+            i18n-aria-label
         >
             @for (item of itemsList; track item) {
             <li
-                role="option"
                 title="{{ item.title }}"
                 [ngClass]="item.style"
                 value="{{ item.value }}"
@@ -45,7 +44,7 @@
                         displayStyle="action"
                         [ngClass]="item.imageClass"
                         [isEmpty]="false"
-                        aria-haspopup="true"
+                        aria-haspopup="menu"
                         (click)="handleDotsClick()"
                         class="nui-paginator__dots"
                     >

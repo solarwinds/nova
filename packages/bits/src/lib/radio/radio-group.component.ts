@@ -52,7 +52,7 @@ import { NuiFormFieldControl } from "../form-field/public-api";
  */
 @Component({
     selector: "nui-radio-group",
-    template: `<div class="nui-radio-group" [attr.aria-label]="ariaLabel">
+    template: `<div class="nui-radio-group">
         <ng-content></ng-content>
     </div>`,
     providers: [
@@ -67,7 +67,7 @@ import { NuiFormFieldControl } from "../form-field/public-api";
             multi: true,
         },
     ],
-    host: { role: "radiogroup" },
+    host: { role: "radiogroup", "[attr.aria-label]": "ariaLabel || null" },
     standalone: false,
 })
 export class RadioGroupComponent
@@ -221,7 +221,6 @@ export class RadioGroupComponent
     host: {
         "[class.nui-radio--hovered]": "hovered",
         "[class.nui-radio--checked]": "checked",
-        role: "radio",
     },
     standalone: false,
 })

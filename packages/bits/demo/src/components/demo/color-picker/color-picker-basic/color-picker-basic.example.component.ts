@@ -19,7 +19,11 @@
 //  THE SOFTWARE.
 
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+} from "@angular/forms";
 
 const CHART_PALETTE_CS1: string[] = [
     "var(--nui-color-bg-secondary)",

@@ -87,6 +87,8 @@ export abstract class BaseSelectV2
         OnDestroy,
         OnChanges
 {
+    private static _counter = 0;
+
     /** Value used as a placeholder for the select. */
     @Input() public placeholder: string = "";
 
@@ -192,6 +194,9 @@ export abstract class BaseSelectV2
     private _selectedOptions: SelectV2OptionComponent[] = [];
 
     private _ariaLabel: string = "";
+
+    /** Unique ID for the trigger element, used for aria-labelledby on the overlay */
+    public readonly triggerId = `nui-select-trigger-${BaseSelectV2._counter++}`;
     private virtualScrollResizeObserver: ResizeObserver;
 
     /** Emits value which has been selected */
