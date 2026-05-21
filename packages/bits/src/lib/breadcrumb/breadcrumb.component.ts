@@ -35,7 +35,10 @@ import { BreadcrumbItem } from "./public-api";
     styleUrls: ["./breadcrumb.component.less"],
     templateUrl: "./breadcrumb.component.html",
     encapsulation: ViewEncapsulation.None,
-    host: { "[attr.aria-label]": "ariaLabel" },
+    host: {
+        "[attr.aria-label]": "items?.length > 1 ? ariaLabel : null",
+        "[attr.role]": "items?.length > 1 ? 'navigation' : null",
+    },
     standalone: false,
 })
 export class BreadcrumbComponent {
