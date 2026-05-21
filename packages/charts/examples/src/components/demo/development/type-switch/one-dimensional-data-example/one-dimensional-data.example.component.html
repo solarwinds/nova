@@ -34,7 +34,11 @@
                     backgroundColor="transparent"
                 >
                 </nui-rich-legend-tile>
-                <nui-icon [icon]="iconMap[legendSeries.id]"></nui-icon>
+                <nui-icon
+                    [icon]="iconMap[legendSeries.id]"
+                    [decorative]="false"
+                    [ariaLabel]="'Series ' + legendSeries.id + ' icon'"
+                ></nui-icon>
             </nui-legend-series>
         </nui-legend>
     </div>

@@ -83,14 +83,13 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [FormsModule, ReactiveFormsModule, PopupAdapterModule],
+                imports: [FormsModule, ReactiveFormsModule, PopupAdapterModule, IconComponent],
                 declarations: [
                     ButtonComponent,
                     CheckboxComponent,
                     ComboboxComponent,
                     DividerComponent,
                     HighlightPipe,
-                    IconComponent,
                     MenuActionComponent,
                     MenuComponent,
                     MenuGroupComponent,

@@ -89,11 +89,11 @@ describe("components >", () => {
 
         beforeEach(waitForAsync(() => {
             TestBed.configureTestingModule({
+                imports: [IconComponent],
                 declarations: [
                     TabHeadingGroupComponent,
                     TabHeadingComponent,
                     TestTabHeadingComponent,
-                    IconComponent,
                 ],
             })
                 .compileComponents()

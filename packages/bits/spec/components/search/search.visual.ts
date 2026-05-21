@@ -45,7 +45,9 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese(`Default`);
 
         await searchWithInput.getSearchButton().click();
-        await browser.actions().sendKeys(protractor.Key.TAB).perform();
+        // Tab order: input → cancel button → search button
+        await browser.actions().sendKeys(protractor.Key.chord(protractor.Key.SHIFT, protractor.Key.TAB)).perform(); // → cancel button
+        await browser.actions().sendKeys(protractor.Key.chord(protractor.Key.SHIFT, protractor.Key.TAB)).perform(); // → input (text auto-selects)
         await searchWithInput.getSearchButton().hover();
         await camera.say.cheese(
             `Search with input text is focused and Search button is hovered`
