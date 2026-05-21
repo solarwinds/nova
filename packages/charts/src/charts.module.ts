@@ -32,6 +32,7 @@ import {
 } from "@nova-ui/bits";
 
 import { ChartComponent } from "./chart/chart.component";
+import { ChartRangeSliderComponent } from "./chart-range-slider/chart-range-slider.component";
 import { ChartCollectionIdDirective } from "./chart-collection/chart-collection-id.directive";
 import { ChartCollectionService } from "./chart-collection/chart-collection.service";
 import { ChartDonutContentComponent } from "./chart-donut-content/chart-donut-content.component";
@@ -54,6 +55,7 @@ import { ThresholdsService } from "./thresholds/thresholds-service";
         BasicLegendTileComponent,
         RichLegendTileComponent,
         ChartComponent,
+        ChartRangeSliderComponent,
         ChartCollectionIdDirective,
         ChartMarkerComponent,
         ChartPopoverComponent,
@@ -68,6 +70,7 @@ import { ThresholdsService } from "./thresholds/thresholds-service";
         RichLegendTileComponent,
         BasicLegendTileComponent,
         ChartComponent,
+        ChartRangeSliderComponent,
         ChartCollectionIdDirective,
         ChartMarkerComponent,
         ChartPopoverComponent,
