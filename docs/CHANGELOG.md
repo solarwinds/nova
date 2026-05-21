@@ -1,5 +1,13 @@
 # Changelog
 
+
+## [21.0.1] 📅 2025-05-21
+
+### Fixes
+
+- `@nova-ui/bits` | A11y fixies for Home Summary
+- `@nova-ui/bits` | A11y fixies for Search component
+
 ## [21.0.0] 📅 2026-05-18
 
 ### Angular upgrade 21
