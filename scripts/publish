@@ -33,6 +33,7 @@ PACKAGE_LICENSE=$(node -p "require('./dist/package.json').license")
 
 echo -e "//registry.npmjs.org/:_authToken=$NPM_TOKEN\nalways-auth=true" > .npmrc
 yarn config set init-license $PACKAGE_LICENSE
+yarn config set registry $NPM_CONFIG_REGISTRY
 
 npm info $PACKAGE_NAME@$PACKAGE_VERSION version 2>/dev/null && {
     echo "Package $PACKAGE_NAME@$PACKAGE_VERSION does already exist on npmjs.org"
