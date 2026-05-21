@@ -32,8 +32,8 @@ PACKAGE_VERSION=$(node -p "require('./dist/package.json').version")
 PACKAGE_LICENSE=$(node -p "require('./dist/package.json').license")
 
 echo -e "//registry.npmjs.org/:_authToken=$NPM_TOKEN\nalways-auth=true" > .npmrc
-yarn config set init-license $PACKAGE_LICENSE
-yarn config set registry $NPM_CONFIG_REGISTRY
+npm config set init-license $PACKAGE_LICENSE
+npm config set registry $NPM_CONFIG_REGISTRY
 
 npm info $PACKAGE_NAME@$PACKAGE_VERSION version 2>/dev/null && {
     echo "Package $PACKAGE_NAME@$PACKAGE_VERSION does already exist on npmjs.org"
@@ -43,12 +43,12 @@ npm info $PACKAGE_NAME@$PACKAGE_VERSION version 2>/dev/null && {
 case $CIRCLE_BRANCH in
       "release/"*)
           echo "Publishing release package | $PACKAGE_NAME @ $PACKAGE_VERSION"
-            yarn publish ./dist --access public
+            npm publish ./dist --access public
             ;;
 
       "main" | "next" | "hotfix/"* | "cci/"*)
           echo "Publishing $CIRCLE_BRANCH package | $PACKAGE_NAME @ $PACKAGE_VERSION"
-            yarn publish ./dist --tag $CIRCLE_BRANCH --access public
+            npm publish ./dist --tag $CIRCLE_BRANCH --access public
             ;;
       *)
           echo "Feature branch build - publish skipped"
