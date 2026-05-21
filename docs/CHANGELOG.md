@@ -1,5 +1,12 @@
 # Changelog
 
+## [21.0.4] 📅 2026-09-24
+
+### Fixes
+
+- `@nova-ui/bits` | A11y fixies for Home Summary
+- `@nova-ui/bits` | A11y fixies for Search component
+
 ## [21.0.1] 📅 2026-05-27
 
 ### Added
