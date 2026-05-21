@@ -1,5 +1,9 @@
 # Changelog
 
+## [19.0.7] 📅 2026-05-21
+### Fixes
+- `@nova-ui/bits` | A11y fixies for Home Summary
+
 ## [19.0.4] 📅 2026-04-29
 ### Fixes
 - `@nova-ui/bits` | Add `resetFilterComponent` method for datasource
