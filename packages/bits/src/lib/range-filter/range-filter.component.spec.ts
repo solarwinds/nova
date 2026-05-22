@@ -370,5 +370,41 @@ describe("components >", () => {
             expect(getLowHandle()?.getAttribute("aria-valuemax")).toBe("60");
             expect(getLowHandle()?.getAttribute("aria-valuenow")).toBe("20");
         });
+
+        it("uses a unique label id for each instance", () => {
+            const firstFixture = TestBed.createComponent(RangeFilterComponent);
+            firstFixture.componentRef.setInput("label", "CPU usage");
+            firstFixture.detectChanges();
+
+            const secondFixture = TestBed.createComponent(RangeFilterComponent);
+            secondFixture.componentRef.setInput("label", "Latency");
+            secondFixture.detectChanges();
+
+            const firstLabelId = (
+                firstFixture.debugElement.query(
+                    By.css(".nui-range-filter__label")
+                ).nativeElement as HTMLElement
+            ).id;
+            const secondLabelId = (
+                secondFixture.debugElement.query(
+                    By.css(".nui-range-filter__label")
+                ).nativeElement as HTMLElement
+            ).id;
+
+            expect(firstLabelId).not.toBe(secondLabelId);
+            expect(
+                firstFixture.debugElement
+                    .query(By.css(".nui-range-filter__handle--high"))
+                    .nativeElement.getAttribute("aria-labelledby")
+            ).toBe(firstLabelId);
+            expect(
+                secondFixture.debugElement
+                    .query(By.css(".nui-range-filter__handle--high"))
+                    .nativeElement.getAttribute("aria-labelledby")
+            ).toBe(secondLabelId);
+
+            firstFixture.destroy();
+            secondFixture.destroy();
+        });
     });
 });

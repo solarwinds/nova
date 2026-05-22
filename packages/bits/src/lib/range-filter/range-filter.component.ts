@@ -27,6 +27,8 @@ import { RangeValue } from "./range-filter.models";
     imports: [CommonModule, FormsModule, NuiTextboxModule],
 })
 export class RangeFilterComponent implements OnDestroy {
+    private static nextLabelId = 0;
+
     public readonly min = input<number>(0);
     public readonly max = input<number>(100);
     public readonly valueLow = input<number>(0);
@@ -45,6 +47,7 @@ export class RangeFilterComponent implements OnDestroy {
 
     public readonly rangeChange = output<RangeValue>();
 
+    protected readonly labelId = `nui-range-filter-label-${RangeFilterComponent.nextLabelId++}`;
     protected readonly dragHandle = signal<"low" | "high" | null>(null);
     protected readonly displayLow = computed(() => {
         if (this.dragHandle() !== null) {
@@ -111,7 +114,6 @@ export class RangeFilterComponent implements OnDestroy {
     private readonly liveHigh = signal<number>(100);
     private readonly cdr = inject(ChangeDetectorRef);
     @ViewChild("trackEl") private readonly trackEl?: ElementRef<HTMLElement>;
-    private readonly hostEl = inject(ElementRef<HTMLElement>);
 
     private debounceTimer?: ReturnType<typeof setTimeout>;
     private dragPointerOffset = 0;

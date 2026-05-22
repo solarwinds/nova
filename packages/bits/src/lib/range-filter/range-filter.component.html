@@ -9,7 +9,7 @@
     <div
         class="nui-range-filter__label"
         [class.nui-range-filter__label--vertical]="orientation() === 'vertical'"
-        id="nui-range-label"
+        [id]="labelId"
     >
         {{ label() }}
         @if (unit()) {
@@ -125,7 +125,7 @@
                 [attr.aria-valuemax]="displayHigh()"
                 [attr.aria-valuenow]="displayLow()"
                 aria-label="Minimum value"
-                [attr.aria-labelledby]="label() ? 'nui-range-label' : null"
+                [attr.aria-labelledby]="label() ? labelId : null"
                 (mousedown)="onHandleMousedown($event, 'low')"
                 (click)="$event.stopPropagation()"
                 (keydown)="onLowKeydown($event)"
@@ -151,7 +151,7 @@
                 [attr.aria-valuemax]="max()"
                 [attr.aria-valuenow]="displayHigh()"
                 aria-label="Maximum value"
-                [attr.aria-labelledby]="label() ? 'nui-range-label' : null"
+                [attr.aria-labelledby]="label() ? labelId : null"
                 (mousedown)="onHandleMousedown($event, 'high')"
                 (click)="$event.stopPropagation()"
                 (keydown)="onHighKeydown($event)"

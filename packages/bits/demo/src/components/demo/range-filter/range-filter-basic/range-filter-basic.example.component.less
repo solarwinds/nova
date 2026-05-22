@@ -1,0 +1,48 @@
+.demo-card {
+    padding: 20px 24px;
+    border: 1px solid var(--nui-color-line-default);
+    border-radius: 12px;
+    background: linear-gradient(
+        180deg,
+        var(--nui-color-background-default) 0%,
+        var(--nui-color-background-strong) 100%
+    );
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+
+    &__eyebrow {
+        margin-bottom: 4px;
+        color: var(--nui-color-text-secondary);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+
+    &__title {
+        margin: 0;
+        font-size: 20px;
+    }
+
+    &__subtitle {
+        margin: 8px 0 0;
+        max-width: 420px;
+        color: var(--nui-color-text-secondary);
+    }
+
+    &__pill {
+        align-self: flex-start;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--nui-color-background-accented);
+        color: var(--nui-color-text-default);
+        font-size: 14px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+}

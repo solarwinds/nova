@@ -1,0 +1,25 @@
+<div class="threshold-demo">
+    <div class="threshold-demo__details">
+        <div class="threshold-demo__eyebrow">Single Value Mode</div>
+        <h3 class="threshold-demo__title">Priority threshold</h3>
+        <p class="threshold-demo__subtitle">
+            Use a vertical slider when the range itself is less important than a
+            single cut-off point.
+        </p>
+        <div class="threshold-demo__status">
+            Level {{ threshold.high }} / 10
+        </div>
+        <div class="threshold-demo__badge">{{ thresholdLabel }}</div>
+    </div>
+
+    <nui-range-filter
+        label="Priority"
+        orientation="vertical"
+        mode="single"
+        [min]="0"
+        [max]="10"
+        [step]="1"
+        [valueHigh]="threshold.high"
+        (rangeChange)="onRangeChange($event)"
+    ></nui-range-filter>
+</div>

@@ -1,0 +1,50 @@
+<h2>Required Modules</h2>
+<ul>
+    <li>
+        <code>NuiRangeFilterModule</code>
+    </li>
+</ul>
+
+<h2>Basic Usage</h2>
+<p>
+    The <code>&lt;nui-range-filter&gt;</code> component provides a draggable
+    range or single-value selector with keyboard support. Use the
+    <code>rangeChange</code> output to react to user input and feed the updated
+    value back through <code>valueLow</code> and <code>valueHigh</code>.
+</p>
+<nui-example-wrapper
+    filenamePrefix="range-filter-basic"
+    exampleTitle="Horizontal range selection"
+>
+    <nui-range-filter-basic-example></nui-range-filter-basic-example>
+</nui-example-wrapper>
+
+<h2>Guided Stepped Range</h2>
+<p>
+    Enable <code>guides</code> to show step markers along the track. This works
+    well for bounded metric ranges where users should stay aligned to discrete
+    increments.
+</p>
+<nui-message type="info" [allowDismiss]="false">
+    When <code>guides</code> is enabled, the component shows compact value
+    labels instead of number inputs.
+</nui-message>
+<nui-example-wrapper
+    filenamePrefix="range-filter-guides"
+    exampleTitle="Stepped range with guide markers"
+>
+    <nui-range-filter-guides-example></nui-range-filter-guides-example>
+</nui-example-wrapper>
+
+<h2>Vertical Single Value</h2>
+<p>
+    Use <code>orientation="vertical"</code> together with
+    <code>mode="single"</code> when the primary interaction is setting one
+    threshold rather than selecting a window.
+</p>
+<nui-example-wrapper
+    filenamePrefix="range-filter-vertical"
+    exampleTitle="Vertical threshold selector"
+>
+    <nui-range-filter-vertical-example></nui-range-filter-vertical-example>
+</nui-example-wrapper>

@@ -1,0 +1,25 @@
+<div class="demo-card">
+    <div class="demo-card__header">
+        <div>
+            <div class="demo-card__eyebrow">Alert Tuning</div>
+            <h3 class="demo-card__title">CPU usage focus band</h3>
+            <p class="demo-card__subtitle">
+                Pick the range you want the dashboard highlight to emphasize.
+            </p>
+        </div>
+        <div class="demo-card__pill">
+            {{ selectedRange.low }}% - {{ selectedRange.high }}%
+        </div>
+    </div>
+
+    <nui-range-filter
+        label="CPU usage"
+        unit="%"
+        [min]="0"
+        [max]="100"
+        [step]="1"
+        [valueLow]="selectedRange.low"
+        [valueHigh]="selectedRange.high"
+        (rangeChange)="onRangeChange($event)"
+    ></nui-range-filter>
+</div>
