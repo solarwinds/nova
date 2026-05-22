@@ -1,0 +1,236 @@
+@handle-size: 16px;
+@track-thickness: 2px;
+@guide-dot-size: 5px;
+@touch-area-extra: 14px;
+
+:host {
+    display: block;
+}
+
+.nui-range-filter {
+    position: relative;
+
+    &__label {
+        font-size: var(--nui-font-size-default);
+        font-weight: bold;
+        color: var(--nui-color-text-default);
+        margin-bottom: 8px;
+
+        &--vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 8px;
+            margin-bottom: 0;
+            text-align: center;
+            line-height: 1.2;
+        }
+    }
+
+    &__unit {
+        margin-left: 4px;
+        font-size: var(--nui-font-size-default);
+        color: var(--nui-color-text-secondary);
+        font-weight: normal;
+
+        &--stacked {
+            margin-left: 0;
+            margin-top: 2px;
+            display: block;
+        }
+    }
+
+    &__track-wrapper {
+        padding: 12px 0;
+    }
+
+    &__track {
+        position: relative;
+        height: @track-thickness;
+        background: var(--nui-color-line-default);
+        border-radius: calc(@track-thickness / 2);
+        cursor: pointer;
+
+        .nui-range-filter--disabled & {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+    }
+
+    &__fill {
+        position: absolute;
+        height: 100%;
+        background: var(--nui-color-active);
+        border-radius: calc(@track-thickness / 2);
+        pointer-events: none;
+
+        .nui-range-filter--disabled & {
+            background: var(--nui-color-disabled);
+            cursor: not-allowed;
+        }
+    }
+
+    &__handle {
+        position: absolute;
+        top: 50%;
+        width: @handle-size;
+        height: @handle-size;
+        background: var(--nui-color-active);
+        border: 2px solid var(--nui-color-active);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        cursor: grab;
+        touch-action: none;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: -@touch-area-extra;
+            left: -@touch-area-extra;
+            right: -@touch-area-extra;
+            bottom: -@touch-area-extra;
+        }
+
+        &:focus {
+            outline: 3px solid var(--nui-color-focus);
+            outline-offset: 2px;
+        }
+
+        &:focus:not(:focus-visible) {
+            outline: none;
+        }
+
+        &--dragging {
+            cursor: grabbing;
+        }
+
+        .nui-range-filter--disabled & {
+            background: var(--nui-color-disabled-secondary);
+            border-color: var(--nui-color-disabled);
+            cursor: not-allowed;
+        }
+    }
+
+    &__guide-dot {
+        position: absolute;
+        top: 50%;
+        width: @guide-dot-size;
+        height: @guide-dot-size;
+        border-radius: 50%;
+        background: var(--nui-color-text-secondary);
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+    }
+
+    &__value-label {
+        display: inline-block;
+        width: 56px;
+        text-align: center;
+        font-size: var(--nui-font-size-default);
+        color: var(--nui-color-text-default);
+        font-variant-numeric: tabular-nums;
+        line-height: 28px;
+    }
+
+    &__sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+    }
+
+    &__inputs {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 4px;
+    }
+
+    &__input-group {
+        display: inline-flex;
+        width: 56px;
+
+        &--end {
+            margin-left: auto;
+        }
+
+        nui-textbox {
+            width: 56px;
+            min-width: 0;
+
+            ::ng-deep .nui-textbox {
+                width: 66px;
+                min-width: 0;
+            }
+
+            ::ng-deep input {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+    }
+
+    &--vertical {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .nui-range-filter__label {
+            order: 5;
+        }
+
+        .nui-range-filter__track-wrapper {
+            order: 2;
+            height: 200px;
+            width: 40px;
+            padding: 0 12px;
+            margin: 4px 0;
+        }
+
+        .nui-range-filter__input-group--vert-top {
+            order: 1;
+        }
+
+        .nui-range-filter__input-group--vert-bottom {
+            order: 4;
+        }
+
+        .nui-range-filter__track {
+            height: 100%;
+            width: @track-thickness;
+            margin: 0 auto;
+        }
+
+        .nui-range-filter__fill {
+            width: 100%;
+            height: auto;
+            left: 0;
+            right: 0;
+        }
+
+        .nui-range-filter__handle {
+            left: 50%;
+            top: auto;
+            transform: translate(-50%, 50%);
+        }
+
+        .nui-range-filter__guide-dot {
+            left: 50%;
+            top: auto;
+            transform: translate(-50%, 50%);
+        }
+
+        .nui-range-filter__value-label {
+            width: auto;
+            line-height: 1.5;
+        }
+
+        .nui-range-filter__input-group--vert {
+            display: flex;
+            justify-content: center;
+            margin: 0;
+        }
+    }
+}

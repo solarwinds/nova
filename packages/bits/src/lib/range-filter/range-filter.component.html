@@ -1,0 +1,191 @@
+<div
+    class="nui-range-filter"
+    [class.nui-range-filter--horizontal]="orientation() === 'horizontal'"
+    [class.nui-range-filter--vertical]="orientation() === 'vertical'"
+    [class.nui-range-filter--disabled]="isDisabled()"
+    [attr.aria-disabled]="isDisabled() || null"
+>
+    @if (label()) {
+    <div
+        class="nui-range-filter__label"
+        [class.nui-range-filter__label--vertical]="orientation() === 'vertical'"
+        id="nui-range-label"
+    >
+        {{ label() }}
+        @if (unit()) {
+        <span
+            class="nui-range-filter__unit"
+            [class.nui-range-filter__unit--stacked]="
+                orientation() === 'vertical'
+            "
+        >
+            {{ unit() }}
+        </span>
+        }
+    </div>
+    } @if (showInputs()) { @if (orientation() === 'horizontal') {
+    <div class="nui-range-filter__inputs">
+        @if (mode() === 'range') {
+        <div class="nui-range-filter__input-group">
+            @if (guides()) {
+            <span class="nui-range-filter__value-label">{{
+                displayLow()
+            }}</span>
+            } @else {
+            <nui-textbox
+                type="number"
+                [value]="displayLow().toString()"
+                [disabled]="isDisabled()"
+                ariaLabel="Minimum value"
+                (textChange)="onLowInputChange($event.toString())"
+            ></nui-textbox>
+            }
+        </div>
+        }
+        <div
+            class="nui-range-filter__input-group"
+            [class.nui-range-filter__input-group--end]="mode() !== 'range'"
+        >
+            @if (guides()) {
+            <span class="nui-range-filter__value-label">{{
+                displayHigh()
+            }}</span>
+            } @else {
+            <nui-textbox
+                type="number"
+                [value]="displayHigh().toString()"
+                [disabled]="isDisabled()"
+                ariaLabel="Maximum value"
+                (textChange)="onHighInputChange($event.toString())"
+            ></nui-textbox>
+            }
+        </div>
+    </div>
+    } @else {
+    <div
+        class="nui-range-filter__input-group nui-range-filter__input-group--vert nui-range-filter__input-group--vert-top"
+    >
+        @if (guides()) {
+        <span class="nui-range-filter__value-label">{{ displayHigh() }}</span>
+        } @else {
+        <nui-textbox
+            type="number"
+            [value]="displayHigh().toString()"
+            [disabled]="isDisabled()"
+            ariaLabel="Maximum value"
+            (textChange)="onHighInputChange($event.toString())"
+        ></nui-textbox>
+        }
+    </div>
+    } }
+
+    <div class="nui-range-filter__track-wrapper">
+        <div
+            class="nui-range-filter__track"
+            #trackEl
+            (click)="onTrackClick($event)"
+        >
+            <div
+                class="nui-range-filter__fill"
+                [style.left.%]="
+                    orientation() === 'horizontal' ? fillStart() : null
+                "
+                [style.width.%]="
+                    orientation() === 'horizontal' ? fillSize() : null
+                "
+                [style.bottom.%]="
+                    orientation() === 'vertical' ? fillStart() : null
+                "
+                [style.height.%]="
+                    orientation() === 'vertical' ? fillSize() : null
+                "
+            ></div>
+
+            @for (dot of guideDots(); track dot) {
+            <div
+                class="nui-range-filter__guide-dot"
+                [style.left.%]="orientation() === 'horizontal' ? dot : null"
+                [style.bottom.%]="orientation() === 'vertical' ? dot : null"
+            ></div>
+            } @if (mode() === 'range') {
+            <div
+                class="nui-range-filter__handle nui-range-filter__handle--low"
+                [class.nui-range-filter__handle--dragging]="
+                    dragHandle() === 'low'
+                "
+                [style.left.%]="
+                    orientation() === 'horizontal' ? lowPct() : null
+                "
+                [style.bottom.%]="
+                    orientation() === 'vertical' ? lowPct() : null
+                "
+                role="slider"
+                [tabindex]="isDisabled() ? -1 : 0"
+                [attr.aria-valuemin]="min()"
+                [attr.aria-valuemax]="displayHigh()"
+                [attr.aria-valuenow]="displayLow()"
+                aria-label="Minimum value"
+                [attr.aria-labelledby]="label() ? 'nui-range-label' : null"
+                (mousedown)="onHandleMousedown($event, 'low')"
+                (click)="$event.stopPropagation()"
+                (keydown)="onLowKeydown($event)"
+            ></div>
+            }
+
+            <div
+                class="nui-range-filter__handle nui-range-filter__handle--high"
+                [class.nui-range-filter__handle--dragging]="
+                    dragHandle() === 'high'
+                "
+                [style.left.%]="
+                    orientation() === 'horizontal' ? highPct() : null
+                "
+                [style.bottom.%]="
+                    orientation() === 'vertical' ? highPct() : null
+                "
+                role="slider"
+                [tabindex]="isDisabled() ? -1 : 0"
+                [attr.aria-valuemin]="
+                    mode() === 'single' ? min() : displayLow()
+                "
+                [attr.aria-valuemax]="max()"
+                [attr.aria-valuenow]="displayHigh()"
+                aria-label="Maximum value"
+                [attr.aria-labelledby]="label() ? 'nui-range-label' : null"
+                (mousedown)="onHandleMousedown($event, 'high')"
+                (click)="$event.stopPropagation()"
+                (keydown)="onHighKeydown($event)"
+            ></div>
+        </div>
+    </div>
+
+    @if (showInputs() && orientation() === 'vertical' && mode() === 'range') {
+    <div
+        class="nui-range-filter__input-group nui-range-filter__input-group--vert nui-range-filter__input-group--vert-bottom"
+    >
+        @if (guides()) {
+        <span class="nui-range-filter__value-label">{{ displayLow() }}</span>
+        } @else {
+        <nui-textbox
+            type="number"
+            [value]="displayLow().toString()"
+            [disabled]="isDisabled()"
+            ariaLabel="Minimum value"
+            (textChange)="onLowInputChange($event.toString())"
+        ></nui-textbox>
+        }
+    </div>
+    }
+
+    <div
+        class="nui-range-filter__sr-only"
+        aria-live="polite"
+        aria-atomic="true"
+    >
+        @if (dragHandle()) { @if (mode() === 'range') {
+        <span>Range: {{ displayLow() }} to {{ displayHigh() }}</span>
+        } @else {
+        <span>Value: {{ displayHigh() }}</span>
+        } }
+    </div>
+</div>
