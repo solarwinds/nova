@@ -25,6 +25,7 @@ import {
     Component,
     ElementRef,
     forwardRef,
+    HostBinding,
     Input,
     NgZone,
     OnChanges,
@@ -68,6 +69,16 @@ export class ChartComponent
         OnChanges
 {
     @Input() public chart: IChart;
+
+    /** Accessible name for the chart. Should be a localized string describing the chart content (WCAG 1.1.1). */
+    @Input() public ariaLabel: string;
+
+    @HostBinding("attr.role") readonly role = "img";
+
+    @HostBinding("attr.aria-label")
+    get a11yLabel(): string | null {
+        return this.ariaLabel || null;
+    }
 
     public resizeObserver?: ResizeObserver;
     private resizeHandler: Function;

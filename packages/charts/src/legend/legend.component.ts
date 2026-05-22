@@ -39,6 +39,11 @@ import { LegendOrientation } from "./types";
 })
 export class LegendComponent implements OnChanges, OnDestroy {
     /**
+     * The accessible name of the legend. Defaults to "Legend".
+     */
+    @Input() public ariaLabel: string = $localize`Legend`;
+
+    /**
      * EventEmitter for notifying subscribers of a change in the active state
      */
     public activeChanged = new EventEmitter<boolean>();
