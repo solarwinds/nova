@@ -54,6 +54,7 @@
                         displayStyle="action"
                         [icon]="mainIcon"
                         [disabled]="isAnimating"
+                        [ariaLabel]="isCollapsed ? $localize`Expand panel` : $localize`Collapse panel`"
                         (click)="toggleCollapsedOnClick()"
                     ></button>
                     } } @if (isClosable) {
@@ -63,6 +64,8 @@
                         class="nui-panel__header-btn nui-panel__header-btn--close"
                         type="button"
                         icon="close"
+                        ariaLabel="Close panel"
+                        i18n-ariaLabel
                         (click)="toggleCollapsedOnClick()"
                     ></button>
                     }

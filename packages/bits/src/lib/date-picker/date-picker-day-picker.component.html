@@ -2,7 +2,6 @@
 <table
     role="grid"
     [attr.aria-labelledby]="datePicker.uniqueId + '-title'"
-    aria-activedescendant="activeDateId"
 >
     <thead>
         <tr>
@@ -53,7 +52,7 @@
             } @for (label of labels; track label) {
             <th class="text-center">
                 <div class="day-label">
-                    <span aria-label="label.full">{{ label.abbr }}</span>
+                    <span [attr.aria-label]="label.full">{{ label.abbr }}</span>
                 </div>
             </th>
             }

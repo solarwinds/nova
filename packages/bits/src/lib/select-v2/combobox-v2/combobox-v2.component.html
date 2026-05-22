@@ -28,6 +28,8 @@
     [isEmpty]="true"
     icon="remove"
     type="button"
+    ariaLabel="Clear value"
+    i18n-ariaLabel
     [nuiTooltip]="clearValueButtonTooltip"
     [class.disabled]="isDisabled"
     [disabled]="isDisabled"
@@ -40,6 +42,8 @@
     type="button"
     [isEmpty]="true"
     icon="caret-down"
+    ariaLabel="Toggle dropdown"
+    i18n-ariaLabel
     [class.rotate]="isDropdownOpen"
     [class.disabled]="isDisabled"
     [disabled]="isDisabled"

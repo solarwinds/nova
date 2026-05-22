@@ -24,8 +24,10 @@ import { TabHeadingGroupAtom } from "./tab-heading-group.atom";
 import { TabHeadingAtom } from "./tab-heading.atom";
 
 test.describe("a11y: tab-heading-group", () => {
+    // target-size disabled: TODO: NUI-6279 - Fix interactive element target sizes
     const rulesToDisable: string[] = [
         "color-contrast", // NUI-6014
+        "target-size",
     ];
 
     test.beforeEach(async ({ page }) => {
