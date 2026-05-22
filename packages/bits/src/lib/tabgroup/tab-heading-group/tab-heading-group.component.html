@@ -1,13 +1,21 @@
 <div class="nui-tab-headings__holder" (click)="$event.preventDefault()">
-    @if (hasTraverse) {
+    @if (hasTraverse) { // a11y: WCAG 2.5.8 Target Size - TODO: NUI-6279
     <div
         class="btn-caret-left"
+        role="button"
+        tabindex="0"
+        aria-label="Scroll tabs left"
+        i18n-aria-label
         [class.disabled]="!rightTraverseEnabled"
-        (click)="traverseRight()">
+        [attr.aria-disabled]="!rightTraverseEnabled ? 'true' : null"
+        (click)="traverseRight()"
+        (keydown.enter)="traverseRight()"
+        (keydown.space)="$event.preventDefault(); traverseRight()">
         <nui-icon
             iconSize="default"
             icon="caret-left"
-            [iconColor]="!rightTraverseEnabled ? 'disabled-gray' : 'gray'"></nui-icon>
+            [iconColor]="!rightTraverseEnabled ? 'disabled-gray' : 'gray'"
+            [decorative]="true"></nui-icon>
     </div>
     }
     <div class="nui-tab-headings">
@@ -18,15 +26,23 @@
             <ng-content></ng-content>
         </div>
     </div>
-    @if (hasTraverse) {
+    @if (hasTraverse) { // a11y: WCAG 2.5.8 Target Size - TODO: NUI-6279
     <div
         class="btn-caret-right"
+        role="button"
+        tabindex="0"
+        aria-label="Scroll tabs right"
+        i18n-aria-label
         [class.disabled]="!leftTraverseEnabled"
-        (click)="traverseLeft()">
+        [attr.aria-disabled]="!leftTraverseEnabled ? 'true' : null"
+        (click)="traverseLeft()"
+        (keydown.enter)="traverseLeft()"
+        (keydown.space)="$event.preventDefault(); traverseLeft()">
         <nui-icon
             iconSize="default"
             icon="caret-right"
-            [iconColor]="!leftTraverseEnabled ? 'disabled-gray' : 'gray'"></nui-icon>
+            [iconColor]="!leftTraverseEnabled ? 'disabled-gray' : 'gray'"
+            [decorative]="true"></nui-icon>
     </div>
     }
 </div>
