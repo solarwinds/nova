@@ -20,6 +20,7 @@
 
 import { Injectable } from "@angular/core";
 import isEqual from "lodash/isEqual";
+import { merge, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { IEvent, INovaFilteringOutputs } from "@nova-ui/bits";
@@ -37,8 +38,10 @@ export class PaginatorFeatureAddonService {
     };
     public paginatorState: IPaginatorState = this.defaultPaginatorState;
     private widget: TableWidgetComponent; // TODO: generic widget
+    private reinit$ = new Subject<void>();
 
     public initPaginator(widget: TableWidgetComponent): void {
+        this.reinit$.next();
         this.widget = widget;
         this.setPaginatorState();
         this.listenPaginatorChanges();
@@ -94,7 +97,7 @@ export class PaginatorFeatureAddonService {
 
             // page and total are dynamically set
             this.widget.dataSource.outputsSubject
-                .pipe(takeUntil(this.widget.onDestroy$))
+                .pipe(takeUntil(merge(this.reinit$, this.widget.onDestroy$)))
                 .subscribe((data: INovaFilteringOutputs) => {
                     this.updatePaginatorState({
                         total: data.paginator?.total ?? 0,
@@ -115,7 +118,7 @@ export class PaginatorFeatureAddonService {
     private listenPaginatorChanges() {
         this.widget.eventBus
             .getStream(SET_NEXT_PAGE)
-            .pipe(takeUntil(this.widget.onDestroy$))
+            .pipe(takeUntil(merge(this.reinit$, this.widget.onDestroy$)))
             .subscribe(({ payload }: IEvent<any>) => {
                 if (!payload) {
                     return;
