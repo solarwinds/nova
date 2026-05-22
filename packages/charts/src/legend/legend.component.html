@@ -1,6 +1,8 @@
 <div
     class="nui-legend d-flex flex-wrap"
     [class.flex-column]="orientation === 'vertical'"
+    [attr.role]="interactive ? 'group' : null"
+    [attr.aria-label]="interactive ? ariaLabel : null"
 >
     <ng-content></ng-content>
 </div>

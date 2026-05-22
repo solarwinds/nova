@@ -135,6 +135,21 @@ export class LegendSeriesComponent implements AfterContentInit {
         return this._active && this.seriesRenderState !== RenderState.hidden;
     }
 
+    @HostBinding("attr.role")
+    get interactiveRole(): string | null {
+        return this._interactive ? "checkbox" : null;
+    }
+
+    @HostBinding("attr.tabindex")
+    get interactiveTabIndex(): number | null {
+        return this._interactive ? 0 : null;
+    }
+
+    @HostBinding("attr.aria-checked")
+    get interactiveAriaChecked(): boolean | null {
+        return this._interactive ? this.isSelected : null;
+    }
+
     private _seriesRenderState: RenderState;
     private _active = false;
     private _interactive: boolean;
@@ -162,6 +177,21 @@ export class LegendSeriesComponent implements AfterContentInit {
     public onClick(): void {
         if (this.interactive) {
             this.isSelectedChange.next(!this.isSelected);
+        }
+    }
+
+    @HostListener("keydown.enter")
+    public onEnterKey(): void {
+        if (this.interactive) {
+            this.isSelectedChange.emit(!this.isSelected);
+        }
+    }
+
+    @HostListener("keydown.space", ["$event"])
+    public onSpaceKey(event: KeyboardEvent): void {
+        if (this.interactive) {
+            event.preventDefault();
+            this.isSelectedChange.emit(!this.isSelected);
         }
     }
 
