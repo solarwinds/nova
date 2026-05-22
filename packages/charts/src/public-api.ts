@@ -24,7 +24,6 @@ export { ChartDonutContentComponent } from "./chart-donut-content/chart-donut-co
 export { ChartTooltipsComponent } from "./chart-tooltips/chart-tooltips.component";
 export { ChartPopoverComponent } from "./chart-popover/chart-popover.component";
 export { ChartMarkerComponent } from "./chart-marker/chart-marker.component";
-export * from "./chart-range-slider/public-api";
 
 export * from "./charts.module";
 export * from "./chart/chart.component";
