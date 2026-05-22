@@ -75,6 +75,16 @@ export abstract class DataSourceService<
         delete this._components?.[componentKey];
     }
 
+    public resetFilterComponent(componentName: string): boolean {
+        const component =
+            this._components?.[componentName]?.componentInstance;
+        if (component?.resetFilter) {
+            component.resetFilter();
+            return true;
+        }
+        return false;
+    }
+
     public abstract getFilteredData(filters: F): Promise<IFilteringOutputs>;
 
     public connect(
