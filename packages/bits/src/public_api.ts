@@ -46,6 +46,7 @@ export { ButtonComponent } from "./lib/button/button.component";
 export { BusyComponent } from "./lib/busy/busy.component";
 export { ImageComponent } from "./lib/image/image.component";
 export { SearchComponent } from "./lib/search/search.component";
+export { RangeFilterComponent } from "./lib/range-filter/range-filter.component";
 export { TextboxComponent } from "./lib/textbox/textbox.component";
 export { RepeatItemComponent } from "./lib/repeat/repeat-item/repeat-item.component";
 export { RepeatComponent } from "./lib/repeat/repeat.component";

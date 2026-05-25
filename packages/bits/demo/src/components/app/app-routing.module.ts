@@ -195,6 +195,11 @@ const appRoutes: Routes = [
             import("../demo/radio-group/radio-group.module"),
     },
     {
+        path: "range-filter",
+        loadChildren: async () =>
+            import("../demo/range-filter/range-filter.module"),
+    },
+    {
         path: "repeat",
         loadChildren: async () => import("../demo/repeat/repeat.module"),
     },

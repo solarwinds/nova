@@ -1,0 +1,26 @@
+<div class="metric-card" [attr.data-testid]="'test-range-filter-guides'">
+    <div class="metric-card__header">
+        <div>
+            <h3 class="metric-card__title">Response-time budget</h3>
+            <p class="metric-card__subtitle">
+                Discrete 25 ms steps make it easier to align the selected band
+                with alert thresholds.
+            </p>
+        </div>
+        <div class="metric-card__legend">
+            {{ selectedRange.low }} ms to {{ selectedRange.high }} ms
+        </div>
+    </div>
+
+    <nui-range-filter
+        label="Latency"
+        unit="ms"
+        [min]="0"
+        [max]="500"
+        [step]="25"
+        [guides]="true"
+        [valueLow]="selectedRange.low"
+        [valueHigh]="selectedRange.high"
+        (rangeChange)="onRangeChange($event)"
+    ></nui-range-filter>
+</div>
