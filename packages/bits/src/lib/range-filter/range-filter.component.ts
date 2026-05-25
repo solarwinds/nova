@@ -49,23 +49,31 @@ export class RangeFilterComponent implements OnDestroy {
 
     protected readonly labelId = `nui-range-filter-label-${RangeFilterComponent.nextLabelId++}`;
     protected readonly dragHandle = signal<"low" | "high" | null>(null);
+    protected readonly resolvedLow = computed(() => {
+        const resolvedHigh = this.snapAndClamp(
+            this.valueHigh(),
+            this.min(),
+            this.max()
+        );
+
+        return this.snapAndClamp(this.valueLow(), this.min(), resolvedHigh);
+    });
+    protected readonly resolvedHigh = computed(() =>
+        this.snapAndClamp(this.valueHigh(), this.resolvedLow(), this.max())
+    );
     protected readonly displayLow = computed(() => {
         if (this.dragHandle() !== null) {
             return this.liveLow();
         }
 
-        return this.snap(
-            Math.max(this.min(), Math.min(this.valueLow(), this.valueHigh()))
-        );
+        return this.resolvedLow();
     });
     protected readonly displayHigh = computed(() => {
         if (this.dragHandle() !== null) {
             return this.liveHigh();
         }
 
-        return this.snap(
-            Math.max(this.valueLow(), Math.min(this.valueHigh(), this.max()))
-        );
+        return this.resolvedHigh();
     });
     protected readonly isDisabled = computed(
         () => this.disabled() || this.min() === this.max()
@@ -359,14 +367,24 @@ export class RangeFilterComponent implements OnDestroy {
 
     private snap(value: number): number {
         const step = this.step();
+        const min = this.min();
 
-        return step > 0 ? Math.round(value / step) * step : value;
+        return step > 0 ? min + Math.round((value - min) / step) * step : value;
+    }
+
+    private snapAndClamp(value: number, low: number, high: number): number {
+        const bounded = Math.max(low, Math.min(value, high));
+
+        return Math.max(low, Math.min(this.snap(bounded), high));
     }
 
     private clampAndSnap(rawValue: string, low: number, high: number): number {
         const parsed = parseFloat(rawValue);
-        return this.snap(
-            Math.max(low, Math.min(Number.isNaN(parsed) ? low : parsed, high))
+
+        return this.snapAndClamp(
+            Number.isNaN(parsed) ? low : parsed,
+            low,
+            high
         );
     }
 

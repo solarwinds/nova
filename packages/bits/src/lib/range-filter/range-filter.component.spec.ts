@@ -157,6 +157,12 @@ describe("components >", () => {
             expect(component["displayHigh"]()).toBe(100);
         });
 
+        it("clamps displayHigh to min when both values are below min", () => {
+            setInputs({ min: 50, max: 100, valueLow: 0, valueHigh: 10 });
+
+            expect(component["displayHigh"]()).toBe(50);
+        });
+
         it("clamps displayLow to valueHigh when valueLow exceeds valueHigh", () => {
             setInputs({ min: 0, max: 100, valueLow: 90, valueHigh: 50 });
 
@@ -179,6 +185,19 @@ describe("components >", () => {
             });
 
             expect(component["displayLow"]()).toBe(10);
+        });
+
+        it("snaps values relative to min", () => {
+            setInputs({
+                min: 3,
+                max: 23,
+                valueLow: 3,
+                valueHigh: 18,
+                step: 5,
+            });
+
+            expect(component["displayLow"]()).toBe(3);
+            expect(component["displayHigh"]()).toBe(18);
         });
 
         it("emits rangeChange immediately when debounceMs is 0", (done) => {

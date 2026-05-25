@@ -37,6 +37,7 @@ export * from "./popover/popover.atom";
 export * from "./popup/overlay-content.atom";
 export * from "./popup/popup.atom";
 export * from "./progress/progress.atom";
+export * from "./range-filter/range-filter.atom";
 export * from "./search/search.atom";
 export * from "./select/basic-select.atom";
 export * from "./select/select.atom";
