@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    TestBed,
+    fakeAsync,
+    tick,
+} from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
 import { RangeFilterComponent } from "./range-filter.component";
@@ -18,6 +23,7 @@ describe("components >", () => {
                 step: number;
                 mode: "range" | "single";
                 disabled: boolean;
+                label: string;
                 showInputs: boolean;
                 debounceMs: number;
             }>
@@ -42,6 +48,9 @@ describe("components >", () => {
             }
             if (overrides.disabled !== undefined) {
                 fixture.componentRef.setInput("disabled", overrides.disabled);
+            }
+            if (overrides.label !== undefined) {
+                fixture.componentRef.setInput("label", overrides.label);
             }
             if (overrides.showInputs !== undefined) {
                 fixture.componentRef.setInput(
@@ -222,6 +231,41 @@ describe("components >", () => {
             );
         });
 
+        it("debounces scheduled range changes and emits only the latest value", fakeAsync(() => {
+            setInputs({ debounceMs: 25 });
+            const emitted: RangeValue[] = [];
+
+            component.rangeChange.subscribe((value: RangeValue) => {
+                emitted.push(value);
+            });
+
+            component["emitDebounced"]({ low: 10, high: 40 });
+            component["emitDebounced"]({ low: 15, high: 45 });
+
+            tick(24);
+            expect(emitted).toEqual([]);
+
+            tick(1);
+            expect(emitted).toEqual([{ low: 15, high: 45 }]);
+        }));
+
+        it("cancels a pending debounced emission when an immediate value is requested", fakeAsync(() => {
+            setInputs({ debounceMs: 25 });
+            const emitted: RangeValue[] = [];
+
+            component.rangeChange.subscribe((value: RangeValue) => {
+                emitted.push(value);
+            });
+
+            component["emitDebounced"]({ low: 10, high: 40 });
+            component["emitImmediately"]({ low: 20, high: 50 });
+
+            expect(emitted).toEqual([{ low: 20, high: 50 }]);
+
+            tick(25);
+            expect(emitted).toEqual([{ low: 20, high: 50 }]);
+        }));
+
         it("does not emit rangeChange when disabled", () => {
             setInputs({ disabled: true, debounceMs: 0 });
             const spy = jasmine.createSpy("rangeChange");
@@ -340,6 +384,28 @@ describe("components >", () => {
             );
         });
 
+        it("keeps emitted values inside the declared range when step does not divide max", (done) => {
+            setInputs({
+                min: 0,
+                max: 10,
+                valueHigh: 6,
+                step: 6,
+                debounceMs: 0,
+            });
+
+            component.rangeChange.subscribe((value: RangeValue) => {
+                expect(value.high).toBe(10);
+                done();
+            });
+
+            getHighHandle()?.dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    key: "ArrowRight",
+                    bubbles: true,
+                })
+            );
+        });
+
         it("emits low:min in single mode regardless of valueLow", (done) => {
             setInputs({
                 min: 10,
@@ -411,19 +477,26 @@ describe("components >", () => {
             ).id;
 
             expect(firstLabelId).not.toBe(secondLabelId);
-            expect(
-                firstFixture.debugElement
-                    .query(By.css(".nui-range-filter__handle--high"))
-                    .nativeElement.getAttribute("aria-labelledby")
-            ).toBe(firstLabelId);
-            expect(
-                secondFixture.debugElement
-                    .query(By.css(".nui-range-filter__handle--high"))
-                    .nativeElement.getAttribute("aria-labelledby")
-            ).toBe(secondLabelId);
+            expect(firstLabelId).toContain("nui-range-filter-label-");
+            expect(secondLabelId).toContain("nui-range-filter-label-");
 
             firstFixture.destroy();
             secondFixture.destroy();
+        });
+
+        it("preserves distinct thumb labels when a visible label is present", () => {
+            setInputs({ label: "CPU usage", mode: "range" });
+
+            expect(getLowHandle()?.getAttribute("aria-label")).toBe(
+                "CPU usage, Minimum value"
+            );
+            expect(getHighHandle()?.getAttribute("aria-label")).toBe(
+                "CPU usage, Maximum value"
+            );
+            expect(getLowHandle()?.hasAttribute("aria-labelledby")).toBeFalse();
+            expect(
+                getHighHandle()?.hasAttribute("aria-labelledby")
+            ).toBeFalse();
         });
     });
 });

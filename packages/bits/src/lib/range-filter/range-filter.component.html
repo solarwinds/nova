@@ -124,8 +124,9 @@
                 [attr.aria-valuemin]="min()"
                 [attr.aria-valuemax]="displayHigh()"
                 [attr.aria-valuenow]="displayLow()"
-                aria-label="Minimum value"
-                [attr.aria-labelledby]="label() ? labelId : null"
+                [attr.aria-label]="
+                    label() ? label() + ', Minimum value' : 'Minimum value'
+                "
                 (mousedown)="onHandleMousedown($event, 'low')"
                 (click)="$event.stopPropagation()"
                 (keydown)="onLowKeydown($event)"
@@ -150,8 +151,9 @@
                 "
                 [attr.aria-valuemax]="max()"
                 [attr.aria-valuenow]="displayHigh()"
-                aria-label="Maximum value"
-                [attr.aria-labelledby]="label() ? labelId : null"
+                [attr.aria-label]="
+                    label() ? label() + ', Maximum value' : 'Maximum value'
+                "
                 (mousedown)="onHandleMousedown($event, 'high')"
                 (click)="$event.stopPropagation()"
                 (keydown)="onHighKeydown($event)"

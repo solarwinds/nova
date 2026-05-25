@@ -14,9 +14,16 @@ import {
     signal,
 } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { Subject, of, timer } from "rxjs";
+import { map, switchMap, takeUntil } from "rxjs/operators";
 
 import { NuiTextboxModule } from "../textbox/textbox.module";
 import { RangeValue } from "./range-filter.models";
+
+type RangeChangeRequest = {
+    immediate: boolean;
+    value: RangeValue;
+};
 
 @Component({
     selector: "nui-range-filter",
@@ -120,14 +127,36 @@ export class RangeFilterComponent implements OnDestroy {
 
     private readonly liveLow = signal<number>(0);
     private readonly liveHigh = signal<number>(100);
+    private readonly destroy$ = new Subject<void>();
+    private readonly rangeChangeRequests$ = new Subject<RangeChangeRequest>();
     private readonly cdr = inject(ChangeDetectorRef);
     @ViewChild("trackEl") private readonly trackEl?: ElementRef<HTMLElement>;
 
-    private debounceTimer?: ReturnType<typeof setTimeout>;
     private dragPointerOffset = 0;
 
+    constructor() {
+        this.rangeChangeRequests$
+            .pipe(
+                switchMap(({ immediate, value }) => {
+                    const debounceMs = this.debounceMs();
+
+                    if (immediate || debounceMs <= 0) {
+                        return of(value);
+                    }
+
+                    return timer(debounceMs).pipe(map(() => value));
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe((value) => {
+                this.rangeChange.emit(value);
+            });
+    }
+
     public ngOnDestroy(): void {
-        clearTimeout(this.debounceTimer);
+        this.destroy$.next();
+        this.destroy$.complete();
+        this.rangeChangeRequests$.complete();
     }
 
     protected onLowKeydown(event: KeyboardEvent): void {
@@ -150,9 +179,7 @@ export class RangeFilterComponent implements OnDestroy {
             next = this.displayLow() + action;
         }
 
-        next = this.snap(
-            Math.max(this.min(), Math.min(next, this.displayHigh()))
-        );
+        next = this.snapAndClamp(next, this.min(), this.displayHigh());
         this.emitDebounced({ low: next, high: this.displayHigh() });
     }
 
@@ -177,7 +204,7 @@ export class RangeFilterComponent implements OnDestroy {
             next = this.displayHigh() + action;
         }
 
-        next = this.snap(Math.max(floor, Math.min(next, this.max())));
+        next = this.snapAndClamp(next, floor, this.max());
         this.emitDebounced({
             low: this.mode() === "single" ? this.min() : this.displayLow(),
             high: next,
@@ -225,16 +252,12 @@ export class RangeFilterComponent implements OnDestroy {
         const value = this.eventToValue(event, this.dragPointerOffset);
         if (this.dragHandle() === "low") {
             this.liveLow.set(
-                this.snap(
-                    Math.max(this.min(), Math.min(value, this.liveHigh()))
-                )
+                this.snapAndClamp(value, this.min(), this.liveHigh())
             );
         } else {
             const floor =
                 this.mode() === "single" ? this.min() : this.liveLow();
-            this.liveHigh.set(
-                this.snap(Math.max(floor, Math.min(value, this.max())))
-            );
+            this.liveHigh.set(this.snapAndClamp(value, floor, this.max()));
         }
 
         this.cdr.markForCheck();
@@ -249,8 +272,7 @@ export class RangeFilterComponent implements OnDestroy {
         const low = this.mode() === "single" ? this.min() : this.liveLow();
         const high = this.liveHigh();
         this.dragHandle.set(null);
-        clearTimeout(this.debounceTimer);
-        this.rangeChange.emit({ low, high });
+        this.emitImmediately({ low, high });
         this.cdr.markForCheck();
     }
 
@@ -265,9 +287,7 @@ export class RangeFilterComponent implements OnDestroy {
         if (this.mode() === "single" || distHigh <= distLow) {
             const floor =
                 this.mode() === "single" ? this.min() : this.displayLow();
-            const next = this.snap(
-                Math.max(floor, Math.min(value, this.max()))
-            );
+            const next = this.snapAndClamp(value, floor, this.max());
             this.emitDebounced({
                 low: this.mode() === "single" ? this.min() : this.displayLow(),
                 high: next,
@@ -275,9 +295,7 @@ export class RangeFilterComponent implements OnDestroy {
             return;
         }
 
-        const next = this.snap(
-            Math.max(this.min(), Math.min(value, this.displayHigh()))
-        );
+        const next = this.snapAndClamp(value, this.min(), this.displayHigh());
         this.emitDebounced({ low: next, high: this.displayHigh() });
     }
 
@@ -389,15 +407,10 @@ export class RangeFilterComponent implements OnDestroy {
     }
 
     private emitDebounced(value: RangeValue): void {
-        clearTimeout(this.debounceTimer);
-        const debounceMs = this.debounceMs();
-        if (debounceMs <= 0) {
-            this.rangeChange.emit(value);
-            return;
-        }
+        this.rangeChangeRequests$.next({ immediate: false, value });
+    }
 
-        this.debounceTimer = setTimeout(() => {
-            this.rangeChange.emit(value);
-        }, debounceMs);
+    private emitImmediately(value: RangeValue): void {
+        this.rangeChangeRequests$.next({ immediate: true, value });
     }
 }
