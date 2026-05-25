@@ -65,8 +65,9 @@
                     icon="remove"
                     type="button"
                     displayStyle="action"
-                    (click)="removeMetric(summarySerie.id)"
-                    displayStyle="action"></button>
+                    aria-label="Remove metric"
+                    i18n-aria-label
+                    (click)="removeMetric(summarySerie.id)"></button>
                 }
             </nui-legend-series>
             } @for ( legendSeries of chartAssist.legendSeriesSet; track
@@ -149,11 +150,13 @@
                     @if (legendSeries.realtime) {
                     <nui-icon
                         icon="fast-poll"
-                        iconColor="primary-blue"></nui-icon>
+                        iconColor="primary-blue"
+                        aria-hidden="true"></nui-icon>
                     } @if (legendSeries.transformer) {
                     <nui-icon
                         icon="performance"
-                        iconColor="primary-blue"></nui-icon>
+                        iconColor="primary-blue"
+                        aria-hidden="true"></nui-icon>
                     }
                 </div>
                 @if (displayLegendMenu()) {
