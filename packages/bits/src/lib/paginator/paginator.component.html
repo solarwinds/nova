@@ -15,6 +15,7 @@
                     nui-button
                     type="button"
                     displayStyle="action"
+                    [attr.aria-label]="item.title"
                     [disabled]="item.style"
                     class="move-icon"
                     [icon]="item.iconName"
@@ -24,8 +25,10 @@
                     nui-button
                     type="button"
                     displayStyle="action"
+                    [attr.aria-label]="item.title"
                     (click)="item.action?.($event)"
-                    [isEmpty]="false">
+                    [isEmpty]="false"
+                    [attr.aria-current]="item.style === activeClass ? 'page' : null">
                     {{ item.value }}
                 </button>
                 } @if (item.value === dots) {
@@ -37,6 +40,7 @@
                         type="button"
                         nuiPopupToggle
                         displayStyle="action"
+                        [attr.aria-label]="item.title"
                         [ngClass]="item.imageClass"
                         [isEmpty]="false"
                         aria-haspopup="menu"
@@ -97,6 +101,7 @@
         </div>
         <nui-select-v2
             ariaLabel="Items per page"
+            i18n-ariaLabel
             [value]="pageSize"
             (valueSelected)="onPageSizeChange($event)">
             @for (item of pageSizeSet; track item) {

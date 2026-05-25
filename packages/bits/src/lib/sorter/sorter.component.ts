@@ -263,8 +263,8 @@ export class SorterComponent
 
     public getAriaLabelForSortingButton(): string {
         return this.sortDirection === SorterDirection.descending
-            ? `${this.getSelectedItemTitle()}. Sorter direction - descending`
-            : `${this.getSelectedItemTitle()}. Sorter direction - ascending`;
+            ? $localize`${this.getSelectedItemTitle()}. Sorter direction - descending`
+            : $localize`${this.getSelectedItemTitle()}. Sorter direction - ascending`;
     }
 
     public ngOnDestroy(): void {

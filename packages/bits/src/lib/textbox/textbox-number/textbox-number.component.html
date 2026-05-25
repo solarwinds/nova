@@ -22,7 +22,8 @@
             (paste)="preventNonNumericalPaste($event)"
             [placeholder]="placeholder"
             [readonly]="readonly"
-            aria-label="Textbox number input" />
+            aria-label="Textbox number input"
+            i18n-aria-label />
     </div>
     <span class="nui-textbox-number__buttons">
         <span class="nui-textbox-number__updown nui-textbox-number__up-button">
@@ -34,7 +35,8 @@
                 [isRepeat]="isRepeatable"
                 [disabled]="readonly || disabled || compareMax()"
                 (click)="addNumber(+step)"
-                aria-label="Up"></button>
+                aria-label="Up"
+                i18n-aria-label></button>
         </span>
         <span
             class="nui-textbox-number__updown nui-textbox-number__updown-divider"></span>
@@ -48,7 +50,8 @@
                 [isRepeat]="isRepeatable"
                 [disabled]="readonly || disabled || compareMin()"
                 (click)="addNumber(-step)"
-                aria-label="Down"></button>
+                aria-label="Down"
+                i18n-aria-label></button>
         </span>
     </span>
 </div>
