@@ -29,8 +29,10 @@
         </ng-container>
 
         <ng-container nuiColumnDef="status" type="icon">
+            <!-- Icon-only header: axe empty-table-header rule requires DOM text content -->
             <th nui-header-cell *nuiHeaderCellDef>
-                <div class="d-flex align-items-center">
+                <span class="cdk-visually-hidden" i18n>Status</span>
+                <div class="d-flex align-items-center" aria-hidden="true">
                     <nui-icon [icon]="'enable'"></nui-icon>
                 </div>
             </th>

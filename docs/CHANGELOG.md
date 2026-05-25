@@ -3,6 +3,7 @@
 ## [19.0.7] 📅 2026-05-21
 ### Fixes
 - `@nova-ui/bits` | A11y fixies for Home Summary
+- `@nova-ui/bits` | A11y fixies for Search component
 
 ## [19.0.4] 📅 2026-04-29
 ### Fixes

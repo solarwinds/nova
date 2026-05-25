@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
@@ -73,7 +73,8 @@ describe("components >", () => {
 
             testLegendComponent = new LegendComponent();
             testLegendSeriesComponent = new LegendSeriesComponent(
-                testLegendComponent
+                testLegendComponent,
+                { markForCheck: () => {} } as ChangeDetectorRef
             );
         });
 

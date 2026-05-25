@@ -31,7 +31,7 @@ const name: string = "Progress";
 describe(`Visual tests: ${name}`, () => {
     let camera: Camera, startProgressBasic: ButtonAtom;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
         await Helpers.prepareBrowser("progress/progress-visual-test");
         await Helpers.disableCSSAnimations(Animations.ALL);
 
