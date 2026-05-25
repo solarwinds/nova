@@ -3,7 +3,7 @@
         class="nui-expander__header"
         tabindex="0"
         role="button"
-        aria-label="Expander toggle"
+        [attr.aria-label]="expanderToggleAriaLabel"
         [attr.aria-expanded]="state === 'expanded'"
         [attr.aria-disabled]="disabled"
         [class.nui-expander__header--empty]="

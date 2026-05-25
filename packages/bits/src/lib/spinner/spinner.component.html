@@ -7,10 +7,11 @@
     [@spinnerAppear]
 >
     <div class="nui-spinner__container">
+        @if (!isDeterminate) {
         <svg
             class="nui-spinner__circular"
             viewBox="25 25 50 50"
-            *ngIf="!isDeterminate"
+            aria-hidden="true"
         >
             <circle
                 class="nui-spinner__path-under"
@@ -31,10 +32,11 @@
                 stroke-miterlimit="10"
             />
         </svg>
+        } @if (isDeterminate) {
         <svg
             class="nui-spinner__circular"
             viewBox="0 0 36 36"
-            *ngIf="isDeterminate"
+            aria-hidden="true"
         >
             <circle
                 class="nui-spinner__path-under"
