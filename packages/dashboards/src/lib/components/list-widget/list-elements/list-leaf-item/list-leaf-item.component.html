@@ -1,5 +1,11 @@
-<div class="nui-list-leaf-item" (click)="onButtonClick()">
-    <div class="nui-list-leaf-item__info-container">
+<div
+    class="nui-list-leaf-item"
+    role="button"
+    tabindex="0"
+    (click)="onButtonClick()"
+    (keydown.enter)="onButtonClick()"
+    (keydown.space)="$event.preventDefault(); onButtonClick()"
+>    <div class="nui-list-leaf-item__info-container">
         <div class="nui-list-leaf-item__icon-container">
             <nui-icon
                 *ngIf="icon; else statusTpl"
@@ -24,5 +30,7 @@
 
         <ng-template #statusTpl>{{ status }}</ng-template>
     </div>
-    <nui-icon *ngIf="canNavigate" icon="caret-right"></nui-icon>
+    @if (canNavigate) {
+    <nui-icon icon="caret-right" aria-hidden="true"></nui-icon>
+    }
 </div>

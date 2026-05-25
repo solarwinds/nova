@@ -4,10 +4,18 @@
         *ngIf="!hideHeader"
         [class.nui-dashwiz__header--lines-stretched]="stretchStepLines"
     >
-        <ul class="nui-dashwiz__header-steps" *ngIf="steps">
+        @if (steps) {
+        <ul class="nui-dashwiz__header-steps" role="tablist">
+            @for (step of steps; track step; let first = $first; let last =
+            $last) {
             <li
-                *ngFor="let step of steps; let first = first; let last = last"
+                role="tab"
+                [attr.tabindex]="step.active ? '0' : '-1'"
+                [attr.aria-selected]="step.active ? 'true' : 'false'"
+                [attr.aria-disabled]="(step.disabled || !step.visited || currentStep.busyConfig.busy) ? 'true' : null"
                 (click)="selectStep(step)"
+                (keydown.enter)="selectStep(step)"
+                (keydown.space)="$event.preventDefault(); selectStep(step)"
                 [ngClass]="{
                     'nui-dashwiz__header-step--first': first,
                     'nui-dashwiz__header-step--last': last,
@@ -52,6 +60,7 @@
                                         <nui-icon
                                             [icon]="step.icon"
                                             [iconColor]="step.iconColor"
+                                            aria-hidden="true"
                                         ></nui-icon>
                                         <div
                                             class="nui-dashwiz__header-step-col nui-dashwiz__header-step-col-left"
@@ -70,7 +79,9 @@
                         </div>
                     </div>
                 </div>
-            </li>
+                }
+            </li><!--
+            -->}
         </ul>
     </div>
 

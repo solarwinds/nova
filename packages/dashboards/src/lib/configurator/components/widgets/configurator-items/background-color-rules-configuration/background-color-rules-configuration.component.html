@@ -91,7 +91,22 @@
                             [style.height.px]="height"
                         ></nui-drop-area>
                     </div>
-                </ng-container>
+                    <button
+                        nui-button
+                        icon="delete"
+                        displayStyle="action"
+                        type="button"
+                        aria-label="Remove rule"
+                        i18n-aria-label
+                        class="kpi-color-rule__control"
+                        (click)="removeRule(i)"
+                    ></button>
+                    <nui-drop-area
+                        *cdkDragPlaceholder
+                        [style.height.px]="height"
+                    ></nui-drop-area>
+                </div>
+                }
             </div>
             <button
                 nui-button

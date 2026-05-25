@@ -10,10 +10,16 @@
         "
         [@expandedState]="state"
     >
+        @if (collapsed && collapsible) {
         <div
-            *ngIf="collapsed && collapsible"
             class="collapse-container"
+            role="button"
+            tabindex="0"
+            aria-label="Expand header"
+            i18n-aria-label
             (click)="toggleCollapsed()"
+            (keydown.enter)="toggleCollapsed()"
+            (keydown.space)="$event.preventDefault(); toggleCollapsed()"
         >
             <span class="collapse-container__line"></span>
         </div>
@@ -22,7 +28,7 @@
                 *ngIf="editMode"
                 class="nui-widget__header__content-drag-icon nui-dashboard__widget--drag-handle"
             >
-                <nui-icon icon="drag" iconColor="gray"></nui-icon>
+                <nui-icon icon="drag" iconColor="gray" aria-hidden="true"></nui-icon>
             </div>
             <div
                 #widgetHeaderCustomElement
@@ -97,6 +103,7 @@
                     nui-button
                     displayStyle="action"
                     [href]="url"
+                    [attr.aria-label]="linkTooltip"
                     (click)="prepareLink($event)"
                     (mouseenter)="prepareLink($event)"
                     icon="external-link"
@@ -113,6 +120,8 @@
                     type="button"
                     displayStyle="action"
                     icon="edit"
+                    aria-label="Edit widget"
+                    i18n-aria-label
                     nuiTooltip="Edit widget"
                     i18n-nuiTooltip
                     (click)="onEditWidget()"
@@ -123,6 +132,8 @@
                     nui-button
                     type="button"
                     displayStyle="action"
+                    aria-label="Collapse header"
+                    i18n-aria-label
                     nuiTooltip="Collapse header"
                     icon="double-caret-up"
                     (click)="toggleCollapsed()"
@@ -134,16 +145,15 @@
                     displayStyle="action"
                     [appendToBody]="true"
                 >
-                    <nui-menu-action
-                        *ngIf="reloadable"
-                        (actionDone)="onReloadData()"
-                    >
-                        <nui-icon icon="reload"></nui-icon>
+                    @if (reloadable) {
+                    <nui-menu-action (actionDone)="onReloadData()">
+                        <nui-icon icon="reload" aria-hidden="true"></nui-icon>
                         <span i18n>Reload data</span>
                     </nui-menu-action>
                 </nui-menu>
                 <!--TODO: After NUI-3431 should be changed to regular menu instead of popup-->
                 <nui-popup
+                    #popup
                     class="nui-widget-header__action-remove"
                     [appendToBody]="true"
                     *ngIf="removable && editMode"
@@ -156,7 +166,10 @@
                             icon="remove"
                             iconColor="red"
                             displayStyle="action"
-                            i18n
+                            aria-label="Remove widget"
+                            i18n-aria-label
+                            aria-haspopup="menu"
+                            [attr.aria-expanded]="popup?.isOpen ? 'true' : 'false'"
                         ></button>
                     </span>
                     <div popupAreaContent class="nui-menu">
