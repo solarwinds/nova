@@ -1,5 +1,11 @@
-<div class="nui-list-leaf-item" (click)="onButtonClick()">
-    <div class="nui-list-leaf-item__info-container">
+<div
+    class="nui-list-leaf-item"
+    role="button"
+    tabindex="0"
+    (click)="onButtonClick()"
+    (keydown.enter)="onButtonClick()"
+    (keydown.space)="$event.preventDefault(); onButtonClick()"
+>    <div class="nui-list-leaf-item__info-container">
         <div class="nui-list-leaf-item__icon-container">
             @if (icon) {
             <nui-icon [icon]="icon" [status]="status" class="mr-1"></nui-icon>
@@ -22,6 +28,6 @@
         </div>
     </div>
     @if (canNavigate) {
-    <nui-icon icon="caret-right"></nui-icon>
+    <nui-icon icon="caret-right" aria-hidden="true"></nui-icon>
     }
 </div>

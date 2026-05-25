@@ -20,7 +20,7 @@
                             class="nui-table-columns-configuration__drag-handler"
                             cdkDragHandle
                         >
-                            <nui-icon icon="drag"></nui-icon>
+                            <nui-icon icon="drag" aria-hidden="true"></nui-icon>
                         </div>
                     </ng-container>
                     <span
@@ -48,6 +48,10 @@
                             type="button"
                             icon="delete"
                             displayStyle="action"
+                            title="Remove column"
+                            i18n-title
+                            aria-label="Remove column"
+                            i18n-aria-label
                             (click)="removeItem(i)"
                         ></button>
                     </div>

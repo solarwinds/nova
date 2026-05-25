@@ -73,8 +73,9 @@
                     icon="remove"
                     type="button"
                     displayStyle="action"
+                    aria-label="Remove metric"
+                    i18n-aria-label
                     (click)="removeMetric(summarySerie.id)"
-                    displayStyle="action"
                 ></button>
                 }
             </nui-legend-series>
@@ -167,11 +168,13 @@
                     <nui-icon
                         icon="fast-poll"
                         iconColor="primary-blue"
+                        aria-hidden="true"
                     ></nui-icon>
                     } @if (legendSeries.transformer) {
                     <nui-icon
                         icon="performance"
                         iconColor="primary-blue"
+                        aria-hidden="true"
                     ></nui-icon>
                     }
                 </div>
