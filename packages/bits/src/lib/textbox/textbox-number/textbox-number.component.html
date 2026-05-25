@@ -25,6 +25,7 @@
             [placeholder]="placeholder"
             [readonly]="readonly"
             aria-label="Textbox number input"
+            i18n-aria-label
         />
     </div>
     <span class="nui-textbox-number__buttons">
@@ -38,6 +39,7 @@
                 [disabled]="readonly || disabled || compareMax()"
                 (click)="addNumber(+step)"
                 aria-label="Up"
+                i18n-aria-label
             ></button>
         </span>
         <span
@@ -55,6 +57,7 @@
                 [disabled]="readonly || disabled || compareMin()"
                 (click)="addNumber(-step)"
                 aria-label="Down"
+                i18n-aria-label
             ></button>
         </span>
     </span>

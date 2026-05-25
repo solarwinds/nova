@@ -85,6 +85,13 @@ export class ExpanderComponent implements AfterContentInit {
     public state: "expanded" | "collapsed" = "collapsed";
     public isCustomHeaderContentEmpty: boolean = false;
 
+    /** Returns an accessible label only when no visible text content exists in the header. */
+    public get expanderToggleAriaLabel(): string | null {
+        return !this.header && this.isCustomHeaderContentEmpty
+            ? $localize`Expander toggle`
+            : null;
+    }
+
     private actionKeys = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
 
     constructor(private cdRef: ChangeDetectorRef) {}

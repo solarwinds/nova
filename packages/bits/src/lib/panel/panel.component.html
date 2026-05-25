@@ -54,7 +54,7 @@
                         displayStyle="action"
                         [icon]="mainIcon"
                         [disabled]="isAnimating"
-                        [ariaLabel]="isCollapsed ? $localize`Expand panel` : $localize`Collapse panel`"
+                        [ariaLabel]="expandCollapseAriaLabel"
                         (click)="toggleCollapsedOnClick()"
                     ></button>
                     } } @if (isClosable) {

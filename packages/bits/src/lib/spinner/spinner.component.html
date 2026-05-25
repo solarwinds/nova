@@ -8,7 +8,11 @@
 >
     <div class="nui-spinner__container">
         @if (!isDeterminate) {
-        <svg class="nui-spinner__circular" viewBox="25 25 50 50">
+        <svg
+            class="nui-spinner__circular"
+            viewBox="25 25 50 50"
+            aria-hidden="true"
+        >
             <circle
                 class="nui-spinner__path-under"
                 cx="50"
@@ -29,7 +33,11 @@
             />
         </svg>
         } @if (isDeterminate) {
-        <svg class="nui-spinner__circular" viewBox="0 0 36 36">
+        <svg
+            class="nui-spinner__circular"
+            viewBox="0 0 36 36"
+            aria-hidden="true"
+        >
             <circle
                 class="nui-spinner__path-under"
                 cx="18"
