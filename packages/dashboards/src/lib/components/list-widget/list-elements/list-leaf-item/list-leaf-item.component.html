@@ -7,12 +7,11 @@
     (keydown.space)="$event.preventDefault(); onButtonClick()"
 >    <div class="nui-list-leaf-item__info-container">
         <div class="nui-list-leaf-item__icon-container">
-            <nui-icon
-                *ngIf="icon; else statusTpl"
-                [icon]="icon"
-                [status]="status"
-                class="mr-1"
-            ></nui-icon>
+            @if (icon) {
+            <nui-icon [icon]="icon" [status]="status" [decorative]="false" class="mr-1"></nui-icon>
+            } @else {
+            {{ status }}
+            }
         </div>
         <div class="nui-list-leaf-item__description">
             <a
