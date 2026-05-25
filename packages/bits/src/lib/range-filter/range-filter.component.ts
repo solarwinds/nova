@@ -14,16 +14,17 @@ import {
     signal,
 } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { Subject, of, timer } from "rxjs";
-import { map, switchMap, takeUntil } from "rxjs/operators";
+import { Subject, of } from "rxjs";
+import { debounce, delay } from "rxjs/operators";
 
-import { NuiTextboxModule } from "../textbox/textbox.module";
 import { RangeValue } from "./range-filter.models";
+import { NuiTextboxModule } from "../textbox/textbox.module";
 
-type RangeChangeRequest = {
+interface RangeChangeRequest {
+    debounceMs: number;
     immediate: boolean;
     value: RangeValue;
-};
+}
 
 @Component({
     selector: "nui-range-filter",
@@ -127,35 +128,25 @@ export class RangeFilterComponent implements OnDestroy {
 
     private readonly liveLow = signal<number>(0);
     private readonly liveHigh = signal<number>(100);
-    private readonly destroy$ = new Subject<void>();
     private readonly rangeChangeRequests$ = new Subject<RangeChangeRequest>();
+    private readonly rangeChangeSubscription = this.rangeChangeRequests$
+        .pipe(
+            debounce(({ immediate, debounceMs }) =>
+                immediate || debounceMs <= 0
+                    ? of(null)
+                    : of(null).pipe(delay(debounceMs))
+            )
+        )
+        .subscribe(({ value }) => {
+            this.rangeChange.emit(value);
+        });
     private readonly cdr = inject(ChangeDetectorRef);
     @ViewChild("trackEl") private readonly trackEl?: ElementRef<HTMLElement>;
 
     private dragPointerOffset = 0;
 
-    constructor() {
-        this.rangeChangeRequests$
-            .pipe(
-                switchMap(({ immediate, value }) => {
-                    const debounceMs = this.debounceMs();
-
-                    if (immediate || debounceMs <= 0) {
-                        return of(value);
-                    }
-
-                    return timer(debounceMs).pipe(map(() => value));
-                }),
-                takeUntil(this.destroy$)
-            )
-            .subscribe((value) => {
-                this.rangeChange.emit(value);
-            });
-    }
-
     public ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
+        this.rangeChangeSubscription.unsubscribe();
         this.rangeChangeRequests$.complete();
     }
 
@@ -407,10 +398,18 @@ export class RangeFilterComponent implements OnDestroy {
     }
 
     private emitDebounced(value: RangeValue): void {
-        this.rangeChangeRequests$.next({ immediate: false, value });
+        this.rangeChangeRequests$.next({
+            debounceMs: this.debounceMs(),
+            immediate: false,
+            value,
+        });
     }
 
     private emitImmediately(value: RangeValue): void {
-        this.rangeChangeRequests$.next({ immediate: true, value });
+        this.rangeChangeRequests$.next({
+            debounceMs: 0,
+            immediate: true,
+            value,
+        });
     }
 }
