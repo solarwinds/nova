@@ -225,6 +225,7 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerMinMax.acceptText(
                 datepickerMinMax.formatDate(date, "en-US")
             );
+            await datepickerMinMax.isInputValid();
 
             // min date and larger dates can be selected
             date = moment(minDate);
@@ -333,12 +334,8 @@ test.describe("USERCONTROL datepicker", () => {
                 .getLocator()
                 .textContent();
             await datepickerWithPreserve.selectDate(10);
-            const newValue = await Atom.find<Atom>(
-                Atom,
-                activeDateValueIdPreserved
-            )
-                .getLocator()
-                .textContent();
+            await expect(Atom.find<Atom>(Atom, activeDateValueIdPreserved).getLocator()).not.toHaveText(oldValue);
+            const newValue = await getTrimmedText(activeDateValueIdPreserved);
 
             expect(newValue).not.toBe(oldValue);
 
@@ -351,9 +348,8 @@ test.describe("USERCONTROL datepicker", () => {
                 .getLocator()
                 .textContent();
             await datepickerInline.selectDate(10);
-            const newValue = await Atom.find<Atom>(Atom, activeDateValueId)
-                .getLocator()
-                .textContent();
+            await expect(Atom.find<Atom>(Atom, activeDateValueId).getLocator()).not.toHaveText(oldValue);
+            const newValue = await getTrimmedText(activeDateValueId);
 
             expect(newValue).not.toBe(oldValue);
             expect(moment(newValue).hour()).toBe(0);
@@ -440,17 +436,13 @@ test.describe("USERCONTROL datepicker", () => {
             const nextMonth = datepickerInline.getNextMonthTitle(currentMonth);
 
             await datepickerInline.goBack();
-            let updatedCurrentMonth =
-                await datepickerInline.getMonthFromTitle();
-            expect(updatedCurrentMonth).toEqual(previousMonth);
+            await expect(datepickerInline.getTitleText).toContainText(previousMonth);
 
             await datepickerInline.goNext();
-            updatedCurrentMonth = await datepickerInline.getMonthFromTitle();
-            expect(updatedCurrentMonth).toEqual(currentMonth);
+            await expect(datepickerInline.getTitleText).toContainText(currentMonth);
 
             await datepickerInline.goNext();
-            updatedCurrentMonth = await datepickerInline.getMonthFromTitle();
-            expect(updatedCurrentMonth).toEqual(nextMonth);
+            await expect(datepickerInline.getTitleText).toContainText(nextMonth);
         });
     });
 
