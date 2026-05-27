@@ -5,14 +5,23 @@
         (click)="$event.preventDefault()"
     >
         @if (hasTraverse) {
+        <!-- a11y: WCAG 2.5.8 Target Size - TODO: NUI-6279 -->
         <div
             class="btn-caret-left"
+            role="button"
+            tabindex="0"
+            aria-label="Scroll tabs left"
+            i18n-aria-label
             [class.disabled]="!rightTraverseEnabled"
+            [attr.aria-disabled]="!rightTraverseEnabled ? 'true' : null"
             (click)="traverseRight()"
+            (keydown.enter)="traverseRight()"
+            (keydown.space)="$event.preventDefault(); traverseRight()"
         >
             <nui-icon
                 [icon]="'caret-left'"
                 [iconColor]="!rightTraverseEnabled ? 'gray' : 'default'"
+                [decorative]="true"
             ></nui-icon>
         </div>
         }
@@ -37,14 +46,23 @@
             </div>
         </div>
         @if (hasTraverse) {
+        <!-- a11y: WCAG 2.5.8 Target Size - TODO: NUI-6279 -->
         <div
             class="btn-caret-right"
+            role="button"
+            tabindex="0"
+            aria-label="Scroll tabs right"
+            i18n-aria-label
             [class.disabled]="!leftTraverseEnabled"
+            [attr.aria-disabled]="!leftTraverseEnabled ? 'true' : null"
             (click)="traverseLeft()"
+            (keydown.enter)="traverseLeft()"
+            (keydown.space)="$event.preventDefault(); traverseLeft()"
         >
             <nui-icon
                 [icon]="'caret-right'"
                 [iconColor]="!leftTraverseEnabled ? 'gray' : 'default'"
+                [decorative]="true"
             ></nui-icon>
         </div>
         }

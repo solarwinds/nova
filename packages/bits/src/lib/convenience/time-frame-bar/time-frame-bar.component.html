@@ -12,6 +12,8 @@
             type="button"
             icon="caret-left"
             displayStyle="action"
+            ariaLabel="Go to previous time period"
+            i18n-ariaLabel
             [disabled]="isLeftmostRange"
             (click)="shiftRange(-1)"
         ></button>
@@ -43,6 +45,8 @@
             type="button"
             icon="caret-right"
             displayStyle="action"
+            ariaLabel="Go to next time period"
+            i18n-ariaLabel
             [disabled]="isRightmostRange"
             (click)="shiftRange(1)"
         ></button>
@@ -56,6 +60,8 @@
                 type="button"
                 displayStyle="action"
                 icon="undo"
+                ariaLabel="Undo"
+                i18n-ariaLabel
                 (click)="onUndo()"
                 nuiTooltip="Undo"
                 i18n-nuiTooltip
@@ -67,6 +73,8 @@
                 type="button"
                 displayStyle="action"
                 icon="reset"
+                ariaLabel="Reset to default"
+                i18n-ariaLabel
                 (click)="onClear()"
                 nuiTooltip="Reset to default"
                 i18n-nuiTooltip

@@ -1,5 +1,5 @@
 @if (items?.length > 1) {
-<div [attr.aria-label]="ariaLabel" class="nui-breadcrumb">
+<div role="navigation" [attr.aria-label]="ariaLabel" class="nui-breadcrumb">
     @for (item of items; track item; let isLast = $last) {
     <span class="nui-breadcrumb__wrapper">
         @if (!isLast) {
