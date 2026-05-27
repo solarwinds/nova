@@ -31,20 +31,10 @@ PACKAGE_NAME=$(node -p "require('./dist/package.json').name")
 PACKAGE_VERSION=$(node -p "require('./dist/package.json').version")
 PACKAGE_LICENSE=$(node -p "require('./dist/package.json').license")
 
-REGISTRY_URL=${NPM_CONFIG_REGISTRY:-https://registry.npmjs.org/}
-REGISTRY_URL=${REGISTRY_URL%/}/
-REGISTRY_AUTH_URI=$(echo "$REGISTRY_URL" | sed -e 's/^https\?:/\/\//')
+echo -e "//registry.npmjs.org/:_authToken=$NPM_TOKEN\nalways-auth=true" > .npmrc
+yarn config set init-license $PACKAGE_LICENSE
 
-echo -e "registry=${REGISTRY_URL}\n${REGISTRY_AUTH_URI}:_authToken=${NPM_TOKEN}\nalways-auth=true" > .npmrc
-
-echo "Using registry: $REGISTRY_URL"
-echo "Using npm config: $PWD/.npmrc"
-echo "NPM_TOKEN present: ${NPM_TOKEN:+yes}"
-cat "$PWD/.npmrc" | sed 's/_authToken=.*/_authToken=***hidden***/'
-
-npm whoami --registry "$REGISTRY_URL" --userconfig "$PWD/.npmrc"
-
-npm info "$PACKAGE_NAME@$PACKAGE_VERSION" version --registry "$REGISTRY_URL" --userconfig "$PWD/.npmrc" 2>/dev/null && {
+npm info $PACKAGE_NAME@$PACKAGE_VERSION version 2>/dev/null && {
     echo "Package $PACKAGE_NAME@$PACKAGE_VERSION does already exist on npmjs.org"
     exit
 }
@@ -52,12 +42,12 @@ npm info "$PACKAGE_NAME@$PACKAGE_VERSION" version --registry "$REGISTRY_URL" --u
 case $CIRCLE_BRANCH in
       "release/"*)
           echo "Publishing release package | $PACKAGE_NAME @ $PACKAGE_VERSION"
-            npm publish ./dist --registry "$REGISTRY_URL" --access public --userconfig "$PWD/.npmrc"
+            yarn publish ./dist --access public
             ;;
 
       "main" | "next" | "hotfix/"* | "cci/"*)
           echo "Publishing $CIRCLE_BRANCH package | $PACKAGE_NAME @ $PACKAGE_VERSION"
-            npm publish ./dist --registry "$REGISTRY_URL" --tag $CIRCLE_BRANCH --access public --userconfig "$PWD/.npmrc"
+            yarn publish ./dist --tag $CIRCLE_BRANCH --access public
             ;;
       *)
           echo "Feature branch build - publish skipped"
