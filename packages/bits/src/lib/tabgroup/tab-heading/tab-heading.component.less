@@ -22,6 +22,9 @@
             outline: none;
             .setCssVariable(background, nui-color-bg-transparent-hover);
         }
+        &:focus-visible {
+            .focus-outline();
+        }
 
         .tab-link {
             .setCssVariable(background, nui-color-bg-transparent);
@@ -55,10 +58,6 @@
 
     &:hover {
         .setCssVariable(background, nui-color-bg-transparent-hover);
-    }
-
-    &:focus {
-        outline: none;
     }
 }
 

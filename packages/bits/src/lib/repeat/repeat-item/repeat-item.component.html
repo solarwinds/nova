@@ -4,7 +4,9 @@
     [class.text-nowrap]="nowrap"
     [class.nui-repeat-item--clickable]="clickable"
     (click)="clickable ? rowClicked.emit($event) : null"
-    tabindex="-1"
+    (keydown.enter)="onKeyActivate($event)"
+    (keydown.space)="onKeyActivate($event)"
+    [tabindex]="clickable ? 0 : -1"
 >
     <div class="nui-repeat-item__content">
         <ng-content></ng-content>

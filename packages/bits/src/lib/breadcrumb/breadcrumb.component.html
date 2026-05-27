@@ -5,8 +5,10 @@
         @if (!isLast) {
         <a
             [attr.href]="item?.url"
+            tabindex="0"
             class="nui-breadcrumb__crumb nui-breadcrumb__crumb__link"
             (click)="handleClick($event, item)"
+            (keydown.enter)="handleClick($event, item)"
             >{{ item.title }}</a
         >
         <nui-icon
