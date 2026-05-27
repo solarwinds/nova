@@ -5,7 +5,9 @@
     (click)="onButtonClick()"
     (keydown.enter)="onButtonClick()"
     (keydown.space)="$event.preventDefault(); onButtonClick()"
->    <div class="nui-list-leaf-item__info-container">
+>
+    <!-- TODO: NUI-6284 - list-leaf-item contains nested interactive elements -->
+    <div class="nui-list-leaf-item__info-container">
         <div class="nui-list-leaf-item__icon-container">
             @if (icon) {
             <nui-icon [icon]="icon" [status]="status" [decorative]="false" class="mr-1"></nui-icon>
