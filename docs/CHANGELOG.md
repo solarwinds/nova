@@ -1,4 +1,10 @@
 # Changelog
+
+## [20.0.4] 📅 2026-05-27
+### Fixes
+- `@nova-ui/bits` | Add `resetFilterComponent` method for datasource
+- `@nova-ui/dashboards` | Fix unsubscribes for paginator and search in table widget
+
 ## [20.0.0] 📅 2025-10-01
 ### Angular upgrade 20
 
