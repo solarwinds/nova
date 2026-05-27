@@ -1,10 +1,7 @@
 <div class="nui-table-columns-configuration">
-    <div
-        *ngIf="!dataSourceError && dataSourceFields.length"
-        cdkDropList
-        (cdkDropListDropped)="drop($event)"
-        [formGroup]="form"
-    >
+    <!-- TODO: NUI-6281 - Fix no keyboard alternative for drag-to-reorder -->
+    @if (!dataSourceError && dataSourceFields.length) {
+    <div cdkDropList (cdkDropListDropped)="drop($event)" [formGroup]="form">
         <div formArrayName="columns">
             <div
                 cdkDrag

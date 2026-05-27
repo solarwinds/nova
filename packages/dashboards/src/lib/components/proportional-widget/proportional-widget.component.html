@@ -89,6 +89,10 @@
                 "
                 (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
                 (click)="onInteraction(legendSeries)"
+                (keydown.enter)="onInteraction(legendSeries)"
+                (keydown.space)="$event.preventDefault(); onInteraction(legendSeries)"
+                [attr.role]="interactive ? 'button' : null"
+                [tabindex]="interactive ? 0 : -1"
                 [class.nui-proportional-widget__legend--interactive]="
                     interactive
                 "

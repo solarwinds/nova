@@ -8,11 +8,11 @@
         <div
             class="nui-switch__bar"
             (click)="toggle()"
-            (keyup.enter)="toggle()"
-            (keyup.space)="toggle()"
+            (keydown.space)="$event.preventDefault(); toggle()"
             tabindex="{{ disabled ? -1 : 0 }}"
             role="checkbox"
             [attr.aria-checked]="value"
+            [attr.aria-disabled]="disabled || null"
             [attr.aria-label]="ariaLabel || null"
             [attr.aria-labelledby]="ariaLabel ? null : labelId"
         >

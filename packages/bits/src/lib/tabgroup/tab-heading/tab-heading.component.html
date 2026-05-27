@@ -1,4 +1,6 @@
-<div class="nui-tab-heading" 
+<!-- TODO: NUI-6283 - elements do not have aria-controls pointing to their panel -->
+<div
+    class="nui-tab-heading"
     [class.active]="active"
     [tabindex]="disabled ? -1 : 0"
     [attr.aria-selected]="active ? 'true' : 'false'"
