@@ -104,5 +104,5 @@
     "test:dev": "ng test lib -c dev"
   },
   "typings": "public_api.d.ts",
-  "version": "21.0.0"
+  "version": "21.0.1"
 }

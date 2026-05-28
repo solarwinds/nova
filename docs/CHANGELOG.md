@@ -1,5 +1,17 @@
 # Changelog
 
+## [21.0.1] 📅 2026-05-27
+
+### Added
+
+- `@nova-ui/bits` | Add range filter component with demos, public API exports, and test coverage
+
+### Fixes
+
+- `@nova-ui/bits` | Improve accessibility for Home Summary
+- `@nova-ui/bits` | Improve accessibility for Search component
+- `@nova-ui/dashboards` | Improve table widget paginator and search subscription handling
+
 ## [21.0.0] 📅 2026-05-18
 
 ### Angular upgrade 21

@@ -161,7 +161,7 @@ describe("components >", () => {
                 const button = fixture.debugElement.query(
                     By.css(".menu-button")
                 );
-                expect(button.attributes["aria-haspopup"]).toBe("true");
+                expect(button.attributes["aria-haspopup"]).toBe("menu");
                 expect(button.attributes["aria-expanded"]).toBe("false");
                 expect(button.attributes["aria-controls"]).toBeFalsy();
 

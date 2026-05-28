@@ -1,0 +1,32 @@
+.metric-card {
+    padding: 20px 24px;
+    border-left: 4px solid var(--nui-color-active);
+    border-radius: 12px;
+    background: var(--nui-color-background-default);
+    box-shadow: inset 0 0 0 1px var(--nui-color-line-default);
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+
+    &__title {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    &__subtitle {
+        margin: 8px 0 0;
+        max-width: 420px;
+        color: var(--nui-color-text-secondary);
+    }
+
+    &__legend {
+        align-self: flex-start;
+        font-weight: 700;
+        color: var(--nui-color-active);
+        white-space: nowrap;
+    }
+}

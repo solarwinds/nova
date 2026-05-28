@@ -37,6 +37,7 @@ export * from "./menu/public-api";
 export * from "./paginator/public-api";
 export * from "./panel/public-api";
 export * from "./popover/public-api";
+export * from "./range-filter/public-api";
 export * from "./repeat/public-api";
 export * from "./select/public-api";
 export * from "./select-v2/types";
