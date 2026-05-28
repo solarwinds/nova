@@ -39,7 +39,7 @@
                         class="tab-link"
                         role="tab"
                         [attr.tabindex]="tab.disabled ? -1 : 0"
-                        [attr.aria-selected]="tab.active"
+                        [attr.aria-selected]="tab.active ?? false"
                         [attr.aria-disabled]="tab.disabled || null"
                         (click)="selectTab(tab)"
                         (keydown.enter)="selectTab(tab)"
