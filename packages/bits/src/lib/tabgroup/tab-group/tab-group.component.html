@@ -16,25 +16,32 @@
             ></nui-icon>
         </div>
         <div class="nui-tabs">
-            <div class="nui-tabs__container" [class.flex-column]="vertical">
-                <ng-container *ngFor="let tab of tabs">
-                    <div
-                        class="nui-tab"
-                        [class.active]="tab.active && !vertical"
-                        [class.horizontal]="tab.active && !vertical"
-                        [class.disabled]="tab.disabled"
-                        [class.active__vertical]="tab.active && vertical"
+            <div class="nui-tabs__container" role="tablist" [class.flex-column]="vertical">
+                @for (tab of tabs; track tab) {
+                <div
+                    class="nui-tab"
+                    [class.active]="tab.active && !vertical"
+                    [class.horizontal]="tab.active && !vertical"
+                    [class.disabled]="tab.disabled"
+                    [class.active__vertical]="tab.active && vertical"
+                >
+                    <span
+                        class="tab-link"
+                        role="tab"
+                        [attr.tabindex]="tab.disabled ? -1 : 0"
+                        [attr.aria-selected]="tab.active"
+                        [attr.aria-disabled]="tab.disabled || null"
+                        (click)="selectTab(tab)"
+                        (keydown.enter)="selectTab(tab)"
+                        (keydown.space)="$event.preventDefault(); selectTab(tab)"
                     >
-                        <span class="tab-link" (click)="selectTab(tab)">
-                            <span
-                                [nuiTabHeadingCustomTemplateRef]="
-                                    tab.headingRef
-                                "
-                                >{{ tab.heading }}</span
-                            >
-                        </span>
-                    </div>
-                </ng-container>
+                        <span
+                            [nuiTabHeadingCustomTemplateRef]="tab.headingRef"
+                            >{{ tab.heading }}</span
+                        >
+                    </span>
+                </div>
+                }
             </div>
         </div>
         <div
