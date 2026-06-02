@@ -200,5 +200,12 @@ export const DEMO_PATHS = [
     "widget-types/timeseries/timeseries-widget-status-bar-example/timeseries-widget-status-bar-example.component.html",
     "widget-types/timeseries/timeseries-widget-status-bar-example/timeseries-widget-status-bar-example.component.less",
     "widget-types/timeseries/timeseries-widget-status-bar-example/timeseries-widget-status-bar-example.component.ts",
+    "widget-types/view-components/kpi-tile-view-basic/kpi-tile-view-basic-example.component.ts",
+    "widget-types/view-components/kpi-tile-view-interactive/kpi-tile-view-interactive-example.component.ts",
+    "widget-types/view-components/proportional-chart-view-bar/proportional-chart-view-bar-example.component.ts",
+    "widget-types/view-components/proportional-chart-view-donut/proportional-chart-view-donut-example.component.ts",
+    "widget-types/view-components/view-components-docs.component.html",
+    "widget-types/view-components/view-components-docs.component.ts",
+    "widget-types/view-components/view-components-docs.module.ts",
     "widget-types/widget-types.module.ts",
 ];
