@@ -18,21 +18,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./dashboard/public-api";
-export * from "./widget/public-api";
-export * from "./layouts/public-api";
-export * from "./template-load-error/public-api";
-export * from "./proportional-widget/public-api";
-export * from "./kpi-widget/public-api";
-export * from "./risk-score-tile/public-api";
-export * from "./timeseries-widget/public-api";
-export * from "./table-widget/public-api";
-export * from "./providers/public-api";
-export * from "./types";
-export * from "./time-frame-selection/public-api";
-export * from "./loading/public-api";
-export * from "./embedded-content/embedded-content.component";
-export * from "./list-widget/public-api";
-export * from "./widget-search/widget-search.component";
-export * from "./widget-search/types";
-export * from "./views/public-api";
+/** A single data item in the proportional chart. */
+export interface IProportionalDataItem {
+    /** Unique identifier for the segment. */
+    id: string;
+    /** Display name shown in legend. */
+    name: string;
+    /** Numeric value determining segment size. */
+    value: number;
+    /** Optional CSS color (hex or token). If not provided, palette is used. */
+    color?: string;
+    /** Optional icon name displayed in legend. */
+    icon?: string;
+    /** Optional link for drill-down interaction. */
+    link?: string;
+}
+
+/** Chart type variants the view supports. */
+export type ProportionalChartType = "donut" | "pie" | "verticalBar" | "horizontalBar";
+
+/** Legend placement relative to the chart. */
+export type ViewLegendPlacement = "right" | "bottom" | "none";
