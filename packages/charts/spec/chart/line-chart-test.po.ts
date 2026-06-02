@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { by, element, ElementFinder } from "protractor";
+import { browser, by, element, ElementFinder, protractor } from "protractor";
 
 import { Atom } from "@nova-ui/bits/sdk/atoms";
 
@@ -38,6 +38,12 @@ export class LineChartTestPage {
     }
 
     public async changeData(input: number[][]): Promise<void> {
+        const EC = protractor.ExpectedConditions;
+        await browser.wait(
+            EC.presenceOf(this.root),
+            5000,
+            "Element .nui-line-chart-basic-test not found"
+        );
         await this.dataInput.clear();
         return this.dataInput.sendKeys(JSON.stringify(input));
     }

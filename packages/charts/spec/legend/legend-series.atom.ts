@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { by, ElementFinder } from "protractor";
+import { browser, by, ElementFinder, protractor } from "protractor";
 
 import { Atom } from "@nova-ui/bits/sdk/atoms";
 
@@ -71,6 +71,12 @@ export class LegendSeriesAtom extends Atom {
         this.checkbox.isDisplayed();
 
     public async isCheckboxChecked(): Promise<boolean> {
+        const EC = protractor.ExpectedConditions;
+        await browser.wait(
+            EC.presenceOf(this.root),
+            5000,
+            "Legend series element not found"
+        );
         const elementClassList = await this.checkbox.getAttribute("class");
         return elementClassList.includes(
             "nui-legend-series__checkbox--checked"

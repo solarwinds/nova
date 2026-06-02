@@ -50,8 +50,8 @@ export class LineChartTestComponent implements OnInit {
     public chart: Chart;
     private seriesSet: IChartSeries<ILineAccessors>[];
     private initialInput = [
-        [30, 95, 15, 60, 35],
         [60, 40, 70, 45, 90],
+        [30, 95, 15, 60, 35],
     ];
 
     public ngOnInit(): void {
