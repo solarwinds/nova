@@ -51,6 +51,16 @@ export class ToolbarKeyboardService {
             this.navigateByArrow(code);
         }
 
+        if (code === KEYBOARD_CODE.HOME) {
+            event.preventDefault();
+            this.focusFirst();
+        }
+
+        if (code === KEYBOARD_CODE.END) {
+            event.preventDefault();
+            this.focusLast();
+        }
+
         if (code === KEYBOARD_CODE.TAB) {
             this.closeMenuIfOpened();
         }
