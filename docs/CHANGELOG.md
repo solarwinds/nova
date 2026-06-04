@@ -1,5 +1,9 @@
 # Changelog
 
+## [19.0.8] 📅 2026-06-04
+### Fixes
+- `@nova-ui/bits` | new accessible blue for active menu button text
+
 ## [19.0.7] 📅 2026-05-21
 ### Fixes
 - `@nova-ui/bits` | A11y fixies for Home Summary
