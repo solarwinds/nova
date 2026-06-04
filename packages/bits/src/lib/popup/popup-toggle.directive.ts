@@ -40,11 +40,27 @@ export class PopupToggleDirective {
 
     @Output() toggle = new EventEmitter();
 
+    /**
+     * Whether the toggle should react to keyboard events (Enter/Space)
+     */
+    @Input() toggleOnKey: boolean = true;
+
     constructor(public host: ElementRef) {}
 
     @HostListener("click", ["$event"])
     public handleElementFocus(event: Event): void {
         if (!this.isDisabled && !this.disabled) {
+            this.toggle.emit(event);
+        }
+    }
+
+    @HostListener("keydown", ["$event"])
+    public handleKeydown(event: KeyboardEvent): void {
+        if (this.isDisabled || this.disabled || !this.toggleOnKey || event.defaultPrevented) {
+            return;
+        }
+        if (event.key === " " || event.key === "Enter") {
+            event.preventDefault();
             this.toggle.emit(event);
         }
     }

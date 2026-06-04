@@ -62,7 +62,8 @@ export class Helpers {
     static async prepareBrowser(pageName: string, page: Page): Promise<void> {
         await test.step(`Prepare browser for page: ${pageName}`, async () => {
             Helpers.setPage(page);
-            await Helpers.page.goto(`#/${pageName}`); // Update path as needed
+            const baseURL = process.env["PLAYWRIGHT_TEST_BASE_URL"] ?? "http://localhost:4200";
+            await Helpers.page.goto(`${baseURL}/#/${pageName}`);
         });
     }
 

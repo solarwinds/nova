@@ -1,5 +1,11 @@
 # Changelog
 
+## [20.0.5] 📅 2025-06-04
+### Fixes
+- `@nova-ui/bits` | A11y fixies for Home Summary
+- `@nova-ui/bits` | A11y fixies for Search component
+- `@nova-ui/bits` | new accessible blue for active menu button text
+
 ## [20.0.4] 📅 2026-05-27
 ### Fixes
 - `@nova-ui/bits` | Add `resetFilterComponent` method for datasource
