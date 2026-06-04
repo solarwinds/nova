@@ -71,6 +71,8 @@
             [displayValueTemplate]="iconsOnly"
             [style.max-width.px]="200"
             id="display-value-mw200"
+            ariaLabel="Select item with icon display"
+            i18n-ariaLabel
         >
             @for (item of itemsWithIconsOnly; track item) {
             <nui-select-v2-option [value]="item">

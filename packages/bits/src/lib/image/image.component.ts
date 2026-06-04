@@ -201,13 +201,11 @@ export class ImageComponent {
         this.images.find((img) => img.name === imageName);
 
     private isImageSizeValid(value: string): boolean {
-        if (value === "auto") {
-            return true;
-        }
-
         return (
             !isNaN(parseFloat(value)) &&
-            (value.includes("px") || value.includes("%"))
+            (value.includes("px") ||
+                value.includes("%") ||
+                value.includes("auto"))
         );
     }
 }

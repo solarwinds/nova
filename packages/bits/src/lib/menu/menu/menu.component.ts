@@ -167,19 +167,6 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
                 }
             )
         );
-        this.menuKeyControlListeners.push(
-            this.renderer.listen(
-                this.menuToggle.nativeElement,
-                "click",
-                (event: MouseEvent) => {
-                    if (this.suppressNextToggleClick) {
-                        this.suppressNextToggleClick = false;
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                    }
-                }
-            )
-        );
         // Monitor focus changes for accessibility purposes
         // The FocusMonitor tracks how the element was focused (mouse, keyboard, touch, programmatically)
         // For keyboard accessibility, we only monitor focus but don't auto-open the menu

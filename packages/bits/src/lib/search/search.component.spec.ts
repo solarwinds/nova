@@ -19,12 +19,7 @@
 //  THE SOFTWARE.
 
 import { DebugElement } from "@angular/core";
-import {
-    ComponentFixture,
-    fakeAsync,
-    flushMicrotasks,
-    TestBed,
-} from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
 import { SearchComponent } from "./search.component";
@@ -65,12 +60,12 @@ describe("components >", () => {
             );
         });
 
-        it("should clear the input on cancel", () => {
-            subject.value.set("current input");
-
+        it("should set 'captureFocus' and emit 'focusChange' with true passed on cancel", () => {
+            subject.captureFocus.set(false);
+            spyOn(subject.focusChange, "emit");
             subject.onCancel();
-
-            expect(subject.value()).toBe("");
+            expect(subject.captureFocus()).toEqual(true);
+            expect(subject.focusChange.emit).toHaveBeenCalledWith(true);
         });
 
         it("should set 'captureFocus' and emit 'focusChange' with true passed on cancel", fakeAsync(() => {

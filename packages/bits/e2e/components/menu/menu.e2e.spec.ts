@@ -115,9 +115,9 @@ test.describe("USERCONTROL Menu", () => {
                 await Helpers.pressKey("Enter");
                 await menu.isMenuOpened();
                 // First menu item should be active
-                await expect
-                    .poll(() => menu.getMenuItemByIndex(0).isActiveItem())
-                    .toBe(true);
+                expect(await menu.getMenuItemByIndex(0).isActiveItem()).toBe(
+                    true
+                );
                 // ENTER on active menu item should close menu
                 await Helpers.pressKey("Enter");
                 await menu.isMenuClosed();
@@ -129,9 +129,9 @@ test.describe("USERCONTROL Menu", () => {
                 await Helpers.pressKey("Space");
                 await menu.isMenuOpened();
                 // First menu item should be active
-                await expect
-                    .poll(() => menu.getMenuItemByIndex(0).isActiveItem())
-                    .toBe(true);
+                expect(await menu.getMenuItemByIndex(0).isActiveItem()).toBe(
+                    true
+                );
                 // SPACE on active menu item should close menu
                 await Helpers.pressKey("Space");
                 await menu.isMenuClosed();

@@ -10,7 +10,6 @@
         nui-button
         nuiPopupToggle
         [toggleOnKey]="false"
-        [id]="menuTriggerId"
         [disabled]="isDisabled"
         [attr.aria-expanded]="popup?.isOpen ? 'true' : 'false'"
         [attr.aria-controls]="popup?.isOpen ? popupContentId : null"
@@ -23,7 +22,7 @@
         [iconRight]="isTitlePresent()"
         class="menu-button no-shadow"
         [isEmpty]="!isTitlePresent()"
-        [attr.aria-label]="title || ariaLabel"
+        [ariaLabel]="title || ariaLabel || 'Menu'"
     >
         <span>{{ title }}</span>
     </button>
@@ -33,7 +32,7 @@
             [itemsSource]="itemsSource"
             [size]="size"
         ></nui-menu-popup>
-        } @if (!itemsSource) {
+        } @else {
         <ng-content></ng-content>
         }
     </div>
