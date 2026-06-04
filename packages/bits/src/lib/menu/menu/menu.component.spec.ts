@@ -158,8 +158,10 @@ describe("components >", () => {
 
         describe("accessibility >", () => {
             it("should have correct aria attributes on toggle button", () => {
-                const button = fixture.debugElement.query(By.css(".menu-button"));
-                expect(button.attributes["aria-haspopup"]).toBe("true");
+                const button = fixture.debugElement.query(
+                    By.css(".menu-button")
+                );
+                expect(button.attributes["aria-haspopup"]).toBe("menu");
                 expect(button.attributes["aria-expanded"]).toBe("false");
                 expect(button.attributes["aria-controls"]).toBeFalsy();
 

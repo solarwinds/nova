@@ -31,6 +31,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 import { NuiFormFieldControl } from "../form-field/public-api";
 
+let switchLabelCounter = 0;
+
 /**
  * <example-url>./../examples/index.html#/switch</example-url>
  */
@@ -60,7 +62,12 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel: string = "Switch";
+    @Input() public ariaLabel?: string;
+
+    /**
+     * Label element id used to dynamically compute accessible name.
+     */
+    public readonly labelId = `nui-switch-label-${switchLabelCounter++}`;
 
     @Output() valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 

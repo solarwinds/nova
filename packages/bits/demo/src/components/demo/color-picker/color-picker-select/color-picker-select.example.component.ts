@@ -27,7 +27,6 @@ import {
 
 import { HTML_COLORS, IPaletteColor } from "../../../../../../src/constants/color-picker.constants";
 
-
 @Component({
     selector: "nui-color-picker-select-example",
     templateUrl: "./color-picker-select.example.component.html",

@@ -75,7 +75,7 @@ test.describe("USERCONTROL Menu", () => {
     test.describe("accessibility", () => {
         test("should have correct aria attributes", async () => {
             const button = menu.getMenuButton().getLocator();
-            await expect(button).toHaveAttribute("aria-haspopup", "true");
+            await expect(button).toHaveAttribute("aria-haspopup", "menu");
             await expect(button).toHaveAttribute("aria-expanded", "false");
 
             await menu.toggleMenu();

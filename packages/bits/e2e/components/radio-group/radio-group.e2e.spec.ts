@@ -51,7 +51,7 @@ test.describe("USERCONTROL Radio group", () => {
 
         await expect(bananaRadioInput).toBeDisabled();
         await papayaRadioLabel.click();
-        await bananaRadioLabel.click();
+        await bananaRadioLabel.click({ force: true });
         await basicGroup.toHaveRadioNotSelected("Banana");
         await basicGroup.toHaveValue("Papaya");
         await basicGroup.toHaveRadioSelected("Papaya");
