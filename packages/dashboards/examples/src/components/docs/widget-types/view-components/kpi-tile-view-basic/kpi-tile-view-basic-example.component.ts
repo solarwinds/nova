@@ -19,49 +19,30 @@
 //  THE SOFTWARE.
 
 import { Component } from "@angular/core";
+import { FormControl } from "@angular/forms";
+
+type KpiTileState = "normal" | "loading" | "empty";
 
 /**
- * Basic KPI Tile View example demonstrating standalone usage
- * without any Pizzagna framework dependencies.
+ * KPI Tile View - Playground example.
+ * Switch between all visual states (normal / loading / empty) and toggle
+ * interactivity to explore every variant the standalone tile supports.
  */
 @Component({
     selector: "kpi-tile-view-basic-example",
-    template: `
-        <div class="d-flex gap-3" style="height: 150px;">
-            <!-- Simple KPI tile with value, label, and background color -->
-            <nui-kpi-tile-view
-                [value]="42"
-                label="Nodes Up"
-                units="%"
-                backgroundColor="#2cc079"
-            ></nui-kpi-tile-view>
-
-            <!-- KPI tile showing a warning state -->
-            <nui-kpi-tile-view
-                [value]="7"
-                label="Critical Alerts"
-                backgroundColor="#f3a002"
-            ></nui-kpi-tile-view>
-
-            <!-- KPI tile showing empty state -->
-            <nui-kpi-tile-view
-                [value]="null"
-                label="Response Time"
-                units="ms"
-                backgroundColor="#707070"
-                [empty]="true"
-            ></nui-kpi-tile-view>
-
-            <!-- KPI tile in loading state -->
-            <nui-kpi-tile-view
-                [value]="null"
-                label="Throughput"
-                units="req/s"
-                backgroundColor="#3b5998"
-                [loading]="true"
-            ></nui-kpi-tile-view>
-        </div>
-    `,
+    templateUrl: "./kpi-tile-view-basic-example.component.html",
     standalone: false,
 })
-export class KpiTileViewBasicExampleComponent {}
+export class KpiTileViewBasicExampleComponent {
+    public readonly stateControl = new FormControl<KpiTileState>("normal", {
+        nonNullable: true,
+    });
+    public interactive = false;
+    public lastClicked = "";
+
+    public readonly stateOptions: KpiTileState[] = ["normal", "loading", "empty"];
+
+    public onTileClick(label: string): void {
+        this.lastClicked = label;
+    }
+}

@@ -20,12 +20,16 @@
 
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 
 import {
     NuiDocsModule,
     NuiIconModule,
     NuiMessageModule,
+    NuiFormFieldModule,
+    NuiSelectV2Module,
+    NuiSwitchModule,
     DEMO_PATH_TOKEN,
 } from "@nova-ui/bits";
 import { NuiDashboardViewsModule } from "@nova-ui/dashboards";
@@ -33,8 +37,7 @@ import { NuiDashboardViewsModule } from "@nova-ui/dashboards";
 import { getDemoFiles } from "../../../../demo-files-factory";
 import { KpiTileViewBasicExampleComponent } from "./kpi-tile-view-basic/kpi-tile-view-basic-example.component";
 import { KpiTileViewInteractiveExampleComponent } from "./kpi-tile-view-interactive/kpi-tile-view-interactive-example.component";
-import { ProportionalChartViewBarExampleComponent } from "./proportional-chart-view-bar/proportional-chart-view-bar-example.component";
-import { ProportionalChartViewDonutExampleComponent } from "./proportional-chart-view-donut/proportional-chart-view-donut-example.component";
+import { ProportionalChartViewPlaygroundExampleComponent } from "./proportional-chart-view-playground/proportional-chart-view-playground-example.component";
 import { ViewComponentsDocsComponent } from "./view-components-docs.component";
 
 const routes: Routes = [
@@ -58,17 +61,8 @@ const routes: Routes = [
         },
     },
     {
-        path: "proportional-chart-view-donut",
-        component: ProportionalChartViewDonutExampleComponent,
-        data: {
-            srlc: {
-                hideIndicator: true,
-            },
-        },
-    },
-    {
-        path: "proportional-chart-view-bar",
-        component: ProportionalChartViewBarExampleComponent,
+        path: "proportional-chart-view-playground",
+        component: ProportionalChartViewPlaygroundExampleComponent,
         data: {
             srlc: {
                 hideIndicator: true,
@@ -80,18 +74,21 @@ const routes: Routes = [
 @NgModule({
     imports: [
         CommonModule,
+        ReactiveFormsModule,
         RouterModule.forChild(routes),
         NuiDocsModule,
         NuiMessageModule,
         NuiIconModule,
+        NuiFormFieldModule,
+        NuiSelectV2Module,
+        NuiSwitchModule,
         NuiDashboardViewsModule,
     ],
     declarations: [
         ViewComponentsDocsComponent,
         KpiTileViewBasicExampleComponent,
         KpiTileViewInteractiveExampleComponent,
-        ProportionalChartViewDonutExampleComponent,
-        ProportionalChartViewBarExampleComponent,
+        ProportionalChartViewPlaygroundExampleComponent,
     ],
     providers: [
         {
