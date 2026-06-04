@@ -122,6 +122,36 @@ describe("Services > ", () => {
                 service.onKeyDown(rightButtonPressEvent);
                 expect(spy).toHaveBeenCalled();
             });
+
+            it("should navigate to first element on pressing Home key", () => {
+                const items = service["toolbarItems"];
+                const first = items[0];
+                const last = items[items.length - 1];
+                const spy = spyOn(first, "focus");
+
+                last.focus();
+
+                service.onKeyDown({
+                    ...keyboardEventMock,
+                    code: KEYBOARD_CODE.HOME,
+                } as KeyboardEvent);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("should navigate to last element on pressing End key", () => {
+                const items = service["toolbarItems"];
+                const first = items[0];
+                const last = items[items.length - 1];
+                const spy = spyOn(last, "focus");
+
+                first.focus();
+
+                service.onKeyDown({
+                    ...keyboardEventMock,
+                    code: KEYBOARD_CODE.END,
+                } as KeyboardEvent);
+                expect(spy).toHaveBeenCalled();
+            });
         });
     });
 });
