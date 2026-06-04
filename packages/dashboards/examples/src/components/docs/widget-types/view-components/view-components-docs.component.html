@@ -19,14 +19,7 @@
 
 <p>Import the module in your feature module:</p>
 
-<nui-example-code language="typescript">
-import &#123; NuiDashboardViewsModule &#125; from "&#64;nova-ui/dashboards";
-
-&#64;NgModule(&#123;
-    imports: [NuiDashboardViewsModule],
-&#125;)
-export class MyFeatureModule &#123;&#125;
-</nui-example-code>
+<nui-example-code language="typescript" [code]="installationSnippet"></nui-example-code>
 
 <hr />
 
@@ -156,13 +149,4 @@ export class MyFeatureModule &#123;&#125;
 </table>
 
 <h3><code>IProportionalDataItem</code> Interface</h3>
-<nui-example-code language="typescript">
-interface IProportionalDataItem &#123;
-    id: string;       // Unique segment identifier
-    name: string;     // Display name in legend
-    value: number;    // Numeric value determining segment size
-    color?: string;   // Optional CSS color (hex or token)
-    icon?: string;    // Optional icon name for legend
-    link?: string;    // Optional drill-down URL
-&#125;
-</nui-example-code>
+<nui-example-code language="typescript" [code]="proportionalDataItemSnippet"></nui-example-code>

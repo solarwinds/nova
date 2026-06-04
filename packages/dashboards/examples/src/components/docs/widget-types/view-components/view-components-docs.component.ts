@@ -25,4 +25,20 @@ import { Component } from "@angular/core";
     templateUrl: "./view-components-docs.component.html",
     standalone: false,
 })
-export class ViewComponentsDocsComponent {}
+export class ViewComponentsDocsComponent {
+    public readonly installationSnippet = `import { NuiDashboardViewsModule } from "@nova-ui/dashboards";
+
+@NgModule({
+    imports: [NuiDashboardViewsModule],
+})
+export class MyFeatureModule {}`;
+
+    public readonly proportionalDataItemSnippet = `interface IProportionalDataItem {
+    id: string;       // Unique segment identifier
+    name: string;     // Display name in legend
+    value: number;    // Numeric value determining segment size
+    color?: string;   // Optional CSS color (hex or token)
+    icon?: string;    // Optional icon name for legend
+    link?: string;    // Optional drill-down URL
+}`;
+}

@@ -1,7 +1,7 @@
 <div class="d-flex flex-column gap-3">
     <!-- Playground controls: switch between all available view states -->
-    <div class="d-flex gap-4 align-items-end flex-wrap">
-        <nui-form-field caption="State">
+    <div class="d-flex flex-wrap mb-3" style="gap: 16px 24px;">
+        <nui-form-field caption="State" style="width: 220px;">
             <nui-select-v2 [formControl]="stateControl">
                 <nui-select-v2-option
                     *ngFor="let opt of stateOptions"
@@ -12,13 +12,15 @@
             </nui-select-v2>
         </nui-form-field>
 
-        <nui-form-field caption="Interactive">
+        <nui-form-field caption="Interactive" style="width: 220px;">
             <nui-switch [(value)]="interactive"></nui-switch>
         </nui-form-field>
     </div>
 
-    <div class="d-flex gap-3" style="height: 150px;">
+    <div class="d-flex gap-3" style="height: 200px;">
         <nui-kpi-tile-view
+            class="flex-grow-1"
+            style="flex: 1 1 0; min-width: 0;"
             [value]="stateControl.value === 'normal' ? 42 : null"
             label="Nodes Up"
             units="%"
@@ -30,6 +32,8 @@
         ></nui-kpi-tile-view>
 
         <nui-kpi-tile-view
+            class="flex-grow-1"
+            style="flex: 1 1 0; min-width: 0;"
             [value]="stateControl.value === 'normal' ? 7 : null"
             label="Critical Alerts"
             backgroundColor="#f3a002"
@@ -40,6 +44,8 @@
         ></nui-kpi-tile-view>
 
         <nui-kpi-tile-view
+            class="flex-grow-1"
+            style="flex: 1 1 0; min-width: 0;"
             [value]="stateControl.value === 'normal' ? 123 : null"
             label="Throughput"
             units="req/s"
