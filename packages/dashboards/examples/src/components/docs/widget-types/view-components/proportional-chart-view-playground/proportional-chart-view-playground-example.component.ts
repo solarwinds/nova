@@ -71,4 +71,8 @@ export class ProportionalChartViewPlaygroundExampleComponent {
         { id: "warning", name: "Warning", value: 12 },
         { id: "unknown", name: "Unknown", value: 2 },
     ];
+
+    public totalOf(data: IProportionalDataItem[] | undefined): number {
+        return (data ?? []).reduce((sum, d) => sum + (d?.value ?? 0), 0);
+    }
 }
