@@ -26,39 +26,7 @@ import { Component, TemplateRef, ViewChild } from "@angular/core";
  */
 @Component({
     selector: "kpi-tile-view-interactive-example",
-    template: `
-        <div class="d-flex gap-3" style="height: 150px;">
-            <!-- Interactive tile that emits tileClick events -->
-            <nui-kpi-tile-view
-                [value]="currentValue"
-                label="Active Sessions"
-                units="sessions"
-                backgroundColor="#0058e9"
-                [interactive]="true"
-                [valueTemplate]="customValueTpl"
-                (tileClick)="onTileClick()"
-            ></nui-kpi-tile-view>
-
-            <nui-kpi-tile-view
-                [value]="98.7"
-                label="Uptime"
-                units="%"
-                backgroundColor="#2cc079"
-                [interactive]="true"
-                (tileClick)="onUptimeClick()"
-            ></nui-kpi-tile-view>
-        </div>
-
-        <p class="mt-3" *ngIf="lastClickedTile">
-            Last clicked: <strong>{{ lastClickedTile }}</strong>
-        </p>
-
-        <!-- Custom value template: renders value with a prefix icon -->
-        <ng-template #customValueTpl let-val>
-            <nui-icon icon="status_up" class="mr-1"></nui-icon>
-            <strong>{{ val }}</strong>
-        </ng-template>
-    `,
+    templateUrl: "./kpi-tile-view-interactive-example.component.html",
     standalone: false,
 })
 export class KpiTileViewInteractiveExampleComponent {

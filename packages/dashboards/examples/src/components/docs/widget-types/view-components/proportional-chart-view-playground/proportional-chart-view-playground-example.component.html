@@ -1,0 +1,35 @@
+<div class="d-flex flex-column gap-3">
+    <!-- Playground controls: switch between all available view options -->
+    <div class="d-flex gap-4 align-items-end flex-wrap">
+        <nui-form-field caption="Chart type">
+            <nui-select-v2 [formControl]="chartTypeControl">
+                <nui-select-v2-option
+                    *ngFor="let opt of chartTypeOptions"
+                    [value]="opt"
+                >
+                    {{ opt }}
+                </nui-select-v2-option>
+            </nui-select-v2>
+        </nui-form-field>
+
+        <nui-form-field caption="Legend placement">
+            <nui-select-v2 [formControl]="legendPlacementControl">
+                <nui-select-v2-option
+                    *ngFor="let opt of legendPlacementOptions"
+                    [value]="opt"
+                >
+                    {{ opt }}
+                </nui-select-v2-option>
+            </nui-select-v2>
+        </nui-form-field>
+    </div>
+
+    <div style="height: 300px; width: 100%;">
+        <nui-proportional-chart-view
+            [data]="chartData"
+            [chartType]="chartTypeControl.value"
+            [legendPlacement]="legendPlacementControl.value"
+            [colors]="colors"
+        ></nui-proportional-chart-view>
+    </div>
+</div>
