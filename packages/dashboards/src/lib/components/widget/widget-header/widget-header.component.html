@@ -17,6 +17,7 @@
             tabindex="0"
             aria-label="Expand header"
             i18n-aria-label
+            [attr.aria-expanded]="false"
             (click)="toggleCollapsed()"
             (keydown.enter)="toggleCollapsed()"
             (keydown.space)="$event.preventDefault(); toggleCollapsed()"
@@ -28,7 +29,11 @@
                 *ngIf="editMode"
                 class="nui-widget__header__content-drag-icon nui-dashboard__widget--drag-handle"
             >
-                <nui-icon icon="drag" iconColor="gray" aria-hidden="true"></nui-icon>
+                <nui-icon
+                    icon="drag"
+                    iconColor="gray"
+                    aria-hidden="true"
+                ></nui-icon>
             </div>
             <div
                 #widgetHeaderCustomElement
@@ -136,6 +141,7 @@
                     i18n-aria-label
                     nuiTooltip="Collapse header"
                     icon="double-caret-up"
+                    [attr.aria-expanded]="true"
                     (click)="toggleCollapsed()"
                 ></button>
                 <nui-menu
@@ -169,7 +175,9 @@
                             aria-label="Remove widget"
                             i18n-aria-label
                             aria-haspopup="menu"
-                            [attr.aria-expanded]="popup?.isOpen ? 'true' : 'false'"
+                            [attr.aria-expanded]="
+                                popup?.isOpen ? 'true' : 'false'
+                            "
                         ></button>
                     </span>
                     <div popupAreaContent class="nui-menu">

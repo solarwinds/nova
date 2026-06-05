@@ -127,6 +127,8 @@
                     class="description-container d-flex nui-text-small justify-content-center"
                 >
                     <div class="descriptions">
+                        @if (!legendSeries.link) {
+                        <!-- TODO: NUI-6288 - drill-down sits inside the nui-legend-series (role="checkbox") -->
                         <div
                             *ngIf="!legendSeries.link"
                             class="description description-primary"
