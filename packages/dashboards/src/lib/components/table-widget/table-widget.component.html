@@ -58,18 +58,19 @@
                 [selection]="selection"
                 [selectionConfig]="configuration?.selectionConfiguration"
                 [totalItems]="totalItems"
-                [paginatorUsed]="hasPaginator && configuration?.selectionConfiguration?.allPages"
-                [dataSource]="hasVirtualScroll ? virtualScrollAddon.visibleItems : tableData"
+                [paginatorUsed]="
+                    hasPaginator &&
+                    configuration?.selectionConfiguration?.allPages
+                "
+                [dataSource]="tableData"
                 [sortedColumn]="sortedColumn"
                 (sortOrderChanged)="onSortOrderChanged($event)"
                 (selectionChange)="onSelectionChange($event)"
                 [trackBy]="dataTrackBy()"
                 #widgetTable
             >
-                <ng-container
-                    nuiColumnDef="{{ column.id }}"
-                    *ngFor="let column of columns; trackBy: columnTrackBy"
-                >
+                @for (column of columns; track columnTrackBy($index, column)) {
+                <ng-container nuiColumnDef="{{ column.id }}">
                     <th
                         nui-header-cell
                         [isColumnSortingDisabled]="!column.sortable"
@@ -98,10 +99,10 @@
                             "
                             [alignment]="getColumnAlignment(column)"
                         >
+                            @if (element[column.id] && column.formatter) {
                             <ng-container
                                 nuiComponentPortal
                                 componentId="formatter"
-                                *ngIf="element[column.id] && column.formatter"
                                 [componentType]="
                                     column.formatter?.componentType
                                 "
@@ -115,28 +116,45 @@
                                     "
                                 ></ng-template>
                             </ng-container>
+                            }
                         </td>
                     </ng-container>
                 </ng-container>
+                }
                 <tr nui-header-row *nuiHeaderRowDef="headers"></tr>
-                <ng-template
-                    nuiRowDef
-                    cdkVirtualFor
-                    let-row
-                    [nuiRowDefColumns]="headers"
-                    [cdkVirtualForOf]="tableData"
-                    [cdkVirtualForTemplateCacheSize]="10"
-                    [cdkVirtualForTrackBy]="dataTrackBy()"
-                >
-                    <tr
-                        nui-row
-                        (click)="onInteraction(row, $event)"
-                        [attr.role]="interactive ? 'button' : ''"
-                        density="tiny"
-                        [rowObject]="row.__record"
-                        [clickableRow]="clickableRow"
-                    ></tr>
-                </ng-template>
+                <tr
+                    nui-row
+                    *nuiRowDef="let row; columns: headers"
+                    (click)="onInteraction(row, $event)"
+                    (keydown.enter)="onInteraction(row, $event)"
+                    (keydown.space)="
+                        interactive && $event.preventDefault();
+                        onInteraction(row, $event)
+                    "
+                    [attr.role]="interactive ? 'button' : null"
+                    [attr.tabindex]="interactive ? 0 : null"
+                    density="tiny"
+                    [rowObject]="row.__record"
+                    [clickableRow]="clickableRow"
+                ></tr>
+                <!--                <ng-template-->
+                <!--                    nuiRowDef-->
+                <!--                    cdkVirtualFor-->
+                <!--                    let-row-->
+                <!--                    [nuiRowDefColumns]="headers"-->
+                <!--                    [cdkVirtualForOf]="tableData"-->
+                <!--                    [cdkVirtualForTemplateCacheSize]="10"-->
+                <!--                    [cdkVirtualForTrackBy]="dataTrackBy()"-->
+                <!--                >-->
+                <!--                    <tr-->
+                <!--                        nui-row-->
+                <!--                        (click)="onInteraction(row, $event)"-->
+                <!--                        [attr.role]="interactive ? 'button' : ''"-->
+                <!--                        density="tiny"-->
+                <!--                        [rowObject]="row.__record"-->
+                <!--                        [clickableRow]="clickableRow"-->
+                <!--                    ></tr>-->
+                <!--                </ng-template>-->
             </table>
         </cdk-virtual-scroll-viewport>
     </div>
