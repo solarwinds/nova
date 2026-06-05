@@ -58,9 +58,9 @@
                 [selectionConfig]="configuration?.selectionConfiguration"
                 [totalItems]="totalItems"
                 [paginatorUsed]="
-                hasPaginator &&
-                configuration?.selectionConfiguration?.allPages
-            "
+                    hasPaginator &&
+                    configuration?.selectionConfiguration?.allPages
+                "
                 [dataSource]="tableData"
                 [sortedColumn]="sortedColumn"
                 (sortOrderChanged)="onSortOrderChanged($event)"
@@ -78,8 +78,8 @@
                         [style.min-width.px]="columnsWidthMap.get(column.id)"
                         [title]="column.label"
                         [tooltipText]="
-                        headerTooltipsEnabled ? column.label : undefined
-                    "
+                            headerTooltipsEnabled ? column.label : undefined
+                        "
                         [alignment]="getColumnAlignment(column)">
                         {{ column.label }}
                     </th>
@@ -89,26 +89,26 @@
                             *nuiCellDef="let element"
                             [style.width.px]="columnsWidthMap.get(column.id)"
                             [style.max-width.px]="
-                            columnsWidthMap.get(column.id)
-                        "
+                                columnsWidthMap.get(column.id)
+                            "
                             [style.min-width.px]="
-                            columnsWidthMap.get(column.id)
-                        "
+                                columnsWidthMap.get(column.id)
+                            "
                             [alignment]="getColumnAlignment(column)">
                             @if (element[column.id] && column.formatter) {
                             <ng-container
                                 nuiComponentPortal
                                 componentId="formatter"
                                 [componentType]="
-                                column.formatter?.componentType
-                            "
+                                    column.formatter?.componentType
+                                "
                                 [properties]="element[column.id]"
                                 #componentPortal="nuiComponentPortal">
                                 <ng-template
                                     [cdkPortalOutlet]="componentPortal.portal"
                                     (attached)="
-                                    componentPortal.attached($event)
-                                "></ng-template>
+                                        componentPortal.attached($event)
+                                    "></ng-template>
                             </ng-container>
                             }
                         </td>
@@ -120,7 +120,13 @@
                     nui-row
                     *nuiRowDef="let row; columns: headers"
                     (click)="onInteraction(row, $event)"
-                    [attr.role]="interactive ? 'button' : ''"
+                    (keydown.enter)="onInteraction(row, $event)"
+                    (keydown.space)="
+                        interactive && $event.preventDefault();
+                        onInteraction(row, $event)
+                    "
+                    [attr.role]="interactive ? 'button' : null"
+                    [attr.tabindex]="interactive ? 0 : null"
                     density="tiny"
                     [rowObject]="row.__record"
                     [clickableRow]="clickableRow"></tr>
