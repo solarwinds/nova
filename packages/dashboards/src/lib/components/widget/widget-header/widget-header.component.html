@@ -16,6 +16,7 @@
             tabindex="0"
             aria-label="Expand header"
             i18n-aria-label
+            [attr.aria-expanded]="false"
             (click)="toggleCollapsed()"
             (keydown.enter)="toggleCollapsed()"
             (keydown.space)="$event.preventDefault(); toggleCollapsed()">
@@ -112,7 +113,9 @@
                     i18n-aria-label
                     nuiTooltip="Collapse header"
                     icon="double-caret-up"
-                    (click)="toggleCollapsed()"></button>
+                    [attr.aria-expanded]="true"
+                    (click)="toggleCollapsed()"
+                ></button>
                 } @if (!hideMenu && !editMode) {
                 <nui-menu
                     class="nui-widget__header__content-actions__menu"
@@ -144,7 +147,10 @@
                             aria-label="Remove widget"
                             i18n-aria-label
                             aria-haspopup="menu"
-                            [attr.aria-expanded]="popup?.isOpen ? 'true' : 'false'"></button>
+                            [attr.aria-expanded]="
+                                popup?.isOpen ? 'true' : 'false'
+                            "
+                        ></button>
                     </span>
                     <div popupAreaContent class="nui-menu">
                         <nui-menu-action
