@@ -41,9 +41,10 @@ export class BaseSelectV2Atom extends Atom {
     public async options(): Promise<SelectV2OptionAtom> {
         let parentLocator: Locator;
         if (await this.popup.isOpened()) {
-            parentLocator = Helpers.page.locator(
-                "body > .cdk-overlay-container .cdk-overlay-pane"
-            );
+            parentLocator = Helpers.page
+                .locator("body > .cdk-overlay-container .cdk-overlay-pane")
+                .filter({ visible: true })
+                .first();
         } else {
             parentLocator = this.getLocator();
         }
@@ -55,7 +56,9 @@ export class BaseSelectV2Atom extends Atom {
     }
 
     public get input(): Locator {
-        return this.getLocator().locator(".nui-select-v2__value");
+        return this.getLocator()
+            .locator(".nui-select-v2__value, .nui-select-v2__container")
+            .first();
     }
 
     public get getPopupElement(): Locator {
