@@ -9,25 +9,20 @@
 >
     @for ( item of readonly ? [] : currentHelp; track item; let idx = $index;
     let last = $last; let first = $first) { @if (!item.items) {
-    <nui-select-v2-option
-        tabindex="-1"
-        [displayValueContext]="item"
-        [value]="item"
-    >
+    <nui-select-v2-option [displayValueContext]="item" [value]="item">
         <div class="d-inline-flex align-items-center">
             @if (item.icon) {
             <nui-icon class="mr-2" [icon]="item.icon"></nui-icon>
             }
             <span
-                tabindex="-1"
                 [innerHTML]="
-                    (item.displayValue || '') | nuiHighlight : focusedTokenValue
+                    item.displayValue || '' | nuiHighlight : focusedTokenValue
                 "
             ></span>
         </div>
     </nui-select-v2-option>
     } @if (item.items && item.items !== []) {
-    <nui-select-v2-option-group tabindex="-1">
+    <nui-select-v2-option-group [ariaLabel]="item.header">
         @if (last && idx > 1) {
         <nui-divider size="extra-small"></nui-divider>
         } @if (item.header) {
@@ -37,13 +32,11 @@
         } @if (!item.notice) { @for (groupedItem of item.items; track
         groupedItem) {
         <nui-select-v2-option
-            tabindex="-1"
             [displayValueContext]="groupedItem"
             [value]="groupedItem"
         >
             @if (!customTemplate) {
             <span
-                tabindex="-1"
                 [innerHTML]="
                     groupedItem.displayValue | nuiHighlight : focusedTokenValue
                 "
@@ -62,7 +55,7 @@
                             : 'info')
                 }}"
             ></nui-icon>
-            <span class="options-group__item" tabindex="-1">{{
+            <span class="options-group__item">{{
                 groupedItem.message.displayValue
             }}</span>
         </div>
@@ -92,6 +85,7 @@
                         formControlName="body"
                         [placeholder]="placeholder"
                         [maxLength]="maxLength"
+                        aria-label="Freetype query"
                     >
                     </textarea>
                     <div class="overlay-holder" #textHighlightOverlayHolder>

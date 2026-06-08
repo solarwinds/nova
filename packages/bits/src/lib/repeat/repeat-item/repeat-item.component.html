@@ -3,6 +3,7 @@
     [class.nui-repeat-item--selected]="selected"
     [class.text-nowrap]="nowrap"
     [class.nui-repeat-item--clickable]="clickable"
+    [attr.aria-selected]="selectable ? selected : null"
     (click)="clickable ? rowClicked.emit($event) : null"
     (keydown.enter)="onKeyActivate($event)"
     (keydown.space)="onKeyActivate($event)"

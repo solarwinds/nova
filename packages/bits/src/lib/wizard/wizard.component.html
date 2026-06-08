@@ -4,11 +4,27 @@
         [class.nui-wizard__header--lines-stretched]="stretchStepLines"
     >
         @if (steps) {
-        <ul class="nui-wizard__header-steps">
+        <ul class="nui-wizard__header-steps" role="tablist">
             @for (step of steps; track step; let first = $first; let last =
             $last) {
             <li
+                role="tab"
+                [attr.tabindex]="
+                    step.disabled ||
+                    (!step.visited && !step.active) ||
+                    currentStep?.busyConfig.busy
+                        ? -1
+                        : 0
+                "
+                [attr.aria-selected]="step.active"
+                [attr.aria-disabled]="
+                    step.disabled || (!step.visited && !step.active)
+                        ? 'true'
+                        : null
+                "
                 (click)="selectStep(step)"
+                (keydown.enter)="selectStep(step)"
+                (keydown.space)="$event.preventDefault(); selectStep(step)"
                 [ngClass]="{
                     'nui-wizard__header-step--first': first,
                     'nui-wizard__header-step--last': last,
@@ -53,6 +69,7 @@
                                         <nui-icon
                                             [icon]="step.icon"
                                             [iconColor]="step.iconColor"
+                                            aria-hidden="true"
                                         ></nui-icon>
                                         <div
                                             class="nui-wizard__header-step-col nui-wizard__header-step-col-left"

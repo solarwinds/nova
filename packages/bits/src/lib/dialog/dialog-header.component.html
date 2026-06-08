@@ -1,7 +1,7 @@
 <div class="dialog-header {{ severityClass }}">
     <div class="severity-text">
         @if (severityIcon) {
-        <nui-icon [icon]="severityIcon"></nui-icon>
+        <nui-icon [icon]="severityIcon" aria-hidden="true"></nui-icon>
         }
         <h1 class="dialog-title">{{ title }}</h1>
     </div>
