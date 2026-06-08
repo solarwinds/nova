@@ -78,11 +78,8 @@ import { InputValueTypes } from "../types";
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
-        "class": "nui-combobox-v2",
-        "role": "combobox",
-        "[attr.aria-expanded]": "isDropdownOpen || false",
-        "aria-haspopup": "listbox",
-        "aria-owns": "nui-overlay",
+        class: "nui-combobox-v2",
+        role: "none",
     },
     standalone: false,
 })
@@ -117,10 +114,10 @@ export class ComboboxV2Component
     }
 
     /** Value of the Combobox Input */
-    public inputValue: string | number;
+    public inputValue: string | number = "";
 
     /** Text of the Clear Button tooltip */
-    public clearValueButtonTooltip: string;
+    public clearValueButtonTooltip: string = "";
 
     constructor(
         elRef: ElementRef,
@@ -130,6 +127,7 @@ export class ComboboxV2Component
         public liveAnnouncer: LiveAnnouncer
     ) {
         super(optionKeyControlService, cdRef, elRef, liveAnnouncer);
+        this.optionKeyControlService.skipSpace = true;
     }
 
     public ngAfterContentInit(): void {

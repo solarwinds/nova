@@ -83,7 +83,7 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel: string = "Spinner";
+    @Input() public ariaLabel: string = $localize`Spinner`;
 
     @Output() public cancel = new EventEmitter();
 

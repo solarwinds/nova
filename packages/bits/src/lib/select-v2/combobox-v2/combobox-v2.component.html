@@ -6,8 +6,13 @@
     <input
         class="nui-combobox-v2__input pb-2"
         type="text"
+        role="combobox"
+        aria-autocomplete="list"
+        aria-haspopup="listbox"
+        [attr.aria-controls]="isDropdownOpen ? 'nui-overlay' : null"
+        [attr.aria-expanded]="isDropdownOpen || false"
         [id]="triggerId"
-        [attr.aria-label]="ariaLabel || 'input'"
+        [attr.aria-label]="accessibleLabel"
         [class.has-error]="isInErrorState"
         [disabled]="isDisabled"
         [(ngModel)]="inputValue"
@@ -28,6 +33,7 @@
     type="button"
     ariaLabel="Clear value"
     i18n-ariaLabel
+    title="Clear value"
     [nuiTooltip]="clearValueButtonTooltip"
     [class.disabled]="isDisabled"
     [disabled]="isDisabled"></button>
@@ -41,13 +47,14 @@
     icon="caret-down"
     ariaLabel="Toggle dropdown"
     i18n-ariaLabel
+    title="Toggle dropdown"
     [class.rotate]="isDropdownOpen"
     [class.disabled]="isDisabled"
     [disabled]="isDisabled"
     (click)="selectTextInInput()"></button>
 <nui-overlay
     roleAttr="listbox"
-    [ariaLabelledBy]="triggerId"
+    [ariaLabelledby]="triggerId"
     [toggleReference]="elRef.nativeElement"
     [viewportMargin]="popupViewportMargin"
     [overlayConfig]="overlayConfig">

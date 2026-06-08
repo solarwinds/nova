@@ -99,6 +99,10 @@ export class RiskScoreComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.colorLineWidth$.unsubscribe();
     }
 
+    public get riskScoreAriaLabel(): string {
+        return $localize`Risk score: ${this.level}`;
+    }
+
     public ngOnChanges(): void {
         this.updateOffset(this.colorLineWidth$.getValue());
     }

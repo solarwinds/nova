@@ -7,8 +7,9 @@
         [attr.aria-checked]="checkboxChecked"
         class="nui-selector__checkbox-button"
         [displayStyle]="'default'"
-        (click)="handleSelectorClick($event)">
-        <div class="nui-selector__checkbox-container">
+        (click)="handleSelectorClick($event)"
+        (keydown.space)="$event.preventDefault(); handleSelectorClick($event)">
+        <div class="nui-selector__checkbox-container" aria-hidden="true">
             <nui-checkbox
                 #checkbox
                 [checked]="checkboxChecked"
@@ -25,6 +26,8 @@
         i18n-ariaLabel
         [displayStyle]="'default'"
         [icon]="'caret-down'"
+        aria-haspopup="menu"
+        [attr.aria-expanded]="overlay.showing"
         (click)="overlay.toggle()"></button>
     }
 </div>

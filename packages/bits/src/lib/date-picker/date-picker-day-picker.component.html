@@ -8,6 +8,9 @@
                     type="button"
                     displayStyle="action"
                     icon="caret-left"
+                    ariaLabel="Previous month"
+                    i18n-ariaLabel
+                    title="Previous month"
                     (click)="datePicker.move(-1, $event)"
                     tabindex="-1"></button>
             </th>
@@ -36,6 +39,9 @@
                     type="button"
                     displayStyle="action"
                     icon="caret-right"
+                    ariaLabel="Next month"
+                    i18n-ariaLabel
+                    title="Next month"
                     (click)="datePicker.move(1, $event)"
                     tabindex="-1"></button>
             </th>

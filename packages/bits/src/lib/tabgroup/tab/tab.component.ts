@@ -80,6 +80,7 @@ export class TabComponent {
     @Output() deselected: EventEmitter<TabComponent> = new EventEmitter();
 
     @HostBinding("class.tab-pane") addClass = true;
+    @HostBinding("attr.role") role = "tabpanel";
 
     public headingRef: TemplateRef<any>;
     protected _active: boolean;
