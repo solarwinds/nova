@@ -23,11 +23,7 @@ import { Helpers, test } from "../../setup";
 import { ComboboxV2Atom } from "./combobox-v2.atom";
 
 test.describe("a11y: combobox-v2", () => {
-    const rulesToDisable: string[] = [
-        "aria-required-children",
-        "aria-required-attr",
-        "target-size",
-    ];
+    const rulesToDisable: string[] = ["target-size"];
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("combobox-v2/test", page);
