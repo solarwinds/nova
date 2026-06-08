@@ -2,6 +2,7 @@
     <nui-popover
         trigger="focus"
         tabindex="0"
+        [attr.aria-label]="'+' + value + tooltipText"
         placement="bottom"
         [unlimited]="true"
         [template]="template"

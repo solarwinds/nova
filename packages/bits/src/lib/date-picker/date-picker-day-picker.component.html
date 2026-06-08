@@ -1,9 +1,5 @@
-<table
-    *ngIf="datePicker.datepickerMode === 'day'"
-    role="grid"
-    [attr.aria-labelledby]="datePicker.uniqueId + '-title'"
-    aria-activedescendant="activeDateId"
->
+@if (datePicker.datepickerMode === 'day') {
+<table role="grid" [attr.aria-labelledby]="datePicker.uniqueId + '-title'">
     <thead>
         <tr>
             <th>
@@ -12,6 +8,9 @@
                     type="button"
                     displayStyle="action"
                     icon="caret-left"
+                    ariaLabel="Previous month"
+                    i18n-ariaLabel
+                    title="Previous month"
                     (click)="datePicker.move(-1, $event)"
                     tabindex="-1"
                 ></button>
@@ -42,6 +41,9 @@
                     type="button"
                     displayStyle="action"
                     icon="caret-right"
+                    ariaLabel="Next month"
+                    i18n-ariaLabel
+                    title="Next month"
                     (click)="datePicker.move(1, $event)"
                     tabindex="-1"
                 ></button>
@@ -57,34 +59,28 @@
         </tr>
     </thead>
     <tbody>
-        <ng-template
-            ngFor
-            [ngForOf]="rows"
-            let-row="$implicit"
-            let-index="index"
-        >
-            <tr *ngIf="row.isRowVisible">
-                <td *ngIf="datePicker.showWeeks" class="h6 text-center">
-                    <em>{{ weekNumbers[index] }}</em>
-                </td>
-                <td
-                    *ngFor="let cell of row.days"
-                    class="text-center day"
-                    [id]="cell.uid"
+        @for (row of rows; track $index; let index = $index) { @if
+        (row.isRowVisible) {
+        <tr>
+            @if (datePicker.showWeeks) {
+            <td class="h6 text-center">
+                <em>{{ weekNumbers[index] }}</em>
+            </td>
+            } @for (cell of row.days; track cell) {
+            <td class="text-center day" [id]="cell.uid">
+                @if (cell.isCellVisible) {
+                <button
+                    nui-button
+                    type="button"
+                    displayStyle="action"
+                    [ngClass]="{
+                        selected: cell.selected,
+                        disabled: cell.disabled
+                    }"
+                    [disabled]="cell.disabled"
+                    (click)="datePicker.select(cell.date, $event)"
+                    tabindex="-1"
                 >
-                    <button
-                        *ngIf="cell.isCellVisible"
-                        nui-button
-                        type="button"
-                        displayStyle="action"
-                        [ngClass]="{
-                            selected: cell.selected,
-                            disabled: cell.disabled
-                        }"
-                        [disabled]="cell.disabled"
-                        (click)="datePicker.select(cell.date, $event)"
-                        tabindex="-1"
-                    >
                         <span
                             [ngClass]="{
                                 'text-muted': cell.secondary,
@@ -94,9 +90,12 @@
                             >{{ cell.label }}</span
                         >
                     </button>
+                    }
                 </td>
+                }
             </tr>
-        </ng-template>
+            }
+        }
         <tr>
             <td [attr.colspan]="7 + (datePicker.showWeeks ? 1 : 0)">
                 <button

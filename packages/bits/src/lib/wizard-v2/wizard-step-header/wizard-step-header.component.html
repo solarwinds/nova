@@ -39,8 +39,9 @@
         <span class="nui-wizard-step-header-icon-content">
             <ng-container>
                 <nui-icon
-                    [icon]="stepStateConfigMap[stepState].icon"
-                    [iconColor]="stepStateConfigMap[stepState].iconColor"
+                    [icon]="stepStateConfigMap[stepState]?.icon"
+                    [iconColor]="stepStateConfigMap[stepState]?.iconColor"
+                    aria-hidden="true"
                 ></nui-icon>
             </ng-container>
         </span>

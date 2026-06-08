@@ -94,7 +94,7 @@ export class CheckboxGroupComponent
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabeledby = "";
+    @Input() public ariaLabelledby = "";
 
     private subscriptionsArray = new Array<Subscription>();
     private disabled: boolean = false;

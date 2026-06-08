@@ -3,10 +3,28 @@
         class="nui-wizard__header"
         [class.nui-wizard__header--lines-stretched]="stretchStepLines"
     >
-        <ul class="nui-wizard__header-steps" *ngIf="steps">
+        @if (steps) {
+        <ul class="nui-wizard__header-steps" role="tablist">
+            @for (step of steps; track step; let first = $first; let last =
+            $last) {
             <li
-                *ngFor="let step of steps; let first = first; let last = last"
+                role="tab"
+                [attr.tabindex]="
+                    step.disabled ||
+                    (!step.visited && !step.active) ||
+                    currentStep?.busyConfig.busy
+                        ? -1
+                        : 0
+                "
+                [attr.aria-selected]="step.active"
+                [attr.aria-disabled]="
+                    step.disabled || (!step.visited && !step.active)
+                        ? 'true'
+                        : null
+                "
                 (click)="selectStep(step)"
+                (keydown.enter)="selectStep(step)"
+                (keydown.space)="$event.preventDefault(); selectStep(step)"
                 [ngClass]="{
                     'nui-wizard__header-step--first': first,
                     'nui-wizard__header-step--last': last,
@@ -20,10 +38,8 @@
                 }"
                 class="nui-wizard__header-step"
             >
-                <div
-                    class="nui-wizard__header-step-container"
-                    *ngIf="!step.hidden"
-                >
+                @if (!step.hidden) {
+                <div class="nui-wizard__header-step-container">
                     <div class="nui-wizard__header-step-row">
                         <div class="nui-wizard__header-step-col">
                             <div class="nui-wizard__header-step-content">
@@ -53,6 +69,7 @@
                                         <nui-icon
                                             [icon]="step.icon"
                                             [iconColor]="step.iconColor"
+                                            aria-hidden="true"
                                         ></nui-icon>
                                         <div
                                             class="nui-wizard__header-step-col nui-wizard__header-step-col-left"
@@ -71,8 +88,11 @@
                         </div>
                     </div>
                 </div>
+                }
             </li>
+            }
         </ul>
+        }
     </div>
     <div
         class="nui-wizard__container"
@@ -92,8 +112,8 @@
             <span i18n>Cancel</span>
         </button>
         <ng-content select="[nui-button]"></ng-content>
+        @if (!steps.first.active) {
         <button
-            *ngIf="!steps.first.active"
             nui-button
             type="button"
             class="nui-wizard__back-button"
@@ -103,8 +123,8 @@
         >
             <span i18n>Back</span>
         </button>
+        } @if (!steps.last.active) {
         <button
-            *ngIf="!steps.last.active"
             nui-button
             type="button"
             class="nui-wizard__next-button"
@@ -116,8 +136,8 @@
         >
             <span>{{ currentStep?.nextText }}</span>
         </button>
+        } @if (canFinish || steps.last.active) {
         <button
-            *ngIf="canFinish || steps.last.active"
             nui-button
             type="button"
             class="nui-wizard__finish-button"
@@ -126,5 +146,6 @@
         >
             <span>{{ finishText }}</span>
         </button>
+        }
     </div>
 </div>

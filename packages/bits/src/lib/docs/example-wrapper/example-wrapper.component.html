@@ -10,6 +10,8 @@
                     showSource ? 'double-caret-up' : 'double-caret-down'
                 }}"
                 title="Show source"
+                ariaLabel="Toggle source code"
+                i18n-ariaLabel
                 [nuiTooltip]="getTooltip()"
                 tooltipPlacement="bottom"
                 (click)="showSource = !showSource"
@@ -20,6 +22,8 @@
                 displayStyle="action"
                 icon="external-link"
                 title="Open in CodeSandbox"
+                ariaLabel="Open in CodeSandbox"
+                i18n-ariaLabel
                 nuiTooltip="Open in Code Sandbox (only self-contained examples are opened properly)"
                 tooltipPlacement="bottom"
                 (click)="openCodeSandboxExample()"

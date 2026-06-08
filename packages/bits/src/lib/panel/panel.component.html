@@ -49,6 +49,7 @@
                         [icon]="mainIcon"
                         [disabled]="isAnimating"
                         [ariaLabel]="expandCollapseAriaLabel"
+                        [title]="expandCollapseAriaLabel"
                         (click)="toggleCollapsedOnClick()"
                     ></button>
                     } } @if (isClosable) {
@@ -60,6 +61,7 @@
                         icon="close"
                         ariaLabel="Close panel"
                         i18n-ariaLabel
+                        title="Close panel"
                         (click)="toggleCollapsedOnClick()"
                     ></button>
                     }

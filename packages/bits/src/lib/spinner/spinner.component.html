@@ -59,16 +59,20 @@
             />
         </svg>
 
+        @if (allowCancel) {
         <button
             nui-button
             type="button"
             class="nui-spinner__cancel"
             icon="close"
-            *ngIf="allowCancel"
+            ariaLabel="Cancel"
+            i18n-ariaLabel
+            title="Cancel"
             (click)="cancelProgress()"
             displayStyle="action"
             [nuiTooltip]="tooltipText"
         ></button>
+        }
     </div>
 
     <div class="nui-spinner__text-content" *ngIf="showText">

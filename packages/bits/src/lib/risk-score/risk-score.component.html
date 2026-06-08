@@ -1,4 +1,8 @@
-<div class="nui-risk-score" [title]="level">
+<div
+    class="nui-risk-score"
+    [title]="level"
+    [attr.aria-label]="riskScoreAriaLabel"
+>
     <div class="nui-risk-score__float" [style.margin-left.px]="floatOffset">
         <div class="nui-risk-score__float-title" *ngIf="title !== undefined">
             {{ title }}
