@@ -11,9 +11,9 @@
         nuiPopupToggle
         [toggleOnKey]="false"
         [disabled]="isDisabled"
-        [attr.aria-expanded]="popup?.isOpen ? 'true' : 'false'"
-        [attr.aria-controls]="popup?.isOpen ? popupContentId : null"
-        aria-haspopup="menu"
+        [opened]="popup?.isOpen || false"
+        [role]="'menu'"
+        [ariaControls]="popup?.isOpen ? popupContentId : null"
         type="button"
         (blur)="onBlur($event)"
         [displayStyle]="displayStyle"

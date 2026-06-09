@@ -117,6 +117,11 @@ export class ChipsComponent
      */
     @Input() public title: string;
 
+    /**
+     * Input to set aria label text for the chips container
+     */
+    @Input() public ariaLabel: string = "Chips";
+
     /** */
     @Input() public customClass: string;
     /**
