@@ -49,7 +49,7 @@ export class ProgressComponent implements OnChanges {
     @Input() public helpText?: string;
     @Input() public stacked: boolean;
     @Input() public compactMode: boolean;
-    @Input() public ariaLabel: string = "Progress bar";
+    @Input() public ariaLabel: string = $localize`Progress bar`;
 
     /**
      * Help template content displayed under the progress bar.

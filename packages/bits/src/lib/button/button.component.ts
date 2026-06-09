@@ -212,7 +212,11 @@ should be set explicitly: `,
     @HostListener("keydown", ["$event"])
     public onKeyDown(event: KeyboardEvent): void {
         const hostElement = this.getHostElement() as HTMLButtonElement;
-        if (!hostElement.disabled && !this.isBusy && (event.code === "Space" || event.code === "Enter")) {
+        if (
+            !hostElement.disabled &&
+            !this.isBusy &&
+            (event.code === "Space" || event.code === "Enter")
+        ) {
             this.isActive = true;
         }
     }
