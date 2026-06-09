@@ -266,6 +266,11 @@ export class RadioComponent implements OnInit, OnDestroy {
      */
     @Input() public ariaLabel: string = "";
 
+    /**
+     * Input to set aria-labelledby text/id
+     */
+    @Input() public ariaLabelledby: string = "";
+
     @ViewChild("inputViewContainer", { static: true, read: ViewContainerRef })
     public inputViewContainer: ViewContainerRef;
 
