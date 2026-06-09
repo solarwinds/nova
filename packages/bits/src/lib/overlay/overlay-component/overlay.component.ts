@@ -68,6 +68,7 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
             id="nui-overlay"
             class="nui-overlay"
             [attr.role]="roleAttr || null"
+            [attr.aria-label]="ariaLabel || null"
             [attr.aria-labelledby]="ariaLabelledby || null"
             [ngClass]="{ empty: empty$ | async }"
         >
@@ -108,6 +109,9 @@ export class OverlayComponent
 
     /** Sets the role attribute */
     @Input() roleAttr: string;
+
+    /** Sets the aria-label attribute for accessibility */
+    @Input() ariaLabel?: string;
 
     /** Sets the aria-labelledby attribute for accessibility */
     @Input() ariaLabelledby?: string;
