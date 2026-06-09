@@ -67,9 +67,7 @@ test.describe("a11y: combobox-v2", () => {
         await (await comboboxForm.getLastOption()).click();
         await comboboxForm.removeAll();
 
-        await Helpers.pressKey("Tab");
-        await ComboboxV2Atom.type("Item 3");
-        await (await comboboxBasic.getOption(33)).hover();
+        await (await comboboxBasic.getFirstOption()).hover();
         await runA11yScan(ComboboxV2Atom, rulesToDisable);
 
         await Helpers.switchDarkTheme("on");

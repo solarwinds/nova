@@ -77,7 +77,6 @@ import {
     styleUrls: ["./chips.component.less"],
     encapsulation: ViewEncapsulation.None,
     providers: [ChipsOverflowService],
-    host: { "[attr.role]": "role" },
     standalone: false,
 })
 export class ChipsComponent
@@ -157,10 +156,6 @@ export class ChipsComponent
     }
 
     private readonly destroy$ = new Subject<void>();
-
-    get role(): string | null {
-        return this.getItemsCount() ? "list" : null;
-    }
 
     constructor(
         private zone: NgZone,

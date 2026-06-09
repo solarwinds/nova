@@ -64,14 +64,13 @@ test.describe(`Visual tests: ${name}`, () => {
         await comboboxError.removeAll();
         await (await comboboxForm.getLastOption()).click();
         await comboboxForm.removeAll();
-        await Helpers.pressKey("Tab");
-        await ComboboxV2Atom.type("Item 3");
-        await (await comboboxBasic.getOption(33)).hover();
+        await comboboxBasic.type("Item 3");
+        await comboboxBasic.activeOption.hover();
         await camera.say.cheese("State 1");
 
         // State 2
         await Helpers.switchDarkTheme("on");
-        await (await comboboxBasic.getOption(33)).click();
+        await comboboxBasic.activeOption.click();
         await (await comboboxError.getFirstOption()).click();
         await (await comboboxForm.getLastOption()).click();
         await Helpers.page.locator("#trigger-disabled").click();

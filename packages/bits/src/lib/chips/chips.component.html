@@ -3,8 +3,6 @@
     #nuiChips
     class="nui-chips media"
     [ngClass]="customClass"
-    role="list"
-    [attr.aria-label]="ariaLabel"
     [class.nui-chips__vertical]="orientation === 'vertical'">
     @if (!!title && orientation === 'vertical') {
     <h4 class="nui-chips__title-cell">
@@ -15,6 +13,8 @@
     <div
         class="nui-chips__main-cell"
         #chipsMainCell
+        role="list"
+        [attr.aria-label]="ariaLabel"
         [style.flex-grow]="isOverflowed ? 1 : 0">
         @if (itemsSource.flatItems?.length) { @for (flatItem of
         itemsSource.flatItems; track flatItem; let last = $last) {
