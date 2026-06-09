@@ -4,7 +4,7 @@
         <ul
             class="nui-paginator__list"
             aria-label="List of pages"
-            i18n-aria-label
+            i18n-aria-label="@@paginatorPagesList"
         >
             @for (item of itemsList; track item) {
             <li
@@ -31,7 +31,9 @@
                     [attr.aria-label]="item.title"
                     (click)="item.action?.($event)"
                     [isEmpty]="false"
-                    [attr.aria-current]="item.style === activeClass ? 'page' : null"
+                    [attr.aria-current]="
+                        item.style === activeClass ? 'page' : null
+                    "
                 >
                     {{ item.value }}
                 </button>

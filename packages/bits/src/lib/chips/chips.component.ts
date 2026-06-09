@@ -120,7 +120,7 @@ export class ChipsComponent
     /**
      * Input to set aria label text for the chips container
      */
-    @Input() public ariaLabel: string = "Chips";
+    @Input() public ariaLabel: string = $localize`Chips`;
 
     /** */
     @Input() public customClass: string;

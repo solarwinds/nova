@@ -4,6 +4,8 @@
     class="nui-chips media"
     [ngClass]="customClass"
     [class.nui-chips__vertical]="orientation === 'vertical'"
+    role="list"
+    [attr.aria-label]="ariaLabel"
 >
     @if (!!title && orientation === 'vertical') {
     <h4 class="nui-chips__title-cell">

@@ -129,7 +129,7 @@ export class TextboxComponent
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel: string = "Textbox input";
+    @Input() public ariaLabel: string = $localize`Textbox input`;
 
     /**
      * Input to apply busy state and show spinner
