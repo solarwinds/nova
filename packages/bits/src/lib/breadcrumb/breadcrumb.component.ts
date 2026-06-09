@@ -43,7 +43,7 @@ import { BreadcrumbItem } from "./public-api";
 })
 export class BreadcrumbComponent {
     @Input() items: BreadcrumbItem[];
-    @Input() ariaLabel: string = "Breadcrumb";
+    @Input() ariaLabel: string = $localize`Breadcrumb`;
     @Output() navigation = new EventEmitter<string>();
 
     public handleClick(event: KeyboardEvent, item: BreadcrumbItem): void {

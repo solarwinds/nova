@@ -1,3 +1,9 @@
-<div *ngIf="datepickerMode" class="nui-datepicker-inner" [attr.role]="role">
+@if (datepickerMode) {
+<div
+    class="nui-datepicker-inner"
+    [attr.role]="role"
+    aria-label="Calendar"
+    i18n-aria-label="@@calendar"
+>
     <ng-content></ng-content>
 </div>

@@ -191,7 +191,7 @@ export class CheckboxComponent
     private rendererListener: Function;
     private sub: Subscription;
 
-    private _ariaLabel: string = "Checkbox";
+    private _ariaLabel: string = $localize`Checkbox`;
 
     private keysAction = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
 
