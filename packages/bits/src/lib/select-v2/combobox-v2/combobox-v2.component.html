@@ -1,8 +1,11 @@
-<div
-    class="w-100 d-flex flex-wrap align-items-center pt-2"
-    [attr.role]="multiselect && selectedOptions.length ? 'list' : null"
->
+<div class="w-100 d-flex flex-wrap align-items-center pt-2">
+    @if (multiselect && selectedOptions.length) {
+    <div class="d-flex flex-wrap align-items-center" role="list">
+        <ng-content select="[selectedItems]"></ng-content>
+    </div>
+    } @else {
     <ng-content select="[selectedItems]"></ng-content>
+    }
 
     <input
         class="nui-combobox-v2__input pb-2"

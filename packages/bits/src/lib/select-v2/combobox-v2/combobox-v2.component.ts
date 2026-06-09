@@ -119,6 +119,15 @@ export class ComboboxV2Component
     /** Text of the Clear Button tooltip */
     public clearValueButtonTooltip: string = "";
 
+    /**
+     * Accessible name for the combobox input. Falls back to a generic localized
+     * label so the input always has an accessible name (e.g. multiselect with
+     * selected chips and no placeholder).
+     */
+    public get accessibleLabel(): string | null {
+        return super.accessibleLabel ?? $localize`Combobox`;
+    }
+
     constructor(
         elRef: ElementRef,
         optionKeyControlService: OptionKeyControlService<SelectV2OptionComponent>,

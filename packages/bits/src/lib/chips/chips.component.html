@@ -4,8 +4,6 @@
     class="nui-chips media"
     [ngClass]="customClass"
     [class.nui-chips__vertical]="orientation === 'vertical'"
-    role="list"
-    [attr.aria-label]="ariaLabel"
 >
     <h4
         *ngIf="!!title && orientation === 'vertical'"
@@ -17,6 +15,8 @@
     <div
         class="nui-chips__main-cell"
         #chipsMainCell
+        role="list"
+        [attr.aria-label]="ariaLabel"
         [style.flex-grow]="isOverflowed ? 1 : 0"
     >
         <ng-container *ngIf="itemsSource.flatItems?.length">
