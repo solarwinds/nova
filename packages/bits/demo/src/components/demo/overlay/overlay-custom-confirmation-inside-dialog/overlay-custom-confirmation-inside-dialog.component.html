@@ -53,23 +53,25 @@
     </div>
     <!-- By setting the [toggleReference] below we choose the container to apply our overlay to. The chosen container 
          can later be accessed via the overlay's 'overlayRef' -->
-    <nui-overlay #overlay [toggleReference]="dialog">
+    <nui-overlay #overlay [toggleReference]="dialog" [trapFocus]="true">
         <div class="overlay-class">
             <div class="overlay-content">
                 <div class="header">Are you sure you want to quit?</div>
                 <div class="footer">
                     <button
                         nui-button
-                        displayStyle="action"
                         type="button"
                         (click)="overlay.hide()"
+                        i18n
                     >
                         No
                     </button>
                     <button
                         nui-button
+                        displayStyle="primary"
                         type="button"
                         (click)="overlay.hide(); close()"
+                        i18n
                     >
                         Yes
                     </button>
@@ -173,7 +175,11 @@
         </nui-dialog-footer>
     </div>
 
-    <nui-overlay #overlayLarge [toggleReference]="dialogLarge">
+    <nui-overlay
+        #overlayLarge
+        [toggleReference]="dialogLarge"
+        [trapFocus]="true"
+    >
         <div class="overlay-class">
             <div class="overlay-content">
                 <div class="header">
@@ -191,16 +197,18 @@
                 <div class="footer">
                     <button
                         nui-button
-                        displayStyle="action"
                         type="button"
                         (click)="overlayLarge.hide()"
+                        i18n
                     >
-                        Cancel
+                        No
                     </button>
                     <button
                         nui-button
+                        displayStyle="primary"
                         type="button"
                         (click)="overlayLarge.hide(); close()"
+                        i18n
                     >
                         Yes
                     </button>

@@ -19,6 +19,10 @@
 //  THE SOFTWARE.
 
 import {
+    ConfigurableFocusTrap,
+    ConfigurableFocusTrapFactory,
+} from "@angular/cdk/a11y";
+import {
     Overlay,
     OVERLAY_DEFAULT_CONFIG,
     OverlayConfig,
@@ -36,6 +40,7 @@ import {
     Input,
     OnChanges,
     OnDestroy,
+    OnInit,
     Output,
     SimpleChanges,
     ViewChild,
@@ -43,6 +48,7 @@ import {
 } from "@angular/core";
 import set from "lodash/set";
 import some from "lodash/some";
+import _uniqueId from "lodash/uniqueId";
 import { Observable, Subject, Subscription } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 
@@ -65,11 +71,13 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
     selector: "nui-overlay",
     template: ` <ng-template cdkPortal>
         <div
-            id="nui-overlay"
+            [attr.id]="overlayId"
             class="nui-overlay"
             [attr.role]="roleAttr || null"
             [attr.aria-label]="ariaLabel || null"
             [attr.aria-labelledby]="ariaLabelledby || null"
+            [attr.aria-describedby]="ariaDescribedby || null"
+            [attr.aria-modal]="ariaModal ? 'true' : null"
             [ngClass]="{ empty: empty$ | async }"
         >
             <ng-content></ng-content>
@@ -89,6 +97,7 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
 })
 export class OverlayComponent
     implements
+        OnInit,
         OnDestroy,
         IOverlayComponent,
         AfterContentChecked,
@@ -110,12 +119,27 @@ export class OverlayComponent
     /** Sets the role attribute */
     @Input() roleAttr: string;
 
+    /** Sets the id attribute */
+    @Input() idAttr?: string;
+
     /** Sets the aria-label attribute for accessibility */
     @Input() ariaLabel?: string;
 
     /** Sets the aria-labelledby attribute for accessibility */
     @Input() ariaLabelledby?: string;
 
+    /** Sets the aria-describedby attribute for accessibility */
+    @Input() ariaDescribedby?: string;
+
+    /** Sets whether the overlay is modal (adds aria-modal="true") */
+    @Input() ariaModal?: boolean;
+    /**
+     * When enabled, keyboard focus is trapped inside the overlay content while it is open,
+     * and restored to the previously focused element once the overlay is closed.
+     * Useful for modal-like overlays (e.g. confirmation dialogs). Defaults to false so that
+     * dropdown-like usages (select, combobox) keep their current behavior.
+     */
+    @Input() public trapFocus = false;
     /** Emits MouseEvent when click occurs outside Select/Combobox */
     @Output() public readonly clickOutside = new EventEmitter<MouseEvent>();
 
@@ -137,16 +161,25 @@ export class OverlayComponent
         return this.overlayService?.showing;
     }
 
-    private positionStrategySubscription: Subscription;
+    public overlayId!: string;
+
+    private positionStrategySubscription!: Subscription;
+    private focusTrap: ConfigurableFocusTrap | null = null;
+    private previouslyFocusedElement: HTMLElement | null = null;
 
     constructor(
         public overlayPositionService: OverlayPositionService,
         protected overlayService: OverlayService,
         protected cdkOverlay: Overlay,
-        private eventBusService: EventBusService
+        private eventBusService: EventBusService,
+        private focusTrapFactory: ConfigurableFocusTrapFactory
     ) {
         this.show$ = this.overlayService.show$;
         this.hide$ = this.overlayService.hide$;
+    }
+
+    public ngOnInit(): void {
+        this.overlayId = this.idAttr || _uniqueId("nui-overlay-");
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -170,6 +203,7 @@ export class OverlayComponent
     }
 
     public ngOnDestroy(): void {
+        this.deactivateFocusTrap();
         this.overlayService.ngOnDestroy();
     }
 
@@ -178,12 +212,14 @@ export class OverlayComponent
         this.setOverlayConfig();
         this.overlayService.show();
         this.handleOutsideClicks();
+        this.activateFocusTrap();
 
         setTimeout(() => this.empty$.next(this.isPopupContentEmpty())); // timeout to get the height of rendered content items
     }
 
     /** Hides Popup */
     public hide(): void {
+        this.deactivateFocusTrap();
         this.overlayService.hide();
         this.positionStrategySubscription?.unsubscribe();
     }
@@ -279,5 +315,36 @@ export class OverlayComponent
 
     private isPopupContentEmpty(): boolean {
         return this.getContentHeight() <= 10; // 10 is for 5 + 5 paddings
+    }
+
+    private activateFocusTrap(): void {
+        if (!this.trapFocus) {
+            return;
+        }
+
+        const overlayElement =
+            this.overlayService.getOverlayRef()?.overlayElement;
+        if (!overlayElement) {
+            return;
+        }
+
+        this.previouslyFocusedElement =
+            (document.activeElement as HTMLElement) ?? null;
+
+        this.focusTrap = this.focusTrapFactory.create(overlayElement);
+        // Defer focus until the overlay content has been rendered.
+        this.focusTrap.focusInitialElementWhenReady();
+    }
+
+    private deactivateFocusTrap(): void {
+        if (this.focusTrap) {
+            this.focusTrap.destroy();
+            this.focusTrap = null;
+        }
+
+        if (this.previouslyFocusedElement) {
+            this.previouslyFocusedElement.focus();
+            this.previouslyFocusedElement = null;
+        }
     }
 }

@@ -52,6 +52,9 @@ const FOCUSABLE_SELECTOR =
         role: "dialog",
         "aria-modal": "true",
         tabindex: "-1",
+        "[attr.aria-label]": "ariaLabel || null",
+        "[attr.aria-labelledby]": "ariaLabelledby || null",
+        "[attr.aria-describedby]": "ariaDescribedby || null",
         "(keyup.esc)": "escKey($event)",
         "(mousedown)": "backdropMouseDown($event)",
         "(mouseup)": "backdropMouseUp($event)",
@@ -85,6 +88,21 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() windowClass: string;
 
     /**
+     * Explicit aria-label for screen readers.
+     */
+    @Input() ariaLabel?: string;
+
+    /**
+     * ID of the element that labels the dialog window.
+     */
+    @Input() ariaLabelledby?: string;
+
+    /**
+     * ID of the element that describes the dialog window.
+     */
+    @Input() ariaDescribedby?: string;
+
+    /**
      * Event fired on dismiss of the dialog window
      */
     @Output() dismissEvent = new EventEmitter();
@@ -100,20 +118,48 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
     ) {}
 
     @HostListener("window:keydown.shift.tab", ["$event"])
-    onShiftTab(event: KeyboardEvent): void {
+    onShiftTab(event: any): void {
+        const activeElement = this.document.activeElement;
+        // When the focus is inside another overlay (e.g. a nui-overlay rendered
+        // on top of this dialog), let that overlay manage its own focus trapping.
+        if (this.isFocusInsideForeignOverlay(activeElement)) {
+            return;
+        }
+
         if (
-            this.elRef.nativeElement === this.document.activeElement ||
-            !this.elRef.nativeElement.contains(this.document.activeElement)
+            this.elRef.nativeElement === activeElement ||
+            !this.elRef.nativeElement.contains(activeElement)
         ) {
             this.handleFocus(event);
         }
     }
 
     @HostListener("window:keydown.tab", ["$event"])
-    onTab(event: KeyboardEvent): void {
-        if (!this.elRef.nativeElement.contains(this.document.activeElement)) {
+    onTab(event: any): void {
+        const activeElement = this.document.activeElement;
+        // When the focus is inside another overlay (e.g. a nui-overlay rendered
+        // on top of this dialog), let that overlay manage its own focus trapping.
+        if (this.isFocusInsideForeignOverlay(activeElement)) {
+            return;
+        }
+
+        if (!this.elRef.nativeElement.contains(activeElement)) {
             this.handleFocus(event);
         }
+    }
+
+    private isFocusInsideForeignOverlay(
+        activeElement: Element | null
+    ): boolean {
+        if (!activeElement || typeof activeElement.closest !== "function") {
+            return false;
+        }
+        const activeOverlayPane = activeElement.closest(".cdk-overlay-pane");
+        const dialogOverlayPane =
+            this.elRef.nativeElement.closest(".cdk-overlay-pane");
+        return Boolean(
+            activeOverlayPane && activeOverlayPane !== dialogOverlayPane
+        );
     }
 
     backdropMouseDown($event: any): void {

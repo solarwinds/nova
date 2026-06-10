@@ -209,5 +209,35 @@ describe("components >", () => {
                 expect(spy).toHaveBeenCalled();
             });
         });
+
+        describe("A11y and ID attributes", () => {
+            it("should apply custom id, role, and ARIA attributes to overlay container", () => {
+                wrapperComponent.dropdown.idAttr = "custom-overlay-id";
+                wrapperComponent.dropdown.roleAttr = "dialog";
+                wrapperComponent.dropdown.ariaLabel = "Custom Label";
+                wrapperComponent.dropdown.ariaLabelledby = "some-title-id";
+                wrapperComponent.dropdown.ariaDescribedby = "some-desc-id";
+                wrapperComponent.dropdown.ariaModal = true;
+                wrapperComponent.dropdown.ngOnInit();
+                wrapperComponent.dropdown.show();
+
+                const overlayElement =
+                    wrapperComponent.dropdown.getOverlayRef().overlayElement;
+                const innerOverlay =
+                    overlayElement.querySelector("#custom-overlay-id");
+                expect(innerOverlay).toBeTruthy();
+                expect(innerOverlay?.getAttribute("role")).toBe("dialog");
+                expect(innerOverlay?.getAttribute("aria-label")).toBe(
+                    "Custom Label"
+                );
+                expect(innerOverlay?.getAttribute("aria-labelledby")).toBe(
+                    "some-title-id"
+                );
+                expect(innerOverlay?.getAttribute("aria-describedby")).toBe(
+                    "some-desc-id"
+                );
+                expect(innerOverlay?.getAttribute("aria-modal")).toBe("true");
+            });
+        });
     });
 });
