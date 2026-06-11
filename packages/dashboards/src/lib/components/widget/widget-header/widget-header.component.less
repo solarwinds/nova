@@ -58,6 +58,7 @@
                 display: block;
                 max-width: 100%;
                 margin: 0;
+                min-width: 0;
                 .text-overflow(ellipsis);
 
                 a {
@@ -73,6 +74,25 @@
                 &-with-additional-content {
                     padding-left: 0;
                 }
+            }
+
+            &-title-row {
+                align-items: center;
+                display: flex;
+                gap: @nui-space-xxs;
+                max-width: 100%;
+                min-width: 0;
+            }
+
+            &-title-icon {
+                align-items: center;
+                color: @nui-color-text-default;
+                display: inline-flex;
+                flex: 0 0 auto;
+                justify-content: center;
+                min-height: 24px;
+                min-width: 24px;
+                opacity: 1;
             }
 
             &-help-hint {
