@@ -70,12 +70,17 @@
         font-size: @nui-font-size-big;
         font-weight: @nui-font-weight-semibold;
         min-width: 0; // we need this to make ellipsis work with the flex child (when we quit using zoom)
-        gap: @nui-space-xxs;
         margin-top: auto;
         .flex-center();
         .restrict-content-height(100%);
-        justify-content: center;
-        width: 100%;
+
+        &-content {
+            align-items: center;
+            display: flex;
+            gap: @nui-space-xxs;
+            max-width: 100%;
+            min-width: 0;
+        }
 
         &-text {
             display: block;
@@ -83,12 +88,6 @@
             max-width: 100%;
             .text-overflow(ellipsis);
             min-width: 0;
-
-            &--empty {
-                flex: 0 0 0;
-                max-width: 0;
-                overflow: hidden;
-            }
         }
 
         &-icon {
