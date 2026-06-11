@@ -254,15 +254,11 @@ describe("KpiComponent", () => {
                     ".nui-kpi-indicator__description-icon"
                 )
             ).toBeTruthy();
-            const labelText = fixture.nativeElement.querySelector(
-                ".nui-kpi-indicator__description-text"
-            ) as HTMLElement;
-
-            expect(labelText).toBeTruthy();
-            expect(labelText.classList).toContain(
-                "nui-kpi-indicator__description-text--empty"
-            );
-            expect(labelText.textContent?.trim()).toBe("");
+            expect(
+                fixture.nativeElement.querySelector(
+                    ".nui-kpi-indicator__description-text"
+                )
+            ).toBeNull();
         });
     });
 });
