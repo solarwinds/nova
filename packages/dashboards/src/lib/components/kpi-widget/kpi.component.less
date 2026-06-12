@@ -73,16 +73,30 @@
         margin-top: auto;
         .flex-center();
         .restrict-content-height(100%);
-        gap: @nui-space-xxs;
         justify-content: center;
         width: 100%;
 
+        &-content {
+            align-items: center;
+            display: flex;
+            gap: @nui-space-xxs;
+            justify-content: center;
+            max-width: 100%;
+            min-width: 0;
+            width: 100%;
+        }
+
         &-text {
             display: block;
-            flex: 0 1 auto;
+            flex: 1 1 auto;
             max-width: 100%;
-            .text-overflow(ellipsis);
             min-width: 0;
+
+            & > span {
+                display: block;
+                max-width: 100%;
+                .text-overflow(ellipsis);
+            }
         }
 
         &-icon {
