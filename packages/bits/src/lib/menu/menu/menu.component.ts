@@ -123,6 +123,13 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     public readonly menuTriggerId = _uniqueId("nui-menu-trigger-");
     public readonly popupContentId = _uniqueId("nui-menu-content-");
 
+    /**
+     * Accessible name for the menu toggle.
+     */
+    public get menuAriaLabel(): string | null {
+        return this.ariaLabel || (this.title ? null : "Menu");
+    }
+
     private menuKeyControlListeners: Function[] = [];
     private focusMonitorSubscription: Subscription;
     private suppressNextToggleClick = false;
@@ -220,6 +227,12 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         }
 
         this.menuOpenStream.next();
+    }
+
+    public get activeDescendant(): string | null {
+        return (
+            this.keyControlService.keyboardEventsManager?.activeItem?.id || null
+        );
     }
 
     public isJustified(): boolean {

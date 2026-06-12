@@ -108,6 +108,10 @@ export class ChipsComponent
      */
     @Input() public itemsSource: IChipsItemsSource;
     /**
+     * Input to set aria label text
+     */
+    @Input() public ariaLabel: string = $localize`Chips`;
+    /**
      * Can be set to 'vertical' to switch chips to vertical list mode. Otherwise horizontal mode is used.
      */
     @Input() public orientation: "horizontal" | "vertical";
@@ -115,11 +119,6 @@ export class ChipsComponent
      * Value to be shown as vertical orientation chips title.
      */
     @Input() public title: string;
-
-    /**
-     * Input to set aria label text for the chips container
-     */
-    @Input() public ariaLabel: string = $localize`Chips`;
 
     /** */
     @Input() public customClass: string;

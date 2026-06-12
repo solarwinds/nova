@@ -67,7 +67,11 @@ import { NuiFormFieldControl } from "../form-field/public-api";
             multi: true,
         },
     ],
-    host: { role: "radiogroup", "[attr.aria-label]": "ariaLabel || null" },
+    host: {
+        role: "radiogroup",
+        "[attr.aria-label]": "ariaLabel || null",
+        "[attr.id]": "id",
+    },
     standalone: false,
 })
 export class RadioGroupComponent
@@ -77,6 +81,9 @@ export class RadioGroupComponent
      * Input to set aria label text
      */
     @Input() public ariaLabel: string = "";
+
+    /** Unique id for the control. */
+    @Input() public id: string;
 
     /**
      * Sets the "name" attribute for each radio button in the group

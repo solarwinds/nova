@@ -10,6 +10,7 @@
         <input
             class="form-control input-control nui-textbox__input"
             #numberInput
+            [id]="id"
             step="any"
             [disabled]="disabled"
             type="number"
@@ -24,8 +25,10 @@
             (paste)="preventNonNumericalPaste($event)"
             [placeholder]="placeholder"
             [readonly]="readonly"
-            aria-label="Textbox number input"
-            i18n-aria-label
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-valuemin]="minValue"
+            [attr.aria-valuemax]="maxValue"
+            [attr.aria-valuenow]="value"
         />
     </div>
     <span class="nui-textbox-number__buttons">
@@ -38,8 +41,8 @@
                 [isRepeat]="isRepeatable"
                 [disabled]="readonly || disabled || compareMax()"
                 (click)="addNumber(+step)"
-                aria-label="Up"
-                i18n-aria-label
+                ariaLabel="Up"
+                i18n-ariaLabel
             ></button>
         </span>
         <span
@@ -56,8 +59,8 @@
                 [isRepeat]="isRepeatable"
                 [disabled]="readonly || disabled || compareMin()"
                 (click)="addNumber(-step)"
-                aria-label="Down"
-                i18n-aria-label
+                ariaLabel="Down"
+                i18n-ariaLabel
             ></button>
         </span>
     </span>

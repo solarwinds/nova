@@ -26,7 +26,11 @@
         </div>
         }
         <div class="nui-tabs">
-            <div class="nui-tabs__container" role="tablist" [class.flex-column]="vertical">
+            <div
+                class="nui-tabs__container"
+                role="tablist"
+                [class.flex-column]="vertical"
+            >
                 @for (tab of tabs; track tab) {
                 <div
                     class="nui-tab"
@@ -38,12 +42,16 @@
                     <span
                         class="tab-link"
                         role="tab"
+                        [id]="tab.tabId"
+                        [attr.aria-controls]="tab.panelId"
                         [attr.tabindex]="tab.disabled ? -1 : 0"
                         [attr.aria-selected]="tab.active ?? false"
                         [attr.aria-disabled]="tab.disabled || null"
                         (click)="selectTab(tab)"
                         (keydown.enter)="selectTab(tab)"
-                        (keydown.space)="$event.preventDefault(); selectTab(tab)"
+                        (keydown.space)="
+                            $event.preventDefault(); selectTab(tab)
+                        "
                     >
                         <span
                             [nuiTabHeadingCustomTemplateRef]="tab.headingRef"

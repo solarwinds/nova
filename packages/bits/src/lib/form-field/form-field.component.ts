@@ -50,6 +50,8 @@ import { ValidationMessageComponent } from "../validation-message/validation-mes
 export class FormFieldComponent
     implements AfterContentInit, AfterContentChecked
 {
+    private static nextUniqueId = 0;
+
     /**
      * Form control obtained from the parent reactive form
      */
@@ -92,6 +94,8 @@ export class FormFieldComponent
 
     public controlIsOptional: boolean = false;
 
+    public labelId = `nui-form-field-label-${FormFieldComponent.nextUniqueId++}`;
+
     public ngAfterContentChecked(): void {
         this.controlIsOptional =
             this.showOptionalText && !this.hasRequiredField(this.control);
@@ -121,6 +125,9 @@ export class FormFieldComponent
             // using setTimeout to prevent "expression changed after it has been checked" error
             setTimeout(() => {
                 this.nuiFormControl.ariaLabel = this.caption;
+                if (!this.nuiFormControl.id) {
+                    this.nuiFormControl.id = `${this.labelId}-control`;
+                }
             });
         }
     }

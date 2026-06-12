@@ -28,6 +28,8 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 
+import { _uniqueId } from "../../functions/unique-id";
+
 /**
  * <example-url>./../examples/index.html#/progress</example-url>
  */
@@ -36,9 +38,20 @@ import {
     templateUrl: "./progress.component.html",
     styleUrls: ["./progress.component.less"],
     encapsulation: ViewEncapsulation.None,
+    host: {
+        role: "progressbar",
+        "aria-valuemin": "0",
+        "aria-valuemax": "100",
+        "[attr.aria-label]": "ariaLabel",
+        "[attr.aria-valuenow]": "percent",
+        "[attr.aria-describedby]":
+            "message ? messageId : (helpText ? helpId : null)",
+    },
     standalone: false,
 })
 export class ProgressComponent implements OnChanges {
+    public readonly messageId = _uniqueId("nui-progress-message-");
+    public readonly helpId = _uniqueId("nui-progress-help-");
     @Input() public show: boolean;
     @Input() public showProgress = true;
     @Input() public message: string;

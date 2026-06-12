@@ -37,6 +37,7 @@ import {
 import { Subject } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
 
+import { _uniqueId } from "../../functions/unique-id";
 import { CheckboxStatus, SelectionType } from "./public-api";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import {
@@ -98,6 +99,8 @@ export class SelectorComponent
 
     @Input()
     public ariaLabel: string = "Selector";
+
+    public _id = _uniqueId("nui-selector-");
 
     @Output()
     public selectionChange = new EventEmitter<SelectionType>();
@@ -168,6 +171,10 @@ export class SelectorComponent
         } else {
             this.handleClosedMenu(event);
         }
+    }
+
+    public get activeDescendant(): string | null {
+        return this.keyboardEventsManager?.activeItem?.id || null;
     }
 
     public getFilters(): IFilter<ISelectorFilter> {

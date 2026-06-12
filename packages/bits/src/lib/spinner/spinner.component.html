@@ -77,13 +77,13 @@
     @if (showText) {
     <div class="nui-spinner__text-content">
         @if (message !== undefined) {
-        <div class="nui-spinner__label">
+        <div class="nui-spinner__label" [id]="messageId">
             <span class="nui-text-label nui-spinner__label-item">{{
                 message
             }}</span>
         </div>
         } @if (helpText !== undefined) {
-        <span class="nui-spinner__hint nui-help-hint">
+        <span class="nui-spinner__hint nui-help-hint" [id]="helpId">
             {{ helpText }}
         </span>
         }

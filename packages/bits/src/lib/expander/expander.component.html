@@ -6,6 +6,7 @@
         [attr.aria-label]="expanderToggleAriaLabel"
         [attr.aria-expanded]="state === 'expanded'"
         [attr.aria-disabled]="disabled"
+        [attr.aria-controls]="bodyId"
         [class.nui-expander__header--empty]="
             !header && isCustomHeaderContentEmpty
         "
@@ -52,7 +53,8 @@
     <div
         class="nui-expander__body-wrapper"
         role="region"
-        [attr.aria-label]="header || null"
+        [id]="bodyId"
+        [attr.aria-label]="expanderBodyAriaLabel"
     >
         @if (open) {
         <div
