@@ -74,30 +74,24 @@
         .flex-center();
         .restrict-content-height(100%);
 
-        &-content {
+        & > span {
             align-items: center;
             display: flex;
-            gap: @nui-space-xxs;
+            justify-content: center;
             max-width: 100%;
             min-width: 0;
         }
 
         &-text {
             display: block;
-            flex: 0 1 auto;
-            max-width: 100%;
-            .text-overflow(ellipsis);
             min-width: 0;
+            .text-overflow(ellipsis);
         }
 
         &-icon {
-            align-items: center;
-            display: inline-flex;
             flex: 0 0 auto;
-            justify-content: center;
-            min-height: 24px;
-            min-width: 24px;
-            pointer-events: auto;
+            margin-left: @nui-space-xs;
+            vertical-align: middle;
         }
     }
 
