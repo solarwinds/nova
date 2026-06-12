@@ -32,6 +32,7 @@ import {
     SimpleChanges,
 } from "@angular/core";
 
+import { _uniqueId } from "../../../../functions/unique-id";
 import { MenuGroupComponent } from "../menu-group/menu-group.component";
 
 /**
@@ -49,6 +50,10 @@ export abstract class MenuItemBaseComponent
      * Disables action, link and option components
      */
     @Input() public disabled?: boolean;
+
+    @HostBinding("attr.id")
+    @Input()
+    public id: string = _uniqueId("nui-menu-item-");
 
     @HostBinding("class.nui-menu-item") public setDefaultClass = true;
 

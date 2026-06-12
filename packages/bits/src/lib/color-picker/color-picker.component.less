@@ -29,15 +29,25 @@
     &-container {
         padding: @nui-space-xs @nui-space-sm;
     }
-    &-select {
+    &-select,
+    &-select-label {
         width: fit-content;
         min-width: unset;
         cursor: pointer;
+
+        &:focus-visible {
+            .focus-outline();
+        }
     }
 
     &-input {
         display: flex;
         justify-content: space-between;
+        outline: none;
+
+        &:focus-visible {
+            .focus-outline();
+        }
 
         &__label {
             margin: @nui-space-xs 0;
@@ -77,9 +87,6 @@
 
         &--selected {
             .setCssVariable(background-color, nui-color-selected);
-            &:focus {
-                outline: none;
-            }
         }
 
         &__glyph {
@@ -97,6 +104,10 @@
     width: fit-content;
     min-width: min(200px,100%);
     cursor: pointer;
+
+    &:focus-visible {
+        .focus-outline();
+    }
 
     &__option {
         display: flex;

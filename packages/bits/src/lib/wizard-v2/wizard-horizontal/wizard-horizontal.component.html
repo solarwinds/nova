@@ -128,7 +128,10 @@
         #stepHeaders
         class="nui-wizard-horizontal-header"
         (click)="step.select()"
-        (keydown)="_onKeydown($event)"
+        (keydown)="
+            $event.code === 'Space' ? $event.preventDefault() : null;
+            _onKeydown($event)
+        "
         [tabIndex]="selectedIndex === i ? 0 : -1"
         [id]="labelIds[i]"
         [attr.aria-posinset]="i + 1"

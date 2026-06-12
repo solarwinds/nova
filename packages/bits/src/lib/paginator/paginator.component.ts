@@ -239,6 +239,10 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         this.pageChange.emit(this.page);
     }
 
+    public getPageAriaLabel(pageValue: number): string {
+        return $localize`Go to page ${pageValue}`;
+    }
+
     /**
      * Change page number
      * @param page Page number

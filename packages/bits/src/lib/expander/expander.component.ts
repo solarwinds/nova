@@ -45,6 +45,8 @@ import { KEYBOARD_CODE } from "../../constants/keycode.constants";
     standalone: false,
 })
 export class ExpanderComponent implements AfterContentInit {
+    private static nextUniqueId = 0;
+
     /**
      * Adds "disabled" attribute to expander
      */
@@ -61,6 +63,10 @@ export class ExpanderComponent implements AfterContentInit {
      * Hides left dotted border of expander.
      */
     @Input() hideLeftBorder: boolean = false;
+    /**
+     * Accessible label for the expander toggle.
+     */
+    @Input() ariaLabel: string;
     /**
      * Use this to have expander opened by default.
      */
@@ -87,10 +93,21 @@ export class ExpanderComponent implements AfterContentInit {
 
     /** Returns an accessible label only when no visible text content exists in the header. */
     public get expanderToggleAriaLabel(): string | null {
+        if (this.ariaLabel) {
+            return this.ariaLabel;
+        }
         return !this.header && this.isCustomHeaderContentEmpty
             ? $localize`Expander toggle`
             : null;
     }
+
+    /** Returns an accessible label for the expander body region. */
+    public get expanderBodyAriaLabel(): string | null {
+        return this.header || this.ariaLabel || $localize`Expander content`;
+    }
+
+    /** Unique id for the expander body. */
+    public readonly bodyId = `nui-expander-body-${ExpanderComponent.nextUniqueId++}`;
 
     private actionKeys = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
 

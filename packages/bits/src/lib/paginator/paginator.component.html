@@ -15,7 +15,7 @@
                     nui-button
                     type="button"
                     displayStyle="action"
-                    [attr.aria-label]="item.title"
+                    [ariaLabel]="item.title"
                     [disabled]="item.style"
                     *ngIf="item.iconName"
                     class="move-icon"
@@ -27,7 +27,7 @@
                     type="button"
                     *ngIf="item.value !== dots && !item.iconName"
                     displayStyle="action"
-                    [attr.aria-label]="item.title"
+                    [ariaLabel]="item.title"
                     (click)="item.action?.($event)"
                     [isEmpty]="false"
                     [attr.aria-current]="
@@ -46,7 +46,7 @@
                         type="button"
                         nuiPopupToggle
                         displayStyle="action"
-                        [attr.aria-label]="item.title"
+                        [ariaLabel]="item.title"
                         [ngClass]="item.imageClass"
                         [isEmpty]="false"
                         aria-haspopup="menu"
@@ -130,6 +130,7 @@
                 type="button"
                 displayStyle="action"
                 (click)="goToPage(value)"
+                [ariaLabel]="getPageAriaLabel(value)"
             >
                 <!-- This tag span was added to display value properly on Safari brouser inside a button in ngFor directive -->
                 <span>{{ value }}</span>

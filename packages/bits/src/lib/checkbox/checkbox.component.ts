@@ -109,6 +109,9 @@ export class CheckboxComponent
     /** The 'aria-describedby' attribute is read after the element's label and field type. */
     @Input() ariaDescribedby: string;
 
+    /** Unique id for the control. */
+    @Input() public id: string;
+
     /**
      * Sets "name" attribute for inner input element of nui-checkbox
      */

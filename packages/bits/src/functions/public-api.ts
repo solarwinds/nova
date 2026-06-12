@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 export * from "./uuid";
+export * from "./unique-id";
 export * from "./immutable-set";
 export * from "./remove-errors";
 export * from "./traverse";

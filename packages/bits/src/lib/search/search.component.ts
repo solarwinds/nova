@@ -40,7 +40,7 @@ import { NuiButtonModule } from "../button/button.module";
     imports: [FormsModule, NuiCommonModule, NuiButtonModule],
     host: {
         class: "nui-search",
-        role: "searchbox",
+        role: "search",
         "[attr.aria-label]": "inputAriaLabel",
     },
     templateUrl: "./search.component.html",
@@ -74,7 +74,9 @@ export class SearchComponent implements IFilterPub {
     /** Watermark text (placeholder) displayed when empty. */
     public placeholder = input<string>();
     /** Custom id for the input. */
-    public inputId = input<string>("search-input");
+    public inputId = input<string>();
+    /** Accessible label for the search input. */
+    public ariaLabel = input<string>($localize`Search`);
     /** Value of the input field. */
     public value = model<string>("");
 
@@ -123,12 +125,15 @@ export class SearchComponent implements IFilterPub {
     );
     /** Whether the search button should be disabled (empty value). */
     public isButtonDisabled = computed(() => !this.value()?.trim());
-    /** Accessible label text for the input (used by hidden label). */
-    public inputAriaLabel = $localize`Search`;
     /** Accessible label for the cancel (clear) button. */
     public cancelAriaLabel = $localize`Cancel search`;
     /** Accessible label for the submit (search) button. */
     public submitAriaLabel = $localize`Submit search`;
+
+    /** Accessible label applied to the host search landmark. */
+    public get inputAriaLabel(): string {
+        return this.ariaLabel();
+    }
 
     public getFilters(): IFilter<string> {
         return {
