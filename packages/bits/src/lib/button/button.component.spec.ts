@@ -226,7 +226,10 @@ describe("components >", () => {
 
             it("should add .active class on Space keydown", () => {
                 hostElement.dispatchEvent(
-                    new KeyboardEvent("keydown", { code: "Space", bubbles: true })
+                    new KeyboardEvent("keydown", {
+                        code: "Space",
+                        bubbles: true,
+                    })
                 );
                 buttonFixture.detectChanges();
                 expect(hostElement.classList.contains("active")).toBeTrue();
@@ -234,7 +237,10 @@ describe("components >", () => {
 
             it("should add .active class on Enter keydown", () => {
                 hostElement.dispatchEvent(
-                    new KeyboardEvent("keydown", { code: "Enter", bubbles: true })
+                    new KeyboardEvent("keydown", {
+                        code: "Enter",
+                        bubbles: true,
+                    })
                 );
                 buttonFixture.detectChanges();
                 expect(hostElement.classList.contains("active")).toBeTrue();
@@ -242,7 +248,10 @@ describe("components >", () => {
 
             it("should remove .active class on Space keyup", () => {
                 hostElement.dispatchEvent(
-                    new KeyboardEvent("keydown", { code: "Space", bubbles: true })
+                    new KeyboardEvent("keydown", {
+                        code: "Space",
+                        bubbles: true,
+                    })
                 );
                 hostElement.dispatchEvent(
                     new KeyboardEvent("keyup", { code: "Space", bubbles: true })
@@ -253,9 +262,14 @@ describe("components >", () => {
 
             it("should remove .active class on blur", () => {
                 hostElement.dispatchEvent(
-                    new KeyboardEvent("keydown", { code: "Enter", bubbles: true })
+                    new KeyboardEvent("keydown", {
+                        code: "Enter",
+                        bubbles: true,
+                    })
                 );
-                hostElement.dispatchEvent(new FocusEvent("blur", { bubbles: true }));
+                hostElement.dispatchEvent(
+                    new FocusEvent("blur", { bubbles: true })
+                );
                 buttonFixture.detectChanges();
                 expect(hostElement.classList.contains("active")).toBeFalse();
             });
@@ -263,7 +277,10 @@ describe("components >", () => {
             it("should NOT add .active class when button is disabled", () => {
                 hostElement.disabled = true;
                 hostElement.dispatchEvent(
-                    new KeyboardEvent("keydown", { code: "Space", bubbles: true })
+                    new KeyboardEvent("keydown", {
+                        code: "Space",
+                        bubbles: true,
+                    })
                 );
                 buttonFixture.detectChanges();
                 expect(hostElement.classList.contains("active")).toBeFalse();
@@ -273,7 +290,10 @@ describe("components >", () => {
                 buttonSubject.isBusy = true;
                 buttonFixture.detectChanges();
                 hostElement.dispatchEvent(
-                    new KeyboardEvent("keydown", { code: "Space", bubbles: true })
+                    new KeyboardEvent("keydown", {
+                        code: "Space",
+                        bubbles: true,
+                    })
                 );
                 buttonFixture.detectChanges();
                 expect(hostElement.classList.contains("active")).toBeFalse();

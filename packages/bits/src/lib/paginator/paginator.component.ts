@@ -70,7 +70,7 @@ const containerPaddingsWithScroll = 37;
     encapsulation: ViewEncapsulation.None,
     providers: [PopupContainerService],
     host: {
-        role: "navigation",
+        "role": "navigation",
         "[attr.aria-label]": "ariaLabel",
     },
     standalone: false,
@@ -237,6 +237,10 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
     public resetFilter(): void {
         this.page = 1;
         this.pageChange.emit(this.page);
+    }
+
+    public getPageAriaLabel(pageValue: number): string {
+        return $localize`Go to page ${pageValue}`;
     }
 
     /**

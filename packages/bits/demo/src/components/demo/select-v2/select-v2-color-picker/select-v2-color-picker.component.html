@@ -43,7 +43,14 @@ Don't forget to disable the width synchronization, so that the overlay does not 
 
 <!-- This template defines the input markup -->
 <ng-template #colorSelectTemplate let-item let-open="open">
-    <div class="color-picker-input">
+    <div
+        class="color-picker-input"
+        role="combobox"
+        aria-haspopup="listbox"
+        [attr.aria-expanded]="open"
+        [attr.aria-label]="item || 'Select color'"
+        [attr.aria-controls]="open ? 'nui-overlay' : null"
+        tabindex="0">
         <div class="color-picker-input__box">
             <div
                 class="color-picker-input__color-box"
@@ -52,7 +59,8 @@ Don't forget to disable the width synchronization, so that the overlay does not 
         <div class="color-picker-input__toggle">
             <nui-icon
                 [style.transform]="open ? 'rotate(180deg)' : ''"
-                icon="caret-down"></nui-icon>
+                icon="caret-down"
+                aria-hidden="true"></nui-icon>
         </div>
     </div>
 </ng-template>

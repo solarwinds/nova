@@ -114,8 +114,7 @@
                     nuiTooltip="Collapse header"
                     icon="double-caret-up"
                     [attr.aria-expanded]="true"
-                    (click)="toggleCollapsed()"
-                ></button>
+                    (click)="toggleCollapsed()"></button>
                 } @if (!hideMenu && !editMode) {
                 <nui-menu
                     class="nui-widget__header__content-actions__menu"
@@ -149,8 +148,7 @@
                             aria-haspopup="menu"
                             [attr.aria-expanded]="
                                 popup?.isOpen ? 'true' : 'false'
-                            "
-                        ></button>
+                            "></button>
                     </span>
                     <div popupAreaContent class="nui-menu">
                         <nui-menu-action

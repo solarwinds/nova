@@ -60,7 +60,7 @@ describe("components >", () => {
 
             it("should have role=tab on each tab link", () => {
                 const tabLinks = el.querySelectorAll(".tab-link");
-                tabLinks.forEach((link) => {
+                tabLinks.forEach(link => {
                     expect(link.getAttribute("role")).toBe("tab");
                 });
             });
@@ -107,7 +107,11 @@ describe("components >", () => {
                 expect(tabLinks[1].getAttribute("aria-selected")).toBe("false");
 
                 tabLinks[1].dispatchEvent(
-                    new KeyboardEvent("keydown", { key: "Enter", code: "Enter", bubbles: true })
+                    new KeyboardEvent("keydown", {
+                        key: "Enter",
+                        code: "Enter",
+                        bubbles: true,
+                    })
                 );
                 fixture.detectChanges();
 
@@ -120,7 +124,11 @@ describe("components >", () => {
                 const disabledTab = tabLinks[2];
 
                 disabledTab.dispatchEvent(
-                    new KeyboardEvent("keydown", { key: "Enter", code: "Enter", bubbles: true })
+                    new KeyboardEvent("keydown", {
+                        key: "Enter",
+                        code: "Enter",
+                        bubbles: true,
+                    })
                 );
                 fixture.detectChanges();
 

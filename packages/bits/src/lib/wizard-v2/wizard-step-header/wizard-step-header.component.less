@@ -15,11 +15,17 @@
         .setCssVariable(color, nui-color-text-link);
     }
 
-    &:focus {
+    &:focus-visible {
         .focus-outline-inset();
         border-radius: @nui-radius-default;
     }
 
+    &:focus {
+        outline: none;
+    }
+
+    /* Keep focused but not visible to remove browser default or old logic if needed,
+       but the focus-visible above handles the ring. */
     &:focus:not(:focus-visible) {
         box-shadow: unset;
         border-radius: unset;

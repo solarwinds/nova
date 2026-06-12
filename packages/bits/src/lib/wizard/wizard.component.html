@@ -8,6 +8,8 @@
             $last) {
             <li
                 role="tab"
+                [id]="step.stepId"
+                [attr.aria-controls]="step.panelId"
                 [attr.tabindex]="
                     step.disabled ||
                     (!step.visited && !step.active) ||
@@ -87,6 +89,9 @@
     </div>
     <div
         class="nui-wizard__container"
+        role="tabpanel"
+        [id]="currentStep?.panelId"
+        [attr.aria-labelledby]="currentStep?.stepId"
         [class.show-scroll]="enableScroll"
         [style.height]="bodyContainerHeight">
         <ng-content></ng-content>

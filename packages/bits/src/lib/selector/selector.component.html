@@ -28,6 +28,10 @@
         [icon]="'caret-down'"
         aria-haspopup="menu"
         [attr.aria-expanded]="overlay.showing"
+        [attr.aria-controls]="
+            overlay.showing ? 'nui-selector-menu-' + _id : null
+        "
+        [attr.aria-activedescendant]="overlay.showing ? activeDescendant : null"
         (click)="overlay.toggle()"></button>
     }
 </div>
@@ -40,6 +44,7 @@
     [overlayConfig]="overlayConfig"
     [customContainer]="customContainer">
     <nui-menu-popup
+        [id]="'nui-selector-menu-' + _id"
         [itemsSource]="items"
         (menuItemClicked)="handleItemClick($event)"></nui-menu-popup>
 </nui-overlay>

@@ -66,11 +66,9 @@ export class ExpanderComponent implements AfterContentInit {
      */
     @Input() hideLeftBorder: boolean = false;
     /**
-     * Accessible name used when `header` is not set, so the header button and body region always have a valid label.
-     * Defaults to a localized fallback.
+     * Accessible label for the expander toggle.
      */
-    @Input() ariaLabel: string = "";
-    public readonly defaultAriaLabel: string = $localize`Expander`;
+    @Input() ariaLabel: string;
     /**
      * Use this to have expander opened by default.
      */
@@ -96,11 +94,19 @@ export class ExpanderComponent implements AfterContentInit {
     public isCustomHeaderContentEmpty: boolean = false;
     public uniqueId: string;
 
+    private readonly instanceId = ExpanderComponent.nextUniqueId++;
+
+    /** Unique id for the expander header button. */
+    public readonly headerId = `nui-expander-header-${this.instanceId}`;
+
     /** Unique id for the expander body. */
-    public readonly bodyId = `nui-expander-body-${ExpanderComponent.nextUniqueId++}`;
+    public readonly bodyId = `nui-expander-body-${this.instanceId}`;
 
     /** Returns an accessible label only when no visible text content exists in the header. */
     public get expanderToggleAriaLabel(): string | null {
+        if (this.ariaLabel) {
+            return this.ariaLabel;
+        }
         return !this.header && this.isCustomHeaderContentEmpty
             ? $localize`Expander toggle`
             : null;

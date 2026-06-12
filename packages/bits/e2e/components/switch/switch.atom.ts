@@ -26,7 +26,8 @@ export class SwitchAtom extends Atom {
     public static ON_CSS = "nui-switched";
     public static CSS_CLASS = "nui-switch";
 
-    public toggle = async (): Promise<void> => this.slider.click({ force: true });
+    public toggle = async (): Promise<void> =>
+        this.slider.click({ force: true });
 
     public container(): Locator {
         return super.getLocator().locator(".nui-switch__container");

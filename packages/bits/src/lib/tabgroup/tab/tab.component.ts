@@ -43,6 +43,11 @@ import { TabGroupComponent } from "../tab-group/tab-group.component";
     standalone: false,
 })
 export class TabComponent {
+    private static nextId = 0;
+    /** Unique id for the tab and its panel. */
+    public readonly tabId = `nui-tab-${TabComponent.nextId++}`;
+    public readonly panelId = `${this.tabId}-panel`;
+
     /** Tab header text */
     @Input() heading: string;
     /** If true tab can not be activated  */
@@ -81,6 +86,12 @@ export class TabComponent {
 
     @HostBinding("class.tab-pane") addClass = true;
     @HostBinding("attr.role") role = "tabpanel";
+    @HostBinding("attr.id") get idAttr() {
+        return this.panelId;
+    }
+    @HostBinding("attr.aria-labelledby") get ariaLabelledbyAttr() {
+        return this.tabId;
+    }
 
     public headingRef: TemplateRef<any>;
     protected _active: boolean;

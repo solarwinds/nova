@@ -77,6 +77,22 @@ export class TextboxComponent
      * Value used as a info in popover for the text box.
      */
     @Input() public info: string;
+    /**
+     * Value used as a aria-activedescendant for the text box.
+     */
+    @Input() public ariaActiveDescendant: string | null;
+    /**
+     * Value used as a aria-expanded for the text box.
+     */
+    @Input() public ariaExpanded: boolean | null;
+    /**
+     * Value used as a aria-haspopup for the text box.
+     */
+    @Input() public ariaHasPopup: string | null;
+    /**
+     * Value used as a aria-controls for the text box.
+     */
+    @Input() public ariaControls: string | null;
 
     /**
      * Use to set a custom width for the input field.
@@ -115,6 +131,11 @@ export class TextboxComponent
      * Use to set type of input (number, password etc.).
      */
     @Input() public type = "text";
+
+    /**
+     * Unique id for the control.
+     */
+    @Input() public id: string;
 
     /**
      * Input initial value

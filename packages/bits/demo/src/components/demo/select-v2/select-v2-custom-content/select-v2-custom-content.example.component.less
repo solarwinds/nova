@@ -30,6 +30,15 @@ nui-select-v2-option {
     align-items: center;
     justify-content: space-between;
     padding: @nui-space-xs @nui-space-sm;
+    outline: none;
+
+    &:focus-within {
+        .setCssVariable(background-color, nui-color-bg-transparent-hover);
+    }
+
+    &:focus-visible {
+        .focus-outline();
+    }
 }
 
 .custom-input-template {

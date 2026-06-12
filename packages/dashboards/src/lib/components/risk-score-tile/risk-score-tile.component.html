@@ -10,8 +10,7 @@
         [tabindex]="interactive ? 0 : -1"
         (click)="onInteraction()"
         (keydown.enter)="onInteraction()"
-        (keydown.space)="$event.preventDefault(); onInteraction()"
-    >
+        (keydown.space)="$event.preventDefault(); onInteraction()">
         <ng-container [ngTemplateOutlet]="riskScoreContent"></ng-container>
     </div>
     }

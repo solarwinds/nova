@@ -4,8 +4,7 @@
         <ul
             class="nui-paginator__list"
             aria-label="List of pages"
-            i18n-aria-label="@@paginatorPagesList"
-        >
+            i18n-aria-label="@@paginatorPagesList">
             @for (item of itemsList; track item) {
             <li
                 title="{{ item.title }}"
@@ -16,7 +15,7 @@
                     nui-button
                     type="button"
                     displayStyle="action"
-                    [attr.aria-label]="item.title"
+                    [ariaLabel]="item.title"
                     [disabled]="item.style"
                     class="move-icon"
                     [icon]="item.iconName"
@@ -26,13 +25,12 @@
                     nui-button
                     type="button"
                     displayStyle="action"
-                    [attr.aria-label]="item.title"
+                    [ariaLabel]="item.title"
                     (click)="item.action?.($event)"
                     [isEmpty]="false"
                     [attr.aria-current]="
                         item.style === activeClass ? 'page' : null
-                    "
-                >
+                    ">
                     {{ item.value }}
                 </button>
                 } @if (item.value === dots) {
@@ -44,7 +42,7 @@
                         type="button"
                         nuiPopupToggle
                         displayStyle="action"
-                        [attr.aria-label]="item.title"
+                        [ariaLabel]="item.title"
                         [ngClass]="item.imageClass"
                         [isEmpty]="false"
                         aria-haspopup="menu"
@@ -125,7 +123,8 @@
                 nui-button
                 type="button"
                 displayStyle="action"
-                (click)="goToPage(value)">
+                (click)="goToPage(value)"
+                [ariaLabel]="getPageAriaLabel(value)">
                 <!-- This tag span was added to display value properly on Safari brouser inside a button in ngFor directive -->
                 <span>{{ value }}</span>
             </button>

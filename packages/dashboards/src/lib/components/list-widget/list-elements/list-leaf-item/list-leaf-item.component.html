@@ -4,13 +4,16 @@
     tabindex="0"
     (click)="onButtonClick()"
     (keydown.enter)="onButtonClick()"
-    (keydown.space)="$event.preventDefault(); onButtonClick()"
->
+    (keydown.space)="$event.preventDefault(); onButtonClick()">
     <!-- TODO: NUI-6284 - list-leaf-item contains nested interactive elements -->
     <div class="nui-list-leaf-item__info-container">
         <div class="nui-list-leaf-item__icon-container">
             @if (icon) {
-            <nui-icon [icon]="icon" [status]="status" [decorative]="false" class="mr-1"></nui-icon>
+            <nui-icon
+                [icon]="icon"
+                [status]="status"
+                [decorative]="false"
+                class="mr-1"></nui-icon>
             } @else {
             {{ status }}
             }

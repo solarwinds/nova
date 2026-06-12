@@ -118,14 +118,21 @@ describe("components >", () => {
 
             it("should toggle when Space is pressed (keydown)", () => {
                 switchBar.dispatchEvent(
-                    new KeyboardEvent("keydown", { key: " ", code: "Space", bubbles: true })
+                    new KeyboardEvent("keydown", {
+                        key: " ",
+                        code: "Space",
+                        bubbles: true,
+                    })
                 );
                 expect(valueChange).toHaveBeenCalledWith(true);
             });
 
             it("should NOT toggle when Enter is pressed", () => {
                 switchBar.dispatchEvent(
-                    new KeyboardEvent("keydown", { code: "Enter", bubbles: true })
+                    new KeyboardEvent("keydown", {
+                        code: "Enter",
+                        bubbles: true,
+                    })
                 );
                 expect(valueChange).not.toHaveBeenCalled();
             });
@@ -133,7 +140,11 @@ describe("components >", () => {
             it("should NOT toggle when disabled and Space is pressed", () => {
                 nuiSwitch.setDisabledState(true);
                 switchBar.dispatchEvent(
-                    new KeyboardEvent("keydown", { key: " ", code: "Space", bubbles: true })
+                    new KeyboardEvent("keydown", {
+                        key: " ",
+                        code: "Space",
+                        bubbles: true,
+                    })
                 );
                 expect(valueChange).not.toHaveBeenCalled();
             });

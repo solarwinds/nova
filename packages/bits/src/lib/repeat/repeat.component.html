@@ -79,8 +79,7 @@
                 itemIndex !== undefined
                     ? 'nui-repeat-item-content-' + itemIndex
                     : null
-            "
-        >
+            ">
             <ng-container
                 [ngTemplateOutlet]="repeatItemTemplateRef"
                 [ngTemplateOutletContext]="{ item: item }"></ng-container>
@@ -127,8 +126,7 @@
                     [ngTemplateOutletContext]="{
                         item: sourceItem,
                         itemIndex: i
-                    }"
-                ></ng-container>
+                    }"></ng-container>
             </ng-container>
         </cdk-virtual-scroll-viewport>
         }

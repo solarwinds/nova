@@ -51,7 +51,7 @@ const FOCUSABLE_SELECTOR =
         "[class]": `"nui-dialog fade in show" + (windowClass ? " " + windowClass : "")`,
         "role": "dialog",
         "aria-modal": "true",
-        tabindex: "-1",
+        "tabindex": "-1",
         "[attr.aria-label]": "ariaLabel || null",
         "[attr.aria-labelledby]": "ariaLabelledby || null",
         "[attr.aria-describedby]": "ariaDescribedby || null",
