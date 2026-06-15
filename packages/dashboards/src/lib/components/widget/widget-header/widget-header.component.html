@@ -36,32 +36,48 @@
                     withCustomElement || editMode
                 "
             >
-                <!-- text only header with no url defined -->
-                <h2
-                    class="nui-text-widget nui-widget__header__content-title"
-                    [title]="title"
-                    *ngIf="!url || editMode"
-                >
-                    {{ title }}
-                </h2>
-
-                <!-- link version of the header -->
-                <h2
-                    *ngIf="url && !editMode"
-                    class="nui-text-widget nui-widget__header__content-title"
-                    [title]="title"
-                >
-                    <a
-                        [href]="url"
-                        (click)="prepareLink($event)"
-                        (mouseenter)="prepareLink($event)"
-                        (mousedown)="
-                            $event.stopPropagation(); $event.preventDefault()
-                        "
-                        [nuiTooltip]="linkTooltip"
-                        >{{ title }}</a
+                <div class="nui-widget__header__content-title-row">
+                    <!-- text only header with no url defined -->
+                    <h2
+                        class="nui-text-widget nui-widget__header__content-title"
+                        [title]="title"
+                        *ngIf="!url || editMode"
                     >
-                </h2>
+                        {{ title }}
+                    </h2>
+
+                    <!-- link version of the header -->
+                    <h2
+                        *ngIf="url && !editMode"
+                        class="nui-text-widget nui-widget__header__content-title"
+                        [title]="title"
+                    >
+                        <a
+                            [href]="url"
+                            (click)="prepareLink($event)"
+                            (mouseenter)="prepareLink($event)"
+                            (mousedown)="
+                                $event.stopPropagation(); $event.preventDefault()
+                            "
+                            [nuiTooltip]="linkTooltip"
+                            >{{ title }}</a
+                        >
+                    </h2>
+
+                    <span
+                        *ngIf="showTitleIcon"
+                        class="nui-widget__header__content-title-icon"
+                        [attr.aria-label]="titleIconTooltip || null"
+                        [attr.role]="titleIconTooltip ? 'img' : null"
+                        [attr.title]="titleIconTooltip || null"
+                    >
+                        <nui-icon
+                            [icon]="titleIcon"
+                            [iconSize]="titleIconSize"
+                            aria-hidden="true"
+                        ></nui-icon>
+                    </span>
+                </div>
 
                 <div
                     *ngIf="subtitle"

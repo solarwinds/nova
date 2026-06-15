@@ -21,13 +21,22 @@
          [ngStyle]="{'color': widgetData?.textColor || backgroundColor ||  widgetData?.backgroundColor || defaultColor}">
         <div class="nui-kpi-indicator__zoom-container">
             <div class="nui-kpi-indicator__description nui-kpi-indicator__zoom-container__row"
-                 [title]="widgetData?.label">
-                    <span nuiZoomContent
-                          [useZoom]="false"
-                          [minScale]="0.5"
-                          [scaleIN$]="getScaleBroker('label')?.out$"
-                          [scaleOUT$]="getScaleBroker('label')?.in$"
-                    >{{widgetData?.label}}</span>
+                 [title]="widgetData?.label || null">
+                <span nuiZoomContent
+                      [useZoom]="false"
+                      [minScale]="0.5"
+                      [scaleIN$]="getScaleBroker('label')?.out$"
+                      [scaleOUT$]="getScaleBroker('label')?.in$">
+                    <bdi *ngIf="widgetData?.label"
+                         class="nui-kpi-indicator__description-text">{{widgetData?.label}}</bdi>
+                    <nui-icon *ngIf="widgetData?.labelIcon"
+                              class="nui-kpi-indicator__description-icon"
+                              [icon]="widgetData?.labelIcon"
+                              [iconSize]="widgetData?.labelIconSize || 'medium'"
+                              [attr.aria-label]="widgetData?.labelIconTooltip || null"
+                              [attr.role]="widgetData?.labelIconTooltip ? 'img' : null"
+                              [attr.title]="widgetData?.labelIconTooltip || null"></nui-icon>
+                </span>
             </div>
 
             <ng-container *ngIf="configuration?.formatters?.Value; else kpiValueRaw"
