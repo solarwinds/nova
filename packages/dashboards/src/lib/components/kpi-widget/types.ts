@@ -30,9 +30,6 @@ export interface IKpiData {
     value?: any;
     units?: string;
     label?: string;
-    labelIcon?: string;
-    labelIconSize?: string;
-    labelIconTooltip?: string;
     backgroundColor?: string;
     textColor?: string;
     fontSize?: string;
