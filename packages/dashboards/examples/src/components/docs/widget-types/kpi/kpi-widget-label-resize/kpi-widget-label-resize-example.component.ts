@@ -19,8 +19,8 @@ interface IKpiLabelComparisonWidget {
     units: string;
     x: number;
     y: number;
-    labelIcon?: string;
-    labelIconTooltip?: string;
+    titleIcon?: string;
+    titleIconTooltip?: string;
 }
 
 const comparisonWidgets: IKpiLabelComparisonWidget[] = [
@@ -37,8 +37,8 @@ const comparisonWidgets: IKpiLabelComparisonWidget[] = [
         id: "kpiShortLabelWithIcon",
         title: "Short label + icon",
         label: "CPU",
-        labelIcon: "clock_off",
-        labelIconTooltip: "Not affected by dashboard time filter",
+        titleIcon: "clock_off",
+        titleIconTooltip: "Not affected by dashboard time filter",
         value: 18,
         units: "%",
         x: 4,
@@ -57,8 +57,8 @@ const comparisonWidgets: IKpiLabelComparisonWidget[] = [
         id: "kpiMediumLabelWithIcon",
         title: "Medium label + icon",
         label: "Average response time",
-        labelIcon: "clock_off",
-        labelIconTooltip: "Not affected by dashboard time filter",
+        titleIcon: "clock_off",
+        titleIconTooltip: "Not affected by dashboard time filter",
         value: 128,
         units: "ms",
         x: 0,
@@ -77,8 +77,8 @@ const comparisonWidgets: IKpiLabelComparisonWidget[] = [
         id: "kpiLongLabelWithIcon",
         title: "Long label + icon",
         label: "Average response time for background synchronization jobs",
-        labelIcon: "clock_off",
-        labelIconTooltip: "Not affected by dashboard time filter",
+        titleIcon: "clock_off",
+        titleIconTooltip: "Not affected by dashboard time filter",
         value: 256,
         units: "ms",
         x: 8,
@@ -143,10 +143,13 @@ export class KpiWidgetLabelResizeExampleComponent implements OnInit {
             value: widget.value,
             units: widget.units,
         };
+        const headerProperties: Record<string, string | undefined> = {
+            title: widget.title,
+        };
 
-        if (widget.labelIcon) {
-            widgetData.labelIcon = widget.labelIcon;
-            widgetData.labelIconTooltip = widget.labelIconTooltip;
+        if (widget.titleIcon) {
+            headerProperties.titleIcon = widget.titleIcon;
+            headerProperties.titleIconTooltip = widget.titleIconTooltip;
         }
 
         return {
@@ -155,9 +158,7 @@ export class KpiWidgetLabelResizeExampleComponent implements OnInit {
             pizzagna: {
                 [PizzagnaLayer.Configuration]: {
                     header: {
-                        properties: {
-                            title: widget.title,
-                        },
+                        properties: headerProperties,
                     },
                     tiles: {
                         properties: {

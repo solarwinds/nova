@@ -31,7 +31,7 @@
         <div class="nui-kpi-indicator__zoom-container">
             <div
                 class="nui-kpi-indicator__description nui-kpi-indicator__zoom-container__row"
-                [title]="widgetData?.label || null"
+                [title]="widgetData?.label"
             >
                 <span
                     nuiZoomContent
@@ -39,23 +39,8 @@
                     [minScale]="0.5"
                     [scaleIN$]="getScaleBroker('label')?.out$"
                     [scaleOUT$]="getScaleBroker('label')?.in$"
+                    >{{ widgetData?.label }}</span
                 >
-                    @if (widgetData?.label) {
-                    <bdi class="nui-kpi-indicator__description-text">{{
-                        widgetData?.label
-                    }}</bdi>
-                    }
-                    @if (widgetData?.labelIcon) {
-                    <nui-icon
-                        class="nui-kpi-indicator__description-icon"
-                        [icon]="widgetData?.labelIcon"
-                        [iconSize]="widgetData?.labelIconSize || 'medium'"
-                        [attr.aria-label]="widgetData?.labelIconTooltip || null"
-                        [attr.role]="widgetData?.labelIconTooltip ? 'img' : null"
-                        [attr.title]="widgetData?.labelIconTooltip || null"
-                    ></nui-icon>
-                    }
-                </span>
             </div>
 
             @if (configuration?.formatters?.Value) {
