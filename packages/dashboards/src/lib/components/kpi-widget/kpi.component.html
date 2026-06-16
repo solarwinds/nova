@@ -21,12 +21,12 @@
          [ngStyle]="{'color': widgetData?.textColor || backgroundColor ||  widgetData?.backgroundColor || defaultColor}">
         <div class="nui-kpi-indicator__zoom-container">
             <div class="nui-kpi-indicator__description nui-kpi-indicator__zoom-container__row"
-                  [title]="widgetData?.label">
-                <span nuiZoomContent
-                      [useZoom]="false"
-                      [minScale]="0.5"
-                      [scaleIN$]="getScaleBroker('label')?.out$"
-                      [scaleOUT$]="getScaleBroker('label')?.in$"
+                 [title]="widgetData?.label">
+                    <span nuiZoomContent
+                          [useZoom]="false"
+                          [minScale]="0.5"
+                          [scaleIN$]="getScaleBroker('label')?.out$"
+                          [scaleOUT$]="getScaleBroker('label')?.in$"
                     >{{widgetData?.label}}</span>
             </div>
 
