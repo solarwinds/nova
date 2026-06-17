@@ -69,12 +69,14 @@ const containerPaddingsWithScroll = 37;
     styleUrls: ["./paginator.component.less"],
     encapsulation: ViewEncapsulation.None,
     providers: [PopupContainerService],
-    host: { role: "navigation" },
+    host: { role: "navigation", "[attr.aria-label]": "ariaLabel" },
     standalone: false,
 })
 export class PaginatorComponent
     implements OnInit, OnChanges, OnDestroy, IFilterPub
 {
+    @Input() public ariaLabel: string = "Pagination";
+
     @Input() public itemsList: Array<IPaginatorItem> = [];
     /**
      * Current page number

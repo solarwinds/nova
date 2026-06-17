@@ -84,10 +84,13 @@ export class ExpanderComponent implements AfterContentInit {
 
     public state: "expanded" | "collapsed" = "collapsed";
     public isCustomHeaderContentEmpty: boolean = false;
+    public uniqueId: string;
 
     private actionKeys = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
 
-    constructor(private cdRef: ChangeDetectorRef) {}
+    constructor(private cdRef: ChangeDetectorRef) {
+        this.uniqueId = "expander-" + Math.random().toString(36).substr(2, 9);
+    }
 
     public ngAfterContentInit(): void {
         this.isCustomHeaderContentEmpty =
