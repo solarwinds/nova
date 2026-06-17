@@ -89,7 +89,7 @@ export class ExpanderComponent implements AfterContentInit {
     private actionKeys = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
 
     constructor(private cdRef: ChangeDetectorRef) {
-        this.uniqueId = 'expander-' + Math.random().toString(36).substr(2, 9);
+        this.uniqueId = "expander-" + Math.random().toString(36).substr(2, 9);
     }
 
     public ngAfterContentInit(): void {
