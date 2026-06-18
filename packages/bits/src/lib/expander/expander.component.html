@@ -1,6 +1,7 @@
 <div class="nui-expander" [class.nui-expander--expanded]="state === 'expanded'">
     <div
         class="nui-expander__header"
+        [id]="uniqueId"
         tabindex="0"
         role="button"
         aria-label="Expander toggle"
@@ -50,7 +51,7 @@
     <div
         class="nui-expander__body-wrapper"
         role="region"
-        [attr.aria-label]="header || null"
+        [attr.aria-labelledby]="uniqueId"
     >
         <div
             class="nui-expander__body"
