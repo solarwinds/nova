@@ -28,7 +28,6 @@ test.describe("a11y: expander", () => {
     const rulesToDisable: string[] = [
         "aria-required-children",
         "aria-dialog-name",
-        "landmark-unique",
         "aria-command-name",
         "nested-interactive",
     ];
