@@ -135,6 +135,8 @@
     "trigger-pipeline-build-ci": "bash scripts/trigger-pipeline-build",
     "verify-ci": "bash scripts/verify-published"
   },
-  "version": "21.0.1",
-  "workspaces": ["packages/*"]
+  "version": "21.0.2",
+  "workspaces": [
+    "packages/*"
+  ]
 }

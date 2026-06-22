@@ -38,6 +38,7 @@ import { KpiSyncBrokerExampleComponent } from "./kpi-sync-broker/kpi-sync-broker
 import { KpiSyncBrokerDocsComponent } from "./kpi-sync-broker-docs.component";
 import { KpiSyncBrokerForAllTilesExampleComponent } from "./kpi-sync-broker-for-all-tiles/kpi-sync-broker-for-all-tiles-example.component";
 import { KpiWidgetExampleComponent } from "./kpi-widget/kpi-widget-example.component";
+import { KpiWidgetLabelResizeExampleComponent } from "./kpi-widget-label-resize/kpi-widget-label-resize-example.component";
 import { KpiWidgetBackgroundColorExampleComponent } from "./kpi-widget-background-color/kpi-widget-background-color-example.component";
 import { KpiWidgetBackgroundColorDocsComponent } from "./kpi-widget-background-color-docs.component";
 import { KpiWidgetInteractiveExampleComponent } from "./kpi-widget-interactive/kpi-widget-interactive-example.component";
@@ -95,6 +96,7 @@ const routes: Routes = [
     declarations: [
         KpiDocsComponent,
         KpiWidgetExampleComponent,
+        KpiWidgetLabelResizeExampleComponent,
         KpiWidgetInteractiveExampleComponent,
         KpiWidgetBackgroundColorDocsComponent,
         KpiWidgetBackgroundColorExampleComponent,

@@ -35,34 +35,53 @@
                     withCustomElement || editMode
                 "
             >
-                <!-- text only header with no url defined -->
-                @if (!url || editMode) {
-                <h2
-                    class="nui-text-widget nui-widget__header__content-title"
-                    [title]="title"
-                >
-                    {{ title }}
-                </h2>
-                }
-
-                <!-- link version of the header -->
-                @if (url && !editMode) {
-                <h2
-                    class="nui-text-widget nui-widget__header__content-title"
-                    [title]="title"
-                >
-                    <a
-                        [href]="url"
-                        (click)="prepareLink($event)"
-                        (mouseenter)="prepareLink($event)"
-                        (mousedown)="
-                            $event.stopPropagation(); $event.preventDefault()
-                        "
-                        [nuiTooltip]="linkTooltip"
-                        >{{ title }}</a
+                <div class="nui-widget__header__content-title-row">
+                    <!-- text only header with no url defined -->
+                    @if (!url || editMode) {
+                    <h2
+                        class="nui-text-widget nui-widget__header__content-title"
+                        [title]="title"
                     >
-                </h2>
-                } @if (subtitle) {
+                        {{ title }}
+                    </h2>
+                    }
+
+                    <!-- link version of the header -->
+                    @if (url && !editMode) {
+                    <h2
+                        class="nui-text-widget nui-widget__header__content-title"
+                        [title]="title"
+                    >
+                        <a
+                            [href]="url"
+                            (click)="prepareLink($event)"
+                            (mouseenter)="prepareLink($event)"
+                            (mousedown)="
+                                $event.stopPropagation(); $event.preventDefault()
+                            "
+                            [nuiTooltip]="linkTooltip"
+                            >{{ title }}</a
+                        >
+                    </h2>
+                    }
+
+                    @if (showTitleIcon) {
+                    <span
+                        class="nui-widget__header__content-title-icon"
+                        [attr.aria-label]="titleIconTooltip || null"
+                        [attr.role]="titleIconTooltip ? 'img' : null"
+                        [attr.title]="titleIconTooltip || null"
+                    >
+                        <nui-icon
+                            [icon]="titleIcon"
+                            [iconSize]="titleIconSize"
+                            aria-hidden="true"
+                        ></nui-icon>
+                    </span>
+                    }
+                </div>
+
+                @if (subtitle) {
                 <div
                     class="nui-text-hint nui-widget__header__content-help-hint"
                     [title]="subtitle"
