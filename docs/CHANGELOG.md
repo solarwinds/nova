@@ -1,5 +1,8 @@
 # Changelog
 
+## [21.0.2] 📅 2025-06-24
+### Fixes
+- `@nova-ui/bits` | A11y fixes for nui-toolbar
 
 ## [21.0.1] 📅 2025-05-21
 
