@@ -50,6 +50,7 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | A11y fixes for nui-toolbar
 - `@nova-ui/bits` | Added unique IDs to expander landmarks
 
 ## [21.0.2] 📅 2026-07-13
