@@ -73,6 +73,17 @@ describe("components >", () => {
                 expect(subject.valueChange.emit).toHaveBeenCalled();
             });
 
+            it("should not change value or emit when disabled and clicked", () => {
+                spyOn(subject.valueChange, "emit").and.callThrough();
+                subject.disabled = true;
+                fixture.detectChanges();
+
+                checkboxInput.click();
+
+                expect(subject.checked).toBeFalsy();
+                expect(subject.valueChange.emit).not.toHaveBeenCalled();
+            });
+
             it("should output not emit events if focused, or hovered", () => {
                 spyOn(subject.valueChange, "emit").and.callThrough();
 
