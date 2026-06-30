@@ -6,7 +6,7 @@
     }
   ],
   "dependencies": {
-    "@nova-ui/bits": "~21.0.1"
+    "@nova-ui/bits": "~21.0.2"
   },
   "devDependencies": {
     "@types/d3": "^5.7.2",
@@ -89,5 +89,5 @@
     "test": "ng test lib -c coverage",
     "test:dev": "ng test lib -c dev"
   },
-  "version": "21.0.1"
+  "version": "21.0.2"
 }
