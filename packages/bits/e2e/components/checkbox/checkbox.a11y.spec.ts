@@ -2,7 +2,7 @@ import { CheckboxAtom } from "./checkbox.atom";
 import { test, Helpers } from "../../setup";
 
 // disabling the rule until NUI-6015 is addressed
-const rulesToDisable: string[] = ["aria-allowed-role", "nested-interactive"];
+const rulesToDisable: string[] = ["nested-interactive"];
 
 test.describe("a11y: checkbox", () => {
     test.beforeEach(async ({ page }) => {
