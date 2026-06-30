@@ -65,6 +65,9 @@ import { MenuComponent } from "../menu";
     host: {
         class: "nui-toolbar nui-strip-layout nui-flex-container",
         role: "toolbar",
+        "[attr.aria-label]": "ariaLabel || null",
+        "[attr.aria-labelledby]": "ariaLabelledBy || null",
+        "[attr.aria-orientation]": "ariaOrientation || null",
     },
     styleUrls: ["./toolbar.component.less"],
     encapsulation: ViewEncapsulation.None,
@@ -77,6 +80,12 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
 
     @ContentChildren(ToolbarItemComponent, { descendants: true })
     public items: QueryList<ToolbarItemComponent>;
+
+    @Input() public ariaLabel?: string;
+
+    @Input() public ariaLabelledBy?: string;
+
+    @Input() public ariaOrientation?: "horizontal" | "vertical";
 
     @Input()
     /**
