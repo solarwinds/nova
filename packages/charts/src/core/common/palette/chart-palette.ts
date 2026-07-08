@@ -21,11 +21,12 @@
 import { rgb } from "d3-color";
 import isArray from "lodash/isArray";
 
+import { getColorValueByName } from "@nova-ui/bits";
+
 import { IChartPalette, IValueProvider } from "../types";
 import { ProcessedColorProvider } from "./processed-color-provider";
 import { SequentialColorProvider } from "./sequential-color-provider";
 import { TextColorProvider } from "./text-color-provider";
-import { getColorValueByName } from "@nova-ui/bits";
 
 export class ChartPalette implements IChartPalette {
     private _standardColors: IValueProvider<string>;

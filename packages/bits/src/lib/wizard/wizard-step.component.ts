@@ -29,8 +29,8 @@ import {
     TemplateRef,
 } from "@angular/core";
 
-import { _uniqueId } from "../../functions/unique-id";
 import { IWizardSelectionEvent, IWizardStepComponent } from "./public-api";
+import { _uniqueId } from "../../functions/unique-id";
 import { IBusyConfig } from "../busy/public-api";
 
 /**

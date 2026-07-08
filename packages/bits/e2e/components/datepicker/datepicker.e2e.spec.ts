@@ -6,6 +6,11 @@ import { Atom } from "../../atom";
 import { Animations, Helpers, test, expect } from "../../setup";
 
 test.describe("USERCONTROL datepicker", () => {
+    const getTrimmedText = async (id: string) => {
+        const text = await Helpers.page.locator(`#${id}`).textContent();
+        return text?.trim() ?? "";
+    };
+
     const activeDateValueId = "nui-demo-datepicker-active-date-value";
     const activeDateValueIdPreserved =
         "nui-demo-datepicker-active-date-value-preserve";

@@ -50,10 +50,13 @@
         (keydown)="onKeyDown($event)"
     >
         @if (context) {
-        <div class="custom-input-template">
-            <span>{{ context.name }}</span>
-            <nui-icon class="ml-2" [icon]="context.icon"></nui-icon>
-        </div>
+            <div class="custom-input-template">
+                <span>{{ context.name }}</span>
+                <nui-icon class="ml-2" [icon]="context.icon"></nui-icon>
+            </div>
+        } @else {
+            <ng-template [ngTemplateOutlet]="empty"></ng-template>
+        }
 
         <nui-icon
             [style.transform]="open ? 'rotate(180deg)' : ''"

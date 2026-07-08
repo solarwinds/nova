@@ -19,12 +19,12 @@
                     @if (item.icon) {
                         <nui-icon
                             class="mr-2"
-                            [icon]="item.icon"
+                            [icon]="item.icon || ''"
                         ></nui-icon>
                     }
                     <span
                         [innerHTML]="
-                            item.displayValue | nuiHighlight : focusedTokenValue
+                            (item.displayValue || '') | nuiHighlight : focusedTokenValue
                         "
                     ></span>
                 </div>
@@ -33,7 +33,7 @@
 
         @if (item.items && item.items.length > 0) {
             <nui-select-v2-option-group
-                [ariaLabel]="item.header"
+                [ariaLabel]="item.header || ''"
             >
                 @if (last && idx > 1) {
                     <nui-divider

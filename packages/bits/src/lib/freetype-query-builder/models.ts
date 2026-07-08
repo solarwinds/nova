@@ -54,6 +54,10 @@ export interface HintEntry {
     displayValue: string;
     value: string;
     icon?: string;
+    // adding optional properties to avoid template errors
+    items?: any[];
+    header?: string;
+    notice?: boolean;
 }
 
 export type HelpEntry = HelpEntryCategory | HintEntry;
@@ -62,6 +66,9 @@ export interface HelpEntryCategory {
     notice?: boolean;
     header?: string;
     items?: any[];
+    // adding optional properties to avoid template errors
+    displayValue?: string;
+    icon?: string;
 }
 
 export interface Tokenizer<T extends QueryToken> {

@@ -113,42 +113,34 @@
     </div>
     <ul #dropListArea class="repeat-group" aria-dropeffect="move">
         @if (!virtualScroll) {
-        <div>
-            @for ( sourceItem of itemsSource; track
-            (itemConfig?.trackBy?.(itemIndex, sourceItem) ?? itemIndex); let
-            itemIndex = $index) {
-            <ng-container
-                *ngFor="
-                    let sourceItem of itemsSource;
-                    trackBy: itemConfig?.trackBy;
-                    let itemIndex = index
-                "
-                [ngTemplateOutlet]="repeatItems"
-                [ngTemplateOutletContext]="{
-                    item: sourceItem,
-                    itemIndex: itemIndex
-                }"
-            ></ng-container>
-        </div>
-        <cdk-virtual-scroll-viewport
-            [itemSize]="itemSize"
-            *ngIf="virtualScroll && itemSize"
-        >
-            <ng-container
-                *cdkVirtualFor="
-                    let sourceItem of itemsSource;
-                    let i = index;
-                    templateCacheSize: 0
-                "
-            >
+            @for ( sourceItem of itemsSource; track (itemConfig?.trackBy?.($index, sourceItem) ?? $index)) {
                 <ng-container
                     [ngTemplateOutlet]="repeatItems"
                     [ngTemplateOutletContext]="{
                         item: sourceItem,
-                        itemIndex: i
+                        itemIndex: $index
                     }"
                 ></ng-container>
-            </ng-container>
-        </cdk-virtual-scroll-viewport>
+            }
+        }
+        @if (virtualScroll && itemSize) {
+            <cdk-virtual-scroll-viewport [itemSize]="itemSize">
+                <ng-container
+                    *cdkVirtualFor="
+                        let sourceItem of itemsSource;
+                        let i = index;
+                        templateCacheSize: 0
+                    "
+                >
+                    <ng-container
+                        [ngTemplateOutlet]="repeatItems"
+                        [ngTemplateOutletContext]="{
+                            item: sourceItem,
+                            itemIndex: i
+                        }"
+                    ></ng-container>
+                </ng-container>
+            </cdk-virtual-scroll-viewport>
+        }
     </ul>
 </div>

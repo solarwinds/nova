@@ -4,7 +4,6 @@
     <div
         class="btn-caret-left"
         [class.disabled]="!rightTraverseEnabled"
-        *ngIf="hasTraverse"
         (click)="traverseRight()"
     >
         <nui-icon
@@ -13,6 +12,7 @@
             [iconColor]="!rightTraverseEnabled ? 'disabled-gray' : 'gray'"
         ></nui-icon>
     </div>
+    }
     <div class="nui-tab-headings">
         <div
             class="nui-tab-headings__container"
@@ -27,7 +27,6 @@
     <div
         class="btn-caret-right"
         [class.disabled]="!leftTraverseEnabled"
-        *ngIf="hasTraverse"
         (click)="traverseLeft()"
     >
         <nui-icon
@@ -36,4 +35,5 @@
             [iconColor]="!leftTraverseEnabled ? 'disabled-gray' : 'gray'"
         ></nui-icon>
     </div>
+    }
 </div>

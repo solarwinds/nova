@@ -128,51 +128,47 @@
                 >
                     <div class="descriptions">
                         @if (!legendSeries.link) {
-                        <!-- TODO: NUI-6288 - drill-down sits inside the nui-legend-series (role="checkbox") -->
-                        <div
-                            *ngIf="!legendSeries.link"
-                            class="description description-primary"
-                            [ngClass]="{
-                                'nui-text-link-small link': seriesInteractive
-                            }"
-                            (click)="onPrimaryDescClick($event, legendSeries)"
-                            [title]="legendSeries.legendDescriptionPrimary"
-                        >
-                            {{ legendSeries.legendDescriptionPrimary }}
-                        </div>
-                        <a
-                            class="description description-primary nui-text-link-small link"
-                            (click)="$event.stopPropagation()"
-                            *ngIf="legendSeries.link"
-                            [href]="legendSeries.link"
-                            rel="noopener noreferrer"
-                            [title]="legendSeries.legendDescriptionPrimary"
-                        >
-                            {{ legendSeries.legendDescriptionPrimary }}
-                        </a>
-                        <div
-                            class="description description-secondary"
-                            *ngIf="
-                                !legendSeries.secondaryLink &&
-                                !widgetData.summarySerie
-                            "
-                            [title]="legendSeries.legendDescriptionSecondary"
-                        >
-                            {{ legendSeries.legendDescriptionSecondary }}
-                        </div>
-                        <a
-                            class="description description-secondary nui-text-link-small link"
-                            (click)="$event.stopPropagation()"
-                            *ngIf="
-                                legendSeries.secondaryLink &&
-                                !widgetData.summarySerie
-                            "
-                            [href]="legendSeries.secondaryLink"
-                            rel="noopener noreferrer"
-                            [title]="legendSeries.legendDescriptionSecondary"
-                        >
-                            {{ legendSeries.legendDescriptionSecondary }}
-                        </a>
+                            <!-- TODO: NUI-6288 - drill-down sits inside the nui-legend-series (role="checkbox") -->
+                            <div
+                                class="description description-primary"
+                                [ngClass]="{
+                                    'nui-text-link-small link': seriesInteractive
+                                }"
+                                (click)="onPrimaryDescClick($event, legendSeries)"
+                                [title]="legendSeries.legendDescriptionPrimary"
+                            >
+                                {{ legendSeries.legendDescriptionPrimary }}
+                            </div>
+                        } @else {
+                            <a
+                                class="description description-primary nui-text-link-small link"
+                                (click)="$event.stopPropagation()"
+                                [href]="legendSeries.link"
+                                rel="noopener noreferrer"
+                                [title]="legendSeries.legendDescriptionPrimary"
+                            >
+                                {{ legendSeries.legendDescriptionPrimary }}
+                            </a>
+                        }
+
+                        @if (!legendSeries.secondaryLink && !widgetData.summarySerie) {
+                            <div
+                                class="description description-secondary"
+                                [title]="legendSeries.legendDescriptionSecondary"
+                            >
+                                {{ legendSeries.legendDescriptionSecondary }}
+                            </div>
+                        } @else if (legendSeries.secondaryLink && !widgetData.summarySerie) {
+                            <a
+                                class="description description-secondary nui-text-link-small link"
+                                (click)="$event.stopPropagation()"
+                                [href]="legendSeries.secondaryLink"
+                                rel="noopener noreferrer"
+                                [title]="legendSeries.legendDescriptionSecondary"
+                            >
+                                {{ legendSeries.legendDescriptionSecondary }}
+                            </a>
+                        }
                     </div>
                     <nui-icon
                         *ngIf="legendSeries.realtime"

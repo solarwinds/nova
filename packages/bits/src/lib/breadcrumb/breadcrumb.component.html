@@ -18,13 +18,14 @@
             iconSize="small"
             aria-hidden="true"
         ></nui-icon>
-        } @if (isLast) {
-        <span
-            *ngIf="isLast"
-            aria-current="page"
-            class="nui-breadcrumb__crumb nui-breadcrumb__crumb-current-level"
-            >{{ item.title }}</span
-        >
+        }
+        @if (isLast) {
+            <span
+                aria-current="page"
+                class="nui-breadcrumb__crumb nui-breadcrumb__crumb-current-level"
+                >{{ item.title }}</span
+            >
+        }
     </span>
     }
 </nav>

@@ -189,8 +189,9 @@ export class ImageComponent {
 
     private isImageSizeValid(value: string): boolean {
         return (
-            !isNaN(parseFloat(value)) &&
-            (value.includes("px") || value.includes("%") || value.includes("auto"))
+            value === "auto" ||
+            (!isNaN(parseFloat(value)) &&
+                (value.includes("px") || value.includes("%")))
         );
     }
 }

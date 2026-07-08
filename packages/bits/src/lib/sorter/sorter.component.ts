@@ -40,9 +40,9 @@ import _values from "lodash/values";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { _uniqueId } from "../../functions/unique-id";
 import { ISortedItem, ISorterChanges, SorterDirection } from "./public-api";
 import { SorterKeyboardService } from "./sorter-keyboard.service";
+import { _uniqueId } from "../../functions/unique-id";
 import {
     IFilter,
     IFilterPub,

@@ -7,27 +7,33 @@
     [class.nui-wizard-step-header__label--error]="stepState === 'error'"
 >
     <!-- If there is a label template, use it. -->
+    @if (templateLabel) {
     <ng-container
-        *ngIf="templateLabel"
         [ngTemplateOutlet]="templateLabel?.template"
     ></ng-container>
+    }
 
     <!-- If there is no label template, fall back to the text label. -->
-    <div class="nui-wizard-step-header__text-label" *ngIf="stringLabel">
+    @if (stringLabel) {
+    <div class="nui-wizard-step-header__text-label">
         {{ label }}
     </div>
-    } @if (step.completed && !selected) {
+    }
+    @if (step.completed && !selected) {
     <span class="cdk-visually-hidden" i18n>Completed</span>
-    } @if (step.optional && stepState !== 'error') {
+    }
+    @if (step.optional && stepState !== 'error') {
     <div class="nui-wizard-step-header__label--optional">
         {{ optionalLabel }}
     </div>
+    }
+    @if (stepState === 'error') {
     <div
         class="nui-wizard-step-header__label--error"
-        *ngIf="stepState === 'error'"
     >
         {{ errorMessage }}
     </div>
+    }
 </div>
 
 <div
