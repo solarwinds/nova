@@ -46,8 +46,16 @@ export class TimeFrameBarTestPage {
     }
 
     public async removeDelay(): Promise<void> {
-        if (await this.delayCheckbox.isChecked()) {
+        // Ensure the checkbox element is visible and stable before checking state
+        await this.delayCheckbox.waitFor({ state: "visible" });
+        // Add a small delay for Angular to fully apply bindings
+        await this.page.waitForTimeout(50);
+
+        const isChecked = await this.delayCheckbox.isChecked();
+        if (isChecked) {
             await this.delayCheckbox.click();
+            // Wait for Angular change detection after click
+            await this.page.waitForTimeout(100);
         }
     }
 
