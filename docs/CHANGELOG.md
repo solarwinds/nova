@@ -1,5 +1,10 @@
 # Changelog
 
+## [21.0.2] 📅 2026-07-13
+
+### Fixes
+
+- `@nova-ui/bits` | A11y fix for nui-checkbox
 
 ## [21.0.1] 📅 2025-05-21
 
