@@ -1,4 +1,11 @@
 <div class="nui-checkbox">
+    <!--
+        ARIA Accessibility (OO-50779 - Correct markup solution):
+        - The label element has role="checkbox" to provide semantic meaning
+        - aria-checked is bound to reflect the input's checked state
+        - aria-label/labelledby/describedby provide flexible accessible naming
+        See: https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/
+    -->
     <label
         class="nui-checkbox__label"
         #checkboxLabel

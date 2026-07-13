@@ -75,6 +75,12 @@ import { NuiFormFieldControl } from "../form-field/public-api";
 /**
  * <nui-checkbox> provides the same functionality as a native
  * <input type="checkbox"> enhanced with NUI styling.
+ *
+ * ARIA Accessibility (OO-50779):
+ * - role="checkbox" on the label element allows semantic checkbox behavior
+ * - aria-checked attribute reflects the checked state for assistive technologies
+ * - aria-label, aria-labelledby, and aria-describedby support flexible labeling strategies
+ *
  * <example-url>./../examples/index.html#/checkbox</example-url>
  */
 export class CheckboxComponent
