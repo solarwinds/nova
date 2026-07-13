@@ -149,11 +149,12 @@ export class TableAtom extends Atom {
                 throw new Error("row is not defined");
             }
             const cell = this.getCell(rowIndex, 0);
-            const selectionControl = cell.locator('input[type="checkbox"]');
+            // Check the visible checkbox component wrapper, not the hidden native input
+            const checkboxComponent = cell.locator(".nui-checkbox").first();
             if (enabled) {
-                await expect(selectionControl.first()).toBeVisible();
+                await expect(checkboxComponent).toBeVisible();
             } else {
-                await expect(selectionControl).toHaveCount(0);
+                await expect(cell.locator(".nui-checkbox")).toHaveCount(0);
             }
 
             selectionValidationPassed++;
