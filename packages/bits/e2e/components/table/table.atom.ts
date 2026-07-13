@@ -149,7 +149,7 @@ export class TableAtom extends Atom {
                 throw new Error("row is not defined");
             }
             const cell = this.getCell(rowIndex, 0);
-            const selectionControl = cell.getByRole("checkbox");
+            const selectionControl = cell.locator('input[type="checkbox"]');
             if (enabled) {
                 await expect(selectionControl.first()).toBeVisible();
             } else {
