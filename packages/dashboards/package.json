@@ -6,8 +6,8 @@
     }
   ],
   "dependencies": {
-    "@nova-ui/bits": "~21.0.1",
-    "@nova-ui/charts": "~21.0.1"
+    "@nova-ui/bits": "~21.0.2",
+    "@nova-ui/charts": "~21.0.2"
   },
   "devDependencies": {
     "@apollo/client": "4.1.7",
@@ -91,5 +91,5 @@
     "test": "ng t lib -c coverage",
     "test:dev": "ng t lib -c dev"
   },
-  "version": "21.0.1"
+  "version": "21.0.2"
 }

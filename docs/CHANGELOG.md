@@ -7,6 +7,12 @@
 - `@nova-ui/bits` | A11y fixies for Home Summary
 - `@nova-ui/bits` | A11y fixies for Search component
 
+## [21.0.2] 📅 2026-07-13
+
+### Fixes
+
+- `@nova-ui/bits` | A11y fix for nui-checkbox
+
 ## [21.0.1] 📅 2026-05-27
 
 ### Added

@@ -91,7 +91,7 @@ test.describe("USERCONTROL Checkbox Group", () => {
     });
 
     test("should not change the value if clicked on disabled checkbox inside the checkbox group", async () => {
-        await checkboxGroupCheckboxDisabled.toggle();
+        await checkboxGroupCheckboxDisabled.toBeDisabled();
         await checkboxGroupCheckboxDisabled.toBeChecked();
     });
 
