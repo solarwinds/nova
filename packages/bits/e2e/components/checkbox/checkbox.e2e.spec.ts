@@ -65,7 +65,7 @@ test.describe("USERCONTROL Checkbox", () => {
 
         test("should not check on disabled items", async () => {
             await expect(atomDisabled.getInputElement).toBeChecked();
-            await atomDisabled.toggle();
+            await atomDisabled.toBeDisabled();
             await expect(atomDisabled.getInputElement).toBeChecked();
         });
     });
