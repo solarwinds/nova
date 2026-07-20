@@ -35,3 +35,4 @@ export * from "./embedded-content/embedded-content.component";
 export * from "./list-widget/public-api";
 export * from "./widget-search/widget-search.component";
 export * from "./widget-search/types";
+export * from "./views/public-api";

@@ -1,0 +1,152 @@
+<h1>Standalone View Components</h1>
+
+<p>
+    Nova Dashboards provides standalone view components that encapsulate the
+    rendering logic of proportional charts and KPI tiles <strong>without</strong>
+    requiring the Pizzagna framework. These components can be used directly in
+    any Angular application by importing <code>NuiDashboardViewsModule</code>.
+</p>
+
+<nui-message type="info" [allowDismiss]="false">
+    These view components have <strong>zero</strong> dependency on
+    <code>PIZZAGNA_EVENT_BUS</code>, <code>DATA_SOURCE</code>, or
+    <code>ComponentPortalService</code>. They accept data via
+    <code>&#64;Input()</code> properties and emit events via
+    <code>&#64;Output()</code>.
+</nui-message>
+
+<h2>Installation</h2>
+
+<p>Import the module in your feature module:</p>
+
+<nui-example-code language="typescript" [code]="installationSnippet"></nui-example-code>
+
+<hr />
+
+<h2>KPI Tile View</h2>
+
+<p>
+    The <code>&lt;nui-kpi-tile-view&gt;</code> component renders a single KPI
+    indicator tile with a label, value, units, and configurable background color.
+    It supports interactive click handling and custom value formatting via
+    <code>ng-template</code>.
+</p>
+
+<h3>Playground &mdash; All States</h3>
+<p>
+    Use the controls below to switch between the supported visual states
+    (<code>normal</code>, <code>loading</code>, <code>empty</code>) and toggle
+    <code>interactive</code> click handling on each tile.
+</p>
+<nui-example-wrapper
+    filenamePrefix="kpi-tile-view-basic"
+    exampleTitle="KPI Tile View - Playground"
+>
+    <kpi-tile-view-basic-example></kpi-tile-view-basic-example>
+</nui-example-wrapper>
+
+<h3>Interactive with Custom Formatting</h3>
+<nui-example-wrapper
+    filenamePrefix="kpi-tile-view-interactive"
+    exampleTitle="KPI Tile View - Interactive"
+>
+    <kpi-tile-view-interactive-example></kpi-tile-view-interactive-example>
+</nui-example-wrapper>
+
+<hr />
+
+<h2>Proportional Chart View</h2>
+
+<p>
+    The <code>&lt;nui-proportional-chart-view&gt;</code> component renders a
+    proportional chart (donut, pie, vertical bar, or horizontal bar) with an
+    integrated legend. It supports custom donut center content and legend item
+    templates via <code>ng-template</code>.
+</p>
+
+<h3>Playground &mdash; All Chart Types</h3>
+<p>
+    Use the controls below to switch between every supported
+    <code>chartType</code> (<code>donut</code>, <code>pie</code>,
+    <code>verticalBar</code>, <code>horizontalBar</code>) and every
+    <code>legendPlacement</code> option.
+</p>
+<nui-example-wrapper
+    filenamePrefix="proportional-chart-view-playground"
+    exampleTitle="Proportional Chart View - Playground"
+>
+    <proportional-chart-view-playground-example></proportional-chart-view-playground-example>
+</nui-example-wrapper>
+
+<hr />
+
+<h2>API Reference</h2>
+
+<h3><code>nui-kpi-tile-view</code> Inputs</h3>
+<table class="nui-table">
+    <thead>
+        <tr>
+            <th>Input</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td><code>value</code></td><td><code>string | number | null</code></td><td><code>null</code></td><td>The KPI value to display</td></tr>
+        <tr><td><code>label</code></td><td><code>string</code></td><td><code>""</code></td><td>KPI label text</td></tr>
+        <tr><td><code>units</code></td><td><code>string</code></td><td><code>""</code></td><td>Unit suffix (e.g., "%", "ms")</td></tr>
+        <tr><td><code>backgroundColor</code></td><td><code>string</code></td><td><code>""</code></td><td>Tile background color</td></tr>
+        <tr><td><code>textColor</code></td><td><code>string</code></td><td><code>""</code></td><td>Optional text color override; auto-computed if omitted</td></tr>
+        <tr><td><code>link</code></td><td><code>string</code></td><td><code>""</code></td><td>Optional drill-down URL (renders as anchor)</td></tr>
+        <tr><td><code>interactive</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Enable click interactions</td></tr>
+        <tr><td><code>loading</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Shows busy/spinner state</td></tr>
+        <tr><td><code>empty</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Shows empty state placeholder</td></tr>
+        <tr><td><code>valueTemplate</code></td><td><code>TemplateRef</code></td><td><code>null</code></td><td>Custom value rendering template</td></tr>
+        <tr><td><code>syncValuesBroker</code></td><td><code>IKpiTileViewBroker[]</code></td><td><code>[]</code></td><td>Brokers for multi-tile zoom synchronization</td></tr>
+    </tbody>
+</table>
+
+<h3><code>nui-kpi-tile-view</code> Outputs</h3>
+<table class="nui-table">
+    <thead>
+        <tr><th>Output</th><th>Type</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>tileClick</code></td><td><code>EventEmitter&lt;void&gt;</code></td><td>Emitted when the tile is clicked (only when interactive)</td></tr>
+    </tbody>
+</table>
+
+<h3><code>nui-proportional-chart-view</code> Inputs</h3>
+<table class="nui-table">
+    <thead>
+        <tr>
+            <th>Input</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td><code>data</code></td><td><code>IProportionalDataItem[]</code></td><td><code>[]</code></td><td>Array of chart data items</td></tr>
+        <tr><td><code>chartType</code></td><td><code>"donut" | "pie" | "verticalBar" | "horizontalBar"</code></td><td><code>"donut"</code></td><td>Chart type variant</td></tr>
+        <tr><td><code>legendPlacement</code></td><td><code>"right" | "bottom" | "none"</code></td><td><code>"right"</code></td><td>Legend position relative to chart</td></tr>
+        <tr><td><code>colors</code></td><td><code>string[] | Record&lt;string, string&gt;</code></td><td><code>[]</code></td><td>Color palette array or id-to-color map</td></tr>
+        <tr><td><code>interactive</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Enable click interactions on legend items</td></tr>
+        <tr><td><code>donutContentTemplate</code></td><td><code>TemplateRef</code></td><td><code>null</code></td><td>Custom donut center content template</td></tr>
+        <tr><td><code>legendItemTemplate</code></td><td><code>TemplateRef</code></td><td><code>null</code></td><td>Custom legend item template</td></tr>
+    </tbody>
+</table>
+
+<h3><code>nui-proportional-chart-view</code> Outputs</h3>
+<table class="nui-table">
+    <thead>
+        <tr><th>Output</th><th>Type</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>itemClick</code></td><td><code>EventEmitter&lt;IProportionalDataItem&gt;</code></td><td>Emitted when a chart segment or legend item is clicked</td></tr>
+    </tbody>
+</table>
+
+<h3><code>IProportionalDataItem</code> Interface</h3>
+<nui-example-code language="typescript" [code]="proportionalDataItemSnippet"></nui-example-code>
