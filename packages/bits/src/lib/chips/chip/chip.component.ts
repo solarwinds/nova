@@ -71,6 +71,15 @@ export class ChipComponent implements AfterViewInit {
 
     public isContentProjected: boolean;
 
+    /**
+     * Input to set aria label text for remove button
+     */
+    @Input() public ariaLabel: string;
+
+    public get removeAriaLabel(): string {
+        return this.ariaLabel ?? $localize`Remove ${this.item?.label}`;
+    }
+
     @ViewChild("projection") private contentTemplate: TemplateRef<any>;
 
     constructor(public host: ElementRef, private cdRef: ChangeDetectorRef) {}

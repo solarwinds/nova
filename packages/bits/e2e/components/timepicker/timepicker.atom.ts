@@ -73,7 +73,7 @@ export class TimepickerAtom extends Atom {
     }
 
     public toggle = async (): Promise<void> =>
-        this.getLocator().locator(".nui-timepicker__container").click();
+        this.getLocator().locator(".nui-timepicker__icon").click();
 
     public selectTime = async (time: string): Promise<void> => {
         await this.textbox.clearText();

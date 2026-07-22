@@ -34,7 +34,7 @@ import { OverlayComponent } from "../overlay/overlay-component/overlay.component
 export class SorterKeyboardService {
     public overlay: OverlayComponent;
     public menuItems: QueryList<MenuItemBaseComponent>;
-    private keyboardEventsManager: ListKeyManager<MenuItemBaseComponent>;
+    public keyboardEventsManager: ListKeyManager<MenuItemBaseComponent>;
 
     constructor(private liveAnnouncer: LiveAnnouncer) {}
 

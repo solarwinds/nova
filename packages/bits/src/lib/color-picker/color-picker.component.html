@@ -1,12 +1,15 @@
 @if (isSelect) {
 <nui-select-v2
     class="color-picker-select-label"
+    [id]="id"
+    [ariaLabel]="ariaLabel"
     [displayValueTemplate]="colorPickerTemplate"
 >
     @for (item of palette; track item) {
     <nui-select-v2-option
         class="color-picker-select-label__option nui-text-default"
         [value]="item"
+        [attr.aria-label]="item?.label"
     >
         <div class="color-picker-input__box" [attr.title]="item?.label">
             <div
@@ -21,6 +24,8 @@
 } @else {
 <nui-select-v2
     class="color-picker-select"
+    [id]="id"
+    [ariaLabel]="ariaLabel"
     [overlayConfig]="overlayConfig"
     [syncWidth]="false"
     [displayValueTemplate]="colorPickerTemplate"
@@ -31,6 +36,7 @@
             <nui-select-v2-option
                 [value]="item?.color"
                 [displayValueContext]="item"
+                [attr.aria-label]="item?.label"
                 class="w-100 h-100 reset-box-sizes"
                 #option
             >
@@ -46,6 +52,7 @@
                         @if (option?.selected) {
                         <div
                             class="color-picker-option__glyph"
+                            aria-hidden="true"
                             [class.black-tick]="
                                 isBlackTick || item?.color === defaultColor
                             "
@@ -61,7 +68,16 @@
 }
 
 <ng-template #colorPickerTemplate let-item let-open="open">
-    <div class="color-picker-input">
+    <div
+        class="color-picker-input"
+        role="combobox"
+        aria-haspopup="listbox"
+        [attr.aria-expanded]="open"
+        [attr.aria-label]="ariaLabel"
+        [attr.aria-controls]="open ? 'nui-overlay' : null"
+        [attr.id]="id"
+        tabindex="0"
+    >
         <div class="color-picker-input__box" [attr.title]="item?.label">
             <div
                 class="color-picker-input__color-box"
@@ -78,6 +94,7 @@
             <nui-icon
                 [style.transform]="open ? 'rotate(180deg)' : ''"
                 icon="caret-down"
+                aria-hidden="true"
             ></nui-icon>
         </div>
     </div>

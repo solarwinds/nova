@@ -141,7 +141,7 @@ export class PopupDeprecatedComponent
     public baseElementSelector: string;
 
     @Input()
-    public ariaLabel: string = "Popup";
+    public ariaLabel: string = $localize`Popup`;
 
     @Output()
     public opened = new EventEmitter<boolean>();
