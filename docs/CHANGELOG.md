@@ -1,5 +1,9 @@
 # Changelog
 
+## [20.0.9] 📅 2025-07-29
+### Fixes
+- Essentional A11y fixies
+
 ## [20.0.8] 📅 2025-07-27
 ### Added
 - `@nova-ui/dashboards` | Decoupled KPI tile and proportional chart into reusable view components (`KpiTileViewComponent`, `ProportionalChartViewComponent`)
