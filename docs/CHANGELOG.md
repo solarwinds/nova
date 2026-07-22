@@ -2,6 +2,8 @@
 
 ## [20.0.7] 📅 2026-07-22
 ### versions of package were upgrade to be at least the same as in Fusion
+### Fixes
+- Essentional A11y fixies
 
 ## [20.0.5] 📅 2025-06-04
 ### Fixes
