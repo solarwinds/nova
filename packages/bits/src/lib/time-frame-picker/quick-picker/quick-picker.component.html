@@ -3,9 +3,13 @@
         <h4 class="nui-quick-picker-header nui-quick-picker__presets-header">
             {{ presetsTitle }}
         </h4>
+        @for (key of presetKeys; track key) {
         <div
-            *ngFor="let key of presetKeys"
+            role="button"
+            tabindex="0"
             (click)="selectPreset(key)"
+            (keydown.enter)="selectPreset(key)"
+            (keydown.space)="$event.preventDefault(); selectPreset(key)"
             [ngClass]="{
                 'nui-quick-picker__preset--selected': isPresetSelected(key)
             }"
@@ -13,6 +17,7 @@
         >
             {{ presets[key].name }}
         </div>
+        }
     </div>
     <div class="nui-quick-picker__divider"></div>
     <div class="nui-quick-picker__picker">

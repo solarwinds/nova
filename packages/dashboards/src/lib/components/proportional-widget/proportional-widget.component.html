@@ -89,16 +89,15 @@
                 "
                 (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
                 (click)="onInteraction(legendSeries)"
+                (keydown.enter)="onInteraction(legendSeries)"
+                (keydown.space)="$event.preventDefault(); onInteraction(legendSeries)"
+                [attr.role]="interactive ? 'button' : null"
+                [tabindex]="interactive ? 0 : -1"
                 [class.nui-proportional-widget__legend--interactive]="
                     interactive
                 "
             >
-                <div
-                    *ngIf="
-                        legendFormatter && legendFormatter.componentType;
-                        else legendDefaultTile
-                    "
-                >
+                @if (legendFormatter && legendFormatter.componentType) {
                     <div description>
                         <ng-container
                             nuiComponentPortal
@@ -112,8 +111,7 @@
                             ></ng-template>
                         </ng-container>
                     </div>
-                </div>
-                <ng-template #legendDefaultTile>
+                } @else {
                     <nui-rich-legend-tile
                         [value]="
                             computeLegendTileValue(legendSeries.data[0])
@@ -124,47 +122,44 @@
                             chartAssist.palette.textColors.get(legendSeries.id)
                         "
                         [backgroundColor]="
-                            chartAssist.palette.standardColors.get(
-                                legendSeries.id
-                            )
+                            chartAssist.palette.standardColors.get(legendSeries.id)
                         "
                     >
                     </nui-rich-legend-tile>
-
-                    <nui-icon
-                        legendTransclusion
-                        *ngIf="
-                            seriesToIconMap && seriesToIconMap[legendSeries.id]
-                        "
-                        class="align-items-center"
-                        [icon]="seriesToIconMap[legendSeries.id]"
-                    ></nui-icon>
-
+                    @if ( seriesToIconMap && seriesToIconMap[legendSeries.id] ) {
+                        <nui-icon
+                            legendTransclusion
+                            class="align-items-center"
+                            [icon]="seriesToIconMap[legendSeries.id]"
+                            aria-hidden="true"
+                        ></nui-icon>
+                    }
                     <div
                         description
                         class="description-container d-flex flex-column nui-text-small justify-content-center"
                     >
-                        <div
-                            *ngIf="!legendSeries.link"
-                            class="description description-primary"
-                            [ngClass]="{
-                                'nui-text-link-small link': interactive
-                            }"
-                        >
-                            {{ legendSeries.name }}
-                        </div>
-                        <a
-                            class="description description-primary nui-text-link-small link"
-                            (click)="$event.stopPropagation()"
-                            *ngIf="legendSeries.link"
-                            [href]="legendSeries.link"
-                            rel="noopener noreferrer"
-                            [title]="legendSeries.name"
-                        >
-                            {{ legendSeries.name }}
-                        </a>
+                        @if (!legendSeries.link) {
+                            <div
+                                class="description description-primary"
+                                [ngClass]="{
+                                    'nui-text-link-small link': interactive
+                                }"
+                            >
+                                {{ legendSeries.name }}
+                            </div>
+                        } @else {
+                            <a
+                                class="description description-primary nui-text-link-small link"
+                                (click)="$event.stopPropagation()"
+                                [href]="legendSeries.link"
+                                rel="noopener noreferrer"
+                                [title]="legendSeries.name"
+                            >
+                                {{ legendSeries.name }}
+                            </a>
+                        }
                     </div>
-                </ng-template>
+                }
             </nui-legend-series>
         </nui-legend>
     </div>

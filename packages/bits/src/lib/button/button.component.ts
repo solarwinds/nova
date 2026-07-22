@@ -25,6 +25,7 @@ import {
     Component,
     ElementRef,
     HostBinding,
+    HostListener,
     Input,
     OnDestroy,
     OnInit,
@@ -168,6 +169,9 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
         return this.ariaLabel || this.getAriaLabel();
     }
 
+    @HostBinding("class.active")
+    public isActive: boolean = false;
+
     @ViewChild("contentContainer", { static: true, read: ViewContainerRef })
     private contentContainer: ViewContainerRef;
 
@@ -203,6 +207,30 @@ should be set explicitly: `,
     public ngOnDestroy(): void {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
+    }
+
+    @HostListener("keydown", ["$event"])
+    public onKeyDown(event: KeyboardEvent): void {
+        const hostElement = this.getHostElement() as HTMLButtonElement;
+        if (
+            !hostElement.disabled &&
+            !this.isBusy &&
+            (event.code === "Space" || event.code === "Enter")
+        ) {
+            this.isActive = true;
+        }
+    }
+
+    @HostListener("keyup", ["$event"])
+    public onKeyUp(event: KeyboardEvent): void {
+        if (event.code === "Space" || event.code === "Enter") {
+            this.isActive = false;
+        }
+    }
+
+    @HostListener("blur")
+    public onBlur(): void {
+        this.isActive = false;
     }
 
     /**

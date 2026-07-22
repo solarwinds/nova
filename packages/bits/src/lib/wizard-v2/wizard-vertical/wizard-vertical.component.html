@@ -5,7 +5,10 @@
     <nui-wizard-step-header
         class="nui-wizard-vertical-header"
         (click)="step.select()"
-        (keydown)="_onKeydown($event)"
+        (keydown)="
+            $event.code === 'Space' ? $event.preventDefault() : null;
+            _onKeydown($event)
+        "
         [tabIndex]="_getFocusIndex() === i ? 0 : -1"
         [id]="labelIds[i]"
         [attr.aria-posinset]="i + 1"

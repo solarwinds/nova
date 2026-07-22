@@ -1,50 +1,42 @@
 <div class="nui-wizard-horizontal-header-container" #headerContainer>
     <!--  Left overflow container -->
-    <ng-container *ngIf="isInResponsiveMode && overflownStepsStart.length">
-        <nui-wizard-overflow
-            #overflowComponent
-            class="overflow-left"
-            [template]="overflowStart"
-            [completed]="true"
-            [value]="overflownStepsStart.length"
-        >
-        </nui-wizard-overflow>
-
-        <ng-template #overflowStart>
-            <div *ngIf="overflownStepsStart.length" class="pb-3">
-                <strong>+{{ overflownStepsStart.length }} more steps</strong>
-            </div>
-            <div
-                class="nui-wizard-horizontal-header-wrapper"
-                *ngFor="
-                    let step of overflownStepsStart;
-                    let i = index;
-                    let isFirst = first
+    @if (isInResponsiveMode && overflownStepsStart.length) {
+    <nui-wizard-overflow
+        #overflowComponent
+        class="overflow-left"
+        [template]="overflowStart"
+        [completed]="true"
+        [value]="overflownStepsStart.length"
+    >
+    </nui-wizard-overflow>
+    <ng-template #overflowStart>
+        @if (overflownStepsStart.length) {
+        <div class="pb-3">
+            <strong i18n>+{{ overflownStepsStart.length }} more steps</strong>
+        </div>
+        } @for ( step of overflownStepsStart; track step; let i = $index; let
+        isFirst = $first) {
+        <div class="nui-wizard-horizontal-header-wrapper">
+            <ng-template
+                *ngTemplateOutlet="
+                    stepHeaderWithLines;
+                    context: {
+                        $implicit: steps,
+                        step: step,
+                        i: i,
+                        isFirst: isFirst
+                    }
                 "
-            >
-                <ng-template
-                    *ngTemplateOutlet="
-                        stepHeaderWithLines;
-                        context: {
-                            $implicit: steps,
-                            step: step,
-                            i: i,
-                            isFirst: isFirst
-                        }
-                    "
                 ></ng-template>
             </div>
-        </ng-template>
-    </ng-container>
+        }
+    </ng-template>
+    }
 
     <!--  Visible items container -->
+    @for (step of (isInResponsiveMode ? visibleSteps : steps); track step; let i = $index; let isFirst = $first) {
     <div
         class="nui-wizard-horizontal-header-wrapper"
-        *ngFor="
-            let step of isInResponsiveMode ? visibleSteps : steps;
-            let i = index;
-            let isFirst = first
-        "
     >
         <ng-template
             *ngTemplateOutlet="
@@ -58,48 +50,42 @@
             "
         ></ng-template>
     </div>
+    }
 
     <!--  Right overflow container -->
-    <ng-container *ngIf="isInResponsiveMode && overflownStepsEnd.length">
-        <nui-wizard-overflow
-            #overflowComponent
-            class="overflow-right"
-            [class.overflow-right-completed]="allStepsCompleted"
-            [template]="overflowEnd"
-            [completed]="allStepsCompleted"
-            [value]="overflownStepsEnd.length"
-        >
-        </nui-wizard-overflow>
-
-        <ng-template #overflowEnd>
-            <div *ngIf="overflownStepsEnd.length" class="pb-3">
-                <strong>+{{ overflownStepsEnd.length }} more steps</strong>
-            </div>
-            <div
-                class="nui-wizard-horizontal-header-wrapper"
-                *ngFor="
-                    let step of overflownStepsEnd;
-                    let i = index;
-                    let isFirst = first
+    @if (isInResponsiveMode && overflownStepsEnd.length) {
+    <nui-wizard-overflow
+        #overflowComponent
+        class="overflow-right"
+        [class.overflow-right-completed]="allStepsCompleted"
+        [template]="overflowEnd"
+        [completed]="allStepsCompleted"
+        [value]="overflownStepsEnd.length"
+    >
+    </nui-wizard-overflow>
+    <ng-template #overflowEnd>
+        @if (overflownStepsEnd.length) {
+        <div class="pb-3">
+            <strong i18n>+{{ overflownStepsEnd.length }} more steps</strong>
+        </div>
+        } @for ( step of overflownStepsEnd; track step; let i = $index; let
+        isFirst = $first) {
+        <div class="nui-wizard-horizontal-header-wrapper">
+            <ng-template
+                *ngTemplateOutlet="
+                    stepHeaderWithLines;
+                    context: {
+                        $implicit: steps,
+                        step: step,
+                        i: overflownStepsStart.length + visibleSteps.length + i,
+                        isFirst: isFirst
+                    }
                 "
-            >
-                <ng-template
-                    *ngTemplateOutlet="
-                        stepHeaderWithLines;
-                        context: {
-                            $implicit: steps,
-                            step: step,
-                            i:
-                                overflownStepsStart.length +
-                                visibleSteps.length +
-                                i,
-                            isFirst: isFirst
-                        }
-                    "
-                ></ng-template>
-            </div>
-        </ng-template>
-    </ng-container>
+            ></ng-template>
+        </div>
+        }
+    </ng-template>
+    }
 </div>
 
 <div class="nui-wizard-horizontal-content-container">
@@ -107,6 +93,7 @@
         *ngFor="let step of steps; let i = index"
         class="nui-wizard-horizontal-content"
         role="tabpanel"
+        [attr.tabindex]="selectedIndex === i ? 0 : null"
         [id]="stepContentIds[i]"
         [attr.aria-labelledby]="labelIds[i]"
         [attr.aria-expanded]="selectedIndex === i"
@@ -141,7 +128,10 @@
         #stepHeaders
         class="nui-wizard-horizontal-header"
         (click)="step.select()"
-        (keydown)="_onKeydown($event)"
+        (keydown)="
+            $event.code === 'Space' ? $event.preventDefault() : null;
+            _onKeydown($event)
+        "
         [tabIndex]="selectedIndex === i ? 0 : -1"
         [id]="labelIds[i]"
         [attr.aria-posinset]="i + 1"

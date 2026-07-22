@@ -33,7 +33,8 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 
-import { ButtonIcon, SpinnerSize } from "./public-api";
+import { SpinnerSize, ButtonIcon } from "./public-api";
+import { _uniqueId } from "../../functions/unique-id";
 import { LoggerService } from "../../services/log-service";
 
 /**
@@ -59,11 +60,16 @@ import { LoggerService } from "../../services/log-service";
         "aria-valuemin": "0",
         "aria-valuemax": "100",
         "[attr.aria-label]": "ariaLabel",
+        "[attr.aria-describedby]":
+            "message ? messageId : (helpText ? helpId : null)",
     },
     standalone: false,
 })
 export class SpinnerComponent implements OnChanges, OnDestroy {
     private static defaultSize: SpinnerSize = SpinnerSize.Small;
+
+    public readonly messageId = _uniqueId("nui-spinner-message-");
+    public readonly helpId = _uniqueId("nui-spinner-help-");
     private showTimer: any;
     private _size: SpinnerSize;
     public tooltipText = $localize`Cancel`;
@@ -83,7 +89,7 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel: string = "Spinner";
+    @Input() public ariaLabel: string = $localize`Spinner`;
 
     @Output() public cancel = new EventEmitter();
 

@@ -69,7 +69,7 @@ import { OptionKeyControlService } from "../option-key-control.service";
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         class: "nui-select-v2",
-        role: "button",
+        role: "none",
     },
     standalone: false,
 })
@@ -80,7 +80,7 @@ export class SelectV2Component
     implements AfterContentInit, OnDestroy, OnChanges
 {
     /** Sets a custom template for displaying it in the Option */
-    @Input() public displayValueTemplate: TemplateRef<any>;
+    @Input() public displayValueTemplate?: TemplateRef<any>;
 
     /** Value of the selected Option that derives in the Select */
     public displayText: string;

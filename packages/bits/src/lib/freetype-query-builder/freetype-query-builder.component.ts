@@ -120,6 +120,12 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
     @Output()
     submitQuery = new EventEmitter();
 
+    /** Unique id for the control. */
+    @Input() public id: string;
+
+    /** Input to set aria label text */
+    @Input() public ariaLabel: string;
+
     @ViewChild("queryselect", { static: true })
     querySelect: SelectV2Component;
     @ViewChild("messageTextarea", { static: false })

@@ -42,6 +42,7 @@ import { takeUntil } from "rxjs/operators";
 
 import { ISortedItem, ISorterChanges, SorterDirection } from "./public-api";
 import { SorterKeyboardService } from "./sorter-keyboard.service";
+import { _uniqueId } from "../../functions/unique-id";
 import {
     IFilter,
     IFilterPub,
@@ -81,6 +82,8 @@ export class SorterComponent
     @Input() selectedItem: string;
     @Input() sortDirection: any;
 
+    public _id = _uniqueId("nui-sorter-");
+
     @Output() sorterAction = new EventEmitter<ISorterChanges>();
 
     @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
@@ -112,7 +115,7 @@ export class SorterComponent
 
     constructor(
         private logger: LoggerService,
-        private sorterKeyboardService: SorterKeyboardService,
+        private keyboardService: SorterKeyboardService,
         private elRef: ElementRef,
         private renderer: Renderer2
     ) {}
@@ -198,7 +201,7 @@ export class SorterComponent
                 this.elRef.nativeElement,
                 "keydown",
                 (event: KeyboardEvent) => {
-                    this.sorterKeyboardService.handleKeydown(event);
+                    this.keyboardService.handleKeydown(event);
                 }
             )
         );
@@ -238,6 +241,12 @@ export class SorterComponent
         return this.selectedItem;
     }
 
+    public get activeDescendant(): string | null {
+        return (
+            this.keyboardService.keyboardEventsManager?.activeItem?.id || null
+        );
+    }
+
     public getSelectedItemTitle(): string {
         return this.items[0].itemsSource.find(
             (item: IMenuItem) => item.isSelected
@@ -263,8 +272,8 @@ export class SorterComponent
 
     public getAriaLabelForSortingButton(): string {
         return this.sortDirection === SorterDirection.descending
-            ? `${this.getSelectedItemTitle()}. Sorter direction - descending`
-            : `${this.getSelectedItemTitle()}. Sorter direction - ascending`;
+            ? $localize`${this.getSelectedItemTitle()}. Sorter direction - descending`
+            : $localize`${this.getSelectedItemTitle()}. Sorter direction - ascending`;
     }
 
     public ngOnDestroy(): void {
@@ -275,7 +284,7 @@ export class SorterComponent
 
     public toggleSorterMenu(): void {
         this.overlay.toggle();
-        this.sorterKeyboardService.announceDropdown();
+        this.keyboardService.announceDropdown();
     }
 
     private initSelectedItem() {
@@ -326,8 +335,8 @@ export class SorterComponent
     }
 
     private initKeyboardService(): void {
-        this.sorterKeyboardService.menuItems = this.menuPopup?.menuItems;
-        this.sorterKeyboardService.overlay = this.overlay;
-        this.sorterKeyboardService.initKeyboardManager();
+        this.keyboardService.menuItems = this.menuPopup?.menuItems;
+        this.keyboardService.overlay = this.overlay;
+        this.keyboardService.initKeyboardManager();
     }
 }

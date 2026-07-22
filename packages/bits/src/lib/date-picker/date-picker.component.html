@@ -1,20 +1,21 @@
 <div class="nui-datepicker">
-    <ng-container *ngIf="!inline">
-        <div
-            #toggleRef
-            class="nui-datepicker__container"
-            [class.disabled]="isDisabled"
-            (click)="!isDisabled && overlay.toggle()"
+    @if (!inline) {
+    <div
+        #toggleRef
+        class="nui-datepicker__container"
+        [class.disabled]="isDisabled"
+        (click)="!isDisabled && overlay.toggle()"
+    >
+        <nui-textbox
+            #date
+            autocomplete="off"
+            [disabled]="isDisabled"
+            [isInErrorState]="isInErrorState"
+            (textChange)="onInputActiveDateChanged($event)"
+            (blurred)="updateTouchedState()"
+            [ariaLabel]="ariaLabel"
+            (keydown.arrowdown)="!isDisabled && overlay.show()"
         >
-            <nui-textbox
-                #date
-                autocomplete="off"
-                [disabled]="isDisabled"
-                [isInErrorState]="isInErrorState"
-                (textChange)="onInputActiveDateChanged($event)"
-                (blurred)="updateTouchedState()"
-                [ariaLabel]="ariaLabel"
-            >
             </nui-textbox>
             <nui-icon
                 class="nui-datepicker__icon"
@@ -31,11 +32,13 @@
         >
             <ng-container *ngTemplateOutlet="datePickerInner"></ng-container>
         </nui-overlay>
-    </ng-container>
+    }
 
-    <div *ngIf="inline">
+    @if (inline) {
+    <div>
         <ng-container *ngTemplateOutlet="datePickerInner"></ng-container>
     </div>
+    }
 
     <div #popupArea></div>
 </div>

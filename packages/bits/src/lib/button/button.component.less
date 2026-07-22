@@ -39,8 +39,13 @@
         max-width: unset;
     }
 
-    &:active {
+    &:active,
+    &.active {
         transform: scale(0.98);
+    }
+
+    &:focus-visible {
+        .focus-outline();
     }
 
     &__icon {

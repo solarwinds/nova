@@ -15,14 +15,17 @@
         .setCssVariable(color, nui-color-text-link);
     }
 
-    &:focus {
-        // TODO: switch back to mixin .focus-outline() when z-index is removed in the scope of NUI-6103
-        outline: none;
-        box-shadow: inset 0 0 0 @nui-line-medium
-            fade(@nui-color-selected-contrast, 50%);
+    &:focus-visible {
+        .focus-outline-inset();
         border-radius: @nui-radius-default;
     }
 
+    &:focus {
+        outline: none;
+    }
+
+    /* Keep focused but not visible to remove browser default or old logic if needed,
+       but the focus-visible above handles the ring. */
     &:focus:not(:focus-visible) {
         box-shadow: unset;
         border-radius: unset;

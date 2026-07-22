@@ -20,6 +20,10 @@ body > nui-repeat-item.cdk-drag-preview .nui-repeat-item {
         .setCssVariable(background-color, nui-color-bg-transparent-hover);
     }
 
+    &:focus-visible {
+        .focus-outline();
+    }
+
     &:hover {
         .setCssVariable(background-color, nui-color-bg-secondary);
     }

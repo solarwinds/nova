@@ -7,10 +7,12 @@
     [@spinnerAppear]
 >
     <div class="nui-spinner__container">
+        @if (!isDeterminate) {
         <svg
             class="nui-spinner__circular"
             viewBox="25 25 50 50"
-            *ngIf="!isDeterminate"
+            aria-hidden="true"
+            role="presentation"
         >
             <circle
                 class="nui-spinner__path-under"
@@ -31,10 +33,11 @@
                 stroke-miterlimit="10"
             />
         </svg>
+        } @if (isDeterminate) {
         <svg
             class="nui-spinner__circular"
             viewBox="0 0 36 36"
-            *ngIf="isDeterminate"
+            aria-hidden="true"
         >
             <circle
                 class="nui-spinner__path-under"
@@ -56,30 +59,36 @@
                 [ngStyle]="{ 'stroke-dasharray': percent + ', 100' }"
             />
         </svg>
+        }
 
+        @if (allowCancel) {
         <button
             nui-button
             type="button"
             class="nui-spinner__cancel"
             icon="close"
-            *ngIf="allowCancel"
+            ariaLabel="Cancel"
+            i18n-ariaLabel
+            title="Cancel"
             (click)="cancelProgress()"
             displayStyle="action"
             [nuiTooltip]="tooltipText"
         ></button>
+        }
     </div>
-
-    <div class="nui-spinner__text-content" *ngIf="showText">
-        <div class="nui-spinner__label" *ngIf="message !== undefined">
+    @if (showText) {
+    <div class="nui-spinner__text-content">
+        @if (message !== undefined) {
+        <div class="nui-spinner__label" [id]="messageId">
             <span class="nui-text-label nui-spinner__label-item">{{
                 message
             }}</span>
         </div>
-        <span
-            class="nui-spinner__hint nui-help-hint"
-            *ngIf="helpText !== undefined"
-        >
+        } @if (helpText !== undefined) {
+        <span class="nui-spinner__hint nui-help-hint" [id]="helpId">
             {{ helpText }}
         </span>
+        }
     </div>
+    }
 </span>

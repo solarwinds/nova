@@ -31,18 +31,20 @@ export class FreetypeQueryBuilderAtom extends BaseSelectV2Atom {
     }
 
     public type = async (text: string): Promise<void> => {
-        await this.getLocator().click();
-        await this.getLocator().pressSequentially(text);
+        await this.textarea.click();
+        await this.textarea.pressSequentially(text);
     };
 
     public clearText = async (): Promise<void> => {
-        await this.textarea.clear();
+        await this.textarea.fill("");
     };
 
     public getQueryText = async (): Promise<string> =>
-        (await this.getLocator().textContent()) ?? "";
+        (await this.textarea.inputValue()) ?? "";
 
-    public toHaveQueryText = async (expected: string | RegExp): Promise<void> => {
-        await expect(this.getLocator()).toHaveText(expected);
+    public toHaveQueryText = async (
+        expected: string | RegExp
+    ): Promise<void> => {
+        await expect(this.textarea).toHaveValue(expected);
     };
 }

@@ -19,8 +19,15 @@
 //  THE SOFTWARE.
 
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
 
+import {
+    NuiFormFieldModule,
+    NuiSelectV2Module,
+    NuiSwitchModule,
+    NuiValidationMessageModule,
+    LoggerService,
+} from "@nova-ui/bits";
 import {
     ConfiguratorHeadingService,
     LinkConfiguratorComponent,
@@ -33,8 +40,18 @@ describe(LinkConfiguratorComponent.name, () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [LinkConfiguratorComponent],
-            imports: [],
-            providers: [ConfiguratorHeadingService, FormBuilder],
+            imports: [
+                ReactiveFormsModule,
+                NuiFormFieldModule,
+                NuiSelectV2Module,
+                NuiSwitchModule,
+                NuiValidationMessageModule,
+            ],
+            providers: [
+                ConfiguratorHeadingService,
+                FormBuilder,
+                LoggerService,
+            ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(LinkConfiguratorComponent);

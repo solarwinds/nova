@@ -108,7 +108,7 @@ export class DatePickerComponent
     /** to apply error state styles */
     @Input() isInErrorState: boolean;
     /** Input to set aria label text */
-    @Input() public ariaLabel: string = "Date Picker";
+    @Input() public ariaLabel: string = $localize`Date Picker`;
 
     // TODO: Consider injecting locale through LOCALE_ID Injection Token
     /** to date format locale */

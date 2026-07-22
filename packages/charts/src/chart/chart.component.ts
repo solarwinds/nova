@@ -25,6 +25,7 @@ import {
     Component,
     ElementRef,
     forwardRef,
+    HostBinding,
     Input,
     NgZone,
     OnChanges,
@@ -66,6 +67,23 @@ export class ChartComponent
         OnChanges
 {
     @Input() public chart: IChart;
+
+    /** Accessible name for the chart. Should be a localized string describing the chart content (WCAG 1.1.1). */
+    @Input() public ariaLabel: string;
+
+    // Only expose role="img" when an accessible name is present; an img role
+    // without a name is a WCAG 1.1.1 violation (axe: role-img-alt). When no
+    // ariaLabel is supplied the inner svg stays aria-hidden, so the chart is
+    // treated as decorative.
+    @HostBinding("attr.role")
+    get role(): string | null {
+        return this.ariaLabel ? "img" : null;
+    }
+
+    @HostBinding("attr.aria-label")
+    get a11yLabel(): string | null {
+        return this.ariaLabel || null;
+    }
 
     public resizeObserver?: ResizeObserver;
     private resizeHandler: Function;

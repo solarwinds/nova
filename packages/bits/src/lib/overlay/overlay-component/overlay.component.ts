@@ -67,7 +67,8 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
             id="nui-overlay"
             class="nui-overlay"
             [attr.role]="roleAttr || null"
-            [attr.aria-labelledby]="ariaLabelledBy || null"
+            [attr.aria-label]="ariaLabel || null"
+            [attr.aria-labelledby]="ariaLabelledby || null"
             [ngClass]="{ empty: empty$ | async }"
         >
             <ng-content></ng-content>
@@ -96,10 +97,10 @@ export class OverlayComponent
     @Input() public overlayConfig: OverlayConfig;
 
     /** Element to which the Popup is attached */
-    @Input() public toggleReference: HTMLElement;
+    @Input() public toggleReference!: HTMLElement;
 
     /** Popup viewport margins */
-    @Input() viewportMargin: number;
+    @Input() viewportMargin!: number;
 
     /** Sets custom container for CDK Overlay. Selector OR ElementRef */
     @Input() customContainer: OverlayContainerType;
@@ -107,8 +108,11 @@ export class OverlayComponent
     /** Sets the role attribute */
     @Input() roleAttr: string;
 
+    /** Sets the aria-label attribute for accessibility */
+    @Input() ariaLabel?: string;
+
     /** Sets the aria-labelledby attribute for accessibility */
-    @Input() ariaLabelledBy?: string;
+    @Input() ariaLabelledby?: string;
 
     /** Emits MouseEvent when click occurs outside Select/Combobox */
     @Output() public readonly clickOutside = new EventEmitter<MouseEvent>();

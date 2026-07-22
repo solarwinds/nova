@@ -1,8 +1,9 @@
 <div class="nui-tab-headings__holder" (click)="$event.preventDefault()">
+    @if (hasTraverse) {
+    <!-- a11y: WCAG 2.5.8 Target Size - TODO: NUI-6279 -->
     <div
         class="btn-caret-left"
         [class.disabled]="!rightTraverseEnabled"
-        *ngIf="hasTraverse"
         (click)="traverseRight()"
     >
         <nui-icon
@@ -11,6 +12,7 @@
             [iconColor]="!rightTraverseEnabled ? 'disabled-gray' : 'gray'"
         ></nui-icon>
     </div>
+    }
     <div class="nui-tab-headings">
         <div
             class="nui-tab-headings__container"
@@ -20,10 +22,11 @@
             <ng-content></ng-content>
         </div>
     </div>
+    @if (hasTraverse) {
+    <!-- a11y: WCAG 2.5.8 Target Size - TODO: NUI-6279 -->
     <div
         class="btn-caret-right"
         [class.disabled]="!leftTraverseEnabled"
-        *ngIf="hasTraverse"
         (click)="traverseLeft()"
     >
         <nui-icon
@@ -32,4 +35,5 @@
             [iconColor]="!leftTraverseEnabled ? 'disabled-gray' : 'gray'"
         ></nui-icon>
     </div>
+    }
 </div>

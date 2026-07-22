@@ -10,6 +10,7 @@
             value="{{ value }}"
             [autocomplete]="autocomplete"
             [disabled]="disabled"
+            [attr.id]="id"
             [attr.name]="name"
             [type]="type"
             (blur)="onBlurEventEmit()"
@@ -17,6 +18,10 @@
             [placeholder]="placeholder"
             [readonly]="readonly"
             [attr.aria-label]="ariaLabel"
+            [attr.aria-activedescendant]="ariaActiveDescendant"
+            [attr.aria-expanded]="ariaExpanded"
+            [attr.aria-haspopup]="ariaHasPopup"
+            [attr.aria-controls]="ariaControls"
             [attr.aria-readonly]="readonly"
             [attr.aria-invalid]="isInErrorState"
             #textboxInput
@@ -25,7 +30,8 @@
         <textarea
             *ngIf="rows > 1"
             class="form-control input-control nui-textbox__input"
-            value="{{ value }}"
+            [attr.id]="id"
+            [value]="value || ''"
             [rows]="rows"
             [disabled]="disabled"
             [attr.name]="name"

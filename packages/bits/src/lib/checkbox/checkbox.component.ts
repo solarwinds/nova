@@ -109,6 +109,9 @@ export class CheckboxComponent
     /** The 'aria-describedby' attribute is read after the element's label and field type. */
     @Input() ariaDescribedby: string;
 
+    /** Unique id for the control. */
+    @Input() public id: string;
+
     /**
      * Sets "name" attribute for inner input element of nui-checkbox
      */
@@ -191,7 +194,7 @@ export class CheckboxComponent
     private rendererListener: Function;
     private sub: Subscription;
 
-    private _ariaLabel: string = "Checkbox";
+    private _ariaLabel: string = $localize`Checkbox`;
 
     private keysAction = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
 

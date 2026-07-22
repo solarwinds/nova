@@ -40,28 +40,31 @@
                     *ngIf="showDefaultIcon"
                     class="nui-panel__header-container nui-panel__header-container--default"
                 >
-                    <ng-container *ngIf="!isClosable">
-                        <button
-                            nui-button
-                            class="nui-panel__header-btn"
-                            type="button"
-                            displayStyle="action"
-                            [icon]="mainIcon"
-                            [disabled]="isAnimating"
-                            (click)="toggleCollapsedOnClick()"
-                            *ngIf="isCollapsible"
-                        ></button>
-                    </ng-container>
-                    <ng-container *ngIf="isClosable">
-                        <button
-                            nui-button
-                            displayStyle="action"
-                            class="nui-panel__header-btn nui-panel__header-btn--close"
-                            type="button"
-                            icon="close"
-                            (click)="toggleCollapsedOnClick()"
-                        ></button>
-                    </ng-container>
+                    @if (!isClosable) { @if (isCollapsible) {
+                    <button
+                        nui-button
+                        class="nui-panel__header-btn"
+                        type="button"
+                        displayStyle="action"
+                        [icon]="mainIcon"
+                        [disabled]="isAnimating"
+                        [ariaLabel]="expandCollapseAriaLabel"
+                        [title]="expandCollapseAriaLabel"
+                        (click)="toggleCollapsedOnClick()"
+                    ></button>
+                    } } @if (isClosable) {
+                    <button
+                        nui-button
+                        displayStyle="action"
+                        class="nui-panel__header-btn nui-panel__header-btn--close"
+                        type="button"
+                        icon="close"
+                        ariaLabel="Close panel"
+                        i18n-ariaLabel
+                        title="Close panel"
+                        (click)="toggleCollapsedOnClick()"
+                    ></button>
+                    }
                 </div>
             </div>
             <div class="nui-panel__side-pane-body-wrapper nui-scroll-shadows">

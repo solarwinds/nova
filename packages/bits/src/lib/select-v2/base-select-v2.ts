@@ -195,6 +195,15 @@ export abstract class BaseSelectV2
 
     private _ariaLabel: string = "";
 
+    public get accessibleLabel(): string | null {
+        return (
+            this.ariaLabel ||
+            (this as any).displayText ||
+            this.placeholder ||
+            null
+        );
+    }
+
     /** Unique ID for the trigger element, used for aria-labelledby on the overlay */
     public readonly triggerId = `nui-select-trigger-${BaseSelectV2._counter++}`;
     private virtualScrollResizeObserver: ResizeObserver;
