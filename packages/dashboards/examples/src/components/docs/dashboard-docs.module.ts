@@ -18,7 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { provideHttpClient } from "@angular/common/http";
+import {
+    provideHttpClient,
+    withInterceptorsFromDi,
+} from "@angular/common/http";
 import { inject, NgModule, Type } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { InMemoryCache } from "@apollo/client/core";
@@ -60,7 +63,7 @@ const exampleRoutes: Routes = [
         RouterModule.forChild(exampleRoutes),
     ],
     providers: [
-        provideHttpClient(),
+        provideHttpClient(withInterceptorsFromDi()),
         provideApollo(() => {
             const httpLink = inject(HttpLink);
 
