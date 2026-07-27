@@ -88,6 +88,7 @@ import { NuiDashboardConfiguratorModule } from "./configurator/configurator.modu
 import { DATA_SOURCE_OUTPUT } from "./configurator/types";
 import { GridsterItemWidgetIdDirective } from "./directives/gridster-item-widget-id/gridster-item-widget-id.directive";
 import { WidgetEditorDirective } from "./directives/widget-editor/widget-editor.directive";
+import { NuiDashboardViewsModule } from "./components/views/views.module";
 import { NuiPizzagnaModule } from "./pizzagna/pizzagna.module";
 import { ComponentPortalService } from "./pizzagna/services/component-portal.service";
 import {
@@ -191,6 +192,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
 @NgModule({
     imports: [
         NuiDashboardsCommonModule,
+        NuiDashboardViewsModule,
         GridsterModule,
         NuiBusyModule,
         NuiButtonModule,

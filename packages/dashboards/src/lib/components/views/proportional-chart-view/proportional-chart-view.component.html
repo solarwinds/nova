@@ -1,0 +1,95 @@
+<div
+    #gridContainer
+    class="w-100 nui-chart-layout flex-grow-1 p-3"
+    [ngClass]="{
+        'prioritize-rows__right': prioritizedGridRows.right,
+        'prioritize-rows__bottom': prioritizedGridRows.bottom,
+        'empty-grid': isEmpty
+    }"
+>
+    <div class="d-flex chart has-overlay" *ngIf="!isEmpty">
+        <nui-chart class="w-100" [chart]="chartAssist.chart"></nui-chart>
+        <nui-chart-donut-content
+            *ngIf="donutContentPlugin"
+            class="nui-proportional-chart-view__chart-donut-content"
+            [plugin]="donutContentPlugin"
+        >
+            <div class="h-100 w-100 d-flex justify-content-center align-items-center text-center">
+                <div class="d-inline-block" nuiZoomContent [useZoom]="false">
+                    <ng-container *ngIf="donutContentTemplate">
+                        <ng-container
+                            *ngTemplateOutlet="donutContentTemplate; context: { $implicit: data, chartAssist: chartAssist }"
+                        ></ng-container>
+                    </ng-container>
+                </div>
+            </div>
+        </nui-chart-donut-content>
+    </div>
+    <div
+        class="w-100 d-flex legend"
+        [ngClass]="[legendShouldBeAlignedRight() ? 'scrollable' : 'legend-bottom']"
+        *ngIf="hasLegend() && chartAssist"
+    >
+        <nui-legend
+            class="w-100 m-auto"
+            [interactive]="false"
+            (mouseleave)="chartAssist.resetVisibleSeries()"
+            [orientation]="legendShouldBeAlignedRight() ? 'vertical' : 'horizontal'"
+        >
+            <nui-legend-series
+                class="proportional-chart__legend-series"
+                *ngFor="let legendSeries of chartAssist.legendSeriesSet; trackBy: chartAssist.seriesTrackByFn; let i = index"
+                [ngClass]="(prioritizedGridRows.right || prioritizedGridRows.bottom) && 'description-min-width--unset'"
+                [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
+                (isSelectedChange)="chartAssist.toggleSeries(legendSeries.id, $event)"
+                [seriesRenderState]="chartAssist.renderStatesIndex[legendSeries.id]?.state"
+                (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
+                (click)="onInteraction(legendSeries)"
+                [class.nui-proportional-chart-view__legend--interactive]="interactive"
+            >
+                <ng-container *ngIf="legendItemTemplate; else legendDefaultTile">
+                    <div description>
+                        <ng-container
+                            *ngTemplateOutlet="legendItemTemplate; context: { $implicit: data[i], series: legendSeries }"
+                        ></ng-container>
+                    </div>
+                </ng-container>
+                <ng-template #legendDefaultTile>
+                    <nui-rich-legend-tile
+                        [value]="computeLegendTileValue(legendSeries.data[0]) | nuiDashboardUnitConversion"
+                        [color]="chartAssist.palette.textColors.get(legendSeries.id)"
+                        [backgroundColor]="chartAssist.palette.standardColors.get(legendSeries.id)"
+                    ></nui-rich-legend-tile>
+
+                    <nui-icon
+                        legendTransclusion
+                        *ngIf="data[i]?.icon"
+                        class="align-items-center"
+                        [icon]="data[i].icon"
+                    ></nui-icon>
+
+                    <div
+                        description
+                        class="description-container d-flex flex-column nui-text-small justify-content-center"
+                    >
+                        <div
+                            *ngIf="!data[i]?.link"
+                            class="description description-primary"
+                            [ngClass]="{ 'nui-text-link-small link': interactive }"
+                        >
+                            {{ legendSeries.name }}
+                        </div>
+                        <a
+                            class="description description-primary nui-text-link-small link"
+                            (click)="$event.stopPropagation()"
+                            *ngIf="data[i]?.link"
+                            [href]="data[i].link"
+                        >
+                            {{ legendSeries.name }}
+                        </a>
+                    </div>
+                </ng-template>
+            </nui-legend-series>
+        </nui-legend>
+    </div>
+</div>

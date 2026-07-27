@@ -18,21 +18,41 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./dashboard/public-api";
-export * from "./widget/public-api";
-export * from "./layouts/public-api";
-export * from "./template-load-error/public-api";
-export * from "./proportional-widget/public-api";
-export * from "./kpi-widget/public-api";
-export * from "./risk-score-tile/public-api";
-export * from "./timeseries-widget/public-api";
-export * from "./table-widget/public-api";
-export * from "./providers/public-api";
-export * from "./types";
-export * from "./time-frame-selection/public-api";
-export * from "./loading/public-api";
-export * from "./embedded-content/embedded-content.component";
-export * from "./list-widget/public-api";
-export * from "./widget-search/widget-search.component";
-export * from "./widget-search/types";
-export * from "./views/public-api";
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+
+import {
+    NuiBusyModule,
+    NuiCommonModule,
+    NuiIconModule,
+} from "@nova-ui/bits";
+import { NuiChartsModule } from "@nova-ui/charts";
+
+import { NuiDashboardsCommonModule } from "../../common/common.module";
+import { KpiTileViewComponent } from "./kpi-tile-view/kpi-tile-view.component";
+import { ProportionalChartViewComponent } from "./proportional-chart-view/proportional-chart-view.component";
+
+/**
+ * A Pizzagna-free module that exports standalone view components for
+ * proportional charts and KPI tiles. Consumers can import this module
+ * without needing PIZZAGNA_EVENT_BUS, DATA_SOURCE, or any Pizzagna providers.
+ */
+@NgModule({
+    imports: [
+        CommonModule,
+        NuiBusyModule,
+        NuiChartsModule,
+        NuiCommonModule,
+        NuiIconModule,
+        NuiDashboardsCommonModule,
+    ],
+    declarations: [
+        ProportionalChartViewComponent,
+        KpiTileViewComponent,
+    ],
+    exports: [
+        ProportionalChartViewComponent,
+        KpiTileViewComponent,
+    ],
+})
+export class NuiDashboardViewsModule {}

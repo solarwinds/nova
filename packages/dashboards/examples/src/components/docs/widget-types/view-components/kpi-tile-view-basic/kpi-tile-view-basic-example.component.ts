@@ -18,21 +18,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./dashboard/public-api";
-export * from "./widget/public-api";
-export * from "./layouts/public-api";
-export * from "./template-load-error/public-api";
-export * from "./proportional-widget/public-api";
-export * from "./kpi-widget/public-api";
-export * from "./risk-score-tile/public-api";
-export * from "./timeseries-widget/public-api";
-export * from "./table-widget/public-api";
-export * from "./providers/public-api";
-export * from "./types";
-export * from "./time-frame-selection/public-api";
-export * from "./loading/public-api";
-export * from "./embedded-content/embedded-content.component";
-export * from "./list-widget/public-api";
-export * from "./widget-search/widget-search.component";
-export * from "./widget-search/types";
-export * from "./views/public-api";
+import { Component } from "@angular/core";
+import { FormControl } from "@angular/forms";
+
+type KpiTileState = "normal" | "loading" | "empty";
+
+/**
+ * KPI Tile View - Playground example.
+ * Switch between all visual states (normal / loading / empty) and toggle
+ * interactivity to explore every variant the reusable tile view supports.
+ */
+@Component({
+    selector: "kpi-tile-view-basic-example",
+    templateUrl: "./kpi-tile-view-basic-example.component.html",
+    standalone: false,
+})
+export class KpiTileViewBasicExampleComponent {
+    public readonly stateControl = new FormControl<KpiTileState>("normal", {
+        nonNullable: true,
+    });
+    public interactive = false;
+    public lastClicked = "";
+
+    public readonly stateOptions: KpiTileState[] = ["normal", "loading", "empty"];
+
+    public onTileClick(label: string): void {
+        this.lastClicked = label;
+    }
+}

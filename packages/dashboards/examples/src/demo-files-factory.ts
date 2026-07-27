@@ -1,6 +1,6 @@
 import { CodeSourceFiles } from "@nova-ui/bits";
 
-import { DEMO_PATHS } from "./components/docs/demo.files";
+import { DEMO_PATHS, DEMO_TS_SOURCES } from "./components/docs/demo.files";
 
 export const getDemoFiles = (
     filePrefix: string
@@ -11,14 +11,20 @@ export const getDemoFiles = (
     return {
         context: filePrefix,
         files: files.map((filePath) => ({
-            content: async () =>
-                import(`./components/docs/${filePath}`).then((e) => {
+            content: async () => {
+                // For .ts files, return the raw source captured at build time
+                // (dynamic import would return Angular's compiled JS instead).
+                if (filePath.endsWith(".ts")) {
+                    return DEMO_TS_SOURCES[filePath] ?? "";
+                }
+                return import(`./components/docs/${filePath}`).then((e) => {
                     if (e.default) {
                         return e.default;
                     }
                     // typescript files may have exports non default members
                     return `${Object.values(e).join("\n")}`;
-                }),
+                });
+            },
             path: filePath,
         })),
     };

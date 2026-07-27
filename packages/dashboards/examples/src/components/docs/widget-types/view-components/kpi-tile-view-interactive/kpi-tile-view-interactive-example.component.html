@@ -1,0 +1,35 @@
+<div class="d-flex gap-3" style="height: 200px;">
+    <!-- Interactive tile that emits tileClick events -->
+    <nui-kpi-tile-view
+        class="flex-grow-1"
+        style="flex: 1 1 0; min-width: 0;"
+        [value]="currentValue"
+        label="Active Sessions"
+        units="sessions"
+        backgroundColor="#0058e9"
+        [interactive]="true"
+        [valueTemplate]="customValueTpl"
+        (tileClick)="onTileClick()"
+    ></nui-kpi-tile-view>
+
+    <nui-kpi-tile-view
+        class="flex-grow-1"
+        style="flex: 1 1 0; min-width: 0;"
+        [value]="98.7"
+        label="Uptime"
+        units="%"
+        backgroundColor="#2cc079"
+        [interactive]="true"
+        (tileClick)="onUptimeClick()"
+    ></nui-kpi-tile-view>
+</div>
+
+<p class="mt-3" *ngIf="lastClickedTile">
+    Last clicked: <strong>{{ lastClickedTile }}</strong>
+</p>
+
+<!-- Custom value template: renders value with a prefix icon -->
+<ng-template #customValueTpl let-val>
+    <nui-icon icon="status_up" class="mr-1"></nui-icon>
+    <strong>{{ val }}</strong>
+</ng-template>
