@@ -24,6 +24,7 @@ import {
     Component,
     ElementRef,
     EventEmitter,
+    inject,
     Input,
     KeyValueDiffer,
     KeyValueDiffers,
@@ -107,24 +108,17 @@ export class ProportionalChartViewComponent implements AfterViewInit, OnChanges,
     @ViewChild("gridContainer", { static: true })
     private gridContainer: ElementRef;
 
-    private differ: KeyValueDiffer<any, any>;
+    private changeDetector = inject(ChangeDetectorRef);
+    private ngZone = inject(NgZone);
+    private kvDiffers = inject(KeyValueDiffers);
+    private differ: KeyValueDiffer<any, any> = this.kvDiffers.find(this.prioritizedGridRows).create();
     private renderer: Renderer<IAccessors>;
     private scales: Scales;
     private chartPalette: IChartPalette = new ChartPalette(defaultColorProvider());
     private resizeObserver: ResizeObserver;
     private chartTypeSubscription$: Subscription;
-    private unitConversionPipe: DashboardUnitConversionPipe;
+    private unitConversionPipe = new DashboardUnitConversionPipe(inject(UnitConversionService));
     private chartSeries: Array<IChartAssistSeries<IAccessors>> = [];
-
-    constructor(
-        private changeDetector: ChangeDetectorRef,
-        private ngZone: NgZone,
-        private kvDiffers: KeyValueDiffers,
-        unitConversionService: UnitConversionService
-    ) {
-        this.differ = this.kvDiffers.find(this.prioritizedGridRows).create();
-        this.unitConversionPipe = new DashboardUnitConversionPipe(unitConversionService);
-    }
 
     public get isEmpty(): boolean {
         return !this.data || this.data.length === 0;

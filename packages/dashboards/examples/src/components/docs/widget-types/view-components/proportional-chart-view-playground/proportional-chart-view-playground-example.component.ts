@@ -29,7 +29,7 @@ type LegendPlacement = "right" | "bottom" | "none";
 /**
  * Proportional Chart View - Playground example.
  * Lets you switch between all supported chart types and legend placements
- * to see every visual variant the standalone view component provides.
+ * to see every visual variant the reusable view component provides.
  */
 @Component({
     selector: "proportional-chart-view-playground-example",

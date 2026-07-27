@@ -2,8 +2,8 @@
 
 ## [20.0.7] 📅 2025-07-20
 ### Added
-- `@nova-ui/dashboards` | Decoupled KPI tile and proportional chart into standalone reusable view components (`KpiTileViewComponent`, `ProportionalChartViewComponent`)
-- `@nova-ui/dashboards` | Added `ViewsModule` exposing standalone view components for use outside of widget context
+- `@nova-ui/dashboards` | Decoupled KPI tile and proportional chart into reusable view components (`KpiTileViewComponent`, `ProportionalChartViewComponent`)
+- `@nova-ui/dashboards` | Added `ViewsModule` exposing reusable module-based view components for use outside of widget context
 
 ## [20.0.5] 📅 2025-06-04
 ### Fixes

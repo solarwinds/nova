@@ -20,13 +20,10 @@
 
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     EventEmitter,
     Input,
-    OnChanges,
     Output,
-    SimpleChanges,
     TemplateRef,
     ViewEncapsulation,
 } from "@angular/core";
@@ -50,7 +47,7 @@ export interface IKpiTileViewBroker {
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false,
 })
-export class KpiTileViewComponent implements OnChanges {
+export class KpiTileViewComponent {
     @Input() public value: string | number | null;
     @Input() public label: string;
     @Input() public units: string;
@@ -92,12 +89,6 @@ export class KpiTileViewComponent implements OnChanges {
         }
 
         return _isNil(this.value) && this.value !== 0;
-    }
-
-    constructor(private changeDetector: ChangeDetectorRef) {}
-
-    public ngOnChanges(_changes: SimpleChanges): void {
-        this.changeDetector.markForCheck();
     }
 
     public onInteraction(): void {

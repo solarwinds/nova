@@ -26,7 +26,7 @@ type KpiTileState = "normal" | "loading" | "empty";
 /**
  * KPI Tile View - Playground example.
  * Switch between all visual states (normal / loading / empty) and toggle
- * interactivity to explore every variant the standalone tile supports.
+ * interactivity to explore every variant the reusable tile view supports.
  */
 @Component({
     selector: "kpi-tile-view-basic-example",
