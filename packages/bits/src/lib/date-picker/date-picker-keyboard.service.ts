@@ -47,13 +47,6 @@ interface FocusablePicker {
  */
 @Injectable()
 export class DatePickerKeyboardService {
-    private datePickerInner!: DatePickerInnerComponent;
-    private dayPicker!: DayPickerComponent;
-    private monthPicker?: MonthPickerComponent;
-    private yearPicker?: YearPickerComponent;
-    private overlay?: OverlayComponent;
-    private toggleButton?: HTMLElement;
-
     // Per-mode grid navigation config: the calendar unit each arrow step moves by,
     // the number of grid columns (used for vertical Up/Down movement), and the unit
     // PageUp/PageDown jumps by. `pageAmount` is resolved at runtime for the year view,
@@ -81,6 +74,64 @@ export class DatePickerKeyboardService {
         },
         year: { stepUnit: "years", columns: 5, pageUnit: "years" },
     };
+
+    // Arrow keys: horizontal = +/-1 unit, vertical = +/-one grid row (columns)
+    private static getArrowOffset(
+        code: string,
+        columns: number
+    ): number | undefined {
+        switch (code) {
+            case KEYBOARD_CODE.ARROW_RIGHT:
+                return 1;
+            case KEYBOARD_CODE.ARROW_LEFT:
+                return -1;
+            case KEYBOARD_CODE.ARROW_DOWN:
+                return columns;
+            case KEYBOARD_CODE.ARROW_UP:
+                return -columns;
+            default:
+                return undefined;
+        }
+    }
+
+    private static getPageDirection(code: string): number | undefined {
+        switch (code) {
+            case KEYBOARD_CODE.PAGE_DOWN:
+                return 1;
+            case KEYBOARD_CODE.PAGE_UP:
+                return -1;
+            default:
+                return undefined;
+        }
+    }
+
+    private static getEdgeDirection(
+        code: string
+    ): "start" | "end" | undefined {
+        switch (code) {
+            case KEYBOARD_CODE.HOME:
+                return "start";
+            case KEYBOARD_CODE.END:
+                return "end";
+            default:
+                return undefined;
+        }
+    }
+
+    // True when the key event originates from an editable text field (e.g. the
+    // date input), so grid navigation should defer to native caret behavior.
+    private static isFromEditableInput(event: KeyboardEvent): boolean {
+        const tagName = (event.target as HTMLElement | null)?.tagName;
+
+        return tagName === "INPUT" || tagName === "TEXTAREA";
+    }
+
+    private datePickerInner!: DatePickerInnerComponent;
+    private dayPicker!: DayPickerComponent;
+    private monthPicker?: MonthPickerComponent;
+    private yearPicker?: YearPickerComponent;
+    private overlay?: OverlayComponent;
+    private toggleButton?: HTMLElement;
 
     public initService(
         datePickerInner: DatePickerInnerComponent,
@@ -167,57 +218,6 @@ export class DatePickerKeyboardService {
                 this.applyActiveDate(current, next);
             }
         }
-    }
-
-    // Arrow keys: horizontal = +/-1 unit, vertical = +/-one grid row (columns)
-    private static getArrowOffset(
-        code: string,
-        columns: number
-    ): number | undefined {
-        switch (code) {
-            case KEYBOARD_CODE.ARROW_RIGHT:
-                return 1;
-            case KEYBOARD_CODE.ARROW_LEFT:
-                return -1;
-            case KEYBOARD_CODE.ARROW_DOWN:
-                return columns;
-            case KEYBOARD_CODE.ARROW_UP:
-                return -columns;
-            default:
-                return undefined;
-        }
-    }
-
-    private static getPageDirection(code: string): number | undefined {
-        switch (code) {
-            case KEYBOARD_CODE.PAGE_DOWN:
-                return 1;
-            case KEYBOARD_CODE.PAGE_UP:
-                return -1;
-            default:
-                return undefined;
-        }
-    }
-
-    private static getEdgeDirection(
-        code: string
-    ): "start" | "end" | undefined {
-        switch (code) {
-            case KEYBOARD_CODE.HOME:
-                return "start";
-            case KEYBOARD_CODE.END:
-                return "end";
-            default:
-                return undefined;
-        }
-    }
-
-    // True when the key event originates from an editable text field (e.g. the
-    // date input), so grid navigation should defer to native caret behavior.
-    private static isFromEditableInput(event: KeyboardEvent): boolean {
-        const tagName = (event.target as HTMLElement | null)?.tagName;
-
-        return tagName === "INPUT" || tagName === "TEXTAREA";
     }
 
     private closeAndRestoreFocus(): void {
