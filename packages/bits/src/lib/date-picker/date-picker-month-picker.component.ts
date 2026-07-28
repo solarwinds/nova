@@ -18,7 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import {
+    Component,
+    ElementRef,
+    OnInit,
+    QueryList,
+    ViewChildren,
+} from "@angular/core";
 import moment from "moment/moment";
 import { Moment } from "moment/moment";
 
@@ -30,6 +36,9 @@ import { DatePickerInnerComponent } from "./date-picker-inner.component";
     standalone: false,
 })
 export class MonthPickerComponent implements OnInit {
+    @ViewChildren("cellButton", { read: ElementRef })
+    private cellButtons!: QueryList<ElementRef<HTMLButtonElement>>;
+
     title: string;
     rows: any[] = [];
     maxMode: string;
@@ -69,5 +78,18 @@ export class MonthPickerComponent implements OnInit {
             },
             "month"
         );
+    }
+
+    /**
+     * Moves DOM focus to the month cell button representing the currently
+     * navigated/active month (the cell whose `current` flag is set), enabling
+     * roving-tabindex keyboard navigation across the grid.
+     */
+    public focusActiveCell(): void {
+        const cells = this.rows.flat();
+        const activeIndex = cells.findIndex((cell: any) => cell.current);
+        const activeButton = this.cellButtons?.toArray()[activeIndex];
+
+        activeButton?.nativeElement.focus();
     }
 }

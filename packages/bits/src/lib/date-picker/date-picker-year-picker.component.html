@@ -10,8 +10,7 @@
                     ariaLabel="Previous page of years"
                     i18n-ariaLabel="@@prevPageOfYears"
                     title="Previous page of years"
-                    (click)="datePicker.move(-1, $event)"
-                    tabindex="-1"></button>
+                    (click)="datePicker.move(-1, $event)"></button>
             </th>
             <th [attr.colspan]="3">
                 <button
@@ -27,8 +26,7 @@
                         disabled:
                             datePicker.datepickerMode === datePicker.maxMode
                     }"
-                    (click)="datePicker.toggleMode($event)"
-                    tabindex="-1">
+                    (click)="datePicker.toggleMode($event)">
                     <span>{{ title }}</span>
                 </button>
             </th>
@@ -41,8 +39,7 @@
                     ariaLabel="Next page of years"
                     i18n-ariaLabel="@@nextPageOfYears"
                     title="Next page of years"
-                    (click)="datePicker.move(1, $event)"
-                    tabindex="-1"></button>
+                    (click)="datePicker.move(1, $event)"></button>
             </th>
         </tr>
     </thead>
@@ -52,14 +49,15 @@
                 <button
                     nui-button
                     type="button"
+                    #cellButton
                     displayStyle="action"
                     [ngClass]="{
                         selected: cell.selected,
                         disabled: cell.disabled
                     }"
                     [disabled]="cell.disabled"
-                    (click)="datePicker.select(cell.date, $event)"
-                    tabindex="-1">
+                    [attr.tabindex]="cell.current ? 0 : -1"
+                    (click)="datePicker.select(cell.date, $event)">
                     <span [ngClass]="{ 'text-info': cell.current }">{{
                         cell.label
                     }}</span>

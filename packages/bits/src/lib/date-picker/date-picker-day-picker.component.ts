@@ -18,7 +18,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import {
+    Component,
+    ElementRef,
+    OnInit,
+    QueryList,
+    ViewChildren,
+    ViewEncapsulation,
+} from "@angular/core";
 import moment, { Moment } from "moment/moment";
 
 import { DatePickerInnerComponent } from "./date-picker-inner.component";
@@ -31,6 +38,9 @@ import { DatePickerInnerComponent } from "./date-picker-inner.component";
     standalone: false,
 })
 export class DayPickerComponent implements OnInit {
+    @ViewChildren("dayCellButton", { read: ElementRef })
+    private dayCellButtons: QueryList<ElementRef<HTMLButtonElement>>;
+
     public labels: any[] = [];
     public title: string;
     public rows: any[] = [];
@@ -146,6 +156,22 @@ export class DayPickerComponent implements OnInit {
             },
             "day"
         );
+    }
+
+    /**
+     * Moves DOM focus to the day cell button that represents the currently
+     * navigated/active date (i.e. the cell whose `current` flag is set),
+     * enabling roving-tabindex keyboard navigation across the grid.
+     */
+    public focusActiveCell(): void {
+        const visibleCells = this.rows
+            .filter((row) => row.isRowVisible)
+            .flatMap((row) => row.days.filter((cell: any) => cell.isCellVisible));
+        const activeIndex = visibleCells.findIndex((cell: any) => cell.current);
+        const buttons = this.dayCellButtons?.toArray() ?? [];
+        const activeButton = buttons[activeIndex];
+
+        activeButton?.nativeElement.focus();
     }
 
     protected getDates(startDate: Moment, n: number): Moment[] {

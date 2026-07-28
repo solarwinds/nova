@@ -27,6 +27,7 @@ import {
     EventEmitter,
     forwardRef,
     HostBinding,
+    HostListener,
     Input,
     OnChanges,
     OnDestroy,
@@ -51,7 +52,11 @@ import moment, { Moment } from "moment/moment";
 import { Subject, Subscription } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
 
+import { DayPickerComponent } from "./date-picker-day-picker.component";
 import { DatePickerInnerComponent } from "./date-picker-inner.component";
+import { DatePickerKeyboardService } from "./date-picker-keyboard.service";
+import { MonthPickerComponent } from "./date-picker-month-picker.component";
+import { YearPickerComponent } from "./date-picker-year-picker.component";
 import {
     datePickerDateFormats,
     datePickerDefaults,
@@ -83,6 +88,7 @@ import { TextboxComponent } from "../textbox/textbox.component";
             useExisting: forwardRef(() => DatePickerComponent),
             multi: true,
         },
+        DatePickerKeyboardService,
     ],
     styleUrls: ["./date-picker.component.less"],
     encapsulation: ViewEncapsulation.None,
@@ -187,10 +193,21 @@ export class DatePickerComponent
     @ViewChild(DatePickerInnerComponent)
     _datePicker: DatePickerInnerComponent;
 
+    @ViewChild(DayPickerComponent)
+    dayPicker: DayPickerComponent;
+
+    @ViewChild(MonthPickerComponent)
+    monthPicker: MonthPickerComponent;
+
+    @ViewChild(YearPickerComponent)
+    yearPicker: YearPickerComponent;
+
     @ViewChild("date") textbox: TextboxComponent;
 
     @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
+    @ViewChild("toggleButton", { read: ElementRef })
+    toggleButtonRef: ElementRef<HTMLButtonElement>;
 
     public onDestroy$ = new Subject<void>();
     public customContainer: ElementRef | undefined;
@@ -208,7 +225,10 @@ export class DatePickerComponent
     private momentDateFormat: string;
     private calendarChanged: Subscription;
 
-    constructor(private cd: ChangeDetectorRef) {}
+    constructor(
+        private cd: ChangeDetectorRef,
+        private keyboardService: DatePickerKeyboardService
+    ) {}
 
     public ngOnInit(): void {
         _defaults(this, datePickerDefaults);
@@ -276,6 +296,36 @@ export class DatePickerComponent
                     this._datePicker.datepickerMode = "day";
                 }
             });
+        }
+
+        this.keyboardService.initService(
+            this._datePicker,
+            this.dayPicker,
+            this.overlay,
+            this.toggleButtonRef?.nativeElement,
+            this.monthPicker,
+            this.yearPicker
+        );
+
+        // When the view switches between day/month/year, keep keyboard focus inside
+        // the newly rendered grid so arrow keys keep working without an extra Tab.
+        this._datePicker.modeChanged
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => this.keyboardService.focusActiveCell());
+    }
+
+    @HostListener("keydown", ["$event"])
+    public onKeyDown(event: KeyboardEvent): void {
+        this.keyboardService.onKeyDown(event);
+    }
+
+    public onToggleClick(event: MouseEvent): void {
+        // Prevent the click from also bubbling to the container's own toggle handler,
+        // which would otherwise immediately re-toggle the overlay shut.
+        event.stopPropagation();
+
+        if (!this.isDisabled) {
+            this.overlay.toggle();
         }
     }
 

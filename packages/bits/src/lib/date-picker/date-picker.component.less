@@ -70,8 +70,19 @@
         pointer-events: auto;
         position: absolute;
         right: @nui-space-xs + @nui-space-xxs;
-        top: @nui-space-xs + @nui-space-xxs;
+        top: 50%;
+        transform: translateY(-50%);
         z-index: (@zindex-active + 1);
+
+        // The calendar toggle is a real <button> (for keyboard accessibility),
+        // but it must visually match the previous standalone <nui-icon>. Size it
+        // to the default icon footprint instead of the default 30x30 icon-only
+        // action-button box, so it keeps the same footprint and alignment.
+        &.btn.is-empty {
+            min-width: @icon-size-default;
+            min-height: @icon-size-default;
+            padding: 0;
+        }
 
         &.disabled {
             pointer-events: none;

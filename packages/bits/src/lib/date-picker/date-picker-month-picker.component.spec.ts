@@ -51,5 +51,42 @@ describe("components >", () => {
             expect(inner.setRefreshViewHandler).toHaveBeenCalled();
             expect(inner.setCompareHandler).toHaveBeenCalled();
         });
+
+        describe("focusActiveCell >", () => {
+            it("should focus the button of the active (current) month cell", () => {
+                const otherButton = { focus: jasmine.createSpy("focus") };
+                const activeButton = { focus: jasmine.createSpy("focus") };
+                monthPicker.rows = [
+                    [
+                        { current: false },
+                        { current: true },
+                        { current: false },
+                    ],
+                ];
+                (monthPicker as any).cellButtons = {
+                    toArray: () => [
+                        { nativeElement: otherButton },
+                        { nativeElement: activeButton },
+                        { nativeElement: { focus: jasmine.createSpy() } },
+                    ],
+                };
+
+                monthPicker.focusActiveCell();
+
+                expect(activeButton.focus).toHaveBeenCalled();
+                expect(otherButton.focus).not.toHaveBeenCalled();
+            });
+
+            it("should do nothing when there is no active month cell", () => {
+                monthPicker.rows = [[{ current: false }]];
+                (monthPicker as any).cellButtons = {
+                    toArray: () => [
+                        { nativeElement: { focus: jasmine.createSpy() } },
+                    ],
+                };
+
+                expect(() => monthPicker.focusActiveCell()).not.toThrow();
+            });
+        });
     });
 });

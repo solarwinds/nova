@@ -11,8 +11,7 @@
                     ariaLabel="Previous month"
                     i18n-ariaLabel="@@prevMonth"
                     title="Previous month"
-                    (click)="datePicker.move(-1, $event)"
-                    tabindex="-1"></button>
+                    (click)="datePicker.move(-1, $event)"></button>
             </th>
             <th [attr.colspan]="5 + (datePicker.showWeeks ? 1 : 0)">
                 <button
@@ -28,8 +27,7 @@
                         disabled:
                             datePicker.datepickerMode === datePicker.maxMode
                     }"
-                    (click)="datePicker.toggleMode($event)"
-                    tabindex="-1">
+                    (click)="datePicker.toggleMode($event)">
                     <span>{{ title }}</span>
                 </button>
             </th>
@@ -42,8 +40,7 @@
                     ariaLabel="Next month"
                     i18n-ariaLabel="@@nextMonth"
                     title="Next month"
-                    (click)="datePicker.move(1, $event)"
-                    tabindex="-1"></button>
+                    (click)="datePicker.move(1, $event)"></button>
             </th>
         </tr>
         <tr>
@@ -67,24 +64,21 @@
             <td class="text-center day" [id]="cell.uid">
                 @if (cell.isCellVisible) {
                 <button
+                    #dayCellButton
                     nui-button
                     type="button"
                     displayStyle="action"
                     [ngClass]="{
                         selected: cell.selected,
-                        disabled: cell.disabled
+                        disabled: cell.disabled,
+                        'text-muted': cell.secondary,
+                        'text-info': cell.current,
+                        today: cell.today
                     }"
                     [disabled]="cell.disabled"
                     (click)="datePicker.select(cell.date, $event)"
-                    tabindex="-1">
-                    <span
-                        [ngClass]="{
-                            'text-muted': cell.secondary,
-                            'text-info': cell.current,
-                            today: cell.today
-                        }"
-                        >{{ cell.label }}</span
-                    >
+                    [attr.tabindex]="cell.current ? 0 : -1">
+                    <span>{{ cell.label }}</span>
                 </button>
                 }
             </td>
