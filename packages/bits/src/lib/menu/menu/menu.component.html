@@ -9,7 +9,7 @@
         #menuToggle
         nui-button
         nuiPopupToggle
-        [role]="'menu'"
+        [attr.aria-haspopup]="'menu'"
         [toggleOnKey]="false"
         [disabled]="isDisabled"
         [opened]="popup?.isOpen || false"

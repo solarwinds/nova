@@ -497,7 +497,11 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
 
     /* START - ITEM BEHAVIOUR DECIDERS */
     public isItemClickable(item: T): boolean {
-        return !this.preventRowClick && !this.isItemDisabled(item);
+        return (
+            this.selectionMode !== RepeatSelectionMode.none &&
+            !this.preventRowClick &&
+            !this.isItemDisabled(item)
+        );
     }
 
     public isItemSelectable(item: T): boolean {
