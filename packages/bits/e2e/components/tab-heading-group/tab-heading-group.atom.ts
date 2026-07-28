@@ -22,6 +22,7 @@ import { Locator } from "@playwright/test";
 
 import { TabHeadingAtom } from "./tab-heading.atom";
 import { Atom } from "../../atom";
+import { expect } from "../../setup";
 
 export class TabHeadingGroupAtom extends Atom {
     public static CSS_CLASS = "nui-tab-headings__holder";
@@ -30,6 +31,8 @@ export class TabHeadingGroupAtom extends Atom {
         const tabLocator = this.getLocator().locator(
             `.${TabHeadingAtom.CSS_CLASS}`
         );
+        // `count()` does not retry, so wait for the tabs to be rendered first
+        await tabLocator.first().waitFor({ state: "attached" });
         const count = await tabLocator.count();
         const tabs: TabHeadingAtom[] = [];
         for (let i = 0; i < count; i++) {
@@ -79,10 +82,20 @@ export class TabHeadingGroupAtom extends Atom {
         }
     }
 
-    public async caretsPresent(): Promise<boolean> {
-        const caretLeft = this.getCaretLeft();
-        const caretRight = this.getCaretRight();
-        return (await caretLeft.count()) > 0 && (await caretRight.count()) > 0;
+    /**
+     * Assert both navigation carets are rendered. The carets are toggled by a
+     * resize observer, so a retrying assertion is required.
+     */
+    public async toHaveCarets(): Promise<void> {
+        await expect(this.getCaretLeft()).toBeVisible();
+        await expect(this.getCaretRight()).toBeVisible();
+    }
+
+    /** Assert no navigation carets are rendered. */
+    public async toNotHaveCarets(): Promise<void> {
+        await expect(this.getLocator()).toBeVisible();
+        await expect(this.getCaretLeft()).toHaveCount(0);
+        await expect(this.getCaretRight()).toHaveCount(0);
     }
 
     public async getNumberOfTabs(): Promise<number> {

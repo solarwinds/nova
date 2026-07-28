@@ -49,7 +49,7 @@
                         [ariaLabel]="item.title"
                         [ngClass]="item.imageClass"
                         [isEmpty]="false"
-                        aria-haspopup="menu"
+                        [role]="'menu'"
                         (click)="handleDotsClick()"
                         class="nui-paginator__dots"
                     >

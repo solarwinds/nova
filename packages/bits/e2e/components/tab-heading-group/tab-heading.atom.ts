@@ -42,7 +42,10 @@ export class TabHeadingAtom extends Atom {
     }
 
     public async getText(): Promise<string> {
-        return (await this.getLocator().textContent()) ?? "";
+        const text = (await this.getLocator().textContent()) ?? "";
+        // The tab content is projected via ng-content, so textContent contains
+        // the surrounding template whitespace and needs to be normalized.
+        return text.replace(/\s+/g, " ").trim();
     }
 
     public async toBeActive(): Promise<void> {

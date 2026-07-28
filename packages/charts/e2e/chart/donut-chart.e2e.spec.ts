@@ -50,6 +50,18 @@ test.describe("Donut chart", () => {
 
         pageObject = new DonutChartTestPage();
 
+        // NOTE: the arcs are rendered asynchronously, so wait until all of them are present
+        await expect
+            .poll(
+                async () =>
+                    (
+                        await pageObject.chart.getAllVisibleDataSeries(
+                            RadialSeriesAtom as any
+                        )
+                    ).length
+            )
+            .toBeGreaterThanOrEqual(3);
+
         allSeries = (await pageObject.chart.getAllVisibleDataSeries(
             RadialSeriesAtom as any
         )) as unknown as RadialSeriesAtom[];

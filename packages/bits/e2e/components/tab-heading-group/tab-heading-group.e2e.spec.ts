@@ -76,8 +76,8 @@ test.describe("USERCONTROL tab heading group", () => {
     });
 
     test("should responsive tab group have navigation buttons", async () => {
-        expect(await tabGroupResponsive.caretsPresent()).toBeTruthy();
-        expect(await tabGroupHorizontal.caretsPresent()).toBeFalsy();
+        await tabGroupResponsive.toHaveCarets();
+        await tabGroupHorizontal.toNotHaveCarets();
     });
 
     test("should navigate through responsive tabs", async () => {

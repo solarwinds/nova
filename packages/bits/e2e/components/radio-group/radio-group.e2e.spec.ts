@@ -62,6 +62,8 @@ test.describe("USERCONTROL Radio group", () => {
     });
 
     test("should initialize a disabled state and be able to handle dynamic disabled state change", async () => {
+        // `count()` does not retry, so wait for the items to be rendered first
+        await disabledGroup.items.first().waitFor({ state: "attached" });
         const totalItems = await disabledGroup.items.count();
         await disabledGroup.toHaveDisabledItemsCount(totalItems);
 

@@ -9,12 +9,11 @@
         #menuToggle
         nui-button
         nuiPopupToggle
-        [attr.aria-haspopup]="'menu'"
+        [role]="'menu'"
         [toggleOnKey]="false"
         [disabled]="isDisabled"
         [opened]="popup?.isOpen || false"
-        [attr.aria-expanded]="!!popup?.isOpen"
-        [attr.aria-controls]="popup?.isOpen ? popupContentId : null"
+        [ariaControls]="popup?.isOpen ? popupContentId : null"
         [attr.aria-activedescendant]="popup?.isOpen ? activeDescendant : null"
         type="button"
         (blur)="onBlur($event)"
