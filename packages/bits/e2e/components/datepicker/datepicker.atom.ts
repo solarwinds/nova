@@ -127,6 +127,10 @@ export class DatepickerAtom extends Atom {
         await el.click();
     };
 
+    public toggleToBeDisabled = async (): Promise<void> => {
+        await expect(this.getLocatorByCss(".nui-datepicker__icon")).toBeDisabled();
+    };
+
     public clickChangeModeButton = async (): Promise<void> =>
         this.getLocatorByCss(".change-mode-button").click();
 

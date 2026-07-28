@@ -219,8 +219,7 @@ test.describe("USERCONTROL form-field >", () => {
         await textbox.toBeDisabled();
         await textboxNumber.toBeDisabled();
         await datepicker.toBeDisabled();
-        await datepicker.toggle();
-        await datepicker.getOverlay.toNotBeOpened();
+        await datepicker.toggleToBeDisabled();
         await radioGroup.toHaveDisabledItemsCount(1);
         await checkbox.toBeDisabled();
         await checkboxGroup.toBeDisabled();
@@ -313,8 +312,7 @@ test.describe("USERCONTROL form-field >", () => {
             await textbox.toBeDisabled();
             await textboxNumber.toBeDisabled();
             await datepicker.toBeDisabled();
-            await datepicker.toggle();
-            await datepicker.getOverlay.toNotBeOpened();
+            await datepicker.toggleToBeDisabled();
             await radioGroup.toHaveDisabledItemsCount(1);
             await select.toBeDisabled();
             await switchElement.isDisabled();
