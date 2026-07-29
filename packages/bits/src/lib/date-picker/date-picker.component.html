@@ -3,7 +3,8 @@
     <div
         #toggleRef
         class="nui-datepicker__container"
-        [class.disabled]="isDisabled">
+        [class.disabled]="isDisabled"
+        (click)="!isDisabled && overlay.toggle()">
         <nui-textbox
             #date
             autocomplete="off"
@@ -23,8 +24,7 @@
             [iconColor]="getIconColor()"
             [disabled]="isDisabled"
             ariaLabel="Open calendar"
-            [attr.aria-expanded]="overlay.showing"
-            (click)="onToggleClick($event)"></button>
+            [attr.aria-expanded]="overlay.showing"></button>
     </div>
     <nui-overlay
         #overlay

@@ -319,16 +319,6 @@ export class DatePickerComponent
         this.keyboardService.onKeyDown(event);
     }
 
-    public onToggleClick(event: MouseEvent): void {
-        // Prevent the click from also bubbling to the container's own toggle handler,
-        // which would otherwise immediately re-toggle the overlay shut.
-        event.stopPropagation();
-
-        if (!this.isDisabled) {
-            this.overlay.toggle();
-        }
-    }
-
     public updateTouchedState(): void {
         setTimeout(() => this.inputBlurred.emit(), 100);
         this.onTouched();
