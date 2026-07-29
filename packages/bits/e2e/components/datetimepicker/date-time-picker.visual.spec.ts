@@ -70,6 +70,9 @@ test.describe(`Visual tests: ${name}`, () => {
         await dateTimePickerRanged.datePicker.toggle();
         await camera.say.cheese(`Ranged picker disables dates out of range`);
 
+        // Dismiss the open date-picker overlays before opening the dialog so their
+        // calendar (and its "Today" button) can't intercept the dialog button click.
+        await Helpers.clickOnEmptySpace();
         await dialogButton.click();
         dateTimePickerDialog = Atom.find<DateTimepickerAtom>(
             DateTimepickerAtom,

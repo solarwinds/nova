@@ -101,8 +101,12 @@ export class DatepickerAtom extends Atom {
         const currentTitle = await this.getTitleText.textContent();
         if (currentTitle && currentTitle.length === 4) {
             const currentYear: number = Math.floor(parseInt(currentTitle, 10));
-            const rangeStart: number = currentYear;
-            const rangeEnd: number = currentYear + 19;
+            // The year grid shows a fixed block of `yearRange` (default 20) years,
+            // aligned the same way as the picker's getStartingYear calculation.
+            const yearRange = 20;
+            const rangeStart: number =
+                Math.floor((currentYear - 1) / yearRange) * yearRange + 1;
+            const rangeEnd: number = rangeStart + yearRange - 1;
             newTitle = `${rangeStart} - ${rangeEnd}`;
         } else if (currentTitle) {
             newTitle = currentTitle.substring(currentTitle.length - 4);
