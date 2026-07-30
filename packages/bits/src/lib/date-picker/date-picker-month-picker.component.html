@@ -8,7 +8,6 @@
                     displayStyle="action"
                     icon="caret-left"
                     (click)="datePicker.move(-1, $event)"
-                    tabindex="-1"
                 ></button>
             </th>
             <th>
@@ -23,7 +22,6 @@
                         disabled: datePicker.datepickerMode === maxMode
                     }"
                     (click)="datePicker.toggleMode($event)"
-                    tabindex="-1"
                 >
                     <span>{{ title }}</span>
                 </button>
@@ -35,7 +33,6 @@
                     displayStyle="action"
                     icon="caret-right"
                     (click)="datePicker.move(1, $event)"
-                    tabindex="-1"
                 ></button>
             </th>
         </tr>
@@ -50,14 +47,15 @@
                 <button
                     nui-button
                     type="button"
+                    #cellButton
                     displayStyle="action"
                     [ngClass]="{
                         selected: cell.selected,
                         disabled: cell.disabled
                     }"
                     [disabled]="cell.disabled"
+                    [attr.tabindex]="cell.current ? 0 : -1"
                     (click)="datePicker.select(cell.date, $event)"
-                    tabindex="-1"
                 >
                     <span [ngClass]="{ 'text-info': cell.current }">{{
                         cell.label

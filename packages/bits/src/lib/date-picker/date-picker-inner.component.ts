@@ -86,6 +86,9 @@ export class DatePickerInnerComponent
 
     public calendarMoved: Subject<Moment> = new Subject<Moment>();
 
+    // Emits the new mode on day/month/year switches so the host can refocus the grid.
+    public modeChanged: Subject<string> = new Subject<string>();
+
     protected _value: Moment | undefined;
     protected _todayDate: Moment = moment();
 
@@ -272,6 +275,7 @@ export class DatePickerInnerComponent
         } else {
             this.datepickerMode =
                 this.modes[this.modes.indexOf(this.datepickerMode) - 1];
+            this.modeChanged.next(this.datepickerMode);
             event.stopPropagation();
         }
 
@@ -326,6 +330,7 @@ export class DatePickerInnerComponent
 
         this.datepickerMode =
             this.modes[this.modes.indexOf(this.datepickerMode) + direction];
+        this.modeChanged.next(this.datepickerMode);
         this.refreshView();
         event.stopPropagation();
     }
@@ -385,5 +390,6 @@ export class DatePickerInnerComponent
 
     public ngOnDestroy(): void {
         this.calendarMoved.complete();
+        this.modeChanged.complete();
     }
 }

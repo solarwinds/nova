@@ -2,7 +2,6 @@
     *ngIf="datePicker.datepickerMode === 'day'"
     role="grid"
     [attr.aria-labelledby]="datePicker.uniqueId + '-title'"
-    aria-activedescendant="activeDateId"
 >
     <thead>
         <tr>
@@ -13,7 +12,6 @@
                     displayStyle="action"
                     icon="caret-left"
                     (click)="datePicker.move(-1, $event)"
-                    tabindex="-1"
                 ></button>
             </th>
             <th [attr.colspan]="5 + (datePicker.showWeeks ? 1 : 0)">
@@ -31,7 +29,6 @@
                             datePicker.datepickerMode === datePicker.maxMode
                     }"
                     (click)="datePicker.toggleMode($event)"
-                    tabindex="-1"
                 >
                     <span>{{ title }}</span>
                 </button>
@@ -43,7 +40,6 @@
                     displayStyle="action"
                     icon="caret-right"
                     (click)="datePicker.move(1, $event)"
-                    tabindex="-1"
                 ></button>
             </th>
         </tr>
@@ -74,6 +70,7 @@
                 >
                     <button
                         *ngIf="cell.isCellVisible"
+                        #dayCellButton
                         nui-button
                         type="button"
                         displayStyle="action"
@@ -82,8 +79,8 @@
                             disabled: cell.disabled
                         }"
                         [disabled]="cell.disabled"
+                        [attr.tabindex]="cell.current ? 0 : -1"
                         (click)="datePicker.select(cell.date, $event)"
-                        tabindex="-1"
                     >
                         <span
                             [ngClass]="{
