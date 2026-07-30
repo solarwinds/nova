@@ -3,6 +3,7 @@
 ## [20.0.11] 📅 2026-09-16
 ### Fixes
 - Prettier formatting fixes across the project
+- `@nova-ui/bits` | Calendar navigation improvements
 
 ## [20.0.10] 📅 2026-08-11
 ### Fixes
