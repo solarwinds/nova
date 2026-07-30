@@ -28,29 +28,27 @@ import { YearPickerComponent } from "./date-picker-year-picker.component";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 
-// Safety limit to avoid infinite loops when every remaining date happens to be disabled
+// Safety limit to avoid infinite loops if every remaining date is disabled
 const MAX_DISABLED_DATE_SKIPS = 366;
 
-// Calendar units the grid can navigate by, one per picker mode
+// Calendar units the grid navigates by, one per picker mode
 type CalendarUnit = "days" | "months" | "years";
 
-// Any picker grid the keyboard service can move DOM focus within
+// A picker grid whose active cell can receive DOM focus
 interface FocusablePicker {
     focusActiveCell(): void;
 }
 
 /**
- * Handles keyboard interaction for the `nui-date-picker` day, month and year grids,
- * in line with the WAI-ARIA APG Date Picker Dialog pattern:
- * https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/
+ * Keyboard interaction for the day/month/year grids, per the WAI-ARIA APG
+ * Date Picker Dialog pattern.
  * @ignore
  */
 @Injectable()
 export class DatePickerKeyboardService {
-    // Per-mode grid navigation config: the calendar unit each arrow step moves by,
-    // the number of grid columns (used for vertical Up/Down movement), and the unit
-    // PageUp/PageDown jumps by. `pageAmount` is resolved at runtime for the year view,
-    // which spans a full `yearRange`.
+    // Per-mode nav config: arrow step unit, grid columns (for Up/Down), and
+    // the PageUp/PageDown unit. `pageAmount` is omitted for year view, which
+    // resolves it to `yearRange` at runtime.
     private static readonly modeNav: Record<
         string,
         {
@@ -118,8 +116,8 @@ export class DatePickerKeyboardService {
         }
     }
 
-    // True when the key event originates from an editable text field (e.g. the
-    // date input), so grid navigation should defer to native caret behavior.
+    // True when the event comes from an editable field (e.g. the date input),
+    // so grid navigation should defer to native caret behavior.
     private static isFromEditableInput(event: KeyboardEvent): boolean {
         const tagName = (event.target as HTMLElement | null)?.tagName;
 
@@ -150,7 +148,7 @@ export class DatePickerKeyboardService {
     }
 
     public onKeyDown(event: KeyboardEvent): void {
-        // Inline date-pickers have no overlay to open/close - the grid is always considered "open"
+        // Inline pickers have no overlay - the grid is always considered "open"
         const isOpen = !this.overlay || this.overlay.showing;
 
         isOpen ? this.handleOpenedCalendar(event) : this.handleClosedCalendar(event);
@@ -173,8 +171,7 @@ export class DatePickerKeyboardService {
             return;
         }
 
-        // Let the text input keep its native caret movement - don't hijack the
-        // arrow/page keys when the event originates from an editable field.
+        // Don't hijack arrow/page keys from an editable field - keep native caret movement
         if (DatePickerKeyboardService.isFromEditableInput(event)) {
             return;
         }
@@ -207,8 +204,8 @@ export class DatePickerKeyboardService {
             return;
         }
 
-        // Home/End jump to the first/last cell of the current page (day and month
-        // views only; the year view has no natural single edge to jump to).
+        // Home/End jump to first/last cell of the page (day and month only;
+        // year has no single edge to jump to).
         const edge = DatePickerKeyboardService.getEdgeDirection(code);
         if (edge !== undefined) {
             const current = this.getActiveDate();
@@ -229,12 +226,12 @@ export class DatePickerKeyboardService {
         this.toggleButton?.focus();
     }
 
-    // Arrow-key movement: steps by a single grid unit and skips over disabled cells
+    // Steps by one grid unit, skipping disabled cells
     private moveByStep(amount: number, unit: CalendarUnit): void {
         const current = this.getActiveDate();
         const next = current.clone().add(amount, unit);
 
-        // Skip over any disabled cells in the direction of travel
+        // Skip disabled cells in the travel direction
         let attempts = 0;
         while (
             this.datePickerInner.isDisabled(next) &&
@@ -247,8 +244,8 @@ export class DatePickerKeyboardService {
         this.applyActiveDate(current, next);
     }
 
-    // PageUp/PageDown movement: jumps a whole page. moment clamps the day-of-month
-    // automatically when the target month/year is shorter (e.g. Jan 31 -> Feb 28).
+    // Jumps a whole page; moment auto-clamps day-of-month for shorter months
+    // (e.g. Jan 31 -> Feb 28).
     private moveByPage(amount: number, unit: CalendarUnit): void {
         const current = this.getActiveDate();
         const next = current.clone().add(amount, unit);
@@ -270,8 +267,7 @@ export class DatePickerKeyboardService {
         this.focusActiveCell();
     }
 
-    // Identifies the page currently shown by the active grid so that calendarMoved
-    // only fires when navigation shifts the grid to a different page.
+    // Page identifier for the active grid; calendarMoved fires only on page change
     private getPageId(date: Moment): string {
         switch (this.datePickerInner.datepickerMode) {
             case "month":
@@ -290,9 +286,8 @@ export class DatePickerKeyboardService {
         }
     }
 
-    // The first/last cell date of the current page for Home/End (day -> first/last
-    // day of the month, month -> January/December). Returns undefined for modes
-    // without a supported edge (year).
+    // First/last cell of the page for Home/End (day -> 1st/last day of month,
+    // month -> Jan/Dec). Undefined for modes with no supported edge (year).
     private getEdgeDate(
         date: Moment,
         edge: "start" | "end"
@@ -309,7 +304,7 @@ export class DatePickerKeyboardService {
         }
     }
 
-    // The date the grid is currently focused on, defaulting to today when unset
+    // Currently focused date, defaulting to today when unset
     private getActiveDate(): Moment {
         return this.datePickerInner.value
             ? this.datePickerInner.value.clone()
@@ -317,11 +312,11 @@ export class DatePickerKeyboardService {
     }
 
     public focusActiveCell(): void {
-        // Wait a tick so the grid has re-rendered before moving DOM focus.
+        // Wait a tick for the grid to re-render before focusing
         setTimeout(() => this.getActivePicker()?.focusActiveCell());
     }
 
-    // The picker grid matching the current mode, whose cell should receive focus
+    // Picker grid matching the current mode
     private getActivePicker(): FocusablePicker | undefined {
         switch (this.datePickerInner.datepickerMode) {
             case "month":

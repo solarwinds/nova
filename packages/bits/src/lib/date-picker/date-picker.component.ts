@@ -307,8 +307,8 @@ export class DatePickerComponent
             this.yearPicker
         );
 
-        // When the view switches between day/month/year, keep keyboard focus inside
-        // the newly rendered grid so arrow keys keep working without an extra Tab.
+        // Keep focus in the grid across day/month/year switches, so arrows
+        // keep working without an extra Tab.
         this._datePicker.modeChanged
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(() => this.keyboardService.focusActiveCell());

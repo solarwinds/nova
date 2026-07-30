@@ -4,6 +4,8 @@
 
 @nui-datepicker-calendar-min-cell-size: 30px;
 @nui-datepicker-width: 135px;
+// WCAG 2.2 (2.5.8) minimum touch-target size
+@nui-datepicker-min-touch-target-size: 24px;
 // 9 * 30 + 2 * 10 (9 cells + paddings)
 @nui-datepicker-popup-min-height: (
     9 * @nui-datepicker-calendar-min-cell-size + 2 * @nui-space-sm
@@ -74,17 +76,15 @@
         transform: translateY(-50%);
         z-index: (@zindex-active + 1);
 
-        // The calendar toggle is a real <button> (for keyboard accessibility),
-        // but it must visually match the previous standalone <nui-icon>. Keep the
-        // 16px icon glyph while ensuring the interactive button meets the WCAG 2.2
-        // (2.5.8) minimum 24x24px touch-target size so it passes the axe
-        // `target-size` / `target-offset` checks.
+        // Real <button> for a11y, must still look like the old icon-only glyph.
+        // Enlarges only the hit area to the WCAG 2.5.8 24x24 min touch target
+        // (axe target-size/target-offset), keeping the 16px icon glyph.
         &.btn.is-empty {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-width: 24px;
-            min-height: 24px;
+            min-width: @nui-datepicker-min-touch-target-size;
+            min-height: @nui-datepicker-min-touch-target-size;
             padding: 0;
         }
 

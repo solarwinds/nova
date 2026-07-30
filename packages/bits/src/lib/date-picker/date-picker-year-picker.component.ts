@@ -82,9 +82,8 @@ export class YearPickerComponent implements OnInit {
     }
 
     /**
-     * Moves DOM focus to the year cell button representing the currently
-     * navigated/active year (the cell whose `current` flag is set), enabling
-     * roving-tabindex keyboard navigation across the grid.
+     * Focuses the year cell button for the currently active year (the cell
+     * whose `current` flag is set), for roving-tabindex keyboard navigation.
      */
     public focusActiveCell(): void {
         const cells = this.rows.flat();

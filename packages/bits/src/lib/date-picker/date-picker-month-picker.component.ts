@@ -81,9 +81,8 @@ export class MonthPickerComponent implements OnInit {
     }
 
     /**
-     * Moves DOM focus to the month cell button representing the currently
-     * navigated/active month (the cell whose `current` flag is set), enabling
-     * roving-tabindex keyboard navigation across the grid.
+     * Focuses the month cell button for the currently active month (the cell
+     * whose `current` flag is set), for roving-tabindex keyboard navigation.
      */
     public focusActiveCell(): void {
         const cells = this.rows.flat();

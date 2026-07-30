@@ -159,9 +159,8 @@ export class DayPickerComponent implements OnInit {
     }
 
     /**
-     * Moves DOM focus to the day cell button that represents the currently
-     * navigated/active date (i.e. the cell whose `current` flag is set),
-     * enabling roving-tabindex keyboard navigation across the grid.
+     * Focuses the day cell button for the currently active date (the cell
+     * whose `current` flag is set), for roving-tabindex keyboard navigation.
      */
     public focusActiveCell(): void {
         const visibleCells = this.rows

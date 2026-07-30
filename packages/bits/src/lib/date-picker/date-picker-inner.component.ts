@@ -86,8 +86,7 @@ export class DatePickerInnerComponent
 
     public calendarMoved: Subject<Moment> = new Subject<Moment>();
 
-    // Emits the new mode whenever the view switches between day/month/year, so the
-    // host can keep keyboard focus inside the newly rendered grid.
+    // Emits the new mode on day/month/year switches so the host can refocus the grid.
     public modeChanged: Subject<string> = new Subject<string>();
 
     protected _value: Moment | undefined;
