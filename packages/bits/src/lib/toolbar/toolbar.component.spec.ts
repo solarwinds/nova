@@ -241,33 +241,24 @@ describe("components >", () => {
             });
 
             it("should render aria-label when ariaLabel is set", () => {
-                fixture.componentRef.setInput("ariaLabel", "Main toolbar");
-
+                component.ariaLabel = "Main toolbar";
                 fixture.detectChanges();
-
                 expect(toolbarEl.getAttribute("aria-label")).toBe(
                     "Main toolbar"
                 );
             });
 
             it("should render aria-labelledby when ariaLabelledBy is set", () => {
-                fixture.componentRef.setInput(
-                    "ariaLabelledBy",
-                    "toolbar-heading"
-                );
-
+                component.ariaLabelledBy = "toolbar-heading";
                 fixture.detectChanges();
-
                 expect(toolbarEl.getAttribute("aria-labelledby")).toBe(
                     "toolbar-heading"
                 );
             });
 
             it("should render aria-orientation when ariaOrientation is set", () => {
-                fixture.componentRef.setInput("ariaOrientation", "vertical");
-
+                component.ariaOrientation = "vertical";
                 fixture.detectChanges();
-
                 expect(toolbarEl.getAttribute("aria-orientation")).toBe(
                     "vertical"
                 );
