@@ -136,8 +136,11 @@ export class LegendSeriesComponent implements AfterContentInit {
     }
 
     @HostBinding("attr.role")
-    get interactiveRole(): string | null {
-        return this._interactive ? "checkbox" : null;
+    get role(): string | null {
+        if (this._interactive) {
+            return "checkbox";
+        }
+        return this.legend?.interactive === false ? "listitem" : null;
     }
 
     @HostBinding("attr.tabindex")
@@ -188,7 +191,7 @@ export class LegendSeriesComponent implements AfterContentInit {
     }
 
     @HostListener("keydown.space", ["$event"])
-    public onSpaceKey(event: KeyboardEvent): void {
+    public onSpaceKey(event: Event): void {
         if (this.interactive) {
             event.preventDefault();
             this.isSelectedChange.emit(!this.isSelected);

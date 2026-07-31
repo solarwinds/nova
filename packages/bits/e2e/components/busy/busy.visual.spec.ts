@@ -36,10 +36,20 @@ test.describe(`Visual tests: ${name}`, () => {
         switchBusyState = Atom.find(Atom, "nui-busy-test-button");
     });
 
-    test(`${name} visual test`, async () => {
+    test(`${name} visual test`, async ({ page }) => {
         await camera.turn.on();
 
         await switchBusyState.click();
+        await page
+            .locator("#nui-busy-test-custom")
+            .first()
+            .locator(".nui-spinner__label")
+            .waitFor({ state: "visible" });
+        await page
+            .locator("#nui-busy-test-progress")
+            .first()
+            .locator(".nui-progress__message")
+            .waitFor({ state: "visible" });
         await camera.say.cheese(`States of Busy component`);
 
         await Helpers.switchDarkTheme("on");

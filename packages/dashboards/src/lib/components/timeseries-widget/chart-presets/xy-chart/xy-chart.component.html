@@ -78,6 +78,7 @@
                     displayStyle="action"
                     aria-label="Remove metric"
                     i18n-aria-label
+                    *ngIf="displayDeleteButton()"
                     (click)="removeMetric(summarySerie.id)"
                 ></button>
             </nui-legend-series>
