@@ -241,7 +241,7 @@ describe("components >", () => {
             });
 
             it("should render aria-label when ariaLabel is set", () => {
-                component.ariaLabel = "Main toolbar";
+                fixture.componentInstance.ariaLabel = "Main toolbar";
                 fixture.detectChanges();
                 expect(toolbarEl.getAttribute("aria-label")).toBe(
                     "Main toolbar"
@@ -249,7 +249,7 @@ describe("components >", () => {
             });
 
             it("should render aria-labelledby when ariaLabelledBy is set", () => {
-                component.ariaLabelledBy = "toolbar-heading";
+                fixture.componentInstance.ariaLabelledBy = "toolbar-heading";
                 fixture.detectChanges();
                 expect(toolbarEl.getAttribute("aria-labelledby")).toBe(
                     "toolbar-heading"
@@ -257,7 +257,7 @@ describe("components >", () => {
             });
 
             it("should render aria-orientation when ariaOrientation is set", () => {
-                component.ariaOrientation = "vertical";
+                fixture.componentInstance.ariaOrientation = "vertical";
                 fixture.detectChanges();
                 expect(toolbarEl.getAttribute("aria-orientation")).toBe(
                     "vertical"
@@ -320,7 +320,6 @@ describe("components >", () => {
         describe("disabled items >", () => {
             it("should assign tabindex 0 to the first enabled item when the first item is disabled", () => {
                 const wrapper = fixture.componentInstance;
-
                 wrapper.firstItemDisabled = true;
                 fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
@@ -329,14 +328,12 @@ describe("components >", () => {
                     fixture.debugElement.nativeElement.querySelectorAll(
                         "button[nui-button]"
                     );
-
                 expect(buttons[0].getAttribute("tabindex")).toBe("-1");
                 expect(buttons[1].getAttribute("tabindex")).toBe("0");
             });
 
             it("should pass the disabled state of a menu item to nui-menu-action in the overflow menu", () => {
                 const wrapper = fixture.componentInstance;
-
                 wrapper.menuItemDisabled = true;
                 fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
@@ -344,7 +341,6 @@ describe("components >", () => {
                 const menuActions = fixture.debugElement.queryAll(
                     By.css("nui-menu-action")
                 );
-
                 expect((menuActions[0].nativeElement as any).disabled).toBe(
                     true
                 );
