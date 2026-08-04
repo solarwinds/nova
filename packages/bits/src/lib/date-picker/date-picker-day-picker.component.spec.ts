@@ -93,5 +93,72 @@ describe("components >", () => {
             ).toBe(true);
             expect(dates.length).toBe(10);
         });
+
+        describe("focusActiveCell >", () => {
+            it("should move DOM focus to the button representing the active (current) day cell", () => {
+                const otherButton = { focus: jasmine.createSpy("focus") };
+                const activeButton = { focus: jasmine.createSpy("focus") };
+                dayPicker.rows = [
+                    {
+                        isRowVisible: true,
+                        days: [
+                            { isCellVisible: true, current: false },
+                            { isCellVisible: true, current: true },
+                        ],
+                    },
+                ];
+                (dayPicker as any).dayCellButtons = {
+                    toArray: () => [
+                        { nativeElement: otherButton },
+                        { nativeElement: activeButton },
+                    ],
+                };
+
+                dayPicker.focusActiveCell();
+
+                expect(activeButton.focus).toHaveBeenCalled();
+                expect(otherButton.focus).not.toHaveBeenCalled();
+            });
+
+            it("should skip cells that are hidden (not visible in the current view)", () => {
+                const renderedButton = { focus: jasmine.createSpy("focus") };
+                dayPicker.rows = [
+                    {
+                        isRowVisible: true,
+                        days: [
+                            { isCellVisible: false, current: true },
+                            { isCellVisible: true, current: false },
+                        ],
+                    },
+                    {
+                        isRowVisible: false,
+                        days: [{ isCellVisible: true, current: true }],
+                    },
+                ];
+                (dayPicker as any).dayCellButtons = {
+                    toArray: () => [{ nativeElement: renderedButton }],
+                };
+
+                dayPicker.focusActiveCell();
+
+                expect(renderedButton.focus).not.toHaveBeenCalled();
+            });
+
+            it("should do nothing when there is no active day cell", () => {
+                dayPicker.rows = [
+                    {
+                        isRowVisible: true,
+                        days: [{ isCellVisible: true, current: false }],
+                    },
+                ];
+                (dayPicker as any).dayCellButtons = {
+                    toArray: () => [
+                        { nativeElement: { focus: jasmine.createSpy() } },
+                    ],
+                };
+
+                expect(() => dayPicker.focusActiveCell()).not.toThrow();
+            });
+        });
     });
 });

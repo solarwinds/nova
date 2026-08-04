@@ -17,12 +17,18 @@
             (keydown.arrowdown)="!isDisabled && overlay.show()"
         >
             </nui-textbox>
-            <nui-icon
-                class="nui-datepicker__icon"
+            <button
+                #toggleButton
+                nui-button
+                type="button"
+                displayStyle="action"
                 icon="calendar"
-                aria-hidden="true"
+                class="nui-datepicker__icon"
                 [iconColor]="getIconColor()"
-            ></nui-icon>
+                [disabled]="isDisabled"
+                [ariaLabel]="'Open calendar'"
+                [attr.aria-expanded]="overlay.showing"
+            ></button>
         </div>
         <nui-overlay
             #overlay
@@ -71,8 +77,8 @@
         [handleTimezone]="handleTimezone"
         [value]="value"
     >
-        <nui-day-picker tabindex="0"></nui-day-picker>
-        <nui-month-picker tabindex="0"></nui-month-picker>
-        <nui-year-picker tabindex="0"></nui-year-picker>
+        <nui-day-picker></nui-day-picker>
+        <nui-month-picker></nui-month-picker>
+        <nui-year-picker></nui-year-picker>
     </nui-date-picker-inner>
 </ng-template>

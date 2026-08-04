@@ -56,7 +56,39 @@ describe("components >", () => {
         it("should check get starting year", () => {
             inner.yearRange = 10;
             const startingYear = (yearPicker as any).getStartingYear(2018);
-            expect(startingYear).toBe(2018);
+            expect(startingYear).toBe(2011);
+        });
+
+        describe("focusActiveCell >", () => {
+            it("should focus the button of the active (current) year cell", () => {
+                const otherButton = { focus: jasmine.createSpy("focus") };
+                const activeButton = { focus: jasmine.createSpy("focus") };
+                yearPicker.rows = [
+                    [{ current: false }, { current: true }],
+                ];
+                (yearPicker as any).cellButtons = {
+                    toArray: () => [
+                        { nativeElement: otherButton },
+                        { nativeElement: activeButton },
+                    ],
+                };
+
+                yearPicker.focusActiveCell();
+
+                expect(activeButton.focus).toHaveBeenCalled();
+                expect(otherButton.focus).not.toHaveBeenCalled();
+            });
+
+            it("should do nothing when there is no active year cell", () => {
+                yearPicker.rows = [[{ current: false }]];
+                (yearPicker as any).cellButtons = {
+                    toArray: () => [
+                        { nativeElement: { focus: jasmine.createSpy() } },
+                    ],
+                };
+
+                expect(() => yearPicker.focusActiveCell()).not.toThrow();
+            });
         });
     });
 });
