@@ -46,6 +46,11 @@
                 line-height: normal;
                 display: inline-flex;
                 cursor: pointer;
+
+                &:focus-visible {
+                    .focus-outline();
+                }
+
                 &--disabled {
                     pointer-events: none;
                     cursor: default;

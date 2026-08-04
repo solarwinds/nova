@@ -64,6 +64,9 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
      */
     @Input() public ariaLabel?: string;
 
+    /** Unique id for the control. */
+    @Input() public id: string;
+
     /**
      * Label element id used to dynamically compute accessible name.
      */

@@ -33,6 +33,7 @@ import { IOption, IOverlayComponent } from "../overlay/types";
 export class OptionKeyControlService<T extends IOption> {
     public popup: IOverlayComponent;
     public optionItems: QueryList<T>;
+    public skipSpace: boolean = false;
 
     private keyboardEventsManager: ActiveDescendantKeyManager<T>;
 
@@ -110,12 +111,19 @@ export class OptionKeyControlService<T extends IOption> {
 
         this.scrollToActiveItem({ block: "nearest" });
 
-        // prevent closing on enter
-        if (!this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
+        // prevent page scroll on space and prevent closing on enter/space when no item is active
+        if (
+            event.code === KEYBOARD_CODE.SPACE ||
+            (!this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER)
+        ) {
             event.preventDefault();
         }
 
-        if (this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
+        if (
+            this.hasActiveItem() &&
+            (event.code === KEYBOARD_CODE.ENTER ||
+                (!this.skipSpace && event.code === KEYBOARD_CODE.SPACE))
+        ) {
             if (!this.keyboardEventsManager.activeItem) {
                 throw new Error("ActiveItem is not defined");
             }
@@ -139,7 +147,11 @@ export class OptionKeyControlService<T extends IOption> {
             event.preventDefault();
         }
 
-        if (event.code === KEYBOARD_CODE.ARROW_DOWN) {
+        if (
+            event.code === KEYBOARD_CODE.ARROW_DOWN ||
+            event.code === KEYBOARD_CODE.ENTER ||
+            (!this.skipSpace && event.code === KEYBOARD_CODE.SPACE)
+        ) {
             this.popup.toggle();
             this.scrollToActiveItem({ block: "center" });
         }

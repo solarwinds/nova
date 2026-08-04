@@ -30,6 +30,10 @@
             justify-content: center;
             cursor: pointer;
 
+            &:focus-visible {
+                .focus-outline();
+            }
+
             &__line {
                 width: 16px;
                 height: @nui-line-default;

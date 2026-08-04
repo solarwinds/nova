@@ -83,25 +83,29 @@
                 "
                 (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
                 (click)="onInteraction(legendSeries)"
+                (keydown.enter)="onInteraction(legendSeries)"
+                (keydown.space)="
+                    $event.preventDefault(); onInteraction(legendSeries)
+                "
+                [attr.role]="interactive ? 'button' : null"
+                [tabindex]="interactive ? 0 : -1"
                 [class.nui-proportional-widget__legend--interactive]="
                     interactive
                 "
             >
-                @if ( legendFormatter && legendFormatter.componentType) {
-                <div>
-                    <div description>
-                        <ng-container
-                            nuiComponentPortal
-                            [componentType]="legendFormatter.componentType"
-                            [properties]="{ data: widgetData[i] }"
-                            #componentPortal="nuiComponentPortal"
-                        >
-                            <ng-template
-                                [cdkPortalOutlet]="componentPortal.portal"
-                                (attached)="componentPortal.attached($event)"
-                            ></ng-template>
-                        </ng-container>
-                    </div>
+                @if (legendFormatter && legendFormatter.componentType) {
+                <div description>
+                    <ng-container
+                        nuiComponentPortal
+                        [componentType]="legendFormatter.componentType"
+                        [properties]="{ data: widgetData[i] }"
+                        #componentPortal="nuiComponentPortal"
+                    >
+                        <ng-template
+                            [cdkPortalOutlet]="componentPortal.portal"
+                            (attached)="componentPortal.attached($event)"
+                        ></ng-template>
+                    </ng-container>
                 </div>
                 } @else {
                 <nui-rich-legend-tile
@@ -123,11 +127,14 @@
                     legendTransclusion
                     class="align-items-center"
                     [icon]="seriesToIconMap[legendSeries.id]"
+                    aria-hidden="true"
                 ></nui-icon>
                 }
                 <div
-                    description
-                    class="description-container d-flex flex-column nui-text-small justify-content-center"
+                    class="description description-primary"
+                    [ngClass]="{
+                        'nui-text-link-small link': interactive
+                    }"
                 >
                     @if (!legendSeries.link) {
                     <div
@@ -138,7 +145,7 @@
                     >
                         {{ legendSeries.name }}
                     </div>
-                    } @if (legendSeries.link) {
+                    } @else {
                     <a
                         class="description description-primary nui-text-link-small link"
                         (click)="$event.stopPropagation()"

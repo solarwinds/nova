@@ -217,6 +217,12 @@ export class PanelComponent
     public isHoverable = false;
     public isAnimating = false;
 
+    public get expandCollapseAriaLabel(): string {
+        return this._isCollapsed
+            ? $localize`Expand panel`
+            : $localize`Collapse panel`;
+    }
+
     private _isCollapsed: boolean;
     private _isHidden: boolean = false;
     private _viewInitialized = false;

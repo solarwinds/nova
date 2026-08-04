@@ -21,6 +21,8 @@
             icon="details"
             title="Inspect selection in the data explorer"
             i18n-title
+            aria-label="Inspect selection in the data explorer"
+            i18n-aria-label
             (click)="explore(true)"
         ></button>
         } @if (isZoomInAllowed()) {
@@ -30,6 +32,8 @@
             icon="zoom-in"
             title="Zoom In"
             i18n-title
+            aria-label="Zoom In"
+            i18n-aria-label
             (click)="zoomIn()"
         ></button>
         }
@@ -39,6 +43,8 @@
             icon="zoom-out"
             title="Zoom Out"
             i18n-title
+            aria-label="Zoom Out"
+            i18n-aria-label
             (click)="zoomOut()"
         ></button>
         <button
@@ -47,6 +53,8 @@
             icon="remove"
             title="Clear selection"
             i18n-title
+            aria-label="Clear selection"
+            i18n-aria-label
             (click)="clearZoom()"
         ></button>
     </div>

@@ -23,11 +23,7 @@ import { Helpers, test } from "../../setup";
 import { ComboboxV2Atom } from "./combobox-v2.atom";
 
 test.describe("a11y: combobox-v2", () => {
-    const rulesToDisable: string[] = [
-        "aria-required-children",
-        "aria-required-attr",
-        "target-size",
-    ];
+    const rulesToDisable: string[] = ["target-size"];
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("combobox-v2/test", page);
@@ -71,9 +67,7 @@ test.describe("a11y: combobox-v2", () => {
         await (await comboboxForm.getLastOption()).click();
         await comboboxForm.removeAll();
 
-        await Helpers.pressKey("Tab");
-        await ComboboxV2Atom.type("Item 3");
-        await (await comboboxBasic.getOption(33)).hover();
+        await (await comboboxBasic.getFirstOption()).hover();
         await runA11yScan(ComboboxV2Atom, rulesToDisable);
 
         await Helpers.switchDarkTheme("on");

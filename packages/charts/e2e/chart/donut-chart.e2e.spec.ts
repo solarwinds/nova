@@ -20,7 +20,12 @@
 
 import { Locator } from "@playwright/test";
 
-import { Animations, expect, Helpers, test } from "@nova-ui/bits/sdk/atoms-playwright";
+import {
+    Animations,
+    expect,
+    Helpers,
+    test,
+} from "@nova-ui/bits/sdk/atoms-playwright";
 
 import { RadialSeriesAtom } from "./atoms/radial-series.atom";
 import { DonutChartContentBooster } from "./boosters/donut-chart-content.booster";
@@ -38,10 +43,34 @@ test.describe("Donut chart", () => {
 
     test.beforeEach(async ({ page }) => {
         await page.setViewportSize({ width: 1920, height: 1080 });
-        await Helpers.prepareBrowser("chart-types/pie-and-donut/donut-test", page);
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.prepareBrowser(
+            "chart-types/pie-and-donut/donut-test",
+            page
+        );
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
 
         pageObject = new DonutChartTestPage();
+
+        // NOTE: the arcs are rendered asynchronously, so wait until all of them are present
+        await expect
+            .poll(
+                async () =>
+                    (
+                        await pageObject.chart.getAllVisibleDataSeries(
+                            RadialSeriesAtom as any
+                        )
+                    ).length
+            )
+            .toBeGreaterThanOrEqual(3);
+
+        allSeries = (await pageObject.chart.getAllVisibleDataSeries(
+            RadialSeriesAtom as any
+        )) as unknown as RadialSeriesAtom[];
+        blueArc = allSeries[0];
+        pinkArc = allSeries[1];
+        lilacArc = allSeries[2];
 
         content = DonutChartContentBooster.getContentElement(pageObject.chart);
         textPage = content.locator(".nui-text-page");

@@ -12,6 +12,7 @@
 - `@nova-ui/bits` | A11y fixies for Home Summary
 - `@nova-ui/bits` | A11y fixies for Search component
 - `@nova-ui/bits` | new accessible blue for active menu button text
+- Essentional A11y fixies
 
 ## [21.0.3] 📅 2026-08-04
 

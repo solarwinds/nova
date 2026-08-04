@@ -22,13 +22,12 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
 
 import {
-    LoggerService,
     NuiFormFieldModule,
     NuiSelectV2Module,
     NuiSwitchModule,
     NuiValidationMessageModule,
+    LoggerService,
 } from "@nova-ui/bits";
-
 import {
     ConfiguratorHeadingService,
     LinkConfiguratorComponent,
@@ -48,16 +47,9 @@ describe(LinkConfiguratorComponent.name, () => {
                 NuiSwitchModule,
                 NuiValidationMessageModule,
             ],
-            providers: [
-                ConfiguratorHeadingService,
-                FormBuilder,
-                {
-                    provide: LoggerService,
-                    useValue: { warn: () => {}, error: () => {}, debug: () => {} },
-                },
-            ],
-        })
-            .compileComponents();
+            providers: [ConfiguratorHeadingService, FormBuilder, LoggerService],
+        }).compileComponents();
+
         fixture = TestBed.createComponent(LinkConfiguratorComponent);
         component = fixture.componentInstance;
         component.initForm();

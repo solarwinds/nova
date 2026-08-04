@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+// © 2026 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -18,20 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import lodashUniqueId from "lodash/uniqueId";
+
 /**
- * An abstract class (you can call it interface) which allows formField component to access inner components.
- * If there is some element that implements NuiFormFieldControl provided inside, the form field will be able
- * to control isInErrorState of that control.
- * Textbox, combobox, select, timepicker and datepicker are using this.
+ * Generates a unique ID with an optional prefix.
+ * @param prefix
+ * @returns
  */
-export abstract class NuiFormFieldControl {
-    /** Whether the control is in an error state. */
-    public isInErrorState: boolean;
-
-    // TODO: make this field required in v-next
-    /** Aria label to set on the tab-focusable item. */
-    public ariaLabel?: string;
-
-    /** Unique id for the control. */
-    public id?: string;
+export function _uniqueId(prefix?: string): string {
+    return lodashUniqueId(prefix);
 }

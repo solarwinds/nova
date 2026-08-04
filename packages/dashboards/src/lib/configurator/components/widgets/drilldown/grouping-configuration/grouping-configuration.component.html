@@ -14,7 +14,7 @@
         @for (group of getGroupByControl.controls; track group; let i = $index)
         { @if (i !== 0) {
         <label class="d-flex nui-text-secondary mb-1" i18n>Then</label>
-        } @if (i === 0) {
+        } @else {
         <label class="d-flex nui-text-panel mb-2" i18n>Group by</label>
         }
         <div class="d-flex flex-row flex-grow-1 mb-4">
@@ -37,11 +37,13 @@
                     icon="delete"
                     displayStyle="action"
                     type="button"
+                    aria-label="Remove grouping"
+                    i18n-aria-label
                     (click)="removeRule(i)"
                 ></button>
             </div>
         </div>
-        } @if (!this.isAddRestricted()) {
+        }
         <button
             nui-button
             icon="add"
@@ -52,6 +54,5 @@
         >
             Add another level
         </button>
-        }
     </div>
 </nui-widget-editor-accordion>
