@@ -33,6 +33,8 @@ import {
 import { expandV2 } from "../../animations/expand";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 
+let nextExpanderId = 0;
+
 /**
  * <example-url>./../examples/index.html#/expander</example-url>
  */
@@ -84,10 +86,13 @@ export class ExpanderComponent implements AfterContentInit {
 
     public state: "expanded" | "collapsed" = "collapsed";
     public isCustomHeaderContentEmpty: boolean = false;
+    public uniqueId: string;
 
     private actionKeys = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
 
-    constructor(private cdRef: ChangeDetectorRef) {}
+    constructor(private cdRef: ChangeDetectorRef) {
+        this.uniqueId = String(++nextExpanderId);
+    }
 
     public ngAfterContentInit(): void {
         this.isCustomHeaderContentEmpty =
