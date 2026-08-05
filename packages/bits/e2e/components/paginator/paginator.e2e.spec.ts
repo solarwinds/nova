@@ -162,36 +162,45 @@ test.describe("USERCONTROL paginator", () => {
         "should display 'adjacent' page links on each side of the active page, " +
             "when the active page is not an endpoint link in adjacent paginator",
         async () => {
+            await expect(adjacentPaginator.activePageLink).toHaveText("10");
             const pageCountAdjacent = await adjacentPaginator.pageCount();
-
-            expect(await adjacentPaginator.activePage()).toEqual(10);
+            await expect(adjacentPaginator.ellipsisLink(1)).toBeVisible();
             await adjacentPaginator.ellipsisLink(1).click();
             await adjacentPaginator.ellipsedPageLinkClick(pageTwenty);
 
-            await expect.poll(() => adjacentPaginator.activePage()).toBe(
-                pageTwenty
+            await expect(adjacentPaginator.activePageLink).toHaveText(
+                String(pageTwenty)
             );
-            const expectedVisiblePageNumbers = [
-                1,
-                pageTwenty - adjacent,
-                pageTwenty - 1,
-                pageTwenty,
-                pageTwenty + 1,
-                pageTwenty + adjacent,
-                pageCountAdjacent,
-            ];
+            await expect(adjacentPaginator.pageLink(pageTwenty)).toBeVisible();
 
-            await expect.poll(() => getVisiblePageNumbers(adjacentPaginator)).toEqual(
-                expectedVisiblePageNumbers
-            );
-
-            expect(await adjacentPaginator.isActivePage(pageTwenty)).toBe(true);
+            // left adjacent
+            await expect(
+                adjacentPaginator.pageLink(pageTwenty - adjacent)
+            ).toBeVisible();
+            await expect(adjacentPaginator.pageLink(1)).toBeVisible();
+            for (let i = pageTwenty - adjacent - 1; i > 1; --i) {
+                await expect(adjacentPaginator.pageLink(i)).toBeHidden();
+            }
+            // right adjacent
+            await expect(
+                adjacentPaginator.pageLink(pageTwenty + adjacent)
+            ).toBeVisible();
+            await expect(
+                adjacentPaginator.pageLink(pageCountAdjacent)
+            ).toBeVisible();
+            for (
+                let i = pageTwenty + adjacent + 1;
+                i < pageCountAdjacent;
+                ++i
+            ) {
+                await expect(adjacentPaginator.pageLink(i)).toBeHidden();
+            }
 
             // Return to initial state
+            await expect(adjacentPaginator.ellipsisLink(0)).toBeVisible();
             await adjacentPaginator.ellipsisLink(0).click();
             await adjacentPaginator.ellipsedPageLinkClick(10);
-            await expect.poll(() => adjacentPaginator.activePage()).toBe(10);
-            expect(await adjacentPaginator.isActivePage(10)).toBe(true);
+            await expect(adjacentPaginator.activePageLink).toHaveText("10");
         }
     );
 
