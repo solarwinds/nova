@@ -68,6 +68,7 @@ export class MonthPickerComponent implements OnInit {
 
             this.title = picker.formatDate(date, picker.formatMonthTitle);
             this.rows = picker.split(months, 3);
+            picker.resolveFocusTarget(this.rows.flat());
         }, "month");
 
         this.datePicker.setCompareHandler(
@@ -81,12 +82,14 @@ export class MonthPickerComponent implements OnInit {
     }
 
     /**
-     * Focuses the month cell button for the currently active month (the cell
-     * whose `current` flag is set), for roving-tabindex keyboard navigation.
+     * Focuses the month cell holding the roving tabindex (focus target, else current).
      */
     public focusActiveCell(): void {
         const cells = this.rows.flat();
-        const activeIndex = cells.findIndex((cell: any) => cell.current);
+        let activeIndex = cells.findIndex((cell: any) => cell.isFocusTarget);
+        if (activeIndex === -1) {
+            activeIndex = cells.findIndex((cell: any) => cell.current);
+        }
         const activeButton = this.cellButtons?.toArray()[activeIndex];
 
         activeButton?.nativeElement.focus();

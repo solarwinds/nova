@@ -12,7 +12,8 @@
             [isInErrorState]="isInErrorState"
             (textChange)="onInputActiveDateChanged($event)"
             (blurred)="updateTouchedState()"
-            [ariaLabel]="ariaLabel">
+            [ariaLabel]="ariaLabel"
+            (keydown.arrowdown)="!isDisabled && overlay.show()">
         </nui-textbox>
         <button
             #toggleButton
@@ -31,7 +32,9 @@
         [toggleReference]="toggleRef"
         [overlayConfig]="overlayConfig"
         [customContainer]="customContainer">
-        <ng-container *ngTemplateOutlet="datePickerInner"></ng-container>
+        <div cdkTrapFocus (keydown)="onOverlayKeyDown($event)">
+            <ng-container *ngTemplateOutlet="datePickerInner"></ng-container>
+        </div>
     </nui-overlay>
     } @if (inline) {
     <div>

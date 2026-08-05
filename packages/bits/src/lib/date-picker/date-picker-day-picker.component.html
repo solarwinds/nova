@@ -76,8 +76,8 @@
                         today: cell.today
                     }"
                     [disabled]="cell.disabled"
-                    (click)="datePicker.select(cell.date, $event)"
-                    [attr.tabindex]="cell.current ? 0 : -1">
+                    [attr.tabindex]="cell.isFocusTarget ? 0 : -1"
+                    (click)="datePicker.select(cell.date, $event)">
                     <span>{{ cell.label }}</span>
                 </button>
                 }

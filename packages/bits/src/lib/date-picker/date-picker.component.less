@@ -72,18 +72,18 @@
         pointer-events: auto;
         position: absolute;
         right: @nui-space-xs + @nui-space-xxs;
+        // Center via margin, not transform, so :active scale isn't overridden.
         top: 50%;
-        transform: translateY(-50%);
+        margin-top: (-@nui-datepicker-min-touch-target-size / 2);
         z-index: (@zindex-active + 1);
 
-        // Real <button> for a11y, must still look like the old icon-only glyph.
-        // Enlarges only the hit area to the WCAG 2.5.8 24x24 min touch target
-        // (axe target-size/target-offset), keeping the 16px icon glyph.
+        // Enlarge only the hit area to the WCAG 2.5.8 24x24 min touch target.
         &.btn.is-empty {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             min-width: @nui-datepicker-min-touch-target-size;
+            height: @nui-datepicker-min-touch-target-size;
             min-height: @nui-datepicker-min-touch-target-size;
             padding: 0;
         }

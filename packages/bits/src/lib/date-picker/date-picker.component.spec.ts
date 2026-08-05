@@ -463,6 +463,96 @@ describe("components >", () => {
 
                 expect(focusSpy).toHaveBeenCalled();
             });
+
+            it("should trap focus within the open calendar overlay", () => {
+                componentInstance.overlay.show();
+                fixture.detectChanges();
+
+                expect(
+                    document.querySelector(".nui-overlay [cdkTrapFocus]")
+                ).toBeTruthy();
+            });
+
+            it("should wrap Tab focus within a reopened calendar overlay", () => {
+                componentInstance.overlay.show();
+                componentInstance.overlay.hide();
+                componentInstance.overlay.show();
+                fixture.detectChanges();
+                const container = document.querySelector<HTMLElement>(
+                    ".nui-overlay [cdkTrapFocus]"
+                )!;
+                const focusableElements = Array.from(
+                    container.querySelectorAll<HTMLElement>(
+                        "button:not([disabled]):not([tabindex='-1']), input:not([disabled]):not([tabindex='-1']), select:not([disabled]):not([tabindex='-1']), textarea:not([disabled]):not([tabindex='-1']), [href], [tabindex]:not([tabindex='-1'])"
+                    )
+                ).filter((element) => element.getClientRects().length > 0);
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements.at(-1)!;
+
+                lastElement.focus();
+                const tabEvent = new KeyboardEvent("keydown", {
+                    key: "Tab",
+                    bubbles: true,
+                    cancelable: true,
+                });
+                lastElement.dispatchEvent(tabEvent);
+
+                expect(tabEvent.defaultPrevented).toBe(true);
+                expect(document.activeElement).toBe(firstElement);
+
+                firstElement.focus();
+                const shiftTabEvent = new KeyboardEvent("keydown", {
+                    key: "Tab",
+                    shiftKey: true,
+                    bubbles: true,
+                    cancelable: true,
+                });
+                firstElement.dispatchEvent(shiftTabEvent);
+
+                expect(shiftTabEvent.defaultPrevented).toBe(true);
+                expect(document.activeElement).toBe(lastElement);
+            });
+
+            it("should move focus into the grid on every open", fakeAsync(() => {
+                componentInstance.overlay.show();
+                tick();
+
+                expect(document.activeElement?.closest(".day")).toBeTruthy();
+
+                componentInstance.overlay.hide();
+                componentInstance.overlay.show();
+                tick();
+
+                expect(document.activeElement?.closest(".day")).toBeTruthy();
+            }));
+
+            it("should hide the overlay and restore focus to the toggle button on selection", () => {
+                componentInstance.overlay.show();
+                fixture.detectChanges();
+                spyOn(componentInstance.overlay, "hide").and.callThrough();
+                const toggleButton =
+                    componentInstance.toggleButtonRef.nativeElement;
+                spyOn(toggleButton, "focus");
+
+                componentInstance.onSelectionDone(moment());
+
+                expect(componentInstance.overlay.hide).toHaveBeenCalled();
+                expect(toggleButton.focus).toHaveBeenCalled();
+            });
+
+            it("should refocus the active cell on selection when inline (no overlay)", () => {
+                componentInstance.inline = true;
+                fixture.detectChanges();
+                const keyboardService =
+                    fixture.debugElement.injector.get<DatePickerKeyboardService>(
+                        DatePickerKeyboardService
+                    );
+                const focusSpy = spyOn(keyboardService, "focusActiveCell");
+
+                componentInstance.onSelectionDone(moment());
+
+                expect(focusSpy).toHaveBeenCalled();
+            });
         });
     });
 });

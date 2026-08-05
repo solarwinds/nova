@@ -124,6 +124,14 @@ export class DayPickerComponent implements OnInit {
                 ),
             }));
 
+            picker.resolveFocusTarget(
+                this.rows
+                    .filter((row) => row.isRowVisible)
+                    .flatMap((row) =>
+                        row.days.filter((cell: any) => cell.isCellVisible)
+                    )
+            );
+
             if (picker.showWeeks) {
                 const thursdayIndex = (4 + 7 - picker.startingDay) % 7;
                 const numWeeks = this.rows.length;
@@ -159,14 +167,18 @@ export class DayPickerComponent implements OnInit {
     }
 
     /**
-     * Focuses the day cell button for the currently active date (the cell
-     * whose `current` flag is set), for roving-tabindex keyboard navigation.
+     * Focuses the day cell holding the roving tabindex (focus target, else current).
      */
     public focusActiveCell(): void {
         const visibleCells = this.rows
             .filter((row) => row.isRowVisible)
             .flatMap((row) => row.days.filter((cell: any) => cell.isCellVisible));
-        const activeIndex = visibleCells.findIndex((cell: any) => cell.current);
+        let activeIndex = visibleCells.findIndex(
+            (cell: any) => cell.isFocusTarget
+        );
+        if (activeIndex === -1) {
+            activeIndex = visibleCells.findIndex((cell: any) => cell.current);
+        }
         const buttons = this.dayCellButtons?.toArray() ?? [];
         const activeButton = buttons[activeIndex];
 

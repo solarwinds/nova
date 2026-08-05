@@ -120,6 +120,31 @@ describe("components >", () => {
                 expect(otherButton.focus).not.toHaveBeenCalled();
             });
 
+            it("should focus the isFocusTarget cell even when it is not the current cell", () => {
+                const otherButton = { focus: jasmine.createSpy("focus") };
+                const targetButton = { focus: jasmine.createSpy("focus") };
+                dayPicker.rows = [
+                    {
+                        isRowVisible: true,
+                        days: [
+                            { isCellVisible: true, current: true },
+                            { isCellVisible: true, isFocusTarget: true },
+                        ],
+                    },
+                ];
+                (dayPicker as any).dayCellButtons = {
+                    toArray: () => [
+                        { nativeElement: otherButton },
+                        { nativeElement: targetButton },
+                    ],
+                };
+
+                dayPicker.focusActiveCell();
+
+                expect(targetButton.focus).toHaveBeenCalled();
+                expect(otherButton.focus).not.toHaveBeenCalled();
+            });
+
             it("should skip cells that are hidden (not visible in the current view)", () => {
                 const renderedButton = { focus: jasmine.createSpy("focus") };
                 dayPicker.rows = [

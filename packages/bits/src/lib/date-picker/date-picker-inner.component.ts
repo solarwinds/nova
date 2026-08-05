@@ -265,6 +265,21 @@ export class DatePickerInnerComponent
         return arrays;
     }
 
+    /**
+     * Marks the cell that owns the roving tabindex/focus: current, else today,
+     * else first enabled, so the grid always has a focusable entry point.
+     */
+    public resolveFocusTarget(cells: any[]): void {
+        const target =
+            cells.find((cell) => cell.current) ??
+            cells.find((cell) => cell.today && !cell.disabled) ??
+            cells.find((cell) => !cell.disabled);
+
+        for (const cell of cells) {
+            cell.isFocusTarget = cell === target;
+        }
+    }
+
     public select(date: string, event: any): void {
         this.value = this.handleTimezone
             ? moment.parseZone(date)

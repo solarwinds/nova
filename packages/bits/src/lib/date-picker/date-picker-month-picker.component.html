@@ -56,7 +56,7 @@
                         disabled: cell.disabled
                     }"
                     [disabled]="cell.disabled"
-                    [attr.tabindex]="cell.current ? 0 : -1"
+                    [attr.tabindex]="cell.isFocusTarget ? 0 : -1"
                     (click)="datePicker.select(cell.date, $event)">
                     <span [ngClass]="{ 'text-info': cell.current }">{{
                         cell.label

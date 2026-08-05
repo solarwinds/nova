@@ -72,6 +72,7 @@ export class YearPickerComponent implements OnInit {
                 years[picker.yearRange - 1].label,
             ].join(" - ");
             this.rows = picker.split(years, 5);
+            picker.resolveFocusTarget(this.rows.flat());
         }, "year");
 
         this.datePicker.setCompareHandler(
@@ -82,12 +83,14 @@ export class YearPickerComponent implements OnInit {
     }
 
     /**
-     * Focuses the year cell button for the currently active year (the cell
-     * whose `current` flag is set), for roving-tabindex keyboard navigation.
+     * Focuses the year cell holding the roving tabindex (focus target, else current).
      */
     public focusActiveCell(): void {
         const cells = this.rows.flat();
-        const activeIndex = cells.findIndex((cell: any) => cell.current);
+        let activeIndex = cells.findIndex((cell: any) => cell.isFocusTarget);
+        if (activeIndex === -1) {
+            activeIndex = cells.findIndex((cell: any) => cell.current);
+        }
         const activeButton = this.cellButtons?.toArray()[activeIndex];
 
         activeButton?.nativeElement.focus();
