@@ -181,7 +181,9 @@ function addRootCssClass(options: any) {
         try {
             const projectTargets = getBrowserProjectTargets(host, options);
             const projectSourceRoot = getProjectSourceRoot(host, options);
-            const filePath = projectTargets.options.index ?? `${projectSourceRoot}/index.html`;
+            const filePath =
+                projectTargets.options.index ??
+                `${projectSourceRoot}/index.html`;
             const rootHtmlFile = host.read(filePath ?? "");
 
             if (rootHtmlFile) {

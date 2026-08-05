@@ -38,7 +38,7 @@ import {
     NodeDependencyType,
 } from "@schematics/angular/utility/dependencies";
 import { BrowserBuilderTarget } from "@schematics/angular/utility/workspace-models";
-import ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
+import ts from "@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript";
 
 import { getProject } from "./project";
 import { getProjectTargets } from "./project-targets";
@@ -215,10 +215,7 @@ export function getBrowserProjectTargets(
     return getProjectTargets(clientProject)["build"];
 }
 
-export function getProjectSourceRoot(
-    host: Tree,
-    options: any
-): string {
+export function getProjectSourceRoot(host: Tree, options: any): string {
     const workspace = getWorkspace(host);
     const clientProject = getProject(workspace, options.project);
 

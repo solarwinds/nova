@@ -110,11 +110,11 @@ export class WithActiveDialogComponent {
             </button>
         </ng-template>
         <ng-template #contentWithIf>
-            @if (show) {
-            <button type="button" id="if" (click)="show = false">
-                Click me
-            </button>
-            }
+            <ng-template [ngIf]="show">
+                <button type="button" id="if" (click)="show = false">
+                    Click me
+                </button>
+            </ng-template>
         </ng-template>
         <button type="button" id="open" (click)="open('from button')">
             Open

@@ -338,7 +338,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
                 })
             );
 
-        const dataStream$ = dataSource.pipe(
+        const dataStream$ = this.virtualFor.dataStream.pipe(
             // give CDK some time to render rows after a change
             delay(0, asyncScheduler),
             tap(() => this.updateNativeHeaderPlaceholder())
@@ -394,7 +394,11 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             this.renderer.addClass(this.stickyHeadContainer, cssClass)
         );
 
-        this.renderer.setAttribute(this.stickyHeadContainer, "aria-hidden", "true");
+        this.renderer.setAttribute(
+            this.stickyHeadContainer,
+            "aria-hidden",
+            "true"
+        );
 
         this.renderer.insertBefore(
             this.viewportEl.parentElement,

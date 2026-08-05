@@ -3,7 +3,7 @@
         class="nui-expander__header"
         tabindex="0"
         role="button"
-        [attr.aria-label]="expanderToggleAriaLabel"
+        [attr.aria-labelledby]="'nui-expander-label-' + uniqueId"
         [attr.aria-expanded]="state === 'expanded'"
         [attr.aria-disabled]="disabled"
         [attr.aria-controls]="bodyId"
@@ -34,7 +34,6 @@
             >
                 <ng-content select="[nuiExpanderHeader]"></ng-content>
             </div>
-            @if (isCustomHeaderContentEmpty) {
             <div
                 class="nui-expander__header-content"
                 [class.nui-expander__header-content--with-icon]="!!icon"
@@ -47,7 +46,6 @@
                 }
                 <span class="nui-expander__header-title">{{ header }}</span>
             </div>
-            }
             <span [id]="'nui-expander-label-' + uniqueId" class="sr-only">
                 {{ ariaLabel || header || defaultAriaLabel }}
             </span>
@@ -57,7 +55,7 @@
         class="nui-expander__body-wrapper"
         role="region"
         [id]="bodyId"
-        [attr.aria-label]="expanderBodyAriaLabel"
+        [attr.aria-labelledby]="'nui-expander-label-' + uniqueId"
     >
         @if (open) {
         <div

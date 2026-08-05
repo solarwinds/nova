@@ -111,8 +111,10 @@
         [dataSource]="dataSource"
         id="nui-demo-custom-table-actions"
     >
-        @for (column of displayedColumns; track column) {
-        <ng-container nuiColumnDef="{{ column }}">
+        <ng-container
+            *ngFor="let column of displayedColumns"
+            nuiColumnDef="{{ column }}"
+        >
             <th nui-header-cell *nuiHeaderCellDef class="text-capitalize">
                 {{ column }}
             </th>
@@ -140,7 +142,6 @@
                 }
             </td>
         </ng-container>
-        }
         <tr nui-header-row *nuiHeaderRowDef="displayedColumns"></tr>
         <tr nui-row *nuiRowDef="let row; columns: displayedColumns"></tr>
     </table>

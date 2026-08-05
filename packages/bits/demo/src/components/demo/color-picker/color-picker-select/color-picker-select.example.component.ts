@@ -19,13 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component, OnInit } from "@angular/core";
-import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-} from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 
-import { HTML_COLORS, IPaletteColor } from "../../../../../../src/constants/color-picker.constants";
+import {
+    HTML_COLORS,
+    IPaletteColor,
+} from "../../../../../../src/constants/color-picker.constants";
 
 @Component({
     selector: "nui-color-picker-select-example",
