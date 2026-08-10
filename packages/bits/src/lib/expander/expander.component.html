@@ -3,9 +3,10 @@
         class="nui-expander__header"
         tabindex="0"
         role="button"
-        aria-label="Expander toggle"
+        [attr.aria-labelledby]="'nui-expander-label-' + uniqueId"
         [attr.aria-expanded]="state === 'expanded'"
         [attr.aria-disabled]="disabled"
+        [attr.aria-controls]="bodyId"
         [class.nui-expander__header--empty]="
             !header && isCustomHeaderContentEmpty
         "
@@ -47,12 +48,16 @@
                 <span class="nui-expander__header-title">{{ header }}</span>
             </div>
             }
+            <span [id]="'nui-expander-label-' + uniqueId" class="sr-only">
+                {{ ariaLabel || header || defaultAriaLabel }}
+            </span>
         </div>
     </div>
     <div
         class="nui-expander__body-wrapper"
         role="region"
-        [attr.aria-label]="header || null"
+        [id]="bodyId"
+        [attr.aria-labelledby]="'nui-expander-label-' + uniqueId"
     >
         @if (open) {
         <div

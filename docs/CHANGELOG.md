@@ -1,11 +1,10 @@
 # Changelog
 
-## [21.0.4] 📅 2026-09-24
+## [21.0.3] 📅 2026-08-04
 
 ### Fixes
 
-- `@nova-ui/bits` | A11y fixies for Home Summary
-- `@nova-ui/bits` | A11y fixies for Search component
+- `@nova-ui/bits` | Added unique IDs to expander landmarks
 
 ## [21.0.2] 📅 2026-07-13
 
@@ -24,6 +23,8 @@
 - `@nova-ui/bits` | Improve accessibility for Home Summary
 - `@nova-ui/bits` | Improve accessibility for Search component
 - `@nova-ui/dashboards` | Improve table widget paginator and search subscription handling
+- `@nova-ui/bits` | A11y fixies for Home Summary
+- `@nova-ui/bits` | A11y fixies for Search component
 
 ## [21.0.0] 📅 2026-05-18
 
