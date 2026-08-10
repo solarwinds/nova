@@ -113,7 +113,7 @@ export class OptionKeyControlService<T extends IOption> {
 
         // prevent page scroll on space and prevent closing on enter/space when no item is active
         if (
-            event.code === KEYBOARD_CODE.SPACE ||
+            (!this.skipSpace && event.code === KEYBOARD_CODE.SPACE) ||
             (!this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER)
         ) {
             event.preventDefault();
