@@ -1,5 +1,14 @@
 # Changelog
 
+
+## [20.0.11] 📅 2026-08-17
+### Fixes
+- `@nova-ui/bits` | Select-v2: added nested actionable elements with keyboard navigation support
+
+## [20.0.10] 📅 2026-08-11
+### Fixes
+- `@nova-ui/bits` | SkipSpace a11y regression fixed
+
 ## [20.0.9] 📅 2026-08-05
 ### Fixes
 - Essentional A11y fixies

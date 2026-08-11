@@ -56,6 +56,7 @@ import {
 } from "./constants";
 import { SelectV2OptionComponent } from "./option/select-v2-option.component";
 import { OptionKeyControlService } from "./option-key-control.service";
+import { SelectV2GroupActionDirective } from "./select-v2-actions.directive";
 import { InputValueTypes, IOptionedComponent } from "./types";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import {
@@ -75,6 +76,11 @@ const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
 };
 
 const V_SCROLL_HEIGHT_BUFFER = 10;
+
+// focusVisible isn't in this project's TS lib.dom types yet.
+interface FocusOptionsWithVisible extends FocusOptions {
+    focusVisible?: boolean;
+}
 
 // Will be renamed in scope of the NUI-5797
 @Directive()
@@ -169,6 +175,10 @@ export abstract class BaseSelectV2
     @ContentChildren(forwardRef(() => OVERLAY_ITEM), { descendants: true })
     public allPopupItems: QueryList<IOption>;
 
+    /** Interactive group-level controls (e.g. header buttons) reachable via ArrowUp */
+    @ContentChildren(SelectV2GroupActionDirective, { descendants: true })
+    public groupActions: QueryList<SelectV2GroupActionDirective>;
+
     /** Gets options from the model */
     public get selectedOptions(): SelectV2OptionComponent[] {
         return this._selectedOptions;
@@ -191,6 +201,8 @@ export abstract class BaseSelectV2
         new OverlayUtilitiesService();
     protected destroy$: Subject<void> = new Subject<void>();
     protected mouseDown: boolean;
+    // Prevents onFocusIn from reopening the dropdown during a programmatic refocus.
+    private suppressOpenOnFocus: boolean = false;
     private _selectedOptions: SelectV2OptionComponent[] = [];
 
     private _ariaLabel: string = "";
@@ -278,6 +290,9 @@ export abstract class BaseSelectV2
      */
     @HostListener("focusin")
     public onFocusIn(): void {
+        if (this.suppressOpenOnFocus) {
+            return;
+        }
         if (this.isOpenOnFocus()) {
             this.showDropdown();
             this.announceDropdown(true);
@@ -341,6 +356,13 @@ export abstract class BaseSelectV2
         }
     }
 
+    /** Moves DOM focus back to the Select trigger (used by nested action directives) */
+    public focusTrigger(): void {
+        this.optionKeyControlService.restoreActiveHighlight();
+        // Focus silently so the current active option is preserved (no reopen/reset).
+        this.returnFocusToTrigger();
+    }
+
     /** Selects specific option and set its value to the model */
     public selectOption(option: SelectV2OptionComponent): void {
         if (
@@ -348,6 +370,7 @@ export abstract class BaseSelectV2
             !this.manualDropdownControl
         ) {
             this.hideDropdown();
+            this.returnFocusToTrigger();
             return;
         }
 
@@ -358,7 +381,20 @@ export abstract class BaseSelectV2
 
         if (!this.manualDropdownControl) {
             this.hideDropdown();
+            this.returnFocusToTrigger();
         }
+    }
+
+    /** Returns DOM focus to the trigger without reopening the dropdown or losing the active option. */
+    protected returnFocusToTrigger(): void {
+        if (!this.inputElement) {
+            return;
+        }
+        this.suppressOpenOnFocus = true;
+        // focusVisible keeps the ring visible for this programmatic focus.
+        const options: FocusOptionsWithVisible = { focusVisible: true };
+        this.inputElement.nativeElement.focus(options);
+        setTimeout(() => (this.suppressOpenOnFocus = false));
     }
 
     /** Removes selected options or passed option if multi-select mode enabled */
@@ -511,6 +547,7 @@ export abstract class BaseSelectV2
     private initKeyboardManager() {
         this.optionKeyControlService.optionItems = this.allPopupItems;
         this.optionKeyControlService.popup = this.dropdown;
+        this.optionKeyControlService.groupActions = this.groupActions;
         this.optionKeyControlService.initKeyboardManager();
         this.optionKeyControlService.setSkipPredicate(
             (option: IOption) => !!(option.outfiltered || option.isDisabled)

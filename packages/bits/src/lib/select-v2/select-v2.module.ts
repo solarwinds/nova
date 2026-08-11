@@ -30,6 +30,10 @@ import { MarkAsSelectedItemDirective } from "./mark-as-selected-item.directive";
 import { SelectV2OptionComponent } from "./option/select-v2-option.component";
 import { SelectV2OptionGroupComponent } from "./option-group/select-v2-option-group.component";
 import { SelectV2Component } from "./select/select-v2.component";
+import {
+    SelectV2GroupActionDirective,
+    SelectV2OptionActionDirective,
+} from "./select-v2-actions.directive";
 import { NuiButtonModule } from "../button/button.module";
 import { NuiIconModule } from "../icon/icon.module";
 import { NuiOverlayModule } from "../overlay/overlay.module";
@@ -56,6 +60,8 @@ import { NuiTooltipModule } from "../tooltip/tooltip.module";
         ComboboxV2Component,
         MarkAsSelectedItemDirective,
         ComboboxV2OptionHighlightDirective,
+        SelectV2OptionActionDirective,
+        SelectV2GroupActionDirective,
     ],
     exports: [
         SelectV2Component,
@@ -64,6 +70,8 @@ import { NuiTooltipModule } from "../tooltip/tooltip.module";
         ComboboxV2Component,
         MarkAsSelectedItemDirective,
         ComboboxV2OptionHighlightDirective,
+        SelectV2OptionActionDirective,
+        SelectV2GroupActionDirective,
     ],
     providers: [],
 })

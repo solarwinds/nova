@@ -29,6 +29,15 @@ export interface IOptionedComponent {
     isTypeaheadEnabled?: boolean;
     selectedOptions: SelectV2OptionComponent[];
     selectOption(option: SelectV2OptionComponent): void;
+    /** Moves DOM focus back to the Select trigger (used by nested action directives) */
+    focusTrigger?(): void;
+    /** Closes the dropdown (used by nested action directives on Tab) */
+    hideDropdown?(): void;
+}
+
+/** A control that can receive real DOM focus from the option key manager */
+export interface IFocusableAction {
+    focus(): void;
 }
 
 export type InputValueTypes = number | string;

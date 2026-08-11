@@ -262,6 +262,62 @@
     </div>
 </div>
 
+<div class="row mb-3">
+    <div class="col">
+        <h4>Nested actionable elements (NUI-6294)</h4>
+        <nui-select-v2
+            placeholder="Select Item"
+            i18n-placeholder
+            id="nested-actions"
+        >
+            <nui-select-v2-option-group>
+                <button
+                    nui-button
+                    nuiSelectV2GroupAction
+                    id="nested-actions-group-btn"
+                    type="button"
+                    displayStyle="action"
+                    [icon]="'add'"
+                    (click)="onGroupAction()"
+                    (keydown.enter)="onGroupAction()"
+                    (keydown.space)="onGroupAction(); $event.preventDefault()"
+                >
+                    Add new item
+                </button>
+                <nui-divider size="extra-small"></nui-divider>
+                <span class="nui-select-v2-option-group--header">Items</span>
+                <nui-select-v2-option
+                    *ngFor="let item of nestedActionItems"
+                    [value]="item"
+                >
+                    {{ item }}
+                    <button
+                        nui-button
+                        nuiSelectV2OptionAction
+                        class="nested-actions-option-btn"
+                        type="button"
+                        displayStyle="action"
+                        [icon]="'menu'"
+                        (click)="onOptionAction($event)"
+                    ></button>
+                </nui-select-v2-option>
+            </nui-select-v2-option-group>
+        </nui-select-v2>
+        <div>
+            Group clicks:
+            <span id="nested-actions-group-clicks">{{
+                groupActionClicks
+            }}</span>
+        </div>
+        <div>
+            Option clicks:
+            <span id="nested-actions-option-clicks">{{
+                optionActionClicks
+            }}</span>
+        </div>
+    </div>
+</div>
+
 <ng-template #temp let-item let-open="open">
     <div class="nui-select-v2__value">
         <div

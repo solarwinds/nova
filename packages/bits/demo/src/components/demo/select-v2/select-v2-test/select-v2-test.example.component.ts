@@ -102,6 +102,12 @@ export class SelectV2TestExampleComponent
     // Form
     public selectControl = new FormControl<IExampleItem | null>(null);
     public fancyForm;
+    // Nested actionable elements (NUI-6294)
+    public nestedActionItems = Array.from({ length: 3 }).map(
+        (_, i) => $localize`Item ${i + 1}`
+    );
+    public groupActionClicks = 0;
+    public optionActionClicks = 0;
     // Test
     public customStylesOverlayConfig: OverlayConfig = {
         panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS, "custom-select-styles"],
@@ -143,6 +149,15 @@ export class SelectV2TestExampleComponent
         event.stopPropagation();
         this.select.toggleDropdown();
         this.select.inputElement.nativeElement.focus();
+    }
+
+    public onGroupAction(): void {
+        this.groupActionClicks++;
+    }
+
+    public onOptionAction(event?: Event): void {
+        event?.stopPropagation();
+        this.optionActionClicks++;
     }
 
     public ngOnInit(): void {

@@ -2,6 +2,7 @@
     #input
     [id]="triggerId"
     class="nui-select-v2__container"
+    [class.nui-select-v2__container--custom-trigger]="!!displayValueTemplate"
     [attr.role]="displayValueTemplate ? 'none' : 'combobox'"
     [attr.tabindex]="displayValueTemplate ? -1 : isDisabled ? -1 : 0"
     [attr.aria-haspopup]="displayValueTemplate ? null : 'listbox'"

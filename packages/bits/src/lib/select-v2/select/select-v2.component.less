@@ -44,6 +44,11 @@
             transform: unset;
             outline: unset;
         }
+
+        // Focus ring for the trigger when a custom displayValueTemplate refocuses it.
+        &--custom-trigger:focus-visible {
+            .focus-outline();
+        }
     }
 
     &__value {

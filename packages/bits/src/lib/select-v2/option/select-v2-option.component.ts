@@ -22,6 +22,7 @@ import { Highlightable } from "@angular/cdk/a11y";
 import {
     ChangeDetectionStrategy,
     Component,
+    ContentChildren,
     ElementRef,
     forwardRef,
     HostBinding,
@@ -29,12 +30,14 @@ import {
     Inject,
     Input,
     Optional,
+    QueryList,
 } from "@angular/core";
 
 import { OVERLAY_ITEM } from "../../overlay/constants";
 import { OverlayItemComponent } from "../../overlay/overlay-item/overlay-item.component";
 import { IOption, OptionValueType } from "../../overlay/types";
 import { NUI_SELECT_V2_OPTION_PARENT_COMPONENT } from "../constants";
+import { SelectV2OptionActionDirective } from "../select-v2-actions.directive";
 import { IOptionedComponent } from "../types";
 
 /**
@@ -70,6 +73,10 @@ export class SelectV2OptionComponent
 
     /** Used to pass context for the custom template */
     @Input() public displayValueContext: any;
+
+    /** Interactive controls nested inside the option, reachable via ArrowRight */
+    @ContentChildren(SelectV2OptionActionDirective, { descendants: true })
+    public actions: QueryList<SelectV2OptionActionDirective>;
 
     /** Whether the Option outfiltered */
     @HostBinding("class.hidden")

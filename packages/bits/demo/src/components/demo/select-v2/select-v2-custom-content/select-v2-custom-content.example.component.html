@@ -8,6 +8,7 @@
     <nui-select-v2-option-group *ngFor="let item of items">
         <button
             nui-button
+            nuiSelectV2GroupAction
             type="button"
             displayStyle="action"
             [icon]="'add'"
@@ -30,11 +31,11 @@
             {{ option.name }}
             <button
                 nui-button
+                nuiSelectV2OptionAction
                 type="button"
                 displayStyle="action"
                 [icon]="'menu'"
                 (click)="actionSimulation($event)"
-                (keydown)="$event.stopPropagation()"
             ></button>
         </nui-select-v2-option>
     </nui-select-v2-option-group>

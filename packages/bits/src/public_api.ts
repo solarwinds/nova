@@ -77,6 +77,10 @@ export { OverlayArrowComponent as ArrowComponent } from "./lib/overlay/arrow-com
 export { SelectV2Component } from "./lib/select-v2/select/select-v2.component";
 export { ComboboxV2Component } from "./lib/select-v2/combobox-v2/combobox-v2.component";
 export { MarkAsSelectedItemDirective } from "./lib/select-v2/mark-as-selected-item.directive";
+export {
+    SelectV2OptionActionDirective,
+    SelectV2GroupActionDirective,
+} from "./lib/select-v2/select-v2-actions.directive";
 export { ComboboxComponent } from "./lib/select/combobox/combobox.component";
 export { BaseSelect } from "./lib/select/base-select";
 export { DatePickerComponent } from "./lib/date-picker/date-picker.component";

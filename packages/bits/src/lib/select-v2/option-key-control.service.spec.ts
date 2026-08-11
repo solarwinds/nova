@@ -245,5 +245,109 @@ describe("components > ", () => {
                 expect(spy).toHaveBeenCalled();
             });
         });
+
+        describe("nested interactive actions (NUI-6294)", () => {
+            // popupMock is shared across tests and a previous test sets showing=false
+            beforeEach(() => {
+                service.popup.showing = true;
+            });
+
+            it("should focus the active option's first action on ArrowRight", () => {
+                const focusSpy = jasmine.createSpy("focus");
+                spyOnProperty(
+                    service["keyboardEventsManager"],
+                    "activeItem"
+                ).and.returnValue({
+                    actions: { first: { focus: focusSpy } },
+                } as any);
+                const arrowRightEvent = {
+                    ...keyBoardEventMock,
+                    ...{ code: KEYBOARD_CODE.ARROW_RIGHT },
+                };
+                const preventSpy = spyOn(arrowRightEvent, "preventDefault");
+
+                service.handleKeydown(arrowRightEvent as any);
+
+                expect(focusSpy).toHaveBeenCalled();
+                expect(preventSpy).toHaveBeenCalled();
+            });
+
+            it("should not throw or focus on ArrowRight when active option has no actions", () => {
+                spyOnProperty(
+                    service["keyboardEventsManager"],
+                    "activeItem"
+                ).and.returnValue({} as any);
+                const arrowRightEvent = {
+                    ...keyBoardEventMock,
+                    ...{ code: KEYBOARD_CODE.ARROW_RIGHT },
+                };
+                const preventSpy = spyOn(arrowRightEvent, "preventDefault");
+
+                expect(() =>
+                    service.handleKeydown(arrowRightEvent as any)
+                ).not.toThrow();
+                expect(preventSpy).not.toHaveBeenCalled();
+            });
+
+            it("should focus the first group action on ArrowUp when the first option is active", () => {
+                const focusSpy = jasmine.createSpy("focus");
+                service.groupActions = { first: { focus: focusSpy } } as any;
+                spyOn(service, "getActiveItemIndex").and.returnValue(0);
+                const managerSpy = spyOn(
+                    service["keyboardEventsManager"],
+                    "onKeydown"
+                );
+                const arrowUpEvent = {
+                    ...keyBoardEventMock,
+                    ...{ code: KEYBOARD_CODE.ARROW_UP },
+                };
+
+                service.handleKeydown(arrowUpEvent as any);
+
+                expect(focusSpy).toHaveBeenCalled();
+                expect(managerSpy).not.toHaveBeenCalled();
+            });
+
+            it("should navigate options normally on ArrowUp when no group actions exist", () => {
+                service.groupActions = undefined;
+                const managerSpy = spyOn(
+                    service["keyboardEventsManager"],
+                    "onKeydown"
+                );
+                const arrowUpEvent = {
+                    ...keyBoardEventMock,
+                    ...{ code: KEYBOARD_CODE.ARROW_UP },
+                };
+
+                service.handleKeydown(arrowUpEvent as any);
+
+                expect(managerSpy).toHaveBeenCalledWith(arrowUpEvent as any);
+            });
+
+            it("should suspend and restore the active highlight around a group action", () => {
+                spyOn(service, "getActiveItemIndex").and.returnValue(2);
+                const setActiveSpy = spyOn(
+                    service["keyboardEventsManager"],
+                    "setActiveItem"
+                );
+
+                service.suspendActiveHighlight();
+                expect(setActiveSpy).toHaveBeenCalledWith(-1);
+
+                service.restoreActiveHighlight();
+                expect(setActiveSpy).toHaveBeenCalledWith(2);
+            });
+
+            it("should not restore the highlight when nothing was suspended", () => {
+                const setActiveSpy = spyOn(
+                    service["keyboardEventsManager"],
+                    "setActiveItem"
+                );
+
+                service.restoreActiveHighlight();
+
+                expect(setActiveSpy).not.toHaveBeenCalled();
+            });
+        });
     });
 });

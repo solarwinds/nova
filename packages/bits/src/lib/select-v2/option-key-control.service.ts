@@ -26,6 +26,7 @@ import {
     ANNOUNCER_CLOSE_MESSAGE,
     ANNOUNCER_OPEN_MESSAGE_SUFFIX,
 } from "./constants";
+import { IFocusableAction } from "./types";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { IOption, IOverlayComponent } from "../overlay/types";
 
@@ -35,7 +36,13 @@ export class OptionKeyControlService<T extends IOption> {
     public optionItems: QueryList<T>;
     public skipSpace: boolean = false;
 
+    /** Group-level focusable actions (e.g. header buttons) reachable via ArrowUp */
+    public groupActions?: QueryList<IFocusableAction>;
+
     private keyboardEventsManager: ActiveDescendantKeyManager<T>;
+
+    // Active option index saved while its highlight is suspended.
+    private suspendedActiveIndex: number | null = null;
 
     constructor(public liveAnnouncer: LiveAnnouncer) {}
 
@@ -57,6 +64,23 @@ export class OptionKeyControlService<T extends IOption> {
 
     public resetActiveItem(): void {
         this.keyboardEventsManager.setActiveItem(-1);
+    }
+
+    /** Removes the active option highlight while focus is on a group action. */
+    public suspendActiveHighlight(): void {
+        this.suspendedActiveIndex = this.getActiveItemIndex();
+        this.resetActiveItem();
+    }
+
+    /** Restores the option highlight suspended by {@link suspendActiveHighlight}. */
+    public restoreActiveHighlight(): void {
+        if (this.suspendedActiveIndex == null) {
+            return;
+        }
+        if (this.suspendedActiveIndex >= 0) {
+            this.keyboardEventsManager.setActiveItem(this.suspendedActiveIndex);
+        }
+        this.suspendedActiveIndex = null;
     }
 
     public setFirstItemActive(): void {
@@ -90,12 +114,52 @@ export class OptionKeyControlService<T extends IOption> {
         );
     }
 
+    /** Moves DOM focus to the active option's first nested action, if any. */
+    private focusActiveOptionAction(): boolean {
+        const activeItem = this.keyboardEventsManager.activeItem as
+            | (T & { actions?: QueryList<IFocusableAction> })
+            | null;
+        const action = activeItem?.actions?.first;
+        if (action) {
+            action.focus();
+            return true;
+        }
+        return false;
+    }
+
+    /** Moves DOM focus to the first group action when the first option is active. */
+    private focusGroupActionOnArrowUp(): boolean {
+        const action = this.groupActions?.first;
+        if (action && this.getActiveItemIndex() === 0) {
+            // Focus leaves the options list, so drop the option highlight.
+            this.suspendActiveHighlight();
+            action.focus();
+            return true;
+        }
+        return false;
+    }
+
     private handleOpenKeyDown(event: KeyboardEvent): void {
         switch (event.code) {
-            case KEYBOARD_CODE.ARROW_DOWN:
             case KEYBOARD_CODE.ARROW_UP:
+                // ArrowUp on the first option reaches the group action.
+                if (this.focusGroupActionOnArrowUp()) {
+                    event.preventDefault();
+                    return;
+                }
                 this.keyboardEventsManager.onKeydown(event);
                 this.announceNavigatedOption();
+                break;
+            case KEYBOARD_CODE.ARROW_DOWN:
+                this.keyboardEventsManager.onKeydown(event);
+                this.announceNavigatedOption();
+                break;
+            case KEYBOARD_CODE.ARROW_RIGHT:
+                // ArrowRight enters the active option's nested action(s)
+                if (this.focusActiveOptionAction()) {
+                    event.preventDefault();
+                    return;
+                }
                 break;
             case KEYBOARD_CODE.PAGE_UP:
                 event.preventDefault();

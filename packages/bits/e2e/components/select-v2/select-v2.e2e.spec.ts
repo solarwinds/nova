@@ -32,6 +32,7 @@ test.describe("USERCONTROL Select V2 >", () => {
     let selectErrorState: SelectV2Atom;
     let selectCustomControl: SelectV2Atom;
     let selectInsideDialog: SelectV2Atom;
+    let selectNestedActions: SelectV2Atom;
 
     let buttonShow: Locator;
     let buttonHide: Locator;
@@ -56,6 +57,10 @@ test.describe("USERCONTROL Select V2 >", () => {
         selectInsideDialog = Atom.find<SelectV2Atom>(
             SelectV2Atom,
             "inside-dialog"
+        );
+        selectNestedActions = Atom.find<SelectV2Atom>(
+            SelectV2Atom,
+            "nested-actions"
         );
 
         buttonShow = Helpers.page.locator("#show");
@@ -208,6 +213,172 @@ test.describe("USERCONTROL Select V2 >", () => {
                     OverlayAtom.CDK_CONTAINER_PANE
                 );
                 await expect(overlay).toHaveCount(0);
+            });
+        });
+
+        test.describe("focus management on selection", () => {
+            const dvTrigger = () =>
+                Helpers.page.locator(
+                    "#display-value .nui-select-v2__container"
+                );
+
+            test.afterEach(async () => {
+                await focusdrop.click({ force: true });
+            });
+
+            test("should return focus to the trigger after selecting in a custom-template select", async () => {
+                const selectDisplayValue = Atom.find<SelectV2Atom>(
+                    SelectV2Atom,
+                    "display-value"
+                );
+                await dvTrigger().focus();
+                await selectDisplayValue.toBeOpened();
+                await Helpers.page.keyboard.press("Enter");
+                await selectDisplayValue.toBeClosed();
+                await expect(dvTrigger()).toBeFocused();
+            });
+        });
+
+        test.describe("nested interactive elements (NUI-6294)", () => {
+            const trigger = () =>
+                Helpers.page.locator(
+                    "#nested-actions .nui-select-v2__container"
+                );
+            const groupButton = () =>
+                Helpers.page.locator("#nested-actions-group-btn");
+            const optionButton = () =>
+                Helpers.page
+                    .locator(".nested-actions-option-btn")
+                    .first();
+            const groupClicks = () =>
+                Helpers.page.locator("#nested-actions-group-clicks");
+            const optionClicks = () =>
+                Helpers.page.locator("#nested-actions-option-clicks");
+            const firstOption = () =>
+                Helpers.page
+                    .locator(".nui-overlay .nui-select-v2-option")
+                    .first();
+
+            test.afterEach(async () => {
+                await focusdrop.click({ force: true });
+            });
+
+            test("should reach the group action with ArrowUp on the first option", async () => {
+                await trigger().focus();
+                await selectNestedActions.toBeOpened();
+                await Helpers.page.keyboard.press("ArrowUp");
+                await expect(groupButton()).toBeFocused();
+                // the option highlight must be gone once focus leaves the list
+                await expect(firstOption()).not.toHaveClass(
+                    /(^|\s)active(\s|$)/
+                );
+            });
+
+            test("should return to the options list from the group action on ArrowDown", async () => {
+                await trigger().focus();
+                await selectNestedActions.toBeOpened();
+                await Helpers.page.keyboard.press("ArrowUp");
+                await expect(groupButton()).toBeFocused();
+                await Helpers.page.keyboard.press("ArrowDown");
+                await expect(trigger()).toBeFocused();
+                await selectNestedActions.toBeOpened();
+            });
+
+            test("should activate the group action and keep the dropdown open", async () => {
+                await trigger().focus();
+                await selectNestedActions.toBeOpened();
+                await Helpers.page.keyboard.press("ArrowUp");
+                await Helpers.page.keyboard.press("Enter");
+                await expect(groupClicks()).not.toHaveText("0");
+                await selectNestedActions.toBeOpened();
+            });
+
+            test("should reach the option action with ArrowRight", async () => {
+                await trigger().focus();
+                await selectNestedActions.toBeOpened();
+                await Helpers.page.keyboard.press("ArrowRight");
+                await expect(optionButton()).toBeFocused();
+            });
+
+            test("should keep focus on the option action on ArrowRight (entry key)", async () => {
+                await trigger().focus();
+                await selectNestedActions.toBeOpened();
+                await Helpers.page.keyboard.press("ArrowRight");
+                await expect(optionButton()).toBeFocused();
+                await Helpers.page.keyboard.press("ArrowRight");
+                await expect(optionButton()).toBeFocused();
+            });
+
+            test("should activate the option action without selecting/closing", async () => {
+                await trigger().focus();
+                await selectNestedActions.toBeOpened();
+                await Helpers.page.keyboard.press("ArrowRight");
+                await Helpers.page.keyboard.press("Enter");
+                await expect(optionClicks()).not.toHaveText("0");
+                await selectNestedActions.toBeOpened();
+            });
+
+            test("should return focus to the trigger on Escape from an action", async () => {
+                await trigger().focus();
+                await selectNestedActions.toBeOpened();
+                await Helpers.page.keyboard.press("ArrowRight");
+                await expect(optionButton()).toBeFocused();
+                await Helpers.page.keyboard.press("Escape");
+                await expect(trigger()).toBeFocused();
+            });
+
+            test("should return focus to the trigger on ArrowLeft from an action", async () => {
+                await trigger().focus();
+                await selectNestedActions.toBeOpened();
+                await Helpers.page.keyboard.press("ArrowRight");
+                await expect(optionButton()).toBeFocused();
+                await Helpers.page.keyboard.press("ArrowLeft");
+                await expect(trigger()).toBeFocused();
+            });
+
+            test("should keep the same option active when returning to the list from its action", async () => {
+                const options = Helpers.page.locator(
+                    ".nui-overlay .nui-select-v2-option"
+                );
+                const secondButton = Helpers.page
+                    .locator(".nested-actions-option-btn")
+                    .nth(1);
+
+                await trigger().focus();
+                await selectNestedActions.toBeOpened();
+                await Helpers.page.keyboard.press("ArrowDown"); // second option active
+                await Helpers.page.keyboard.press("ArrowRight"); // enter its action
+                await expect(secondButton).toBeFocused();
+
+                await Helpers.page.keyboard.press("ArrowLeft"); // back to the list
+                await expect(trigger()).toBeFocused();
+                // the same (second) option stays active, focus must not jump to another option
+                await expect(options.nth(1)).toHaveClass(/(^|\s)active(\s|$)/);
+                await expect(options.nth(0)).not.toHaveClass(
+                    /(^|\s)active(\s|$)/
+                );
+            });
+
+            test("should close the dropdown and exit the widget on Tab from an option action", async () => {
+                await trigger().focus();
+                await selectNestedActions.toBeOpened();
+                await Helpers.page.keyboard.press("ArrowRight");
+                await expect(optionButton()).toBeFocused();
+
+                await Helpers.page.keyboard.press("Tab");
+                await selectNestedActions.toBeClosed();
+                await expect(trigger()).not.toBeFocused();
+            });
+
+            test("should close the dropdown and exit the widget on Tab from the group action", async () => {
+                await trigger().focus();
+                await selectNestedActions.toBeOpened();
+                await Helpers.page.keyboard.press("ArrowUp");
+                await expect(groupButton()).toBeFocused();
+
+                await Helpers.page.keyboard.press("Tab");
+                await selectNestedActions.toBeClosed();
+                await expect(trigger()).not.toBeFocused();
             });
         });
     });
