@@ -1,10 +1,12 @@
 # Changelog
 
-## [21.0.3] 📅 2026-08-04
+## [21.0.3] 📅 2026-08-11
 
 ### Fixes
 
+- `@nova-ui/bits` | A11y fixes for nui-toolbar
 - `@nova-ui/bits` | Added unique IDs to expander landmarks
+- `@nova-ui/bits` | new accessible blue for active menu button text
 
 ## [21.0.2] 📅 2026-07-13
 

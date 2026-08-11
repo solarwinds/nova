@@ -143,6 +143,146 @@ describe("Services > ", () => {
 
                 searchInput.remove();
             });
+
+            it("should navigate to first element on pressing Home key", () => {
+                const items = service["toolbarItems"];
+                const first = items[0];
+                const last = items[items.length - 1];
+                const spy = spyOn(first, "focus");
+
+                last.focus();
+
+                service.onKeyDown({
+                    ...keyboardEventMock,
+                    code: KEYBOARD_CODE.HOME,
+                } as KeyboardEvent);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("should navigate to last element on pressing End key", () => {
+                const items = service["toolbarItems"];
+                const first = items[0];
+                const last = items[items.length - 1];
+                const spy = spyOn(last, "focus");
+
+                first.focus();
+
+                service.onKeyDown({
+                    ...keyboardEventMock,
+                    code: KEYBOARD_CODE.END,
+                } as KeyboardEvent);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            describe("disabled items", () => {
+                afterEach(() => {
+                    const items = service["toolbarItems"];
+
+                    items.forEach((item) => item.removeAttribute("disabled"));
+                });
+
+                it("should skip a disabled item on pressing right arrow button", () => {
+                    const items = service["toolbarItems"];
+                    const [first, middle, last] = items;
+                    const spy = spyOn(last, "focus");
+
+                    middle.setAttribute("disabled", "true");
+                    first.focus();
+
+                    service.onKeyDown(rightButtonPressEvent);
+                    expect(spy).toHaveBeenCalled();
+                });
+
+                it("should not focus a disabled item on pressing End key", () => {
+                    const items = service["toolbarItems"];
+                    const [first, middle, last] = items;
+                    const spy = spyOn(middle, "focus");
+                    const lastSpy = spyOn(last, "focus");
+
+                    last.setAttribute("disabled", "true");
+                    first.focus();
+
+                    service.onKeyDown({
+                        ...keyboardEventMock,
+                        code: KEYBOARD_CODE.END,
+                    } as KeyboardEvent);
+                    expect(spy).toHaveBeenCalled();
+                    expect(lastSpy).not.toHaveBeenCalled();
+                });
+            });
+        });
+
+        describe("onKeyDown with vertical orientation", () => {
+            const downButtonPressEvent = {
+                ...keyboardEventMock,
+                code: KEYBOARD_CODE.ARROW_DOWN,
+            } as KeyboardEvent;
+            const upButtonPressEvent = {
+                ...keyboardEventMock,
+                code: KEYBOARD_CODE.ARROW_UP,
+            } as KeyboardEvent;
+            const rightButtonPressEvent = {
+                ...keyboardEventMock,
+                code: KEYBOARD_CODE.ARROW_RIGHT,
+            } as KeyboardEvent;
+
+            beforeEach(() => {
+                const buttons = document.querySelectorAll(".testButton");
+
+                service.setToolbarItems(
+                    Array.from(buttons) as HTMLElement[],
+                    undefined,
+                    "vertical"
+                );
+            });
+
+            it("should move to next item on pressing down arrow button", () => {
+                const items = service["toolbarItems"];
+                const first = items[0];
+                const next = items[1];
+                const spy = spyOn(next, "focus");
+
+                first.focus();
+
+                service.onKeyDown(downButtonPressEvent);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("should move to previous item on pressing up arrow button", () => {
+                const items = service["toolbarItems"];
+                const first = items[0];
+                const middle = items[1];
+                const spy = spyOn(first, "focus");
+
+                middle.focus();
+
+                service.onKeyDown(upButtonPressEvent);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("should wrap to last item on pressing up arrow button on first item", () => {
+                const items = service["toolbarItems"];
+                const first = items[0];
+                const last = items[items.length - 1];
+                const spy = spyOn(last, "focus");
+
+                first.focus();
+
+                service.onKeyDown(upButtonPressEvent);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("should not navigate on left/right arrow keys", () => {
+                const items = service["toolbarItems"];
+                const first = items[0];
+                const next = items[1];
+                const spy = spyOn(next, "focus");
+
+                first.focus();
+
+                service.onKeyDown(rightButtonPressEvent);
+                expect(spy).not.toHaveBeenCalled();
+            });
         });
     });
 });

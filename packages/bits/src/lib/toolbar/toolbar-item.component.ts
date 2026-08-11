@@ -48,6 +48,8 @@ export class ToolbarItemComponent implements AfterContentInit {
      */
     @Input() public displayStyle = ToolbarItemDisplayStyle.action;
 
+    @Input() public disabled = false;
+
     public menuHidden: boolean;
 
     @Output() public actionDone = new EventEmitter();

@@ -27,10 +27,16 @@ import { MenuComponent } from "../menu";
 export class ToolbarKeyboardService {
     private toolbarItems: HTMLElement[] = [];
     private menu: MenuComponent | undefined;
+    private orientation: "horizontal" | "vertical" = "horizontal";
 
-    public setToolbarItems(items: HTMLElement[], menu?: MenuComponent): void {
+    public setToolbarItems(
+        items: HTMLElement[],
+        menu?: MenuComponent,
+        orientation: "horizontal" | "vertical" = "horizontal"
+    ): void {
         this.toolbarItems = items;
         this.menu = menu;
+        this.orientation = orientation;
     }
 
     public onKeyDown(event: KeyboardEvent): void {
@@ -43,12 +49,29 @@ export class ToolbarKeyboardService {
 
         const { code } = event;
 
-        if (
+        const horizontal =
             code === KEYBOARD_CODE.ARROW_LEFT ||
-            code === KEYBOARD_CODE.ARROW_RIGHT
+            code === KEYBOARD_CODE.ARROW_RIGHT;
+        const vertical =
+            code === KEYBOARD_CODE.ARROW_UP ||
+            code === KEYBOARD_CODE.ARROW_DOWN;
+
+        if (
+            (this.orientation !== "vertical" && horizontal) ||
+            (this.orientation === "vertical" && vertical)
         ) {
             event.preventDefault();
             this.navigateByArrow(code);
+        }
+
+        if (code === KEYBOARD_CODE.HOME) {
+            event.preventDefault();
+            this.focusFirst();
+        }
+
+        if (code === KEYBOARD_CODE.END) {
+            event.preventDefault();
+            this.focusLast();
         }
 
         if (code === KEYBOARD_CODE.TAB) {
@@ -74,36 +97,54 @@ export class ToolbarKeyboardService {
 
     private navigateByArrow(code: KEYBOARD_CODE): void {
         const activeEl = document.activeElement;
-        const activeIndex = this.toolbarItems.indexOf(activeEl as HTMLElement);
-        const first = this.toolbarItems[0];
-        const last = this.toolbarItems[this.toolbarItems.length - 1];
+        const items = this.enabledItems;
+        const activeIndex = items.indexOf(activeEl as HTMLElement);
+        const first = items[0];
+        const last = items[items.length - 1];
 
-        if (code === KEYBOARD_CODE.ARROW_LEFT) {
+        if (
+            code === KEYBOARD_CODE.ARROW_LEFT ||
+            code === KEYBOARD_CODE.ARROW_UP
+        ) {
             activeEl === first ? this.focusLast() : this.focusLeft(activeIndex);
         }
 
-        if (code === KEYBOARD_CODE.ARROW_RIGHT && activeIndex !== -1) {
+        if (
+            (code === KEYBOARD_CODE.ARROW_RIGHT ||
+                code === KEYBOARD_CODE.ARROW_DOWN) &&
+            activeIndex !== -1
+        ) {
             activeEl === last
                 ? this.focusFirst()
                 : this.focusRight(activeIndex);
         }
     }
 
+    // items disabled after the list was built are excluded here rather than at build time
+    private get enabledItems(): HTMLElement[] {
+        return this.toolbarItems.filter(
+            (el) =>
+                !el.hasAttribute("disabled") &&
+                el.getAttribute("aria-disabled") !== "true"
+        );
+    }
+
     private focusFirst(): void {
-        this.toolbarItems[0].focus();
+        this.enabledItems[0]?.focus();
         this.closeMenuIfOpened();
     }
 
     private focusLast(): void {
-        this.toolbarItems[this.toolbarItems.length - 1].focus();
+        const items = this.enabledItems;
+        items[items.length - 1]?.focus();
     }
 
     private focusRight(index: number) {
-        this.toolbarItems[index + 1]?.focus();
+        this.enabledItems[index + 1]?.focus();
     }
 
     private focusLeft(index: number) {
-        this.toolbarItems[index - 1]?.focus();
+        this.enabledItems[index - 1]?.focus();
         this.closeMenuIfOpened();
     }
 

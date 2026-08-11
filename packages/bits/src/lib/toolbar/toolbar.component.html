@@ -5,15 +5,15 @@
     #toolbarContainer
 >
     <div class="nui-toolbar-content__dynamic">
-        @for (commandGroup of commandGroups; track commandGroup; let i = $index;
-        let last = $last) { @for (commandItem of commandGroup.items; track
-        commandItem; let j = $index) {
-        <!-- (!i && !j) is used for set focusable state to first element first group -->
+        @for (commandGroup of commandGroups; track commandGroup; let last =
+        $last) { @for (commandItem of commandGroup.items; track commandItem) {
+        <!-- tabindex 0 is assigned to the first enabled item so a fully-disabled toolbar stays reachable via Tab -->
         <button
             nui-button
             type="button"
             #toolbarButtons
-            [tabindex]="!i && !j ? 0 : -1"
+            [tabindex]="isFirstFocusableItem(commandItem) ? 0 : -1"
+            [disabled]="commandItem.disabled"
             (click)="onClickToolbarBtn($event, commandItem)"
             [displayStyle]="
                 commandItem.displayStyle === 'main'
@@ -42,7 +42,8 @@
                 <nui-menu-action
                     [type]="menuItem.isDestructive ? 'destructive' : 'default'"
                     [icon]="menuItem.icon"
-                    (click)="menuItem.actionDone.emit()"
+                    [disabled]="menuItem.disabled"
+                    (actionDone)="menuItem.actionDone.emit()"
                     >{{ menuItem.title }}
                 </nui-menu-action>
                 }
