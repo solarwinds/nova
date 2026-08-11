@@ -14,7 +14,13 @@
         </nui-tab-heading>
     </nui-tab-heading-group>
 
-    <div *ngFor="let tab of tabsetContent">
+    <div
+        *ngFor="let tab of tabsetContent"
+        role="tabpanel"
+        [id]="'panel-' + tab.id"
+        [attr.aria-labelledby]="'tab-' + tab.id"
+        [hidden]="currentTabId !== tab.id"
+    >
         <nui-content size="small" *ngIf="currentTabId === tab.id">
             <p>
                 Tab titeled <strong>{{ tab.title }}</strong> with id

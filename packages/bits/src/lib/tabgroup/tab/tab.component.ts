@@ -29,6 +29,11 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 
+import {
+    TAB_ID_PREFIX,
+    TAB_PANEL_ID_PREFIX,
+} from "../../../constants/tabgroup.constants";
+import { _uniqueId } from "../../../functions/unique-id";
 import { TabGroupComponent } from "../tab-group/tab-group.component";
 /** @ignore */
 @Component({
@@ -42,10 +47,16 @@ import { TabGroupComponent } from "../tab-group/tab-group.component";
     standalone: false,
 })
 export class TabComponent {
-    private static nextId = 0;
-    /** Unique id for the tab and its panel. */
-    public readonly tabId = `nui-tab-${TabComponent.nextId++}`;
-    public readonly panelId = `${this.tabId}-panel`;
+    /** Unique identifier for the tab and its panel. Can be supplied by a consumer or generated automatically. */
+    @Input() public tabId = _uniqueId("nui-tab-");
+
+    public get tabControlId(): string {
+        return TAB_ID_PREFIX + this.tabId;
+    }
+
+    public get panelId(): string {
+        return TAB_PANEL_ID_PREFIX + this.tabId;
+    }
 
     /** Tab header text */
     @Input() heading: string;
@@ -89,7 +100,7 @@ export class TabComponent {
         return this.panelId;
     }
     @HostBinding("attr.aria-labelledby") get ariaLabelledbyAttr() {
-        return this.tabId;
+        return this.tabControlId;
     }
 
     public headingRef: TemplateRef<any>;

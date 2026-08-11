@@ -4,6 +4,7 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | Align tab and tab-panel IDs with the accessible `tab-{id}` / `panel-{id}` relationship.
 - `@nova-ui/dashboards` | Fixed regression in keyboard scrolling in Modern Dashboard table widgets
 - Prettier formatting fixes across the project
 
