@@ -8,7 +8,12 @@
     @if (caption) {
     <div class="nui-form-field__control-label-container">
         <div class="nui-form-field__control-label-container-description">
-            <label class="nui-form-field__control-label">{{ caption }}</label>
+            <label
+                class="nui-form-field__control-label"
+                [attr.for]="nuiFormControl?.id"
+                [attr.id]="labelId"
+                >{{ caption }}</label
+            >
             @if (controlIsOptional) {
             <span class="nui-form-field__state-text" i18n>(optional)</span>
             }

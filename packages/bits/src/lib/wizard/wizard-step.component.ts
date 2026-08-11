@@ -29,6 +29,7 @@ import {
     TemplateRef,
 } from "@angular/core";
 
+import { _uniqueId } from "../../functions/unique-id";
 import { IWizardSelectionEvent, IWizardStepComponent } from "./public-api";
 import { IBusyConfig } from "../busy/public-api";
 
@@ -43,6 +44,8 @@ import { IBusyConfig } from "../busy/public-api";
 export class WizardStepComponent
     implements IWizardStepComponent, OnInit, OnChanges
 {
+    public readonly stepId = _uniqueId("nui-wizard-step-");
+    public readonly panelId = _uniqueId("nui-wizard-panel-");
     /**
      * Template for step.
      */

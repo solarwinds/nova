@@ -30,6 +30,11 @@ import {
 /** @ignore */
 @Directive({
     selector: "[nuiPopupToggle]",
+    host: {
+        "[attr.aria-expanded]": "opened ? 'true' : 'false'",
+        "[attr.aria-haspopup]": "role",
+        "[attr.aria-controls]": "ariaControls",
+    },
     standalone: false,
 })
 export class PopupToggleDirective {
@@ -37,6 +42,21 @@ export class PopupToggleDirective {
     @Input() isDisabled: boolean;
     /** sets disable state and which prevents emitting toggle (for using it on textbox component) */
     @Input() disabled: boolean;
+
+    /**
+     * Whether the popup is opened (for aria-expanded)
+     */
+    @Input() opened: boolean;
+
+    /**
+     * The role of the popup (for aria-haspopup)
+     */
+    @Input() role: string = "dialog";
+
+    /**
+     * The id of the popup (for aria-controls)
+     */
+    @Input() ariaControls: string;
 
     @Output() toggle = new EventEmitter();
 

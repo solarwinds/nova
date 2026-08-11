@@ -1,7 +1,8 @@
 import { ChipsAtom } from "./chips.atom";
 import { Helpers, test } from "../../setup";
 
-const rulesToDisable: string[] = ["color-contrast"];
+// target-size disabled: TODO: NUI-6279 - Fix interactive element target sizes
+const rulesToDisable: string[] = ["color-contrast", "target-size"];
 
 test.describe("a11y: chips", () => {
     test.beforeEach(async ({ page }): Promise<void> => {

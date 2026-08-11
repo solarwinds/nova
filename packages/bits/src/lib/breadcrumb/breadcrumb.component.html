@@ -1,12 +1,14 @@
 @if (items?.length > 1) {
-<div [attr.aria-label]="ariaLabel" class="nui-breadcrumb">
+<nav [attr.aria-label]="ariaLabel" class="nui-breadcrumb">
     @for (item of items; track item; let isLast = $last) {
     <span class="nui-breadcrumb__wrapper">
         @if (!isLast) {
         <a
             [attr.href]="item?.url"
+            tabindex="0"
             class="nui-breadcrumb__crumb nui-breadcrumb__crumb__link"
             (click)="handleClick($event, item)"
+            (keydown.enter)="handleClick($event, item)"
             >{{ item.title }}</a
         >
         <nui-icon
@@ -14,6 +16,7 @@
             icon="caret-right"
             iconColor="disabled-gray"
             iconSize="small"
+            aria-hidden="true"
         ></nui-icon>
         } @if (isLast) {
         <span
@@ -24,5 +27,5 @@
         }
     </span>
     }
-</div>
+</nav>
 }

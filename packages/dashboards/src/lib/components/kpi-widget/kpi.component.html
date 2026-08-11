@@ -4,7 +4,14 @@
         <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
     </a>
     } @if (!widgetData?.link) {
-    <div class="nui-kpi-indicator" (click)="onInteraction()">
+    <div
+        class="nui-kpi-indicator"
+        [attr.role]="interactive ? 'button' : null"
+        [tabindex]="interactive ? 0 : -1"
+        (click)="onInteraction()"
+        (keydown.enter)="onInteraction()"
+        (keydown.space)="$event.preventDefault(); onInteraction()"
+    >
         <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
     </div>
     }

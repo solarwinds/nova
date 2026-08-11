@@ -1,9 +1,5 @@
 @if (datePicker.datepickerMode === 'day') {
-<table
-    role="grid"
-    [attr.aria-labelledby]="datePicker.uniqueId + '-title'"
-    aria-activedescendant="activeDateId"
->
+<table role="grid" [attr.aria-labelledby]="datePicker.uniqueId + '-title'">
     <thead>
         <tr>
             <th>
@@ -12,6 +8,9 @@
                     type="button"
                     displayStyle="action"
                     icon="caret-left"
+                    ariaLabel="Previous month"
+                    i18n-ariaLabel="@@prevMonth"
+                    title="Previous month"
                     (click)="datePicker.move(-1, $event)"
                     tabindex="-1"
                 ></button>
@@ -42,6 +41,9 @@
                     type="button"
                     displayStyle="action"
                     icon="caret-right"
+                    ariaLabel="Next month"
+                    i18n-ariaLabel="@@nextMonth"
+                    title="Next month"
                     (click)="datePicker.move(1, $event)"
                     tabindex="-1"
                 ></button>
@@ -53,14 +55,15 @@
             } @for (label of labels; track label) {
             <th class="text-center">
                 <div class="day-label">
-                    <span aria-label="label.full">{{ label.abbr }}</span>
+                    <span [attr.aria-label]="label.full">{{ label.abbr }}</span>
                 </div>
             </th>
             }
         </tr>
     </thead>
     <tbody>
-        @for (row of rows; track $index; let index = $index) { @if (row.isRowVisible) {
+        @for (row of rows; track $index; let index = $index) { @if
+        (row.isRowVisible) {
         <tr>
             @if (datePicker.showWeeks) {
             <td class="h6 text-center">

@@ -5,7 +5,11 @@
         </h4>
         @for (key of presetKeys; track key) {
         <div
+            role="button"
+            tabindex="0"
             (click)="selectPreset(key)"
+            (keydown.enter)="selectPreset(key)"
+            (keydown.space)="$event.preventDefault(); selectPreset(key)"
             [ngClass]="{
                 'nui-quick-picker__preset--selected': isPresetSelected(key)
             }"

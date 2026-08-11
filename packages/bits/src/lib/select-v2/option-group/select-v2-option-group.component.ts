@@ -25,6 +25,7 @@ import {
     ContentChildren,
     forwardRef,
     HostBinding,
+    Input,
     Inject,
     OnDestroy,
     Optional,
@@ -47,12 +48,17 @@ import { IOptionedComponent } from "../types";
     template: "<ng-content></ng-content>",
     styleUrls: ["./select-v2-option-group.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    host: { role: "group" },
+    host: {
+        role: "group",
+        "[attr.aria-label]": "ariaLabel",
+    },
     standalone: false,
 })
 export class SelectV2OptionGroupComponent
     implements AfterContentInit, OnDestroy
 {
+    @Input() public ariaLabel: string = "";
+
     /** Whether the Option Group outfiltered */
     @HostBinding("class.hidden")
     public outfiltered: boolean = false;

@@ -69,8 +69,7 @@ import { OptionKeyControlService } from "../option-key-control.service";
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         class: "nui-select-v2",
-        role: "button",
-        "[attr.aria-label]": "accessibleLabel",
+        role: "none",
     },
     standalone: false,
 })
@@ -81,7 +80,7 @@ export class SelectV2Component
     implements AfterContentInit, OnDestroy, OnChanges
 {
     /** Sets a custom template for displaying it in the Option */
-    @Input() public displayValueTemplate: TemplateRef<any>;
+    @Input() public displayValueTemplate?: TemplateRef<any>;
 
     /** Value of the selected Option that derives in the Select */
     public displayText: string;
@@ -150,10 +149,6 @@ export class SelectV2Component
     /** Checks whether value of the Select is empty */
     public get isEmpty(): boolean {
         return !this.getLastSelectedOption();
-    }
-
-    public get accessibleLabel(): string | null {
-        return this.ariaLabel || this.displayText || this.placeholder || null;
     }
 
     /**

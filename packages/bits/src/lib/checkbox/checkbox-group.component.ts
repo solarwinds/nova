@@ -55,7 +55,7 @@ import { NuiFormFieldControl } from "../form-field/public-api";
             multi: true,
         },
     ],
-    host: { role: "group" },
+    host: { role: "group", "[attr.id]": "id" },
     standalone: false,
 })
 /**
@@ -94,7 +94,10 @@ export class CheckboxGroupComponent
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabeledby = "";
+    @Input() public ariaLabelledby = "";
+
+    /** Unique id for the control. */
+    @Input() public id: string;
 
     private subscriptionsArray = new Array<Subscription>();
     private disabled: boolean = false;

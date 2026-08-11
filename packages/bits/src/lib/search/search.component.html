@@ -4,10 +4,11 @@
             class="sr-only"
             [attr.id]="resolvedInputId() + '-label'"
             [attr.for]="resolvedInputId()"
-            >{{ inputAriaLabel }}</label
+            >{{ ariaLabel() }}</label
         >
         <input
             class="nui-search__input-control form-control"
+            role="searchbox"
             [attr.id]="resolvedInputId()"
             [attr.name]="name()"
             type="text"

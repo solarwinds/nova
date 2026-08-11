@@ -77,6 +77,22 @@ export class TextboxComponent
      * Value used as a info in popover for the text box.
      */
     @Input() public info: string;
+    /**
+     * Value used as a aria-activedescendant for the text box.
+     */
+    @Input() public ariaActiveDescendant: string | null;
+    /**
+     * Value used as a aria-expanded for the text box.
+     */
+    @Input() public ariaExpanded: boolean | null;
+    /**
+     * Value used as a aria-haspopup for the text box.
+     */
+    @Input() public ariaHasPopup: string | null;
+    /**
+     * Value used as a aria-controls for the text box.
+     */
+    @Input() public ariaControls: string | null;
 
     /**
      * Use to set a custom width for the input field.
@@ -117,6 +133,11 @@ export class TextboxComponent
     @Input() public type = "text";
 
     /**
+     * Unique id for the control.
+     */
+    @Input() public id: string;
+
+    /**
      * Input initial value
      */
     @Input() public value: string;
@@ -129,7 +150,7 @@ export class TextboxComponent
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel: string = "Textbox input";
+    @Input() public ariaLabel: string = $localize`Textbox input`;
 
     /**
      * Input to apply busy state and show spinner

@@ -39,14 +39,21 @@ export class BaseSelectV2Atom extends Atom {
     }
 
     public async options(): Promise<SelectV2OptionAtom> {
-        let parentLocator: Locator;
-        if (await this.popup.isOpened()) {
-            parentLocator = Helpers.page.locator(
-                "body > .cdk-overlay-container .cdk-overlay-pane"
-            );
-        } else {
-            parentLocator = this.getLocator();
-        }
+        // Target the visible overlay (.nui-overlay) that actually contains
+        // options. Using .nui-overlay (consistent with waitForPopup) instead of
+        // the CDK pane avoids false negatives, because a CDK overlay pane can be
+        // a zero-size container whose positioned content is still visible. It
+        // also skips stale/empty panes left behind by previously closed popups.
+        const openOverlay = Helpers.page
+            .locator(".nui-overlay")
+            .filter({ visible: true })
+            .filter({
+                has: Helpers.page.locator(".nui-select-v2-option"),
+            })
+            .first();
+
+        const parentLocator =
+            (await openOverlay.count()) > 0 ? openOverlay : this.getLocator();
 
         return Atom.findIn<SelectV2OptionAtom>(
             SelectV2OptionAtom,
@@ -55,11 +62,66 @@ export class BaseSelectV2Atom extends Atom {
     }
 
     public get input(): Locator {
-        return this.getLocator().locator(".nui-select-v2__value");
+        return this.getLocator()
+            .locator(".nui-select-v2__value, .nui-select-v2__container")
+            .first();
     }
 
     public get getPopupElement(): Locator {
         return this.popup.getLocator();
+    }
+
+    /**
+     * The visible overlay that actually contains options. Used as a reliable
+     * "dropdown is open" signal (a CDK overlay pane can be a zero-size container
+     * whose positioned content is still visible, so checking the pane alone is
+     * not dependable).
+     */
+    private get openOptionsOverlay(): Locator {
+        return Helpers.page
+            .locator(".nui-overlay")
+            .filter({ visible: true })
+            .filter({ has: Helpers.page.locator(".nui-select-v2-option") })
+            .first();
+    }
+
+    /** The focusable trigger element for select-v2 / combobox-v2. */
+    private get focusableTrigger(): Locator {
+        return this.getLocator()
+            .locator(".nui-combobox-v2__input, .nui-select-v2__container")
+            .first();
+    }
+
+    private async isDropdownOpen(): Promise<boolean> {
+        return (await this.openOptionsOverlay.count()) > 0;
+    }
+
+    /**
+     * Reliably opens the dropdown. A plain click on the trigger can
+     * intermittently fail to open the dropdown when another overlay is
+     * transitioning; focusing the trigger deterministically opens it
+     * (the component opens its dropdown on focus-in).
+     */
+    private async ensureOpen(): Promise<void> {
+        if (await this.isDropdownOpen()) {
+            return;
+        }
+        // The component opens its dropdown on focus-in, which is deterministic.
+        // A plain click can intermittently fail to open it (or immediately
+        // toggle it closed) when another overlay is transitioning.
+        await this.focusableTrigger.focus();
+        try {
+            await this.openOptionsOverlay.waitFor({
+                state: "visible",
+                timeout: 3000,
+            });
+        } catch {
+            await this.click();
+            await this.openOptionsOverlay.waitFor({
+                state: "visible",
+                timeout: 5000,
+            });
+        }
     }
 
     /**
@@ -72,9 +134,7 @@ export class BaseSelectV2Atom extends Atom {
     }
 
     public async getOption(index: number): Promise<SelectV2OptionAtom> {
-        if (!(await this.popup.isOpened())) {
-            await this.toggle();
-        }
+        await this.ensureOpen();
 
         return (await this.options()).nth<SelectV2OptionAtom>(
             SelectV2OptionAtom,
@@ -87,15 +147,14 @@ export class BaseSelectV2Atom extends Atom {
     }
 
     public async getLastOption(): Promise<SelectV2OptionAtom> {
+        await this.ensureOpen();
         const count = await (await this.options()).getLocator().count();
 
         return this.getOption(count - 1);
     }
 
     public async countOptions(): Promise<number> {
-        if (!(await this.popup.isOpened())) {
-            await this.toggle();
-        }
+        await this.ensureOpen();
 
         return await (await this.options()).getLocator().count();
     }

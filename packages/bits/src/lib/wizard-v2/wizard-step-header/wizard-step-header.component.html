@@ -1,6 +1,7 @@
 <div
     class="nui-wizard-step-header__label"
     [nuiTooltip]="stringLabel ? stringLabel : ''"
+    [attr.aria-current]="selected ? 'step' : null"
     [class.nui-wizard-step-header__label--active]="step.completed"
     [class.nui-wizard-step-header__label--selected]="selected"
     [class.nui-wizard-step-header__label--error]="stepState === 'error'"
@@ -15,6 +16,8 @@
     <div class="nui-wizard-step-header__text-label">
         {{ label }}
     </div>
+    } @if (step.completed && !selected) {
+    <span class="cdk-visually-hidden" i18n>Completed</span>
     } @if (step.optional && stepState !== 'error') {
     <div class="nui-wizard-step-header__label--optional">
         {{ optionalLabel }}
@@ -37,6 +40,7 @@
                 <nui-icon
                     [icon]="stepStateConfigMap[stepState]?.icon"
                     [iconColor]="stepStateConfigMap[stepState]?.iconColor"
+                    aria-hidden="true"
                 ></nui-icon>
             </ng-container>
         </span>

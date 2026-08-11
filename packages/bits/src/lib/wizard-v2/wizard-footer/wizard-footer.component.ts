@@ -38,7 +38,6 @@ import { WizardStepFooterDirective } from "../wizard-step-footer.directive";
     styleUrls: ["wizard-footer.component.less"],
     host: {
         class: "nui-wizard-footer",
-        role: "tab",
     },
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,

@@ -94,7 +94,7 @@ export class PopupComponent
     @Input() public appendToBody: boolean = false;
     @Input() public baseElementSelector: string;
     @Input() public isHostToggleRef: boolean;
-    @Input() public ariaLabel: string = "Popup";
+    @Input() public ariaLabel: string = $localize`Popup`;
 
     @Input() set isOpen(open: boolean) {
         if (this.isContentInitialized) {

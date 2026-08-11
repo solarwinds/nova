@@ -81,6 +81,12 @@ export class ChartTooltipDirective implements OnInit, OnDestroy {
             scrollStrategy: this.scrollStrategyOptions.close(),
         });
 
+        // a11y: the overlay element persists in the DOM between show/hide cycles.
+        // Setting aria-live here (not on the component) ensures the live region is
+        // registered once and reliably announces tooltip content to screen readers.
+        this.overlayRef.overlayElement.setAttribute("aria-live", "polite");
+        this.overlayRef.overlayElement.setAttribute("aria-atomic", "true");
+
         if (this.openRemoteControl) {
             this.openSubscription = this.openRemoteControl.subscribe(() => {
                 this.show();

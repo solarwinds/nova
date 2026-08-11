@@ -70,11 +70,7 @@ import { NuiFormFieldControl } from "../../form-field/public-api";
     styleUrls: ["../textbox.component.less", "./textbox-number.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: {
-        role: "spinbutton",
-        "[attr.aria-label]": "ariaLabel",
-        "[attr.aria-valuemin]": "minValue || null",
-        "[attr.aria-valuemax]": "maxValue || null",
-        "[attr.aria-valuenow]": "value || 0",
+        class: "nui-textbox-number-host",
     },
     standalone: false,
 })
@@ -134,6 +130,11 @@ export class TextboxNumberComponent
      * The option to make the textboxNumber read only.
      */
     @Input() public readonly = false;
+
+    /**
+     * Unique id for the control.
+     */
+    @Input() public id: string;
 
     /**
      * Step by which the value are increased/decreased

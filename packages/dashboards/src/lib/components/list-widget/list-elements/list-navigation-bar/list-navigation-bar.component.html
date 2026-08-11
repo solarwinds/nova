@@ -6,6 +6,8 @@
         [isRepeat]="true"
         displayStyle="action"
         icon="arrow-left"
+        aria-label="Back"
+        i18n-aria-label
         [disabled]="!navBarConfig?.buttons?.back?.disabled"
         (click)="onBack()"
     ></button>
@@ -15,6 +17,8 @@
         [isRepeat]="true"
         displayStyle="action"
         icon="overview"
+        aria-label="Home"
+        i18n-aria-label
         (click)="onHome()"
     ></button>
     <div class="list-nav-bar__label">{{ navBarConfig?.label }}</div>

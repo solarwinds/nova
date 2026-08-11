@@ -25,7 +25,6 @@ import { test, Helpers, Animations } from "../../setup";
 test.describe("a11y: select-v2", () => {
     const rulesToDisable: string[] = [
         "color-contrast", // NUI-6014
-        "nested-interactive",
     ];
     let selectBasic: SelectV2Atom;
     let selectErrorState: SelectV2Atom;

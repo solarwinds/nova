@@ -67,6 +67,21 @@ export interface IDialogOptions {
     windowClass?: string;
 
     /**
+     * Explicit aria-label for screen readers.
+     */
+    ariaLabel?: string;
+
+    /**
+     * ID of the element that labels the dialog window.
+     */
+    ariaLabelledby?: string;
+
+    /**
+     * ID of the element that describes the dialog window.
+     */
+    ariaDescribedby?: string;
+
+    /**
      * Temporary solution to display the dialog inside the cdk overlay container
      */
     useOverlay?: boolean;

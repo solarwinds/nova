@@ -129,6 +129,8 @@ export class Chart implements IChart {
                 class: "nui-chart",
                 height: "100%",
                 width: "100%",
+                // aria-hidden: the accessible label is carried by the nui-chart host element (role="img")
+                "aria-hidden": "true",
             });
 
         this.configureCssFilters();

@@ -13,6 +13,7 @@
                 We can automatically change the background color when the value
                 meets certain conditions.
             </p>
+            <!-- TODO: NUI-6281 - Fix no keyboard alternative for drag-to-reorder -->
             <div cdkDropList (cdkDropListDropped)="drop($event)">
                 @for ( rule of formLocal.get('rules')?.value.controls; track
                 rule; let i = $index) {
@@ -72,6 +73,8 @@
                         icon="delete"
                         displayStyle="action"
                         type="button"
+                        aria-label="Remove rule"
+                        i18n-aria-label
                         class="kpi-color-rule__control"
                         (click)="removeRule(i)"
                     ></button>

@@ -56,4 +56,10 @@ export class SelectV2CustomContentExampleComponent {
         });
         event?.stopPropagation();
     }
+
+    public onKeyDown(event: KeyboardEvent): void {
+        if (event.code === "Space") {
+            event.preventDefault();
+        }
+    }
 }

@@ -594,7 +594,7 @@ export class TableWidgetComponent
         this.eventBus.getStream(SELECTION).next({ payload: this.selection });
     }
 
-    public onInteraction(row: any, event: MouseEvent): void {
+    public onInteraction(row: any, event: Event): void {
         if (
             !this.interactive ||
             this.configuration.selectionConfiguration?.enabled

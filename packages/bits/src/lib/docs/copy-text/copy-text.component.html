@@ -5,6 +5,8 @@
         [nuiTooltip]="copyTooltip"
         icon="copy"
         iconColor="primary-blue"
+        ariaLabel="Copy to clipboard"
+        i18n-ariaLabel
         (clipboardSuccess)="onSnippetCopied()"
         nuiClipboard="{{ fileContent }}"
     ></button>

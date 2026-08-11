@@ -184,10 +184,11 @@ test.describe("USERCONTROL Dialog", () => {
         test.beforeEach(async ({ page }) => {
             await defaultDialogBtn.getLocator().scrollIntoViewIfNeeded();
             await defaultDialogBtn.click();
+            await dialog.toBeVisible();
             initiallyFocusedCloseButtonElement = dialog.getCloseButton();
         });
 
-        test("should Close button in header have focus by default", async ({
+        test("should close button in header have focus by default", async ({
             page,
         }) => {
             await assert(page);
