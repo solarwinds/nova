@@ -44,5 +44,15 @@ describe("components >", () => {
             subject.selectTab();
             expect(subject.selected.emit).toHaveBeenCalled();
         });
+
+        it("should expose an explicit id and controlled panel", () => {
+            subject.tabId = "overview";
+            componentFixture.detectChanges();
+
+            const tab =
+                componentFixture.nativeElement.querySelector("[role=\"tab\"]");
+            expect(tab.id).toBe("tab-overview");
+            expect(tab.getAttribute("aria-controls")).toBe("panel-overview");
+        });
     });
 });
