@@ -2,6 +2,7 @@
 
 ## [20.0.11] 📅 2026-09-16
 ### Fixes
+- `@nova-ui/bits` | Align tab and tab-panel IDs with the accessible `tab-{id}` / `panel-{id}` relationship.
 - Prettier formatting fixes across the project
 
 ## [20.0.10] 📅 2026-08-11
