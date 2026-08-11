@@ -37,18 +37,24 @@ import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
 @Component({
     selector: "nui-test-tab-heading-group-cmp",
     template: ` <nui-tab-heading-group (selected)="updateContent($event)">
-        <nui-tab-heading
-            *ngFor="let tab of tabsetContent"
-            [tabId]="tab.id"
-            [active]="currentTabId === tab.id"
-        >
-            <div class="d-flex align-content-center">
-                <div class="d-inline-flex align-items-center">
-                    <span [title]="tab.title">{{ tab.title }}</span>
+            <nui-tab-heading
+                *ngFor="let tab of tabsetContent"
+                [tabId]="tab.id"
+                [active]="currentTabId === tab.id"
+            >
+                <div class="d-flex align-content-center">
+                    <div class="d-inline-flex align-items-center">
+                        <span [title]="tab.title">{{ tab.title }}</span>
+                    </div>
                 </div>
-            </div>
-        </nui-tab-heading>
-    </nui-tab-heading-group>`,
+            </nui-tab-heading>
+        </nui-tab-heading-group>
+        <div
+            *ngFor="let tab of tabsetContent"
+            role="tabpanel"
+            [id]="'panel-' + tab.id"
+            [attr.aria-labelledby]="'tab-' + tab.id"
+        ></div>`,
     standalone: false,
 })
 class TestTabHeadingComponent {
@@ -82,6 +88,24 @@ class TestTabHeadingComponent {
     }
 }
 
+@Component({
+    template: `
+        <nui-tab-heading-group>
+            <nui-tab-heading #tabHeading>Overview</nui-tab-heading>
+        </nui-tab-heading-group>
+        <div
+            role="tabpanel"
+            [id]="tabHeading.panelId"
+            [attr.aria-labelledby]="tabHeading.tabControlId"
+        ></div>
+    `,
+    standalone: false,
+})
+class TestGeneratedTabHeadingComponent {
+    @ViewChild(TabHeadingComponent, { static: true })
+    public tabHeading: TabHeadingComponent;
+}
+
 describe("components >", () => {
     describe("tab heading group >", () => {
         let componentFixture: ComponentFixture<TestTabHeadingComponent>;
@@ -94,6 +118,7 @@ describe("components >", () => {
                     TabHeadingGroupComponent,
                     TabHeadingComponent,
                     TestTabHeadingComponent,
+                    TestGeneratedTabHeadingComponent,
                 ],
             })
                 .compileComponents()
@@ -151,6 +176,41 @@ describe("components >", () => {
             subject.tabHeadings.toArray()[2].selectTab();
             componentFixture.detectChanges();
             expect(subject.currentTabId).toBe("3");
+        });
+
+        it("should relate headings to consumer-owned panels", () => {
+            componentFixture.detectChanges();
+
+            const tab =
+                componentFixture.nativeElement.querySelector("[role=\"tab\"]");
+            const panel =
+                componentFixture.nativeElement.querySelector(
+                    "[role=\"tabpanel\"]"
+                );
+
+            expect(tab.id).toBe("tab-1");
+            expect(tab.getAttribute("aria-controls")).toBe(panel.id);
+            expect(panel.getAttribute("aria-labelledby")).toBe(tab.id);
+        });
+
+        it("should generate an id for a heading without one", () => {
+            const generatedFixture = TestBed.createComponent(
+                TestGeneratedTabHeadingComponent
+            );
+            generatedFixture.detectChanges();
+
+            const { tabHeading } = generatedFixture.componentInstance;
+            const tab =
+                generatedFixture.nativeElement.querySelector("[role=\"tab\"]");
+            const panel =
+                generatedFixture.nativeElement.querySelector(
+                    "[role=\"tabpanel\"]"
+                );
+
+            expect(tabHeading.tabId).toMatch(/^nui-tab-heading-/);
+            expect(tab.id).toBe(tabHeading.tabControlId);
+            expect(tab.getAttribute("aria-controls")).toBe(panel.id);
+            expect(panel.getAttribute("aria-labelledby")).toBe(tab.id);
         });
     });
 });
