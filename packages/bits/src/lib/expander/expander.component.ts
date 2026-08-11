@@ -33,6 +33,8 @@ import {
 import { expandV2 } from "../../animations/expand";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 
+let nextExpanderId = 0;
+
 /**
  * <example-url>./../examples/index.html#/expander</example-url>
  */
@@ -64,9 +66,11 @@ export class ExpanderComponent implements AfterContentInit {
      */
     @Input() hideLeftBorder: boolean = false;
     /**
-     * Accessible label for the expander toggle.
+     * Accessible name used when `header` is not set, so the header button and body region always have a valid label.
+     * Defaults to a localized fallback.
      */
-    @Input() ariaLabel: string;
+    @Input() ariaLabel: string = "";
+    public readonly defaultAriaLabel: string = $localize`Expander`;
     /**
      * Use this to have expander opened by default.
      */
@@ -90,28 +94,16 @@ export class ExpanderComponent implements AfterContentInit {
 
     public state: "expanded" | "collapsed" = "collapsed";
     public isCustomHeaderContentEmpty: boolean = false;
-
-    /** Returns an accessible label only when no visible text content exists in the header. */
-    public get expanderToggleAriaLabel(): string | null {
-        if (this.ariaLabel) {
-            return this.ariaLabel;
-        }
-        return !this.header && this.isCustomHeaderContentEmpty
-            ? $localize`Expander toggle`
-            : null;
-    }
-
-    /** Returns an accessible label for the expander body region. */
-    public get expanderBodyAriaLabel(): string | null {
-        return this.header || this.ariaLabel || $localize`Expander content`;
-    }
+    public uniqueId: string;
 
     /** Unique id for the expander body. */
     public readonly bodyId = `nui-expander-body-${ExpanderComponent.nextUniqueId++}`;
 
     private actionKeys = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
 
-    constructor(private cdRef: ChangeDetectorRef) {}
+    constructor(private cdRef: ChangeDetectorRef) {
+        this.uniqueId = String(++nextExpanderId);
+    }
 
     public ngAfterContentInit(): void {
         this.isCustomHeaderContentEmpty =

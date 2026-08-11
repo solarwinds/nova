@@ -193,9 +193,8 @@ test.describe("USERCONTROL Repeat", () => {
 
             test("should not allow multi selection of disabled items by clicking on checkbox", async () => {
                 await expectOriginalSelection();
-                await list.selectCheckbox(0);
-                await expectOriginalSelection();
-                await list.selectCheckbox(4);
+                await list.getCheckbox(0).toBeDisabled();
+                await list.getCheckbox(4).toBeDisabled();
                 await expectOriginalSelection();
             });
 
