@@ -18,8 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { NgModule } from "@angular/core";
 import { A11yModule } from "@angular/cdk/a11y";
+import { NgModule } from "@angular/core";
 
 import { DayPickerComponent } from "./date-picker-day-picker.component";
 import { DatePickerInnerComponent } from "./date-picker-inner.component";
