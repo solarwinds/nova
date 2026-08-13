@@ -1,12 +1,4 @@
-<div
-    class="nui-list-leaf-item"
-    role="button"
-    tabindex="0"
-    (click)="onButtonClick()"
-    (keydown.enter)="onButtonClick()"
-    (keydown.space)="$event.preventDefault(); onButtonClick()"
->
-    <!-- TODO: NUI-6284 - list-leaf-item contains nested interactive elements -->
+<div class="nui-list-leaf-item">
     <div class="nui-list-leaf-item__info-container">
         <div class="nui-list-leaf-item__icon-container">
             @if (icon) {
@@ -17,7 +9,7 @@
         </div>
         <div class="nui-list-leaf-item__description">
             <a
-                class="nui-text-ellipsis"
+                class="nui-list-leaf-item__link nui-text-ellipsis"
                 [ngClass]="url ? '' : 'not-active'"
                 [attr.target]="url ? '_blank' : null"
                 [attr.href]="url || null"
@@ -32,6 +24,13 @@
         <ng-template #statusTpl>{{ status }}</ng-template>
     </div>
     @if (canNavigate) {
-    <nui-icon icon="caret-right" aria-hidden="true"></nui-icon>
+    <button
+        type="button"
+        class="nui-list-leaf-item__navigate-btn"
+        [attr.aria-label]="label ? 'Navigate to ' + label : 'Navigate'"
+        (click)="onButtonClick()"
+    >
+        <nui-icon icon="caret-right" aria-hidden="true"></nui-icon>
+    </button>
     }
 </div>
