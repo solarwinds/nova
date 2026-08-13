@@ -62,7 +62,11 @@ export class MonthPickerComponent implements OnInit {
 
             for (let i = 0; i < 12; i++) {
                 date = date.clone().set("month", i);
-                months[i] = picker.createDateObject(date, picker.formatMonth);
+                months[i] = picker.createDateObject(
+                    date,
+                    picker.formatMonth,
+                    "MMMM YYYY"
+                );
                 months[i].uid = picker.uniqueId + "-" + i;
             }
 
@@ -82,7 +86,7 @@ export class MonthPickerComponent implements OnInit {
     }
 
     /**
-     * Focuses the month cell holding the roving tabindex (focus target, else current).
+     * Focuses the roving-tabindex cell (focus target, else current).
      */
     public focusActiveCell(): void {
         const cells = this.rows.flat();
@@ -93,5 +97,13 @@ export class MonthPickerComponent implements OnInit {
         const activeButton = this.cellButtons?.toArray()[activeIndex];
 
         activeButton?.nativeElement.focus();
+    }
+
+    public trackByIndex(index: number): number {
+        return index;
+    }
+
+    public trackByCellUid(_index: number, cell: any): string {
+        return cell.uid;
     }
 }

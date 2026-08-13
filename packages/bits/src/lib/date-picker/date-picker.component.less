@@ -77,7 +77,7 @@
         margin-top: (-@nui-datepicker-min-touch-target-size / 2);
         z-index: (@zindex-active + 1);
 
-        // Enlarge only the hit area to the WCAG 2.5.8 24x24 min touch target.
+        // Enlarge hit area to WCAG 2.5.8 24x24 min touch target.
         &.btn.is-empty {
             display: inline-flex;
             align-items: center;
@@ -97,6 +97,30 @@
         min-height: @nui-datepicker-popup-min-height;
         min-width: @nui-datepicker-popup-min-width;
         padding: (@nui-space-sm - @nui-space-xxs) @nui-space-sm;
+
+        .nui-datepicker-nav {
+            align-items: center;
+            display: flex;
+
+            button.btn.btn-action {
+                height: @nui-datepicker-calendar-min-cell-size;
+
+                &.is-empty {
+                    width: @nui-datepicker-calendar-min-cell-size;
+                }
+            }
+
+            .change-mode-button {
+                flex: 1;
+                width: 100%;
+
+                // sets the color for disabled year title button (default is opacity 0.4)
+                &:disabled {
+                    opacity: 1;
+                    .setCssVariable(color, nui-color-off);
+                }
+            }
+        }
 
         table {
             outline: none;
@@ -145,9 +169,14 @@
                     .setCssVariable(background-color, nui-color-selected-contrast);
                     color: @white;
 
-                    &:hover {
+                    &:hover,
+                    &:focus {
                         .setCssVariable(background-color, nui-color-selected-contrast-hover);
                         border-color: transparent;
+                    }
+
+                    &:focus-visible {
+                        .focus-outline();
                     }
 
                     span {
@@ -164,31 +193,6 @@
             // sets font-weight for days in the calendar
             button span {
                 font-weight: normal;
-            }
-
-            th {
-                button.btn.btn-action {
-                    height: @nui-datepicker-calendar-min-cell-size;
-                    width: 100%;
-
-                    &.is-empty {
-                        width: @nui-datepicker-calendar-min-cell-size;
-                    }
-                }
-
-                > button.title {
-                    width: 100%;
-
-                    // sets the color for disabled year title button (default is opacity 0.4)
-                    &:disabled {
-                        opacity: 1;
-                        .setCssVariable(color, nui-color-off);
-                    }
-                }
-
-                &:last-of-type {
-                    text-align: right;
-                }
             }
 
             td {
@@ -222,16 +226,6 @@
                 }
             }
 
-            .today-button {
-                height: @nui-datepicker-calendar-min-cell-size;
-                max-width: none;
-                width: 100%;
-
-                &:focus {
-                    background-color: transparent;
-                }
-            }
-
             .day-label {
                 .setCssVariable(color, nui-color-text-default);
                 align-items: center;
@@ -239,6 +233,16 @@
                 height: @nui-datepicker-calendar-min-cell-size;
                 justify-content: center;
                 min-width: @nui-datepicker-calendar-min-cell-size;
+            }
+        }
+
+        .today-button {
+            height: @nui-datepicker-calendar-min-cell-size;
+            max-width: none;
+            width: 100%;
+
+            &:focus {
+                background-color: transparent;
             }
         }
     }

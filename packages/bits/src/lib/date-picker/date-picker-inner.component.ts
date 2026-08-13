@@ -86,7 +86,7 @@ export class DatePickerInnerComponent
 
     public calendarMoved: Subject<Moment> = new Subject<Moment>();
 
-    // Emits the new mode on day/month/year switches so the host can refocus the grid.
+    // Emits on mode switches so the host can refocus the grid.
     public modeChanged: Subject<string> = new Subject<string>();
 
     protected _value: Moment | undefined;
@@ -244,10 +244,18 @@ export class DatePickerInnerComponent
         }
     }
 
-    public createDateObject(date: Moment, format: string): any {
+    /**
+     * @param ariaFormat - full-text format for assistive tech; defaults to `format`
+     */
+    public createDateObject(
+        date: Moment,
+        format: string,
+        ariaFormat?: string
+    ): any {
         return {
             date: date.clone().toISOString(this.handleTimezone),
             label: this.formatDate(date, format),
+            ariaLabel: this.formatDate(date, ariaFormat ?? format),
             selected: this.compare(date, this.selectedDate) === 0,
             disabled: this.isDisabled(date),
             current: this.compare(date, this.value) === 0,
@@ -266,8 +274,7 @@ export class DatePickerInnerComponent
     }
 
     /**
-     * Marks the cell that owns the roving tabindex/focus: current, else today,
-     * else first enabled, so the grid always has a focusable entry point.
+     * Marks the roving-tabindex cell: current, else today, else first enabled.
      */
     public resolveFocusTarget(cells: any[]): void {
         const target =
@@ -345,8 +352,9 @@ export class DatePickerInnerComponent
 
         this.datepickerMode =
             this.modes[this.modes.indexOf(this.datepickerMode) + direction];
-        this.modeChanged.next(this.datepickerMode);
+        // Populate the grid before emitting, so refocus listeners find a rendered cell.
         this.refreshView();
+        this.modeChanged.next(this.datepickerMode);
         event.stopPropagation();
     }
 

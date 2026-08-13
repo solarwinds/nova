@@ -1,55 +1,53 @@
-<table *ngIf="datePicker.datepickerMode === 'month'" role="grid">
-    <thead>
-        <tr>
-            <th>
-                <button
-                    nui-button
-                    type="button"
-                    displayStyle="action"
-                    icon="caret-left"
-                    ariaLabel="Previous year"
-                    i18n-ariaLabel="@@prevYear"
-                    title="Previous year"
-                    (click)="datePicker.move(-1, $event)"></button>
-            </th>
-            <th>
-                <button
-                    nui-button
-                    type="button"
-                    [id]="datePicker.uniqueId + '-title'"
-                    displayStyle="action"
-                    [disabled]="datePicker.datepickerMode === maxMode"
-                    class="change-mode-button"
-                    [ngClass]="{
-                        disabled: datePicker.datepickerMode === maxMode
-                    }"
-                    (click)="datePicker.toggleMode($event)">
-                    <span>{{ title }}</span>
-                </button>
-            </th>
-            <th>
-                <button
-                    nui-button
-                    type="button"
-                    displayStyle="action"
-                    icon="caret-right"
-                    ariaLabel="Next year"
-                    i18n-ariaLabel="@@nextYear"
-                    title="Next year"
-                    (click)="datePicker.move(1, $event)"></button>
-            </th>
-        </tr>
-    </thead>
+<div *ngIf="datePicker.datepickerMode === 'month'" class="nui-datepicker-nav">
+    <button
+        nui-button
+        type="button"
+        displayStyle="action"
+        icon="caret-left"
+        ariaLabel="Previous year"
+        i18n-ariaLabel="@@prevYear"
+        title="Previous year"
+        (click)="datePicker.move(-1, $event)"
+    ></button>
+    <button
+        nui-button
+        type="button"
+        [id]="datePicker.uniqueId + '-title'"
+        displayStyle="action"
+        [disabled]="datePicker.datepickerMode === maxMode"
+        class="change-mode-button"
+        [ngClass]="{
+            disabled: datePicker.datepickerMode === maxMode
+        }"
+        (click)="datePicker.toggleMode($event)"
+    >
+        <span>{{ title }}</span>
+    </button>
+    <button
+        nui-button
+        type="button"
+        displayStyle="action"
+        icon="caret-right"
+        ariaLabel="Next year"
+        i18n-ariaLabel="@@nextYear"
+        title="Next year"
+        (click)="datePicker.move(1, $event)"
+    ></button>
+</div>
+<table *ngIf="datePicker.datepickerMode === 'month'" role="grid" [attr.aria-labelledby]="datePicker.uniqueId + '-title'">
     <tbody>
-        <tr *ngFor="let row of rows">
+        <tr *ngFor="let row of rows; trackBy: trackByIndex">
             <td
-                *ngFor="let cell of row"
+                *ngFor="let cell of row; trackBy: trackByCellUid"
                 class="text-center month"
-                id="{{ cell.uid }}">
+                id="{{ cell.uid }}"
+                role="presentation"
+            >
                 <button
                     nui-button
                     type="button"
                     #cellButton
+                    role="gridcell"
                     displayStyle="action"
                     [ngClass]="{
                         selected: cell.selected,
@@ -57,6 +55,8 @@
                     }"
                     [disabled]="cell.disabled"
                     [attr.tabindex]="cell.isFocusTarget ? 0 : -1"
+                    [ariaLabel]="cell.ariaLabel"
+                    [attr.aria-selected]="cell.selected ? true : null"
                     (click)="datePicker.select(cell.date, $event)">
                     <span [ngClass]="{ 'text-info': cell.current }">{{
                         cell.label

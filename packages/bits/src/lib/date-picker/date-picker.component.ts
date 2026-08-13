@@ -308,11 +308,14 @@ export class DatePickerComponent
             this.yearPicker
         );
 
-        // Keep focus in the grid across day/month/year switches, so arrows
-        // keep working without an extra Tab.
+        // Refocus the grid on mode switch; force sync render first so
+        // focus never drops to <body> mid-switch.
         this._datePicker.modeChanged
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => this.keyboardService.focusActiveCell());
+            .subscribe(() => {
+                this.cd.detectChanges();
+                this.keyboardService.focusActiveCellSync();
+            });
     }
 
     @HostListener("keydown", ["$event"])

@@ -1,53 +1,51 @@
 @if (datePicker.datepickerMode === 'day') {
+<div class="nui-datepicker-nav">
+    <button
+        nui-button
+        type="button"
+        displayStyle="action"
+        icon="caret-left"
+        ariaLabel="Previous month"
+        i18n-ariaLabel="@@prevMonth"
+        title="Previous month"
+        (click)="datePicker.move(-1, $event)"
+    ></button>
+    <button
+        nui-button
+        type="button"
+        [id]="datePicker.uniqueId + '-title'"
+        displayStyle="action"
+        [disabled]="datePicker.datepickerMode === datePicker.maxMode"
+        class="change-mode-button"
+        [ngClass]="{
+            disabled: datePicker.datepickerMode === datePicker.maxMode
+        }"
+        (click)="datePicker.toggleMode($event)"
+    >
+        <span>{{ title }}</span>
+    </button>
+    <button
+        nui-button
+        type="button"
+        displayStyle="action"
+        icon="caret-right"
+        ariaLabel="Next month"
+        i18n-ariaLabel="@@nextMonth"
+        title="Next month"
+        (click)="datePicker.move(1, $event)"
+    ></button>
+</div>
 <table role="grid" [attr.aria-labelledby]="datePicker.uniqueId + '-title'">
     <thead>
         <tr>
-            <th>
-                <button
-                    nui-button
-                    type="button"
-                    displayStyle="action"
-                    icon="caret-left"
-                    ariaLabel="Previous month"
-                    i18n-ariaLabel="@@prevMonth"
-                    title="Previous month"
-                    (click)="datePicker.move(-1, $event)"></button>
-            </th>
-            <th [attr.colspan]="5 + (datePicker.showWeeks ? 1 : 0)">
-                <button
-                    nui-button
-                    type="button"
-                    [id]="datePicker.uniqueId + '-title'"
-                    displayStyle="action"
-                    [disabled]="
-                        datePicker.datepickerMode === datePicker.maxMode
-                    "
-                    class="change-mode-button"
-                    [ngClass]="{
-                        disabled:
-                            datePicker.datepickerMode === datePicker.maxMode
-                    }"
-                    (click)="datePicker.toggleMode($event)">
-                    <span>{{ title }}</span>
-                </button>
-            </th>
-            <th>
-                <button
-                    nui-button
-                    type="button"
-                    displayStyle="action"
-                    icon="caret-right"
-                    ariaLabel="Next month"
-                    i18n-ariaLabel="@@nextMonth"
-                    title="Next month"
-                    (click)="datePicker.move(1, $event)"></button>
-            </th>
-        </tr>
-        <tr>
             <th *ngIf="datePicker.showWeeks"></th>
-            <th *ngFor="let label of labels" class="text-center">
+            <th
+                *ngFor="let label of labels"
+                class="text-center"
+                role="presentation"
+            >
                 <div class="day-label">
-                    <span aria-label="label.full">{{ label.abbr }}</span>
+                    <span>{{ label.abbr }}</span>
                 </div>
             </th>
         </tr>
@@ -60,13 +58,14 @@
             <td class="h6 text-center">
                 <em>{{ weekNumbers[index] }}</em>
             </td>
-            } @for (cell of row.days; track cell) {
-            <td class="text-center day" [id]="cell.uid">
+            } @for (cell of row.days; track cell.uid) {
+            <td class="text-center day" [id]="cell.uid" role="presentation">
                 @if (cell.isCellVisible) {
                 <button
                     #dayCellButton
                     nui-button
                     type="button"
+                    role="gridcell"
                     displayStyle="action"
                     [ngClass]="{
                         selected: cell.selected,
@@ -77,6 +76,9 @@
                     }"
                     [disabled]="cell.disabled"
                     [attr.tabindex]="cell.isFocusTarget ? 0 : -1"
+                    [ariaLabel]="cell.ariaLabel"
+                    [attr.aria-current]="cell.today ? 'date' : null"
+                    [attr.aria-selected]="cell.selected ? true : null"
                     (click)="datePicker.select(cell.date, $event)">
                     <span>{{ cell.label }}</span>
                 </button>
@@ -85,20 +87,17 @@
             }
         </tr>
         } }
-        <tr>
-            <td [attr.colspan]="7 + (datePicker.showWeeks ? 1 : 0)">
-                <button
-                    nui-button
-                    type="button"
-                    class="today-button"
-                    displayStyle="action"
-                    [disabled]="datePicker.isTodayButtonDisabled"
-                    (click)="datePicker.select(todayDate, $event)"
-                    i18n>
-                    Today
-                </button>
-            </td>
-        </tr>
     </tbody>
 </table>
+<button
+    nui-button
+    type="button"
+    class="today-button"
+    displayStyle="action"
+    [disabled]="datePicker.isTodayButtonDisabled"
+    (click)="datePicker.select(todayDate, $event)"
+    i18n
+>
+    Today
+</button>
 }

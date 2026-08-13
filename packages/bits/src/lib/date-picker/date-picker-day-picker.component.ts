@@ -91,7 +91,8 @@ export class DayPickerComponent implements OnInit {
                     : moment;
                 const _dateObject = picker.createDateObject(
                     handler(_days[i].date),
-                    picker.formatDay
+                    picker.formatDay,
+                    "dddd, MMMM D, YYYY"
                 );
 
                 _dateObject.secondary = _days[i].month !== month;
@@ -110,7 +111,6 @@ export class DayPickerComponent implements OnInit {
                         days[j].date,
                         picker.formatDayHeader
                     ),
-                    full: picker.formatDate(days[j].date, "EEEE"),
                 };
             }
 
@@ -167,7 +167,7 @@ export class DayPickerComponent implements OnInit {
     }
 
     /**
-     * Focuses the day cell holding the roving tabindex (focus target, else current).
+     * Focuses the roving-tabindex cell (focus target, else current).
      */
     public focusActiveCell(): void {
         const visibleCells = this.rows

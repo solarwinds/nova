@@ -28,27 +28,25 @@ import { YearPickerComponent } from "./date-picker-year-picker.component";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 
-// Safety limit to avoid infinite loops if every remaining date is disabled
+// Safety limit if every remaining date is disabled
 const MAX_DISABLED_DATE_SKIPS = 366;
 
-// Calendar units the grid navigates by, one per picker mode
+// Units the grid navigates by, per mode
 type CalendarUnit = "days" | "months" | "years";
 
-// A picker grid whose active cell can receive DOM focus
+// Picker grid that can focus its active cell
 interface FocusablePicker {
     focusActiveCell(): void;
 }
 
 /**
- * Keyboard interaction for the day/month/year grids, per the WAI-ARIA APG
- * Date Picker Dialog pattern.
+ * Keyboard interaction for the day/month/year grids (WAI-ARIA APG Date Picker pattern).
  * @ignore
  */
 @Injectable()
 export class DatePickerKeyboardService {
-    // Per-mode nav config: arrow step unit, grid columns (for Up/Down), and
-    // the PageUp/PageDown unit. `pageAmount` is omitted for year view, which
-    // resolves it to `yearRange` at runtime.
+    // Per-mode nav config: step unit, grid columns, page unit.
+    // Year omits pageAmount - resolved to yearRange at runtime.
     private static readonly modeNav: Record<
         string,
         {
@@ -73,7 +71,7 @@ export class DatePickerKeyboardService {
         year: { stepUnit: "years", columns: 5, pageUnit: "years" },
     };
 
-    // Arrow keys: horizontal = +/-1 unit, vertical = +/-one grid row (columns)
+    // Arrow keys: +/-1 horizontal, +/-columns vertical
     private static getArrowOffset(
         code: string,
         columns: number
@@ -116,8 +114,7 @@ export class DatePickerKeyboardService {
         }
     }
 
-    // True when the event comes from an editable field (e.g. the date input),
-    // so grid navigation should defer to native caret behavior.
+    // True when event is from an editable field (defer to native caret)
     private static isFromEditableInput(event: KeyboardEvent): boolean {
         const tagName = (event.target as HTMLElement | null)?.tagName;
 
@@ -148,7 +145,7 @@ export class DatePickerKeyboardService {
     }
 
     public onKeyDown(event: KeyboardEvent): void {
-        // Inline pickers have no overlay - the grid is always considered "open"
+        // Inline pickers have no overlay - grid is always "open"
         const isOpen = !this.overlay || this.overlay.showing;
 
         isOpen ? this.handleOpenedCalendar(event) : this.handleClosedCalendar(event);
@@ -171,7 +168,7 @@ export class DatePickerKeyboardService {
             return;
         }
 
-        // Don't hijack arrow/page keys from an editable field - keep native caret movement
+        // Don't hijack keys from an editable field
         if (DatePickerKeyboardService.isFromEditableInput(event)) {
             return;
         }
@@ -204,8 +201,7 @@ export class DatePickerKeyboardService {
             return;
         }
 
-        // Home/End jump to first/last cell of the page (day and month only;
-        // year has no single edge to jump to).
+        // Home/End jump to first/last cell (day/month only)
         const edge = DatePickerKeyboardService.getEdgeDirection(code);
         if (edge !== undefined) {
             const current = this.getActiveDate();
@@ -244,8 +240,7 @@ export class DatePickerKeyboardService {
         this.applyActiveDate(current, next);
     }
 
-    // Jumps a whole page; moment auto-clamps day-of-month for shorter months
-    // (e.g. Jan 31 -> Feb 28).
+    // Jumps a whole page; moment auto-clamps shorter months
     private moveByPage(amount: number, unit: CalendarUnit): void {
         const current = this.getActiveDate();
         const next = current.clone().add(amount, unit);
@@ -264,7 +259,8 @@ export class DatePickerKeyboardService {
             picker.calendarMoved.next(next);
         }
 
-        this.focusActiveCell();
+        // Focus synchronously, before change detection paints new labels
+        this.getActivePicker()?.focusActiveCell();
     }
 
     // Page identifier for the active grid; calendarMoved fires only on page change
@@ -286,8 +282,7 @@ export class DatePickerKeyboardService {
         }
     }
 
-    // First/last cell of the page for Home/End (day -> 1st/last day of month,
-    // month -> Jan/Dec). Undefined for modes with no supported edge (year).
+    // First/last cell for Home/End; undefined for year (no edge)
     private getEdgeDate(
         date: Moment,
         edge: "start" | "end"
@@ -314,6 +309,12 @@ export class DatePickerKeyboardService {
     public focusActiveCell(): void {
         // Wait a tick for the grid to re-render before focusing
         setTimeout(() => this.getActivePicker()?.focusActiveCell());
+    }
+
+    // Synchronous focus, for callers that already forced change detection
+    // (avoids a gap where focus falls to <body> and AT announces page content)
+    public focusActiveCellSync(): void {
+        this.getActivePicker()?.focusActiveCell();
     }
 
     // Picker grid matching the current mode

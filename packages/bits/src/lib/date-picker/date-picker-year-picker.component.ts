@@ -83,7 +83,7 @@ export class YearPickerComponent implements OnInit {
     }
 
     /**
-     * Focuses the year cell holding the roving tabindex (focus target, else current).
+     * Focuses the roving-tabindex cell (focus target, else current).
      */
     public focusActiveCell(): void {
         const cells = this.rows.flat();
@@ -94,6 +94,14 @@ export class YearPickerComponent implements OnInit {
         const activeButton = this.cellButtons?.toArray()[activeIndex];
 
         activeButton?.nativeElement.focus();
+    }
+
+    public trackByIndex(index: number): number {
+        return index;
+    }
+
+    public trackByCellUid(_index: number, cell: any): string {
+        return cell.uid;
     }
 
     protected getStartingYear(year: number): number {
