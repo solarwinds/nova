@@ -8,6 +8,7 @@
             [ariaControls]="
                 currentTabRoute === tab.id ? 'panel-' + tab.id : null
             "
+            tabindex="-1"
             routerLink="/tabgroup/{{ tab.id }}"
             [active]="currentTabRoute === tab.id">
             <div class="d-flex align-content-center">

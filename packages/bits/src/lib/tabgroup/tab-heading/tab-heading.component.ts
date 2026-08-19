@@ -109,6 +109,7 @@ export class TabHeadingComponent {
             event.code === KEYBOARD_CODE.SPACE
         ) {
             event.preventDefault();
+            this.selectTab();
             this.elementRef.nativeElement.click();
         }
     }
