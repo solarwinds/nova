@@ -40,6 +40,7 @@ import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
             <nui-tab-heading
                 *ngFor="let tab of tabsetContent"
                 [tabId]="tab.id"
+                [ariaControls]="'panel-' + tab.id"
                 [active]="currentTabId === tab.id"
             >
                 <div class="d-flex align-content-center">
@@ -91,7 +92,11 @@ class TestTabHeadingComponent {
 @Component({
     template: `
         <nui-tab-heading-group>
-            <nui-tab-heading #tabHeading>Overview</nui-tab-heading>
+            <nui-tab-heading
+                #tabHeading
+                [ariaControls]="tabHeading.panelId"
+                >Overview</nui-tab-heading
+            >
         </nui-tab-heading-group>
         <div
             role="tabpanel"

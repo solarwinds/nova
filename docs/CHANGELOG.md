@@ -2,7 +2,7 @@
 
 ## [20.0.11] 📅 2026-09-16
 ### Fixes
-- `@nova-ui/bits` | Align tab and tab-panel IDs with the accessible `tab-{id}` / `panel-{id}` relationship.
+- `@nova-ui/bits` | Fixed tab accessibility relationships by aligning `nui-tab` and consumer-owned tab panels with `tab-{id}` / `panel-{id}` IDs. `nui-tab-heading` now sets `aria-controls` only when the consumer provides the controlled panel ID through `ariaControls`.
 - Prettier formatting fixes across the project
 
 ## [20.0.10] 📅 2026-08-11

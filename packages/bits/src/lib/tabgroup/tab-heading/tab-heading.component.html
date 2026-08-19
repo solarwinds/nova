@@ -4,7 +4,7 @@
     [tabindex]="disabled ? -1 : 0"
     [attr.aria-selected]="active ? 'true' : 'false'"
     [attr.id]="tabControlId"
-    [attr.aria-controls]="panelId"
+    [attr.aria-controls]="ariaControls"
     role="tab"
     (click)="selectTab()"
     (keydown)="onKeyDown($event)">

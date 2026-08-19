@@ -4,6 +4,7 @@
     <nui-tab-heading
         *ngFor="let tab of tabs"
         [tabId]="tab.id"
+        [ariaControls]="'panel-' + tab.id"
         [active]="currentTabId === tab.id"
         >{{ tab.title }}</nui-tab-heading
     >

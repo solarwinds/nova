@@ -75,6 +75,9 @@ export class TabHeadingComponent {
         return this._tabId;
     }
 
+    /** ID of the panel controlled by this tab, when a consumer-owned panel exists. */
+    @Input() public ariaControls: string | null;
+
     public get tabControlId(): string {
         return TAB_ID_PREFIX + this.tabId;
     }
