@@ -3,8 +3,8 @@
         <nui-tab-heading
             *ngFor="let tab of tabsetContent"
             [disabled]="tab.isDisabled"
-            [tabId]="tab.id"
-            [ariaControls]="'panel-' + tab.id"
+            [tabId]="'with-content-' + tab.id"
+            [ariaControls]="'panel-with-content-' + tab.id"
         >
             <div class="d-flex align-content-center">
                 <div class="d-inline-flex align-items-center">
@@ -30,8 +30,8 @@
     <div
         *ngFor="let tab of tabsetContent"
         role="tabpanel"
-        [id]="'panel-' + tab.id"
-        [attr.aria-labelledby]="'tab-' + tab.id"
+        [id]="'panel-with-content-' + tab.id"
+        [attr.aria-labelledby]="'tab-with-content-' + tab.id"
         [hidden]="currentTabId !== tab.id"
     >
         <nui-content size="small" *ngIf="currentTabId === tab.id">
