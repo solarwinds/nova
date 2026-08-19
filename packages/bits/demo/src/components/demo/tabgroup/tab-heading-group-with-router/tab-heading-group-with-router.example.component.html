@@ -3,6 +3,9 @@
         <nui-tab-heading
             *ngFor="let tab of tabsetContent"
             [tabId]="tab.id"
+            [ariaControls]="
+                currentTabRoute === tab.id ? 'panel-' + tab.id : null
+            "
             routerLink="/tabgroup/{{ tab.id }}"
             [active]="currentTabRoute === tab.id">
             <div class="d-flex align-content-center">
@@ -26,6 +29,14 @@
         </nui-tab-heading>
     </nui-tab-heading-group>
 
-    <!-- Tab content is placed below depending on the component used in a certain routing -->
-    <router-outlet></router-outlet>
+    <div
+        role="tabpanel"
+        [attr.id]="currentTabRoute ? 'panel-' + currentTabRoute : null"
+        [attr.aria-labelledby]="
+            currentTabRoute ? 'tab-' + currentTabRoute : null
+        "
+    >
+        <!-- Tab content is placed below depending on the component used in a certain routing -->
+        <router-outlet></router-outlet>
+    </div>
 </div>
