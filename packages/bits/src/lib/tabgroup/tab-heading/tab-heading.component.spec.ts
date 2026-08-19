@@ -50,7 +50,7 @@ describe("components >", () => {
             componentFixture.detectChanges();
 
             const tab =
-                componentFixture.nativeElement.querySelector("[role=\"tab\"]");
+                componentFixture.nativeElement.querySelector('[role="tab"]');
             expect(tab.id).toBe("tab-overview");
             expect(tab.getAttribute("aria-controls")).toBeNull();
         });
@@ -61,7 +61,7 @@ describe("components >", () => {
             componentFixture.detectChanges();
 
             const tab =
-                componentFixture.nativeElement.querySelector("[role=\"tab\"]");
+                componentFixture.nativeElement.querySelector('[role="tab"]');
             expect(tab.id).toBe("tab-overview");
             expect(tab.getAttribute("aria-controls")).toBe("panel-overview");
         });
