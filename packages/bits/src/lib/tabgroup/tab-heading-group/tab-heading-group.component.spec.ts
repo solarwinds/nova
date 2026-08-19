@@ -189,10 +189,10 @@ describe("components >", () => {
             componentFixture.detectChanges();
 
             const tab =
-                componentFixture.nativeElement.querySelector('[role="tab"]');
+                componentFixture.nativeElement.querySelector("[role='tab']");
             const panel =
                 componentFixture.nativeElement.querySelector(
-                    '[role="tabpanel"]'
+                    "[role='tabpanel']"
                 );
 
             expect(tab.id).toBe("tab-1");
@@ -208,10 +208,10 @@ describe("components >", () => {
 
             const { tabHeading } = generatedFixture.componentInstance;
             const tab =
-                generatedFixture.nativeElement.querySelector('[role="tab"]');
+                generatedFixture.nativeElement.querySelector("[role='tab']");
             const panel =
                 generatedFixture.nativeElement.querySelector(
-                    '[role="tabpanel"]'
+                    "[role='tabpanel']"
                 );
 
             expect(tabHeading.tabId).toMatch(/^nui-tab-heading-/);
