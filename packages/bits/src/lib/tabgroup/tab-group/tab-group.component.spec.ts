@@ -53,10 +53,10 @@ describe("components > tab group", () => {
 
     it("should connect every tab to its panel", () => {
         const tabs =
-            componentFixture.nativeElement.querySelectorAll('[role="tab"]');
+            componentFixture.nativeElement.querySelectorAll("[role='tab']");
         const panels =
             componentFixture.nativeElement.querySelectorAll(
-                '[role="tabpanel"]'
+                "[role='tabpanel']"
             );
 
         expect(tabs.length).toBe(2);
