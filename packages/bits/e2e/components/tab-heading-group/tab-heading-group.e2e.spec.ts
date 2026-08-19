@@ -94,4 +94,73 @@ test.describe("USERCONTROL tab heading group", () => {
         await lastTab.click();
         await lastTab.toBeActive();
     });
+
+    test("should relate each routed tab to the current panel", async ({
+        page,
+    }) => {
+        const routes = ["tab-settings", "tab-statistics", "tab-about"];
+
+        for (const route of routes) {
+            await Helpers.prepareBrowser(`tabgroup/${route}`, page);
+
+            const routerExample = page.locator(
+                "nui-tab-heading-group-with-router-example"
+            );
+            const activeTab = routerExample.locator(
+                "[role='tab'][aria-selected='true']"
+            );
+            const panel = routerExample.locator("[role='tabpanel']");
+
+            await expect(activeTab).toHaveAttribute("id", `tab-${route}`);
+            await expect(activeTab).toHaveAttribute(
+                "aria-controls",
+                `panel-${route}`
+            );
+            await expect(panel).toHaveCount(1);
+            await expect(panel).toHaveAttribute("id", `panel-${route}`);
+            await expect(panel).toHaveAttribute(
+                "aria-labelledby",
+                `tab-${route}`
+            );
+            await expect(
+                routerExample.locator(
+                    "[role='tab'][aria-selected='false'][aria-controls]"
+                )
+            ).toHaveCount(0);
+        }
+    });
+
+    test("should update the routed panel relationship when switching tabs", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("tabgroup/tab-settings", page);
+
+        const routerExample = page.locator(
+            "nui-tab-heading-group-with-router-example"
+        );
+        await routerExample.locator("nui-tab-heading").nth(1).click();
+
+        await expect(page).toHaveURL(/\/#\/tabgroup\/tab-statistics$/);
+
+        const activeTab = routerExample.locator(
+            "[role='tab'][aria-selected='true']"
+        );
+        const panel = routerExample.locator("[role='tabpanel']");
+
+        await expect(activeTab).toHaveAttribute("id", "tab-tab-statistics");
+        await expect(activeTab).toHaveAttribute(
+            "aria-controls",
+            "panel-tab-statistics"
+        );
+        await expect(panel).toHaveAttribute("id", "panel-tab-statistics");
+        await expect(panel).toHaveAttribute(
+            "aria-labelledby",
+            "tab-tab-statistics"
+        );
+        await expect(
+            routerExample.locator(
+                "[role='tab'][aria-selected='false'][aria-controls]"
+            )
+        ).toHaveCount(0);
+    });
 });
