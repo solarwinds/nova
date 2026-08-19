@@ -45,8 +45,19 @@ describe("components >", () => {
             expect(subject.selected.emit).toHaveBeenCalled();
         });
 
-        it("should expose an explicit id and controlled panel", () => {
+        it("should expose an explicit id without assuming a controlled panel", () => {
             subject.tabId = "overview";
+            componentFixture.detectChanges();
+
+            const tab =
+                componentFixture.nativeElement.querySelector("[role=\"tab\"]");
+            expect(tab.id).toBe("tab-overview");
+            expect(tab.getAttribute("aria-controls")).toBeNull();
+        });
+
+        it("should expose an explicitly provided controlled panel", () => {
+            subject.tabId = "overview";
+            subject.ariaControls = subject.panelId;
             componentFixture.detectChanges();
 
             const tab =
