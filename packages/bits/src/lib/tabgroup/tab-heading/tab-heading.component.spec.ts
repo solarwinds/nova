@@ -45,6 +45,15 @@ describe("components >", () => {
             expect(subject.selected.emit).toHaveBeenCalled();
         });
 
+        it("should emit event when activated with Enter or Space", () => {
+            spyOn(subject.selected, "emit");
+
+            subject.onKeyDown(new KeyboardEvent("keydown", { code: "Enter" }));
+            subject.onKeyDown(new KeyboardEvent("keydown", { code: "Space" }));
+
+            expect(subject.selected.emit).toHaveBeenCalledTimes(2);
+        });
+
         it("should expose an explicit id without assuming a controlled panel", () => {
             subject.tabId = "overview";
             componentFixture.detectChanges();

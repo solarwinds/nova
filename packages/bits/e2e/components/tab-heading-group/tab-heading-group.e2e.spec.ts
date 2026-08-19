@@ -95,6 +95,24 @@ test.describe("USERCONTROL tab heading group", () => {
         await lastTab.toBeActive();
     });
 
+    test("should activate a focused tab with Enter and Space", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("tabgroup", page);
+
+        const tabs = page.locator(
+            "nui-tab-heading-group-dynamic-example [role='tab']"
+        );
+
+        await tabs.nth(1).focus();
+        await page.keyboard.press("Enter");
+        await expect(tabs.nth(1)).toHaveAttribute("aria-selected", "true");
+
+        await tabs.nth(0).focus();
+        await page.keyboard.press("Space");
+        await expect(tabs.nth(0)).toHaveAttribute("aria-selected", "true");
+    });
+
     test("should relate each routed tab to the current panel", async ({
         page,
     }) => {
@@ -138,7 +156,9 @@ test.describe("USERCONTROL tab heading group", () => {
         const routerExample = page.locator(
             "nui-tab-heading-group-with-router-example"
         );
-        await routerExample.locator("nui-tab-heading").nth(1).click();
+        const statisticsTab = routerExample.locator("[role='tab']").nth(1);
+        await statisticsTab.focus();
+        await page.keyboard.press("Enter");
 
         await expect(page).toHaveURL(/\/#\/tabgroup\/tab-statistics$/);
 
@@ -162,5 +182,11 @@ test.describe("USERCONTROL tab heading group", () => {
                 "[role='tab'][aria-selected='false'][aria-controls]"
             )
         ).toHaveCount(0);
+        await expect(
+            routerExample.locator("nui-tab-heading[tabindex='-1']")
+        ).toHaveCount(3);
+        await expect(
+            routerExample.locator("[role='tab'][tabindex='0']")
+        ).toHaveCount(3);
     });
 });
