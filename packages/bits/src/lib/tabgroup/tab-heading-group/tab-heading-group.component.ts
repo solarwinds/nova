@@ -245,8 +245,8 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
     }
 
     public ngOnDestroy(): void {
-        this._changesSubscription.unsubscribe();
+        this._changesSubscription?.unsubscribe();
         this._tabSelectedSubscriptions.forEach(sub => sub.unsubscribe());
-        this._ro.disconnect();
+        this._ro?.disconnect();
     }
 }
