@@ -69,35 +69,55 @@
 </div>
 <nui-example-code language="html" [code]="intro" />
 <div class="d-flex align-items-center code-line px-3">
-    <nui-switch [(value)]="hasLegend"></nui-switch>
+    <nui-switch
+        [(value)]="hasLegend"
+        ariaLabel="Legend"
+        i18n-ariaLabel
+    ></nui-switch>
     <nui-example-code
         language="html"
         [ngClass]="{ 'turned-off': !hasLegend }"
         [code]="getCodeLine('legend', 'Legend')" />
 </div>
 <div class="d-flex align-items-center code-line px-3">
-    <nui-switch [(value)]="hasLegendBottom"></nui-switch>
+    <nui-switch
+        [(value)]="hasLegendBottom"
+        ariaLabel="Bottom legend"
+        i18n-ariaLabel
+    ></nui-switch>
     <nui-example-code
         language="html"
         [ngClass]="{ 'turned-off': !hasLegendBottom }"
         [code]="getCodeLine('legend-bottom', 'Bottom legend')" />
 </div>
 <div class="d-flex align-items-center code-line px-3">
-    <nui-switch [(value)]="hasAxisLabelLeft"></nui-switch>
+    <nui-switch
+        [(value)]="hasAxisLabelLeft"
+        ariaLabel="Left axis label"
+        i18n-ariaLabel
+    ></nui-switch>
     <nui-example-code
         language="html"
         [ngClass]="{ 'turned-off': !hasAxisLabelLeft }"
         [code]="getCodeLine('axis-label-left', 'Left axis label')" />
 </div>
 <div class="d-flex align-items-center code-line px-3">
-    <nui-switch [(value)]="hasAxisLabelRight"></nui-switch>
+    <nui-switch
+        [(value)]="hasAxisLabelRight"
+        ariaLabel="Right axis label"
+        i18n-ariaLabel
+    ></nui-switch>
     <nui-example-code
         language="html"
         [ngClass]="{ 'turned-off': !hasAxisLabelRight }"
         [code]="getCodeLine('axis-label-right', 'Right axis label')" />
 </div>
 <div class="d-flex align-items-center code-line px-3">
-    <nui-switch [(value)]="hasAxisLabelBottom"></nui-switch>
+    <nui-switch
+        [(value)]="hasAxisLabelBottom"
+        ariaLabel="Bottom axis label"
+        i18n-ariaLabel
+    ></nui-switch>
     <nui-example-code
         language="html"
         [ngClass]="{ 'turned-off': !hasAxisLabelBottom }"
