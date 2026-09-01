@@ -4,7 +4,8 @@
             *ngFor="let tab of tabsetContent"
             [tabId]="'dynamic-' + tab.id"
             [ariaControls]="'panel-dynamic-' + tab.id"
-            [active]="currentTabId === tab.id">
+            [active]="currentTabId === 'dynamic-' + tab.id"
+        >
             <div class="d-flex align-content-center">
                 <div class="d-inline-flex align-items-center">
                     <div class="ellipsis">
@@ -21,8 +22,9 @@
         tabindex="0"
         [id]="'panel-dynamic-' + tab.id"
         [attr.aria-labelledby]="'tab-dynamic-' + tab.id"
-        [hidden]="currentTabId !== tab.id">
-        <nui-content size="small" *ngIf="currentTabId === tab.id">
+        [hidden]="currentTabId !== 'dynamic-' + tab.id"
+    >
+        <nui-content size="small" *ngIf="currentTabId === 'dynamic-' + tab.id">
             <p>
                 Tab titeled <strong>{{ tab.title }}</strong> with id
                 <strong>{{ tab.id }}</strong

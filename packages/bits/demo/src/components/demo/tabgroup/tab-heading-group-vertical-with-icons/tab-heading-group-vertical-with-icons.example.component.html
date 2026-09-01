@@ -15,7 +15,8 @@
                         [iconColor]="
                             tab.isDisabled
                                 ? tab.icon.disabledColor
-                                : currentTabId === tab.id
+                                : currentTabId ===
+                                  'vertical-with-icons-' + tab.id
                                 ? tab.icon.activeColor
                                 : tab.icon.inactiveColor
                         "></nui-icon>
