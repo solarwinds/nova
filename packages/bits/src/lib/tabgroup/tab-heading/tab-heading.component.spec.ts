@@ -87,5 +87,14 @@ describe("components >", () => {
             expect(tab.id).toBe("tab-overview");
             expect(tab.getAttribute("aria-controls")).toBe("panel-overview");
         });
+
+        it("should expose an accessible name when provided", () => {
+            subject.ariaLabel = "Settings";
+            componentFixture.detectChanges();
+
+            const tab =
+                componentFixture.nativeElement.querySelector("[role='tab']");
+            expect(tab.getAttribute("aria-label")).toBe("Settings");
+        });
     });
 });
