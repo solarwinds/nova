@@ -16,7 +16,9 @@
             <div
                 class="nui-tabs__container"
                 role="tablist"
-                [class.flex-column]="vertical">
+                [class.flex-column]="vertical"
+                [attr.aria-orientation]="vertical ? 'vertical' : null"
+                (keydown)="onKeyDown($event)">
                 @for (tab of tabs; track tab) {
                 <div
                     class="nui-tab"
@@ -29,7 +31,9 @@
                         role="tab"
                         [id]="tab.tabControlId"
                         [attr.aria-controls]="tab.panelId"
-                        [attr.tabindex]="tab.disabled ? -1 : 0"
+                        [attr.tabindex]="
+                            tab.disabled || !tab.active ? -1 : 0
+                        "
                         [attr.aria-selected]="tab.active"
                         [attr.aria-disabled]="tab.disabled || null"
                         (click)="selectTab(tab)"
