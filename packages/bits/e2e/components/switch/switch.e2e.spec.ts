@@ -93,4 +93,12 @@ test.describe("USERCONTROL switch", () => {
         await switchComponent.slider.press("Space");
         await switchComponent.isOn();
     });
+
+    test("should change value with Enter", async () => {
+        await switchComponent.isOn();
+        await switchComponent.slider.press("Enter");
+        await switchComponent.isOff();
+        await switchComponent.slider.press("Enter");
+        await switchComponent.isOn();
+    });
 });
