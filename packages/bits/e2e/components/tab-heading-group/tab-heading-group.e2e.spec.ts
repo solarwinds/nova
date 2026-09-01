@@ -170,6 +170,30 @@ test.describe("USERCONTROL tab heading group", () => {
         await expect(verticalTabs.nth(0)).toBeFocused();
     });
 
+    test("should provide accessible names for icon-only tabs", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("tabgroup", page);
+
+        const tabs = page.locator(
+            "nui-tab-heading-group-with-icons-example [role='tab']"
+        );
+        const accessibleNames = [
+            "Settings",
+            "Statistics",
+            "Acknowledgements",
+            "Add tab",
+        ];
+
+        await expect(tabs).toHaveCount(accessibleNames.length);
+        for (let index = 0; index < accessibleNames.length; index++) {
+            await expect(tabs.nth(index)).toHaveAttribute(
+                "aria-label",
+                accessibleNames[index]
+            );
+        }
+    });
+
     test("should relate every routed tab to the shared panel", async ({
         page,
     }) => {
@@ -220,6 +244,19 @@ test.describe("USERCONTROL tab heading group", () => {
         await page.keyboard.press("Enter");
 
         await expect(page).toHaveURL(/\/#\/tabgroup\/tab-statistics$/);
+
+        const switches = page.locator(
+            "nui-content-statistics-example [role='checkbox']"
+        );
+        await expect(switches.nth(0)).toHaveAccessibleName(
+            "Enable Statistics"
+        );
+        await expect(switches.nth(1)).toHaveAccessibleName(
+            "Enable Thresholds"
+        );
+        await expect(switches.nth(2)).toHaveAccessibleName(
+            "Activate Superpower"
+        );
 
         const tabs = routerExample.locator("[role='tab']");
         const panel = routerExample.locator("[role='tabpanel']");
