@@ -54,6 +54,19 @@ describe("components >", () => {
             expect(subject.selected.emit).toHaveBeenCalledTimes(2);
         });
 
+        it("should expose the disabled state to assistive technology", () => {
+            subject.disabled = true;
+            componentFixture.detectChanges();
+
+            const tab =
+                componentFixture.nativeElement.querySelector("[role='tab']");
+            expect(tab.getAttribute("aria-disabled")).toBe("true");
+
+            subject.disabled = false;
+            componentFixture.detectChanges();
+            expect(tab.getAttribute("aria-disabled")).toBeNull();
+        });
+
         it("should expose an explicit id without assuming a controlled panel", () => {
             subject.tabId = "overview";
             componentFixture.detectChanges();
