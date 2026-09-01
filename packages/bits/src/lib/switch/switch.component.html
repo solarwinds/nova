@@ -6,7 +6,6 @@
     <div class="nui-switch__container">
         <div
             class="nui-switch__bar"
-            [id]="id"
             (click)="toggle()"
             (keydown.enter)="$event.preventDefault(); toggle()"
             (keydown.space)="$event.preventDefault(); toggle()"
@@ -14,8 +13,9 @@
             role="checkbox"
             [attr.aria-checked]="value"
             [attr.aria-disabled]="disabled || null"
-            [attr.aria-label]="ariaLabel || null"
-            [attr.aria-labelledby]="ariaLabel ? null : labelId">
+            [attr.aria-label]="accessibleLabel"
+            [attr.aria-labelledby]="labelIdIfProjected"
+        >
             <div class="nui-switch__on">
                 <svg
                     aria-hidden="true"
@@ -33,7 +33,7 @@
                     viewBox="0 0 7.1 6.7"></svg>
             </div>
         </div>
-        <label class="nui-switch__label" [attr.id]="labelId">
+        <label #switchLabel class="nui-switch__label" [attr.id]="labelId">
             <ng-content></ng-content>
         </label>
     </div>
