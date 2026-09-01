@@ -28,6 +28,7 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 
+import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
 import { TabComponent } from "../tab/tab.component";
 
 // <example-url>./../examples/index.html#/tabgroup</example-url>
@@ -98,6 +99,43 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
         }
     }
 
+    public onKeyDown(event: KeyboardEvent): void {
+        const tabElement = (event.target as HTMLElement)?.closest?.(
+            "[role='tab']"
+        ) as HTMLElement;
+        const tabElements = Array.from(
+            this.el.nativeElement.querySelectorAll("[role='tab']")
+        ) as HTMLElement[];
+        const currentIndex = tabElements.indexOf(tabElement);
+
+        if (currentIndex < 0) {
+            return;
+        }
+
+        const isForwardKey =
+            (!this.vertical && event.code === KEYBOARD_CODE.ARROW_RIGHT) ||
+            (this.vertical && event.code === KEYBOARD_CODE.ARROW_DOWN);
+        const isBackwardKey =
+            (!this.vertical && event.code === KEYBOARD_CODE.ARROW_LEFT) ||
+            (this.vertical && event.code === KEYBOARD_CODE.ARROW_UP);
+        let nextIndex = -1;
+
+        if (isForwardKey) {
+            nextIndex = this.findEnabledTabIndex(currentIndex, 1);
+        } else if (isBackwardKey) {
+            nextIndex = this.findEnabledTabIndex(currentIndex, -1);
+        } else if (event.code === KEYBOARD_CODE.HOME) {
+            nextIndex = this.findEnabledTabIndex(-1, 1);
+        } else if (event.code === KEYBOARD_CODE.END) {
+            nextIndex = this.findEnabledTabIndex(tabElements.length, -1);
+        }
+
+        if (nextIndex >= 0) {
+            event.preventDefault();
+            tabElements[nextIndex].focus();
+        }
+    }
+
     public allowTraverse(): boolean {
         const holderSize = this.getElementSize("nui-tabs__holder");
         const contentSize = this.getElementSize("nui-tabs__container");
@@ -157,6 +195,20 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
 
         const margin = Math.abs(this.getNumberFromPixels(leftMargin));
         return margin < maxAllowedMargin;
+    }
+
+    private findEnabledTabIndex(startIndex: number, direction: 1 | -1): number {
+        const tabCount = this.tabs.length;
+        let index = startIndex;
+
+        for (let offset = 0; offset < tabCount; offset++) {
+            index = (index + direction + tabCount) % tabCount;
+            if (!this.tabs[index].disabled) {
+                return index;
+            }
+        }
+
+        return -1;
     }
 
     private isTraverseRightAllowed(margin: string): boolean {

@@ -200,6 +200,48 @@ describe("components >", () => {
             expect(panel.getAttribute("aria-labelledby")).toBe(tab.id);
         });
 
+        it("should keep only the active tab in the tab sequence", () => {
+            componentFixture.detectChanges();
+
+            const tabs =
+                componentFixture.nativeElement.querySelectorAll("[role='tab']");
+
+            expect(tabs[0].tabIndex).toBe(0);
+            expect(tabs[1].tabIndex).toBe(-1);
+        });
+
+        it("should move focus with arrows, Home, and End", () => {
+            componentFixture.detectChanges();
+
+            const tabs =
+                componentFixture.nativeElement.querySelectorAll("[role='tab']");
+
+            tabs[0].focus();
+            tabs[0].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "ArrowRight",
+                    bubbles: true,
+                })
+            );
+            expect(document.activeElement).toBe(tabs[1]);
+
+            tabs[1].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "Home",
+                    bubbles: true,
+                })
+            );
+            expect(document.activeElement).toBe(tabs[0]);
+
+            tabs[0].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "End",
+                    bubbles: true,
+                })
+            );
+            expect(document.activeElement).toBe(tabs[1]);
+        });
+
         it("should generate an id for a heading without one", () => {
             const generatedFixture = TestBed.createComponent(
                 TestGeneratedTabHeadingComponent

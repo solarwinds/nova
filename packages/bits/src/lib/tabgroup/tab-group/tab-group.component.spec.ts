@@ -72,4 +72,28 @@ describe("components > tab group", () => {
             expect(panel.getAttribute("aria-labelledby")).toBe(tab.id);
         });
     });
+
+    it("should move focus with arrows, Home, and End", () => {
+        const tabs =
+            componentFixture.nativeElement.querySelectorAll("[role='tab']");
+
+        tabs[0].focus();
+        tabs[0].dispatchEvent(
+            new KeyboardEvent("keydown", {
+                code: "ArrowRight",
+                bubbles: true,
+            })
+        );
+        expect(document.activeElement).toBe(tabs[1]);
+
+        tabs[1].dispatchEvent(
+            new KeyboardEvent("keydown", { code: "Home", bubbles: true })
+        );
+        expect(document.activeElement).toBe(tabs[0]);
+
+        tabs[0].dispatchEvent(
+            new KeyboardEvent("keydown", { code: "End", bubbles: true })
+        );
+        expect(document.activeElement).toBe(tabs[1]);
+    });
 });

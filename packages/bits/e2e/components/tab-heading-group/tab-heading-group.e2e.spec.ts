@@ -113,6 +113,29 @@ test.describe("USERCONTROL tab heading group", () => {
         await expect(tabs.nth(0)).toHaveAttribute("aria-selected", "true");
     });
 
+    test("should use roving tabindex for keyboard navigation", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("tabgroup", page);
+
+        const tabs = page.locator(
+            "nui-tab-heading-group-dynamic-example [role='tab']"
+        );
+
+        await expect(tabs.nth(0)).toHaveAttribute("tabindex", "0");
+        await expect(tabs.nth(1)).toHaveAttribute("tabindex", "-1");
+
+        await tabs.nth(0).focus();
+        await page.keyboard.press("ArrowRight");
+        await expect(tabs.nth(1)).toBeFocused();
+
+        await page.keyboard.press("Home");
+        await expect(tabs.nth(0)).toBeFocused();
+
+        await page.keyboard.press("End");
+        await expect(tabs.nth(1)).toBeFocused();
+    });
+
     test("should relate each routed tab to the current panel", async ({
         page,
     }) => {
@@ -187,6 +210,9 @@ test.describe("USERCONTROL tab heading group", () => {
         ).toHaveCount(3);
         await expect(
             routerExample.locator("[role='tab'][tabindex='0']")
-        ).toHaveCount(3);
+        ).toHaveCount(1);
+        await expect(
+            routerExample.locator("[role='tab'][tabindex='-1']")
+        ).toHaveCount(2);
     });
 });
