@@ -69,7 +69,7 @@ test.describe("USERCONTROL tab heading group", () => {
 
     test("should not allow disabled tabs to get selected", async () => {
         const disabledTab = await tabGroupHorizontal.getTabByText("Tab 3");
-        await disabledTab.click();
+        await disabledTab.getLocator().click({ force: true });
         await disabledTab.toNotBeActive();
     });
 

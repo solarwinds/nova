@@ -4,7 +4,8 @@
             *ngFor="let tab of tabsetContent"
             [disabled]="tab.isDisabled"
             [tabId]="'with-content-' + tab.id"
-            [ariaControls]="'panel-with-content-' + tab.id">
+            [ariaControls]="'panel-with-content-' + tab.id"
+        >
             <div class="d-flex align-content-center">
                 <div class="d-inline-flex align-items-center">
                     <nui-icon
@@ -14,10 +15,11 @@
                         [iconColor]="
                             tab.isDisabled
                                 ? tab.icon.disabledColor
-                                : currentTabId === tab.id
+                                : currentTabId === 'with-content-' + tab.id
                                 ? tab.icon.activeColor
                                 : tab.icon.inactiveColor
-                        "></nui-icon>
+                        "
+                    ></nui-icon>
                     <div class="ellipsis">
                         <span [title]="tab.title">{{ tab.title }}</span>
                     </div>
@@ -32,8 +34,12 @@
         tabindex="0"
         [id]="'panel-with-content-' + tab.id"
         [attr.aria-labelledby]="'tab-with-content-' + tab.id"
-        [hidden]="currentTabId !== tab.id">
-        <nui-content size="small" *ngIf="currentTabId === tab.id">
+        [hidden]="currentTabId !== 'with-content-' + tab.id"
+    >
+        <nui-content
+            size="small"
+            *ngIf="currentTabId === 'with-content-' + tab.id"
+        >
             <p>
                 Tab titeled <strong>{{ tab.title }}</strong> with id
                 <strong>{{ tab.id }}</strong
