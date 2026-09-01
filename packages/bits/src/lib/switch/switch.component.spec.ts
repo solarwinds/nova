@@ -103,6 +103,29 @@ describe("components >", () => {
                 );
                 expect(switchBar.getAttribute("aria-labelledby")).toBeNull();
             });
+
+            it("should toggle with Enter and Space", () => {
+                switchFixture.detectChanges();
+                const switchBar = switchFixture.nativeElement.querySelector(
+                    ".nui-switch__bar"
+                ) as HTMLElement;
+
+                switchBar.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        key: "Enter",
+                        bubbles: true,
+                    })
+                );
+                expect(nuiSwitch.value).toBeTrue();
+
+                switchBar.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        key: " ",
+                        bubbles: true,
+                    })
+                );
+                expect(nuiSwitch.value).toBeFalse();
+            });
         });
     });
 });
