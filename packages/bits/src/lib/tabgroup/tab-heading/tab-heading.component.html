@@ -6,9 +6,11 @@
     [attr.aria-disabled]="disabled ? 'true' : null"
     [attr.id]="tabControlId"
     [attr.aria-controls]="ariaControls"
+    [attr.aria-label]="ariaLabel"
     role="tab"
     (click)="selectTab()"
-    (keydown)="onKeyDown($event)">
+    (keydown)="onKeyDown($event)"
+>
     <span class="tab-link">
         <ng-content></ng-content>
     </span>
