@@ -34,11 +34,11 @@
 
     <div
         role="tabpanel"
+        tabindex="0"
         [attr.id]="currentTabRoute ? 'panel-' + currentTabRoute : null"
         [attr.aria-labelledby]="
             currentTabRoute ? 'tab-' + currentTabRoute : null
-        "
-    >
+        ">
         <!-- Tab content is placed below depending on the component used in a certain routing -->
         <router-outlet></router-outlet>
     </div>

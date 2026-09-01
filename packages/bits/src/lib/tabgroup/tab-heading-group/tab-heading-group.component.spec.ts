@@ -36,10 +36,14 @@ import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
  */
 @Component({
     selector: "nui-test-tab-heading-group-cmp",
-    template: ` <nui-tab-heading-group (selected)="updateContent($event)">
+    template: ` <nui-tab-heading-group
+            [vertical]="isVertical"
+            (selected)="updateContent($event)"
+        >
             <nui-tab-heading
                 *ngFor="let tab of tabsetContent"
                 [tabId]="tab.id"
+                [disabled]="tab.disabled"
                 [ariaControls]="'panel-' + tab.id"
                 [active]="currentTabId === tab.id"
             >
@@ -53,12 +57,14 @@ import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
         <div
             *ngFor="let tab of tabsetContent"
             role="tabpanel"
+            tabindex="0"
             [id]="'panel-' + tab.id"
             [attr.aria-labelledby]="'tab-' + tab.id"
         ></div>`,
     standalone: false,
 })
 class TestTabHeadingComponent {
+    public isVertical = false;
     public currentTabId: string;
     public tabsetContent: any[] = [];
 
@@ -76,12 +82,13 @@ class TestTabHeadingComponent {
         this.currentTabId = tabId;
         this.changeDetector.detectChanges();
     }
-    public addTab() {
+    public addTab(disabled = false) {
         const nextIndex = this.tabsetContent.length + 1;
         this.tabsetContent.push({
             id: `${nextIndex}`,
             title: "Tab " + nextIndex,
             content: "Lorem ipsum #" + nextIndex,
+            disabled,
         });
     }
     public popTab() {
@@ -98,6 +105,7 @@ class TestTabHeadingComponent {
         </nui-tab-heading-group>
         <div
             role="tabpanel"
+            tabindex="0"
             [id]="tabHeading.panelId"
             [attr.aria-labelledby]="tabHeading.tabControlId"
         ></div>
@@ -210,7 +218,7 @@ describe("components >", () => {
             expect(tabs[1].tabIndex).toBe(-1);
         });
 
-        it("should move focus with arrows, Home, and End", () => {
+        it("should move focus with arrows, Home, and End including wrap-around", () => {
             componentFixture.detectChanges();
 
             const tabs =
@@ -220,6 +228,24 @@ describe("components >", () => {
             tabs[0].dispatchEvent(
                 new KeyboardEvent("keydown", {
                     code: "ArrowRight",
+                    bubbles: true,
+                })
+            );
+            expect(document.activeElement).toBe(tabs[1]);
+
+            // Wrap around from last to first
+            tabs[1].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "ArrowRight",
+                    bubbles: true,
+                })
+            );
+            expect(document.activeElement).toBe(tabs[0]);
+
+            // Wrap around from first to last with ArrowLeft
+            tabs[0].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "ArrowLeft",
                     bubbles: true,
                 })
             );
@@ -236,6 +262,68 @@ describe("components >", () => {
             tabs[0].dispatchEvent(
                 new KeyboardEvent("keydown", {
                     code: "End",
+                    bubbles: true,
+                })
+            );
+            expect(document.activeElement).toBe(tabs[1]);
+        });
+
+        it("should skip disabled tabs during arrow navigation", () => {
+            subject.addTab(true); // Tab 3 (disabled)
+            subject.addTab(false); // Tab 4 (enabled)
+            componentFixture.detectChanges();
+
+            const tabs =
+                componentFixture.nativeElement.querySelectorAll("[role='tab']");
+
+            tabs[1].focus();
+            tabs[1].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "ArrowRight",
+                    bubbles: true,
+                })
+            );
+            // Should skip Tab 3 (disabled) and focus Tab 4
+            expect(document.activeElement).toBe(tabs[3]);
+
+            tabs[3].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "ArrowLeft",
+                    bubbles: true,
+                })
+            );
+            // Should skip Tab 3 (disabled) and focus Tab 2
+            expect(document.activeElement).toBe(tabs[1]);
+        });
+
+        it("should navigate vertically with ArrowDown and ArrowUp", () => {
+            subject.isVertical = true;
+            componentFixture.detectChanges();
+
+            const tabs =
+                componentFixture.nativeElement.querySelectorAll("[role='tab']");
+
+            tabs[0].focus();
+            tabs[0].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "ArrowDown",
+                    bubbles: true,
+                })
+            );
+            expect(document.activeElement).toBe(tabs[1]);
+
+            // Wrap around vertically
+            tabs[1].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "ArrowDown",
+                    bubbles: true,
+                })
+            );
+            expect(document.activeElement).toBe(tabs[0]);
+
+            tabs[0].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "ArrowUp",
                     bubbles: true,
                 })
             );

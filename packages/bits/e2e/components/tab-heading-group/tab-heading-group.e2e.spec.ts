@@ -121,12 +121,24 @@ test.describe("USERCONTROL tab heading group", () => {
         const tabs = page.locator(
             "nui-tab-heading-group-dynamic-example [role='tab']"
         );
+        const panel = page.locator(
+            "nui-tab-heading-group-dynamic-example [role='tabpanel']:not([hidden])"
+        );
 
         await expect(tabs.nth(0)).toHaveAttribute("tabindex", "0");
         await expect(tabs.nth(1)).toHaveAttribute("tabindex", "-1");
 
+        // Forward arrow navigation
         await tabs.nth(0).focus();
         await page.keyboard.press("ArrowRight");
+        await expect(tabs.nth(1)).toBeFocused();
+
+        // Wrap around from last to first
+        await page.keyboard.press("ArrowRight");
+        await expect(tabs.nth(0)).toBeFocused();
+
+        // Wrap around from first to last with ArrowLeft
+        await page.keyboard.press("ArrowLeft");
         await expect(tabs.nth(1)).toBeFocused();
 
         await page.keyboard.press("Home");
@@ -134,6 +146,28 @@ test.describe("USERCONTROL tab heading group", () => {
 
         await page.keyboard.press("End");
         await expect(tabs.nth(1)).toBeFocused();
+
+        // Tab moves focus from active tab into the active tabpanel
+        await tabs.nth(0).focus();
+        await page.keyboard.press("Tab");
+        await expect(panel).toBeFocused();
+    });
+
+    test("should navigate vertical tabs using ArrowDown and ArrowUp", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("tabgroup", page);
+
+        const verticalTabs = page.locator(
+            "nui-tab-heading-group-vertical-example [role='tab']"
+        );
+
+        await verticalTabs.nth(0).focus();
+        await page.keyboard.press("ArrowDown");
+        await expect(verticalTabs.nth(1)).toBeFocused();
+
+        await page.keyboard.press("ArrowUp");
+        await expect(verticalTabs.nth(0)).toBeFocused();
     });
 
     test("should relate each routed tab to the current panel", async ({

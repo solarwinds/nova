@@ -96,6 +96,9 @@ export class TabComponent {
 
     @HostBinding("class.tab-pane") addClass = true;
     @HostBinding("attr.role") role = "tabpanel";
+    @HostBinding("attr.tabindex") get tabIndex() {
+        return this.active ? 0 : -1;
+    }
     @HostBinding("attr.id") get idAttr() {
         return this.panelId;
     }
