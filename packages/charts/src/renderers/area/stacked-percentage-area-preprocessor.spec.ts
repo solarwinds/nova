@@ -21,6 +21,7 @@
 import { AreaAccessors, IAreaAccessors } from "./area-accessors";
 import { AreaRenderer } from "./area-renderer";
 import { stackedPercentageAreaPreprocessor } from "./stacked-percentage-area-preprocessor";
+import { XYAccessors } from "../accessors/xy-accessors";
 import { LinearScale } from "../../core/common/scales/linear-scale";
 import { TimeScale } from "../../core/common/scales/time-scale";
 import { IXYScales } from "../../core/common/scales/types";
@@ -154,5 +155,81 @@ describe("Stacked Area Preprocessor >", () => {
         expect(firstSeries.data[0]["__stack_y"].end).toEqual(50);
         expect(secondSeries.data[0]["__stack_y"].start).toEqual(50);
         expect(secondSeries.data[0]["__stack_y"].end).toEqual(100);
+    });
+
+    it("should skip preprocess:false summary-like series without y0 and y1 accessors", () => {
+        const summaryAccessors = new XYAccessors();
+        summaryAccessors.data.x = (d: any) => d.x;
+        const summarySeries: any = {
+            id: "summary-series",
+            name: "Summary",
+            data: [{ x: "test1", y: 80 }],
+            accessors: summaryAccessors,
+            renderer,
+            scales,
+            preprocess: false,
+        };
+
+        const seriesSet: IChartSeries<IAreaAccessors>[] = [
+            {
+                id: "series-1",
+                name: "Series 1",
+                data: [{ x: "test1", value: 20 }],
+                accessors,
+                renderer,
+                scales,
+            },
+            summarySeries,
+            {
+                id: "series-2",
+                name: "Series 2",
+                data: [{ x: "test1", value: 60 }],
+                accessors,
+                renderer,
+                scales,
+            },
+        ];
+
+        const [firstSeries, skippedSeries, secondSeries] =
+            stackedPercentageAreaPreprocessor(seriesSet, () => true);
+
+        expect(firstSeries.data[0]["__stack_y"].start).toEqual(0);
+        expect(firstSeries.data[0]["__stack_y"].end).toEqual(25);
+        expect(skippedSeries.data[0]["__stack_y"]).toBeUndefined();
+        expect(secondSeries.data[0]["__stack_y"].start).toEqual(25);
+        expect(secondSeries.data[0]["__stack_y"].end).toEqual(100);
+    });
+
+    it("should keep zero-total domains at zero percent instead of generating NaN", () => {
+        const data = [
+            {
+                id: "series-1",
+                name: "Series 1",
+                data: [{ x: "test1", value: 0 }],
+            },
+            {
+                id: "series-2",
+                name: "Series 2",
+                data: [{ x: "test1", value: 0 }],
+            },
+        ];
+
+        const seriesSet: IChartSeries<IAreaAccessors>[] = data.map((d) => ({
+            ...d,
+            accessors,
+            renderer,
+            scales,
+        }));
+
+        const [firstSeries, secondSeries] = stackedPercentageAreaPreprocessor(
+            seriesSet,
+            () => true
+        );
+
+        expect(firstSeries.data[0]["__stack_y"]).toEqual({ start: 0, end: 0 });
+        expect(secondSeries.data[0]["__stack_y"]).toEqual({
+            start: 0,
+            end: 0,
+        });
     });
 });
