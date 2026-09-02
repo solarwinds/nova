@@ -99,23 +99,54 @@ class TestTabHeadingComponent {
 @Component({
     template: `
         <nui-tab-heading-group>
-            <nui-tab-heading #tabHeading [ariaControls]="tabHeading.panelId"
+            <nui-tab-heading #firstTab [ariaControls]="firstTab.panelId"
                 >Overview</nui-tab-heading
+            >
+            <nui-tab-heading #secondTab [ariaControls]="secondTab.panelId"
+                >Details</nui-tab-heading
             >
         </nui-tab-heading-group>
         <div
             role="tabpanel"
             tabindex="0"
-            [id]="tabHeading.panelId"
-            [attr.aria-labelledby]="tabHeading.tabControlId"
+            [id]="firstTab.panelId"
+            [attr.aria-labelledby]="firstTab.tabControlId"
+        ></div>
+        <div
+            role="tabpanel"
+            tabindex="-1"
+            [id]="secondTab.panelId"
+            [attr.aria-labelledby]="secondTab.tabControlId"
         ></div>
     `,
     standalone: false,
 })
 class TestGeneratedTabHeadingComponent {
-    @ViewChild(TabHeadingComponent, { static: true })
-    public tabHeading: TabHeadingComponent;
+    @ViewChildren(TabHeadingComponent)
+    public tabHeadings: QueryList<TabHeadingComponent>;
 }
+
+@Component({
+    template: `
+        <nui-tab-heading-group>
+            <nui-tab-heading [disabled]="true">Disabled</nui-tab-heading>
+            <nui-tab-heading>Enabled</nui-tab-heading>
+        </nui-tab-heading-group>
+    `,
+    standalone: false,
+})
+class TestFirstDisabledTabHeadingComponent {}
+
+@Component({
+    template: `
+        <nui-tab-heading-group>
+            <nui-tab-heading [disabled]="true">First</nui-tab-heading>
+            <nui-tab-heading [disabled]="true">Second</nui-tab-heading>
+        </nui-tab-heading-group>
+    `,
+    standalone: false,
+})
+class TestAllDisabledTabHeadingComponent {}
 
 describe("components >", () => {
     describe("tab heading group >", () => {
@@ -130,6 +161,8 @@ describe("components >", () => {
                     TabHeadingComponent,
                     TestTabHeadingComponent,
                     TestGeneratedTabHeadingComponent,
+                    TestFirstDisabledTabHeadingComponent,
+                    TestAllDisabledTabHeadingComponent,
                 ],
             })
                 .compileComponents()
@@ -232,6 +265,10 @@ describe("components >", () => {
                 })
             );
             expect(document.activeElement).toBe(tabs[1]);
+            expect(tabs[0].tabIndex).toBe(0);
+            expect(tabs[1].tabIndex).toBe(-1);
+            expect(tabs[0].getAttribute("aria-selected")).toBe("true");
+            expect(tabs[1].getAttribute("aria-selected")).toBe("false");
 
             // Wrap around from last to first
             tabs[1].dispatchEvent(
@@ -336,18 +373,61 @@ describe("components >", () => {
             );
             generatedFixture.detectChanges();
 
-            const { tabHeading } = generatedFixture.componentInstance;
-            const tab =
-                generatedFixture.nativeElement.querySelector("[role='tab']");
-            const panel =
-                generatedFixture.nativeElement.querySelector(
+            const tabs =
+                generatedFixture.nativeElement.querySelectorAll("[role='tab']");
+            const panels =
+                generatedFixture.nativeElement.querySelectorAll(
                     "[role='tabpanel']"
                 );
+            const tabIds = Array.from(tabs as NodeListOf<HTMLElement>).map(
+                (tab) => tab.id
+            );
+            const panelIds = Array.from(panels as NodeListOf<HTMLElement>).map(
+                (panel) => panel.id
+            );
 
-            expect(tabHeading.tabId).toMatch(/^nui-tab-heading-/);
-            expect(tab.id).toBe(tabHeading.tabControlId);
-            expect(tab.getAttribute("aria-controls")).toBe(panel.id);
-            expect(panel.getAttribute("aria-labelledby")).toBe(tab.id);
+            expect(tabs.length).toBe(2);
+            expect(panels.length).toBe(2);
+            expect(tabIds[0]).toMatch(/^tab-nui-tab-heading-/);
+            expect(new Set(tabIds).size).toBe(2);
+            expect(new Set(panelIds).size).toBe(2);
+            tabs.forEach((tab: HTMLElement) => {
+                const panel = generatedFixture.nativeElement.querySelector(
+                    `#${tab.getAttribute("aria-controls")}`
+                );
+                expect(panel?.getAttribute("aria-labelledby")).toBe(tab.id);
+            });
+        });
+
+        it("should select the first enabled heading when the first heading is disabled", () => {
+            const disabledFixture = TestBed.createComponent(
+                TestFirstDisabledTabHeadingComponent
+            );
+            disabledFixture.detectChanges();
+
+            const tabs =
+                disabledFixture.nativeElement.querySelectorAll("[role='tab']");
+
+            expect(tabs[0].getAttribute("aria-disabled")).toBe("true");
+            expect(tabs[0].getAttribute("aria-selected")).toBe("false");
+            expect(tabs[0].tabIndex).toBe(-1);
+            expect(tabs[1].getAttribute("aria-selected")).toBe("true");
+            expect(tabs[1].tabIndex).toBe(0);
+        });
+
+        it("should leave all headings inactive when every heading is disabled", () => {
+            const disabledFixture = TestBed.createComponent(
+                TestAllDisabledTabHeadingComponent
+            );
+            disabledFixture.detectChanges();
+
+            const tabs =
+                disabledFixture.nativeElement.querySelectorAll("[role='tab']");
+
+            tabs.forEach((tab: HTMLElement) => {
+                expect(tab.getAttribute("aria-selected")).toBe("false");
+                expect(tab.tabIndex).toBe(-1);
+            });
         });
     });
 });

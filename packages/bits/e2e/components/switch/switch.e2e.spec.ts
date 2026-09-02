@@ -95,10 +95,19 @@ test.describe("USERCONTROL switch", () => {
     });
 
     test("should change value with Enter", async () => {
-        await switchComponent.isOn();
+        await expect(switchComponent.slider).toHaveAttribute(
+            "aria-checked",
+            "true"
+        );
         await switchComponent.slider.press("Enter");
-        await switchComponent.isOff();
+        await expect(switchComponent.slider).toHaveAttribute(
+            "aria-checked",
+            "false"
+        );
         await switchComponent.slider.press("Enter");
-        await switchComponent.isOn();
+        await expect(switchComponent.slider).toHaveAttribute(
+            "aria-checked",
+            "true"
+        );
     });
 });
