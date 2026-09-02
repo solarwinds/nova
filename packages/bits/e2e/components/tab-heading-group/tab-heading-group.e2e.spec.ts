@@ -107,10 +107,12 @@ test.describe("USERCONTROL tab heading group", () => {
         await tabs.nth(1).focus();
         await page.keyboard.press("Enter");
         await expect(tabs.nth(1)).toHaveAttribute("aria-selected", "true");
+        await expect(tabs.nth(0)).toHaveAttribute("aria-selected", "false");
 
         await tabs.nth(0).focus();
         await page.keyboard.press("Space");
         await expect(tabs.nth(0)).toHaveAttribute("aria-selected", "true");
+        await expect(tabs.nth(1)).toHaveAttribute("aria-selected", "false");
     });
 
     test("should use roving tabindex for keyboard navigation", async ({
@@ -132,14 +134,20 @@ test.describe("USERCONTROL tab heading group", () => {
         await tabs.nth(0).focus();
         await page.keyboard.press("ArrowRight");
         await expect(tabs.nth(1)).toBeFocused();
+        await expect(tabs.nth(0)).toHaveAttribute("aria-selected", "true");
+        await expect(tabs.nth(1)).toHaveAttribute("aria-selected", "false");
 
         // Wrap around from last to first
         await page.keyboard.press("ArrowRight");
         await expect(tabs.nth(0)).toBeFocused();
+        await expect(tabs.nth(0)).toHaveAttribute("tabindex", "0");
+        await expect(tabs.nth(1)).toHaveAttribute("tabindex", "-1");
 
         // Wrap around from first to last with ArrowLeft
         await page.keyboard.press("ArrowLeft");
         await expect(tabs.nth(1)).toBeFocused();
+        await expect(tabs.nth(0)).toHaveAttribute("tabindex", "0");
+        await expect(tabs.nth(1)).toHaveAttribute("tabindex", "-1");
 
         await page.keyboard.press("Home");
         await expect(tabs.nth(0)).toBeFocused();
@@ -187,8 +195,7 @@ test.describe("USERCONTROL tab heading group", () => {
 
         await expect(tabs).toHaveCount(accessibleNames.length);
         for (let index = 0; index < accessibleNames.length; index++) {
-            await expect(tabs.nth(index)).toHaveAttribute(
-                "aria-label",
+            await expect(tabs.nth(index)).toHaveAccessibleName(
                 accessibleNames[index]
             );
         }
@@ -209,7 +216,7 @@ test.describe("USERCONTROL tab heading group", () => {
             const panel = routerExample.locator("[role='tabpanel']");
 
             await expect(tabs).toHaveCount(3);
-            await expect(tabs.nth(0)).toHaveAttribute("aria-label", "Settings");
+            await expect(tabs.nth(0)).toHaveAccessibleName("Settings");
             await expect(tabs.nth(1)).toHaveAttribute(
                 "aria-controls",
                 "tabgroup-router-panel"
@@ -224,14 +231,10 @@ test.describe("USERCONTROL tab heading group", () => {
                 "aria-labelledby",
                 `tab-${route}`
             );
-            await expect(tabs.nth(0)).toHaveAttribute(
-                "aria-controls",
-                "tabgroup-router-panel"
-            );
         }
     });
 
-    test("should update the routed panel relationship when switching tabs", async ({
+    test("should provide accessible names for switches in routed content", async ({
         page,
     }) => {
         await Helpers.prepareBrowser("tabgroup/tab-settings", page);
@@ -248,15 +251,26 @@ test.describe("USERCONTROL tab heading group", () => {
         const switches = page.locator(
             "nui-content-statistics-example [role='checkbox']"
         );
-        await expect(switches.nth(0)).toHaveAccessibleName(
-            "Enable Statistics"
-        );
-        await expect(switches.nth(1)).toHaveAccessibleName(
-            "Enable Thresholds"
-        );
+        await expect(switches.nth(0)).toHaveAccessibleName("Enable Statistics");
+        await expect(switches.nth(1)).toHaveAccessibleName("Enable Thresholds");
         await expect(switches.nth(2)).toHaveAccessibleName(
             "Activate Superpower"
         );
+    });
+
+    test("should update the routed panel relationship when switching tabs", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("tabgroup/tab-settings", page);
+
+        const routerExample = page.locator(
+            "nui-tab-heading-group-with-router-example"
+        );
+        const statisticsTab = routerExample.locator("[role='tab']").nth(1);
+        await statisticsTab.focus();
+        await page.keyboard.press("Enter");
+
+        await expect(page).toHaveURL(/\/\#\/tabgroup\/tab-statistics$/);
 
         const tabs = routerExample.locator("[role='tab']");
         const panel = routerExample.locator("[role='tabpanel']");
@@ -274,9 +288,6 @@ test.describe("USERCONTROL tab heading group", () => {
                 "tabgroup-router-panel"
             );
         }
-        await expect(
-            routerExample.locator("nui-tab-heading[tabindex='-1']")
-        ).toHaveCount(3);
         await expect(
             routerExample.locator("[role='tab'][tabindex='0']")
         ).toHaveCount(1);

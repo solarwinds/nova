@@ -27,7 +27,7 @@ import createSpy = jasmine.createSpy;
 import Spy = jasmine.Spy;
 
 @Component({
-    template: "<nui-switch id=\"public-switch-id\">Refresh widget</nui-switch>",
+    template: `<nui-switch id="public-switch-id">Refresh widget</nui-switch>`,
     standalone: false,
 })
 class SwitchHostComponent {}

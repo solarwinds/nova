@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import {
+    AfterContentInit,
     AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -46,12 +47,14 @@ import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
     styleUrls: ["./tab-heading-group.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        "role": "tablist",
+        role: "tablist",
         "[attr.aria-orientation]": "vertical ? 'vertical' : null",
     },
     standalone: false,
 })
-export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
+export class TabHeadingGroupComponent
+    implements OnDestroy, AfterViewInit, AfterContentInit
+{
     @ContentChildren(TabHeadingComponent) _tabs: QueryList<TabHeadingComponent>;
 
     @ViewChild("resizableArea") resizableArea: ElementRef;
@@ -86,7 +89,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
 
     public ngAfterViewInit(): void {
         // Observing the size of the component to check traverse
-        this._ro = new ResizeObserver(entries =>
+        this._ro = new ResizeObserver((entries) =>
             entries.forEach(() => this.checkTraverse())
         );
         this.ngZone.runOutsideAngular(() => {
@@ -94,14 +97,12 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
             this._ro.observe(this.el.nativeElement);
         });
 
-        // Making the first tab in group active by default
-        this.setActiveTab();
         this.subscribeToSelection();
 
         this._changesSubscription = this._tabs.changes.subscribe(
             (changedTabs: any) => {
                 this.setActiveTab();
-                this._tabSelectedSubscriptions.forEach(sub =>
+                this._tabSelectedSubscriptions.forEach((sub) =>
                     sub.unsubscribe()
                 );
                 this._tabSelectedSubscriptions = [];
@@ -110,10 +111,25 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
         );
     }
 
+    public ngAfterContentInit(): void {
+        this.setActiveTab();
+    }
+
     public setActiveTab(): void {
-        if (this._tabs.length && !this.getActiveTab()) {
-            this._tabs.first.active = true;
-            this.selected.emit(this._tabs.first.tabId);
+        const activeTab = this.getActiveTab();
+        const firstEnabledTab = this._tabs.find((tab) => !tab.disabled);
+
+        if (activeTab && !activeTab.disabled) {
+            return;
+        }
+
+        if (activeTab) {
+            activeTab.active = false;
+        }
+
+        if (firstEnabledTab) {
+            firstEnabledTab.active = true;
+            this.selected.emit(firstEnabledTab.tabId);
         }
     }
 
@@ -302,7 +318,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
 
     public ngOnDestroy(): void {
         this._changesSubscription?.unsubscribe();
-        this._tabSelectedSubscriptions.forEach(sub => sub.unsubscribe());
+        this._tabSelectedSubscriptions.forEach((sub) => sub.unsubscribe());
         this._ro?.disconnect();
     }
 }

@@ -20,6 +20,7 @@
 
 import {
     AfterViewInit,
+    AfterContentInit,
     ChangeDetectorRef,
     Component,
     ElementRef,
@@ -43,7 +44,9 @@ import { TabComponent } from "../tab/tab.component";
     encapsulation: ViewEncapsulation.None,
     standalone: false,
 })
-export class TabGroupComponent implements OnDestroy, AfterViewInit {
+export class TabGroupComponent
+    implements OnDestroy, AfterViewInit, AfterContentInit
+{
     /** If true tabs will be placed vertically */
     @Input()
     get vertical(): boolean {
@@ -72,6 +75,29 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
 
     public ngAfterViewInit(): void {
         this.checkTraverse();
+    }
+
+    public ngAfterContentInit(): void {
+        this.setInitialActiveTab();
+    }
+
+    private setInitialActiveTab(): void {
+        const activeTab = this.tabs.find((tab) => tab.active);
+        const firstEnabledTab = this.tabs.find((tab) => !tab.disabled);
+
+        if (activeTab && !activeTab.disabled) {
+            return;
+        }
+
+        this.tabs.forEach((tab) => {
+            if (tab.active && tab !== firstEnabledTab) {
+                tab.active = false;
+            }
+        });
+
+        if (firstEnabledTab) {
+            this.selectTab(firstEnabledTab);
+        }
     }
 
     public checkTraverse(): void {

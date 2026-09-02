@@ -113,7 +113,11 @@ export class TabHeadingComponent {
         ) {
             event.preventDefault();
             this.selectTab();
-            this.elementRef.nativeElement.click();
+            // Forwards activation to host-level directives such as routerLink,
+            // which only react to clicks.
+            if (!this.disabled) {
+                this.elementRef.nativeElement.click();
+            }
         }
     }
 }
