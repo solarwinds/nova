@@ -49,6 +49,39 @@
     <code>TabHeading</code>.
 </p>
 
+<h2>Tab and Panel Accessibility</h2>
+<p>
+    Tab elements use <code>role="tab"</code> and panel elements use
+    <code>role="tabpanel"</code>. The component prefixes the supplied
+    <code>tabId</code> with <code>tab-</code> for the tab element and with
+    <code>panel-</code> for the matching panel element. Generated IDs are unique
+    when no <code>tabId</code> is supplied.
+</p>
+<p>
+    When a <code>TabHeading</code> controls content outside the component, set
+    <code>ariaControls</code> to the actual panel ID. Set
+    <code>ariaLabel</code> when the projected tab content does not provide an
+    accessible name, such as for an icon-only tab. The controlled panel should
+    reference the tab with <code>aria-labelledby</code>.
+</p>
+<pre><code>&lt;nui-tab-heading
+    [tabId]="'settings'"
+    [ariaControls]="'panel-settings'"
+    [ariaLabel]="'Settings'"
+&gt;Settings&lt;/nui-tab-heading&gt;
+
+&lt;div
+    id="panel-settings"
+    role="tabpanel"
+    aria-labelledby="tab-settings"
+&gt;Settings content&lt;/div&gt;</code></pre>
+<p>
+    Within a <code>TabHeadingGroup</code>, only the active tab is in the tab
+    sequence. Use the arrow keys to move between tabs, <code>Home</code> and
+    <code>End</code> to move to the first or last enabled tab, and
+    <code>Enter</code> or <code>Space</code> to activate the focused tab.
+</p>
+
 <!-- ------------------------------------------------------------------------------------------------------ -->
 
 <h2>Horizontal Tabs</h2>
