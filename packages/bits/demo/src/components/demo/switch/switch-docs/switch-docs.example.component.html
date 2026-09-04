@@ -33,3 +33,12 @@
 <nui-example-wrapper filenamePrefix="switch-disable" exampleTitle="Disable">
     <nui-switch-disable-example></nui-switch-disable-example>
 </nui-example-wrapper>
+
+<h2>Accessible Name</h2>
+<p>
+    A switch gets its accessible name from projected label content. For a switch
+    without projected content, provide the <strong>ariaLabel</strong>
+    input. If no label is provided, the component uses a localized fallback
+    name.
+</p>
+<pre><code>&lt;nui-switch ariaLabel="Enable notifications" i18n-ariaLabel&gt;&lt;/nui-switch&gt;</code></pre>

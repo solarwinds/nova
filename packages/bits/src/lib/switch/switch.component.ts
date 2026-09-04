@@ -77,8 +77,13 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
      */
     public readonly labelId = `nui-switch-label-${switchLabelCounter++}`;
 
+    private readonly defaultAriaLabel = $localize`:Accessible name for a switch without a label:Switch`;
+
     public get accessibleLabel(): string | null {
-        return this.ariaLabel || (!this.hasProjectedLabel ? "Switch" : null);
+        return (
+            this.ariaLabel ||
+            (!this.hasProjectedLabel ? this.defaultAriaLabel : null)
+        );
     }
 
     public get labelIdIfProjected(): string | null {
