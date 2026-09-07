@@ -20,6 +20,7 @@
 
 import {
     AfterViewInit,
+    AfterContentInit,
     ChangeDetectorRef,
     Component,
     ElementRef,
@@ -28,6 +29,7 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 
+import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
 import { TabComponent } from "../tab/tab.component";
 
 // <example-url>./../examples/index.html#/tabgroup</example-url>
@@ -42,7 +44,9 @@ import { TabComponent } from "../tab/tab.component";
     encapsulation: ViewEncapsulation.None,
     standalone: false,
 })
-export class TabGroupComponent implements OnDestroy, AfterViewInit {
+export class TabGroupComponent
+    implements OnDestroy, AfterViewInit, AfterContentInit
+{
     /** If true tabs will be placed vertically */
     @Input()
     get vertical(): boolean {
@@ -73,6 +77,29 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
         this.checkTraverse();
     }
 
+    public ngAfterContentInit(): void {
+        this.setInitialActiveTab();
+    }
+
+    private setInitialActiveTab(): void {
+        const activeTab = this.tabs.find((tab) => tab.active);
+        const firstEnabledTab = this.tabs.find((tab) => !tab.disabled);
+
+        if (activeTab && !activeTab.disabled) {
+            return;
+        }
+
+        this.tabs.forEach((tab) => {
+            if (tab.active && tab !== firstEnabledTab) {
+                tab.active = false;
+            }
+        });
+
+        if (firstEnabledTab) {
+            this.selectTab(firstEnabledTab);
+        }
+    }
+
     public checkTraverse(): void {
         this.hasTraverse = this.allowTraverse();
         this.changeDetectorRef.detectChanges();
@@ -95,6 +122,43 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
                     tab.active = false;
                 }
             });
+        }
+    }
+
+    public onKeyDown(event: KeyboardEvent): void {
+        const tabElement = (event.target as HTMLElement)?.closest?.(
+            "[role='tab']"
+        ) as HTMLElement;
+        const tabElements = Array.from(
+            this.el.nativeElement.querySelectorAll("[role='tab']")
+        ) as HTMLElement[];
+        const currentIndex = tabElements.indexOf(tabElement);
+
+        if (currentIndex < 0) {
+            return;
+        }
+
+        const isForwardKey =
+            (!this.vertical && event.code === KEYBOARD_CODE.ARROW_RIGHT) ||
+            (this.vertical && event.code === KEYBOARD_CODE.ARROW_DOWN);
+        const isBackwardKey =
+            (!this.vertical && event.code === KEYBOARD_CODE.ARROW_LEFT) ||
+            (this.vertical && event.code === KEYBOARD_CODE.ARROW_UP);
+        let nextIndex = -1;
+
+        if (isForwardKey) {
+            nextIndex = this.findEnabledTabIndex(currentIndex, 1);
+        } else if (isBackwardKey) {
+            nextIndex = this.findEnabledTabIndex(currentIndex, -1);
+        } else if (event.code === KEYBOARD_CODE.HOME) {
+            nextIndex = this.findEnabledTabIndex(-1, 1);
+        } else if (event.code === KEYBOARD_CODE.END) {
+            nextIndex = this.findEnabledTabIndex(tabElements.length, -1);
+        }
+
+        if (nextIndex >= 0) {
+            event.preventDefault();
+            tabElements[nextIndex].focus();
         }
     }
 
@@ -157,6 +221,20 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
 
         const margin = Math.abs(this.getNumberFromPixels(leftMargin));
         return margin < maxAllowedMargin;
+    }
+
+    private findEnabledTabIndex(startIndex: number, direction: 1 | -1): number {
+        const tabCount = this.tabs.length;
+        let index = startIndex;
+
+        for (let offset = 0; offset < tabCount; offset++) {
+            index = (index + direction + tabCount) % tabCount;
+            if (!this.tabs[index].disabled) {
+                return index;
+            }
+        }
+
+        return -1;
     }
 
     private isTraverseRightAllowed(margin: string): boolean {

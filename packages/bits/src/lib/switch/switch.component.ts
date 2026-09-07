@@ -20,11 +20,13 @@
 
 import {
     Component,
+    ElementRef,
     EventEmitter,
     forwardRef,
     Input,
     OnInit,
     Output,
+    ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
@@ -67,10 +69,26 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
     /** Unique id for the control. */
     @Input() public id: string;
 
+    @ViewChild("switchLabel", { static: true })
+    private switchLabel: ElementRef<HTMLElement>;
+
     /**
      * Label element id used to dynamically compute accessible name.
      */
     public readonly labelId = `nui-switch-label-${switchLabelCounter++}`;
+
+    private readonly defaultAriaLabel = $localize`:Accessible name for a switch without a label:Switch`;
+
+    public get accessibleLabel(): string | null {
+        return (
+            this.ariaLabel ||
+            (!this.hasProjectedLabel ? this.defaultAriaLabel : null)
+        );
+    }
+
+    public get labelIdIfProjected(): string | null {
+        return this.ariaLabel || !this.hasProjectedLabel ? null : this.labelId;
+    }
 
     @Output() valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -115,5 +133,9 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
 
     public ngOnInit(): void {
         this.value = !!this.value;
+    }
+
+    private get hasProjectedLabel(): boolean {
+        return !!this.switchLabel?.nativeElement.textContent?.trim();
     }
 }

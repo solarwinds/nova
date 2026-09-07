@@ -36,22 +36,35 @@ import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
  */
 @Component({
     selector: "nui-test-tab-heading-group-cmp",
-    template: ` <nui-tab-heading-group (selected)="updateContent($event)">
-        <nui-tab-heading
-            *ngFor="let tab of tabsetContent"
-            [tabId]="tab.id"
-            [active]="currentTabId === tab.id"
+    template: ` <nui-tab-heading-group
+            [vertical]="isVertical"
+            (selected)="updateContent($event)"
         >
-            <div class="d-flex align-content-center">
-                <div class="d-inline-flex align-items-center">
-                    <span [title]="tab.title">{{ tab.title }}</span>
+            <nui-tab-heading
+                *ngFor="let tab of tabsetContent"
+                [tabId]="tab.id"
+                [disabled]="tab.disabled"
+                [ariaControls]="'panel-' + tab.id"
+                [active]="currentTabId === tab.id"
+            >
+                <div class="d-flex align-content-center">
+                    <div class="d-inline-flex align-items-center">
+                        <span [title]="tab.title">{{ tab.title }}</span>
+                    </div>
                 </div>
-            </div>
-        </nui-tab-heading>
-    </nui-tab-heading-group>`,
+            </nui-tab-heading>
+        </nui-tab-heading-group>
+        <div
+            *ngFor="let tab of tabsetContent"
+            role="tabpanel"
+            tabindex="0"
+            [id]="'panel-' + tab.id"
+            [attr.aria-labelledby]="'tab-' + tab.id"
+        ></div>`,
     standalone: false,
 })
 class TestTabHeadingComponent {
+    public isVertical = false;
     public currentTabId: string;
     public tabsetContent: any[] = [];
 
@@ -69,18 +82,71 @@ class TestTabHeadingComponent {
         this.currentTabId = tabId;
         this.changeDetector.detectChanges();
     }
-    public addTab() {
+    public addTab(disabled = false) {
         const nextIndex = this.tabsetContent.length + 1;
         this.tabsetContent.push({
             id: `${nextIndex}`,
             title: "Tab " + nextIndex,
             content: "Lorem ipsum #" + nextIndex,
+            disabled,
         });
     }
     public popTab() {
         this.tabsetContent.pop();
     }
 }
+
+@Component({
+    template: `
+        <nui-tab-heading-group>
+            <nui-tab-heading #firstTab [ariaControls]="firstTab.panelId"
+                >Overview</nui-tab-heading
+            >
+            <nui-tab-heading #secondTab [ariaControls]="secondTab.panelId"
+                >Details</nui-tab-heading
+            >
+        </nui-tab-heading-group>
+        <div
+            role="tabpanel"
+            tabindex="0"
+            [id]="firstTab.panelId"
+            [attr.aria-labelledby]="firstTab.tabControlId"
+        ></div>
+        <div
+            role="tabpanel"
+            tabindex="-1"
+            [id]="secondTab.panelId"
+            [attr.aria-labelledby]="secondTab.tabControlId"
+        ></div>
+    `,
+    standalone: false,
+})
+class TestGeneratedTabHeadingComponent {
+    @ViewChildren(TabHeadingComponent)
+    public tabHeadings: QueryList<TabHeadingComponent>;
+}
+
+@Component({
+    template: `
+        <nui-tab-heading-group>
+            <nui-tab-heading [disabled]="true">Disabled</nui-tab-heading>
+            <nui-tab-heading>Enabled</nui-tab-heading>
+        </nui-tab-heading-group>
+    `,
+    standalone: false,
+})
+class TestFirstDisabledTabHeadingComponent {}
+
+@Component({
+    template: `
+        <nui-tab-heading-group>
+            <nui-tab-heading [disabled]="true">First</nui-tab-heading>
+            <nui-tab-heading [disabled]="true">Second</nui-tab-heading>
+        </nui-tab-heading-group>
+    `,
+    standalone: false,
+})
+class TestAllDisabledTabHeadingComponent {}
 
 describe("components >", () => {
     describe("tab heading group >", () => {
@@ -94,6 +160,9 @@ describe("components >", () => {
                     TabHeadingGroupComponent,
                     TabHeadingComponent,
                     TestTabHeadingComponent,
+                    TestGeneratedTabHeadingComponent,
+                    TestFirstDisabledTabHeadingComponent,
+                    TestAllDisabledTabHeadingComponent,
                 ],
             })
                 .compileComponents()
@@ -104,6 +173,10 @@ describe("components >", () => {
                     subject = componentFixture.componentInstance;
                 });
         }));
+
+        it("should safely clean up before view initialization", () => {
+            expect(() => subject.tabHeadingGroup.ngOnDestroy()).not.toThrow();
+        });
 
         it("should add tabs initially", () => {
             componentFixture.detectChanges();
@@ -151,6 +224,210 @@ describe("components >", () => {
             subject.tabHeadings.toArray()[2].selectTab();
             componentFixture.detectChanges();
             expect(subject.currentTabId).toBe("3");
+        });
+
+        it("should relate headings to consumer-owned panels", () => {
+            componentFixture.detectChanges();
+
+            const tab =
+                componentFixture.nativeElement.querySelector("[role='tab']");
+            const panel =
+                componentFixture.nativeElement.querySelector(
+                    "[role='tabpanel']"
+                );
+
+            expect(tab.id).toBe("tab-1");
+            expect(tab.getAttribute("aria-controls")).toBe(panel.id);
+            expect(panel.getAttribute("aria-labelledby")).toBe(tab.id);
+        });
+
+        it("should keep only the active tab in the tab sequence", () => {
+            componentFixture.detectChanges();
+
+            const tabs =
+                componentFixture.nativeElement.querySelectorAll("[role='tab']");
+
+            expect(tabs[0].tabIndex).toBe(0);
+            expect(tabs[1].tabIndex).toBe(-1);
+        });
+
+        it("should move focus with arrows, Home, and End including wrap-around", () => {
+            componentFixture.detectChanges();
+
+            const tabs =
+                componentFixture.nativeElement.querySelectorAll("[role='tab']");
+
+            tabs[0].focus();
+            tabs[0].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "ArrowRight",
+                    bubbles: true,
+                })
+            );
+            expect(document.activeElement).toBe(tabs[1]);
+            expect(tabs[0].tabIndex).toBe(0);
+            expect(tabs[1].tabIndex).toBe(-1);
+            expect(tabs[0].getAttribute("aria-selected")).toBe("true");
+            expect(tabs[1].getAttribute("aria-selected")).toBe("false");
+
+            // Wrap around from last to first
+            tabs[1].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "ArrowRight",
+                    bubbles: true,
+                })
+            );
+            expect(document.activeElement).toBe(tabs[0]);
+
+            // Wrap around from first to last with ArrowLeft
+            tabs[0].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "ArrowLeft",
+                    bubbles: true,
+                })
+            );
+            expect(document.activeElement).toBe(tabs[1]);
+
+            tabs[1].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "Home",
+                    bubbles: true,
+                })
+            );
+            expect(document.activeElement).toBe(tabs[0]);
+
+            tabs[0].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "End",
+                    bubbles: true,
+                })
+            );
+            expect(document.activeElement).toBe(tabs[1]);
+        });
+
+        it("should skip disabled tabs during arrow navigation", () => {
+            subject.addTab(true); // Tab 3 (disabled)
+            subject.addTab(false); // Tab 4 (enabled)
+            componentFixture.detectChanges();
+
+            const tabs =
+                componentFixture.nativeElement.querySelectorAll("[role='tab']");
+
+            tabs[1].focus();
+            tabs[1].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "ArrowRight",
+                    bubbles: true,
+                })
+            );
+            // Should skip Tab 3 (disabled) and focus Tab 4
+            expect(document.activeElement).toBe(tabs[3]);
+
+            tabs[3].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "ArrowLeft",
+                    bubbles: true,
+                })
+            );
+            // Should skip Tab 3 (disabled) and focus Tab 2
+            expect(document.activeElement).toBe(tabs[1]);
+        });
+
+        it("should navigate vertically with ArrowDown and ArrowUp", () => {
+            subject.isVertical = true;
+            componentFixture.detectChanges();
+
+            const tabs =
+                componentFixture.nativeElement.querySelectorAll("[role='tab']");
+
+            tabs[0].focus();
+            tabs[0].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "ArrowDown",
+                    bubbles: true,
+                })
+            );
+            expect(document.activeElement).toBe(tabs[1]);
+
+            // Wrap around vertically
+            tabs[1].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "ArrowDown",
+                    bubbles: true,
+                })
+            );
+            expect(document.activeElement).toBe(tabs[0]);
+
+            tabs[0].dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    code: "ArrowUp",
+                    bubbles: true,
+                })
+            );
+            expect(document.activeElement).toBe(tabs[1]);
+        });
+
+        it("should generate an id for a heading without one", () => {
+            const generatedFixture = TestBed.createComponent(
+                TestGeneratedTabHeadingComponent
+            );
+            generatedFixture.detectChanges();
+
+            const tabs =
+                generatedFixture.nativeElement.querySelectorAll("[role='tab']");
+            const panels =
+                generatedFixture.nativeElement.querySelectorAll(
+                    "[role='tabpanel']"
+                );
+            const tabIds = Array.from(tabs as NodeListOf<HTMLElement>).map(
+                (tab) => tab.id
+            );
+            const panelIds = Array.from(panels as NodeListOf<HTMLElement>).map(
+                (panel) => panel.id
+            );
+
+            expect(tabs.length).toBe(2);
+            expect(panels.length).toBe(2);
+            expect(tabIds[0]).toMatch(/^tab-nui-tab-heading-/);
+            expect(new Set(tabIds).size).toBe(2);
+            expect(new Set(panelIds).size).toBe(2);
+            tabs.forEach((tab: HTMLElement) => {
+                const panel = generatedFixture.nativeElement.querySelector(
+                    `#${tab.getAttribute("aria-controls")}`
+                );
+                expect(panel?.getAttribute("aria-labelledby")).toBe(tab.id);
+            });
+        });
+
+        it("should select the first enabled heading when the first heading is disabled", () => {
+            const disabledFixture = TestBed.createComponent(
+                TestFirstDisabledTabHeadingComponent
+            );
+            disabledFixture.detectChanges();
+
+            const tabs =
+                disabledFixture.nativeElement.querySelectorAll("[role='tab']");
+
+            expect(tabs[0].getAttribute("aria-disabled")).toBe("true");
+            expect(tabs[0].getAttribute("aria-selected")).toBe("false");
+            expect(tabs[0].tabIndex).toBe(-1);
+            expect(tabs[1].getAttribute("aria-selected")).toBe("true");
+            expect(tabs[1].tabIndex).toBe(0);
+        });
+
+        it("should leave all headings inactive when every heading is disabled", () => {
+            const disabledFixture = TestBed.createComponent(
+                TestAllDisabledTabHeadingComponent
+            );
+            disabledFixture.detectChanges();
+
+            const tabs =
+                disabledFixture.nativeElement.querySelectorAll("[role='tab']");
+
+            tabs.forEach((tab: HTMLElement) => {
+                expect(tab.getAttribute("aria-selected")).toBe("false");
+                expect(tab.tabIndex).toBe(-1);
+            });
         });
     });
 });

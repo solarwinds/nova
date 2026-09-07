@@ -1,5 +1,14 @@
 # Changelog
 
+## [20.0.11] 📅 2026-09-09
+### Fixes
+- `@nova-ui/bits` | Improved tab accessibility by aligning tab and panel IDs, adding APG keyboard navigation with roving `tabindex`, exposing disabled states, and adding `ariaLabel` support. `nui-tab-heading` sets `aria-controls` when a controlled panel ID is provided through `ariaControls`.
+- `@nova-ui/bits` | Improved switch accessibility by enabling Enter key activation, correctly associating projected labels, preventing duplicate element IDs, and adding a localized fallback accessible name.
+
+## [20.0.10] 📅 2026-08-11
+### Fixes
+- `@nova-ui/bits` | SkipSpace a11y regression fixed
+
 ## [20.0.9] 📅 2026-08-05
 ### Fixes
 - Essentional A11y fixies

@@ -18,13 +18,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectorRef } from "@angular/core";
+import { ChangeDetectorRef, Component } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { SwitchComponent } from "./switch.component";
 
 import createSpy = jasmine.createSpy;
 import Spy = jasmine.Spy;
+
+@Component({
+    template: `<nui-switch id="public-switch-id">Refresh widget</nui-switch>`,
+    standalone: false,
+})
+class SwitchHostComponent {}
 
 describe("components >", () => {
     describe("switch >", () => {
@@ -35,7 +41,7 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [SwitchComponent],
+                declarations: [SwitchComponent, SwitchHostComponent],
                 providers: [ChangeDetectorRef],
             });
 
@@ -73,13 +79,15 @@ describe("components >", () => {
         });
 
         describe("accessibility >", () => {
-            it("should set aria-labelledby when ariaLabel is not provided", () => {
-                switchFixture.detectChanges();
+            it("should set aria-labelledby when a projected label is provided", () => {
+                const hostFixture =
+                    TestBed.createComponent(SwitchHostComponent);
+                hostFixture.detectChanges();
 
-                const switchBar = switchFixture.nativeElement.querySelector(
+                const switchBar = hostFixture.nativeElement.querySelector(
                     ".nui-switch__bar"
                 ) as HTMLElement;
-                const label = switchFixture.nativeElement.querySelector(
+                const label = hostFixture.nativeElement.querySelector(
                     ".nui-switch__label"
                 ) as HTMLElement;
 
@@ -102,6 +110,61 @@ describe("components >", () => {
                     "Refresh widget periodically"
                 );
                 expect(switchBar.getAttribute("aria-labelledby")).toBeNull();
+            });
+
+            it("should keep the public id on the host element only", () => {
+                const hostFixture =
+                    TestBed.createComponent(SwitchHostComponent);
+                hostFixture.detectChanges();
+
+                const host = hostFixture.nativeElement.querySelector(
+                    "nui-switch"
+                ) as HTMLElement;
+                const switchBar = hostFixture.nativeElement.querySelector(
+                    ".nui-switch__bar"
+                ) as HTMLElement;
+
+                expect(host.id).toBe("public-switch-id");
+                expect(switchBar.id).toBe("");
+                expect(
+                    hostFixture.nativeElement.querySelectorAll(
+                        "#public-switch-id"
+                    ).length
+                ).toBe(1);
+            });
+
+            it("should use a fallback name without projected content", () => {
+                switchFixture.detectChanges();
+
+                const switchBar = switchFixture.nativeElement.querySelector(
+                    ".nui-switch__bar"
+                ) as HTMLElement;
+
+                expect(switchBar.getAttribute("aria-label")).toBe("Switch");
+                expect(switchBar.getAttribute("aria-labelledby")).toBeNull();
+            });
+
+            it("should toggle with Enter and Space", () => {
+                switchFixture.detectChanges();
+                const switchBar = switchFixture.nativeElement.querySelector(
+                    ".nui-switch__bar"
+                ) as HTMLElement;
+
+                switchBar.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        key: "Enter",
+                        bubbles: true,
+                    })
+                );
+                expect(nuiSwitch.value).toBeTrue();
+
+                switchBar.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        key: " ",
+                        bubbles: true,
+                    })
+                );
+                expect(nuiSwitch.value).toBeFalse();
             });
         });
     });

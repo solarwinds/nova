@@ -1,9 +1,12 @@
-<!-- TODO: NUI-6283 - elements do not have aria-controls pointing to their panel -->
 <div
     class="nui-tab-heading"
     [class.active]="active"
-    [tabindex]="disabled ? -1 : 0"
+    [tabindex]="disabled || !active ? -1 : 0"
     [attr.aria-selected]="active ? 'true' : 'false'"
+    [attr.aria-disabled]="disabled ? 'true' : null"
+    [attr.id]="tabControlId"
+    [attr.aria-controls]="ariaControls"
+    [attr.aria-label]="ariaLabel"
     role="tab"
     (click)="selectTab()"
     (keydown)="onKeyDown($event)"

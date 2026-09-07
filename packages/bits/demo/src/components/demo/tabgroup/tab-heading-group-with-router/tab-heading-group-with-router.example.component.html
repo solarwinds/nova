@@ -1,8 +1,12 @@
 <div>
     <nui-tab-heading-group>
+        <!-- This example renders one shared routed panel controlled by every tab. -->
         <nui-tab-heading
             *ngFor="let tab of tabsetContent"
             [tabId]="tab.id"
+            ariaControls="tabgroup-router-panel"
+            [ariaLabel]="tab.id === 'tab-settings' ? tab.title : null"
+            tabindex="-1"
             routerLink="/tabgroup/{{ tab.id }}"
             [active]="currentTabRoute === tab.id"
         >
@@ -28,6 +32,15 @@
         </nui-tab-heading>
     </nui-tab-heading-group>
 
-    <!-- Tab content is placed below depending on the component used in a certain routing -->
-    <router-outlet></router-outlet>
+    <div
+        role="tabpanel"
+        tabindex="0"
+        id="tabgroup-router-panel"
+        [attr.aria-labelledby]="
+            currentTabRoute ? 'tab-' + currentTabRoute : null
+        "
+    >
+        <!-- Tab content is placed below depending on the component used in a certain routing -->
+        <router-outlet></router-outlet>
+    </div>
 </div>

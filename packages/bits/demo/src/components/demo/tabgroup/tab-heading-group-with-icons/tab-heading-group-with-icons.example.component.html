@@ -3,7 +3,8 @@
         <nui-tab-heading
             *ngFor="let tab of tabsetContent"
             [disabled]="tab.isDisabled"
-            [tabId]="tab.id"
+            [tabId]="'with-icons-' + tab.id"
+            [ariaLabel]="tab.ariaLabel"
         >
             <div class="d-flex align-content-center">
                 <div class="d-inline-flex align-items-center">
@@ -12,7 +13,7 @@
                         [iconColor]="
                             tab.isDisabled
                                 ? tab.icon.disabledColor
-                                : currentTabId === tab.id
+                                : currentTabId === 'with-icons-' + tab.id
                                 ? tab.icon.activeColor
                                 : tab.icon.inactiveColor
                         "

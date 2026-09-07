@@ -1,4 +1,1 @@
-[core]
-autocrlf=false
-eol=lf
-* text=auto
+* text=auto eol=lf
