@@ -26,7 +26,10 @@
                 class="nui-datepicker__icon"
                 [iconColor]="getIconColor()"
                 [disabled]="isDisabled"
-                [ariaLabel]="'Open calendar'"
+                ariaLabel="Open calendar"
+                i18n-ariaLabel="@@openCalendar"
+                title="Open calendar"
+                i18n-title="@@openCalendarTitle"
                 [attr.aria-expanded]="overlay.showing"
             ></button>
         </div>
