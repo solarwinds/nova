@@ -59,6 +59,16 @@ export class DatepickerAtom extends Atom {
         return this.getLocator().locator(`input.form-control`);
     }
 
+    public get toggleButton(): Locator {
+        return this.getLocatorByCss("button.nui-datepicker__icon");
+    }
+
+    public get activeGridCell(): Locator {
+        return this.getLocator().locator(
+            "button[role='gridcell'][tabindex='0']"
+        );
+    }
+
     public formatDate(date: Moment, localeDateStringFormat: string): string {
         return date
             .locale(localeDateStringFormat)
@@ -132,7 +142,9 @@ export class DatepickerAtom extends Atom {
     };
 
     public toggleToBeDisabled = async (): Promise<void> => {
-        await expect(this.getLocatorByCss(".nui-datepicker__icon")).toBeDisabled();
+        await expect(
+            this.getLocatorByCss(".nui-datepicker__icon")
+        ).toBeDisabled();
     };
 
     public clickChangeModeButton = async (): Promise<void> =>

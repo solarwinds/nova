@@ -156,6 +156,85 @@ test.describe("USERCONTROL datepicker", () => {
         await datepickerWithPreserve.getOverlay.toBeOpened();
     });
 
+    test.describe("keyboard accessibility >", () => {
+        test("should expose an accessible calendar toggle state", async () => {
+            await expect(datepickerWithPreserve.toggleButton).toHaveAttribute(
+                "aria-label",
+                "Open calendar"
+            );
+            await expect(datepickerWithPreserve.toggleButton).toHaveAttribute(
+                "title",
+                "Open calendar"
+            );
+            await expect(datepickerWithPreserve.toggleButton).toHaveAttribute(
+                "aria-expanded",
+                "false"
+            );
+        });
+
+        test("should open with ArrowDown and focus the active grid cell", async () => {
+            await datepickerWithPreserve.getInput.focus();
+            await datepickerWithPreserve.getInput.press("ArrowDown");
+
+            await datepickerWithPreserve.getOverlay.toBeOpened();
+            await expect(datepickerWithPreserve.toggleButton).toHaveAttribute(
+                "aria-expanded",
+                "true"
+            );
+            await expect(datepickerWithPreserve.activeGridCell).toBeFocused();
+        });
+
+        test("should navigate the day grid with ArrowRight", async () => {
+            await datepickerWithPreserve.toggle();
+            const activeCellLabel =
+                await datepickerWithPreserve.activeGridCell.getAttribute(
+                    "aria-label"
+                );
+            expect(activeCellLabel).not.toBeNull();
+
+            await Helpers.pressKey("ArrowRight");
+            await expect(datepickerWithPreserve.activeGridCell).toBeFocused();
+            await expect(
+                datepickerWithPreserve.activeGridCell
+            ).not.toHaveAttribute("aria-label", activeCellLabel!);
+        });
+
+        test("should navigate the day grid with PageUp", async () => {
+            await datepickerWithPreserve.toggle();
+            const currentTitle =
+                await datepickerWithPreserve.getTitleText.textContent();
+            expect(currentTitle).not.toBeNull();
+
+            await Helpers.pressKey("PageUp");
+            await expect(datepickerWithPreserve.getTitleText).not.toHaveText(
+                currentTitle!
+            );
+        });
+
+        test("should skip disabled dates during keyboard navigation", async () => {
+            await datepickerDisabledDates.toggle();
+
+            await Helpers.pressKey("Home");
+            await Helpers.pressKey("ArrowRight", 8);
+            await Helpers.pressKey("ArrowRight");
+
+            await expect(datepickerDisabledDates.activeGridCell).toHaveText(
+                "13"
+            );
+            await expect(
+                datepickerDisabledDates.activeGridCell
+            ).not.toBeDisabled();
+        });
+
+        test("should close on Escape and restore focus to the toggle button", async () => {
+            await datepickerWithPreserve.toggle();
+            await Helpers.pressKey("Escape");
+
+            await datepickerWithPreserve.getOverlay.toNotBeOpened();
+            await expect(datepickerWithPreserve.toggleButton).toBeFocused();
+        });
+    });
+
     test("should have the same date both on input form and popped up window upon the click on input", async () => {
         const expectedDate: string = "01 Jan 2020";
         const input = datepickerWithPreserve.getInput;
@@ -339,7 +418,9 @@ test.describe("USERCONTROL datepicker", () => {
                 .getLocator()
                 .textContent();
             await datepickerWithPreserve.selectDate(10);
-            await expect(Atom.find<Atom>(Atom, activeDateValueIdPreserved).getLocator()).not.toHaveText(oldValue);
+            await expect(
+                Atom.find<Atom>(Atom, activeDateValueIdPreserved).getLocator()
+            ).not.toHaveText(oldValue);
             const newValue = await getTrimmedText(activeDateValueIdPreserved);
 
             expect(newValue).not.toBe(oldValue);
@@ -353,7 +434,9 @@ test.describe("USERCONTROL datepicker", () => {
                 .getLocator()
                 .textContent();
             await datepickerInline.selectDate(10);
-            await expect(Atom.find<Atom>(Atom, activeDateValueId).getLocator()).not.toHaveText(oldValue);
+            await expect(
+                Atom.find<Atom>(Atom, activeDateValueId).getLocator()
+            ).not.toHaveText(oldValue);
             const newValue = await getTrimmedText(activeDateValueId);
 
             expect(newValue).not.toBe(oldValue);
@@ -441,13 +524,19 @@ test.describe("USERCONTROL datepicker", () => {
             const nextMonth = datepickerInline.getNextMonthTitle(currentMonth);
 
             await datepickerInline.goBack();
-            await expect(datepickerInline.getTitleText).toContainText(previousMonth);
+            await expect(datepickerInline.getTitleText).toContainText(
+                previousMonth
+            );
 
             await datepickerInline.goNext();
-            await expect(datepickerInline.getTitleText).toContainText(currentMonth);
+            await expect(datepickerInline.getTitleText).toContainText(
+                currentMonth
+            );
 
             await datepickerInline.goNext();
-            await expect(datepickerInline.getTitleText).toContainText(nextMonth);
+            await expect(datepickerInline.getTitleText).toContainText(
+                nextMonth
+            );
         });
     });
 
