@@ -244,6 +244,7 @@
         ><a
             href="https://momentjs.com/docs/#/displaying/format/"
             target="_blank"
+            rel="noopener noreferrer"
             >Moment.js date formats</a
         ></code
     >
@@ -338,3 +339,62 @@
 >
     <nui-date-picker-timezone-example></nui-date-picker-timezone-example>
 </nui-example-wrapper>
+
+<h2>Keyboard interaction</h2>
+<p>
+    <code>&lt;nui-date-picker&gt;</code> comes with built-in accessibility
+    features and keyboard navigation support:
+</p>
+
+<p>Input and toggle button:</p>
+<ul>
+    <li>
+        <code>TAB / SHIFT+TAB</code> for focusing between the date input field
+        and the calendar toggle button.
+    </li>
+    <li>
+        <code>ARROW DOWN</code> when focused on the date input field opens the
+        calendar overlay and moves focus to the active calendar cell.
+    </li>
+    <li>
+        <code>ENTER / SPACE</code> on the calendar toggle button toggles the
+        calendar overlay open or closed.
+    </li>
+</ul>
+
+<p>Calendar overlay (when open):</p>
+<ul>
+    <li>
+        <code>ARROW LEFT / ARROW RIGHT</code> to navigate to the previous / next
+        day (or month / year depending on the active picker mode). Disabled
+        dates are automatically skipped.
+    </li>
+    <li>
+        <code>ARROW UP / ARROW DOWN</code> to navigate one row up / down in the
+        calendar grid (previous / next week in day mode, previous / next 3
+        months in month mode, or previous / next 5 years in year mode). Disabled
+        dates are automatically skipped.
+    </li>
+    <li>
+        <code>PAGE UP / PAGE DOWN</code> to navigate by page (previous / next
+        month in day mode, previous / next year in month mode, or previous /
+        next year range block in year mode).
+    </li>
+    <li>
+        <code>HOME / END</code> to jump to the first / last enabled day of the
+        current month (or first / last month in month mode).
+    </li>
+    <li>
+        <code>ENTER / SPACE</code> to select the focused date, month, or year,
+        or activate calendar controls (Previous, Next, Mode Switch, Today).
+    </li>
+    <li>
+        <code>ESC</code> to close the calendar overlay and return focus to the
+        calendar toggle button.
+    </li>
+    <li>
+        Focus is trapped within the calendar overlay (<code>cdkTrapFocus</code>)
+        while open, ensuring keyboard focus remains inside the dialog until
+        dismissed.
+    </li>
+</ul>

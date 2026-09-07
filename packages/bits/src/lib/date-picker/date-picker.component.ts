@@ -177,6 +177,7 @@ export class DatePickerComponent
         this.updateTextboxValue();
     }
 
+    /** Callback to invoke when a date selection is finalized. */
     @Output()
     selectionDone: EventEmitter<Moment> = new EventEmitter<Moment>();
 
@@ -184,9 +185,11 @@ export class DatePickerComponent
     @Output()
     valueChange: EventEmitter<Moment> = new EventEmitter<Moment>();
 
+    /** Callback to invoke when calendar navigation changes the displayed month or year. */
     @Output()
     calendarNavigated: EventEmitter<Moment> = new EventEmitter<Moment>();
 
+    /** Callback to invoke when the date input field loses focus. */
     @Output()
     inputBlurred: EventEmitter<any> = new EventEmitter<Moment>();
 
