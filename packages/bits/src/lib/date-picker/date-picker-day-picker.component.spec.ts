@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ElementRef, QueryList } from "@angular/core";
 import _isUndefined from "lodash/isUndefined";
 import _keys from "lodash/keys";
 import moment from "moment/moment";
@@ -95,9 +96,24 @@ describe("components >", () => {
         });
 
         describe("focusActiveCell >", () => {
+            let container: HTMLElement;
+            let otherButton: HTMLButtonElement;
+            let targetButton: HTMLButtonElement;
+
+            beforeEach(() => {
+                container = document.createElement("div");
+                document.body.appendChild(container);
+                otherButton = document.createElement("button");
+                targetButton = document.createElement("button");
+                container.appendChild(otherButton);
+                container.appendChild(targetButton);
+            });
+
+            afterEach(() => {
+                container.remove();
+            });
+
             it("should move DOM focus to the button representing the active (current) day cell", () => {
-                const otherButton = { focus: jasmine.createSpy("focus") };
-                const activeButton = { focus: jasmine.createSpy("focus") };
                 dayPicker.rows = [
                     {
                         isRowVisible: true,
@@ -107,22 +123,19 @@ describe("components >", () => {
                         ],
                     },
                 ];
-                (dayPicker as any).dayCellButtons = {
-                    toArray: () => [
-                        { nativeElement: otherButton },
-                        { nativeElement: activeButton },
-                    ],
-                };
+                const buttons = new QueryList<ElementRef<HTMLButtonElement>>();
+                buttons.reset([
+                    new ElementRef(otherButton),
+                    new ElementRef(targetButton),
+                ]);
+                (dayPicker as any).dayCellButtons = buttons;
 
                 dayPicker.focusActiveCell();
 
-                expect(activeButton.focus).toHaveBeenCalled();
-                expect(otherButton.focus).not.toHaveBeenCalled();
+                expect(document.activeElement).toBe(targetButton);
             });
 
             it("should focus the isFocusTarget cell even when it is not the current cell", () => {
-                const otherButton = { focus: jasmine.createSpy("focus") };
-                const targetButton = { focus: jasmine.createSpy("focus") };
                 dayPicker.rows = [
                     {
                         isRowVisible: true,
@@ -132,21 +145,19 @@ describe("components >", () => {
                         ],
                     },
                 ];
-                (dayPicker as any).dayCellButtons = {
-                    toArray: () => [
-                        { nativeElement: otherButton },
-                        { nativeElement: targetButton },
-                    ],
-                };
+                const buttons = new QueryList<ElementRef<HTMLButtonElement>>();
+                buttons.reset([
+                    new ElementRef(otherButton),
+                    new ElementRef(targetButton),
+                ]);
+                (dayPicker as any).dayCellButtons = buttons;
 
                 dayPicker.focusActiveCell();
 
-                expect(targetButton.focus).toHaveBeenCalled();
-                expect(otherButton.focus).not.toHaveBeenCalled();
+                expect(document.activeElement).toBe(targetButton);
             });
 
             it("should skip cells that are hidden (not visible in the current view)", () => {
-                const renderedButton = { focus: jasmine.createSpy("focus") };
                 dayPicker.rows = [
                     {
                         isRowVisible: true,
@@ -160,13 +171,14 @@ describe("components >", () => {
                         days: [{ isCellVisible: true, current: true }],
                     },
                 ];
-                (dayPicker as any).dayCellButtons = {
-                    toArray: () => [{ nativeElement: renderedButton }],
-                };
+                const buttons = new QueryList<ElementRef<HTMLButtonElement>>();
+                buttons.reset([new ElementRef(otherButton)]);
+                (dayPicker as any).dayCellButtons = buttons;
 
+                document.body.focus();
                 dayPicker.focusActiveCell();
 
-                expect(renderedButton.focus).not.toHaveBeenCalled();
+                expect(document.activeElement).toBe(document.body);
             });
 
             it("should do nothing when there is no active day cell", () => {
@@ -176,13 +188,13 @@ describe("components >", () => {
                         days: [{ isCellVisible: true, current: false }],
                     },
                 ];
-                (dayPicker as any).dayCellButtons = {
-                    toArray: () => [
-                        { nativeElement: { focus: jasmine.createSpy() } },
-                    ],
-                };
+                const buttons = new QueryList<ElementRef<HTMLButtonElement>>();
+                buttons.reset([new ElementRef(otherButton)]);
+                (dayPicker as any).dayCellButtons = buttons;
 
+                document.body.focus();
                 expect(() => dayPicker.focusActiveCell()).not.toThrow();
+                expect(document.activeElement).toBe(document.body);
             });
         });
     });

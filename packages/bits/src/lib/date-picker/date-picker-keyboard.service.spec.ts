@@ -32,11 +32,11 @@ const keyBoardEventFactory = (
         preventDefault: () => {},
         code,
         target,
-    }) as KeyboardEvent;
+    } as KeyboardEvent);
 
 describe("Services >", () => {
     describe("DatePickerKeyboardService", () => {
-        const service = new DatePickerKeyboardService();
+        let service: DatePickerKeyboardService;
         let datePickerInnerMock: any;
         let dayPickerMock: any;
         let monthPickerMock: any;
@@ -45,19 +45,38 @@ describe("Services >", () => {
         let toggleButtonMock: any;
 
         beforeEach(() => {
+            service = new DatePickerKeyboardService();
             datePickerInnerMock = {
                 value: moment("2022-06-15"),
                 datepickerMode: "day",
                 yearRange: 20,
-                refreshView: () => {},
-                calendarMoved: { next: () => {} },
+                refreshView: jasmine.createSpy("refreshView"),
+                calendarMoved: {
+                    next: jasmine.createSpy("calendarMoved.next"),
+                },
                 isDisabled: () => false,
             };
-            dayPickerMock = { focusActiveCell: () => {} };
-            monthPickerMock = { focusActiveCell: () => {} };
-            yearPickerMock = { focusActiveCell: () => {} };
-            overlayMock = { showing: false, show: () => {}, hide: () => {} };
-            toggleButtonMock = { focus: () => {} };
+            dayPickerMock = {
+                focusActiveCell: jasmine.createSpy("dayPicker.focusActiveCell"),
+            };
+            monthPickerMock = {
+                focusActiveCell: jasmine.createSpy(
+                    "monthPicker.focusActiveCell"
+                ),
+            };
+            yearPickerMock = {
+                focusActiveCell: jasmine.createSpy(
+                    "yearPicker.focusActiveCell"
+                ),
+            };
+            overlayMock = {
+                showing: false,
+                show: jasmine.createSpy("overlay.show"),
+                hide: jasmine.createSpy("overlay.hide"),
+            };
+            toggleButtonMock = {
+                focus: jasmine.createSpy("toggleButton.focus"),
+            };
 
             service.initService(
                 datePickerInnerMock,
@@ -69,146 +88,121 @@ describe("Services >", () => {
             );
         });
 
-        describe("onKeyDown", () => {
-            it("should call 'handleClosedCalendar' when the overlay is not showing", () => {
-                const spy = spyOn(service as any, "handleClosedCalendar");
-                const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
-
-                service.onKeyDown(event);
-                expect(spy).toHaveBeenCalledWith(event);
-            });
-
-            it("should call 'handleOpenedCalendar' when the overlay is showing", () => {
-                overlayMock.showing = true;
-                const spy = spyOn(service as any, "handleOpenedCalendar");
-                const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
-
-                service.onKeyDown(event);
-                expect(spy).toHaveBeenCalledWith(event);
-            });
-
-            it("should treat the calendar as always open when there is no overlay (inline mode)", () => {
-                service.initService(datePickerInnerMock, dayPickerMock);
-                const spy = spyOn(service as any, "handleOpenedCalendar");
-                const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT);
-
-                service.onKeyDown(event);
-                expect(spy).toHaveBeenCalledWith(event);
-            });
-        });
-
-        describe("handleClosedCalendar", () => {
-            it("should show the overlay and call preventDefault on ArrowDown", () => {
+        describe("when overlay is closed", () => {
+            it("should show overlay, prevent default, and focus active cell on ArrowDown", () => {
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
                 const preventDefaultSpy = spyOn(event, "preventDefault");
-                const showSpy = spyOn(overlayMock, "show");
 
-                service["handleClosedCalendar"](event);
+                service.onKeyDown(event);
 
                 expect(preventDefaultSpy).toHaveBeenCalled();
-                expect(showSpy).toHaveBeenCalled();
+                expect(overlayMock.show).toHaveBeenCalled();
             });
 
-            it("should do nothing for other keys", () => {
+            it("should ignore other navigation keys when closed", () => {
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT);
-                const showSpy = spyOn(overlayMock, "show");
+                const preventDefaultSpy = spyOn(event, "preventDefault");
 
-                service["handleClosedCalendar"](event);
+                service.onKeyDown(event);
 
-                expect(showSpy).not.toHaveBeenCalled();
+                expect(preventDefaultSpy).not.toHaveBeenCalled();
+                expect(overlayMock.show).not.toHaveBeenCalled();
             });
         });
 
-        describe("handleOpenedCalendar", () => {
+        describe("when overlay is open (day mode)", () => {
             beforeEach(() => {
                 overlayMock.showing = true;
             });
 
             it("should hide the overlay and restore focus to the toggle button on Escape", () => {
-                const hideSpy = spyOn(overlayMock, "hide");
-                const focusSpy = spyOn(toggleButtonMock, "focus");
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ESCAPE);
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
 
-                expect(hideSpy).toHaveBeenCalled();
-                expect(focusSpy).toHaveBeenCalled();
+                expect(overlayMock.hide).toHaveBeenCalled();
+                expect(toggleButtonMock.focus).toHaveBeenCalled();
             });
 
             it("should not attempt to hide when there is no overlay (inline mode)", () => {
                 service.initService(datePickerInnerMock, dayPickerMock);
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ESCAPE);
 
-                expect(() =>
-                    service["handleOpenedCalendar"](event)
-                ).not.toThrow();
+                expect(() => service.onKeyDown(event)).not.toThrow();
             });
 
             it("should ignore navigation keys for an unrecognized mode", () => {
                 datePickerInnerMock.datepickerMode = "decade";
-                const refreshSpy = spyOn(datePickerInnerMock, "refreshView");
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT);
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
 
-                expect(refreshSpy).not.toHaveBeenCalled();
+                expect(datePickerInnerMock.refreshView).not.toHaveBeenCalled();
             });
 
             it("should not navigate the grid when an arrow key comes from the text input", fakeAsync(() => {
                 const startValue = datePickerInnerMock.value.clone();
-                const refreshSpy = spyOn(datePickerInnerMock, "refreshView");
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT, {
                     tagName: "INPUT",
                 });
+                const preventDefaultSpy = spyOn(event, "preventDefault");
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
                 tick();
 
-                expect(refreshSpy).not.toHaveBeenCalled();
+                expect(preventDefaultSpy).not.toHaveBeenCalled();
+                expect(datePickerInnerMock.refreshView).not.toHaveBeenCalled();
                 expect(
                     datePickerInnerMock.value.isSame(startValue, "day")
                 ).toBeTruthy();
             }));
 
             it("should still close on Escape when the event comes from the text input", () => {
-                const hideSpy = spyOn(overlayMock, "hide");
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ESCAPE, {
                     tagName: "INPUT",
                 });
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
 
-                expect(hideSpy).toHaveBeenCalled();
+                expect(overlayMock.hide).toHaveBeenCalled();
             });
 
             it("should move to the first day of the month on Home", fakeAsync(() => {
                 const event = keyBoardEventFactory(KEYBOARD_CODE.HOME);
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
                 tick();
 
                 expect(
-                    datePickerInnerMock.value.isSame(moment("2022-06-01"), "day")
+                    datePickerInnerMock.value.isSame(
+                        moment("2022-06-01"),
+                        "day"
+                    )
                 ).toBeTruthy();
             }));
 
             it("should move to the last day of the month on End", fakeAsync(() => {
                 const event = keyBoardEventFactory(KEYBOARD_CODE.END);
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
                 tick();
 
                 expect(
-                    datePickerInnerMock.value.isSame(moment("2022-06-30"), "day")
+                    datePickerInnerMock.value.isSame(
+                        moment("2022-06-30"),
+                        "day"
+                    )
                 ).toBeTruthy();
             }));
 
             it("should move one day forward on ArrowRight", fakeAsync(() => {
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT);
+                const preventDefaultSpy = spyOn(event, "preventDefault");
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
                 tick();
 
+                expect(preventDefaultSpy).toHaveBeenCalled();
                 expect(
                     datePickerInnerMock.value.isSame(
                         moment("2022-06-16"),
@@ -220,7 +214,7 @@ describe("Services >", () => {
             it("should move one day back on ArrowLeft", fakeAsync(() => {
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_LEFT);
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
                 tick();
 
                 expect(
@@ -234,7 +228,7 @@ describe("Services >", () => {
             it("should move one week forward on ArrowDown", fakeAsync(() => {
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
                 tick();
 
                 expect(
@@ -248,7 +242,7 @@ describe("Services >", () => {
             it("should move one week back on ArrowUp", fakeAsync(() => {
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_UP);
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
                 tick();
 
                 expect(
@@ -262,7 +256,7 @@ describe("Services >", () => {
             it("should move to the next month on PageDown, preserving the day", fakeAsync(() => {
                 const event = keyBoardEventFactory(KEYBOARD_CODE.PAGE_DOWN);
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
                 tick();
 
                 expect(
@@ -276,7 +270,7 @@ describe("Services >", () => {
             it("should move to the previous month on PageUp, preserving the day", fakeAsync(() => {
                 const event = keyBoardEventFactory(KEYBOARD_CODE.PAGE_UP);
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
                 tick();
 
                 expect(
@@ -291,7 +285,7 @@ describe("Services >", () => {
                 datePickerInnerMock.value = moment("2022-01-31");
                 const event = keyBoardEventFactory(KEYBOARD_CODE.PAGE_DOWN);
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
                 tick();
 
                 expect(
@@ -307,7 +301,7 @@ describe("Services >", () => {
                     date.isSame(moment("2022-06-16"), "day");
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT);
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
                 tick();
 
                 expect(
@@ -319,42 +313,36 @@ describe("Services >", () => {
             }));
 
             it("should refresh the view and focus the active cell after navigating", fakeAsync(() => {
-                const refreshSpy = spyOn(datePickerInnerMock, "refreshView");
-                const focusSpy = spyOn(dayPickerMock, "focusActiveCell");
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT);
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
                 tick();
 
-                expect(refreshSpy).toHaveBeenCalled();
-                expect(focusSpy).toHaveBeenCalled();
+                expect(datePickerInnerMock.refreshView).toHaveBeenCalled();
+                expect(dayPickerMock.focusActiveCell).toHaveBeenCalled();
             }));
 
             it("should notify calendarMoved only when the displayed month changes", fakeAsync(() => {
-                const calendarMovedSpy = spyOn(
-                    datePickerInnerMock.calendarMoved,
-                    "next"
-                );
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT);
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
                 tick();
 
-                expect(calendarMovedSpy).not.toHaveBeenCalled();
+                expect(
+                    datePickerInnerMock.calendarMoved.next
+                ).not.toHaveBeenCalled();
             }));
 
             it("should notify calendarMoved when navigation crosses into a new month", fakeAsync(() => {
                 datePickerInnerMock.value = moment("2022-06-30");
-                const calendarMovedSpy = spyOn(
-                    datePickerInnerMock.calendarMoved,
-                    "next"
-                );
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT);
 
-                service["handleOpenedCalendar"](event);
+                service.onKeyDown(event);
                 tick();
 
-                expect(calendarMovedSpy).toHaveBeenCalled();
+                expect(
+                    datePickerInnerMock.calendarMoved.next
+                ).toHaveBeenCalled();
             }));
         });
 
@@ -365,131 +353,148 @@ describe("Services >", () => {
             });
 
             it("should move one month forward on ArrowRight", fakeAsync(() => {
-                service["handleOpenedCalendar"](
-                    keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT)
-                );
+                const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT);
+
+                service.onKeyDown(event);
                 tick();
 
                 expect(
-                    datePickerInnerMock.value.isSame(moment("2022-07-15"), "month")
+                    datePickerInnerMock.value.isSame(
+                        moment("2022-07-15"),
+                        "month"
+                    )
                 ).toBeTruthy();
             }));
 
             it("should move one month back on ArrowLeft", fakeAsync(() => {
-                service["handleOpenedCalendar"](
-                    keyBoardEventFactory(KEYBOARD_CODE.ARROW_LEFT)
-                );
+                const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_LEFT);
+
+                service.onKeyDown(event);
                 tick();
 
                 expect(
-                    datePickerInnerMock.value.isSame(moment("2022-05-15"), "month")
+                    datePickerInnerMock.value.isSame(
+                        moment("2022-05-15"),
+                        "month"
+                    )
                 ).toBeTruthy();
             }));
 
             it("should move one row (3 months) forward on ArrowDown", fakeAsync(() => {
-                service["handleOpenedCalendar"](
-                    keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN)
-                );
+                const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
+
+                service.onKeyDown(event);
                 tick();
 
                 expect(
-                    datePickerInnerMock.value.isSame(moment("2022-09-15"), "month")
+                    datePickerInnerMock.value.isSame(
+                        moment("2022-09-15"),
+                        "month"
+                    )
                 ).toBeTruthy();
             }));
 
             it("should move one row (3 months) back on ArrowUp", fakeAsync(() => {
-                service["handleOpenedCalendar"](
-                    keyBoardEventFactory(KEYBOARD_CODE.ARROW_UP)
-                );
+                const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_UP);
+
+                service.onKeyDown(event);
                 tick();
 
                 expect(
-                    datePickerInnerMock.value.isSame(moment("2022-03-15"), "month")
+                    datePickerInnerMock.value.isSame(
+                        moment("2022-03-15"),
+                        "month"
+                    )
                 ).toBeTruthy();
             }));
 
             it("should move one year forward on PageDown", fakeAsync(() => {
-                service["handleOpenedCalendar"](
-                    keyBoardEventFactory(KEYBOARD_CODE.PAGE_DOWN)
-                );
+                const event = keyBoardEventFactory(KEYBOARD_CODE.PAGE_DOWN);
+
+                service.onKeyDown(event);
                 tick();
 
                 expect(
-                    datePickerInnerMock.value.isSame(moment("2023-06-15"), "month")
+                    datePickerInnerMock.value.isSame(
+                        moment("2023-06-15"),
+                        "month"
+                    )
                 ).toBeTruthy();
             }));
 
             it("should move one year back on PageUp", fakeAsync(() => {
-                service["handleOpenedCalendar"](
-                    keyBoardEventFactory(KEYBOARD_CODE.PAGE_UP)
-                );
+                const event = keyBoardEventFactory(KEYBOARD_CODE.PAGE_UP);
+
+                service.onKeyDown(event);
                 tick();
 
                 expect(
-                    datePickerInnerMock.value.isSame(moment("2021-06-15"), "month")
+                    datePickerInnerMock.value.isSame(
+                        moment("2021-06-15"),
+                        "month"
+                    )
                 ).toBeTruthy();
             }));
 
             it("should move to January on Home", fakeAsync(() => {
-                service["handleOpenedCalendar"](
-                    keyBoardEventFactory(KEYBOARD_CODE.HOME)
-                );
+                const event = keyBoardEventFactory(KEYBOARD_CODE.HOME);
+
+                service.onKeyDown(event);
                 tick();
 
                 expect(
-                    datePickerInnerMock.value.isSame(moment("2022-01-15"), "month")
+                    datePickerInnerMock.value.isSame(
+                        moment("2022-01-15"),
+                        "month"
+                    )
                 ).toBeTruthy();
             }));
 
             it("should move to December on End", fakeAsync(() => {
-                service["handleOpenedCalendar"](
-                    keyBoardEventFactory(KEYBOARD_CODE.END)
-                );
+                const event = keyBoardEventFactory(KEYBOARD_CODE.END);
+
+                service.onKeyDown(event);
                 tick();
 
                 expect(
-                    datePickerInnerMock.value.isSame(moment("2022-12-15"), "month")
+                    datePickerInnerMock.value.isSame(
+                        moment("2022-12-15"),
+                        "month"
+                    )
                 ).toBeTruthy();
             }));
 
             it("should focus the active cell of the month grid after navigating", fakeAsync(() => {
-                const focusSpy = spyOn(monthPickerMock, "focusActiveCell");
-
-                service["handleOpenedCalendar"](
+                service.onKeyDown(
                     keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT)
                 );
                 tick();
 
-                expect(focusSpy).toHaveBeenCalled();
+                expect(monthPickerMock.focusActiveCell).toHaveBeenCalled();
             }));
 
             it("should notify calendarMoved only when the displayed year changes", fakeAsync(() => {
-                const calendarMovedSpy = spyOn(
-                    datePickerInnerMock.calendarMoved,
-                    "next"
-                );
-
-                service["handleOpenedCalendar"](
+                service.onKeyDown(
                     keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT)
                 );
                 tick();
 
-                expect(calendarMovedSpy).not.toHaveBeenCalled();
+                expect(
+                    datePickerInnerMock.calendarMoved.next
+                ).not.toHaveBeenCalled();
             }));
 
             it("should notify calendarMoved when navigation crosses into a new year", fakeAsync(() => {
                 datePickerInnerMock.value = moment("2022-12-15");
-                const calendarMovedSpy = spyOn(
-                    datePickerInnerMock.calendarMoved,
-                    "next"
-                );
 
-                service["handleOpenedCalendar"](
+                service.onKeyDown(
                     keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT)
                 );
                 tick();
 
-                expect(calendarMovedSpy).toHaveBeenCalled();
+                expect(
+                    datePickerInnerMock.calendarMoved.next
+                ).toHaveBeenCalled();
             }));
         });
 
@@ -500,95 +505,109 @@ describe("Services >", () => {
             });
 
             it("should move one year forward on ArrowRight", fakeAsync(() => {
-                service["handleOpenedCalendar"](
-                    keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT)
-                );
+                const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT);
+
+                service.onKeyDown(event);
                 tick();
 
                 expect(
-                    datePickerInnerMock.value.isSame(moment("2023-06-15"), "year")
+                    datePickerInnerMock.value.isSame(
+                        moment("2023-06-15"),
+                        "year"
+                    )
                 ).toBeTruthy();
             }));
 
             it("should move one year back on ArrowLeft", fakeAsync(() => {
-                service["handleOpenedCalendar"](
-                    keyBoardEventFactory(KEYBOARD_CODE.ARROW_LEFT)
-                );
+                const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_LEFT);
+
+                service.onKeyDown(event);
                 tick();
 
                 expect(
-                    datePickerInnerMock.value.isSame(moment("2021-06-15"), "year")
+                    datePickerInnerMock.value.isSame(
+                        moment("2021-06-15"),
+                        "year"
+                    )
                 ).toBeTruthy();
             }));
 
             it("should move one row (5 years) forward on ArrowDown", fakeAsync(() => {
-                service["handleOpenedCalendar"](
-                    keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN)
-                );
+                const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
+
+                service.onKeyDown(event);
                 tick();
 
                 expect(
-                    datePickerInnerMock.value.isSame(moment("2027-06-15"), "year")
+                    datePickerInnerMock.value.isSame(
+                        moment("2027-06-15"),
+                        "year"
+                    )
                 ).toBeTruthy();
             }));
 
             it("should move one row (5 years) back on ArrowUp", fakeAsync(() => {
-                service["handleOpenedCalendar"](
-                    keyBoardEventFactory(KEYBOARD_CODE.ARROW_UP)
-                );
+                const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_UP);
+
+                service.onKeyDown(event);
                 tick();
 
                 expect(
-                    datePickerInnerMock.value.isSame(moment("2017-06-15"), "year")
+                    datePickerInnerMock.value.isSame(
+                        moment("2017-06-15"),
+                        "year"
+                    )
                 ).toBeTruthy();
             }));
 
             it("should page by yearRange (20 years) forward on PageDown", fakeAsync(() => {
-                service["handleOpenedCalendar"](
-                    keyBoardEventFactory(KEYBOARD_CODE.PAGE_DOWN)
-                );
+                const event = keyBoardEventFactory(KEYBOARD_CODE.PAGE_DOWN);
+
+                service.onKeyDown(event);
                 tick();
 
                 expect(
-                    datePickerInnerMock.value.isSame(moment("2042-06-15"), "year")
+                    datePickerInnerMock.value.isSame(
+                        moment("2042-06-15"),
+                        "year"
+                    )
                 ).toBeTruthy();
             }));
 
             it("should page by yearRange (20 years) back on PageUp", fakeAsync(() => {
-                service["handleOpenedCalendar"](
-                    keyBoardEventFactory(KEYBOARD_CODE.PAGE_UP)
-                );
+                const event = keyBoardEventFactory(KEYBOARD_CODE.PAGE_UP);
+
+                service.onKeyDown(event);
                 tick();
 
                 expect(
-                    datePickerInnerMock.value.isSame(moment("2002-06-15"), "year")
+                    datePickerInnerMock.value.isSame(
+                        moment("2002-06-15"),
+                        "year"
+                    )
                 ).toBeTruthy();
             }));
 
             it("should focus the active cell of the year grid after navigating", fakeAsync(() => {
-                const focusSpy = spyOn(yearPickerMock, "focusActiveCell");
-
-                service["handleOpenedCalendar"](
+                service.onKeyDown(
                     keyBoardEventFactory(KEYBOARD_CODE.ARROW_RIGHT)
                 );
                 tick();
 
-                expect(focusSpy).toHaveBeenCalled();
+                expect(yearPickerMock.focusActiveCell).toHaveBeenCalled();
             }));
 
             it("should not respond to Home/End in the year view", fakeAsync(() => {
                 const startValue = datePickerInnerMock.value.clone();
-                const refreshSpy = spyOn(datePickerInnerMock, "refreshView");
 
-                service["handleOpenedCalendar"](
-                    keyBoardEventFactory(KEYBOARD_CODE.HOME)
-                );
-                service["handleOpenedCalendar"](
-                    keyBoardEventFactory(KEYBOARD_CODE.END)
-                );
+                const homeEvent = keyBoardEventFactory(KEYBOARD_CODE.HOME);
+                service.onKeyDown(homeEvent);
+
+                const endEvent = keyBoardEventFactory(KEYBOARD_CODE.END);
+                service.onKeyDown(endEvent);
                 tick();
 
-                expect(refreshSpy).not.toHaveBeenCalled();
+                expect(datePickerInnerMock.refreshView).not.toHaveBeenCalled();
                 expect(
                     datePickerInnerMock.value.isSame(startValue, "year")
                 ).toBeTruthy();

@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ElementRef, QueryList } from "@angular/core";
 import _isUndefined from "lodash/isUndefined";
 import _keys from "lodash/keys";
 
@@ -60,34 +61,46 @@ describe("components >", () => {
         });
 
         describe("focusActiveCell >", () => {
+            let container: HTMLElement;
+            let otherButton: HTMLButtonElement;
+            let activeButton: HTMLButtonElement;
+
+            beforeEach(() => {
+                container = document.createElement("div");
+                document.body.appendChild(container);
+                otherButton = document.createElement("button");
+                activeButton = document.createElement("button");
+                container.appendChild(otherButton);
+                container.appendChild(activeButton);
+            });
+
+            afterEach(() => {
+                container.remove();
+            });
+
             it("should focus the button of the active (current) year cell", () => {
-                const otherButton = { focus: jasmine.createSpy("focus") };
-                const activeButton = { focus: jasmine.createSpy("focus") };
-                yearPicker.rows = [
-                    [{ current: false }, { current: true }],
-                ];
-                (yearPicker as any).cellButtons = {
-                    toArray: () => [
-                        { nativeElement: otherButton },
-                        { nativeElement: activeButton },
-                    ],
-                };
+                yearPicker.rows = [[{ current: false }, { current: true }]];
+                const buttons = new QueryList<ElementRef<HTMLButtonElement>>();
+                buttons.reset([
+                    new ElementRef(otherButton),
+                    new ElementRef(activeButton),
+                ]);
+                (yearPicker as any).cellButtons = buttons;
 
                 yearPicker.focusActiveCell();
 
-                expect(activeButton.focus).toHaveBeenCalled();
-                expect(otherButton.focus).not.toHaveBeenCalled();
+                expect(document.activeElement).toBe(activeButton);
             });
 
             it("should do nothing when there is no active year cell", () => {
                 yearPicker.rows = [[{ current: false }]];
-                (yearPicker as any).cellButtons = {
-                    toArray: () => [
-                        { nativeElement: { focus: jasmine.createSpy() } },
-                    ],
-                };
+                const buttons = new QueryList<ElementRef<HTMLButtonElement>>();
+                buttons.reset([new ElementRef(otherButton)]);
+                (yearPicker as any).cellButtons = buttons;
 
+                document.body.focus();
                 expect(() => yearPicker.focusActiveCell()).not.toThrow();
+                expect(document.activeElement).toBe(document.body);
             });
         });
     });
