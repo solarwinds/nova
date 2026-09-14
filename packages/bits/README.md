@@ -1,3 +1,7 @@
+# NOVA Open Source Deprecation Notice
+
+The NOVA UI framework will reach End of Support (EOS) for all public open‑source distribution on December 31, 2026. SolarWinds will continue internal development and maintenance of NOVA for use within SolarWinds products, but the framework will no longer be updated, maintained, or supported as a public open‑source project. After EOS, the NPM package will remain available only in its final published version and will not receive further updates. For continued use inside SolarWinds, NOVA remains fully supported internally.
+
 # Bits Overview
 
 In Bits, the philosophy is all about flexibility – it provides the Legos, plumbing and styles, while you control the layouts. Bits aims to provide high-quality, atomic building blocks, services and tools while allowing feature developers the ability to create whatever layouts they need.

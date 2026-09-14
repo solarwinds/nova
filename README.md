@@ -1,3 +1,7 @@
+# NOVA Repository Archival
+
+This repository will be archived on December 31, 2026 as part of the End of Support for the public NOVA open‑source project. SolarWinds will continue using and developing NOVA internally, but no further public releases, issue responses, or pull‑request reviews will be provided. The repository will remain accessible in read‑only mode for historical reference.
+
 # Nova Nui Framework
 
 The Nova Nui Framework provides a set of common UI-based components and services to assist with rapid web application development. Nui is built on the latest Angular and follows modern UX design principles and front-end software development practices.
