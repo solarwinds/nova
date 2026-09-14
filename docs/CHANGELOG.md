@@ -30,6 +30,7 @@
 
 ### Fixes
 
+- `@nova-ui/dashboards` | Fixed regression in keyboard scrolling in Modern Dashboard table widgets
 - `@nova-ui/bits` | new accessible blue for active menu button text
 - Essentional A11y fixies
 - `@nova-ui/bits` | A11y fixes for nui-toolbar
