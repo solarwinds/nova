@@ -58,13 +58,18 @@ export class DelayedMousePresenceDetectionDirective {
         this.mousePresentSubject.next(true);
     }
 
-    @HostListener("focusout", ["$event"]) onHostFocusout(event: FocusEvent): void {
+    @HostListener("focusout", ["$event"]) onHostFocusout(
+        event: FocusEvent
+    ): void {
         if (!this.enabled) {
             return;
         }
 
         const relatedTarget = event.relatedTarget;
-        if (!(relatedTarget instanceof HTMLElement) || !this.elementRef.nativeElement.contains(relatedTarget)) {
+        if (
+            !(relatedTarget instanceof HTMLElement) ||
+            !this.elementRef.nativeElement.contains(relatedTarget)
+        ) {
             this.mousePresentSubject.next(false);
         }
     }

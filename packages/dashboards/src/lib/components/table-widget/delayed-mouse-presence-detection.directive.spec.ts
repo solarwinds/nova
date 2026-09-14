@@ -30,7 +30,9 @@ describe("TableHideScrollBarDirective", () => {
 
     beforeEach(() => {
         nativeElement = document.createElement("div");
-        directive = new DelayedMousePresenceDetectionDirective({ nativeElement } as ElementRef<HTMLElement>);
+        directive = new DelayedMousePresenceDetectionDirective({
+            nativeElement,
+        } as ElementRef<HTMLElement>);
         directive.enabled = true;
         directive.mousePresentSubject = new Subject<boolean>();
     });
@@ -62,13 +64,19 @@ describe("TableHideScrollBarDirective", () => {
 
     it("should return back false on the subject on focusout when relatedTarget is outside the host element", () => {
         const nextSpy = spyOn(directive.mousePresentSubject, "next");
-        directive.onHostFocusout(new FocusEvent("focusout", { relatedTarget: document.createElement("span") }));
+        directive.onHostFocusout(
+            new FocusEvent("focusout", {
+                relatedTarget: document.createElement("span"),
+            })
+        );
         expect(nextSpy).toHaveBeenCalledWith(false);
     });
 
     it("should return back false on the subject on focusout when relatedTarget is null", () => {
         const nextSpy = spyOn(directive.mousePresentSubject, "next");
-        directive.onHostFocusout(new FocusEvent("focusout", { relatedTarget: null }));
+        directive.onHostFocusout(
+            new FocusEvent("focusout", { relatedTarget: null })
+        );
         expect(nextSpy).toHaveBeenCalledWith(false);
     });
 
@@ -76,7 +84,9 @@ describe("TableHideScrollBarDirective", () => {
         const nextSpy = spyOn(directive.mousePresentSubject, "next");
         const childElement = document.createElement("span");
         nativeElement.appendChild(childElement);
-        directive.onHostFocusout(new FocusEvent("focusout", { relatedTarget: childElement }));
+        directive.onHostFocusout(
+            new FocusEvent("focusout", { relatedTarget: childElement })
+        );
         expect(nextSpy).not.toHaveBeenCalled();
     });
 
@@ -84,7 +94,11 @@ describe("TableHideScrollBarDirective", () => {
         const nextSpy = spyOn(directive.mousePresentSubject, "next");
         directive.enabled = false;
         directive.onHostFocusin();
-        directive.onHostFocusout(new FocusEvent("focusout", { relatedTarget: document.createElement("span") }));
+        directive.onHostFocusout(
+            new FocusEvent("focusout", {
+                relatedTarget: document.createElement("span"),
+            })
+        );
         expect(nextSpy).not.toHaveBeenCalled();
     });
 });
