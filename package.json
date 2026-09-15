@@ -103,7 +103,7 @@
   "resolutions": {
     "@babel/core": "7.29.0",
     "@hono/node-server": "2.1.1",
-    "@sigstore/core": "4.0.1",
+    "@sigstore/core": "3.2.1",
     "@sigstore/verify": "4.1.2",
     "@xmldom/xmldom": "0.9.12",
     "axios": "1.18.0",
