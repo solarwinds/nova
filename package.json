@@ -104,7 +104,7 @@
     "@babel/core": "7.29.0",
     "@hono/node-server": "2.1.1",
     "@sigstore/core": "3.2.1",
-    "@sigstore/verify": "4.1.2",
+    "@sigstore/verify": "3.1.1",
     "@xmldom/xmldom": "0.9.12",
     "axios": "1.18.0",
     "d3-color": "3.1.0",
