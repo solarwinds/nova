@@ -24,6 +24,10 @@
     &__preset {
         .nui-menu-item-mixin();
         .setCssVariable(color, nui-color-text-default);
+
+        &:focus-visible {
+            .focus-outline();
+        }
     }
     // Overwriting nui-menu-item-mixin styles because of UX requirements
     &__preset:not(&__preset--selected) {

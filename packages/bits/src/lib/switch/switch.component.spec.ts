@@ -104,5 +104,39 @@ describe("components >", () => {
                 expect(switchBar.getAttribute("aria-labelledby")).toBeNull();
             });
         });
+
+        describe("keyboard interaction >", () => {
+            let switchBar: HTMLElement;
+
+            beforeEach(() => {
+                nuiSwitch.value = false;
+                switchFixture.detectChanges();
+                switchBar = switchFixture.nativeElement.querySelector(
+                    ".nui-switch__bar"
+                ) as HTMLElement;
+            });
+
+            it("should toggle when Space is pressed (keydown)", () => {
+                switchBar.dispatchEvent(
+                    new KeyboardEvent("keydown", { key: " ", code: "Space", bubbles: true })
+                );
+                expect(valueChange).toHaveBeenCalledWith(true);
+            });
+
+            it("should NOT toggle when Enter is pressed", () => {
+                switchBar.dispatchEvent(
+                    new KeyboardEvent("keydown", { code: "Enter", bubbles: true })
+                );
+                expect(valueChange).not.toHaveBeenCalled();
+            });
+
+            it("should NOT toggle when disabled and Space is pressed", () => {
+                nuiSwitch.setDisabledState(true);
+                switchBar.dispatchEvent(
+                    new KeyboardEvent("keydown", { key: " ", code: "Space", bubbles: true })
+                );
+                expect(valueChange).not.toHaveBeenCalled();
+            });
+        });
     });
 });

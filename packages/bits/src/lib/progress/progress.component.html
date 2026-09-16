@@ -6,6 +6,7 @@
     >
         <span
             class="nui-progress__message nui-text-label nui-progress__header-item"
+            [id]="messageId"
             >{{ message }}</span
         >
     </div>
@@ -17,6 +18,7 @@
         aria-valuemax="100"
         [attr.aria-label]="ariaLabel"
         [attr.aria-valuenow]="percent || null"
+        [attr.aria-describedby]="message ? messageId : helpText ? helpId : null"
     >
         <div
             class="nui-progress__bar"
@@ -28,6 +30,7 @@
             <div
                 class="nui-progress__bar-value"
                 [ngStyle]="{ 'width.%': percent }"
+                aria-hidden="true"
             ></div>
         </div>
         @if (showNumber && !compactMode) {
@@ -44,6 +47,8 @@
             icon="close"
             (click)="cancelProgress()"
             displayStyle="action"
+            ariaLabel="Cancel"
+            i18n-ariaLabel
             [nuiTooltip]="'Cancel'"
         ></button>
         }
@@ -52,6 +57,7 @@
     <div
         class="nui-progress__hint"
         [class.nui-progress__hint--stacked]="stacked"
+        [id]="helpId"
     >
         <ng-container
             [ngTemplateOutlet]="
@@ -63,5 +69,5 @@
 </div>
 
 <ng-template #defaultHelpTemplateRef>
-    <span class="nui-text-small-secondary">{{ helpText }}</span>
+    <span class="nui-text-small-secondary" [id]="helpId">{{ helpText }}</span>
 </ng-template>

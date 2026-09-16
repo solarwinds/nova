@@ -9,12 +9,14 @@
         #menuToggle
         nui-button
         nuiPopupToggle
+        [role]="'menu'"
         [toggleOnKey]="false"
         [id]="menuTriggerId"
         [disabled]="isDisabled"
-        [attr.aria-expanded]="popup?.isOpen ? 'true' : 'false'"
+        [opened]="popup?.isOpen || false"
+        [attr.aria-expanded]="!!popup?.isOpen"
         [attr.aria-controls]="popup?.isOpen ? popupContentId : null"
-        aria-haspopup="menu"
+        [attr.aria-activedescendant]="popup?.isOpen ? activeDescendant : null"
         type="button"
         (blur)="onBlur($event)"
         [displayStyle]="displayStyle"
@@ -23,7 +25,7 @@
         [iconRight]="isTitlePresent()"
         class="menu-button no-shadow"
         [isEmpty]="!isTitlePresent()"
-        [attr.aria-label]="title || ariaLabel"
+        [ariaLabel]="menuAriaLabel"
     >
         <span>{{ title }}</span>
     </button>

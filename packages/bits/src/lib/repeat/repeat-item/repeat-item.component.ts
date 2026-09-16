@@ -49,6 +49,13 @@ export class RepeatItemComponent {
 
     @Output() public rowClicked = new EventEmitter<MouseEvent>();
 
+    public onKeyActivate(event: KeyboardEvent): void {
+        if (this.clickable) {
+            event.preventDefault();
+            this.rowClicked.emit(event as unknown as MouseEvent);
+        }
+    }
+
     get role(): string {
         return this.selectable ? "option" : "listitem";
     }

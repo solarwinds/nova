@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+// © 2026 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -18,27 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Helpers, test } from "../../setup";
-import { Atom } from "../../atom";
-import { TabHeadingGroupAtom } from "./tab-heading-group.atom";
-import { TabHeadingAtom } from "./tab-heading.atom";
+import lodashUniqueId from "lodash/uniqueId";
 
-test.describe("a11y: tab-heading-group", () => {
-    // target-size disabled: TODO: NUI-6279 - Fix interactive element target sizes
-    const rulesToDisable: string[] = [
-        "color-contrast", // NUI-6014
-        "target-size",
-    ];
-
-    test.beforeEach(async ({ page }) => {
-        await Helpers.prepareBrowser("tabgroup/tabgroup-test", page);
-    });
-
-    test("should check a11y of tab-heading", async ({ runA11yScan }) => {
-        await runA11yScan(TabHeadingAtom, rulesToDisable);
-    });
-
-    test("should check a11y of tab-heading-group", async ({ runA11yScan }) => {
-        await runA11yScan(TabHeadingGroupAtom, rulesToDisable);
-    });
-});
+/**
+ * Generates a unique ID with an optional prefix.
+ * @param prefix
+ * @returns
+ */
+export function _uniqueId(prefix?: string): string {
+    return lodashUniqueId(prefix);
+}

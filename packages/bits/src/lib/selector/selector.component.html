@@ -8,8 +8,9 @@
         class="nui-selector__checkbox-button"
         [displayStyle]="'default'"
         (click)="handleSelectorClick($event)"
+        (keydown.space)="$event.preventDefault(); handleSelectorClick($event)"
     >
-        <div class="nui-selector__checkbox-container">
+        <div class="nui-selector__checkbox-container" aria-hidden="true">
             <nui-checkbox
                 #checkbox
                 [checked]="checkboxChecked"
@@ -24,8 +25,15 @@
         type="button"
         class="nui-selector__toggle"
         ariaLabel="Open Selector Menu"
+        i18n-ariaLabel
         [displayStyle]="'default'"
         [icon]="'caret-down'"
+        aria-haspopup="menu"
+        [attr.aria-expanded]="overlay.showing"
+        [attr.aria-controls]="
+            overlay.showing ? 'nui-selector-menu-' + _id : null
+        "
+        [attr.aria-activedescendant]="overlay.showing ? activeDescendant : null"
         (click)="overlay.toggle()"
     ></button>
     }
@@ -40,6 +48,7 @@
     [customContainer]="customContainer"
 >
     <nui-menu-popup
+        [id]="'nui-selector-menu-' + _id"
         [itemsSource]="items"
         (menuItemClicked)="handleItemClick($event)"
     ></nui-menu-popup>

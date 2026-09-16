@@ -73,8 +73,9 @@
                     icon="remove"
                     type="button"
                     displayStyle="action"
+                    aria-label="Remove metric"
+                    i18n-aria-label
                     (click)="removeMetric(summarySerie.id)"
-                    displayStyle="action"
                 ></button>
                 }
             </nui-legend-series>
@@ -122,6 +123,7 @@
                 >
                     <div class="descriptions">
                         @if (!legendSeries.link) {
+                        <!-- TODO: NUI-6288 - drill-down sits inside the nui-legend-series (role="checkbox") -->
                         <div
                             class="description description-primary"
                             [ngClass]="{
@@ -167,11 +169,13 @@
                     <nui-icon
                         icon="fast-poll"
                         iconColor="primary-blue"
+                        aria-hidden="true"
                     ></nui-icon>
                     } @if (legendSeries.transformer) {
                     <nui-icon
                         icon="performance"
                         iconColor="primary-blue"
+                        aria-hidden="true"
                     ></nui-icon>
                     }
                 </div>

@@ -6,6 +6,7 @@
         class="nui-toast__status-icon"
         iconSize="large"
         icon="{{ toastIcon }}"
+        aria-hidden="true"
     ></nui-icon>
     <div class="nui-toast__content-message flex-grow-1">
         @if (title) {
@@ -28,6 +29,8 @@
         displayStyle="action"
         size="default"
         icon="close"
+        ariaLabel="Dismiss notification"
+        i18n-ariaLabel
         (click)="remove()"
     ></button>
     }

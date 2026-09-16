@@ -13,6 +13,10 @@
             .setCssVariable(background-color, nui-color-bg-accordion_header-hover);
         }
 
+        &:has(:focus-visible) {
+            .focus-outline();
+        }
+
         &-name {
             font-size: @nui-font-size-small;
             max-width: 200px;
@@ -30,6 +34,8 @@
 
         &-remove {
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
             margin: 0 0 0 @nui-space-xs;
 
             svg * {

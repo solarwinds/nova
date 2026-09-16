@@ -1,4 +1,5 @@
 <ng-template #repeatItems let-item="item" let-itemIndex="itemIndex">
+    <!-- TODO: NUI-6281 - Fix no keyboard alternative for drag-to-reorder -->
     <nui-repeat-item
         class="repeat-group-item"
         #drag="cdkDrag"
@@ -57,6 +58,11 @@
                 [checked]="isItemSelected(item)"
                 [disabled]="isItemDisabled(item)"
                 (valueChange)="itemClicked($event, item)"
+                [ariaLabelledby]="
+                    itemIndex !== undefined
+                        ? 'nui-repeat-item-content-' + itemIndex
+                        : null
+                "
             >
             </nui-checkbox>
             } @if (isModeRadio()) {
@@ -66,11 +72,23 @@
                 [checked]="isItemSelected(item)"
                 [disabled]="isItemDisabled(item)"
                 (click)="itemClicked($event, item)"
+                [ariaLabelledby]="
+                    itemIndex !== undefined
+                        ? 'nui-repeat-item-content-' + itemIndex
+                        : null
+                "
             >
             </nui-radio>
             }
         </div>
-        <div class="nui-repeat-item__content-container">
+        <div
+            class="nui-repeat-item__content-container"
+            [id]="
+                itemIndex !== undefined
+                    ? 'nui-repeat-item-content-' + itemIndex
+                    : null
+            "
+        >
             <ng-container
                 [ngTemplateOutlet]="repeatItemTemplateRef"
                 [ngTemplateOutletContext]="{ item: item }"
@@ -96,8 +114,8 @@
         @if (!virtualScroll) {
         <div>
             @for ( sourceItem of itemsSource; track
-            (itemConfig?.trackBy?.(itemIndex, sourceItem) ?? itemIndex); let itemIndex = $index)
-            {
+            (itemConfig?.trackBy?.(itemIndex, sourceItem) ?? itemIndex); let
+            itemIndex = $index) {
             <ng-container
                 [ngTemplateOutlet]="repeatItems"
                 [ngTemplateOutletContext]="{
@@ -112,12 +130,16 @@
             <ng-container
                 *cdkVirtualFor="
                     let sourceItem of itemsSource;
+                    let i = index;
                     templateCacheSize: 0
                 "
             >
                 <ng-container
                     [ngTemplateOutlet]="repeatItems"
-                    [ngTemplateOutletContext]="{ item: sourceItem }"
+                    [ngTemplateOutletContext]="{
+                        item: sourceItem,
+                        itemIndex: i
+                    }"
                 ></ng-container>
             </ng-container>
         </cdk-virtual-scroll-viewport>

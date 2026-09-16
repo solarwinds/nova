@@ -1,3 +1,4 @@
+<!-- TODO: NUI-6281 - Fix no keyboard alternative for drag-to-reorder -->
 <div
     class="nui-items-dynamic"
     cdkDropList
@@ -18,7 +19,7 @@
         <ng-template #headerText>
             @if (moveButtons) {
             <div class="nui-items-dynamic__drag-handler" cdkDragHandle>
-                <nui-icon icon="drag"></nui-icon>
+                <nui-icon icon="drag" aria-hidden="true"></nui-icon>
             </div>
             }
             <span
@@ -43,6 +44,8 @@
                     type="button"
                     icon="delete"
                     displayStyle="action"
+                    aria-label="Remove item"
+                    i18n-aria-label
                     (click)="removeItem(getItemForNode(node), i)"
                 ></button>
             </div>

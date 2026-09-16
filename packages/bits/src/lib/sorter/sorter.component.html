@@ -21,7 +21,16 @@
             class="nui-selector__toggle"
             (click)="toggleSorterMenu()"
             ariaLabel="Open Sorter Menu"
+            i18n-ariaLabel
             icon="caret-down"
+            aria-haspopup="menu"
+            [attr.aria-expanded]="overlay.showing"
+            [attr.aria-controls]="
+                overlay.showing ? 'nui-sorter-menu-' + _id : null
+            "
+            [attr.aria-activedescendant]="
+                overlay.showing ? activeDescendant : null
+            "
         ></button>
     </div>
 
@@ -35,6 +44,7 @@
     >
         <nui-menu-popup
             #popup
+            [id]="'nui-sorter-menu-' + _id"
             [itemsSource]="items"
             (menuItemClicked)="select($event)"
         ></nui-menu-popup>

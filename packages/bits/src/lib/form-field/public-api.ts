@@ -31,4 +31,7 @@ export abstract class NuiFormFieldControl {
     // TODO: make this field required in v-next
     /** Aria label to set on the tab-focusable item. */
     public ariaLabel?: string;
+
+    /** Unique id for the control. */
+    public id?: string;
 }

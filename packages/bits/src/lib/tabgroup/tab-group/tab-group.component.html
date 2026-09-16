@@ -5,19 +5,32 @@
         (click)="$event.preventDefault()"
     >
         @if (hasTraverse) {
+        <!-- a11y: WCAG 2.5.8 Target Size - TODO: NUI-6279 -->
         <div
             class="btn-caret-left"
+            role="button"
+            tabindex="0"
+            aria-label="Scroll tabs left"
+            i18n-aria-label
             [class.disabled]="!rightTraverseEnabled"
+            [attr.aria-disabled]="!rightTraverseEnabled ? 'true' : null"
             (click)="traverseRight()"
+            (keydown.enter)="traverseRight()"
+            (keydown.space)="$event.preventDefault(); traverseRight()"
         >
             <nui-icon
                 [icon]="'caret-left'"
                 [iconColor]="!rightTraverseEnabled ? 'gray' : 'default'"
+                [decorative]="true"
             ></nui-icon>
         </div>
         }
         <div class="nui-tabs">
-            <div class="nui-tabs__container" [class.flex-column]="vertical">
+            <div
+                class="nui-tabs__container"
+                role="tablist"
+                [class.flex-column]="vertical"
+            >
                 @for (tab of tabs; track tab) {
                 <div
                     class="nui-tab"
@@ -26,7 +39,20 @@
                     [class.disabled]="tab.disabled"
                     [class.active__vertical]="tab.active && vertical"
                 >
-                    <span class="tab-link" (click)="selectTab(tab)">
+                    <span
+                        class="tab-link"
+                        role="tab"
+                        [id]="tab.tabId"
+                        [attr.aria-controls]="tab.panelId"
+                        [attr.tabindex]="tab.disabled ? -1 : 0"
+                        [attr.aria-selected]="tab.active ?? false"
+                        [attr.aria-disabled]="tab.disabled || null"
+                        (click)="selectTab(tab)"
+                        (keydown.enter)="selectTab(tab)"
+                        (keydown.space)="
+                            $event.preventDefault(); selectTab(tab)
+                        "
+                    >
                         <span
                             [nuiTabHeadingCustomTemplateRef]="tab.headingRef"
                             >{{ tab.heading }}</span
@@ -37,14 +63,23 @@
             </div>
         </div>
         @if (hasTraverse) {
+        <!-- a11y: WCAG 2.5.8 Target Size - TODO: NUI-6279 -->
         <div
             class="btn-caret-right"
+            role="button"
+            tabindex="0"
+            aria-label="Scroll tabs right"
+            i18n-aria-label
             [class.disabled]="!leftTraverseEnabled"
+            [attr.aria-disabled]="!leftTraverseEnabled ? 'true' : null"
             (click)="traverseLeft()"
+            (keydown.enter)="traverseLeft()"
+            (keydown.space)="$event.preventDefault(); traverseLeft()"
         >
             <nui-icon
                 [icon]="'caret-right'"
                 [iconColor]="!leftTraverseEnabled ? 'gray' : 'default'"
+                [decorative]="true"
             ></nui-icon>
         </div>
         }
