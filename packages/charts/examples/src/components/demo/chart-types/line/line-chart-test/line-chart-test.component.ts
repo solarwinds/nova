@@ -134,6 +134,6 @@ export class LineChartTestComponent implements OnInit {
                     y: 0,
                 })),
             },
-        ].map((s) => ({ ...s, scales, renderer, accessors }));
+        ].map(s => ({ ...s, scales, renderer, accessors }));
     }
 }

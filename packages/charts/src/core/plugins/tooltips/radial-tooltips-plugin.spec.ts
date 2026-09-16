@@ -75,7 +75,7 @@ describe("RadialTooltipsPlugin >", () => {
         ];
 
         return radialPreprocessor(
-            donutSeriesSet.map((dataSeries) => ({
+            donutSeriesSet.map(dataSeries => ({
                 ...dataSeries,
                 scales,
                 renderer,

@@ -104,7 +104,7 @@ export class ChartCollectionTestComponent implements OnInit, AfterViewInit {
             index
         );
 
-        return timeLineSeriesSet.map((dataSeries) => ({
+        return timeLineSeriesSet.map(dataSeries => ({
             ...dataSeries,
             scales: myChart.scales,
             renderer: myChart.renderer,
@@ -115,7 +115,7 @@ export class ChartCollectionTestComponent implements OnInit, AfterViewInit {
 
     private generateDataSeriesSet(dataSeriesCount: number, chartIndex: number) {
         const chartNumber = chartIndex + 1;
-        return Array.from(Array(dataSeriesCount).keys()).map((i) => {
+        return Array.from(Array(dataSeriesCount).keys()).map(i => {
             const seriesNumber = i + 1;
             return {
                 id: `series-${chartNumber}-${seriesNumber}`,

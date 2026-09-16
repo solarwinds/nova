@@ -61,7 +61,7 @@ export class FixedDomainsExampleComponent implements OnInit {
         gridConfig.axis.bottom.fit = true;
         this.chart = new Chart(new XYGrid(gridConfig));
 
-        this.seriesSet = getData(this.format).map((d) => ({
+        this.seriesSet = getData(this.format).map(d => ({
             ...d,
             scales,
             accessors: new LineAccessors(),

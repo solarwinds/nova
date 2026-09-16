@@ -153,7 +153,7 @@ export class ThresholdsSummaryTestComponent implements OnChanges, OnInit {
 
         const summarySeriesSet: IChartAssistSeries<IAccessors>[] = [
             ...seriesSet,
-        ].map((s) => {
+        ].map(s => {
             const summaryZoneDefs = [...this.zones, { status: "ok" }];
             const zones = this.thresholdsService.getThresholdZones(
                 s,
@@ -224,7 +224,7 @@ function getDataSeriesSet(
         y,
     });
 
-    return Object.keys(data).map((seriesId) => {
+    return Object.keys(data).map(seriesId => {
         const seriesData = data[seriesId];
         const dataValues = seriesData.map(toDataPoint);
 

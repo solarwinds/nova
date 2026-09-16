@@ -7,8 +7,7 @@
             seriesUnitLabel="sec"
             [active]="chartAssist.isLegendActive"
             [interactive]="true"
-            (mouseleave)="chartAssist.resetVisibleSeries()"
-        >
+            (mouseleave)="chartAssist.resetVisibleSeries()">
             @for ( legendSeries of chartAssist.legendSeriesSet; track
             legendSeries.id) {
             <nui-legend-series
@@ -20,8 +19,7 @@
                 [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                 (isSelectedChange)="
                     chartAssist.toggleSeries(legendSeries.id, $event)
-                "
-            >
+                ">
                 <nui-rich-legend-tile
                     [value]="chartAssist.getHighlightedValue(legendSeries, 'y')"
                     [backgroundColor]="
@@ -29,8 +27,7 @@
                     "
                     [color]="
                         chartAssist.palette.textColors.get(legendSeries.id)
-                    "
-                >
+                    ">
                     <nui-chart-marker
                         rightEdge
                         [marker]="chartAssist.markers.get(legendSeries.id)"
@@ -38,8 +35,7 @@
                             chartAssist.palette.standardColors.get(
                                 legendSeries.id
                             )
-                        "
-                    >
+                        ">
                     </nui-chart-marker>
                 </nui-rich-legend-tile>
             </nui-legend-series>
@@ -57,8 +53,7 @@
             seriesUnitLabel="sec"
             [active]="reversedThresholdsChartAssist.isLegendActive"
             [interactive]="true"
-            (mouseleave)="reversedThresholdsChartAssist.resetVisibleSeries()"
-        >
+            (mouseleave)="reversedThresholdsChartAssist.resetVisibleSeries()">
             @for ( legendSeries of
             reversedThresholdsChartAssist.legendSeriesSet; track
             reversedThresholdsChartAssist.seriesTrackByFn($index, legendSeries))
@@ -85,8 +80,7 @@
                         legendSeries.id,
                         $event
                     )
-                "
-            >
+                ">
                 <nui-rich-legend-tile
                     [value]="
                         reversedThresholdsChartAssist.getHighlightedValue(
@@ -103,8 +97,7 @@
                         reversedThresholdsChartAssist.palette.textColors.get(
                             legendSeries.id
                         )
-                    "
-                >
+                    ">
                     <nui-chart-marker
                         rightEdge
                         [marker]="
@@ -116,8 +109,7 @@
                             reversedThresholdsChartAssist.palette.standardColors.get(
                                 legendSeries.id
                             )
-                        "
-                    >
+                        ">
                     </nui-chart-marker>
                 </nui-rich-legend-tile>
             </nui-legend-series>

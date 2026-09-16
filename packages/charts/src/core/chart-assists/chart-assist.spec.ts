@@ -42,7 +42,7 @@ describe("chart assist >", () => {
         const seriesId = "series1";
 
         const yScale = new LinearScale();
-        yScale.formatters.tick = (v) => Math.round(v * 100) + "%";
+        yScale.formatters.tick = v => Math.round(v * 100) + "%";
 
         const renderer = new LineRenderer();
 
@@ -153,16 +153,16 @@ describe("chart assist >", () => {
 
         it("creates data arrays on the legend series set in the case of null data", () => {
             // @ts-ignore: Disabled for testing purposes
-            seriesSet.forEach((s) => (s.data = null));
+            seriesSet.forEach(s => (s.data = null));
             ca.update(seriesSet);
-            ca.legendSeriesSet.forEach(async (s) => expect(s.data).toEqual([]));
+            ca.legendSeriesSet.forEach(async s => expect(s.data).toEqual([]));
         });
 
         it("leaves the data of the input series set untouched in the case of null data", () => {
             // @ts-ignore: Disabled for testing purposes
-            seriesSet.forEach((s) => (s.data = null));
+            seriesSet.forEach(s => (s.data = null));
             ca.update(seriesSet);
-            ca.inputSeriesSet.forEach(async (s) => expect(s.data).toBeNull());
+            ca.inputSeriesSet.forEach(async s => expect(s.data).toBeNull());
         });
 
         it("sets the render status into the series", () => {
@@ -175,7 +175,7 @@ describe("chart assist >", () => {
             );
 
             let capturedSeriesSet: IChartSeries<IAccessors>[] = [];
-            spyOn(chart, "update").and.callFake((series) => {
+            spyOn(chart, "update").and.callFake(series => {
                 capturedSeriesSet = series;
             });
 

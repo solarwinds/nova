@@ -179,10 +179,10 @@ export class ChartAssist<T extends IAccessors = IAccessors>
             .asObservable()
             .pipe(
                 filter(
-                    (event) =>
+                    event =>
                         event.data.interactionType === InteractionType.MouseMove
                 ),
-                map((event) => event.data.dataPoints[chartSeries.id])
+                map(event => event.data.dataPoints[chartSeries.id])
             );
 
         // if there is no highlightData, or index is "-1", we'll show the last value from series (if possible)
@@ -191,7 +191,7 @@ export class ChartAssist<T extends IAccessors = IAccessors>
 
         return seriesHighlight$.pipe(
             // eslint-disable-next-line import/no-deprecated
-            switchMap((highlightData) =>
+            switchMap(highlightData =>
                 highlightDataPresentPredicate(highlightData)
                     ? of(highlightData.data)
                     : of(
@@ -216,21 +216,21 @@ export class ChartAssist<T extends IAccessors = IAccessors>
         this.inputSeriesSet = inputSeriesSet;
 
         const processedSeriesSet = this.seriesProcessor(
-            inputSeriesSet.map((series) => ({
+            inputSeriesSet.map(series => ({
                 ...series,
                 data: series.data || [],
             }))
         );
 
         this.legendSeriesSet = processedSeriesSet.filter(
-            (s) => s.showInLegend || typeof s.showInLegend === "undefined"
+            s => s.showInLegend || typeof s.showInLegend === "undefined"
         );
 
         if (updateLegend) {
             this.legendInteractionAssist.update(processedSeriesSet);
         }
         // add render states to the series for use in the chart
-        const seriesSet = processedSeriesSet.map((s) =>
+        const seriesSet = processedSeriesSet.map(s =>
             Object.assign(
                 { renderState: this.renderStatesIndex[s.id]?.state },
                 s
@@ -323,7 +323,7 @@ export class ChartAssist<T extends IAccessors = IAccessors>
 
     public getVisibleSeriesWithLegend = (): IChartAssistSeries<
         IAccessors<any>
-    >[] => this.legendSeriesSet.filter((s) => !this.isSeriesHidden(s.id));
+    >[] => this.legendSeriesSet.filter(s => !this.isSeriesHidden(s.id));
 
     /**
      * Synchronize this chart assist's actions with IChartAssistEvents emitted by the specified
@@ -348,7 +348,7 @@ export class ChartAssist<T extends IAccessors = IAccessors>
             )
             .subscribe((event: IChartAssistEvent) => {
                 const args = Object.keys(event.payload).map(
-                    (key) => event.payload[key]
+                    key => event.payload[key]
                 );
                 this.syncHandlerMap[event.type](...args);
             });
@@ -394,8 +394,8 @@ export class ChartAssist<T extends IAccessors = IAccessors>
             },
         };
 
-        each(Object.keys(eventHandlers), (key) => {
-            eventBus.getStream(key).subscribe((event) => {
+        each(Object.keys(eventHandlers), key => {
+            eventBus.getStream(key).subscribe(event => {
                 eventHandlers[key](event.data);
                 if (this.onEvent) {
                     this.onEvent(event);
@@ -421,12 +421,12 @@ export class LegendInteractionAssist {
 
     public update(seriesSet: IChartAssistSeries<IAccessors>[]): void {
         this.seriesGroups = this.getSeriesGroups(seriesSet);
-        this.seriesIndex = keyBy(seriesSet, (s) => s.id);
+        this.seriesIndex = keyBy(seriesSet, s => s.id);
 
         this.resetSeries();
 
         // override render states
-        for (const series of seriesSet.filter((s) => s.renderState)) {
+        for (const series of seriesSet.filter(s => s.renderState)) {
             this.renderStatesIndex[series.id] = new ChartAssistRenderStateData(
                 series.id,
                 series,

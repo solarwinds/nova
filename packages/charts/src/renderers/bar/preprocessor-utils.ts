@@ -44,6 +44,6 @@ export function gatherCategories(
             },
             []
         );
-        return unionBy(acc, categories, (d) => d.valueOf());
+        return unionBy(acc, categories, d => d.valueOf());
     }, []);
 }

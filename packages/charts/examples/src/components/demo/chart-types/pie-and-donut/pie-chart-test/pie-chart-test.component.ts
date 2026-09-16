@@ -44,7 +44,7 @@ export class PieChartTestComponent implements OnInit {
         const renderer = new PieRenderer();
 
         this.chartAssist.update(
-            getData().map((s) => ({
+            getData().map(s => ({
                 ...s,
                 accessors,
                 scales,

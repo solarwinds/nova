@@ -71,7 +71,7 @@ export class GroupedVerticalBarChartTestComponent implements OnInit {
             y: linearScale,
         };
 
-        const mappedSeries = getData().map((d) => ({
+        const mappedSeries = getData().map(d => ({
             ...d,
             accessors: this.accessors,
             renderer,

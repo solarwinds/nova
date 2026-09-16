@@ -66,6 +66,6 @@ export class RichLegendTileAtom extends Atom {
     public async getBackgroundColor(): Promise<string> {
         return this.getLocator()
             .locator(".nui-rich-legend-tile__tilebox")
-            .evaluate((el) => getComputedStyle(el).backgroundColor);
+            .evaluate(el => getComputedStyle(el).backgroundColor);
     }
 }
