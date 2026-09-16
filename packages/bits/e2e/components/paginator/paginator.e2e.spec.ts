@@ -46,13 +46,13 @@ test.describe("USERCONTROL paginator", () => {
         const buttonTexts = await paginator
             .getLocator()
             .locator(".nui-paginator__list > li > button.nui-button")
-            .evaluateAll((buttons) =>
+            .evaluateAll(buttons =>
                 buttons
-                    .map((button) => (button.textContent || "").trim())
-                    .filter((text) => /^\d+$/.test(text))
+                    .map(button => (button.textContent || "").trim())
+                    .filter(text => /^\d+$/.test(text))
             );
 
-        return buttonTexts.map((text) => parseInt(text, 10));
+        return buttonTexts.map(text => parseInt(text, 10));
     };
 
     test.beforeEach(async ({ page }) => {
@@ -168,9 +168,9 @@ test.describe("USERCONTROL paginator", () => {
             await adjacentPaginator.ellipsisLink(1).click();
             await adjacentPaginator.ellipsedPageLinkClick(pageTwenty);
 
-            await expect.poll(() => adjacentPaginator.activePage()).toBe(
-                pageTwenty
-            );
+            await expect
+                .poll(() => adjacentPaginator.activePage())
+                .toBe(pageTwenty);
             const expectedVisiblePageNumbers = [
                 1,
                 pageTwenty - adjacent,
@@ -181,9 +181,9 @@ test.describe("USERCONTROL paginator", () => {
                 pageCountAdjacent,
             ];
 
-            await expect.poll(() => getVisiblePageNumbers(adjacentPaginator)).toEqual(
-                expectedVisiblePageNumbers
-            );
+            await expect
+                .poll(() => getVisiblePageNumbers(adjacentPaginator))
+                .toEqual(expectedVisiblePageNumbers);
 
             expect(await adjacentPaginator.isActivePage(pageTwenty)).toBe(true);
 

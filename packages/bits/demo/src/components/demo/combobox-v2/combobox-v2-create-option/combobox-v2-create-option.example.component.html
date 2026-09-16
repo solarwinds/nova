@@ -2,8 +2,7 @@
     placeholder="Select Item"
     i18n-placeholder
     [formControl]="comboboxControl"
-    #combobox
->
+    #combobox>
     @for (option of options; track option) {
     <nui-select-v2-option [value]="option">
         <div class="d-flex align-items-center">
@@ -13,8 +12,7 @@
     } @if (combobox.canCreateOption | async) {
     <nui-overlay-item
         class="nui-combobox-v2__create-option"
-        (click)="createOption(combobox.inputValue)"
-    >
+        (click)="createOption(combobox.inputValue)">
         Create option "{{ combobox.inputValue }}"
     </nui-overlay-item>
     } @if (combobox.searchEmpty | async) {

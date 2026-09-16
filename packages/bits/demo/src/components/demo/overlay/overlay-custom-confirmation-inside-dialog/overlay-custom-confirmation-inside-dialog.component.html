@@ -3,8 +3,7 @@
     nui-button
     type="button"
     (click)="open(content)"
-    i18n
->
+    i18n>
     Click me!
 </button>
 
@@ -12,13 +11,11 @@
     <div
         #dialog
         nuiResizeObserver
-        (containerResize)="onContainerResize(overlay)"
-    >
+        (containerResize)="onContainerResize(overlay)">
         <nui-dialog-header
             title="Dialog title"
             i18n-title
-            (closed)="close()"
-        ></nui-dialog-header>
+            (closed)="close()"></nui-dialog-header>
         <div class="dialog-body">
             <p i18n>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
@@ -36,8 +33,7 @@
                 nui-button
                 type="button"
                 (click)="triggerOverlay(overlay)"
-                i18n
-            >
+                i18n>
                 Cancel
             </button>
             <button
@@ -45,8 +41,7 @@
                 type="button"
                 displayStyle="primary"
                 (click)="actionDone(); close()"
-                i18n
-            >
+                i18n>
                 Action
             </button>
         </nui-dialog-footer>
@@ -62,15 +57,13 @@
                         nui-button
                         displayStyle="action"
                         type="button"
-                        (click)="overlay.hide()"
-                    >
+                        (click)="overlay.hide()">
                         No
                     </button>
                     <button
                         nui-button
                         type="button"
-                        (click)="overlay.hide(); close()"
-                    >
+                        (click)="overlay.hide(); close()">
                         Yes
                     </button>
                 </div>
@@ -83,13 +76,11 @@
     <div
         #dialogLarge
         nuiResizeObserver
-        (containerResize)="onContainerResize(overlayLarge)"
-    >
+        (containerResize)="onContainerResize(overlayLarge)">
         <nui-dialog-header
             title="Dialog title"
             i18n-title
-            (closed)="close()"
-        ></nui-dialog-header>
+            (closed)="close()"></nui-dialog-header>
         <div class="dialog-body">
             <p i18n>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
@@ -157,8 +148,7 @@
                 nui-button
                 type="button"
                 (click)="triggerOverlay(overlayLarge)"
-                i18n
-            >
+                i18n>
                 Cancel
             </button>
             <button
@@ -166,8 +156,7 @@
                 type="button"
                 displayStyle="primary"
                 (click)="actionDone(); close()"
-                i18n
-            >
+                i18n>
                 Action
             </button>
         </nui-dialog-footer>
@@ -193,15 +182,13 @@
                         nui-button
                         displayStyle="action"
                         type="button"
-                        (click)="overlayLarge.hide()"
-                    >
+                        (click)="overlayLarge.hide()">
                         Cancel
                     </button>
                     <button
                         nui-button
                         type="button"
-                        (click)="overlayLarge.hide(); close()"
-                    >
+                        (click)="overlayLarge.hide(); close()">
                         Yes
                     </button>
                 </div>

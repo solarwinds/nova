@@ -390,11 +390,11 @@ export class TableStateHandlerService {
     public calculateWidthsOfColumns(): void {
         // Apply width of 40px for non-resizable columns of type "icon"
         this.state.columns
-            .filter((columnName) => {
+            .filter(columnName => {
                 const columnIndex = this.state.columns.indexOf(columnName);
                 return this.state.columnsTypes[columnIndex] === "icon";
             })
-            .forEach((column) => {
+            .forEach(column => {
                 this.state.columnsWidths[column] = {
                     width: ICON_CELL_WIDTH_PX,
                 };
@@ -404,7 +404,7 @@ export class TableStateHandlerService {
         const accumulator =
             this.resizable && this.selectable ? SELECTABLE_CELL_WIDTH_PX : 0;
         const userColumnsWidths = this.state.columns
-            .filter((columnName) => this.state.columnsWidths[columnName])
+            .filter(columnName => this.state.columnsWidths[columnName])
             .reduce(
                 (total, curr) => total + this.state.columnsWidths[curr].width,
                 accumulator
@@ -414,7 +414,7 @@ export class TableStateHandlerService {
                 ? 0
                 : this.tableParentWidth - userColumnsWidths - 1;
         const columnsToCalculateWidth = this.state.columns.filter(
-            (columnName) => !this.state.columnsWidths[columnName]
+            columnName => !this.state.columnsWidths[columnName]
         ).length;
         const calculatedWidth = Math.floor(
             widthConsideringUserInputs / columnsToCalculateWidth
@@ -425,8 +425,8 @@ export class TableStateHandlerService {
                 : MIN_COLUMN_WIDTH_PX;
 
         this.state.columns
-            .filter((columnName) => !this.state.columnsWidths[columnName])
-            .forEach((column) => {
+            .filter(columnName => !this.state.columnsWidths[columnName])
+            .forEach(column => {
                 // There is a case when sum of columns can exceed width of parent
                 // Then width of other columns should be set to min width
                 this.state.columnsWidths[column] = { width: widthOfColumn };
@@ -623,7 +623,7 @@ export class TableStateHandlerService {
      * @returns An array of all currently selected items
      */
     public getSelectedItems(): any[] {
-        const trackedItems = this.dataSource.map((d) => this.trackBy(d?.id, d));
+        const trackedItems = this.dataSource.map(d => this.trackBy(d?.id, d));
         return this.selectorService.getSelectedItems(
             this.selection,
             trackedItems

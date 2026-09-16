@@ -3,8 +3,7 @@
         title="Dialog title"
         i18n-title
         [severity]="severity"
-        (closed)="close()"
-    ></nui-dialog-header>
+        (closed)="close()"></nui-dialog-header>
     <div class="dialog-body">
         <p i18n>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
@@ -23,8 +22,7 @@
             type="button"
             [isEmpty]="false"
             (click)="onButtonClick('Cancel')"
-            i18n
-        >
+            i18n>
             Cancel
         </button>
         <button
@@ -33,8 +31,7 @@
             displayStyle="primary"
             [isEmpty]="false"
             (click)="onButtonClick('Action')"
-            i18n
-        >
+            i18n>
             Action
         </button>
     </nui-dialog-footer>
@@ -45,8 +42,7 @@
     nui-button
     type="button"
     (click)="open(content, 'critical')"
-    i18n
->
+    i18n>
     Show Critical
 </button>
 <button
@@ -55,8 +51,7 @@
     nui-button
     type="button"
     (click)="open(content, 'warning')"
-    i18n
->
+    i18n>
     Show Warning
 </button>
 <button
@@ -65,7 +60,6 @@
     nui-button
     type="button"
     (click)="open(content, 'info')"
-    i18n
->
+    i18n>
     Show Info
 </button>

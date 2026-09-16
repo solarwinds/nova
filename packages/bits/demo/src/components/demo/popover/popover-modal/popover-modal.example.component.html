@@ -6,8 +6,7 @@
     [template]="popoverModal"
     [modal]="true"
     [preventClosing]="true"
-    [closePopover]="closePopoverSubject"
->
+    [closePopover]="closePopoverSubject">
     <button nui-button type="button" id="nui-demo-popover-modal" i18n>
         Show modal popover
     </button>
@@ -22,8 +21,7 @@
             type="button"
             displayStyle="action"
             (click)="closePopover()"
-            i18n
-        >
+            i18n>
             Close
         </button>
         <button
@@ -32,8 +30,7 @@
             type="button"
             displayStyle="primary"
             (click)="closePopover()"
-            i18n
-        >
+            i18n>
             Confirm
         </button>
     </div>

@@ -48,11 +48,11 @@ export class OverlayPopupStylesExampleComponent
     public ngAfterViewInit(): void {
         this.overlayWithStyles.clickOutside
             .pipe(takeUntil(this.destroy$))
-            .subscribe((_) => this.overlayWithStyles.hide());
+            .subscribe(_ => this.overlayWithStyles.hide());
 
         this.overlayNoStyles.clickOutside
             .pipe(takeUntil(this.destroy$))
-            .subscribe((_) => this.overlayNoStyles.hide());
+            .subscribe(_ => this.overlayNoStyles.hide());
     }
 
     public ngOnDestroy(): void {

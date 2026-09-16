@@ -4,8 +4,7 @@
             <h3>Basic Combobox</h3>
             <nui-combobox
                 id="nui-visual-test-basic-combobox"
-                [itemsSource]="dataset.items"
-            >
+                [itemsSource]="dataset.items">
             </nui-combobox>
             <hr />
         </div>
@@ -14,8 +13,7 @@
             <nui-combobox
                 id="nui-visual-test-combobox-with-placeholder"
                 [itemsSource]="dataset.items"
-                placeholder="Select item"
-            >
+                placeholder="Select item">
             </nui-combobox>
             <hr />
         </div>
@@ -26,8 +24,7 @@
                 id="nui-visual-test-combobox-disabled"
                 [value]="dataset.selectedItem"
                 [isDisabled]="true"
-                [itemsSource]="dataset.items"
-            >
+                [itemsSource]="dataset.items">
             </nui-combobox>
             <hr />
         </div>
@@ -38,8 +35,7 @@
                 value=""
                 [isInErrorState]="errorState"
                 [itemsSource]="dataset.items"
-                (changed)="valueChange($event)"
-            >
+                (changed)="valueChange($event)">
             </nui-combobox>
             <hr />
         </div>
@@ -50,8 +46,7 @@
                 id="nui-visual-test-justified-combobox"
                 [itemsSource]="dataset.items"
                 placeholder="Select item"
-                [justified]="true"
-            >
+                [justified]="true">
             </nui-combobox>
             <hr />
         </div>
@@ -61,8 +56,7 @@
             <nui-combobox
                 id="nui-visual-test-combobox-separators"
                 [itemsSource]="displayedItems"
-                (changed)="textboxChanged($event)"
-            >
+                (changed)="textboxChanged($event)">
             </nui-combobox>
             <hr />
         </div>

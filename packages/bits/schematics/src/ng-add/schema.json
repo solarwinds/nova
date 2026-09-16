@@ -4,36 +4,36 @@
     "description": "bootstraps a project for bits consumption",
     "properties": {
         "project": {
-            "type": "string",
-            "description": "The name of the project.",
             "$default": {
                 "$source": "projectName"
-            }
-        },
-        "skipProviders": {
-            "type": "boolean",
-            "description": "Skip provider imports",
-            "default": false
-        },
-        "skipCss": {
-            "type": "boolean",
-            "description": "Skip importing css & setting styles",
-            "default": false
-        },
-        "skipTsConfig": {
-            "type": "boolean",
-            "description": "Skip updating the tsconfig",
-            "default": false
+            },
+            "description": "The name of the project.",
+            "type": "string"
         },
         "skipAngularLocalize": {
-            "type": "boolean",
+            "default": false,
             "description": "Skip invoking 'ng add' for @angular/localize",
-            "default": false
+            "type": "boolean"
+        },
+        "skipCss": {
+            "default": false,
+            "description": "Skip importing css & setting styles",
+            "type": "boolean"
         },
         "skipPackageJson": {
-            "type": "boolean",
+            "default": false,
             "description": "Skip updating package.json dependencies",
-            "default": false
+            "type": "boolean"
+        },
+        "skipProviders": {
+            "default": false,
+            "description": "Skip provider imports",
+            "type": "boolean"
+        },
+        "skipTsConfig": {
+            "default": false,
+            "description": "Skip updating the tsconfig",
+            "type": "boolean"
         }
     },
     "required": [],

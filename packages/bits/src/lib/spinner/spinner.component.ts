@@ -55,7 +55,7 @@ import { LoggerService } from "../../services/log-service";
         ]),
     ],
     host: {
-        role: "progressbar",
+        "role": "progressbar",
         "aria-valuemin": "0",
         "aria-valuemax": "100",
         "[attr.aria-label]": "ariaLabel",

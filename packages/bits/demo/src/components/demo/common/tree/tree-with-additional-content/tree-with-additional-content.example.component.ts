@@ -68,7 +68,7 @@ const TREE_DATA: FoodNode[] = [
     standalone: false,
 })
 export class TreeWithAdditionalContentExampleComponent {
-    treeControl = new NestedTreeControl<FoodNode>((node) => node.children);
+    treeControl = new NestedTreeControl<FoodNode>(node => node.children);
     dataSource = new ArrayDataSource(TREE_DATA);
 
     public items = ["Item 1", "Item 2", "Item 3"];

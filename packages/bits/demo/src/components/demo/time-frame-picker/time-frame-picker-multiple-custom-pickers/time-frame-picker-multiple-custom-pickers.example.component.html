@@ -18,12 +18,10 @@
                     [selectedPreset]="picker.acceptedTimeframe.selectedPresetId"
                     (presetSelected)="handlePresetSelection($event, index)"
                     pickerTitle="Custom Range"
-                    i18n-pickerTitle
-                >
+                    i18n-pickerTitle>
                     <nui-time-frame-picker
                         [startModel]="picker.acceptedTimeframe"
-                        (changed)="updateTf($event, index)"
-                    ></nui-time-frame-picker>
+                        (changed)="updateTf($event, index)"></nui-time-frame-picker>
                 </nui-quick-picker>
             </div>
             @if (showFooter) {
@@ -34,8 +32,7 @@
                     displayStyle="action"
                     class="pr-3 nui-time-frame-picker__cancel"
                     (click)="cancelPopover(index)"
-                    i18n
-                >
+                    i18n>
                     Cancel
                 </button>
                 <button
@@ -44,8 +41,7 @@
                     displayStyle="primary"
                     class="nui-time-frame-picker__use"
                     (click)="confirmPopover(index)"
-                    i18n
-                >
+                    i18n>
                     Use
                 </button>
             </nui-dialog-footer>

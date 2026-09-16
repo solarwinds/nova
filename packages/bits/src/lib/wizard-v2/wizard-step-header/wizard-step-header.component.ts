@@ -49,11 +49,11 @@ import { WizardStepLabelDirective } from "../wizard-step-label.directive";
     templateUrl: "wizard-step-header.component.html",
     styleUrls: ["wizard-step-header.component.less"],
     host: {
-        class: "nui-wizard-step-header",
+        "class": "nui-wizard-step-header",
         "[class.nui-wizard-step-header--selected]": "selected",
         "[class.nui-wizard-step-header--optional]": "step.optional",
         "[class.nui-wizard-step-header--completed]": "stepState === 'done'",
-        role: "tab",
+        "role": "tab",
     },
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,

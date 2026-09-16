@@ -56,6 +56,6 @@ export class FilterGroupCompositeDialogComponent {
             selection,
             this.itemPickerOptions
         );
-        this.selectedValues = selectedOptions.map((item) => item.value);
+        this.selectedValues = selectedOptions.map(item => item.value);
     }
 }

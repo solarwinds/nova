@@ -5,14 +5,12 @@
             <nui-checkbox-group
                 id="nui-demo-checkbox-group-basic"
                 name="vegetable"
-                [values]="selectedVegetables"
-            >
+                [values]="selectedVegetables">
                 @for (vegetable of vegetables; track vegetable) {
                 <nui-checkbox
                     [value]="vegetable"
                     hint="This is some help text"
-                    [checked]="isChecked(vegetable)"
-                >
+                    [checked]="isChecked(vegetable)">
                     {{ vegetable }}
                 </nui-checkbox>
                 }
@@ -33,8 +31,7 @@
                 id="nui-demo-checkbox-group-inline"
                 class="nui-checkbox-group-inline"
                 [values]="selectedVegetables"
-                name="vegetable"
-            >
+                name="vegetable">
                 @for (vegetable of vegetables; track vegetable) {
                 <nui-checkbox [value]="vegetable">
                     {{ vegetable }}
@@ -49,14 +46,12 @@
             <nui-checkbox-group
                 id="nui-demo-checkbox-group-justified"
                 name="vegetable"
-                [values]="selectedVegetables"
-            >
+                [values]="selectedVegetables">
                 @for (vegetable of vegetables; track vegetable) {
                 <nui-checkbox
                     [value]="vegetable"
                     [checked]="isChecked(vegetable)"
-                    class="nui-checkbox--justified"
-                >
+                    class="nui-checkbox--justified">
                     {{ vegetable }}
                 </nui-checkbox>
                 }
@@ -69,34 +64,29 @@
                 <nui-checkbox-group
                     id="nui-demo-checkbox-group-in-form-disabled-checkboxes"
                     name="vegetable"
-                    formControlName="enabledCheckboxGroup"
-                >
+                    formControlName="enabledCheckboxGroup">
                     <nui-checkbox
                         [value]="vegetables[0]"
                         [disabled]="true"
-                        [checked]="isChecked(vegetables[0])"
-                    >
+                        [checked]="isChecked(vegetables[0])">
                         {{ vegetables[0] }}</nui-checkbox
                     >
                     <nui-checkbox
                         [value]="vegetables[1]"
                         [disabled]="false"
-                        [checked]="isChecked(vegetables[1])"
-                    >
+                        [checked]="isChecked(vegetables[1])">
                         {{ vegetables[1] }}</nui-checkbox
                     >
                     <nui-checkbox
                         [value]="vegetables[2]"
                         [disabled]="true"
-                        [checked]="isChecked(vegetables[2])"
-                    >
+                        [checked]="isChecked(vegetables[2])">
                         {{ vegetables[2] }}</nui-checkbox
                     >
                     <nui-checkbox
                         [value]="vegetables[3]"
                         [disabled]="false"
-                        [checked]="isChecked(vegetables[3])"
-                    >
+                        [checked]="isChecked(vegetables[3])">
                         {{ vegetables[3] }}</nui-checkbox
                     >
                 </nui-checkbox-group>
@@ -109,13 +99,11 @@
             <nui-checkbox-group
                 id="nui-demo-checkbox-group-in-form"
                 name="vegetable"
-                formControlName="disabledCheckboxGroup"
-            >
+                formControlName="disabledCheckboxGroup">
                 @for (vegetable of vegetables; track vegetable) {
                 <nui-checkbox
                     [value]="vegetable"
-                    [checked]="isChecked(vegetable)"
-                >
+                    [checked]="isChecked(vegetable)">
                     {{ vegetable }}
                 </nui-checkbox>
                 }

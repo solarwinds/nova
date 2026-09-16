@@ -3,15 +3,13 @@
     <nui-textbox
         value="Textbox"
         customBoxWidth="150px"
-        (click)="handleClick($event)"
-    >
+        (click)="handleClick($event)">
     </nui-textbox>
     <button
         nui-button
         type="button"
         (click)="handleClick($event)"
-        displayStyle="primary"
-    >
+        displayStyle="primary">
         Button
     </button>
     <nui-radio value="readonly" [checked]="false" (click)="handleClick($event)"

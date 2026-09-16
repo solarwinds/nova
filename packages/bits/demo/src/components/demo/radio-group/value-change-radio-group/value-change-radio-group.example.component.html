@@ -2,8 +2,7 @@
 <nui-radio-group
     name="color"
     [(value)]="selectedColor"
-    (valueChange)="showSelected()"
->
+    (valueChange)="showSelected()">
     @for (color of colors; track color) {
     <nui-radio [value]="color" [hint]="colorHints[color]">
         {{ color }}

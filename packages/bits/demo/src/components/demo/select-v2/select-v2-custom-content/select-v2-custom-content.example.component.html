@@ -3,8 +3,7 @@
     i18n-placeholder
     class="action"
     #select
-    [displayValueTemplate]="customTemplate"
->
+    [displayValueTemplate]="customTemplate">
     @for (item of items; track item) {
     <nui-select-v2-option-group>
         <button
@@ -13,8 +12,7 @@
             displayStyle="action"
             [icon]="'add'"
             class="custom-box"
-            (click)="actionSimulation()"
-        >
+            (click)="actionSimulation()">
             Add new filtered state
         </button>
         <nui-divider size="extra-small"></nui-divider>
@@ -24,16 +22,14 @@
         @for (option of item.options; track option) {
         <nui-select-v2-option
             [value]="option.id"
-            [displayValueContext]="option"
-        >
+            [displayValueContext]="option">
             {{ option.name }}
             <button
                 nui-button
                 type="button"
                 displayStyle="action"
                 [icon]="'menu'"
-                (click)="actionSimulation($event)"
-            ></button>
+                (click)="actionSimulation($event)"></button>
         </nui-select-v2-option>
         }
     </nui-select-v2-option-group>
@@ -53,7 +49,6 @@
 
         <nui-icon
             [style.transform]="open ? 'rotate(180deg)' : ''"
-            icon="caret-down"
-        ></nui-icon>
+            icon="caret-down"></nui-icon>
     </div>
 </ng-template>

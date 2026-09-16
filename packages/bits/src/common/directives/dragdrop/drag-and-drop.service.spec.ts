@@ -67,7 +67,7 @@ describe("directives >", () => {
                 property: "value",
             };
             let result: IDragState | undefined;
-            sut.onDragStateChanged.subscribe((state) => {
+            sut.onDragStateChanged.subscribe(state => {
                 result = state;
             });
             sut.setDragPayload(payload, event);

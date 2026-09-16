@@ -264,7 +264,7 @@ export class ComboboxComponent
         if (isGroupedData) {
             const flattenedData = _flatMap(
                 this.itemsSource,
-                (group) => group.items
+                group => group.items
             );
             isInArray = this.displayValue
                 ? _some(flattenedData, newValue)
@@ -288,7 +288,7 @@ export class ComboboxComponent
 
         // for itemsSource passed as ISelectGroup[]
         if (this.isGroupedData(this.itemsSource)) {
-            arrayOfValues = _flatMap(this.itemsSource, (group) => group.items);
+            arrayOfValues = _flatMap(this.itemsSource, group => group.items);
         } else {
             arrayOfValues = this.itemsSource;
         }
@@ -300,7 +300,7 @@ export class ComboboxComponent
     public isGroupedData(
         itemsSource: any[] | ISelectGroup[]
     ): itemsSource is ISelectGroup[] {
-        return _every(itemsSource, (group) => _isArray(group.items));
+        return _every(itemsSource, group => _isArray(group.items));
     }
 
     public getItemDisplay(item: any): string {
@@ -320,7 +320,7 @@ export class ComboboxComponent
             this.itemsChangeSubscription.unsubscribe();
         }
         if (this.comboboxEventListeners.length > 0) {
-            this.comboboxEventListeners.forEach((listener) => listener());
+            this.comboboxEventListeners.forEach(listener => listener());
         }
         if (this.focusMonitorSubscription) {
             this.focusMonitorSubscription.unsubscribe();

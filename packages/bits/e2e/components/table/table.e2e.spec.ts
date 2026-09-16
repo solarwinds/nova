@@ -477,11 +477,11 @@ test.describe("USERCONTROL table >", () => {
             );
             await expect(container).toBeVisible();
             const containerHeight = await container.evaluate(
-                (el) => (el as HTMLElement).clientHeight
+                el => (el as HTMLElement).clientHeight
             );
             const viewPortHeight = await Helpers.page
                 .locator("cdk-virtual-scroll-viewport")
-                .evaluate((el) => (el as HTMLElement).clientHeight);
+                .evaluate(el => (el as HTMLElement).clientHeight);
 
             // Table with sticky header actually consists of two tables (one for the header and one for the table itself).
             // Here we are getting the first one for access to the header.
@@ -493,7 +493,7 @@ test.describe("USERCONTROL table >", () => {
                 .getLocator()
                 .locator("thead")
                 .first()
-                .evaluate((el) => (el as HTMLElement).clientHeight);
+                .evaluate(el => (el as HTMLElement).clientHeight);
 
             expect(headerHeight + viewPortHeight).toEqual(containerHeight);
         });

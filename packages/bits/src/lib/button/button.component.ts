@@ -46,7 +46,7 @@ import { LoggerService } from "../../services/log-service";
     templateUrl: "./button.component.html",
     host: {
         "[attr.aria-busy]": "isBusy || null",
-        class: "nui-button btn",
+        "class": "nui-button btn",
     },
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./button.component.less"],

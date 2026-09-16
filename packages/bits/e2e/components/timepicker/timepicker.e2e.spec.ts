@@ -117,8 +117,7 @@ test.describe("USERCONTROL timepicker", () => {
                 await expect
                     .poll(async () => {
                         const highlightedValue =
-                            await basicTimePicker.menuPopup.selectedItem
-                                .textContent();
+                            await basicTimePicker.menuPopup.selectedItem.textContent();
 
                         return highlightedValue?.trim() || "";
                     })

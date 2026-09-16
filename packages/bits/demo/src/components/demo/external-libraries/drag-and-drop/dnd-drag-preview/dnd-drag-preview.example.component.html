@@ -1,8 +1,7 @@
 <div
     cdkDropList
     class="draggable-container"
-    (cdkDropListDropped)="onItemDropped($event)"
->
+    (cdkDropListDropped)="onItemDropped($event)">
     @for (item of listItems; track item) {
     <div cdkDrag cdkDragPreviewClass="dnd-drag-preview" class="draggable-item">
         {{ item.title }}
@@ -12,8 +11,7 @@
                 align="middle"
                 width="100"
                 [src]="item.preview"
-                [alt]="item.title"
-            />
+                [alt]="item.title" />
         </div>
     </div>
     }
