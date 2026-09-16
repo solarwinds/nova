@@ -68,7 +68,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     ],
     encapsulation: ViewEncapsulation.None,
     host: {
-        role: "menuitemcheckbox",
+        "role": "menuitemcheckbox",
         "[attr.aria-checked]": "checked",
     },
     standalone: false,

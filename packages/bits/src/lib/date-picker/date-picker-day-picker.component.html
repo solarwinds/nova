@@ -12,8 +12,7 @@
                     i18n-ariaLabel="@@prevMonth"
                     title="Previous month"
                     (click)="datePicker.move(-1, $event)"
-                    tabindex="-1"
-                ></button>
+                    tabindex="-1"></button>
             </th>
             <th [attr.colspan]="5 + (datePicker.showWeeks ? 1 : 0)">
                 <button
@@ -30,8 +29,7 @@
                             datePicker.datepickerMode === datePicker.maxMode
                     }"
                     (click)="datePicker.toggleMode($event)"
-                    tabindex="-1"
-                >
+                    tabindex="-1">
                     <span>{{ title }}</span>
                 </button>
             </th>
@@ -45,8 +43,7 @@
                     i18n-ariaLabel="@@nextMonth"
                     title="Next month"
                     (click)="datePicker.move(1, $event)"
-                    tabindex="-1"
-                ></button>
+                    tabindex="-1"></button>
             </th>
         </tr>
         <tr>
@@ -79,8 +76,7 @@
                     }"
                     [disabled]="cell.disabled"
                     (click)="datePicker.select(cell.date, $event)"
-                    tabindex="-1"
-                >
+                    tabindex="-1">
                     <span
                         [ngClass]="{
                             'text-muted': cell.secondary,
@@ -104,8 +100,7 @@
                     displayStyle="action"
                     [disabled]="datePicker.isTodayButtonDisabled"
                     (click)="datePicker.select(todayDate, $event)"
-                    i18n
-                >
+                    i18n>
                     Today
                 </button>
             </td>

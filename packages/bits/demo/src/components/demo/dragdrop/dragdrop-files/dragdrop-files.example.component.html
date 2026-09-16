@@ -2,8 +2,7 @@
     (drop)="dropHandler($event)"
     (enter)="dragEnterHandler($event)"
     (leave)="invalidateFiles()"
-    [state]="fileDropState"
->
+    [state]="fileDropState">
     <ng-container *ngIf="gifError">
         <nui-validation-message [show]="true">
             Please upload GIF only!</nui-validation-message
@@ -28,8 +27,7 @@
         [accept]="imageType"
         multiple
         (change)="onFileRead($event)"
-        class="hidden"
-    />
+        class="hidden" />
 </nui-file-drop-example>
 
 <span class="nui-text-small-secondary">File types: GIF</span>
@@ -42,8 +40,7 @@
             [stacked]="true"
             [percent]="42"
             [showNumber]="true"
-            (cancel)="onCancel()"
-        >
+            (cancel)="onCancel()">
         </nui-progress>
     </div>
     <div class="nui-demo-file-area__right flex-grow-0">
@@ -52,7 +49,6 @@
             type="button"
             displayStyle="action"
             icon="close"
-            (click)="rmFile(file)"
-        ></button>
+            (click)="rmFile(file)"></button>
     </div>
 </div>

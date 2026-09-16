@@ -45,7 +45,7 @@ export class TableAtom extends Atom {
         return this.getLocator()
             .locator("tr")
             .count()
-            .then((value) => value - 1); // -1 because we don't need to count header row
+            .then(value => value - 1); // -1 because we don't need to count header row
     }
 
     /**

@@ -2,8 +2,7 @@
     <cdk-virtual-scroll-viewport
         tableStickyHeader
         class="h-100"
-        [itemSize]="itemSize"
-    >
+        [itemSize]="itemSize">
         <!-- IMPORTANT Bind only visible rows to the table, otherwise, the table will render all rows in the DOM -->
         <table
             nui-table
@@ -11,13 +10,11 @@
             [trackBy]="trackByNo"
             [sortable]="true"
             [selectionConfig]="selectionConfig"
-            [(selection)]="selection"
-        >
+            [(selection)]="selection">
             <!--         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  -->
             <ng-container
                 *ngFor="let column of displayedColumns"
-                [nuiColumnDef]="column"
-            >
+                [nuiColumnDef]="column">
                 <th nui-header-cell *nuiHeaderCellDef>{{ column }}</th>
                 <td nui-cell *nuiCellDef="let element">
                     {{ element[column] }}
@@ -34,8 +31,7 @@
                 [nuiRowDefColumns]="displayedColumns"
                 [cdkVirtualForOf]="placeholderItems"
                 [cdkVirtualForTemplateCacheSize]="10"
-                [cdkVirtualForTrackBy]="trackByNo"
-            >
+                [cdkVirtualForTrackBy]="trackByNo">
                 <tr nui-row [rowObject]="context"></tr>
             </ng-template>
             <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->

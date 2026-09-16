@@ -156,7 +156,7 @@ describe("components >", () => {
                 TestBed.createComponent(SelectV2OptionComponent)
             );
             selectedOptionsMock = optionComponentMocks.map(
-                (c) => c.componentInstance
+                c => c.componentInstance
             );
             optionComponentMocks.forEach((c, i) => {
                 c.componentInstance.value = selectedValuesMock[i];

@@ -3,12 +3,10 @@
         class="app-filtered-view-table-with-virtual-scroll-table-scrolling-container"
         tableStickyHeader
         #viewportRef
-        [itemSize]="rowHeight"
-    >
+        [itemSize]="rowHeight">
         <table
             nui-table
-            [dataSource]="items | sliceRange : viewportRef.getRenderedRange()"
-        >
+            [dataSource]="items | sliceRange : viewportRef.getRenderedRange()">
             <ng-container nuiColumnDef="name">
                 <th nui-header-cell [style.width.%]="30" *nuiHeaderCellDef i18n>
                     Name
@@ -32,23 +30,20 @@
 
             <tr
                 nui-header-row
-                *nuiHeaderRowDef="displayedColumns; sticky: true"
-            ></tr>
+                *nuiHeaderRowDef="displayedColumns; sticky: true"></tr>
             <ng-template
                 nuiRowDef
                 cdkVirtualFor
                 let-context
                 [nuiRowDefColumns]="displayedColumns"
-                [cdkVirtualForOf]="items"
-            >
+                [cdkVirtualForOf]="items">
                 <tr nui-row></tr>
             </ng-template>
         </table>
     </cdk-virtual-scroll-viewport>
 
     <footer
-        class="app-filtered-view-table-with-virtual-scroll-table-scrolling-footer"
-    >
+        class="app-filtered-view-table-with-virtual-scroll-table-scrolling-footer">
         <div *ngIf="isBusy; else defaultText">
             <nui-progress [show]="true" [compactMode]="true"></nui-progress>
             <div class="d-flex justify-content-center align-items-center">

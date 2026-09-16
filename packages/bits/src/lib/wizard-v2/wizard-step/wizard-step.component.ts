@@ -130,7 +130,7 @@ export class WizardStepV2Component
         if (this.stepControl) {
             this.stepControl.statusChanges
                 .pipe(takeUntil(this.destroy$))
-                .subscribe((status) => {
+                .subscribe(status => {
                     if (status === "INVALID") {
                         this.completed = false;
                     }

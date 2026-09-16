@@ -5,8 +5,7 @@
     placeholder="Select Item"
     i18n-placeholder
     [formControl]="selectControl"
-    #select
->
+    #select>
     <nui-select-v2-option *ngFor="let item of items" [value]="item">{{
         item
     }}</nui-select-v2-option>
@@ -17,8 +16,7 @@
     type="button"
     displayStyle="action"
     i18n
-    (click)="setItems(0)"
->
+    (click)="setItems(0)">
     Set items: 1, 2, 3, 4
 </button>
 <button
@@ -26,7 +24,6 @@
     type="button"
     displayStyle="action"
     i18n
-    (click)="setItems(1)"
->
+    (click)="setItems(1)">
     Set items: 3, 4, 5, 6
 </button>

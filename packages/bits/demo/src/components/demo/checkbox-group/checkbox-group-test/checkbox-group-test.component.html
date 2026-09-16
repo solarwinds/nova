@@ -3,14 +3,12 @@
         <nui-checkbox-group
             id="nui-demo-checkbox-group-basic"
             name="vegetable"
-            [values]="selectedVegetables"
-        >
+            [values]="selectedVegetables">
             <nui-checkbox
                 *ngFor="let vegetable of vegetables"
                 [value]="vegetable"
                 hint="This is some help text"
-                [checked]="isChecked(vegetable)"
-            >
+                [checked]="isChecked(vegetable)">
                 {{ vegetable }}
             </nui-checkbox>
             <nui-checkbox
@@ -27,8 +25,7 @@
         <nui-checkbox-group
             id="nui-demo-checkbox-group-justified"
             name="vegetable"
-            [values]="selectedVegetables"
-        >
+            [values]="selectedVegetables">
             <nui-checkbox
                 *ngFor="let vegetable of vegetables"
                 [value]="vegetable"
@@ -38,8 +35,7 @@
                         : null
                 "
                 [checked]="isChecked(vegetable)"
-                class="nui-checkbox--justified"
-            >
+                class="nui-checkbox--justified">
                 {{ vegetable }}
             </nui-checkbox>
         </nui-checkbox-group>
@@ -49,34 +45,29 @@
             <nui-checkbox-group
                 id="nui-demo-checkbox-group-in-form-disabled-checkboxes"
                 name="vegetable"
-                formControlName="checkboxGroup2"
-            >
+                formControlName="checkboxGroup2">
                 <nui-checkbox
                     [value]="vegetables[0]"
                     [disabled]="true"
-                    [checked]="isChecked(vegetables[0])"
-                >
+                    [checked]="isChecked(vegetables[0])">
                     {{ vegetables[0] }}</nui-checkbox
                 >
                 <nui-checkbox
                     [value]="vegetables[1]"
                     [disabled]="false"
-                    [checked]="isChecked(vegetables[1])"
-                >
+                    [checked]="isChecked(vegetables[1])">
                     {{ vegetables[1] }}</nui-checkbox
                 >
                 <nui-checkbox
                     [value]="vegetables[2]"
                     [disabled]="true"
-                    [checked]="isChecked(vegetables[2])"
-                >
+                    [checked]="isChecked(vegetables[2])">
                     {{ vegetables[2] }}</nui-checkbox
                 >
                 <nui-checkbox
                     [value]="vegetables[3]"
                     [disabled]="false"
-                    [checked]="isChecked(vegetables[3])"
-                >
+                    [checked]="isChecked(vegetables[3])">
                     {{ vegetables[3] }}</nui-checkbox
                 >
             </nui-checkbox-group>
@@ -84,7 +75,6 @@
     </div>
     <div class="d-flex flex-column mr-5">
         <nui-checkbox-group-in-form-example
-            id="nui-demo-checkbox-group-part-of-form"
-        ></nui-checkbox-group-in-form-example>
+            id="nui-demo-checkbox-group-part-of-form"></nui-checkbox-group-in-form-example>
     </div>
 </div>

@@ -56,7 +56,7 @@ class TestBar {
 })
 export class TimeFrameBarVisualTestComponent implements OnInit {
     public bars: TestBar[] = ["first", "second", "third"].map(
-        (id) => new TestBar(id)
+        id => new TestBar(id)
     );
     public barNoQuickPick = new TestBar("bar-no-quick-pick");
 

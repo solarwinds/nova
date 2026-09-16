@@ -56,7 +56,7 @@ export class ChipsAtom extends Atom {
         element.all(by.className(ChipsAtom.itemNameClass)).first().getText();
 
     public getChipsNames = async (): Promise<string[]> =>
-        this.getChipElements().map(async (el) => {
+        this.getChipElements().map(async el => {
             if (!el) {
                 throw new Error("elementFinder is not defined");
             }
@@ -65,7 +65,7 @@ export class ChipsAtom extends Atom {
         });
 
     public getChipsGroupNames = async (): Promise<string[]> =>
-        this.groups.map(async (el) => {
+        this.groups.map(async el => {
             if (!el) {
                 throw new Error("elementFinder is not defined");
             }

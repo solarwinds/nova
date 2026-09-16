@@ -51,7 +51,7 @@ export abstract class ServerSideDataSource<
     protected setupFilters(): void {
         this.applyFilters$
             .pipe(
-                tap((filters) => this.beforeApplyFilters(filters)),
+                tap(filters => this.beforeApplyFilters(filters)),
                 switchMap((filters: F) => this.getBackendData(filters)),
                 tap(async (data: D) => this.afterApplyFilters(data)),
                 takeUntil(this.destroy$)

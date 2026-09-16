@@ -244,12 +244,12 @@ test.describe("USERCONTROL Combobox >", () => {
                             ?.width;
                         const containerLeftPadding = parseFloat(
                             (await parent.evaluate(
-                                (el) => getComputedStyle(el).paddingLeft
+                                el => getComputedStyle(el).paddingLeft
                             )) as string
                         );
                         const containerRightPadding = parseFloat(
                             (await parent.evaluate(
-                                (el) => getComputedStyle(el).paddingRight
+                                el => getComputedStyle(el).paddingRight
                             )) as string
                         );
                         const containerWidth =
@@ -315,7 +315,7 @@ test.describe("USERCONTROL Combobox >", () => {
             test("should have proper styles", async () => {
                 const display = await inlineCombobox
                     .getLayoutBlock()
-                    .evaluate((el) => getComputedStyle(el).display);
+                    .evaluate(el => getComputedStyle(el).display);
                 expect(display).toEqual("inline-flex");
             });
         });

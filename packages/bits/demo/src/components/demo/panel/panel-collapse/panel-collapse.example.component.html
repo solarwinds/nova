@@ -4,15 +4,13 @@
         id="nui-demo-collapsible-panel"
         orientation="left"
         [isCollapsed]="true"
-        (collapsed)="onCollapseChange($event)"
-    >
+        (collapsed)="onCollapseChange($event)">
         <div nuiPanelEmbeddedHeading class="d-flex flex-row align-items-center">
             <nui-icon
                 *ngIf="!isCollapsed"
                 class="mr-1"
                 [icon]="headerIcon"
-                iconColor="gray"
-            >
+                iconColor="gray">
             </nui-icon>
             <span>
                 <h4 i18n class="my-0">TRANSCLUDED</h4>
@@ -22,8 +20,7 @@
             <nui-icon
                 *ngIf="isCollapsed"
                 [icon]="headerIcon"
-                [counter]="headerIconCounter"
-            >
+                [counter]="headerIconCounter">
             </nui-icon>
         </div>
         <div nuiPanelEmbeddedBody>

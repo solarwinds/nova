@@ -92,7 +92,7 @@ export class FreeTypeQueryUtilsService {
             element.offsetTop + parseInt(computed.borderTopWidth, 10) + "px";
         style.left = "-400px";
 
-        properties.forEach((prop) => {
+        properties.forEach(prop => {
             style[prop as keyof typeof CSSStyleDeclaration] = computed[prop];
         });
 

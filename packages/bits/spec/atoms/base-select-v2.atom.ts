@@ -112,7 +112,7 @@ export class BaseSelectV2Atom extends Atom {
             .getElement()
             .all(by.css("nui-select-v2-option"));
         const optionsText: string[] = await options.map(
-            async (option) => await option?.getText()
+            async option => await option?.getText()
         );
         const titleIndex = optionsText.indexOf(title);
 

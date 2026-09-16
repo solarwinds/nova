@@ -8,8 +8,7 @@
                 [hasPadding]="false"
                 [closePopover]="closePopoverSubject"
                 [modal]="true"
-                id="nui-demo-visual-default-popover"
-            >
+                id="nui-demo-visual-default-popover">
                 <span class="nui-text-link" style="cursor: pointer">{{
                     acceptedTimeframe | timeFrame
                 }}</span>
@@ -21,12 +20,10 @@
                         [presets]="presets"
                         [selectedPreset]="acceptedTimeframe.selectedPresetId"
                         (presetSelected)="handlePresetSelection($event)"
-                        pickerTitle="Custom Range"
-                    >
+                        pickerTitle="Custom Range">
                         <nui-time-frame-picker
                             [startModel]="acceptedTimeframe"
-                            (changed)="updateTf($event)"
-                        >
+                            (changed)="updateTf($event)">
                         </nui-time-frame-picker>
                     </nui-quick-picker>
                 </div>
@@ -36,8 +33,7 @@
                         type="button"
                         displayStyle="action"
                         class="pr-3 nui-time-frame-picker__cancel"
-                        (click)="cancelPopover()"
-                    >
+                        (click)="cancelPopover()">
                         Cancel
                     </button>
                     <button
@@ -45,8 +41,7 @@
                         type="button"
                         displayStyle="primary"
                         class="nui-time-frame-picker__use"
-                        (click)="confirmPopover()"
-                    >
+                        (click)="confirmPopover()">
                         Use
                     </button>
                 </nui-dialog-footer>
@@ -61,8 +56,7 @@
                 [closePopover]="closePopoverSubject"
                 [unlimited]="true"
                 [modal]="true"
-                id="nui-demo-visual-datepicker-popover"
-            >
+                id="nui-demo-visual-datepicker-popover">
                 <span class="nui-text-link" style="cursor: pointer"
                     >Select day</span
                 >
@@ -82,14 +76,12 @@
                             handlePresetSelectionDatePicker($event)
                         "
                         pickerTitle="Custom Date"
-                        presetsTitle="Baselines"
-                    >
+                        presetsTitle="Baselines">
                         <nui-date-picker
                             [inline]="true"
                             [value]="selectedDate"
                             [preserveInsignificant]="false"
-                            (valueChange)="dateChanged($event)"
-                        >
+                            (valueChange)="dateChanged($event)">
                         </nui-date-picker>
                     </nui-quick-picker>
                 </div>
@@ -106,8 +98,7 @@
                 [closePopover]="closePopoverSubject"
                 [modal]="true"
                 [unlimited]="true"
-                id="nui-demo-visual-complex-popover"
-            >
+                id="nui-demo-visual-complex-popover">
                 <span class="nui-text-link" style="cursor: pointer">{{
                     acceptedTimeframe | timeFrame
                 }}</span>
@@ -119,19 +110,16 @@
                         [presets]="presets"
                         [selectedPreset]="acceptedTimeframe.selectedPresetId"
                         (presetSelected)="handlePresetSelection($event)"
-                        pickerTitle="Custom Range"
-                    >
+                        pickerTitle="Custom Range">
                         <nui-time-frame-picker
                             [startModel]="acceptedTimeframe"
-                            (changed)="updateTf($event)"
-                        >
+                            (changed)="updateTf($event)">
                         </nui-time-frame-picker>
                         <nui-date-picker
                             [inline]="true"
                             [value]="selectedDate"
                             [preserveInsignificant]="false"
-                            (valueChange)="dateChanged($event)"
-                        >
+                            (valueChange)="dateChanged($event)">
                         </nui-date-picker>
                     </nui-quick-picker>
                 </div>

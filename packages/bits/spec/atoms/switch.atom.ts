@@ -53,7 +53,7 @@ export class SwitchAtom extends Atom {
         return super
             .getElement()
             .getAttribute("class")
-            .then((classString) => classString.indexOf("disabled") !== -1);
+            .then(classString => classString.indexOf("disabled") !== -1);
     }
 
     public async setState(shouldBeOn: boolean): Promise<void> {

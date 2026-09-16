@@ -72,7 +72,7 @@ export class RiskScoreComponent implements AfterViewInit, OnChanges, OnDestroy {
         private ngZone: NgZone
     ) {
         this.colorLineWidth$ = new BehaviorSubject<number>(0);
-        this.resizeObserver = new ResizeObserver((entries) =>
+        this.resizeObserver = new ResizeObserver(entries =>
             this.colorLineWidth$.next(entries[0].contentRect.width)
         );
     }

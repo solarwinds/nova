@@ -5,8 +5,7 @@
     type="button"
     [isEmpty]="false"
     (click)="overlay.toggle()"
-    i18n
->
+    i18n>
     Toggle the Overlay
 </button>
 
@@ -15,8 +14,7 @@
     type="button"
     [isEmpty]="false"
     (click)="setViewportMargin(30)"
-    i18n
->
+    i18n>
     Viewport margin 30px
 </button>
 
@@ -25,8 +23,7 @@
     type="button"
     [isEmpty]="false"
     (click)="setViewportMargin(100)"
-    i18n
->
+    i18n>
     Viewport margin 100px
 </button>
 
@@ -34,7 +31,6 @@
     #overlay
     [toggleReference]="toggleButton['el'].nativeElement"
     [viewportMargin]="viewportMargin"
-    [overlayConfig]="overlayConfig"
->
+    [overlayConfig]="overlayConfig">
     <nui-menu-item *ngFor="let item of items">{{ item }}</nui-menu-item>
 </nui-overlay>

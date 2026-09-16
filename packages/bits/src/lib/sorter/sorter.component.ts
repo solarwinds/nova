@@ -192,7 +192,7 @@ export class SorterComponent
         };
         this.overlay.clickOutside
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((_) => this.overlay.hide());
+            .subscribe(_ => this.overlay.hide());
 
         this.updateOverlayWidth();
         this.initKeyboardService();
@@ -277,7 +277,7 @@ export class SorterComponent
     }
 
     public ngOnDestroy(): void {
-        this.menuKeyControlListeners.forEach((listener) => listener());
+        this.menuKeyControlListeners.forEach(listener => listener());
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }

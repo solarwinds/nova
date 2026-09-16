@@ -5,14 +5,12 @@
         hint="Some pretty long text with hint"
         i18n-hint
         info="text"
-        [control]="fancyForm.controls.combobox"
-    >
+        [control]="fancyForm.controls.combobox">
         <nui-combobox-v2
             placeholder="Select Item"
             i18n-placeholder
             formControlName="combobox"
-            #combobox
-        >
+            #combobox>
             <nui-select-v2-option *ngFor="let item of items" [value]="item">
                 <span [nuiComboboxV2OptionHighlight]="item"></span>
             </nui-select-v2-option>

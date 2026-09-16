@@ -3,8 +3,7 @@
         nui-table
         [dataSource]="dataSource"
         [resizable]="true"
-        [sortable]="true"
-    >
+        [sortable]="true">
         <ng-container nuiColumnDef="position" [columnWidth]="50">
             <th nui-header-cell *nuiHeaderCellDef i18n>No.</th>
             <td nui-cell *nuiCellDef="let element">{{ element.position }}</td>
@@ -22,8 +21,7 @@
                     <nui-icon
                         *ngFor="let icon of element.features"
                         [icon]="icon"
-                        class="mr-1"
-                    ></nui-icon>
+                        class="mr-1"></nui-icon>
                 </div>
             </td>
         </ng-container>
@@ -61,8 +59,7 @@
                 nui-header-cell
                 [isColumnSortingDisabled]="true"
                 *nuiHeaderCellDef
-                i18n
-            >
+                i18n>
                 Checks
             </th>
             <td nui-cell *nuiCellDef="let element">

@@ -157,7 +157,7 @@ export class TooltipDirective implements OnDestroy {
         _focusMonitor
             .monitor(_elementRef)
             .pipe(takeUntil(this._destroyed))
-            .subscribe((origin) => {
+            .subscribe(origin => {
                 // Note that the focus monitor runs outside the Angular zone.
                 if (!origin) {
                     _ngZone.run(() => this.hide());

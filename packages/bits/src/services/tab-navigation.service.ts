@@ -61,7 +61,7 @@ export class TabNavigationService implements ITabNavigationService {
     public restoreTabNavigation(): void {
         // dom manipulation to restore the tabIndex for the cached elements
         // and remove the tabIndex for those who didn't had it at all
-        this.tabFocusableElements.forEach((e) => {
+        this.tabFocusableElements.forEach(e => {
             if (e?.tabIndex?.length) {
                 e.nativeElement.setAttribute("tabindex", e.tabIndex);
             } else {

@@ -254,7 +254,7 @@ export function installPackageJsonDependencies(): Rule {
 export function assembleDependencies(
     dependencies: Record<string, string>
 ): NodeDependency[] {
-    return Object.keys(dependencies).map((key) => ({
+    return Object.keys(dependencies).map(key => ({
         type: NodeDependencyType.Default,
         version: omitUpperPeerDependencyVersion(dependencies[key]),
         name: key,

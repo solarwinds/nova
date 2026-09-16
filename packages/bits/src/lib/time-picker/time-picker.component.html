@@ -8,8 +8,7 @@
             [isInErrorState]="isInErrorState"
             (textChange)="onInputActiveDateChanged($event)"
             (blurred)="updateInnerModel($event)"
-            [ariaLabel]="ariaLabel"
-        >
+            [ariaLabel]="ariaLabel">
         </nui-textbox>
         <nui-icon
             #menuTrigger
@@ -17,8 +16,7 @@
             icon="clock"
             tabindex="-1"
             (click)="focusOnForm()"
-            [iconColor]="getIconColor()"
-        >
+            [iconColor]="getIconColor()">
         </nui-icon>
     </div>
 
@@ -28,13 +26,11 @@
         #overlay
         [toggleReference]="toggleRef"
         [overlayConfig]="overlayConfig"
-        [customContainer]="customContainer"
-    >
+        [customContainer]="customContainer">
         <nui-menu-popup
             #popup
             [itemsSource]="itemsSource"
-            (menuItemClicked)="select($event)"
-        >
+            (menuItemClicked)="select($event)">
         </nui-menu-popup>
     </nui-overlay>
 </div>

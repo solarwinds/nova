@@ -28,18 +28,15 @@
         #wizardComponent
         id="nui-demo-wizard-busy"
         finishText="Finish"
-        i18n-finishText
-    >
+        i18n-finishText>
         <nui-wizard-step
             i18n-title
             title="Make step busy"
-            [stepTemplate]="stepBusy"
-        ></nui-wizard-step>
+            [stepTemplate]="stepBusy"></nui-wizard-step>
         <nui-wizard-step
             i18n-title
             title="Final"
-            [stepTemplate]="step2"
-        ></nui-wizard-step>
+            [stepTemplate]="step2"></nui-wizard-step>
     </nui-wizard>
     <nui-spinner size="large" message="Fetching data..."></nui-spinner>
 </div>
@@ -49,8 +46,7 @@
     type="button"
     id="nui-demo-busy-button"
     (click)="toggleStepBusy()"
-    i18n
->
+    i18n>
     Toggle busy on current step
 </button>
 <button nui-button type="button" (click)="toggleBusy()">

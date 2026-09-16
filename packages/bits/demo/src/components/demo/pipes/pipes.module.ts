@@ -30,7 +30,7 @@ const routes = [
         path: "highlight",
         loadChildren: async () =>
             import("./highlight/highlight-pipe-example.module").then(
-                (m) => m.HighlightPipeExampleModule
+                m => m.HighlightPipeExampleModule
             ),
     },
     {
@@ -38,7 +38,7 @@ const routes = [
         loadChildren: async () =>
             import(
                 "./unit-conversion/unit-conversion-pipe-example.module"
-            ).then((m) => m.UnitConversionPipeExampleModule),
+            ).then(m => m.UnitConversionPipeExampleModule),
     },
 ];
 

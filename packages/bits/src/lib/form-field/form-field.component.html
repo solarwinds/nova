@@ -19,13 +19,11 @@
         </div>
         <div
             *ngIf="info || infoTemplate"
-            class="nui-form-field__control-label-container-info"
-        >
+            class="nui-form-field__control-label-container-info">
             <nui-popover
                 [template]="infoTemplatePlain"
                 class="d-inline-flex"
-                [unlimited]="true"
-            >
+                [unlimited]="true">
                 <nui-icon [icon]="'severity_info'"></nui-icon>
             </nui-popover>
         </div>
@@ -41,8 +39,7 @@
             }}</ng-container>
             <ng-container
                 *ngIf="hintTemplate && !hint"
-                [ngTemplateOutlet]="hintTemplate"
-            ></ng-container>
+                [ngTemplateOutlet]="hintTemplate"></ng-container>
         </span>
     </div>
 </div>

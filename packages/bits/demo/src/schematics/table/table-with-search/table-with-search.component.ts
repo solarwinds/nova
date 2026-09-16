@@ -90,7 +90,7 @@ export class TableWithSearchComponent
     public ngOnInit(): void {
         this.dataSource.busy
             .pipe(
-                tap((val) => {
+                tap(val => {
                     this.isBusy = val;
                     this.changeDetection.detectChanges();
                 }),

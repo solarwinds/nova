@@ -1,20 +1,17 @@
 <div
     [style.height.px]="gridHeight"
     [style.max-width.px]="1300"
-    style="border-color: lightgrey"
->
+    style="border-color: lightgrey">
     <cdk-virtual-scroll-viewport
         [style.height.px]="gridHeight"
         tableVirtualScroll
         [rowHeight]="24"
-        [offset]="40"
-    >
+        [offset]="40">
         <table
             nui-table
             [dataSource]="users"
             [resizable]="false"
-            [reorderable]="true"
-        >
+            [reorderable]="true">
             <ng-container nuiColumnDef="no" [columnWidth]="50">
                 <th nui-header-cell *nuiHeaderCellDef i18n>No.</th>
                 <td nui-cell *nuiCellDef="let element">{{ element.no }}</td>
@@ -75,34 +72,29 @@
                 <td
                     nui-cell
                     *nuiCellDef="let element"
-                    style="overflow: visible"
-                >
+                    style="overflow: visible">
                     {{ element.cell }}
                 </td>
             </ng-container>
 
             <tr
                 nui-header-row
-                *nuiHeaderRowDef="displayedColumns; sticky: true"
-            ></tr>
+                *nuiHeaderRowDef="displayedColumns; sticky: true"></tr>
             <tr
                 nui-row
                 *nuiRowDef="let row; columns: displayedColumns"
-                density="tiny"
-            ></tr>
+                density="tiny"></tr>
         </table>
     </cdk-virtual-scroll-viewport>
 </div>
 
 <footer
-    class="d-flex justify-content-center align-items-center nui-demo-scrolling-footer"
->
+    class="d-flex justify-content-center align-items-center nui-demo-scrolling-footer">
     <div class="h-100 w-100">
         <div *ngIf="isBusy; else defaultText">
             <nui-progress
                 [show]="isBusy"
-                helpText="Loading next {{ range }} items..."
-            ></nui-progress>
+                helpText="Loading next {{ range }} items..."></nui-progress>
         </div>
         <ng-template #defaultText>
             <div class="h-100 d-flex justify-content-center align-items-center">

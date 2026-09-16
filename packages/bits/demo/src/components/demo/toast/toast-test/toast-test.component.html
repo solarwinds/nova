@@ -14,32 +14,28 @@
             type="radio"
             name="type"
             value="error"
-            [(ngModel)]="type"
-        />
+            [(ngModel)]="type" />
         <label for="radioError" class="px-3"> error </label>
         <input
             id="radioInfo"
             type="radio"
             name="type"
             value="info"
-            [(ngModel)]="type"
-        />
+            [(ngModel)]="type" />
         <label for="radioInfo" class="px-3"> info </label>
         <input
             id="radioSuccess"
             type="radio"
             name="type"
             value="success"
-            [(ngModel)]="type"
-        />
+            [(ngModel)]="type" />
         <label for="radioSuccess" class="px-3"> success </label>
         <input
             id="radioWarning"
             type="radio"
             name="type"
             value="warning"
-            [(ngModel)]="type"
-        />
+            [(ngModel)]="type" />
         <label for="radioWarning" class="px-3"> warning </label>
     </div>
 
@@ -62,8 +58,7 @@
             <input
                 type="text"
                 id="txtTimeOut"
-                [(ngModel)]="toast.options.timeOut"
-            />
+                [(ngModel)]="toast.options.timeOut" />
         </div>
         <div>
             <label class="px-3 w-25" for="txtExtendedTimeOut">
@@ -72,24 +67,21 @@
             <input
                 type="text"
                 id="txtExtendedTimeOut"
-                [(ngModel)]="toast.options.extendedTimeOut"
-            />
+                [(ngModel)]="toast.options.extendedTimeOut" />
         </div>
         <div>
             <label class="px-3 w-25" for="chbCloseButton">closeButton</label>
             <input
                 type="checkbox"
                 id="chbCloseButton"
-                [(ngModel)]="toast.options.closeButton"
-            />
+                [(ngModel)]="toast.options.closeButton" />
         </div>
         <div>
             <label class="px-3 w-25" for="chbProgressBar">progressBar</label>
             <input
                 type="checkbox"
                 id="chbProgressBar"
-                [(ngModel)]="toast.options.progressBar"
-            />
+                [(ngModel)]="toast.options.progressBar" />
         </div>
         <div>
             <label class="px-3 w-25">progressAnimation</label>
@@ -98,16 +90,14 @@
                 type="radio"
                 name="progressAnimation"
                 value="increasing"
-                [(ngModel)]="toast.options.progressAnimation"
-            />
+                [(ngModel)]="toast.options.progressAnimation" />
             <label for="radioIncreasing" class="px-3"> increasing </label>
             <input
                 id="radioDecreasing"
                 type="radio"
                 name="progressAnimation"
                 value="decreasing"
-                [(ngModel)]="toast.options.progressAnimation"
-            />
+                [(ngModel)]="toast.options.progressAnimation" />
             <label for="radioDecreasing" class="px-3"> decreasing </label>
         </div>
         <div>
@@ -115,16 +105,14 @@
             <input
                 type="checkbox"
                 id="chbEnableHtml"
-                [(ngModel)]="toast.options.enableHtml"
-            />
+                [(ngModel)]="toast.options.enableHtml" />
         </div>
         <div>
             <label class="px-3 w-25" for="txtToastClass">toastClass</label>
             <input
                 type="text"
                 id="txtToastClass"
-                [(ngModel)]="toast.options.toastClass"
-            />
+                [(ngModel)]="toast.options.toastClass" />
         </div>
         <div>
             <label class="px-3 w-25">positionClass</label>
@@ -134,32 +122,28 @@
                     type="radio"
                     name="positionClass"
                     value="nui-toast--top-center"
-                    [(ngModel)]="toast.options.positionClass"
-                />
+                    [(ngModel)]="toast.options.positionClass" />
                 <label for="radioTopCenter" class="px-3"> TOP_CENTER </label>
                 <input
                     id="radioTopLeft"
                     type="radio"
                     name="positionClass"
                     value="nui-toast--top-left"
-                    [(ngModel)]="toast.options.positionClass"
-                />
+                    [(ngModel)]="toast.options.positionClass" />
                 <label for="radioTopLeft" class="px-3"> TOP_LEFT </label>
                 <input
                     id="radioTopRight"
                     type="radio"
                     name="positionClass"
                     value="nui-toast--top-right"
-                    [(ngModel)]="toast.options.positionClass"
-                />
+                    [(ngModel)]="toast.options.positionClass" />
                 <label for="radioTopRight" class="px-3"> TOP_RIGHT </label>
                 <input
                     id="radioTopFullWidth"
                     type="radio"
                     name="positionClass"
                     value="nui-toast--top-full-width"
-                    [(ngModel)]="toast.options.positionClass"
-                />
+                    [(ngModel)]="toast.options.positionClass" />
                 <label for="radioTopFullWidth" class="px-3">
                     TOP_FULL_WIDTH
                 </label>
@@ -169,8 +153,7 @@
                     type="radio"
                     name="positionClass"
                     value="nui-toast--bottom-center"
-                    [(ngModel)]="toast.options.positionClass"
-                />
+                    [(ngModel)]="toast.options.positionClass" />
                 <label for="radioBottomCenter" class="px-3">
                     BOTTOM_CENTER
                 </label>
@@ -179,16 +162,14 @@
                     type="radio"
                     name="positionClass"
                     value="nui-toast--bottom-left"
-                    [(ngModel)]="toast.options.positionClass"
-                />
+                    [(ngModel)]="toast.options.positionClass" />
                 <label for="radioBottomLeft" class="px-3"> BOTTOM_LEFT </label>
                 <input
                     id="radioBottomRight"
                     type="radio"
                     name="positionClass"
                     value="nui-toast--bottom-right"
-                    [(ngModel)]="toast.options.positionClass"
-                />
+                    [(ngModel)]="toast.options.positionClass" />
                 <label for="radioBottomRight" class="px-3">
                     BOTTOM_RIGHT
                 </label>
@@ -197,8 +178,7 @@
                     type="radio"
                     name="positionClass"
                     value="nui-toast--bottom-full-width"
-                    [(ngModel)]="toast.options.positionClass"
-                />
+                    [(ngModel)]="toast.options.positionClass" />
                 <label for="radioBottomFullWidth" class="px-3">
                     BOTTOM_FULL_WIDTH
                 </label>
@@ -207,8 +187,7 @@
                     type="radio"
                     name="positionClass"
                     value="demoToastCustomClass"
-                    [(ngModel)]="toast.options.positionClass"
-                />
+                    [(ngModel)]="toast.options.positionClass" />
                 <label for="radioCustomClass" class="px-3">
                     CUSTOM_CLASS
                 </label>
@@ -221,40 +200,35 @@
             <input
                 type="checkbox"
                 id="chbClickToDismiss"
-                [(ngModel)]="toast.options.clickToDismiss"
-            />
+                [(ngModel)]="toast.options.clickToDismiss" />
         </div>
         <div>
             <label class="px-3 w-25" for="chbStickyError">stickyError</label>
             <input
                 type="checkbox"
                 id="chbStickyError"
-                [(ngModel)]="toast.options.stickyError"
-            />
+                [(ngModel)]="toast.options.stickyError" />
         </div>
         <div>
             <label class="px-3 w-25" for="txtMaxOpened">maxOpened</label>
             <input
                 type="number"
                 id="txtMaxOpened"
-                [(ngModel)]="toast.options.maxOpened"
-            />
+                [(ngModel)]="toast.options.maxOpened" />
         </div>
         <div>
             <label class="px-3 w-25" for="chbAutoDismiss">autoDismiss</label>
             <input
                 type="checkbox"
                 id="chbAutoDismiss"
-                [(ngModel)]="toast.options.autoDismiss"
-            />
+                [(ngModel)]="toast.options.autoDismiss" />
         </div>
         <div>
             <label class="px-3 w-25" for="chbNewestOnTop">newestOnTop</label>
             <input
                 type="checkbox"
                 id="chbNewestOnTop"
-                [(ngModel)]="toast.options.newestOnTop"
-            />
+                [(ngModel)]="toast.options.newestOnTop" />
         </div>
         <div>
             <label class="px-3 w-25" for="chbPreventDuplicates"
@@ -263,8 +237,7 @@
             <input
                 type="checkbox"
                 id="chbPreventDuplicates"
-                [(ngModel)]="toast.options.preventDuplicates"
-            />
+                [(ngModel)]="toast.options.preventDuplicates" />
         </div>
     </div>
 

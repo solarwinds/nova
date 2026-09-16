@@ -70,8 +70,8 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
 @Component({
     selector: "nui-popup-deprecated",
     host: {
-        class: "nui-popup",
-        role: "dialog",
+        "class": "nui-popup",
+        "role": "dialog",
         "[attr.aria-label]": "ariaLabel",
     },
     template: `
@@ -191,7 +191,7 @@ export class PopupDeprecatedComponent
     public ngOnInit(): void {
         if (this.manualOpenControl) {
             this.popupSubscriptions.push(
-                this.manualOpenControl.subscribe((event) => {
+                this.manualOpenControl.subscribe(event => {
                     this.toggleOpened(event);
                 })
             );
@@ -342,7 +342,7 @@ export class PopupDeprecatedComponent
     }
 
     public ngOnDestroy(): void {
-        this.popupSubscriptions.forEach((subscription) =>
+        this.popupSubscriptions.forEach(subscription =>
             subscription.unsubscribe()
         );
         this.deletePopupInstance();

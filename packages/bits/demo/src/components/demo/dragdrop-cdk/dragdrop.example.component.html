@@ -4,8 +4,7 @@
         [dropTarget]="droppable"
         (dragStart)="onDragStart($event)"
         (dragEnd)="onDragEnd($event)"
-        i18n
-    >
+        i18n>
         <div class="drag">drag me</div>
     </nui-draggable>
     <pre>{{ draggableObj | json }}</pre>
@@ -16,8 +15,7 @@
         [dragHandle]="true"
         (dragStart)="onDragStart($event)"
         (dragEnd)="onDragEnd($event)"
-        i18n
-    >
+        i18n>
         <div class="drag">drag me (handle)</div>
     </nui-draggable>
     <pre>{{ draggableObjHandle | json }}</pre>
@@ -28,8 +26,7 @@
         [dropTarget]="droppable"
         (dragStart)="onDragStart($event)"
         (dragEnd)="onDragEnd($event)"
-        i18n
-    >
+        i18n>
         <div class="drag drag-with-preview">drag me (preview)</div>
     </nui-draggable>
     <pre>{{ draggableObjPreview | json }}</pre>
@@ -40,8 +37,7 @@
         [dropTarget]="droppable"
         (dragStart)="onDragStart($event)"
         (dragEnd)="onDragEnd($event)"
-        i18n
-    >
+        i18n>
         <div class="drag">drag me ({{ item }})</div>
     </nui-draggable>
 </section>
@@ -53,8 +49,7 @@
         (dragOver)="onDragOver($event)"
         (dragEnter)="onDragEnter($event)"
         (dragLeave)="onDragLeave($event)"
-        i18n
-    >
+        i18n>
         <div class="drop">drop here</div>
     </nui-droppable>
     <pre>{{ destObject | json }}</pre>

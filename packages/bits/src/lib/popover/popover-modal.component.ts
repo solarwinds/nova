@@ -156,7 +156,7 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        this.popoverModalSubscriptions.forEach((sub) => {
+        this.popoverModalSubscriptions.forEach(sub => {
             sub.unsubscribe();
         });
     }
