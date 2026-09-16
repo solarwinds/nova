@@ -30,6 +30,7 @@ import {
     flush,
     TestBed,
 } from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
 import noop from "lodash/noop";
 
 import { IToolbarSelectionState, ToolbarItemType } from "./public-api";
@@ -50,7 +51,12 @@ import { MenuComponent } from "../menu";
     template: `
         <nui-toolbar>
             <nui-toolbar-group title="g1">
-                <nui-toolbar-item type="primary" icon="edit" title="edit">
+                <nui-toolbar-item
+                    type="primary"
+                    icon="edit"
+                    title="edit"
+                    [disabled]="firstItemDisabled"
+                >
                 </nui-toolbar-item>
                 <nui-toolbar-item type="primary" icon="edit" title="edit">
                 </nui-toolbar-item>
@@ -60,7 +66,12 @@ import { MenuComponent } from "../menu";
             <nui-toolbar-group title="g2">
                 <nui-toolbar-item type="primary" icon="add" title="add">
                 </nui-toolbar-item>
-                <nui-toolbar-item type="secondary" icon="add" title="add">
+                <nui-toolbar-item
+                    type="secondary"
+                    icon="add"
+                    title="add"
+                    [disabled]="menuItemDisabled"
+                >
                 </nui-toolbar-item>
                 <nui-toolbar-item type="secondary" icon="add" title="add">
                 </nui-toolbar-item>
@@ -69,7 +80,10 @@ import { MenuComponent } from "../menu";
     `,
     standalone: false,
 })
-class TestWrapperComponent {}
+class TestWrapperComponent {
+    public firstItemDisabled = false;
+    public menuItemDisabled = false;
+}
 
 describe("components >", () => {
     describe("toolbar >", () => {
@@ -208,6 +222,126 @@ describe("components >", () => {
                 component.onKeyDown(keyboardEventMock);
 
                 expect(spy).toHaveBeenCalledWith(keyboardEventMock);
+            });
+        });
+
+        describe("aria attributes >", () => {
+            let toolbarEl: HTMLElement;
+
+            beforeEach(() => {
+                toolbarEl =
+                    fixture.debugElement.nativeElement.querySelector(
+                        "nui-toolbar"
+                    );
+            });
+
+            it("should render aria-label when ariaLabel is set", () => {
+                component.ariaLabel = "Main toolbar";
+                fixture.detectChanges();
+                expect(toolbarEl.getAttribute("aria-label")).toBe(
+                    "Main toolbar"
+                );
+            });
+
+            it("should render aria-labelledby when ariaLabelledBy is set", () => {
+                component.ariaLabelledBy = "toolbar-heading";
+                fixture.detectChanges();
+                expect(toolbarEl.getAttribute("aria-labelledby")).toBe(
+                    "toolbar-heading"
+                );
+            });
+
+            it("should render aria-orientation when ariaOrientation is set", () => {
+                component.ariaOrientation = "vertical";
+                fixture.detectChanges();
+                expect(toolbarEl.getAttribute("aria-orientation")).toBe(
+                    "vertical"
+                );
+            });
+
+            it("should not render aria attributes when inputs are not set", () => {
+                fixture.detectChanges();
+                expect(toolbarEl.hasAttribute("aria-label")).toBeFalse();
+                expect(toolbarEl.hasAttribute("aria-labelledby")).toBeFalse();
+                expect(toolbarEl.hasAttribute("aria-orientation")).toBeFalse();
+            });
+
+            it("should sync a runtime ariaOrientation change to the keyboard service", () => {
+                const spy = spyOn(
+                    component["keyboardService"],
+                    "setToolbarItems"
+                );
+
+                component.ariaOrientation = "vertical";
+
+                expect(spy).toHaveBeenCalledWith(
+                    jasmine.any(Array),
+                    component.menu,
+                    "vertical"
+                );
+            });
+        });
+
+        describe("isFirstFocusableItem >", () => {
+            it("should return true for the first enabled item when the first item is disabled", () => {
+                const disabledItem = {
+                    disabled: true,
+                } as ToolbarItemComponent;
+                const enabledItem = {
+                    disabled: false,
+                } as ToolbarItemComponent;
+                component.commandGroups = [
+                    { items: [disabledItem, enabledItem] },
+                ];
+
+                expect(
+                    component.isFirstFocusableItem(disabledItem)
+                ).toBeFalse();
+                expect(component.isFirstFocusableItem(enabledItem)).toBeTrue();
+            });
+
+            it("should return false for every item when all items are disabled", () => {
+                const disabledItem = {
+                    disabled: true,
+                } as ToolbarItemComponent;
+                component.commandGroups = [{ items: [disabledItem] }];
+
+                expect(
+                    component.isFirstFocusableItem(disabledItem)
+                ).toBeFalse();
+            });
+        });
+
+        describe("disabled items >", () => {
+            it("should assign tabindex 0 to the first enabled item when the first item is disabled", () => {
+                const wrapper = fixture.componentInstance;
+                wrapper.firstItemDisabled = true;
+                fixture.detectChanges();
+                component.splitToolbarItems();
+                fixture.detectChanges();
+
+                const buttons =
+                    fixture.debugElement.nativeElement.querySelectorAll(
+                        "button[nui-button]"
+                    );
+                expect(buttons[0].getAttribute("tabindex")).toBe("-1");
+                expect(buttons[1].getAttribute("tabindex")).toBe("0");
+            });
+
+            it("should pass the disabled state of a menu item to nui-menu-action in the overflow menu", () => {
+                const wrapper = fixture.componentInstance;
+                wrapper.menuItemDisabled = true;
+                fixture.detectChanges();
+
+                const menuActions = fixture.debugElement.queryAll(
+                    By.css("nui-menu-action")
+                );
+                expect((menuActions[0].nativeElement as any).disabled).toBe(
+                    true
+                );
+                expect((menuActions[1].nativeElement as any).disabled).toBe(
+                    false
+                );
             });
         });
     });
