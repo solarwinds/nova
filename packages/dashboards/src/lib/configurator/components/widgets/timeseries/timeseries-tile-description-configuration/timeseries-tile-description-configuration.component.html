@@ -1,7 +1,6 @@
 <ng-container [formGroup]="form">
     <nui-widget-editor-accordion
-        [state]="form.get('label') | nuiWidgetEditorAccordionFormState | async"
-    >
+        [state]="form.get('label') | nuiWidgetEditorAccordionFormState | async">
         <nui-widget-editor-accordion-header
             [headerIcon]="
                 form.get('label') | nuiFormHeaderIconPipe : 'edit' | async
@@ -10,21 +9,17 @@
                 form.get('label') | nuiFormHeaderIconPipe : 'gray' : '' | async
             "
             [subtitle]="form.get('label')?.value"
-            headerTitle="Description"
-        />
+            headerTitle="Description" />
         <div
-            class="timeseries-tile-description-configuration__accordion-content"
-        >
+            class="timeseries-tile-description-configuration__accordion-content">
             <nui-form-field
                 caption="Label"
                 i18n-caption
-                [control]="form.get('label')"
-            >
+                [control]="form.get('label')">
                 <nui-textbox
                     formControlName="label"
                     placeholder="Set label"
-                    i18n-placeholder
-                ></nui-textbox>
+                    i18n-placeholder></nui-textbox>
                 <nui-validation-message for="required" i18n>
                     This field is required
                 </nui-validation-message>

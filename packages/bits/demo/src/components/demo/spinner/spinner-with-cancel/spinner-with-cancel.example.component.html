@@ -2,16 +2,14 @@
     nui-button
     type="button"
     (click)="toggleSpinners()"
-    displayStyle="primary"
->
+    displayStyle="primary">
     Start/stop progress
 </button>
 <nui-spinner
     [show]="show"
     [percent]="spinPercentage"
     [allowCancel]="true"
-    (cancel)="onCancel()"
->
+    (cancel)="onCancel()">
 </nui-spinner>
 
 <nui-spinner
@@ -19,6 +17,5 @@
     [show]="show"
     [percent]="spinPercentage"
     [allowCancel]="true"
-    (cancel)="onCancel()"
->
+    (cancel)="onCancel()">
 </nui-spinner>

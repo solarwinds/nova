@@ -139,9 +139,9 @@ describe("TableScrollTypeEditorComponent", () => {
 
             component.ngOnChanges(changes);
 
-            component.pageSizeSetOptions.forEach((option) => {
+            component.pageSizeSetOptions.forEach(option => {
                 component.paginatorConfiguration.pageSizeSet?.forEach(
-                    (pageValue) => {
+                    pageValue => {
                         if (option.value === pageValue) {
                             expect(option.checked).toBeTrue();
                         }
@@ -180,7 +180,7 @@ describe("TableScrollTypeEditorComponent", () => {
             expect(component.subtitle).toEqual(
                 "Scroll Type:  " +
                     component.scrollTypeEditorService.loadStrategies.find(
-                        (ls) => ls.id === ScrollType.virtual
+                        ls => ls.id === ScrollType.virtual
                     )?.title
             );
         });

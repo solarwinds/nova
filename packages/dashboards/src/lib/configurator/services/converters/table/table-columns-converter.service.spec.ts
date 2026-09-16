@@ -87,7 +87,6 @@ describe("TableColumnsConverterService >", () => {
         expect(service.component).toBeDefined();
     });
 
-
     it("should properly build form", () => {
         const columnsInFormPizzagna =
             pizzagnaService.pizzagna.data.columns.properties?.columns;

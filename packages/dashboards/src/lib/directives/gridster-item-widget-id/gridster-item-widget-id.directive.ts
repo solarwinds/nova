@@ -26,7 +26,7 @@ import {
     Self,
     SimpleChanges,
 } from "@angular/core";
-  import { GridsterItem } from "angular-gridster2";
+import { GridsterItem } from "angular-gridster2";
 
 /**
  * This directive assigns a "widgetId" property to host gridster item. We need it there because moving and resizing the widget with gridster only contains

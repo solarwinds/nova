@@ -65,7 +65,7 @@ export class PizzagnaBroadcasterService implements IConfigurable, OnDestroy {
                 return;
             }
 
-            const subscription = observable.subscribe((v) => {
+            const subscription = observable.subscribe(v => {
                 for (const path of config.paths) {
                     const validatedPath = parseStringWithData(path, this);
                     this.pizzagnaService.setProperty(validatedPath, v);
@@ -87,7 +87,7 @@ export class PizzagnaBroadcasterService implements IConfigurable, OnDestroy {
 
     private getPizzagnaObservableFor(part: IBroadcasterConfig) {
         return this.pizzagnaService.pizzaChanged.pipe(
-            map((v) => get(v, part.key)),
+            map(v => get(v, part.key)),
             distinctUntilChanged()
         );
     }

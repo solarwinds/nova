@@ -3,8 +3,7 @@
     [nodes]="nodes"
     (itemsChange)="onItemsChange($event)"
     [moveButtons]="false"
-    (formReady)="onFormReady($event)"
-></nui-items-dynamic>
+    (formReady)="onFormReady($event)"></nui-items-dynamic>
 
 @if ((emptySeries$ | async) && form.touched) {
 <div class="pl-4 pr-4">
@@ -20,8 +19,7 @@
     type="button"
     class="ml-4 mb-4"
     (click)="addSeries()"
-    i18n
->
+    i18n>
     Add new series
 </button>
 }

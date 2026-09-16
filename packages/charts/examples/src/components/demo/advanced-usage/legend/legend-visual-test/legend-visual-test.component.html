@@ -6,12 +6,10 @@
                 @for (data of seriesData; track data) {
                 <nui-legend-series
                     [descriptionPrimary]="data.descriptionPrimary"
-                    [descriptionSecondary]="data.descriptionSecondary"
-                >
+                    [descriptionSecondary]="data.descriptionSecondary">
                     <nui-rich-legend-tile
                         [value]="data.value"
-                        [unitLabel]="data.unitLabel"
-                    ></nui-rich-legend-tile>
+                        [unitLabel]="data.unitLabel"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -21,12 +19,10 @@
                 @for (data of seriesData; track data) {
                 <nui-legend-series
                     [descriptionPrimary]="data.descriptionPrimary"
-                    [descriptionSecondary]="data.descriptionSecondary"
-                >
+                    [descriptionSecondary]="data.descriptionSecondary">
                     <nui-rich-legend-tile
                         [value]="data.value"
-                        [unitLabel]="data.unitLabel"
-                    ></nui-rich-legend-tile>
+                        [unitLabel]="data.unitLabel"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -37,17 +33,14 @@
             <nui-legend
                 class="rich-tile-horizontal-legend-active-state"
                 [active]="true"
-                orientation="horizontal"
-            >
+                orientation="horizontal">
                 @for (data of seriesData; track data) {
                 <nui-legend-series
                     [descriptionPrimary]="data.descriptionPrimary"
-                    [descriptionSecondary]="data.descriptionSecondary"
-                >
+                    [descriptionSecondary]="data.descriptionSecondary">
                     <nui-rich-legend-tile
                         [value]="data.value"
-                        [unitLabel]="data.unitLabel"
-                    ></nui-rich-legend-tile>
+                        [unitLabel]="data.unitLabel"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -55,19 +48,16 @@
             <h4>Legend Interactive Mode in Default State with Rich Tile</h4>
             <nui-legend
                 class="rich-tile-interactive-legend-default-state"
-                [interactive]="true"
-            >
+                [interactive]="true">
                 @for (data of seriesData; track data) {
                 <nui-legend-series
                     [descriptionPrimary]="data.descriptionPrimary"
-                    [descriptionSecondary]="data.descriptionSecondary"
-                >
+                    [descriptionSecondary]="data.descriptionSecondary">
                     <nui-rich-legend-tile
                         [value]="data.value"
                         [unitLabel]="data.unitLabel"
                         [backgroundColor]="tileBackgroundColor"
-                        [color]="tileColor"
-                    ></nui-rich-legend-tile>
+                        [color]="tileColor"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -76,19 +66,16 @@
             <nui-legend
                 class="rich-tile-interactive-legend-active-state"
                 [active]="true"
-                [interactive]="true"
-            >
+                [interactive]="true">
                 @for (data of seriesData; track data) {
                 <nui-legend-series
                     [descriptionPrimary]="data.descriptionPrimary"
-                    [descriptionSecondary]="data.descriptionSecondary"
-                >
+                    [descriptionSecondary]="data.descriptionSecondary">
                     <nui-rich-legend-tile
                         [value]="data.value"
                         [unitLabel]="data.unitLabel"
                         [backgroundColor]="tileBackgroundColor"
-                        [color]="tileColor"
-                    ></nui-rich-legend-tile>
+                        [color]="tileColor"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -96,33 +83,28 @@
             <h4>Legend Series Render States</h4>
             <nui-legend
                 class="legend-series-render-states"
-                [interactive]="true"
-            >
+                [interactive]="true">
                 <nui-legend-series
                     descriptionPrimary="unselected/hidden"
                     descriptionSecondary="unselected/hidden"
                     seriesRenderState="hidden"
-                    [isSelected]="false"
-                >
+                    [isSelected]="false">
                     <nui-rich-legend-tile
                         value="0"
                         unitLabel="Mbps"
                         [backgroundColor]="tileBackgroundColor"
-                        [color]="tileColor"
-                    ></nui-rich-legend-tile>
+                        [color]="tileColor"></nui-rich-legend-tile>
                 </nui-legend-series>
                 @for (renderState of renderStates; track renderState) {
                 <nui-legend-series
                     [descriptionPrimary]="renderState"
                     [descriptionSecondary]="renderState"
-                    [seriesRenderState]="renderState"
-                >
+                    [seriesRenderState]="renderState">
                     <nui-rich-legend-tile
                         value="0"
                         unitLabel="Mbps"
                         [backgroundColor]="tileBackgroundColor"
-                        [color]="tileColor"
-                    ></nui-rich-legend-tile>
+                        [color]="tileColor"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -136,8 +118,7 @@
                 <nui-legend-series>
                     <nui-rich-legend-tile
                         [value]="data.value"
-                        [unitLabel]="data.unitLabel"
-                    ></nui-rich-legend-tile>
+                        [unitLabel]="data.unitLabel"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -145,14 +126,12 @@
             <h4>Rich Tile Legend Compact Mode Active State</h4>
             <nui-legend
                 class="rich-tile-legend-compact-mode-active-state-test"
-                [active]="true"
-            >
+                [active]="true">
                 @for (data of seriesData; track data) {
                 <nui-legend-series>
                     <nui-rich-legend-tile
                         [value]="data.value"
-                        [unitLabel]="data.unitLabel"
-                    ></nui-rich-legend-tile>
+                        [unitLabel]="data.unitLabel"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -164,14 +143,12 @@
             <nui-legend
                 class="rich-tile-horizontal-legend-compact-mode-active-state-test"
                 [active]="true"
-                orientation="horizontal"
-            >
+                orientation="horizontal">
                 @for (data of seriesData; track data) {
                 <nui-legend-series>
                     <nui-rich-legend-tile
                         [value]="data.value"
-                        [unitLabel]="data.unitLabel"
-                    ></nui-rich-legend-tile>
+                        [unitLabel]="data.unitLabel"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -179,16 +156,14 @@
             <h4>Rich Tile Legend Compact Interactive Mode</h4>
             <nui-legend
                 class="rich-tile-compact-interactive-legend-test"
-                [interactive]="true"
-            >
+                [interactive]="true">
                 @for (data of seriesData; track data) {
                 <nui-legend-series>
                     <nui-rich-legend-tile
                         [value]="data.value"
                         [unitLabel]="data.unitLabel"
                         [backgroundColor]="tileBackgroundColor"
-                        [color]="tileColor"
-                    ></nui-rich-legend-tile>
+                        [color]="tileColor"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -196,21 +171,18 @@
             <h4>Rich Tile Legend Compact Mode with Markers in Active State</h4>
             <nui-legend
                 class="rich-tile-compact-interactive-legend-active-state"
-                [active]="true"
-            >
+                [active]="true">
                 @for (data of seriesData; track data) {
                 <nui-legend-series>
                     <nui-rich-legend-tile
                         [value]="data.value"
                         [unitLabel]="data.unitLabel"
                         [backgroundColor]="tileBackgroundColor"
-                        [color]="tileColor"
-                    >
+                        [color]="tileColor">
                         <nui-chart-marker
                             [marker]="markers.get(data.seriesId)"
                             [color]="tileBackgroundColor"
-                            rightEdge
-                        ></nui-chart-marker>
+                            rightEdge></nui-chart-marker>
                     </nui-rich-legend-tile>
                 </nui-legend-series>
                 }
@@ -224,19 +196,16 @@
                 <nui-legend-series>
                     <nui-rich-legend-tile
                         [backgroundColor]="tileBackgroundColor"
-                        [color]="tileColor"
-                    >
+                        [color]="tileColor">
                         <div top>15.5</div>
                         <nui-icon
                             iconSize="small"
                             icon="status_up"
-                            leftEdge
-                        ></nui-icon>
+                            leftEdge></nui-icon>
                         <nui-chart-marker
                             [marker]="markers.get('1')"
                             [color]="tileBackgroundColor"
-                            rightEdge
-                        ></nui-chart-marker>
+                            rightEdge></nui-chart-marker>
                     </nui-rich-legend-tile>
                     <div description>
                         <div>Primary Description 1</div>
@@ -245,20 +214,17 @@
                 <nui-legend-series>
                     <nui-rich-legend-tile
                         [backgroundColor]="tileBackgroundColor"
-                        [color]="tileColor"
-                    >
+                        [color]="tileColor">
                         <div top>9999k</div>
                         <div bottom>%</div>
                         <nui-icon
                             iconSize="small"
                             icon="status_warning"
-                            leftEdge
-                        ></nui-icon>
+                            leftEdge></nui-icon>
                         <nui-chart-marker
                             [marker]="markers.get('2')"
                             [color]="tileBackgroundColor"
-                            rightEdge
-                        ></nui-chart-marker>
+                            rightEdge></nui-chart-marker>
                     </nui-rich-legend-tile>
                     <div description>
                         <div>Primary Description 2</div>
@@ -268,20 +234,17 @@
                 <nui-legend-series>
                     <nui-rich-legend-tile
                         [backgroundColor]="tileBackgroundColor"
-                        [color]="tileColor"
-                    >
+                        [color]="tileColor">
                         <div top>15.5</div>
                         <div bottom>Kbps</div>
                         <nui-icon
                             iconSize="small"
                             icon="status_critical"
-                            leftEdge
-                        ></nui-icon>
+                            leftEdge></nui-icon>
                         <nui-chart-marker
                             [marker]="markers.get('3')"
                             [color]="tileBackgroundColor"
-                            rightEdge
-                        ></nui-chart-marker>
+                            rightEdge></nui-chart-marker>
                     </nui-rich-legend-tile>
                     <div description>
                         <div>Primary Description 3</div>
@@ -297,8 +260,7 @@
                 @for (data of seriesData; track data) {
                 <nui-legend-series>
                     <nui-rich-legend-tile
-                        [value]="data.value"
-                    ></nui-rich-legend-tile>
+                        [value]="data.value"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -306,13 +268,11 @@
             <h4>Rich Tile Legend Compact Mode Active State No Label</h4>
             <nui-legend
                 class="rich-tile-legend-compact-mode-active-state-test"
-                [active]="true"
-            >
+                [active]="true">
                 @for (data of seriesData; track data) {
                 <nui-legend-series>
                     <nui-rich-legend-tile
-                        [value]="data.value"
-                    ></nui-rich-legend-tile>
+                        [value]="data.value"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -324,13 +284,11 @@
             <nui-legend
                 class="rich-tile-horizontal-legend-compact-mode-active-state-test"
                 [active]="true"
-                orientation="horizontal"
-            >
+                orientation="horizontal">
                 @for (data of seriesData; track data) {
                 <nui-legend-series>
                     <nui-rich-legend-tile
-                        [value]="data.value"
-                    ></nui-rich-legend-tile>
+                        [value]="data.value"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -338,15 +296,13 @@
             <h4>Rich Tile Legend Compact Interactive Mode No Label</h4>
             <nui-legend
                 class="rich-tile-compact-interactive-legend-test"
-                [interactive]="true"
-            >
+                [interactive]="true">
                 @for (data of seriesData; track data) {
                 <nui-legend-series>
                     <nui-rich-legend-tile
                         [value]="data.value"
                         [backgroundColor]="tileBackgroundColor"
-                        [color]="tileColor"
-                    ></nui-rich-legend-tile>
+                        [color]="tileColor"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -354,11 +310,9 @@
             <nui-legend class="rich-tile-legend-default-state">
                 @for (data of seriesData; track data) {
                 <nui-legend-series
-                    [descriptionPrimary]="data.descriptionPrimary"
-                >
+                    [descriptionPrimary]="data.descriptionPrimary">
                     <nui-rich-legend-tile
-                        [value]="data.value"
-                    ></nui-rich-legend-tile>
+                        [value]="data.value"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -367,11 +321,9 @@
             <nui-legend class="rich-tile-legend-active-state" [active]="true">
                 @for (data of seriesData; track data) {
                 <nui-legend-series
-                    [descriptionPrimary]="data.descriptionPrimary"
-                >
+                    [descriptionPrimary]="data.descriptionPrimary">
                     <nui-rich-legend-tile
-                        [value]="data.value"
-                    ></nui-rich-legend-tile>
+                        [value]="data.value"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -383,15 +335,12 @@
             <nui-legend
                 class="rich-tile-horizontal-legend-active-state"
                 [active]="true"
-                orientation="horizontal"
-            >
+                orientation="horizontal">
                 @for (data of seriesData; track data) {
                 <nui-legend-series
-                    [descriptionPrimary]="data.descriptionPrimary"
-                >
+                    [descriptionPrimary]="data.descriptionPrimary">
                     <nui-rich-legend-tile
-                        [value]="data.value"
-                    ></nui-rich-legend-tile>
+                        [value]="data.value"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -401,17 +350,14 @@
             </h4>
             <nui-legend
                 class="rich-tile-interactive-legend-default-state"
-                [interactive]="true"
-            >
+                [interactive]="true">
                 @for (data of seriesData; track data) {
                 <nui-legend-series
-                    [descriptionPrimary]="data.descriptionPrimary"
-                >
+                    [descriptionPrimary]="data.descriptionPrimary">
                     <nui-rich-legend-tile
                         [value]="data.value"
                         [backgroundColor]="tileBackgroundColor"
-                        [color]="tileColor"
-                    ></nui-rich-legend-tile>
+                        [color]="tileColor"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>
@@ -422,17 +368,14 @@
             <nui-legend
                 class="rich-tile-interactive-legend-active-state"
                 [active]="true"
-                [interactive]="true"
-            >
+                [interactive]="true">
                 @for (data of seriesData; track data) {
                 <nui-legend-series
-                    [descriptionPrimary]="data.descriptionPrimary"
-                >
+                    [descriptionPrimary]="data.descriptionPrimary">
                     <nui-rich-legend-tile
                         [value]="data.value"
                         [backgroundColor]="tileBackgroundColor"
-                        [color]="tileColor"
-                    ></nui-rich-legend-tile>
+                        [color]="tileColor"></nui-rich-legend-tile>
                 </nui-legend-series>
                 }
             </nui-legend>

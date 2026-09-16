@@ -364,7 +364,7 @@ describe("services >", () => {
         });
 
         describe("setPosition >", () => {
-            popoverModalTestCases.forEach((test) => {
+            popoverModalTestCases.forEach(test => {
                 it(`should correctly calculate ${test.name}`, () => {
                     spyOn(edgeDetectionService, "canBe").and.returnValue(
                         test.edgeDetectionResult

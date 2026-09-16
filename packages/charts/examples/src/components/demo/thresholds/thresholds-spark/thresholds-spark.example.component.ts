@@ -80,7 +80,7 @@ export class ThresholdsSparkExampleComponent implements OnInit {
             new SequentialColorProvider([CHART_PALETTE_CS1[0]]),
             new SequentialChartMarkerProvider([CHART_MARKERS[0]])
         );
-        this.accessors.data.status = (d) => get(d, "__thresholds.status");
+        this.accessors.data.status = d => get(d, "__thresholds.status");
 
         const seriesSet: IChartSeries<ILineAccessors>[] = getLineSeries(
             this.xScale,
@@ -91,7 +91,7 @@ export class ThresholdsSparkExampleComponent implements OnInit {
         // Zone definitions tell the threshold service where threshold zones begin and end
         const zoneDefinitions = getZoneDefinitions();
 
-        const sparks = seriesSet.map((s) => {
+        const sparks = seriesSet.map(s => {
             // It's possible to manually define zones by area-like data series with start/end values for every data point. We don't do that
             // here, but what we do instead is use simplified zones that are defined by a start value and/or an end value. (A missing
             // start or end value indicates an infinite zone.)
@@ -203,7 +203,7 @@ function getLineSeries(
         },
     ];
 
-    return series.map((s) => ({
+    return series.map(s => ({
         ...s,
         data: getTimeData(s.values, baseDate, interval),
         scales: {

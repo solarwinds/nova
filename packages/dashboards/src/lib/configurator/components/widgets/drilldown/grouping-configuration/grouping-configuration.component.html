@@ -1,16 +1,13 @@
 <nui-widget-editor-accordion
     [formGroup]="form"
-    [state]="form | nuiWidgetEditorAccordionFormState | async"
->
+    [state]="form | nuiWidgetEditorAccordionFormState | async">
     <nui-widget-editor-accordion-header
         [headerIcon]="'tag'"
         [subtitle]="getSubtitle()"
-        headerTitle="Grouping"
-    />
+        headerTitle="Grouping" />
     <div
         class="grouping-configuration__accordion-content"
-        formArrayName="groupBy"
-    >
+        formArrayName="groupBy">
         @for (group of getGroupByControl.controls; track group; let i = $index)
         { @if (i !== 0) {
         <label class="d-flex nui-text-secondary mb-1" i18n>Then</label>
@@ -22,8 +19,7 @@
                 <nui-select-v2
                     placeholder="Select Item"
                     i18n-placeholder
-                    [formControlName]="i"
-                >
+                    [formControlName]="i">
                     @for (item of selectData[i]; track item) {
                     <nui-select-v2-option [value]="item">
                         {{ item }}
@@ -37,8 +33,7 @@
                     icon="delete"
                     displayStyle="action"
                     type="button"
-                    (click)="removeRule(i)"
-                ></button>
+                    (click)="removeRule(i)"></button>
             </div>
         </div>
         } @if (!this.isAddRestricted()) {
@@ -48,8 +43,7 @@
             displayStyle="action"
             type="button"
             i18n
-            (click)="addGrouping()"
-        >
+            (click)="addGrouping()">
             Add another level
         </button>
         }

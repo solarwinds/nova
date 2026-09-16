@@ -4,8 +4,7 @@
     headerPrefix="Column"
     i18n-headerPrefix
     (itemsChange)="onItemsChange($event)"
-    (formReady)="onFormReady($event)"
-></nui-items-dynamic>
+    (formReady)="onFormReady($event)"></nui-items-dynamic>
 
 @if ((emptyColumns$ | async) && form.touched) {
 <div class="pl-4 pr-4">
@@ -23,8 +22,7 @@
     type="button"
     class="ml-4 mb-4"
     (click)="addColumn()"
-    i18n
->
+    i18n>
     Add new column
 </button>
 
@@ -36,7 +34,6 @@
     type="button"
     class="ml-4 mb-4"
     (click)="onResetColumns()"
-    i18n
->
+    i18n>
     Reset columns
 </button>

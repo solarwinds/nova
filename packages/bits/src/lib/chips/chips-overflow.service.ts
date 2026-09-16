@@ -145,7 +145,7 @@ export class ChipsOverflowService {
                 chip.inGroup
             );
             const existingGroup = this.overflowedChips.groupedItems?.find(
-                (group) => group.id === `group${groupId}`
+                group => group.id === `group${groupId}`
             );
 
             if (existingGroup) {
@@ -167,9 +167,9 @@ export class ChipsOverflowService {
         if (!(item instanceof ChipComponent)) {
             return;
         }
-        const inFlat = this.itemsSource.flatItems?.find((i) => i === item.item);
-        const inGroup = this.itemsSource.groupedItems?.find((group) =>
-            group.items.find((i) => i === item.item)
+        const inFlat = this.itemsSource.flatItems?.find(i => i === item.item);
+        const inGroup = this.itemsSource.groupedItems?.find(group =>
+            group.items.find(i => i === item.item)
         );
         return { inFlat, inGroup };
     }

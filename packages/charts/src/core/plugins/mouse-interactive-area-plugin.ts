@@ -57,7 +57,7 @@ export class MouseInteractiveAreaPlugin extends ChartPlugin {
             .getEventBus()
             .getStream(MOUSE_ACTIVE_EVENT)
             .pipe(takeUntil(this.destroy$))
-            .subscribe((event) => {
+            .subscribe(event => {
                 const active: boolean = event.data;
                 if (!active && this.chart.getDataManager().chartSeriesSet) {
                     this.highlightReset();
@@ -68,7 +68,7 @@ export class MouseInteractiveAreaPlugin extends ChartPlugin {
             .getEventBus()
             .getStream(INTERACTION_VALUES_ACTIVE_EVENT)
             .pipe(takeUntil(this.destroy$))
-            .subscribe((event) => (this.interactionValuesActive = event.data));
+            .subscribe(event => (this.interactionValuesActive = event.data));
 
         this.mouseInteractiveArea.interaction
             .pipe(takeUntil(this.destroy$))

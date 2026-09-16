@@ -2,18 +2,15 @@
     <div
         class="nui-tabs__holder"
         [class.vertical]="vertical"
-        (click)="$event.preventDefault()"
-    >
+        (click)="$event.preventDefault()">
         @if (hasTraverse) {
         <div
             class="btn-caret-left"
             [class.disabled]="!rightTraverseEnabled"
-            (click)="traverseRight()"
-        >
+            (click)="traverseRight()">
             <nui-icon
                 [icon]="'caret-left'"
-                [iconColor]="!rightTraverseEnabled ? 'gray' : 'default'"
-            ></nui-icon>
+                [iconColor]="!rightTraverseEnabled ? 'gray' : 'default'"></nui-icon>
         </div>
         }
         <div class="nui-tabs">
@@ -24,8 +21,7 @@
                     [class.active]="tab.active && !vertical"
                     [class.horizontal]="tab.active && !vertical"
                     [class.disabled]="tab.disabled"
-                    [class.active__vertical]="tab.active && vertical"
-                >
+                    [class.active__vertical]="tab.active && vertical">
                     <span class="tab-link" (click)="selectTab(tab)">
                         <span
                             [nuiTabHeadingCustomTemplateRef]="tab.headingRef"
@@ -40,12 +36,10 @@
         <div
             class="btn-caret-right"
             [class.disabled]="!leftTraverseEnabled"
-            (click)="traverseLeft()"
-        >
+            (click)="traverseLeft()">
             <nui-icon
                 [icon]="'caret-right'"
-                [iconColor]="!leftTraverseEnabled ? 'gray' : 'default'"
-            ></nui-icon>
+                [iconColor]="!leftTraverseEnabled ? 'gray' : 'default'"></nui-icon>
         </div>
         }
     </div>

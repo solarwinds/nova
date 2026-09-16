@@ -3,8 +3,7 @@
         nui-table
         [dataSource]="dataSource"
         [reorderable]="true"
-        (columnsOrderChange)="toastColumns($event)"
-    >
+        (columnsOrderChange)="toastColumns($event)">
         <ng-container nuiColumnDef="position">
             <th nui-header-cell *nuiHeaderCellDef i18n>No.</th>
             <td nui-cell *nuiCellDef="let element">{{ element.position }}</td>

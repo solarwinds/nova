@@ -69,7 +69,7 @@ export class GroupedHorizontalBarChartTestComponent implements OnInit {
             highlightStrategy: new BarHighlightStrategy("y"),
         });
 
-        const mappedSeries = getData().map((d) => ({
+        const mappedSeries = getData().map(d => ({
             ...d,
             accessors,
             renderer,

@@ -68,10 +68,10 @@ export class ToastTestComponent implements OnInit {
             string,
             (toast: IToastDeclaration) => IActiveToast
         > = {
-            error: (toast) => this.toastService.error(toast),
-            info: (toast) => this.toastService.info(toast),
-            success: (toast) => this.toastService.success(toast),
-            warning: (toast) => this.toastService.warning(toast),
+            error: toast => this.toastService.error(toast),
+            info: toast => this.toastService.info(toast),
+            success: toast => this.toastService.success(toast),
+            warning: toast => this.toastService.warning(toast),
         };
 
         for (let i = 0; i < this.count; i++) {

@@ -11,8 +11,7 @@
             <h3>Expander without Expand Line</h3>
             <nui-expander
                 id="nui-visual-test-expander-without-border"
-                [hideLeftBorder]="true"
-            >
+                [hideLeftBorder]="true">
                 <p>Content is here</p>
             </nui-expander>
             <hr />
@@ -22,8 +21,7 @@
             <h3>Expander with Text</h3>
             <nui-expander
                 id="nui-visual-test-expander-header-text"
-                header="Advanced Layout Settings"
-            >
+                header="Advanced Layout Settings">
                 <p>Content is here</p>
             </nui-expander>
             <hr />
@@ -33,8 +31,7 @@
             <nui-expander
                 id="nui-visual-test-expander-text-and-icon"
                 header="Advanced Options"
-                icon="orion-sitemaster"
-            >
+                icon="orion-sitemaster">
                 <p>Content is here</p>
             </nui-expander>
             <hr />
@@ -45,8 +42,7 @@
             <nui-expander id="nui-visual-test-expander-custom-header">
                 <div
                     nuiExpanderHeader
-                    class="d-flex align-items-center justify-content-between"
-                >
+                    class="d-flex align-items-center justify-content-between">
                     <span>Advanced options</span>
                     <nui-menu
                         class="ml-3"
@@ -54,8 +50,7 @@
                         icon="menu"
                         displayStyle="action"
                         nuiClickInterceptor
-                        [itemsSource]="itemsSource"
-                    ></nui-menu>
+                        [itemsSource]="itemsSource"></nui-menu>
                 </div>
                 <p>Content is here</p>
             </nui-expander>
@@ -65,8 +60,7 @@
             <h3>Staked Expanders</h3>
             <nui-expander
                 id="nui-visual-test-staked-expander-1"
-                header="Advanced Layout Settings"
-            >
+                header="Advanced Layout Settings">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Nullam maximus faucibus bibendum. Aenean feugiat interdum
@@ -109,14 +103,12 @@
             <nui-expander
                 id="nui-visual-test-expander-nested-expander"
                 header="Parent"
-                [open]="true"
-            >
+                [open]="true">
                 <p i18n>Content goes here</p>
                 <nui-expander
                     id="nui-visual-test-expander-nested-expander-child"
                     header="Child"
-                    [open]="true"
-                >
+                    [open]="true">
                     <p i18n>Content goes here</p>
                 </nui-expander>
             </nui-expander>

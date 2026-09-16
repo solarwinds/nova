@@ -9,8 +9,7 @@
             @for (filterGroupItem of filterGroupItems; track filterGroupItem) {
             <app-custom-data-source-filter-group
                 [filterGroupItem]="filterGroupItem"
-                (filterChanged)="changeFilters($event)"
-            ></app-custom-data-source-filter-group>
+                (filterChanged)="changeFilters($event)"></app-custom-data-source-filter-group>
             }
         </app-custom-data-source-filter-groups-wrapper>
     </div>
@@ -21,8 +20,7 @@
                 id="nui-composites-demo-repeat"
                 [itemsSource]="filteringState.repeat.itemsSource"
                 [repeatItemTemplateRef]="listRepeatItemTemplate"
-                paddingSize="normal"
-            >
+                paddingSize="normal">
             </nui-repeat>
         </div>
         } @else {

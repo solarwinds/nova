@@ -4,13 +4,11 @@
     <nui-dialog-header
         title="Dialog title"
         i18n-title
-        (closed)="close()"
-    ></nui-dialog-header>
+        (closed)="close()"></nui-dialog-header>
     <div
         class="dialog-body"
         [ngClass]="{ 'responsive-mode': isResponsiveMode }"
-        tabindex="0"
-    >
+        tabindex="0">
         <p i18n>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
             maximus faucibus bibendum. Aenean feugiat interdum leo sed posuere.
@@ -140,8 +138,7 @@
             type="button"
             displayStyle="primary"
             (click)="onButtonClick('Action')"
-            i18n
-        >
+            i18n>
             Action
         </button>
     </nui-dialog-footer>
@@ -152,8 +149,7 @@
     nui-button
     type="button"
     (click)="open(content, { isResponsiveMode: false })"
-    i18n
->
+    i18n>
     Default mode
 </button>
 <button
@@ -162,7 +158,6 @@
     nui-button
     type="button"
     (click)="open(content, { isResponsiveMode: true })"
-    i18n
->
+    i18n>
     Responsive mode
 </button>

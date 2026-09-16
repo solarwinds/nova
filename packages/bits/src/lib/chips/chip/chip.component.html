@@ -2,8 +2,7 @@
     <span
         class="nui-chip__value-name"
         [title]="!isContentProjected ? item?.label : ''"
-        [ngClass]="{ projected: isContentProjected }"
-    >
+        [ngClass]="{ projected: isContentProjected }">
         @if (isContentProjected) {
         <ng-container *ngTemplateOutlet="projection"></ng-container>
         } @else {
@@ -15,8 +14,7 @@
         [nuiTooltip]="closeButtonTooltip"
         icon="remove"
         iconSize="small"
-        cssClass="nui-chip__value-remove"
-    ></nui-icon>
+        cssClass="nui-chip__value-remove"></nui-icon>
 </div>
 
 <ng-template #projection><ng-content></ng-content></ng-template>

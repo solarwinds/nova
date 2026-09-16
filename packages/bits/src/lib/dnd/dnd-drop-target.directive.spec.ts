@@ -127,7 +127,7 @@ describe("directives >", () => {
                 const results: boolean[] = [];
                 fixture.detectChanges();
 
-                dropTargetDirective.showDropZone$.subscribe((value) => {
+                dropTargetDirective.showDropZone$.subscribe(value => {
                     results.push(value);
                 });
 

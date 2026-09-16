@@ -135,7 +135,10 @@ describe("components >", () => {
                     testLegendSeriesComponent
                 );
                 // Use setInput so Angular marks the view dirty before detectChanges (Angular 21 NG0100 fix)
-                fixture.componentRef.setInput("unitLabel", seriesSpecificUnitLabel);
+                fixture.componentRef.setInput(
+                    "unitLabel",
+                    seriesSpecificUnitLabel
+                );
                 fixture.detectChanges();
                 fixture.detectChanges();
 
@@ -159,7 +162,10 @@ describe("components >", () => {
                     testLegendSeriesComponent
                 );
                 // Use setInput so Angular marks the view dirty before detectChanges (Angular 21 NG0100 fix)
-                fixture.componentRef.setInput("backgroundColor", seriesSpecificColor);
+                fixture.componentRef.setInput(
+                    "backgroundColor",
+                    seriesSpecificColor
+                );
                 fixture.detectChanges();
                 fixture.detectChanges();
 

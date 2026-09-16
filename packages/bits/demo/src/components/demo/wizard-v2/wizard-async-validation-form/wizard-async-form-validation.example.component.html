@@ -5,14 +5,12 @@
             <nui-wizard-step-v2
                 label="Person Details"
                 formGroupName="personDetails"
-                [stepControl]="form.get(['personDetails'])"
-            >
+                [stepControl]="form.get(['personDetails'])">
                 <nui-form-field
                     class="p-5"
                     [control]="form.get(['personDetails', 'name'])"
                     i18n-caption
-                    caption="Name"
-                >
+                    caption="Name">
                     <nui-textbox formControlName="name"></nui-textbox>
                     @if ( form.get(['personDetails', 'name'])?.errors ?.required
                     ) {
@@ -23,15 +21,13 @@
                 </nui-form-field>
                 <ng-template nuiWizardStepFooter>
                     <ng-container
-                        *ngTemplateOutlet="wizardCancel"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
                 </ng-template>
             </nui-wizard-step-v2>
             <nui-wizard-step-v2
                 formGroupName="contactDetails"
-                [stepControl]="form.get(['contactDetails'])"
-            >
+                [stepControl]="form.get(['contactDetails'])">
                 <ng-template nuiWizardStepLabel>
                     <span (click)="onNextClick(wizard.selected)"
                         >Contact Details</span
@@ -41,12 +37,10 @@
                     class="p-5"
                     [control]="form.get(['contactDetails', 'email'])"
                     i18n-caption
-                    caption="Email"
-                >
+                    caption="Email">
                     <nui-textbox
                         type="email"
-                        formControlName="email"
-                    ></nui-textbox>
+                        formControlName="email"></nui-textbox>
                     @if ( form.get(['contactDetails', 'email'])?.errors
                     ?.required ) {
                     <nui-validation-message for="required" i18n>
@@ -61,18 +55,15 @@
                 </nui-form-field>
                 <ng-template nuiWizardStepFooter>
                     <ng-container
-                        *ngTemplateOutlet="wizardCancel"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container
-                        *ngTemplateOutlet="wizardPrevious"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardPrevious"></ng-container>
                     <button
                         type="button"
                         displayStyle="primary"
                         nui-button
                         (click)="finishWizard()"
-                        i18n
-                    >
+                        i18n>
                         Finish
                     </button>
                 </ng-template>
@@ -83,8 +74,7 @@
                     displayStyle="action"
                     nui-button
                     (click)="resetWizard()"
-                    i18n
-                >
+                    i18n>
                     Cancel
                 </button>
             </ng-template>
@@ -93,8 +83,7 @@
                     type="button"
                     nuiWizardPrevious
                     nui-button
-                    icon="caret-left"
-                >
+                    icon="caret-left">
                     Back
                 </button>
             </ng-template>
@@ -106,8 +95,7 @@
                     displayStyle="primary"
                     icon="caret-right"
                     iconRight="true"
-                    (click)="onNextClick(wizard.selected)"
-                >
+                    (click)="onNextClick(wizard.selected)">
                     Next
                 </button>
             </ng-template>
@@ -118,7 +106,6 @@
     <nui-spinner
         size="large"
         i18n-message
-        message="Async Validation is firing..."
-    >
+        message="Async Validation is firing...">
     </nui-spinner>
 </div>

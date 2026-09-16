@@ -177,11 +177,11 @@ describe("components >", () => {
 
         describe("update >", () => {
             it("should invoke draw on the renderer for each series", () => {
-                mockDoubleSeriesSet.forEach((series) =>
+                mockDoubleSeriesSet.forEach(series =>
                     spyOn(series.renderer, "draw")
                 );
                 renderEngine.update();
-                mockDoubleSeriesSet.forEach(async (series) =>
+                mockDoubleSeriesSet.forEach(async series =>
                     expect(series.renderer.draw).toHaveBeenCalled()
                 );
             });
@@ -195,7 +195,7 @@ describe("components >", () => {
                     id: "y",
                     isDomainValid: () => true,
                 } as IScale<any>;
-                mockDoubleSeriesSet = mockDoubleSeriesSet.map((series) => {
+                mockDoubleSeriesSet = mockDoubleSeriesSet.map(series => {
                     series.scales = {
                         x: invalidScale,
                         y: validScale,
@@ -204,7 +204,7 @@ describe("components >", () => {
                 });
                 dataManager.update(mockDoubleSeriesSet);
 
-                mockDoubleSeriesSet.forEach((series) =>
+                mockDoubleSeriesSet.forEach(series =>
                     spyOn(series.renderer, "draw")
                 );
 
@@ -217,7 +217,7 @@ describe("components >", () => {
                 // restore console warning
                 console.warn = consoleWarnFn;
 
-                mockDoubleSeriesSet.forEach(async (series) =>
+                mockDoubleSeriesSet.forEach(async series =>
                     expect(series.renderer.draw).not.toHaveBeenCalled()
                 );
             });

@@ -114,7 +114,7 @@ describe("components >", () => {
                 TestBed.createComponent(SelectV2OptionComponent)
             );
             selectedOptionsMock = optionComponentMocks.map(
-                (c) => c.componentInstance
+                c => c.componentInstance
             );
             optionComponentMocks.forEach((c, i) => {
                 c.componentRef.setInput("value", selectedValuesMock[i]);
@@ -231,7 +231,7 @@ describe("components >", () => {
                 component.options.reset([...selectedOptionsMock]);
                 component.deselectItem(selectedValuesMock[0]);
 
-                component.options.toArray().forEach((option) => {
+                component.options.toArray().forEach(option => {
                     expect(option.outfiltered).toEqual(false);
                 });
             });
@@ -338,7 +338,7 @@ describe("components >", () => {
                 );
                 expect(component.inputValue).toEqual("", "Input is NOT empty!");
 
-                component.options.forEach((o) => {
+                component.options.forEach(o => {
                     expect(o.outfiltered).toBe(
                         false,
                         "Some items in the list are still filtered out!"
@@ -386,11 +386,11 @@ describe("components >", () => {
                 component.handleInput("2");
                 fixture.detectChanges();
                 const filterdOptions = component.options.filter(
-                    (o) => !o.outfiltered
+                    o => !o.outfiltered
                 );
                 expect(filterdOptions.length).toEqual(1);
                 expect(
-                    filterdOptions.find((o) => o.viewValue === "Item 2")
+                    filterdOptions.find(o => o.viewValue === "Item 2")
                 ).toBeTruthy();
             });
 

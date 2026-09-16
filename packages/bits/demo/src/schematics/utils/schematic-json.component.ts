@@ -69,7 +69,7 @@ export class SchematicJsonComponent implements OnInit {
     }
 
     private fillViewData(schemaJsonFields: any) {
-        Object.keys(schemaJsonFields).forEach((fieldName) => {
+        Object.keys(schemaJsonFields).forEach(fieldName => {
             const {
                 description,
                 type,

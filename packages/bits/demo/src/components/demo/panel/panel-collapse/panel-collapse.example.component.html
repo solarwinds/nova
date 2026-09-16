@@ -4,8 +4,7 @@
         id="nui-demo-collapsible-panel"
         orientation="left"
         [isCollapsed]="true"
-        (collapsed)="onCollapseChange($event)"
-    >
+        (collapsed)="onCollapseChange($event)">
         <div nuiPanelEmbeddedHeading class="d-flex flex-row align-items-center">
             @if (!isCollapsed) {
             <nui-icon class="mr-1" [icon]="headerIcon" iconColor="gray">

@@ -49,7 +49,7 @@ export class ProgressAtom extends Atom {
 
     public async getWidth(): Promise<number> {
         const style = await this.root.evaluate(
-            (el) => window.getComputedStyle(el).width
+            el => window.getComputedStyle(el).width
         );
         return Number(style.replace("px", ""));
     }

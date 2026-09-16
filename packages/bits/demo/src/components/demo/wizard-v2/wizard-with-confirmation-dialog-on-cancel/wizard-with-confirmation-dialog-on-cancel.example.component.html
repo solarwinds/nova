@@ -6,20 +6,17 @@
             i18n-label
             label="Person Details"
             formGroupName="personDetails"
-            [stepControl]="form.get(['personDetails'])"
-        >
+            [stepControl]="form.get(['personDetails'])">
             <!-- the current step content -->
             <div class="step-content-wrapper">
                 <h2>Person Details</h2>
                 <nui-form-field
                     [control]="form.get(['personDetails', 'firstName'])"
                     i18n-caption
-                    caption="First name"
-                >
+                    caption="First name">
                     <nui-textbox
                         formControlName="firstName"
-                        customBoxWidth="150px"
-                    ></nui-textbox>
+                        customBoxWidth="150px"></nui-textbox>
                     @if ( form.get(['personDetails', 'firstName'])?.errors
                     ?.required ) {
                     <nui-validation-message for="required" i18n>
@@ -30,12 +27,10 @@
                 <nui-form-field
                     [control]="form.get(['personDetails', 'lastName'])"
                     i18n-caption
-                    caption="Last name"
-                >
+                    caption="Last name">
                     <nui-textbox
                         formControlName="lastName"
-                        customBoxWidth="150px"
-                    ></nui-textbox>
+                        customBoxWidth="150px"></nui-textbox>
                     @if ( form.get(['personDetails', 'lastName'])?.errors
                     ?.required ) {
                     <nui-validation-message for="required" i18n>
@@ -46,14 +41,12 @@
                 <!-- content of the footer -->
                 <ng-template nuiWizardStepFooter>
                     <ng-container
-                        *ngTemplateOutlet="wizardCancel"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container
                         *ngTemplateOutlet="
                             wizardNext;
                             context: { form: 'personDetails' }
-                        "
-                    ></ng-container>
+                        "></ng-container>
                 </ng-template>
             </div>
         </nui-wizard-step-v2>
@@ -61,20 +54,17 @@
             i18n-label
             label="Contact Details"
             formGroupName="contactDetails"
-            [stepControl]="form.get(['contactDetails'])"
-        >
+            [stepControl]="form.get(['contactDetails'])">
             <div class="step-content-wrapper">
                 <h2>Contact Details</h2>
                 <nui-form-field
                     [control]="form.get(['contactDetails', 'email'])"
                     i18n-caption
-                    caption="Email"
-                >
+                    caption="Email">
                     <nui-textbox
                         type="email"
                         formControlName="email"
-                        customBoxWidth="150px"
-                    ></nui-textbox>
+                        customBoxWidth="150px"></nui-textbox>
                     @if ( form.get(['contactDetails', 'email'])?.errors
                     ?.required ) {
                     <nui-validation-message for="required" i18n>
@@ -90,13 +80,11 @@
                 <nui-form-field
                     [control]="form.get(['contactDetails', 'phone'])"
                     i18n-caption
-                    caption="Phone"
-                >
+                    caption="Phone">
                     <nui-textbox
                         type="phone"
                         formControlName="phone"
-                        customBoxWidth="150px"
-                    ></nui-textbox>
+                        customBoxWidth="150px"></nui-textbox>
                     @if ( form.get(['contactDetails', 'phone'])?.errors
                     ?.required ) {
                     <nui-validation-message for="required" i18n>
@@ -106,17 +94,14 @@
                 </nui-form-field>
                 <ng-template nuiWizardStepFooter>
                     <ng-container
-                        *ngTemplateOutlet="wizardCancel"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container
-                        *ngTemplateOutlet="wizardPrevious"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardPrevious"></ng-container>
                     <ng-container
                         *ngTemplateOutlet="
                             wizardNext;
                             context: { form: 'contactDetails' }
-                        "
-                    ></ng-container>
+                        "></ng-container>
                 </ng-template>
             </div>
         </nui-wizard-step-v2>
@@ -124,8 +109,7 @@
             i18n-label
             label="Final step"
             formGroupName="confirm"
-            [stepControl]="form.get(['confirm'])"
-        >
+            [stepControl]="form.get(['confirm'])">
             <div class="step-content-wrapper">
                 <h2 i18n>Confirm your data</h2>
                 <ul>
@@ -156,17 +140,14 @@
                 </nui-form-field>
                 <ng-template nuiWizardStepFooter>
                     <ng-container
-                        *ngTemplateOutlet="wizardCancel"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container
-                        *ngTemplateOutlet="wizardPrevious"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardPrevious"></ng-container>
                     <ng-container
                         *ngTemplateOutlet="
                             wizardSubmit;
                             context: { formControlName: 'confirm' }
-                        "
-                    ></ng-container>
+                        "></ng-container>
                 </ng-template>
             </div>
         </nui-wizard-step-v2>
@@ -175,8 +156,7 @@
             <nui-dialog-header
                 title="Really want to leave?"
                 i18n-title
-                (closed)="close()"
-            ></nui-dialog-header>
+                (closed)="close()"></nui-dialog-header>
             <div class="dialog-body">
                 <p i18n>
                     There is at least one accomplished step within this wizard.
@@ -189,16 +169,14 @@
                     type="button"
                     displayStyle="action"
                     (click)="close()"
-                    i18n
-                >
+                    i18n>
                     Cancel
                 </button>
                 <button
                     nui-button
                     type="button"
                     (click)="resetWizard(); close()"
-                    i18n
-                >
+                    i18n>
                     Leave
                 </button>
             </nui-dialog-footer>
@@ -210,8 +188,7 @@
                 displayStyle="action"
                 nui-button
                 (click)="openConfirmationDialog(confirmDialog)"
-                i18n
-            >
+                i18n>
                 Cancel
             </button>
         </ng-template>
@@ -222,8 +199,7 @@
                 nuiWizardPrevious
                 nui-button
                 icon="caret-left"
-                i18n
-            >
+                i18n>
                 Back
             </button>
         </ng-template>
@@ -237,8 +213,7 @@
                 icon="caret-right"
                 iconRight="true"
                 (click)="validate(form)"
-                i18n
-            >
+                i18n>
                 Next
             </button>
         </ng-template>
@@ -249,8 +224,7 @@
                 nui-button
                 displayStyle="primary"
                 (click)="onSubmit(formControlName)"
-                i18n
-            >
+                i18n>
                 Submit
             </button>
         </ng-template>

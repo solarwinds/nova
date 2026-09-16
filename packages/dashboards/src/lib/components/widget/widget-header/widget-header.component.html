@@ -8,8 +8,7 @@
         [class.nui-widget__header__container--expanded]="
             collapsible && !collapsed
         "
-        [@expandedState]="state"
-    >
+        [@expandedState]="state">
         @if (collapsed && collapsible) {
         <div class="collapse-container" (click)="toggleCollapsed()">
             <span class="collapse-container__line"></span>
@@ -18,29 +17,25 @@
         <div class="nui-widget__header__content">
             @if (editMode) {
             <div
-                class="nui-widget__header__content-drag-icon nui-dashboard__widget--drag-handle"
-            >
+                class="nui-widget__header__content-drag-icon nui-dashboard__widget--drag-handle">
                 <nui-icon icon="drag" iconColor="gray"></nui-icon>
             </div>
             }
             <div
                 #widgetHeaderCustomElement
-                class="nui-widget__header__content-custom-element"
-            >
+                class="nui-widget__header__content-custom-element">
                 <ng-content></ng-content>
             </div>
             <div
                 class="nui-widget__header__content-title-container nui-dashboard__widget--drag-handle"
                 [class.nui-widget__header__content-title-with-additional-content]="
                     withCustomElement || editMode
-                "
-            >
+                ">
                 <!-- text only header with no url defined -->
                 @if (!url || editMode) {
                 <h2
                     class="nui-text-widget nui-widget__header__content-title"
-                    [title]="title"
-                >
+                    [title]="title">
                     {{ title }}
                 </h2>
                 }
@@ -49,8 +44,7 @@
                 @if (url && !editMode) {
                 <h2
                     class="nui-text-widget nui-widget__header__content-title"
-                    [title]="title"
-                >
+                    [title]="title">
                     <a
                         [href]="url"
                         (click)="prepareLink($event)"
@@ -65,8 +59,7 @@
                 } @if (subtitle) {
                 <div
                     class="nui-text-hint nui-widget__header__content-help-hint"
-                    [title]="subtitle"
-                >
+                    [title]="subtitle">
                     {{ subtitle }}
                 </div>
                 }
@@ -83,8 +76,7 @@
                     [nuiTooltip]="linkTooltip"
                     (mousedown)="
                         $event.stopPropagation(); $event.preventDefault()
-                    "
-                >
+                    ">
                 </a>
                 } @if (editable && editMode) {
                 <button
@@ -95,8 +87,7 @@
                     icon="edit"
                     nuiTooltip="Edit widget"
                     i18n-nuiTooltip
-                    (click)="onEditWidget()"
-                ></button>
+                    (click)="onEditWidget()"></button>
                 } @if (collapsible && !editMode) {
                 <button
                     class="nui-widget-header__action-toggle-collapsed"
@@ -105,15 +96,13 @@
                     displayStyle="action"
                     nuiTooltip="Collapse header"
                     icon="double-caret-up"
-                    (click)="toggleCollapsed()"
-                ></button>
+                    (click)="toggleCollapsed()"></button>
                 } @if (!hideMenu && !editMode) {
                 <nui-menu
                     class="nui-widget__header__content-actions__menu"
                     icon="menu"
                     displayStyle="action"
-                    [appendToBody]="true"
-                >
+                    [appendToBody]="true">
                     @if (reloadable) {
                     <nui-menu-action (actionDone)="onReloadData()">
                         <nui-icon icon="reload"></nui-icon>
@@ -126,8 +115,7 @@
                 @if (removable && editMode) {
                 <nui-popup
                     class="nui-widget-header__action-remove"
-                    [appendToBody]="true"
-                >
+                    [appendToBody]="true">
                     <span nuiTooltip="Remove widget" i18n-nuiTooltip>
                         <button
                             nui-button
@@ -136,8 +124,7 @@
                             icon="remove"
                             iconColor="red"
                             displayStyle="action"
-                            i18n
-                        ></button>
+                            i18n></button>
                     </span>
                     <div popupAreaContent class="nui-menu">
                         <nui-menu-action

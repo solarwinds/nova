@@ -198,7 +198,7 @@ export class ChipsComponent
         let count = _size(this.itemsSource.flatItems);
         if (!_isEmpty(this.itemsSource.groupedItems)) {
             count += (this.itemsSource.groupedItems || [])
-                .map<number>((group) => group.items.length)
+                .map<number>(group => group.items.length)
                 .reduce((sum, val) => sum + val);
         }
         return count;

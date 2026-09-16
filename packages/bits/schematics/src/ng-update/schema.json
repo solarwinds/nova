@@ -4,26 +4,26 @@
     "description": "updates a bits project",
     "properties": {
         "project": {
-            "type": "string",
-            "description": "The name of the project.",
             "$default": {
                 "$source": "projectName"
-            }
-        },
-        "skipProviders": {
-            "type": "boolean",
-            "description": "Skip provider imports",
-            "default": false
+            },
+            "description": "The name of the project.",
+            "type": "string"
         },
         "skipCss": {
-            "type": "boolean",
+            "default": false,
             "description": "Skip importing css & setting styles",
-            "default": false
+            "type": "boolean"
+        },
+        "skipProviders": {
+            "default": false,
+            "description": "Skip provider imports",
+            "type": "boolean"
         },
         "skipTsConfig": {
-            "type": "boolean",
+            "default": false,
             "description": "Skip updating the tsconfig",
-            "default": false
+            "type": "boolean"
         }
     },
     "required": [],

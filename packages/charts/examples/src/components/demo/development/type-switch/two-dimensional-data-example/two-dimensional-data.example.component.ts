@@ -117,7 +117,7 @@ export class TwoDimensionalDataExampleComponent implements OnInit {
 
     public iconMap = zipObject(
         this.statuses,
-        this.iconNames.map((n) => `status_${n}`)
+        this.iconNames.map(n => `status_${n}`)
     );
     public palette: ChartPalette;
     public chartAssist: ChartAssist;
@@ -264,9 +264,9 @@ export class TwoDimensionalDataExampleComponent implements OnInit {
                     const accessors = new LineAccessors(
                         this.palette.standardColors
                     );
-                    accessors.data.x = (d) => d.category;
-                    accessors.data.y = (d) => d.value;
-                    accessors.data.value = (d) => d.value;
+                    accessors.data.x = d => d.category;
+                    accessors.data.y = d => d.value;
+                    accessors.data.value = d => d.value;
                     return accessors;
                 },
                 scaleFunction: () => ({

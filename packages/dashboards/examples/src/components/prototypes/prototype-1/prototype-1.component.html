@@ -3,8 +3,7 @@
     nui-button
     class="mb-3 ml-4"
     (click)="onCloneWidget()"
-    i18n
->
+    i18n>
     Create Widget Clone
 </button>
 <button
@@ -12,8 +11,7 @@
     nui-button
     class="mb-3 ml-4"
     (click)="onEditWithCloner()"
-    i18n
->
+    i18n>
     Simulate edit with cloner
 </button>
 
@@ -22,8 +20,7 @@
         [nuiWidgetEditor]="submitHandler"
         [(dashboard)]="dashboard"
         [(gridsterConfig)]="gridsterConfig"
-        [editMode]="editMode"
-    ></nui-dashboard>
+        [editMode]="editMode"></nui-dashboard>
 </div>
 
 <div class="my-3 d-flex align-items-center">
@@ -38,16 +35,14 @@
         class="ml-3"
         [value]="true"
         (valueChange)="onShowButtonSwitch($event, 'editable')"
-        i18n
-    >
+        i18n>
         Show Edit Button
     </nui-switch>
     <nui-switch
         class="ml-3"
         [value]="true"
         (valueChange)="onShowButtonSwitch($event, 'removable')"
-        i18n
-    >
+        i18n>
         Show Remove Button
     </nui-switch>
     <nui-switch class="ml-3" (valueChange)="onDsErrorSwitch($event)" i18n>
@@ -58,11 +53,9 @@
     <div style="width: 300px">
         <nui-form-field
             caption="System refresh interval (seconds)"
-            i18n-caption
-        >
+            i18n-caption>
             <nui-textbox-number
-                [(value)]="systemRefreshInterval"
-            ></nui-textbox-number>
+                [(value)]="systemRefreshInterval"></nui-textbox-number>
         </nui-form-field>
     </div>
 
@@ -71,8 +64,7 @@
         type="button"
         nui-button
         i18n
-        (click)="onSystemRefreshIntervalClick()"
-    >
+        (click)="onSystemRefreshIntervalClick()">
         Update system refresh interval
     </button>
 </div>
@@ -81,8 +73,7 @@
     <nui-form-field caption="Search query for Timeseries widget" i18n-caption>
         <nui-textbox
             [value]="searchQuery"
-            (textChange)="searchQuery = $event"
-        ></nui-textbox>
+            (textChange)="searchQuery = $event"></nui-textbox>
     </nui-form-field>
 </div>
 

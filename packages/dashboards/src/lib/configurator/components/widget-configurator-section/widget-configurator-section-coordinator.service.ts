@@ -50,14 +50,14 @@ export class WidgetConfiguratorSectionCoordinatorService {
     }
 
     private closeAllAccordions() {
-        this.accordions.forEach((state) => {
+        this.accordions.forEach(state => {
             state.instance.closeAccordion();
         });
     }
 
     private removeAccordion(instanceToRemove: WidgetEditorAccordionComponent) {
         const stateToRemoveIndex = this.accordions.findIndex(
-            (state) => state.instance === instanceToRemove
+            state => state.instance === instanceToRemove
         );
         this.accordions[stateToRemoveIndex].openSubscription.unsubscribe();
         this.accordions.splice(stateToRemoveIndex, 1);

@@ -102,7 +102,8 @@ export class VirtualScrollFeatureAddonService {
                         this.widget.dataSource.page =
                             this.widget.viewportManager.currentPageRange.end /
                             (this.widget.viewportManager.currentPageRange.end -
-                                this.widget.viewportManager.currentPageRange.start);
+                                this.widget.viewportManager.currentPageRange
+                                    .start);
                         this.widget.eventBus
                             .getStream(SCROLL_NEXT_PAGE)
                             .next({});

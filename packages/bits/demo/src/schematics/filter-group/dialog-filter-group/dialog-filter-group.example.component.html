@@ -10,8 +10,7 @@
             <app-dialog-filter-group
                 [filterGroupItem]="filterGroupItem"
                 (filterChanged)="changeFilters($event)"
-                (showAllButtonClicked)="handleFilterDialog(filterGroupItem)"
-            >
+                (showAllButtonClicked)="handleFilterDialog(filterGroupItem)">
             </app-dialog-filter-group>
             }
         </app-dialog-filter-groups-wrapper>
@@ -23,8 +22,7 @@
                 id="nui-composites-demo-repeat"
                 [itemsSource]="filteringState.repeat.itemsSource"
                 [repeatItemTemplateRef]="listRepeatItemTemplate"
-                paddingSize="normal"
-            >
+                paddingSize="normal">
             </nui-repeat>
         </div>
         } @else {

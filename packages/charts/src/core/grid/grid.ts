@@ -339,7 +339,7 @@ export abstract class Grid implements IGrid {
         });
         return renderingAreaContainer.append("rect").attrs({
             "pointer-events": "all",
-            fill: "transparent",
+            "fill": "transparent",
         });
     }
 

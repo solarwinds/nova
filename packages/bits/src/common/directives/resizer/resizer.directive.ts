@@ -191,10 +191,10 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
 
     protected addResizeObserver(): void {
         const resizeHandler = debounce(
-            (entry) => this.refreshStyle(),
+            entry => this.refreshStyle(),
             RESIZE_DEBOUNCE_TIME
         );
-        this.resizeObserver = new ResizeObserver((entries) => {
+        this.resizeObserver = new ResizeObserver(entries => {
             entries.forEach((entry: ResizeObserverEntry) => {
                 this.ngZone.run(() => {
                     if (!this.resizerDisabled) {
@@ -213,7 +213,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     protected addSubscription(): void {
         this.resizeSubscription = this.eventBusService
             .getStream(COMPLETE_RESIZE_EVENT)
-            .subscribe((resize) => this.refreshStyle());
+            .subscribe(resize => this.refreshStyle());
     }
 
     protected onSizeChanged(newSize: string): void {
@@ -244,7 +244,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     protected unlistenEvents(): void {
-        this.eventSubscriptions.forEach((unlistenFn) => {
+        this.eventSubscriptions.forEach(unlistenFn => {
             if (isFunction(unlistenFn)) {
                 unlistenFn();
             }

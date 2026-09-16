@@ -12,8 +12,7 @@
                 <!-- content of the footer -->
                 <ng-template nuiWizardStepFooter>
                     <ng-container
-                        *ngTemplateOutlet="wizardCancel"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
                 </ng-template>
             </nui-wizard-step-v2>
@@ -48,18 +47,15 @@
                 <!-- content of the footer -->
                 <ng-template nuiWizardStepFooter>
                     <ng-container
-                        *ngTemplateOutlet="wizardCancel"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container
-                        *ngTemplateOutlet="wizardPrevious"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardPrevious"></ng-container>
                     <button
                         type="button"
                         displayStyle="primary"
                         nui-button
                         (click)="finishWizard()"
-                        i18n
-                    >
+                        i18n>
                         Finish
                     </button>
                 </ng-template>
@@ -71,8 +67,7 @@
                     displayStyle="action"
                     nui-button
                     (click)="resetWizard()"
-                    i18n
-                >
+                    i18n>
                     Cancel
                 </button>
             </ng-template>
@@ -82,8 +77,7 @@
                     type="button"
                     nuiWizardPrevious
                     nui-button
-                    icon="caret-left"
-                >
+                    icon="caret-left">
                     Back
                 </button>
             </ng-template>
@@ -95,8 +89,7 @@
                     nui-button
                     displayStyle="primary"
                     icon="caret-right"
-                    iconRight="true"
-                >
+                    iconRight="true">
                     Next
                 </button>
             </ng-template>
@@ -106,8 +99,7 @@
         id="nui-demo-spinner"
         size="large"
         i18n-message
-        message="Data is loading from remote server..."
-    ></nui-spinner>
+        message="Data is loading from remote server..."></nui-spinner>
 </div>
 
 <button
@@ -115,7 +107,6 @@
     type="button"
     id="nui-demo-busy-button"
     (click)="toggleStepBusy()"
-    i18n
->
+    i18n>
     Toggle busy on current step
 </button>

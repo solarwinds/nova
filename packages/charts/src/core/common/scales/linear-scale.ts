@@ -29,7 +29,7 @@ export class LinearScale extends Scale<number> {
     constructor(id?: string) {
         super(id);
 
-        this.formatters.tick = (value) => value?.toLocaleString();
+        this.formatters.tick = value => value?.toLocaleString();
     }
 
     protected createD3Scale(): any {
@@ -49,6 +49,6 @@ export class LinearScale extends Scale<number> {
     }
 
     public isDomainValid(): boolean {
-        return -1 === this.domain().findIndex((value) => isNaN(value));
+        return -1 === this.domain().findIndex(value => isNaN(value));
     }
 }

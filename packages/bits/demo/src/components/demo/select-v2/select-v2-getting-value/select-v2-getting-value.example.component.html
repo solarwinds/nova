@@ -10,8 +10,7 @@
 <nui-select-v2
     #selectValueSelectedExample
     placeholder="Select Item"
-    i18n-placeholder
->
+    i18n-placeholder>
     @for (item of items; track item) {
     <nui-select-v2-option [value]="item">{{ item }}</nui-select-v2-option>
     }

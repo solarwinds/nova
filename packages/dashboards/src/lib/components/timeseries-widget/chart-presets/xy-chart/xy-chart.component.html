@@ -1,7 +1,6 @@
 <div
     class="nui-chart-layout h-100"
-    [class.layout-fixed]="configuration.gridConfig?.fixedLayout"
->
+    [class.layout-fixed]="configuration.gridConfig?.fixedLayout">
     @if (!configuration.gridConfig?.hideYAxisLabel) {
     <div class="axis-label-left nui-text-small">
         <strong>{{ configuration.leftAxisLabel }}</strong>
@@ -11,30 +10,26 @@
         <nui-chart
             [nuiChartCollectionId]="collectionId"
             class="w-100"
-            [chart]="chartAssist.chart"
-        ></nui-chart>
+            [chart]="chartAssist.chart"></nui-chart>
     </div>
     @if (hasLegend()) {
     <div
         class="d-flex"
         [ngClass]="[
             legendShouldBeAlignedRight() ? 'legend scrollable' : 'legend-bottom'
-        ]"
-    >
+        ]">
         <nui-legend
             class="m-auto"
             [active]="chartAssist.isLegendActive"
             [interactive]="true"
             [orientation]="
                 legendShouldBeAlignedRight() ? 'vertical' : 'horizontal'
-            "
-        >
+            ">
             @if (widgetData.summarySerie && summarySerie) {
             <nui-legend-series
                 class="summary-serie"
                 [interactive]="false"
-                (mouseenter)="chartAssist.resetVisibleSeries()"
-            >
+                (mouseenter)="chartAssist.resetVisibleSeries()">
                 <nui-rich-legend-tile
                     [value]="
                         chartAssist.getHighlightedValue(
@@ -44,8 +39,7 @@
                         )
                     "
                     [backgroundColor]="summaryLegendBcgColor"
-                    [color]="summaryLegendColor"
-                >
+                    [color]="summaryLegendColor">
                 </nui-rich-legend-tile>
                 <div description class="description-container">
                     <div class="description-text nui-text-small">
@@ -54,14 +48,12 @@
                             [ngClass]="{
                                 'nui-text-link-small link': seriesInteractive
                             }"
-                            [title]="summarySerie.legendDescriptionPrimary"
-                        >
+                            [title]="summarySerie.legendDescriptionPrimary">
                             {{ summarySerie.legendDescriptionPrimary }}
                         </div>
                         <div
                             class="description description-secondary"
-                            [title]="summarySerie.legendDescriptionSecondary"
-                        >
+                            [title]="summarySerie.legendDescriptionSecondary">
                             {{ summarySerie.legendDescriptionSecondary }}
                         </div>
                     </div>
@@ -74,8 +66,7 @@
                     type="button"
                     displayStyle="action"
                     (click)="removeMetric(summarySerie.id)"
-                    displayStyle="action"
-                ></button>
+                    displayStyle="action"></button>
                 }
             </nui-legend-series>
             } @for ( legendSeries of chartAssist.legendSeriesSet; track
@@ -94,8 +85,7 @@
                 (mouseleave)="chartAssist.resetVisibleSeries()"
                 [seriesRenderState]="
                     chartAssist.renderStatesIndex[legendSeries.id]?.state
-                "
-            >
+                ">
                 <nui-rich-legend-tile
                     [value]="getLegendValue(legendSeries, valueAccessorKey)"
                     [backgroundColor]="
@@ -103,8 +93,7 @@
                     "
                     [color]="
                         chartAssist.palette.textColors.get(legendSeries.id)
-                    "
-                >
+                    ">
                     <nui-chart-marker
                         rightEdge
                         [marker]="chartAssist.markers.get(legendSeries.id)"
@@ -112,14 +101,12 @@
                             chartAssist.palette.standardColors.get(
                                 legendSeries.id
                             )
-                        "
-                    >
+                        ">
                     </nui-chart-marker>
                 </nui-rich-legend-tile>
                 <div
                     description
-                    class="description-container d-flex nui-text-small justify-content-center"
-                >
+                    class="description-container d-flex nui-text-small justify-content-center">
                     <div class="descriptions">
                         @if (!legendSeries.link) {
                         <div
@@ -128,8 +115,7 @@
                                 'nui-text-link-small link': seriesInteractive
                             }"
                             (click)="onPrimaryDescClick($event, legendSeries)"
-                            [title]="legendSeries.legendDescriptionPrimary"
-                        >
+                            [title]="legendSeries.legendDescriptionPrimary">
                             {{ legendSeries.legendDescriptionPrimary }}
                         </div>
                         } @if (legendSeries.link) {
@@ -138,16 +124,14 @@
                             (click)="$event.stopPropagation()"
                             [href]="legendSeries.link"
                             rel="noopener noreferrer"
-                            [title]="legendSeries.legendDescriptionPrimary"
-                        >
+                            [title]="legendSeries.legendDescriptionPrimary">
                             {{ legendSeries.legendDescriptionPrimary }}
                         </a>
                         } @if ( !legendSeries.secondaryLink &&
                         !widgetData.summarySerie ) {
                         <div
                             class="description description-secondary"
-                            [title]="legendSeries.legendDescriptionSecondary"
-                        >
+                            [title]="legendSeries.legendDescriptionSecondary">
                             {{ legendSeries.legendDescriptionSecondary }}
                         </div>
                         } @if ( legendSeries.secondaryLink &&
@@ -157,8 +141,7 @@
                             (click)="$event.stopPropagation()"
                             [href]="legendSeries.secondaryLink"
                             rel="noopener noreferrer"
-                            [title]="legendSeries.legendDescriptionSecondary"
-                        >
+                            [title]="legendSeries.legendDescriptionSecondary">
                             {{ legendSeries.legendDescriptionSecondary }}
                         </a>
                         }
@@ -166,13 +149,11 @@
                     @if (legendSeries.realtime) {
                     <nui-icon
                         icon="fast-poll"
-                        iconColor="primary-blue"
-                    ></nui-icon>
+                        iconColor="primary-blue"></nui-icon>
                     } @if (legendSeries.transformer) {
                     <nui-icon
                         icon="performance"
-                        iconColor="primary-blue"
-                    ></nui-icon>
+                        iconColor="primary-blue"></nui-icon>
                     }
                 </div>
                 @if (displayLegendMenu()) {
@@ -180,8 +161,7 @@
                     legendMenu
                     icon="menu"
                     displayStyle="action"
-                    [appendToBody]="true"
-                >
+                    [appendToBody]="true">
                     <nui-menu-group>
                         <nui-menu-action
                             i18n
@@ -198,8 +178,7 @@
                             "
                             (actionDone)="
                                 transformData(legendSeries.id, tr.key)
-                            "
-                        >
+                            ">
                             {{ tr.value.displayName }}
                         </nui-menu-action>
                         }

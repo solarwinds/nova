@@ -127,7 +127,7 @@ export class FreetypeQueryBuilderBasicExampleComponent {
     }
 
     checkValidity(): void {
-        const tokenTypes = this.tokens.map((token) => token.type);
+        const tokenTypes = this.tokens.map(token => token.type);
 
         switch (tokenTypes.toString()) {
             case [ExampleAppTokenType.SELECT_KEYWORD].toString():

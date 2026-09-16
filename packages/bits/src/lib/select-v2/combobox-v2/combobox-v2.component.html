@@ -1,7 +1,6 @@
 <div
     class="w-100 d-flex flex-wrap align-items-center pt-2"
-    [attr.role]="multiselect && selectedOptions.length ? 'list' : null"
->
+    [attr.role]="multiselect && selectedOptions.length ? 'list' : null">
     <ng-content select="[selectedItems]"></ng-content>
 
     <input
@@ -16,8 +15,7 @@
         (input)="handleInput(input.value)"
         (keydown)="onKeyDown($event)"
         (click)="selectTextInInput()"
-        #input
-    />
+        #input />
 </div>
 @if (isRemoveValueEnabled && (selectedOptions[0] || inputValue)) {
 <button
@@ -30,8 +28,7 @@
     type="button"
     [nuiTooltip]="clearValueButtonTooltip"
     [class.disabled]="isDisabled"
-    [disabled]="isDisabled"
-></button>
+    [disabled]="isDisabled"></button>
 }
 <button
     tabindex="-1"
@@ -43,14 +40,12 @@
     [class.rotate]="isDropdownOpen"
     [class.disabled]="isDisabled"
     [disabled]="isDisabled"
-    (click)="selectTextInInput()"
-></button>
+    (click)="selectTextInInput()"></button>
 <nui-overlay
     roleAttr="listbox"
     [ariaLabelledBy]="triggerId"
     [toggleReference]="elRef.nativeElement"
     [viewportMargin]="popupViewportMargin"
-    [overlayConfig]="overlayConfig"
->
+    [overlayConfig]="overlayConfig">
     <ng-content></ng-content>
 </nui-overlay>

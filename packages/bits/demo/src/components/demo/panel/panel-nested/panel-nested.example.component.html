@@ -3,8 +3,7 @@
         panelMode="collapsible"
         orientation="left"
         [isCollapsed]="false"
-        (collapsed)="onCollapseChange($event)"
-    >
+        (collapsed)="onCollapseChange($event)">
         <div nuiPanelEmbeddedHeading class="flex flex-row align-items-center">
             <span>
                 <h4 i18n class="my-0">Outer Panel</h4>
@@ -26,12 +25,10 @@
                 class="w-100"
                 panelMode="collapsible"
                 orientation="left"
-                [isCollapsed]="false"
-            >
+                [isCollapsed]="false">
                 <div
                     nuiPanelEmbeddedHeading
-                    class="flex flex-row align-items-center"
-                >
+                    class="flex flex-row align-items-center">
                     <span>
                         <h4 i18n class="my-0">Inner Panel</h4>
                     </span>

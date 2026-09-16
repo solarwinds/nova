@@ -64,7 +64,7 @@ export class BarChartStackedHorizontalExampleComponent implements OnInit {
             x: new LinearScale(),
         };
 
-        const seriesSet = getData().map((d) => ({
+        const seriesSet = getData().map(d => ({
             ...d,
             accessors,
             renderer,

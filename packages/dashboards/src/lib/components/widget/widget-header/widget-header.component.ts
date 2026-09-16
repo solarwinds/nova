@@ -148,7 +148,7 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         this.eventBus
             .getStream(DASHBOARD_EDIT_MODE)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((event) => {
+            .subscribe(event => {
                 this.pizzagnaService.setProperty(
                     {
                         componentId: this.componentId,

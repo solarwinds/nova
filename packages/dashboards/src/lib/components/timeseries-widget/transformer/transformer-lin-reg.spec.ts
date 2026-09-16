@@ -108,7 +108,7 @@ describe("TransformerLinReg", () => {
         const actualTransformedDataY = transformLinReg(
             mockTimeSeriesData,
             false
-        ).map((d) => d.y);
+        ).map(d => d.y);
         expect(actualTransformedDataY).toEqual(expectedTransformedDataY);
     });
 });

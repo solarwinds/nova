@@ -6,8 +6,7 @@
         displayStyle="action"
         (click)="reInitializeDashboard()"
         nui-button
-        i18n
-    >
+        i18n>
         Restore Widget
     </button>
     }
@@ -22,8 +21,7 @@ The nuiWidgetEditor directive uses a standard input binding for its persistence 
         [(dashboard)]="dashboard"
         [(gridsterConfig)]="gridsterConfig"
         [editMode]="editMode"
-        [nuiWidgetEditor]="persistenceHandler"
-    >
+        [nuiWidgetEditor]="persistenceHandler">
     </nui-dashboard>
     }
 </div>

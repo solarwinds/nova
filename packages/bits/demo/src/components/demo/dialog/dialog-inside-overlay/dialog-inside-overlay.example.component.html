@@ -2,13 +2,11 @@
     id="select-to-open-dialog"
     placeholder="Select an item"
     i18n-placeholder
-    [popupViewportMargin]="100"
->
+    [popupViewportMargin]="100">
     @for (option of options1; track option) {
     <nui-select-v2-option
         [value]="option"
-        (click)="openInOverlay(headerButtonsContent)"
-    >
+        (click)="openInOverlay(headerButtonsContent)">
         {{ option }}
     </nui-select-v2-option>
     }
@@ -18,8 +16,7 @@
     <nui-dialog-header
         title="Dialog Title"
         i18n-title
-        (closed)="close()"
-    ></nui-dialog-header>
+        (closed)="close()"></nui-dialog-header>
     <div class="dialog-body">
         <p>
             <nui-select-v2 placeholder="Select an item" i18n-placeholder>
@@ -48,8 +45,7 @@
             type="button"
             displayStyle="primary"
             (click)="onDone()"
-            i18n
-        >
+            i18n>
             Action
         </button>
     </nui-dialog-footer>

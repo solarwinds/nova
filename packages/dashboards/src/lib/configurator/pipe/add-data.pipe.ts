@@ -28,7 +28,11 @@ import isNil from "lodash/isNil";
 })
 export class AddDataPipe implements PipeTransform {
     transform(origin: Array<any>, value: any, key?: string): any[];
-    transform(origin: object | undefined, value: any, key?: string): object | undefined;
+    transform(
+        origin: object | undefined,
+        value: any,
+        key?: string
+    ): object | undefined;
     transform(
         origin: object | Array<any> | undefined,
         value: any,

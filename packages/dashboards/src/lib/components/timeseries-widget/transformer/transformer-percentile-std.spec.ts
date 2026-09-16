@@ -105,7 +105,7 @@ describe("TransformerPercentileStd", () => {
         const actualTransformedDataY = transformPercentileStd(
             mockTimeSeriesData,
             false
-        ).map((d) => d.y);
+        ).map(d => d.y);
         expect(actualTransformedDataY).toEqual(expectedTransformedDataY);
     });
 });

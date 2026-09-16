@@ -69,7 +69,7 @@ export class BeerReviewCountsByCityMockDataSource
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             setTimeout(() => {
                 this.outputsSubject.next({
                     result: getMockBeerReviewCountsByCity(),
@@ -230,11 +230,11 @@ const widgetConfig: IWidget = {
                         // ],
                         // or use-mapped structure
                         chartColors: {
-                            Brno: "var(--nui-color-chart-five)",
-                            kyiv: "var(--nui-color-chart-six)",
-                            austin: "var(--nui-color-chart-seven)",
-                            lisbon: "var(--nui-color-chart-eight)",
-                            sydney: "var(--nui-color-chart-nine)",
+                            "Brno": "var(--nui-color-chart-five)",
+                            "kyiv": "var(--nui-color-chart-six)",
+                            "austin": "var(--nui-color-chart-seven)",
+                            "lisbon": "var(--nui-color-chart-eight)",
+                            "sydney": "var(--nui-color-chart-nine)",
                             "nur-sultan": "var(--nui-color-chart-ten)",
                         },
                         prioritizeWidgetColors: false,

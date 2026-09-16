@@ -1,33 +1,27 @@
 <nui-widget-editor-accordion
     [formGroup]="form"
-    [state]="form | nuiWidgetEditorAccordionFormState | async"
->
+    [state]="form | nuiWidgetEditorAccordionFormState | async">
     <nui-widget-editor-accordion-header
         [headerIcon]="form | nuiFormHeaderIconPipe : 'widget_pie-chart' | async"
         [subtitle]="chartTitle"
-        headerTitle="Chart Options"
-    />
+        headerTitle="Chart Options" />
     <div
-        class="proportional-widget-chart-options-configuration__accordion-content"
-    >
+        class="proportional-widget-chart-options-configuration__accordion-content">
         <!-- chart type -->
         <div class="mb-4">
             <nui-form-field
                 caption="Chart Type"
                 i18n-caption
-                [control]="form.controls['type']"
-            >
+                [control]="form.controls['type']">
                 <nui-select-v2
                     placeholder="Select chart type"
                     [popupViewportMargin]="configuratorHeading.height$ | async"
                     formControlName="type"
-                    i18n-placeholder
-                >
+                    i18n-placeholder>
                     @for (chartType of chartTypes; track chartType) {
                     <nui-select-v2-option
                         [displayValueContext]="chartType.label"
-                        [value]="chartType.id"
-                    >
+                        [value]="chartType.id">
                         {{ chartType.label }}
                     </nui-select-v2-option>
                     }
@@ -44,12 +38,10 @@
                 caption="Legend"
                 i18n-caption
                 [showOptionalText]="false"
-                [control]="form.controls['legendPlacement']"
-            >
+                [control]="form.controls['legendPlacement']">
                 <nui-select-v2
                     formControlName="legendPlacement"
-                    [popupViewportMargin]="configuratorHeading.height$ | async"
-                >
+                    [popupViewportMargin]="configuratorHeading.height$ | async">
                     @for (option of legendPlacementOptions; track option) {
                     <nui-select-v2-option [value]="option.id">
                         {{ option.label }}
@@ -69,19 +61,16 @@
                     caption="Legend format"
                     i18n-caption
                     [showOptionalText]="false"
-                    [control]="legendFormatterControl"
-                >
+                    [control]="legendFormatterControl">
                     <nui-select-v2
                         formControlName="componentType"
                         [popupViewportMargin]="
                             configuratorHeading.height$ | async
-                        "
-                    >
+                        ">
                         @for (legendFormatter of legendFormatters; track
                         legendFormatter) {
                         <nui-select-v2-option
-                            [value]="legendFormatter.componentType"
-                        >
+                            [value]="legendFormatter.componentType">
                             {{ legendFormatter.label }}
                         </nui-select-v2-option>
                         }

@@ -5,8 +5,7 @@
             [value]="searchTerm"
             (search)="onSearch($event)"
             (cancel)="onSearchCancel()"
-            #filteringSearch
-        >
+            #filteringSearch>
         </nui-search>
     </div>
     <table
@@ -16,8 +15,7 @@
         [(selection)]="selection"
         [totalItems]="paginationTotal"
         [trackBy]="trackBy"
-        #filteringTable
-    >
+        #filteringTable>
         <ng-container nuiColumnDef="position">
             <th nui-header-cell *nuiHeaderCellDef i18n>No.</th>
             <td nui-cell *nuiCellDef="let element">{{ element.position }}</td>
@@ -72,8 +70,7 @@
             nui-row
             *nuiRowDef="let row; columns: displayedColumns"
             [rowObject]="row"
-            [clickableRow]="true"
-        ></tr>
+            [clickableRow]="true"></tr>
     </table>
 </div>
 <nui-paginator
@@ -85,8 +82,7 @@
     disabledClass="disabled"
     showPrevNext="true"
     (pagerAction)="changePagination($event)"
-    #filteringPaginator
->
+    #filteringPaginator>
 </nui-paginator>
 <h2>Selection result</h2>
 <div class="flex-row-container">

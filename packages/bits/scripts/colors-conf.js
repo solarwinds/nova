@@ -54,7 +54,7 @@ updateMapping(colorDarkToPaletteMapping, colorsDarkLessPath, true).on(
 );
 
 function checkInit(...paths) {
-    paths.forEach((path) => {
+    paths.forEach(path => {
         if (!fs.existsSync(path)) {
             const pathStream = fs.createWriteStream(path);
             pathStream.end();
@@ -67,7 +67,7 @@ function updateMapping(mapping, lessFilePath, isDark) {
         .createInterface({
             input: fs.createReadStream(lessFilePath),
         })
-        .on("line", (line) => {
+        .on("line", line => {
             lineHandler(line, mapping, isDark);
         });
 }
