@@ -199,13 +199,12 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
     public updateWidget(widget: IWidget): void {
         let dashboard: IDashboard = this.dashboard;
         if (!this.dashboard.positions[widget.id] && this.gridster?.api) {
-            const gridsterItem =
-                this.gridster.api.getFirstPossiblePosition({
-                    x: 0,
-                    y: 0,
-                    rows: this.gridsterConfig?.defaultItemRows as number,
-                    cols: this.gridsterConfig?.defaultItemCols as number,
-                });
+            const gridsterItem = this.gridster.api.getFirstPossiblePosition({
+                x: 0,
+                y: 0,
+                rows: this.gridsterConfig?.defaultItemRows as number,
+                cols: this.gridsterConfig?.defaultItemCols as number,
+            });
             dashboard = immutableSet(
                 dashboard,
                 `positions.${widget.id}`,
@@ -281,10 +280,7 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
     private hookEvent(
         options: GridsterConfig,
         eventName: string,
-        invoke: (
-            item: GridsterItemConfig,
-            itemComponent: GridsterItem
-        ) => void
+        invoke: (item: GridsterItemConfig, itemComponent: GridsterItem) => void
     ) {
         const prevEvent = options[eventName];
         options[eventName] = (

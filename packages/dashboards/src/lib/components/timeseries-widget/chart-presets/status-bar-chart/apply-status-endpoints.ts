@@ -51,20 +51,20 @@ export function applyStatusEndpoints(
         const filteredData = filteredSeriesData[i].data;
         if (filteredData.length > 0) {
             // if we have filtered data, get the start and end indexes from the original unfiltered data
-            startIndex = series.data.findIndex((datum) =>
+            startIndex = series.data.findIndex(datum =>
                 moment(datum.x).isSame(filteredData[0].x)
             );
-            endIndex = series.data.findIndex((datum) =>
+            endIndex = series.data.findIndex(datum =>
                 moment(datum.x).isSame(filteredData[filteredData.length - 1].x)
             );
         } else {
             // if the filter doesn't overlap any data points, use the indexes of the first data points
             // in the original data that come after the start and before end filter date times respectively
-            startIndex = series.data.findIndex((datum) =>
+            startIndex = series.data.findIndex(datum =>
                 moment(datum.x).isAfter(timeframeFilter.startDatetime)
             );
             endIndex =
-                series.data.findIndex((datum) =>
+                series.data.findIndex(datum =>
                     moment(datum.x).isAfter(timeframeFilter.endDatetime)
                 ) - 1;
         }

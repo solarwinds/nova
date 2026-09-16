@@ -162,7 +162,7 @@ export class AcmeTableDataSourceNoDataFields
         }
 
         this.busy.next(true);
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             setTimeout(() => {
                 this.getData(start, end, filters).then(
                     (response: INovaFilteringOutputs) => {

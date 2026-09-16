@@ -54,7 +54,7 @@ export abstract class InteractionHandler<
     }
 
     protected initializeSubscriptions(): void {
-        this.eventBus.getStream(INTERACTION).subscribe((event) => {
+        this.eventBus.getStream(INTERACTION).subscribe(event => {
             if (
                 !this.properties?.interactionType ||
                 this.properties?.interactionType ===

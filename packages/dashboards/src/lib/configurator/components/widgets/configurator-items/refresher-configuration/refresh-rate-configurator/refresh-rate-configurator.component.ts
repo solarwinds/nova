@@ -172,7 +172,7 @@ export class RefreshRateConfiguratorComponent
     }
 
     private filterUnitItems() {
-        this.displayedUnitItems = this.unitItems.filter((item) => {
+        this.displayedUnitItems = this.unitItems.filter(item => {
             let tooLarge = false;
 
             if (this.maxSeconds != null) {

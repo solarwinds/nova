@@ -74,7 +74,7 @@ function addPackageJsonDependencies(): Rule {
 
         const dependencies: NodeDependency[] =
             assembleDependencies(peerDependencies);
-        dependencies.forEach((dependency) => {
+        dependencies.forEach(dependency => {
             addPackageJsonDependency(host, dependency);
             context.logger.info(
                 `✅️ Added "${dependency.name}" into ${dependency.type}`
@@ -105,7 +105,7 @@ function updateModuleFile(options: any): Rule {
                 { item: `NuiDashboardsModule`, path: `@nova-ui/dashboards` },
             ];
 
-            modules.forEach((module) => {
+            modules.forEach(module => {
                 if (!isImported(moduleSource, module.item, module.path)) {
                     const moduleChanges = addImportToModule(
                         moduleSource,
@@ -113,7 +113,7 @@ function updateModuleFile(options: any): Rule {
                         module.item,
                         module.path
                     );
-                    moduleChanges.forEach((change) => {
+                    moduleChanges.forEach(change => {
                         if (change instanceof InsertChange) {
                             declarationRecorder.insertLeft(
                                 change.pos,

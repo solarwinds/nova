@@ -7,24 +7,21 @@
 <!-- Using invisible class instead of *ngIf as an non-virtual-scroll breakable way to hide the content. -->
 <div
     class="nui-table-widget d-flex flex-column"
-    [ngClass]="shouldDisplayTable() ? 'h-100' : 'invisible'"
->
+    [ngClass]="shouldDisplayTable() ? 'h-100' : 'invisible'">
     @if (isSearchEnabled) {
     <div class="mr-2 mb-2 flex-row">
         <nui-search
             class="unlimited-width d-flex justify-content-end flex-grow-1"
             [value]="searchValue"
             (inputChange)="onSearchInputChanged($event)"
-            (cancel)="onSearchInputChanged($event)"
-        >
+            (cancel)="onSearchInputChanged($event)">
         </nui-search>
         @if (isSearchLimitWarningDisplayed()) {
         <nui-message
             class="nui-table-search-limit-warning"
             type="warning"
             [allowDismiss]="false"
-            i18n
-        >
+            i18n>
             Search query limit is {{ searchLimitMaxLength }} characters.
         </nui-message>
         }
@@ -36,8 +33,7 @@
             delayedMousePresenceDetectionEnabled
         "
         [delay]="configuration.scrollActivationDelayMs"
-        [mousePresentSubject]="mousePresent$"
-    >
+        [mousePresentSubject]="mousePresent$">
         <!-- Note: Using inline style to let tableStickyHeader pick the actual height and update it with header height when it is detached -->
         <cdk-virtual-scroll-viewport
             class="calc-height"
@@ -50,8 +46,7 @@
                 'virtual-scroll-disabled':
                     (mousePresent$ | async) === false &&
                     delayedMousePresenceDetectionEnabled
-            }"
-        >
+            }">
             <table
                 class="nui-table-widget__main"
                 nui-table
@@ -69,88 +64,82 @@
                 (sortOrderChanged)="onSortOrderChanged($event)"
                 (selectionChange)="onSelectionChange($event)"
                 [trackBy]="dataTrackBy()"
-                #widgetTable
-            >
+                #widgetTable>
                 @for (column of columns; track columnTrackBy($index, column)) {
-                    <ng-container nuiColumnDef="{{ column.id }}">
-                        <th
-                            nui-header-cell
-                            [isColumnSortingDisabled]="!column.sortable"
-                            *nuiHeaderCellDef
-                            [style.width.px]="columnsWidthMap.get(column.id)"
-                            [style.max-width.px]="columnsWidthMap.get(column.id)"
-                            [style.min-width.px]="columnsWidthMap.get(column.id)"
-                            [title]="column.label"
-                            [tooltipText]="
+                <ng-container nuiColumnDef="{{ column.id }}">
+                    <th
+                        nui-header-cell
+                        [isColumnSortingDisabled]="!column.sortable"
+                        *nuiHeaderCellDef
+                        [style.width.px]="columnsWidthMap.get(column.id)"
+                        [style.max-width.px]="columnsWidthMap.get(column.id)"
+                        [style.min-width.px]="columnsWidthMap.get(column.id)"
+                        [title]="column.label"
+                        [tooltipText]="
                         headerTooltipsEnabled ? column.label : undefined
                     "
-                            [alignment]="getColumnAlignment(column)"
-                        >
-                            {{ column.label }}
-                        </th>
-                        <ng-container>
-                            <td
-                                nui-cell
-                                *nuiCellDef="let element"
-                                [style.width.px]="columnsWidthMap.get(column.id)"
-                                [style.max-width.px]="
+                        [alignment]="getColumnAlignment(column)">
+                        {{ column.label }}
+                    </th>
+                    <ng-container>
+                        <td
+                            nui-cell
+                            *nuiCellDef="let element"
+                            [style.width.px]="columnsWidthMap.get(column.id)"
+                            [style.max-width.px]="
                             columnsWidthMap.get(column.id)
                         "
-                                [style.min-width.px]="
+                            [style.min-width.px]="
                             columnsWidthMap.get(column.id)
                         "
-                                [alignment]="getColumnAlignment(column)"
-                            >
-                                @if (element[column.id] && column.formatter) {
-                                    <ng-container
-                                        nuiComponentPortal
-                                        componentId="formatter"
-                                        [componentType]="
+                            [alignment]="getColumnAlignment(column)">
+                            @if (element[column.id] && column.formatter) {
+                            <ng-container
+                                nuiComponentPortal
+                                componentId="formatter"
+                                [componentType]="
                                 column.formatter?.componentType
                             "
-                                        [properties]="element[column.id]"
-                                        #componentPortal="nuiComponentPortal"
-                                    >
-                                        <ng-template
-                                            [cdkPortalOutlet]="componentPortal.portal"
-                                            (attached)="
+                                [properties]="element[column.id]"
+                                #componentPortal="nuiComponentPortal">
+                                <ng-template
+                                    [cdkPortalOutlet]="componentPortal.portal"
+                                    (attached)="
                                     componentPortal.attached($event)
-                                "
-                                        ></ng-template>
-                                    </ng-container>
-                                }
-                            </td>
-                        </ng-container>
+                                "></ng-template>
+                            </ng-container>
+                            }
+                        </td>
                     </ng-container>
+                </ng-container>
                 }
                 <tr nui-header-row *nuiHeaderRowDef="headers"></tr>
-                                <tr
-                                    nui-row
-                                    *nuiRowDef="let row; columns: headers"
-                                    (click)="onInteraction(row, $event)"
-                                    [attr.role]="interactive ? 'button' : ''"
-                                    density="tiny"
-                                    [rowObject]="row.__record"
-                                    [clickableRow]="clickableRow"
-                                ></tr>
-<!--                <ng-template-->
-<!--                    nuiRowDef-->
-<!--                    cdkVirtualFor-->
-<!--                    let-row-->
-<!--                    [nuiRowDefColumns]="headers"-->
-<!--                    [cdkVirtualForOf]="tableData"-->
-<!--                    [cdkVirtualForTemplateCacheSize]="10"-->
-<!--                    [cdkVirtualForTrackBy]="dataTrackBy()"-->
-<!--                >-->
-<!--                    <tr-->
-<!--                        nui-row-->
-<!--                        (click)="onInteraction(row, $event)"-->
-<!--                        [attr.role]="interactive ? 'button' : ''"-->
-<!--                        density="tiny"-->
-<!--                        [rowObject]="row.__record"-->
-<!--                        [clickableRow]="clickableRow"-->
-<!--                    ></tr>-->
-<!--                </ng-template>-->
+                <tr
+                    nui-row
+                    *nuiRowDef="let row; columns: headers"
+                    (click)="onInteraction(row, $event)"
+                    [attr.role]="interactive ? 'button' : ''"
+                    density="tiny"
+                    [rowObject]="row.__record"
+                    [clickableRow]="clickableRow"></tr>
+                <!--                <ng-template-->
+                <!--                    nuiRowDef-->
+                <!--                    cdkVirtualFor-->
+                <!--                    let-row-->
+                <!--                    [nuiRowDefColumns]="headers"-->
+                <!--                    [cdkVirtualForOf]="tableData"-->
+                <!--                    [cdkVirtualForTemplateCacheSize]="10"-->
+                <!--                    [cdkVirtualForTrackBy]="dataTrackBy()"-->
+                <!--                >-->
+                <!--                    <tr-->
+                <!--                        nui-row-->
+                <!--                        (click)="onInteraction(row, $event)"-->
+                <!--                        [attr.role]="interactive ? 'button' : ''"-->
+                <!--                        density="tiny"-->
+                <!--                        [rowObject]="row.__record"-->
+                <!--                        [clickableRow]="clickableRow"-->
+                <!--                    ></tr>-->
+                <!--                </ng-template>-->
             </table>
         </cdk-virtual-scroll-viewport>
     </div>
@@ -169,8 +158,7 @@
             [pageSize]="paginatorAddon.paginatorState.pageSize"
             [pageSizeSet]="paginatorAddon.paginatorState.pageSizeSet"
             [total]="paginatorAddon.paginatorState.total"
-            (pagerAction)="onPagerAction($event)"
-        >
+            (pagerAction)="onPagerAction($event)">
         </nui-paginator>
     </footer>
 </ng-template>

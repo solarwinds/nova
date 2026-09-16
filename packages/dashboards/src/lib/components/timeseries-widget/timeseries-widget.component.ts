@@ -82,8 +82,10 @@ export class TimeseriesWidgetComponent
             TimeseriesWidgetProjectType.PerfstackApp
         ) {
             if (this.usesMultiSparkZoomPlugins()) {
-                Array.from({ length: this.getPerfstackZoomPluginCount() }).forEach(
-                    () => this.zoomPlugins.push(this.getTimeseriesZoomPlugin())
+                Array.from({
+                    length: this.getPerfstackZoomPluginCount(),
+                }).forEach(() =>
+                    this.zoomPlugins.push(this.getTimeseriesZoomPlugin())
                 );
             } else {
                 this.zoomPlugins.push(this.getTimeseriesZoomPlugin());

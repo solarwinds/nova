@@ -44,7 +44,7 @@ export class BeerReviewCountsByCityMockDataSource
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             setTimeout(() => {
                 this.outputsSubject.next({
                     result: getMockBeerReviewCountsByCity(),
@@ -70,7 +70,7 @@ export class BeerReviewCountsByCityMockDataSource2
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             setTimeout(() => {
                 this.outputsSubject.next({
                     result: getMockBeerReviewCountsByCity2(),

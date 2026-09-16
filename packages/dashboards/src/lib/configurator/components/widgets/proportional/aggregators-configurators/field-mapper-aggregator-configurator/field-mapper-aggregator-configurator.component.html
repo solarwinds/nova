@@ -5,14 +5,12 @@
             caption="Default Metric"
             i18n-caption
             class="mb-4"
-            [control]="form.controls['activeMetricId']"
-        >
+            [control]="form.controls['activeMetricId']">
             <nui-select-v2
                 formControlName="activeMetricId"
                 #metricsSelect
                 placeholder="Select Value"
-                i18n-placeholder
-            >
+                i18n-placeholder>
                 <nui-overlay-item
                     (click)="unsetMetric()"
                     class="nui-combobox-v2__popup-box"
@@ -22,8 +20,7 @@
                 @for (metric of metrics; track metric) {
                 <nui-select-v2-option
                     [displayValueContext]="metric.label"
-                    [value]="metric.id"
-                >
+                    [value]="metric.id">
                     {{ metric.label }}
                 </nui-select-v2-option>
                 }
@@ -38,19 +35,16 @@
             caption="Chart Series Data Field"
             i18n-caption
             class="mb-4"
-            [control]="form.controls['chartSeriesDataFieldId']"
-        >
+            [control]="form.controls['chartSeriesDataFieldId']">
             <nui-select-v2
                 formControlName="chartSeriesDataFieldId"
                 placeholder="Select Value"
-                i18n-placeholder
-            >
+                i18n-placeholder>
                 @for (chartSeriesDataField of chartSeriesDataFields; track
                 chartSeriesDataField) {
                 <nui-select-v2-option
                     [displayValueContext]="chartSeriesDataField.label"
-                    [value]="chartSeriesDataField.id"
-                >
+                    [value]="chartSeriesDataField.id">
                     {{ chartSeriesDataField.label }}
                 </nui-select-v2-option>
                 }

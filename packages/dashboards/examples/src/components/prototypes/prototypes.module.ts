@@ -35,7 +35,7 @@ const routes = [
         path: "prototype-1",
         loadChildren: async () =>
             import("../prototypes/prototype-1/prototype-1.module").then(
-                (m) => m.Prototype1Module
+                m => m.Prototype1Module
             ),
     },
     {
@@ -43,20 +43,20 @@ const routes = [
         loadChildren: async () =>
             import(
                 "../prototypes/timeseries/timeseries-widget-prototype.module"
-            ).then((m) => m.TimeseriesWidgetPrototypeModule),
+            ).then(m => m.TimeseriesWidgetPrototypeModule),
     },
     {
         path: "table",
         loadChildren: async () =>
             import("../prototypes/table/table-widget-prototype.module").then(
-                (m) => m.TableWidgetPrototypeModule
+                m => m.TableWidgetPrototypeModule
             ),
     },
     {
         path: "many-widgets",
         loadChildren: async () =>
             import("../prototypes/many-widgets/many-widgets.module").then(
-                (m) => m.ManyWidgetsModule
+                m => m.ManyWidgetsModule
             ),
     },
 ];

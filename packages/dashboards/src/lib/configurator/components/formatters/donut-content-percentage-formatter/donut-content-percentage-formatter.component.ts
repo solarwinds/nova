@@ -69,14 +69,14 @@ export class DonutContentPercentageFormatterComponent
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.data) {
-            this.sum = sumBy(this.data, (s) => s.data[0]);
+            this.sum = sumBy(this.data, s => s.data[0]);
         }
 
         if (changes.properties) {
             // If current metric is not in the list of metrics any more we fall back to the very first one from the list we get from the datasource
             this.currentMetricData =
                 this.data.find(
-                    (item) => item.id === this.properties?.currentMetric
+                    item => item.id === this.properties?.currentMetric
                 )?.data[0] || this.data[0].data[0];
         }
 
@@ -89,7 +89,7 @@ export class DonutContentPercentageFormatterComponent
                 tap(
                     (data: IChartAssistEvent) =>
                         (this.emphasizedSeriesData = this.data.find(
-                            (item) => item.id === data.payload.seriesId
+                            item => item.id === data.payload.seriesId
                         ))
                 ),
                 tap(() => this.getProperContentValue()),

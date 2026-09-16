@@ -36,15 +36,13 @@ export const sumAggregator: IProportionalAggregatorFn = (
     const { activeMetricId } = properties || {};
 
     if (activeMetricId) {
-        const activeMetric = origin.find(
-            (entry) => entry.id === activeMetricId
-        );
+        const activeMetric = origin.find(entry => entry.id === activeMetricId);
         if (activeMetric) {
             return activeMetric.data[0];
         }
     }
 
-    return sum(origin.map((entry) => entry.data[0])).toString();
+    return sum(origin.map(entry => entry.data[0])).toString();
 };
 
 sumAggregator.aggregatorType = "sumAggregator";

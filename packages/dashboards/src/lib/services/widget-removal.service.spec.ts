@@ -69,7 +69,7 @@ describe("WidgetRemovalService > ", () => {
                     null,
                     tryRemove
                 )
-                .subscribe((value) => {
+                .subscribe(value => {
                     spy();
                 });
             flush();

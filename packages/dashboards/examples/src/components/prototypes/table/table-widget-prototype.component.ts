@@ -188,7 +188,7 @@ export class AcmeDashboardComponent
                 PizzagnaLayer.Structure
             ].presentation.properties?.nodes.push("refresher");
 
-        const widgetsWithStructure = widgets.map((w) =>
+        const widgetsWithStructure = widgets.map(w =>
             this.widgetTypesService.mergeWithWidgetType(w)
         );
         const widgetsIndex = keyBy(widgetsWithStructure, (w: IWidget) => w.id);
@@ -221,7 +221,7 @@ export class AcmeDashboardComponent
         this.dashboardComponent.eventBus.subscribeUntil(
             WIDGET_CREATE,
             this.destroy$,
-            (event) => {
+            event => {
                 const cloner: IWidgetSelector = {
                     // @ts-ignore: Suppressing strict mode error, preserving old flow
                     widget: this.dashboard.widgets[event.widgetId],

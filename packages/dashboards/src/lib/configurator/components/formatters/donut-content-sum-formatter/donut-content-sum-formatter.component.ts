@@ -40,6 +40,6 @@ export class DonutContentSumFormatterComponent implements OnChanges {
     @Input() data: IFormatterData[];
 
     public ngOnChanges(): void {
-        this.sum = sumBy(this.data, (s) => s.data[0]);
+        this.sum = sumBy(this.data, s => s.data[0]);
     }
 }
