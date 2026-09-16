@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { ElementRef } from "@angular/core";
-import { fakeAsync, flush } from "@angular/core/testing";
+import { fakeAsync, flush, TestBed } from "@angular/core/testing";
 import { Subject } from "rxjs";
 
 import { DelayedMousePresenceDetectionDirective } from "./delayed-mouse-presence-detection.directive";
@@ -30,9 +30,12 @@ describe("TableHideScrollBarDirective", () => {
 
     beforeEach(() => {
         nativeElement = document.createElement("div");
-        directive = new DelayedMousePresenceDetectionDirective({
-            nativeElement,
-        } as ElementRef<HTMLElement>);
+        TestBed.configureTestingModule({
+            providers: [{ provide: ElementRef, useValue: { nativeElement } }],
+        });
+        directive = TestBed.runInInjectionContext(
+            () => new DelayedMousePresenceDetectionDirective()
+        );
         directive.enabled = true;
         directive.mousePresentSubject = new Subject<boolean>();
     });

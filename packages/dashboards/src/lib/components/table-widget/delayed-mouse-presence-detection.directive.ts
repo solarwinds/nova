@@ -18,7 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Directive, ElementRef, HostListener, Input } from "@angular/core";
+import {
+    Directive,
+    ElementRef,
+    HostListener,
+    inject,
+    Input,
+} from "@angular/core";
 import { Subject } from "rxjs";
 
 @Directive({
@@ -32,7 +38,7 @@ export class DelayedMousePresenceDetectionDirective {
 
     private timeout: NodeJS.Timeout;
 
-    public constructor(private readonly elementRef: ElementRef<HTMLElement>) {}
+    private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
     @HostListener("mouseenter") onHostMouseenter(): void {
         if (!this.enabled) {
@@ -65,6 +71,7 @@ export class DelayedMousePresenceDetectionDirective {
             return;
         }
 
+        // Focus moving between elements inside the host still counts as present.
         const relatedTarget = event.relatedTarget;
         if (
             !(relatedTarget instanceof HTMLElement) ||
