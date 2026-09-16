@@ -52,7 +52,7 @@ describe("Side Indicator Renderer >", () => {
         expect(
             -1 !==
                 layers.findIndex(
-                    (layer) => layer.name === RenderLayerName.unclippedData
+                    layer => layer.name === RenderLayerName.unclippedData
                 )
         ).toEqual(true);
     });

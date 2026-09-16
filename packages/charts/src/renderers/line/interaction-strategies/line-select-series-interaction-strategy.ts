@@ -70,8 +70,8 @@ export class LineSelectSeriesInteractionStrategy
                     "stroke-width":
                         renderer.config.strokeWidth +
                         2 * this.INTERACTION_MARGIN,
-                    stroke: "transparent",
-                    fill: "none",
+                    "stroke": "transparent",
+                    "fill": "none",
                 })
                 .on("mouseenter", () => {
                     const dataPoint: Omit<IDataPoint, "position"> = {

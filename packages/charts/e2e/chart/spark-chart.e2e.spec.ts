@@ -81,7 +81,9 @@ test.describe("Spark chart", () => {
         });
 
         test("should show legend for every data series", async () => {
-            expect(await pageObject.getLegendSeriesCount()).toEqual(data.length);
+            expect(await pageObject.getLegendSeriesCount()).toEqual(
+                data.length
+            );
         });
 
         test("should have different color per series", async () => {
@@ -91,8 +93,12 @@ test.describe("Spark chart", () => {
                 const chart = pageObject.getChart(i);
 
                 const [dataLayer] = await chart.getLayer("data");
-                const lineLocator = dataLayer?.locator(`#data-${i + 1}`).first();
-                const line = lineLocator ? new LineSeriesAtom(lineLocator) : undefined;
+                const lineLocator = dataLayer
+                    ?.locator(`#data-${i + 1}`)
+                    .first();
+                const line = lineLocator
+                    ? new LineSeriesAtom(lineLocator)
+                    : undefined;
 
                 const markerSeries = await chart.getMarkerSeriesById(
                     (i + 1).toString()
@@ -107,7 +113,9 @@ test.describe("Spark chart", () => {
                 );
             }
 
-            expect(await pageObject.getLegendSeriesCount()).toEqual(data.length);
+            expect(await pageObject.getLegendSeriesCount()).toEqual(
+                data.length
+            );
         });
     });
 
@@ -119,7 +127,6 @@ test.describe("Spark chart", () => {
                 x: xTicks[pointIndex],
                 y: getYCoordinate(10),
             });
-
         });
 
         test("should highlight corresponding data points in all charts", async () => {
@@ -158,7 +165,9 @@ test.describe("Spark chart", () => {
                 await pageObject.getSparkCountInStack(sparkStackClassName)
             ).toEqual(data.length);
             for (let i = 0; i < data.length; i++) {
-                expect(await pageObject.getChart(i).getNumberOfVisibleDataSeries()).toEqual(1);
+                expect(
+                    await pageObject.getChart(i).getNumberOfVisibleDataSeries()
+                ).toEqual(1);
             }
         });
     });

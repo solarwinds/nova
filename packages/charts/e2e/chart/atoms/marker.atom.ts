@@ -28,12 +28,17 @@ export class MarkerAtom extends Atom {
 
     public async getColor(): Promise<string> {
         // marker structure: <g class="marker"> ... <g fill="..."> ...
-        const fill = await this.root.locator(":scope > g").first().getAttribute("fill");
+        const fill = await this.root
+            .locator(":scope > g")
+            .first()
+            .getAttribute("fill");
         return fill ?? "";
     }
 
     public async getPosition(): Promise<{ x: number; y: number }> {
-        const transform = await this.root.evaluate((el) => getComputedStyle(el).transform);
+        const transform = await this.root.evaluate(
+            el => getComputedStyle(el).transform
+        );
         // looks like: "matrix(1, 0, 0, 1, 400, 15)"
         const values = transform.match(/(-?[0-9.]+)/g) || [];
         return {

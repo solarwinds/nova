@@ -107,7 +107,7 @@ export class ChartDomainExampleComponent implements OnInit, AfterViewInit {
         chartIndex: number
     ): IChartAssistSeries<IAccessors>[] {
         const accessors = new LineAccessors();
-        return dataSeriesSet.map((dataSeries) => ({
+        return dataSeriesSet.map(dataSeries => ({
             ...dataSeries,
             scales: this.scales[chartIndex],
             renderer: this.dataRenderer,
@@ -121,14 +121,14 @@ export class ChartDomainExampleComponent implements OnInit, AfterViewInit {
         const endDatetime = new Date("2017-02-15T16:14:29.909Z");
 
         this.xScale.fixDomain([startDatetime, endDatetime]);
-        this.chartAssists.forEach((chartAssist) => {
+        this.chartAssists.forEach(chartAssist => {
             chartAssist.update(chartAssist.inputSeriesSet);
         });
     }
 
     public resetDomain(): void {
         this.xScale.isDomainFixed = false;
-        this.chartAssists.forEach((chartAssist) => {
+        this.chartAssists.forEach(chartAssist => {
             chartAssist.update(chartAssist.inputSeriesSet);
         });
     }

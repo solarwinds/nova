@@ -5,8 +5,7 @@
     <div class="legend">
         <nui-legend
             [interactive]="true"
-            (mouseleave)="chartAssist.resetVisibleSeries()"
-        >
+            (mouseleave)="chartAssist.resetVisibleSeries()">
             <nui-legend-series
                 *ngFor="
                     let legendSeries of chartAssist.legendSeriesSet;
@@ -20,8 +19,7 @@
                 [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                 (isSelectedChange)="
                     chartAssist.toggleSeries(legendSeries.id, $event)
-                "
-            >
+                ">
                 <nui-basic-legend-tile>
                     <nui-chart-marker
                         [marker]="chartAssist.markers.get(legendSeries.id)"
@@ -29,8 +27,7 @@
                             chartAssist.palette.standardColors.get(
                                 legendSeries.id
                             )
-                        "
-                    >
+                        ">
                     </nui-chart-marker>
                 </nui-basic-legend-tile>
             </nui-legend-series>
@@ -46,8 +43,7 @@
             class="ml-2"
             [itemsSource]="chartTypes"
             [value]="selectedChartType"
-            (changed)="updateChartType($event.newValue)"
-        ></nui-select>
+            (changed)="updateChartType($event.newValue)"></nui-select>
     </div>
 
     <div class="d-flex align-items-center ml-3">
@@ -57,21 +53,18 @@
             class="ml-2"
             [value]="selectedEvent"
             displayValue="name"
-            (changed)="onEventFilterChange($event.newValue)"
-        ></nui-select>
+            (changed)="onEventFilterChange($event.newValue)"></nui-select>
     </div>
 
     <div
         *ngIf="!!selectedInteractionType"
-        class="d-flex align-items-center ml-3"
-    >
+        class="d-flex align-items-center ml-3">
         <strong>Interaction Type:</strong>
         <nui-select
             class="ml-2"
             [itemsSource]="selectedEvent.interactionTypes"
             [value]="selectedInteractionType"
-            (changed)="onInteractionTypeChange($event.newValue)"
-        ></nui-select>
+            (changed)="onInteractionTypeChange($event.newValue)"></nui-select>
     </div>
 </div>
 

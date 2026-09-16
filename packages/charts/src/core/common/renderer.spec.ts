@@ -122,7 +122,7 @@ describe("Renderer >", () => {
 
     describe("getDomain()", () => {
         it("should calculate min and max values, using data accessor with the scale name", () => {
-            const accessor: DataAccessor = (d) => d.a;
+            const accessor: DataAccessor = d => d.a;
             const data = [
                 { a: 0, b: 10, c: 100 },
                 { a: -5, b: 30, c: 500 },
@@ -138,7 +138,7 @@ describe("Renderer >", () => {
         });
 
         it("should return the empty continuous domain for null data", () => {
-            const accessor: DataAccessor = (d) => d.a;
+            const accessor: DataAccessor = d => d.a;
             const domain = renderer.getDomain(
                 // @ts-ignore: Disabled for testing purposes
                 null,
@@ -150,7 +150,7 @@ describe("Renderer >", () => {
         });
 
         it("should return the empty continuous domain for empty data", () => {
-            const accessor: DataAccessor = (d) => d.a;
+            const accessor: DataAccessor = d => d.a;
             const domain = renderer.getDomain(
                 [],
                 { id: "x", data: [], accessors: { data: { a: accessor } } },

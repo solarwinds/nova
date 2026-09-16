@@ -91,7 +91,10 @@ test.describe(`Visual tests: Charts - ${name}`, () => {
             `${name} - Default look with middle legend tile hovered`
         );
 
-        await Helpers.prepareBrowser("chart-types/bar/dst-time-interval-test", page);
+        await Helpers.prepareBrowser(
+            "chart-types/bar/dst-time-interval-test",
+            page
+        );
         await Helpers.disableCSSAnimations(
             Animations.TRANSITIONS_AND_ANIMATIONS
         );

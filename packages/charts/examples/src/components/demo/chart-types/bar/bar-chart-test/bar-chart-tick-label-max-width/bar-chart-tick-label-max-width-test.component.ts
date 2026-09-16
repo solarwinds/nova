@@ -57,7 +57,7 @@ export class BarChartTickLabelMaxWidthTestComponent implements OnInit {
         const gridConfig = this.chart.getGrid().config() as XYGridConfig;
         gridConfig.axis.left.tickLabel.maxWidth = 100;
 
-        const seriesSet: IChartSeries<IBarAccessors>[] = getData().map((d) => ({
+        const seriesSet: IChartSeries<IBarAccessors>[] = getData().map(d => ({
             ...d,
             accessors,
             renderer,

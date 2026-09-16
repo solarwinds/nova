@@ -51,7 +51,7 @@ export class SparkChartMultipleExampleComponent implements OnInit {
         const renderer = new LineRenderer();
 
         const seriesSet: IChartAssistSeries<ILineAccessors>[] = getData().map(
-            (d) => ({
+            d => ({
                 ...d,
                 accessors,
                 renderer,

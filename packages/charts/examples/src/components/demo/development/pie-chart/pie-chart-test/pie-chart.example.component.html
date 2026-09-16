@@ -14,8 +14,7 @@
                     seriesUnitLabel="Share"
                     [active]="chartAssist.isLegendActive"
                     [interactive]="true"
-                    (mouseleave)="chartAssist.resetVisibleSeries()"
-                >
+                    (mouseleave)="chartAssist.resetVisibleSeries()">
                     <nui-legend-series
                         *ngFor="
                             let legendSeries of chartAssist.legendSeriesSet;
@@ -34,8 +33,7 @@
                         "
                         (isSelectedChange)="
                             chartAssist.toggleSeries(legendSeries.id, $event)
-                        "
-                    >
+                        ">
                         <nui-rich-legend-tile
                             [value]="
                                 chartAssist.getHighlightedValue(
@@ -53,8 +51,7 @@
                                 chartAssist.palette.textColors.get(
                                     legendSeries.id
                                 )
-                            "
-                        >
+                            ">
                         </nui-rich-legend-tile>
                     </nui-legend-series>
                 </nui-legend>
@@ -88,11 +85,9 @@
     ><nui-textbox-number
         [value]="15"
         [maxValue]="80"
-        (valueChange)="updateWidth($event)"
-    ></nui-textbox-number>
+        (valueChange)="updateWidth($event)"></nui-textbox-number>
     <span>Max donut's width in px</span
     ><nui-textbox-number
         [value]="renderer.config.maxThickness"
-        (valueChange)="updatemaxWidth($event)"
-    ></nui-textbox-number>
+        (valueChange)="updatemaxWidth($event)"></nui-textbox-number>
 </div>

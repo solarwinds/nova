@@ -39,7 +39,9 @@ export class SparkChartTestPage {
     }
 
     public async getSparkCountInStack(className: string): Promise<number> {
-        return this.page.locator(`.${className} .${ChartAtom.CSS_CLASS}`).count();
+        return this.page
+            .locator(`.${className} .${ChartAtom.CSS_CLASS}`)
+            .count();
     }
 
     public async getLegendSeriesCount(): Promise<number> {
@@ -47,7 +49,9 @@ export class SparkChartTestPage {
     }
 
     public getChart(index: number): ChartAtom {
-        return new ChartAtom(this.root.locator(`.${ChartAtom.CSS_CLASS}`).nth(index));
+        return new ChartAtom(
+            this.root.locator(`.${ChartAtom.CSS_CLASS}`).nth(index)
+        );
     }
 
     public getLegendSeries(index: number): LegendSeriesAtom {

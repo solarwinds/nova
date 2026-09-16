@@ -2,8 +2,7 @@
     <div *ngFor="let item of plugin.dataPoints | keyvalue; trackBy: trackByFn">
         <ng-template #tooltipTemplate>
             <ng-container
-                *ngTemplateOutlet="template; context: { dataPoint: item.value }"
-            ></ng-container>
+                *ngTemplateOutlet="template; context: { dataPoint: item.value }"></ng-container>
         </ng-template>
 
         <div
@@ -18,7 +17,6 @@
             [style.left.px]="plugin.dataPointPositions[item.key].x"
             [style.top.px]="plugin.dataPointPositions[item.key].y"
             [style.height.px]="plugin.dataPointPositions[item.key].height"
-            [style.width.px]="plugin.dataPointPositions[item.key].width"
-        ></div>
+            [style.width.px]="plugin.dataPointPositions[item.key].width"></div>
     </div>
 </div>

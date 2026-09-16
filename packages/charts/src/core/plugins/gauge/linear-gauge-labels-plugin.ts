@@ -150,7 +150,7 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
 
         const formatter =
             this.thresholdsSeries?.scales[this.isHorizontal ? "x" : "y"]
-                .formatters[this.config.formatterName as string] ?? ((d) => d);
+                .formatters[this.config.formatterName as string] ?? (d => d);
         const labelSelection = gaugeThresholdsLabelsGroup
             .selectAll(`text.${GAUGE_THRESHOLD_LABEL_CLASS}`)
             .data(data);
@@ -170,8 +170,8 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
                     )})`
             )
             .attr("title", (d, i) => formatter(data[i].value))
-            .style("text-anchor", (d) => this.getTextAnchor())
-            .style("dominant-baseline", (d) => this.getAlignmentBaseline())
+            .style("text-anchor", d => this.getTextAnchor())
+            .style("dominant-baseline", d => this.getAlignmentBaseline())
             .text((d, i) => formatter(data[i].value));
     }
 

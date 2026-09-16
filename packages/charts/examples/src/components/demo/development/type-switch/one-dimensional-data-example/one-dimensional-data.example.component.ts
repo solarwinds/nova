@@ -73,7 +73,7 @@ export class OneDimensionalDataExampleComponent implements OnInit {
     public values = [24, 16, 7, 6, 97, 4];
     public iconMap = zipObject(
         this.categories,
-        this.iconNames.map((n) => `status_${n}`)
+        this.iconNames.map(n => `status_${n}`)
     );
     private colorProvider = new MappedValueProvider<string>(
         zipObject(

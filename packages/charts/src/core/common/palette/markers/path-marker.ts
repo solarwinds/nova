@@ -37,9 +37,9 @@ export class PathMarker implements IChartMarker {
         this.element = document.createElement("path");
 
         this.setAttributes({
-            class: "nui-chart-element-marker nui-chart--path__outline",
+            "class": "nui-chart-element-marker nui-chart--path__outline",
             "vector-effect": "non-scaling-stroke",
-            d: d,
+            "d": d,
         });
     }
 

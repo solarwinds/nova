@@ -18,8 +18,8 @@ module.exports = function (config) {
             clearContext: false, // leave Jasmine Spec Runner output visible in browser
         },
         junitReporter: {
-            outputDir: 'test-results', // Directory for test results
-            outputFile: 'karma-results.xml', // Optional: file name for JUnit XML results
+            outputDir: "test-results", // Directory for test results
+            outputFile: "karma-results.xml", // Optional: file name for JUnit XML results
             useBrowserName: false,
         },
         coverageReporter: {

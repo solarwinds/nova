@@ -1,7 +1,6 @@
 <nui-example-wrapper
     filenamePrefix="data-point-popovers-prototype"
-    exampleTitle="Data Point Popovers Prototype"
->
+    exampleTitle="Data Point Popovers Prototype">
     <nui-chart class="d-flex" [chart]="chart"></nui-chart>
 
     <div class="my-3 d-flex align-items-center">
@@ -16,16 +15,14 @@
             type="button"
             displayStyle="action"
             (click)="onReset()"
-            nui-button
-        >
+            nui-button>
             Reset Popover
         </button>
     </div>
 
     <nui-chart-popover
         [plugin]="popoverPlugin"
-        [template]="popoverTemplate"
-    ></nui-chart-popover>
+        [template]="popoverTemplate"></nui-chart-popover>
 
     <ng-template let-dataPoints="dataPoints" #popoverTemplate>
         <div class="p-3">

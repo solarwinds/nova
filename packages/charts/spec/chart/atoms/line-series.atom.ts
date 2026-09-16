@@ -43,7 +43,7 @@ export class LineSeriesAtom extends SeriesAtom {
         const dSegments = d // it will look like "M0,75L100,10L200,90L300,45L400,70"
             .substring(1) // trimming first "M"
             .split("L"); // splitting by "L"
-        return dSegments.map((segment) => {
+        return dSegments.map(segment => {
             const coords = segment.split(",");
             return {
                 x: parseFloat(coords[0]),

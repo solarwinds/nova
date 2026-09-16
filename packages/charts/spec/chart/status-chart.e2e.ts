@@ -118,7 +118,7 @@ describe("Status chart", () => {
     });
 
     describe("resize", () => {
-        it("should hide icons on page or container resize", async (done) => {
+        it("should hide icons on page or container resize", async done => {
             const originalSize = await browser.manage().window().getSize();
             const bars = [
                 await statusChartWithIcons.getStatusBarDataPointByIndex(
