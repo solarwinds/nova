@@ -55,7 +55,7 @@ export class AreaChartStackPercentageExampleComponent implements OnInit {
         const accessors = stackedAreaAccessors();
         // 'y1' defines access to the numeric values we want to visualize.
         // The items in the data array of this example have a property named 'value',so we'll use that.
-        accessors.data.y1 = (d) => d.value;
+        accessors.data.y1 = d => d.value;
 
         // The area renderer will make the chart look like a area chart.
         const renderer = new AreaRenderer();
@@ -68,14 +68,12 @@ export class AreaChartStackPercentageExampleComponent implements OnInit {
         };
 
         // Here we assemble the complete chart series.
-        const seriesSet: IChartSeries<IAreaAccessors>[] = getData().map(
-            (d) => ({
-                ...d,
-                accessors,
-                renderer,
-                scales,
-            })
-        );
+        const seriesSet: IChartSeries<IAreaAccessors>[] = getData().map(d => ({
+            ...d,
+            accessors,
+            renderer,
+            scales,
+        }));
 
         // Finally, pass the series set to the chart's update method
         this.chartAssist.update(seriesSet);

@@ -121,7 +121,7 @@ export class CheckboxGroupComponent
         this.children.changes.subscribe(
             (checkboxComponentQueryList: QueryList<ICheckboxComponent>) => {
                 // verify that there are no observers on checkboxes as we are creating new.
-                this.subscriptionsArray.forEach((sub) => sub.unsubscribe());
+                this.subscriptionsArray.forEach(sub => sub.unsubscribe());
                 checkboxComponentQueryList
                     .toArray()
                     .forEach((checkbox: ICheckboxComponent) => {
@@ -165,7 +165,7 @@ export class CheckboxGroupComponent
         if (this.children) {
             this.children
                 .toArray()
-                .forEach((child) => (child.disabled = this.disabled));
+                .forEach(child => (child.disabled = this.disabled));
         }
     }
 
@@ -173,7 +173,7 @@ export class CheckboxGroupComponent
      * Unsubscribe from valuesChange event
      */
     public ngOnDestroy(): void {
-        this.subscriptionsArray.forEach((sub) => sub.unsubscribe());
+        this.subscriptionsArray.forEach(sub => sub.unsubscribe());
     }
 
     private subscribeToCheckboxEvent(

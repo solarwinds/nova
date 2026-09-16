@@ -313,11 +313,9 @@ describe("GaugeUtil >", () => {
                 gaugeConfig,
                 GaugeMode.Donut
             );
-            let series = seriesSet.find(
-                (s) => s.id === GAUGE_QUANTITY_SERIES_ID
-            );
+            let series = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID);
             expect(series?.data[0].value).toEqual(gaugeConfig.max);
-            series = seriesSet.find((s) => s.id === GAUGE_REMAINDER_SERIES_ID);
+            series = seriesSet.find(s => s.id === GAUGE_REMAINDER_SERIES_ID);
             expect(series?.data[0].value).toEqual(0);
         });
 
@@ -327,7 +325,7 @@ describe("GaugeUtil >", () => {
                 GaugeMode.Donut
             );
             const series = seriesSet.find(
-                (s) => s.id === GAUGE_QUANTITY_SERIES_ID
+                s => s.id === GAUGE_QUANTITY_SERIES_ID
             );
             expect(series?.["activeThreshold"].id).toEqual(
                 StandardGaugeThresholdId.Critical
@@ -340,7 +338,7 @@ describe("GaugeUtil >", () => {
                 GaugeMode.Donut
             );
             const series = seriesSet.find(
-                (s) => s.id === GAUGE_QUANTITY_SERIES_ID
+                s => s.id === GAUGE_QUANTITY_SERIES_ID
             );
             expect(series?.["defaultColor"]).toEqual("red");
         });
@@ -352,7 +350,7 @@ describe("GaugeUtil >", () => {
                     GaugeMode.Donut
                 );
                 const series = seriesSet.find(
-                    (s) => s.id === GAUGE_QUANTITY_SERIES_ID
+                    s => s.id === GAUGE_QUANTITY_SERIES_ID
                 );
                 expect(
                     series?.accessors.data?.color?.(undefined, 0, [], series)
@@ -365,7 +363,7 @@ describe("GaugeUtil >", () => {
                     GaugeMode.Donut
                 );
                 const series = seriesSet.find(
-                    (s) => s.id === GAUGE_QUANTITY_SERIES_ID
+                    s => s.id === GAUGE_QUANTITY_SERIES_ID
                 );
                 expect(
                     series?.accessors.data?.color?.(undefined, 0, [], series)
@@ -380,14 +378,14 @@ describe("GaugeUtil >", () => {
                     GaugeMode.Donut
                 );
                 let series = seriesSet.find(
-                    (s) => s.id === GAUGE_QUANTITY_SERIES_ID
+                    s => s.id === GAUGE_QUANTITY_SERIES_ID
                 );
                 expect(series?.data[0].value).toEqual(gaugeConfig.value);
                 expect(series?.renderer instanceof RadialRenderer).toEqual(
                     true
                 );
                 series = seriesSet.find(
-                    (s) => s.id === GAUGE_REMAINDER_SERIES_ID
+                    s => s.id === GAUGE_REMAINDER_SERIES_ID
                 );
                 expect(series?.data[0].value).toEqual(
                     gaugeConfig.max - gaugeConfig.value
@@ -396,7 +394,7 @@ describe("GaugeUtil >", () => {
                     true
                 );
                 series = seriesSet.find(
-                    (s) => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
+                    s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
                 );
                 const thresholds =
                     GaugeUtil.prepareThresholdsData(gaugeConfig).thresholds;
@@ -434,7 +432,7 @@ describe("GaugeUtil >", () => {
                     GaugeMode.Donut
                 );
                 const series = seriesSet.find(
-                    (s) => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
+                    s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
                 );
                 expect(
                     (
@@ -456,7 +454,7 @@ describe("GaugeUtil >", () => {
                     GaugeMode.Donut
                 );
                 const series = seriesSet.find(
-                    (s) => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
+                    s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
                 );
                 expect(
                     (
@@ -478,7 +476,7 @@ describe("GaugeUtil >", () => {
                     GaugeMode.Donut
                 );
                 const series = seriesSet.find(
-                    (s) => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
+                    s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
                 );
                 expect(
                     (
@@ -496,19 +494,19 @@ describe("GaugeUtil >", () => {
                     GaugeMode.Horizontal
                 );
                 let series = seriesSet.find(
-                    (s) => s.id === GAUGE_QUANTITY_SERIES_ID
+                    s => s.id === GAUGE_QUANTITY_SERIES_ID
                 );
                 expect(series?.data[0].value).toEqual(gaugeConfig.value);
                 expect(series?.renderer instanceof BarRenderer).toEqual(true);
                 series = seriesSet.find(
-                    (s) => s.id === GAUGE_REMAINDER_SERIES_ID
+                    s => s.id === GAUGE_REMAINDER_SERIES_ID
                 );
                 expect(series?.data[0].value).toEqual(
                     gaugeConfig.max - gaugeConfig.value
                 );
                 expect(series?.renderer instanceof BarRenderer).toEqual(true);
                 series = seriesSet.find(
-                    (s) => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
+                    s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
                 );
                 const thresholds =
                     GaugeUtil.prepareThresholdsData(gaugeConfig).thresholds;
@@ -546,7 +544,7 @@ describe("GaugeUtil >", () => {
                     GaugeMode.Horizontal
                 );
                 const series = seriesSet.find(
-                    (s) => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
+                    s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
                 );
                 expect(
                     (
@@ -568,7 +566,7 @@ describe("GaugeUtil >", () => {
                     GaugeMode.Horizontal
                 );
                 const series = seriesSet.find(
-                    (s) => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
+                    s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
                 );
                 expect(
                     (
@@ -590,7 +588,7 @@ describe("GaugeUtil >", () => {
                     GaugeMode.Horizontal
                 );
                 const series = seriesSet.find(
-                    (s) => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
+                    s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
                 );
                 expect(
                     (
@@ -608,19 +606,19 @@ describe("GaugeUtil >", () => {
                     GaugeMode.Vertical
                 );
                 let series = seriesSet.find(
-                    (s) => s.id === GAUGE_QUANTITY_SERIES_ID
+                    s => s.id === GAUGE_QUANTITY_SERIES_ID
                 );
                 expect(series?.data[0].value).toEqual(gaugeConfig.value);
                 expect(series?.renderer instanceof BarRenderer).toEqual(true);
                 series = seriesSet.find(
-                    (s) => s.id === GAUGE_REMAINDER_SERIES_ID
+                    s => s.id === GAUGE_REMAINDER_SERIES_ID
                 );
                 expect(series?.data[0].value).toEqual(
                     gaugeConfig.max - gaugeConfig.value
                 );
                 expect(series?.renderer instanceof BarRenderer).toEqual(true);
                 series = seriesSet.find(
-                    (s) => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
+                    s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
                 );
                 const thresholds =
                     GaugeUtil.prepareThresholdsData(gaugeConfig).thresholds;
@@ -658,7 +656,7 @@ describe("GaugeUtil >", () => {
                     GaugeMode.Vertical
                 );
                 const series = seriesSet.find(
-                    (s) => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
+                    s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
                 );
                 expect(
                     (
@@ -680,7 +678,7 @@ describe("GaugeUtil >", () => {
                     GaugeMode.Vertical
                 );
                 const series = seriesSet.find(
-                    (s) => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
+                    s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
                 );
                 expect(
                     (
@@ -702,7 +700,7 @@ describe("GaugeUtil >", () => {
                     GaugeMode.Vertical
                 );
                 const series = seriesSet.find(
-                    (s) => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
+                    s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
                 );
                 expect(
                     (
@@ -724,11 +722,9 @@ describe("GaugeUtil >", () => {
                 GaugeMode.Donut
             );
             seriesSet = GaugeUtil.update(seriesSet, updatedGaugeConfig);
-            let series = seriesSet.find(
-                (s) => s.id === GAUGE_QUANTITY_SERIES_ID
-            );
+            let series = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID);
             expect(series?.data[0].value).toEqual(gaugeConfig.max);
-            series = seriesSet.find((s) => s.id === GAUGE_REMAINDER_SERIES_ID);
+            series = seriesSet.find(s => s.id === GAUGE_REMAINDER_SERIES_ID);
             expect(series?.data[0].value).toEqual(0);
         });
 
@@ -740,19 +736,17 @@ describe("GaugeUtil >", () => {
                 GaugeMode.Donut
             );
             seriesSet = GaugeUtil.update(seriesSet, updatedGaugeConfig);
-            let series = seriesSet.find(
-                (s) => s.id === GAUGE_QUANTITY_SERIES_ID
-            );
+            let series = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID);
 
             expect(series?.data[0].value).toEqual(updatedGaugeConfig.value);
             expect(series?.renderer instanceof RadialRenderer).toEqual(true);
-            series = seriesSet.find((s) => s.id === GAUGE_REMAINDER_SERIES_ID);
+            series = seriesSet.find(s => s.id === GAUGE_REMAINDER_SERIES_ID);
             expect(series?.data[0].value).toEqual(
                 updatedGaugeConfig.max - updatedGaugeConfig.value
             );
             expect(series?.renderer instanceof RadialRenderer).toEqual(true);
             series = seriesSet.find(
-                (s) => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
+                s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
             );
             const thresholds =
                 GaugeUtil.prepareThresholdsData(updatedGaugeConfig).thresholds;
@@ -767,9 +761,7 @@ describe("GaugeUtil >", () => {
                 gaugeConfig,
                 GaugeMode.Donut
             );
-            let series = seriesSet.find(
-                (s) => s.id === GAUGE_QUANTITY_SERIES_ID
-            );
+            let series = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID);
             expect(series?.["activeThreshold"].id).toEqual(
                 StandardGaugeThresholdId.Warning
             );
@@ -777,7 +769,7 @@ describe("GaugeUtil >", () => {
                 ...gaugeConfig,
                 value: 5,
             });
-            series = seriesSet.find((s) => s.id === GAUGE_QUANTITY_SERIES_ID);
+            series = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID);
             expect(series?.["activeThreshold"].id).toEqual(
                 StandardGaugeThresholdId.Critical
             );
@@ -788,15 +780,13 @@ describe("GaugeUtil >", () => {
                 gaugeConfig,
                 GaugeMode.Donut
             );
-            let series = seriesSet.find(
-                (s) => s.id === GAUGE_QUANTITY_SERIES_ID
-            );
+            let series = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID);
             expect(series?.["defaultColor"]).toEqual(StandardGaugeColor.Ok);
             seriesSet = GaugeUtil.update(seriesSet, {
                 ...gaugeConfig,
                 defaultQuantityColor: "red",
             });
-            series = seriesSet.find((s) => s.id === GAUGE_QUANTITY_SERIES_ID);
+            series = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID);
             expect(series?.["defaultColor"]).toEqual("red");
         });
     });

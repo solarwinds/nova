@@ -4,8 +4,7 @@
     [isTypeaheadEnabled]="true"
     [multiselect]="true"
     [manualDropdownControl]="true"
-    #combobox
->
+    #combobox>
     <ng-container selectedItems>
         @for (option of combobox?.value; track option) {
         <nui-chip
@@ -13,8 +12,7 @@
             class="ml-2"
             closeButtonTooltip="Remove"
             [item]="convertToChip(option)"
-            (remove)="onChipRemoved(option)"
-        >
+            (remove)="onChipRemoved(option)">
         </nui-chip>
         }
     </ng-container>
@@ -34,8 +32,7 @@
         nui-button
         type="button"
         class="mr-3"
-        (click)="showList($event)"
-    >
+        (click)="showList($event)">
         Show
     </button>
 
@@ -44,8 +41,7 @@
         nui-button
         type="button"
         class="mr-3"
-        (click)="hideList($event)"
-    >
+        (click)="hideList($event)">
         Hide
     </button>
 
@@ -54,8 +50,7 @@
         nui-button
         type="button"
         class="mr-3"
-        (click)="toggleList($event)"
-    >
+        (click)="toggleList($event)">
         Toggle
     </button>
 

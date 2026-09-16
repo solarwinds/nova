@@ -65,7 +65,9 @@ test.describe("USERCONTROL datepicker", () => {
     });
 
     const getTrimmedText = async (id: string): Promise<string> =>
-        ((await Atom.find<Atom>(Atom, id).getLocator().textContent()) ?? "").trim();
+        (
+            (await Atom.find<Atom>(Atom, id).getLocator().textContent()) ?? ""
+        ).trim();
 
     test("should show year in title and months in body upon click on title", async () => {
         const currentYear: string = moment().year().toString();
@@ -209,8 +211,10 @@ test.describe("USERCONTROL datepicker", () => {
     });
 
     test.describe("when minDate, maxDate or dateDisabled is set", () => {
-        const getMinDate = async () => getTrimmedText("nui-demo-datepicker-min-date");
-        const getMaxDate = async () => getTrimmedText("nui-demo-datepicker-max-date");
+        const getMinDate = async () =>
+            getTrimmedText("nui-demo-datepicker-min-date");
+        const getMaxDate = async () =>
+            getTrimmedText("nui-demo-datepicker-max-date");
 
         test("should forbid selection of date via text input, less than minDate", async () => {
             const minDate: Moment = moment(await getMinDate());

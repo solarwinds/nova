@@ -8,14 +8,12 @@
             <nui-selector
                 (selectionChange)="onSelectorOutput($event)"
                 [checkboxStatus]="state.selector?.selectorState.checkboxStatus"
-                [items]="state.selector?.selectorState.selectorItems"
-            >
+                [items]="state.selector?.selectorState.selectorItems">
             </nui-selector>
             <nui-search
                 class="searchBar"
                 [value]="searchTerm"
-                (search)="applyFilters()"
-            >
+                (search)="applyFilters()">
             </nui-search>
             <nui-repeat
                 class="repeater"
@@ -23,8 +21,7 @@
                 [repeatItemTemplateRef]="repeatItemTemplate"
                 selectionMode="multi"
                 [selection]="state.repeat?.selectedItems"
-                (selectionChange)="onRepeatOutput($event)"
-            >
+                (selectionChange)="onRepeatOutput($event)">
             </nui-repeat>
             <nui-paginator
                 class="paginator"
@@ -34,8 +31,7 @@
                 activeClass="active"
                 disabledClass="disabled"
                 showPrevNext="true"
-                (pagerAction)="applyFilters()"
-            >
+                (pagerAction)="applyFilters()">
             </nui-paginator>
         </div>
     </div>

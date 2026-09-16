@@ -43,7 +43,7 @@ export class HarryPotterAverageRatingDataSource
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             // *** Make a resource request to an external API (if needed)
             this.http
                 .get(`${GOOGLE_BOOKS_URL}/5MQFrgEACAAJ`)
@@ -88,7 +88,7 @@ export class HarryPotterRatingsCountDataSource
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             this.http
                 .get(`${GOOGLE_BOOKS_URL}/5MQFrgEACAAJ`)
                 .pipe(finalize(() => this.busy.next(false)))

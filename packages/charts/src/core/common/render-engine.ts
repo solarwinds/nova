@@ -102,7 +102,7 @@ export class RenderEngine {
                 );
                 const areDomainsValid =
                     -1 ===
-                    Object.values(chartSeries.scales).findIndex((scale) => {
+                    Object.values(chartSeries.scales).findIndex(scale => {
                         if (typeof scaleValidity[scale.id] === "undefined") {
                             const isValid = scale.isDomainValid();
                             if (!isValid) {
@@ -151,7 +151,7 @@ export class RenderEngine {
         const interactionDataPoints = this.dataManager.chartSeriesSet.reduce(
             (result, chartSeries: IChartSeries<IAccessors>) => {
                 const chartValues: { [axis: string]: any } = {};
-                each(Object.keys(payload.values), (scaleKey) => {
+                each(Object.keys(payload.values), scaleKey => {
                     const myScaleId = chartSeries.scales[scaleKey].id;
                     chartValues[scaleKey] = UtilityService.getInteractionValues(
                         payload.values[scaleKey],
@@ -259,7 +259,7 @@ export class RenderEngine {
             const childContainers = this.getSeriesChildContainers(seriesId);
 
             const attrs = chartSeries.renderer.getContainerStateStyles(state);
-            each(values(childContainers), (cc) => {
+            each(values(childContainers), cc => {
                 cc.attrs(attrs);
             });
 
@@ -280,8 +280,8 @@ export class RenderEngine {
         [layerName: string]: ILayerIndexEntry;
     } {
         const layerIndex: { [layerName: string]: ILayerIndexEntry } = {};
-        each(chartSeriesSet, (chartSeries) => {
-            each(chartSeries.renderer.getRequiredLayers(), (layerDef) => {
+        each(chartSeriesSet, chartSeries => {
+            each(chartSeries.renderer.getRequiredLayers(), layerDef => {
                 if (
                     STANDARD_RENDER_LAYERS[layerDef.name] &&
                     !isEqual(STANDARD_RENDER_LAYERS[layerDef.name], layerDef)
@@ -307,7 +307,7 @@ export class RenderEngine {
     }
 
     private removeUnusedLayers(): void {
-        each(Object.keys(this.renderLayers), (layerName) => {
+        each(Object.keys(this.renderLayers), layerName => {
             if (!this.layerIndex[layerName]) {
                 this.lasagna.removeLayer(layerName);
                 delete this.renderLayers[layerName];
@@ -316,7 +316,7 @@ export class RenderEngine {
     }
 
     private addNeededLayers(): void {
-        each(this.layerIndex, (layerData) => {
+        each(this.layerIndex, layerData => {
             if (!this.renderLayers[layerData.layerDefinition.name]) {
                 this.renderLayers[layerData.layerDefinition.name] =
                     this.lasagna.addLayer(layerData.layerDefinition);
@@ -325,7 +325,7 @@ export class RenderEngine {
     }
 
     private updateLayerContents(): void {
-        each(Object.keys(this.renderLayers), (layerName) => {
+        each(Object.keys(this.renderLayers), layerName => {
             const renderLayer = this.renderLayers[layerName];
             const containers = renderLayer
                 .selectAll<SVGElement, IChartSeries<IAccessors>>(
@@ -353,7 +353,7 @@ export class RenderEngine {
     private getSeriesChildContainers(seriesId: string): IRenderContainers {
         const childContainers: { [name: string]: D3Selection<SVGGElement> } =
             {};
-        each(Object.keys(this.renderLayers), (layerName) => {
+        each(Object.keys(this.renderLayers), layerName => {
             const renderLayer = this.renderLayers[layerName];
             childContainers[layerName] = renderLayer.selectAll(
                 `#${layerName}-${UtilityService.cssEscape(seriesId)}`

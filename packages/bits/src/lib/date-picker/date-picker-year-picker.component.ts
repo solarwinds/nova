@@ -33,7 +33,10 @@ export class YearPickerComponent implements OnInit {
     title: string;
     rows: any[] = [];
 
-    constructor(public datePicker: DatePickerInnerComponent, private cdRef: ChangeDetectorRef) {
+    constructor(
+        public datePicker: DatePickerInnerComponent,
+        private cdRef: ChangeDetectorRef
+    ) {
         this.datePicker = datePicker;
     }
 

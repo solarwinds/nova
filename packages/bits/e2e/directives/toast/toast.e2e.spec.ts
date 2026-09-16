@@ -78,9 +78,9 @@ test.describe("USERCONTROL Toast", () => {
         const toast = await page.asertWaitForToastDisplayed();
         await toast.hover();
         await Helpers.page.waitForTimeout(toastConfig.options.timeOut * 2);
-        expect((await toast.isPresent()) && (await toast.isDisplayed())).toEqual(
-            true
-        );
+        expect(
+            (await toast.isPresent()) && (await toast.isDisplayed())
+        ).toEqual(true);
     });
 
     test("should honor the timeout specified", async () => {
@@ -95,8 +95,7 @@ test.describe("USERCONTROL Toast", () => {
         await toast.waitUntilNotDisplayed(toastConfig.options.timeOut * 1.5);
         const endPoint: number = performance.now();
 
-        const elapsedTime =
-            endPoint - startPoint - ToastAtom.animationTimeout;
+        const elapsedTime = endPoint - startPoint - ToastAtom.animationTimeout;
         expect(
             Math.abs(elapsedTime - toastConfig.options.timeOut)
         ).toBeLessThanOrEqual(toastTimingTolerance);
@@ -120,8 +119,7 @@ test.describe("USERCONTROL Toast", () => {
         );
         const endPoint: number = performance.now();
 
-        const elapsedTime =
-            endPoint - startPoint - ToastAtom.animationTimeout;
+        const elapsedTime = endPoint - startPoint - ToastAtom.animationTimeout;
         expect(
             Math.abs(elapsedTime - toastConfig.options.extendedTimeOut)
         ).toBeLessThanOrEqual(toastTimingTolerance);
@@ -220,9 +218,9 @@ test.describe("USERCONTROL Toast", () => {
             const toast = await page.asertWaitForToastDisplayed();
 
             await toast.click();
-            expect((await toast.isPresent()) && (await toast.isDisplayed())).toEqual(
-                true
-            );
+            expect(
+                (await toast.isPresent()) && (await toast.isDisplayed())
+            ).toEqual(true);
         });
     });
 

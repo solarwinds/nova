@@ -116,7 +116,7 @@ export class ChartEventBusTestComponent implements OnInit {
         this.selectAllFilters();
         this.chartAssist.update(this.generateDataSeriesSet(2));
 
-        each(this.eventFilters, (eventName) => {
+        each(this.eventFilters, eventName => {
             this.chart
                 .getEventBus()
                 .getStream(eventName)
@@ -176,7 +176,7 @@ export class ChartEventBusTestComponent implements OnInit {
         });
         const accessors = new LineAccessors();
 
-        return seriesSet.map((dataSeries) => ({
+        return seriesSet.map(dataSeries => ({
             ...dataSeries,
             scales,
             renderer,

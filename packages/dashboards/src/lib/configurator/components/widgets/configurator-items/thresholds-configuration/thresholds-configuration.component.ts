@@ -112,7 +112,7 @@ export class ThresholdsConfigurationComponent
 
         this.form.statusChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe((change) => {
+            .subscribe(change => {
                 this.form.markAllAsTouched();
                 this.cd.detectChanges();
             });

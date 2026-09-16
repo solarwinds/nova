@@ -38,11 +38,11 @@ export class EventBusDebugger implements OnDestroy {
     ) {
         eventBus.streamAdded
             .pipe(takeUntil(this.destroy$))
-            .subscribe((stream) => {
+            .subscribe(stream => {
                 eventBus
                     .getStream({ id: stream })
                     .pipe(takeUntil(this.destroy$))
-                    .subscribe((event) => {
+                    .subscribe(event => {
                         console.log(`${event.id}: `, event.payload);
                     });
             });

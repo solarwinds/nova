@@ -45,7 +45,7 @@ export class CustomDataSourceFilterGroupsWrapperComponent
 
     public i18nHiddenFiltersMapping: { [k: string]: string } = {
         "=1": $localize`1 hidden filter.`,
-        other: $localize`# hidden filters.`,
+        "other": $localize`# hidden filters.`,
     };
 
     constructor(
@@ -64,10 +64,10 @@ export class CustomDataSourceFilterGroupsWrapperComponent
 
     public emptyFilterGroupsTitles(): string {
         return this.filterGroups
-            .filter((filterGroup) =>
+            .filter(filterGroup =>
                 _isEmpty(filterGroup.filterGroupItem.allFilterOptions)
             )
-            .map((filterGroup) => filterGroup.filterGroupItem.title)
+            .map(filterGroup => filterGroup.filterGroupItem.title)
             .join(", ");
     }
 
@@ -76,7 +76,7 @@ export class CustomDataSourceFilterGroupsWrapperComponent
     }
 
     public emptyFilterGroupsCount(): number {
-        return this.filterGroups.filter((filterGroup) =>
+        return this.filterGroups.filter(filterGroup =>
             _isEmpty(filterGroup.filterGroupItem.allFilterOptions)
         ).length;
     }

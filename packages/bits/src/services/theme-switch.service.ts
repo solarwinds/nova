@@ -56,7 +56,7 @@ export class ThemeSwitchService {
 
         this.router.events
             .pipe(
-                filter((event) => event instanceof NavigationEnd),
+                filter(event => event instanceof NavigationEnd),
                 map(() => {
                     let route = this._route.root;
                     while (route.firstChild) {
@@ -65,7 +65,7 @@ export class ThemeSwitchService {
                     return route;
                 })
             )
-            .subscribe((route) => {
+            .subscribe(route => {
                 const showThemeSwitcher = (route.snapshot.data || {})
                     .showThemeSwitcher;
 

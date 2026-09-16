@@ -67,7 +67,7 @@ export class AverageRatingKpiDataSource
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             // *** Make a resource request to an external API (if needed)
             this.http
                 .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")

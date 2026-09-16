@@ -1,8 +1,7 @@
 <div
     class="list-group-item"
     [ngClass]="{ 'widget-medium': isMedium, 'widget-small': isSmall }"
-    (click)="onButtonClick()"
->
+    (click)="onButtonClick()">
     <div class="list-group-item__label" [title]="label">{{ label }}</div>
     <div class="list-group-item__statuses">
         <div class="statuses">

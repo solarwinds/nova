@@ -5,19 +5,16 @@
             caption="Value"
             i18n-caption
             class="mb-3"
-            [control]="dataFieldIds.controls['value']"
-        >
+            [control]="dataFieldIds.controls['value']">
             <nui-select-v2
                 formControlName="value"
                 [popupViewportMargin]="configuratorHeading.height$ | async"
                 placeholder="Select Value"
-                i18n-placeholder
-            >
+                i18n-placeholder>
                 @for (itemValue of dropdownItems.value; track itemValue) {
                 <nui-select-v2-option
                     [displayValueContext]="itemValue.label"
-                    [value]="itemValue.id"
-                >
+                    [value]="itemValue.id">
                     {{ itemValue.label }}
                 </nui-select-v2-option>
                 }

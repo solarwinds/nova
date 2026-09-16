@@ -5,14 +5,12 @@
             [itemsSource]="sorterItems"
             [selectedItem]="sortBy"
             [sortDirection]="initialSortDirection"
-            (sorterAction)="onSorterAction($event)"
-        >
+            (sorterAction)="onSorterAction($event)">
         </nui-sorter>
         <nui-search
             class="d-flex justify-content-end app-basic-list-search"
             (search)="onSearch()"
-            (cancel)="onCancelSearch()"
-        >
+            (cancel)="onCancelSearch()">
         </nui-search>
     </div>
 
@@ -27,8 +25,7 @@
             [itemConfig]="itemConfig"
             [repeatItemTemplateRef]="listRepeatItemTemplate"
             [selection]="filteringState.repeat?.selectedItems"
-            [itemsSource]="filteringState.repeat?.itemsSource"
-        >
+            [itemsSource]="filteringState.repeat?.itemsSource">
         </nui-repeat>
     </div>
 
@@ -39,8 +36,7 @@
             [pageSize]="pageSize"
             [pageSizeSet]="[10, 20, 30, 40]"
             [total]="filteringState.paginator?.total"
-            (pagerAction)="applyFilters()"
-        >
+            (pagerAction)="applyFilters()">
         </nui-paginator>
     </div>
 </div>

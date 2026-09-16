@@ -68,7 +68,7 @@ export class TableWidgetDataSource extends LocalFilteringDataSource<BasicTableMo
     ): Promise<ITableDataSourceOutput> {
         this.busy.next(true);
 
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             setTimeout(async () => {
                 const virtualScrollFilter =
                     filters.virtualScroll && filters.virtualScroll.value;
@@ -85,7 +85,7 @@ export class TableWidgetDataSource extends LocalFilteringDataSource<BasicTableMo
                     // We identify here whether the cached array does already contain some of the fetched data.
                     // Then we update the cached array with the only values it doesn't contain
                     this.cache = this.cache.concat(
-                        nextChunk.filter((item) => !this.cache.includes(item))
+                        nextChunk.filter(item => !this.cache.includes(item))
                     );
                     super.setData(this.cache);
                 }

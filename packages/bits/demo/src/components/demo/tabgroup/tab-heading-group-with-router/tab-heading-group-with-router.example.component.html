@@ -4,8 +4,7 @@
         <nui-tab-heading
             [tabId]="tab.id"
             routerLink="/tabgroup/{{ tab.id }}"
-            [active]="currentTabRoute === tab.id"
-        >
+            [active]="currentTabRoute === tab.id">
             <div class="d-flex align-content-center">
                 <div class="d-inline-flex align-items-center">
                     @if (icon && tab !== tabsetContent[2]) {
@@ -15,8 +14,7 @@
                             currentTabRoute === tab.id
                                 ? tab.icon.activeColor
                                 : tab.icon.inactiveColor
-                        "
-                    ></nui-icon>
+                        "></nui-icon>
                     } @if (tab !== tabsetContent[0]) {
                     <span class="pl-2" [title]="tab.title">{{
                         tab.title

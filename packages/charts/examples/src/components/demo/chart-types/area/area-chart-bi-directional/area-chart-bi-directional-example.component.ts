@@ -52,11 +52,11 @@ export class AreaChartBiDirectionalExampleComponent implements OnInit {
         // Area accessors let the renderer know how to access x and y domain data respectively from a chart's input data set(s).
         const accessors1 = new AreaAccessors();
         // 'x' defines access for values in the data that correspond to the horizontal axis
-        accessors1.data.x = (d) => d.timeStamp;
+        accessors1.data.x = d => d.timeStamp;
         // 'y0' defines the baseline, in other words, where the area starts
         accessors1.data.y0 = () => 0;
         // 'y1' defines access to the numeric values we want to visualize, in other words, where the area ends
-        accessors1.data.y1 = (d) => d.value;
+        accessors1.data.y1 = d => d.value;
         // 'x' and 'y' accessors define the position of the marker. 'x' was already defined, so now we need to define 'y' as well.
         // Notice that the 'y' is assigned the 'absoluteY1' accessor which takes into account areas that may be stacked below
         // the current area and retrieves the absolute distance from the baseline to the area's value line.
@@ -71,10 +71,10 @@ export class AreaChartBiDirectionalExampleComponent implements OnInit {
          * the area is displayed below the baseline.
          */
         const accessors2 = new AreaAccessors();
-        accessors2.data.x = (d) => d.timeStamp;
+        accessors2.data.x = d => d.timeStamp;
         accessors2.data.y0 = () => 0;
         // Here's where we flip the sign of the value so that the area is displayed below the baseline
-        accessors2.data.y1 = (d) => -d.value;
+        accessors2.data.y1 = d => -d.value;
         // Both series use the same color accessor so that the second series will use the second color in the sequence
         accessors2.series.color = accessors1.series.color;
         // 'y' defines the position of the marker
@@ -105,7 +105,7 @@ export class AreaChartBiDirectionalExampleComponent implements OnInit {
 
         // Here we assemble the complete chart series.
         const seriesSet: Partial<IChartSeries<IAreaAccessors>>[] =
-            getData().map((d) => ({
+            getData().map(d => ({
                 ...d,
                 renderer,
                 scales,

@@ -33,7 +33,7 @@ export class SeriesAtom extends Atom {
     }
 
     public async getComputedOpacity(): Promise<number> {
-        return this.root.evaluate((el) =>
+        return this.root.evaluate(el =>
             parseFloat(getComputedStyle(el).opacity || "0")
         );
     }

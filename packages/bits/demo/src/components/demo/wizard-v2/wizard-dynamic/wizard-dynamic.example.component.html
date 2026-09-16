@@ -7,8 +7,7 @@
             <button
                 nui-button
                 type="button"
-                (click)="addStep(dynamicTemplate2)"
-            >
+                (click)="addStep(dynamicTemplate2)">
                 Add dynamic step w/template
             </button>
         </div>
@@ -36,8 +35,7 @@
 
     <ng-container
         *ngTemplateOutlet="dynamicStepWithTemplate"
-        ngProjectAs="nui-wizard-step-v2"
-    ></ng-container>
+        ngProjectAs="nui-wizard-step-v2"></ng-container>
     <ng-template #dynamicStepWithTemplate>
         <nui-wizard-step-v2>
             <ng-template nuiWizardStepLabel>Dynamic w/template</ng-template>
@@ -59,16 +57,14 @@
             <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
             <ng-container
-                *ngTemplateOutlet="!isLast && wizardNext"
-            ></ng-container>
+                *ngTemplateOutlet="!isLast && wizardNext"></ng-container>
             @if (isLast && i >= 1) {
             <button
                 type="button"
                 displayStyle="primary"
                 nui-button
                 (click)="finishWizard()"
-                i18n
-            >
+                i18n>
                 Finish
             </button>
             }
@@ -96,8 +92,7 @@
             displayStyle="action"
             nui-button
             (click)="resetWizard()"
-            i18n
-        >
+            i18n>
             Cancel
         </button>
     </ng-template>
@@ -115,8 +110,7 @@
             nui-button
             displayStyle="primary"
             icon="caret-right"
-            iconRight="true"
-        >
+            iconRight="true">
             Next
         </button>
     </ng-template>

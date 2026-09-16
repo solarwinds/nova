@@ -44,9 +44,7 @@ export class TextboxGettingValueExampleComponent implements AfterViewInit {
     public ngAfterViewInit(): void {
         this.textbox.textChange
             .pipe(
-                tap(
-                    (value) => (this.textboxValueChangedValue = value as string)
-                ),
+                tap(value => (this.textboxValueChangedValue = value as string)),
                 takeUntil(this.destroy$)
             )
             .subscribe();

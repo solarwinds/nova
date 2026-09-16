@@ -12,8 +12,7 @@
         <nui-legend
             [active]="chartAssist.isLegendActive"
             [interactive]="false"
-            (mouseleave)="chartAssist.resetVisibleSeries()"
-        >
+            (mouseleave)="chartAssist.resetVisibleSeries()">
             @for ( legendSeries of chartAssist.legendSeriesSet; track
             legendSeries.id) {
             <nui-legend-series
@@ -25,12 +24,10 @@
                 [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                 (isSelectedChange)="
                     chartAssist.toggleSeries(legendSeries.id, $event)
-                "
-            >
+                ">
                 <nui-rich-legend-tile
                     [value]="legendSeries.data[0]?.value"
-                    backgroundColor="transparent"
-                >
+                    backgroundColor="transparent">
                 </nui-rich-legend-tile>
                 <nui-icon [icon]="iconMap[legendSeries.id]"></nui-icon>
             </nui-legend-series>
@@ -41,8 +38,7 @@
         <nui-radio-group
             class="nui-radio-group-inline"
             [(value)]="chartType"
-            (valueChange)="updateChartType()"
-        >
+            (valueChange)="updateChartType()">
             @for (type of chartTypes; track type) {
             <nui-radio [value]="type">
                 {{ type | titlecase }}

@@ -5,15 +5,13 @@
     style="z-index: 1"
     [formControl]="selectControl"
     [manualDropdownControl]="true"
-    [displayValueTemplate]="customTemplate"
->
+    [displayValueTemplate]="customTemplate">
     @for ( item of readonly ? [] : currentHelp; track item; let idx = $index;
     let last = $last; let first = $first) { @if (!item.items) {
     <nui-select-v2-option
         tabindex="-1"
         [displayValueContext]="item"
-        [value]="item"
-    >
+        [value]="item">
         <div class="d-inline-flex align-items-center">
             @if (item.icon) {
             <nui-icon class="mr-2" [icon]="item.icon"></nui-icon>
@@ -22,8 +20,7 @@
                 tabindex="-1"
                 [innerHTML]="
                     (item.displayValue || '') | nuiHighlight : focusedTokenValue
-                "
-            ></span>
+                "></span>
         </div>
     </nui-select-v2-option>
     } @if (item.items && item.items !== []) {
@@ -39,15 +36,13 @@
         <nui-select-v2-option
             tabindex="-1"
             [displayValueContext]="groupedItem"
-            [value]="groupedItem"
-        >
+            [value]="groupedItem">
             @if (!customTemplate) {
             <span
                 tabindex="-1"
                 [innerHTML]="
                     groupedItem.displayValue | nuiHighlight : focusedTokenValue
-                "
-            ></span>
+                "></span>
             }
         </nui-select-v2-option>
         } } @if (item.notice) { @for (groupedItem of item.items; track
@@ -60,8 +55,7 @@
                         (groupedItem['severity']
                             ? groupedItem['severity']
                             : 'info')
-                }}"
-            ></nui-icon>
+                }}"></nui-icon>
             <span class="options-group__item" tabindex="-1">{{
                 groupedItem.message.displayValue
             }}</span>
@@ -91,14 +85,12 @@
                         class="message-textarea form-control input-control"
                         formControlName="body"
                         [placeholder]="placeholder"
-                        [maxLength]="maxLength"
-                    >
+                        [maxLength]="maxLength">
                     </textarea>
                     <div class="overlay-holder" #textHighlightOverlayHolder>
                         <nui-text-highlight-overlay
                             [model]="highlightModel"
-                            [renderConfigurator]="renderer"
-                        ></nui-text-highlight-overlay>
+                            [renderConfigurator]="renderer"></nui-text-highlight-overlay>
                     </div>
                 </div>
             </form>

@@ -6,8 +6,7 @@
         class="overflow-left"
         [template]="overflowStart"
         [completed]="true"
-        [value]="overflownStepsStart.length"
-    >
+        [value]="overflownStepsStart.length">
     </nui-wizard-overflow>
     <ng-template #overflowStart>
         @if (overflownStepsStart.length) {
@@ -26,8 +25,7 @@
                         i: i,
                         isFirst: isFirst
                     }
-                "
-            ></ng-template>
+                "></ng-template>
         </div>
         }
     </ng-template>
@@ -46,8 +44,7 @@
                     i: overflownStepsStart.length + i,
                     isFirst: isFirst
                 }
-            "
-        ></ng-template>
+            "></ng-template>
     </div>
     }
 
@@ -59,8 +56,7 @@
         [class.overflow-right-completed]="allStepsCompleted"
         [template]="overflowEnd"
         [completed]="allStepsCompleted"
-        [value]="overflownStepsEnd.length"
-    >
+        [value]="overflownStepsEnd.length">
     </nui-wizard-overflow>
     <ng-template #overflowEnd>
         @if (overflownStepsEnd.length) {
@@ -79,8 +75,7 @@
                         i: overflownStepsStart.length + visibleSteps.length + i,
                         isFirst: isFirst
                     }
-                "
-            ></ng-template>
+                "></ng-template>
         </div>
         }
     </ng-template>
@@ -94,8 +89,7 @@
         role="tabpanel"
         [id]="stepContentIds[i]"
         [attr.aria-labelledby]="labelIds[i]"
-        [attr.aria-expanded]="selectedIndex === i"
-    >
+        [attr.aria-expanded]="selectedIndex === i">
         <ng-container [ngTemplateOutlet]="step.content"></ng-container>
     </div>
     }
@@ -111,8 +105,7 @@
     let-steps
     let-step="step"
     let-i="i"
-    let-isFirst="isFirst"
->
+    let-isFirst="isFirst">
     @if (!isFirst) {
     <div
         class="nui-wizard-horizontal__step-connector-line"
@@ -120,8 +113,7 @@
             'nui-wizard-horizontal__step-connector-line--completed':
                 (stepsArray[i - 1]?.completed && step.completed) ||
                 selectedIndex === i
-        }"
-    ></div>
+        }"></div>
     }
     <nui-wizard-step-header
         #stepHeaders
@@ -144,7 +136,6 @@
         [selected]="selectedIndex === i"
         [active]="step.completed || selectedIndex === i || !linear"
         [step]="step"
-        [errorMessage]="step.errorMessage"
-    >
+        [errorMessage]="step.errorMessage">
     </nui-wizard-step-header>
 </ng-template>

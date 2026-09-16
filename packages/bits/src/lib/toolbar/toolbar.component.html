@@ -2,8 +2,7 @@
     class="nui-toolbar-content"
     nuiResizeObserver
     (containerResize)="scheduleMoveToolbarItems()"
-    #toolbarContainer
->
+    #toolbarContainer>
     <div class="nui-toolbar-content__dynamic">
         @for (commandGroup of commandGroups; track commandGroup; let i = $index;
         let last = $last) { @for (commandItem of commandGroup.items; track
@@ -23,8 +22,7 @@
             [ngClass]="{
                 'nui-toolbar-primary-item': commandItem.displayStyle === 'main'
             }"
-            [icon]="commandItem.icon"
-        >
+            [icon]="commandItem.icon">
             <span>{{ commandItem.title }}</span>
         </button>
         } @if (!last || showMenu) {
@@ -34,8 +32,7 @@
             displayStyle="action"
             #menuComponent
             [appendToBody]="appendToBody"
-            [title]="menuTitle"
-        >
+            [title]="menuTitle">
             @for (menuGroup of menuGroups; track menuGroup) {
             <nui-menu-group [header]="menuGroup.title">
                 @for (menuItem of menuGroup.items; track menuItem) {

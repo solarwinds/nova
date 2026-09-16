@@ -116,7 +116,7 @@ export class ProportionalChartOptionsEditorComponent
         ) {
             this.cachedChartOptionsViewModels = (
                 this.chartOptions?.chartTypes || []
-            ).map((value) => ({ label: this.chartTypeNamesMap[value], value }));
+            ).map(value => ({ label: this.chartTypeNamesMap[value], value }));
         }
         return this.cachedChartOptionsViewModels;
     }
@@ -146,7 +146,7 @@ export class ProportionalChartOptionsEditorComponent
             "contentFormatter.componentType"
         )?.value;
         return this.contentFormatters.find(
-            (item) => item.componentType === currentFormValue
+            item => item.componentType === currentFormValue
         );
     }
 

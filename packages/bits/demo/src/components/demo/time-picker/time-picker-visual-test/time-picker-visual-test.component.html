@@ -4,8 +4,7 @@
             <h3>Basic TimePicker</h3>
             <nui-time-picker
                 [model]="myTime"
-                id="nui-visual-test-timepicker-basic"
-            ></nui-time-picker>
+                id="nui-visual-test-timepicker-basic"></nui-time-picker>
             <hr />
         </div>
         <div class="col">
@@ -13,8 +12,7 @@
             <nui-time-picker
                 [model]="myTime"
                 id="nui-visual-test-timepicker-disabled"
-                [isDisabled]="true"
-            ></nui-time-picker>
+                [isDisabled]="true"></nui-time-picker>
             <hr />
         </div>
         <div class="w-100"></div>
@@ -23,8 +21,7 @@
             <nui-time-picker
                 [model]="myTime"
                 id="nui-visual-test-custom-format-timepicker"
-                timeFormat="h:mm:ss"
-            ></nui-time-picker>
+                timeFormat="h:mm:ss"></nui-time-picker>
             <hr />
         </div>
         <div class="col">
@@ -32,8 +29,7 @@
             <nui-time-picker
                 [model]="myTime"
                 id="nui-visual-test-custom-step-timepicker"
-                [timeStep]="10"
-            ></nui-time-picker>
+                [timeStep]="10"></nui-time-picker>
             <hr />
         </div>
         <div class="w-100"></div>
@@ -48,8 +44,7 @@
                         [isInErrorState]="
                             myForm.controls['timePickerFormControl'].invalid
                         "
-                        (timeChanged)="valueChange($event)"
-                    >
+                        (timeChanged)="valueChange($event)">
                     </nui-time-picker>
                 </div>
             </form>

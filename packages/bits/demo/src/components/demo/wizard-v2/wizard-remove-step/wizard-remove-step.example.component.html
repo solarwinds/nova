@@ -12,8 +12,7 @@
                 displayStyle="action"
                 nui-button
                 (click)="resetWizard()"
-                i18n
-            >
+                i18n>
                 Cancel
             </button>
             } @if (i !== 0) {
@@ -21,8 +20,7 @@
                 type="button"
                 nuiWizardPrevious
                 nui-button
-                icon="caret-left"
-            >
+                icon="caret-left">
                 Back
             </button>
             } @if (!isLast) {
@@ -32,8 +30,7 @@
                 nui-button
                 displayStyle="primary"
                 icon="caret-right"
-                iconRight="true"
-            >
+                iconRight="true">
                 Next
             </button>
             } @if (isLast && i >= 1) {
@@ -42,8 +39,7 @@
                 displayStyle="primary"
                 nui-button
                 (click)="finishWizard()"
-                i18n
-            >
+                i18n>
                 Finish
             </button>
             }
@@ -83,8 +79,7 @@
         type="button"
         [disabled]="+number.value < 1"
         (click)="removeStep(+number.value)"
-        i18n
-    >
+        i18n>
         Remove step dynamically
     </button>
 </div>

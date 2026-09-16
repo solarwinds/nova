@@ -214,7 +214,7 @@ export class CheckboxComponent
 
         this.sub = this.eventBusService
             .getStream(CHECKBOX_KEYDOWN_EVENT)
-            .subscribe((event) => {
+            .subscribe(event => {
                 if (event.target === this.checkboxLabel.nativeElement) {
                     if (this.keysAction.includes(event.code)) {
                         event.stopPropagation();

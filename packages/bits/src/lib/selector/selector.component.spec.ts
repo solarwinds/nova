@@ -34,7 +34,9 @@ describe("components >", () => {
         });
 
         it("should hide the overlay after selecting a menu item", () => {
-            componentInstance.overlay = jasmine.createSpyObj("overlay", ["hide"]);
+            componentInstance.overlay = jasmine.createSpyObj("overlay", [
+                "hide",
+            ]);
 
             componentInstance.handleItemClick({
                 title: "Select all items on all pages",

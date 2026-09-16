@@ -97,7 +97,7 @@ export class TableVirtualScrollRealApiExampleComponent
     public ngOnInit(): void {
         this.dataSource.busy
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((busy) => {
+            .subscribe(busy => {
                 this._isBusy = busy;
             });
     }
@@ -114,7 +114,7 @@ export class TableVirtualScrollRealApiExampleComponent
             .pipe(
                 // Note: In case we know the total number of items we can stop the stream when dataset end is reached
                 // Otherwise we can let VirtualViewportManager to stop when last received page range will not match requested range
-                filter((range) =>
+                filter(range =>
                     this.totalItems ? this.totalItems >= range.end : true
                 ),
                 tap(async () => this.dataSource.applyFilters()),
@@ -167,7 +167,7 @@ export class RandomuserTableDataSource extends DataSourceService<IRandomUserTabl
 
         // We're returning Promise with setTimeout here to make the response from the server longer, as the API being used sends responses
         // almost immediately. We need it longer to be able the show the spinner component on data load
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             setTimeout(() => {
                 this.getData(start, end).then(
                     (response: UsersQueryResponse | undefined) => {

@@ -14,14 +14,12 @@
             [formControl]="comboboxControl"
             id="error"
             [overlayConfig]="overlayConfig"
-            #comboboxError
-        >
+            #comboboxError>
             @for (item of customizedItems; track item) {
             <nui-select-v2-option [value]="item">
                 <span
                     class="mr-3"
-                    [nuiComboboxV2OptionHighlight]="item.name"
-                ></span>
+                    [nuiComboboxV2OptionHighlight]="item.name"></span>
                 <nui-icon [icon]="item.icon"></nui-icon>
             </nui-select-v2-option>
             }
@@ -37,8 +35,7 @@
                     formControlName="combobox"
                     id="form"
                     [overlayConfig]="overlayConfig"
-                    #comboboxReactive
-                >
+                    #comboboxReactive>
                     @for (item of items; track item) {
                     <nui-select-v2-option [value]="item">
                         <span [nuiComboboxV2OptionHighlight]="item"></span>
@@ -60,8 +57,7 @@
             i18n-placeholder
             id="basic"
             [overlayConfig]="overlayConfig"
-            #comboboxBasic
-        >
+            #comboboxBasic>
             @for (item of items; track item) {
             <nui-select-v2-option [value]="item">
                 <span [nuiComboboxV2OptionHighlight]="item"></span>
@@ -79,25 +75,21 @@
             [formControl]="comboboxControlSingle"
             id="single"
             [overlayConfig]="overlayConfig"
-            #comboboxSingle
-        >
+            #comboboxSingle>
             @for (option of options; track option) {
             <nui-select-v2-option
                 [value]="option"
-                [isDisabled]="isDisabled(option)"
-            >
+                [isDisabled]="isDisabled(option)">
                 <div class="d-flex align-items-center">
                     <span
                         class="mr-3 nui-select-v2-option__label"
-                        [nuiComboboxV2OptionHighlight]="option"
-                    ></span>
+                        [nuiComboboxV2OptionHighlight]="option"></span>
                 </div>
             </nui-select-v2-option>
             } @if (comboboxSingle.canCreateOption | async) {
             <nui-overlay-item
                 class="nui-combobox-v2__create-option"
-                (click)="createOption(comboboxSingle.inputValue)"
-            >
+                (click)="createOption(comboboxSingle.inputValue)">
                 Create option "{{ comboboxSingle.inputValue }}"
             </nui-overlay-item>
             } @if (comboboxSingle.searchEmpty | async) {
@@ -117,8 +109,7 @@
             [multiselect]="true"
             [overlayConfig]="overlayConfig"
             id="multi"
-            #combobox
-        >
+            #combobox>
             <ng-container selectedItems>
                 @for (item of combobox?.value; track item) {
                 <nui-chip
@@ -127,8 +118,7 @@
                     closeButtonTooltip="Remove"
                     [item]="convertToChip(item)"
                     (remove)="combobox.deselectItem(item)"
-                    (mouseup)="$event.stopPropagation()"
-                >
+                    (mouseup)="$event.stopPropagation()">
                 </nui-chip>
                 }
             </ng-container>
@@ -136,18 +126,15 @@
             @for (option of optionsMulti; track option) {
             <nui-select-v2-option
                 [value]="option"
-                class="d-flex align-items-center"
-            >
+                class="d-flex align-items-center">
                 <span
                     class="mr-3 nui-select-v2-option__label"
-                    [nuiComboboxV2OptionHighlight]="option.name"
-                ></span>
+                    [nuiComboboxV2OptionHighlight]="option.name"></span>
             </nui-select-v2-option>
             } @if (combobox.canCreateOption | async) {
             <nui-overlay-item
                 class="nui-combobox-v2__create-option"
-                (click)="createOptionMulti(combobox.inputValue)"
-            >
+                (click)="createOptionMulti(combobox.inputValue)">
                 Create option "{{ combobox.inputValue }}"
             </nui-overlay-item>
             } @if (combobox.searchEmpty | async) {
@@ -167,13 +154,11 @@
                 id="disabled"
                 [overlayConfig]="overlayConfig"
                 class="flex-grow-1"
-                #comboboxDisabled
-            >
+                #comboboxDisabled>
                 @for (item of optionsMulti.slice(); track item) {
                 <nui-select-v2-option
                     [value]="item"
-                    [isDisabled]="item.disabled"
-                >
+                    [isDisabled]="item.disabled">
                     <span [nuiComboboxV2OptionHighlight]="item.name"></span>
                 </nui-select-v2-option>
                 }
@@ -181,8 +166,7 @@
             <button
                 id="trigger-disabled"
                 (click)="isComboboxDisabled = !isComboboxDisabled"
-                class="ml-auto"
-            >
+                class="ml-auto">
                 {{ isComboboxDisabled ? "enable" : "disable" }}
             </button>
         </div>
@@ -197,8 +181,7 @@
             [isRemoveValueEnabled]="false"
             id="removal"
             [overlayConfig]="overlayConfig"
-            #comboboxValueRemoval
-        >
+            #comboboxValueRemoval>
             @for (item of items; track item) {
             <nui-select-v2-option [value]="item">
                 <span [nuiComboboxV2OptionHighlight]="item"></span>
@@ -219,8 +202,7 @@
         [manualDropdownControl]="true"
         id="custom-control"
         [overlayConfig]="overlayConfig"
-        #comboboxMultiDimensions
-    >
+        #comboboxMultiDimensions>
         <ng-container selectedItems>
             @for (item of comboboxMultiDimensions?.value; track item) {
             <nui-chip
@@ -229,20 +211,17 @@
                 closeButtonTooltip="Remove"
                 [item]="convertToChip(item)"
                 (remove)="comboboxMultiDimensions.deselectItem(item)"
-                (mouseup)="$event.stopPropagation()"
-            >
+                (mouseup)="$event.stopPropagation()">
             </nui-chip>
             }
         </ng-container>
         @for (option of optionsMultiDimensions; track option) {
         <nui-select-v2-option
             [value]="option"
-            class="d-flex align-items-center"
-        >
+            class="d-flex align-items-center">
             <span
                 class="mr-3 nui-select-v2-option__label"
-                [nuiComboboxV2OptionHighlight]="option.name"
-            ></span>
+                [nuiComboboxV2OptionHighlight]="option.name"></span>
         </nui-select-v2-option>
         }
     </nui-combobox-v2>
@@ -261,19 +240,16 @@
         id="virtual-combobox"
         [formControl]="comboboxControl"
         [overlayConfig]="overlayConfig"
-        [isTypeaheadEnabled]="false"
-    >
+        [isTypeaheadEnabled]="false">
         <cdk-virtual-scroll-viewport
             itemSize="30"
             [minBufferPx]="300"
             [maxBufferPx]="600"
-            [style.height.px]="containerHeight"
-        >
+            [style.height.px]="containerHeight">
             <div *cdkVirtualFor="let item of filteredItems | async; index as i">
                 <nui-select-v2-option
                     [value]="item"
-                    class="d-flex align-items-center"
-                >
+                    class="d-flex align-items-center">
                     <span [nuiComboboxV2OptionHighlight]="item"></span>
                 </nui-select-v2-option>
             </div>
@@ -291,8 +267,7 @@
         [manualDropdownControl]="true"
         [overlayConfig]="overlayConfig"
         class="w-100"
-        #comboboxWithDialog
-    >
+        #comboboxWithDialog>
         <ng-container selectedItems>
             @for (item of comboboxWithDialog?.value; track item) {
             <nui-chip
@@ -301,8 +276,7 @@
                 closeButtonTooltip="Remove"
                 [item]="convertToChip(item)"
                 (remove)="comboboxWithDialog.deselectItem(item)"
-                (mouseup)="$event.stopPropagation()"
-            >
+                (mouseup)="$event.stopPropagation()">
             </nui-chip>
             }
         </ng-container>
@@ -311,12 +285,10 @@
         <nui-select-v2-option
             [value]="option"
             class="d-flex align-items-center"
-            (click)="openInOverlay(headerButtonsContent)"
-        >
+            (click)="openInOverlay(headerButtonsContent)">
             <span
                 class="mr-3 nui-select-v2-option__label"
-                [nuiComboboxV2OptionHighlight]="option.name"
-            ></span>
+                [nuiComboboxV2OptionHighlight]="option.name"></span>
         </nui-select-v2-option>
         }
     </nui-combobox-v2>
@@ -329,8 +301,7 @@
     <nui-dialog-header
         title="Dialog title"
         i18n-title
-        (closed)="close()"
-    ></nui-dialog-header>
+        (closed)="close()"></nui-dialog-header>
     <div class="dialog-body">
         <p i18n>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
@@ -348,8 +319,7 @@
             nui-button
             type="button"
             (click)="actionCanceled(); close()"
-            i18n
-        >
+            i18n>
             Cancel
         </button>
         <button
@@ -357,8 +327,7 @@
             type="button"
             displayStyle="primary"
             (click)="actionDone(); close()"
-            i18n
-        >
+            i18n>
             Action
         </button>
     </nui-dialog-footer>
@@ -370,14 +339,12 @@
             nui-button
             type="button"
             displayStyle="action"
-            icon="fullscreen"
-        ></button>
+            icon="fullscreen"></button>
         <button
             nui-button
             type="button"
             displayStyle="action"
-            icon="menu"
-        ></button>
+            icon="menu"></button>
     </nui-dialog-header>
     <div class="dialog-body">
         <p>
@@ -388,21 +355,18 @@
                         <button
                             nui-button
                             type="button"
-                            (click)="confirm($event)"
-                        >
+                            (click)="confirm($event)">
                             boom!
                         </button>
                         {{ item }}
                         <div
                             #popoverContainer
-                            id="nui-demo-popover-container"
-                        ></div>
+                            id="nui-demo-popover-container"></div>
                         <nui-popover
                             id="nui-demo-popover-with-container"
                             [container]="popoverContainer"
                             [template]="popoverWithContainerTemplate"
-                            i18n
-                        >
+                            i18n>
                             Hover over me!
                         </nui-popover>
                         <nui-popover
@@ -413,14 +377,12 @@
                             [template]="popoverModal"
                             [modal]="true"
                             [preventClosing]="true"
-                            [closePopover]="closePopoverSubject"
-                        >
+                            [closePopover]="closePopoverSubject">
                             <button
                                 nui-button
                                 type="button"
                                 id="nui-demo-popover-modal"
-                                i18n
-                            >
+                                i18n>
                                 Show modal popover
                             </button>
                         </nui-popover>
@@ -436,8 +398,7 @@
                                     type="button"
                                     displayStyle="action"
                                     (click)="closePopover()"
-                                    i18n
-                                >
+                                    i18n>
                                     Close
                                 </button>
                                 <button
@@ -446,8 +407,7 @@
                                     type="button"
                                     displayStyle="primary"
                                     (click)="closePopover()"
-                                    i18n
-                                >
+                                    i18n>
                                     Confirm
                                 </button>
                             </div>
@@ -486,8 +446,7 @@
             nui-button
             type="button"
             displayStyle="primary"
-            (click)="onButtonClick('Action')"
-        >
+            (click)="onButtonClick('Action')">
             Action
         </button>
     </nui-dialog-footer>

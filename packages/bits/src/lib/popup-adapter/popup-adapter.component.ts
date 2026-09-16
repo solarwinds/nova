@@ -65,8 +65,8 @@ const ADAPTER_OVERLAY_CONFIG: OverlayConfig = {
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
-        class: "nui-popup",
-        role: "dialog",
+        "class": "nui-popup",
+        "role": "dialog",
         "[attr.aria-label]": "ariaLabel",
     },
     standalone: false,
@@ -342,7 +342,7 @@ export class PopupComponent
         );
 
         if (this.contextClass) {
-            this.contextClass.split(" ").forEach((contextClass) => {
+            this.contextClass.split(" ").forEach(contextClass => {
                 this.popupAreaContainer.nativeElement.classList.add(
                     contextClass
                 );

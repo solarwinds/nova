@@ -109,7 +109,7 @@ export class BackgroundColorRulesConfigurationComponent
             (this.formLocal?.get("rules")?.value as FormArray).setValue([]);
 
             if (this.rules && isArray(this.rules)) {
-                this.rules.forEach((rule) => {
+                this.rules.forEach(rule => {
                     (this.formLocal.get("rules")?.value as FormArray).push(
                         this.formBuilder.group({
                             comparisonType: [

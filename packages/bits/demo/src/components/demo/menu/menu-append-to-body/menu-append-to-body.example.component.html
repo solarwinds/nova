@@ -2,8 +2,7 @@
     id="nui-demo-append-to-body-menu"
     title="Basic appended to body menu"
     [appendToBody]="true"
-    i18n-title
->
+    i18n-title>
     @for (group of dataset.itemsInGroups; track group) {
     <nui-menu-group [header]="group.header">
         @for (item of group.items; track item) {

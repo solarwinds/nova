@@ -138,7 +138,7 @@ export class TableVirtualScrollStepsAndButtonExampleComponent
         );
         this.dataSource.applyFilters();
 
-        this.dataSource.busy.subscribe((busy) => {
+        this.dataSource.busy.subscribe(busy => {
             this._isBusy = busy;
         });
     }

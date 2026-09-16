@@ -57,7 +57,7 @@ export enum TableVirtualScrollHeaderPosition {
     selector: "cdk-virtual-scroll-viewport[tableStickyHeader]",
     host: {
         "[class.sticky-table-header]": "true",
-        style: "overflow-y:overlay",
+        "style": "overflow-y:overlay",
     },
     standalone: false,
 })
@@ -275,7 +275,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         // Disable animation for resizable sticky header cells to prevent a lagging effect during width changes.
         if (!this.table.resizable) {
             Array.from(this.headRef?.getElementsByTagName("th") || []).forEach(
-                (th) => th.classList.add("virtual-sticky")
+                th => th.classList.add("virtual-sticky")
             );
         }
         this.bodyRef =
@@ -328,7 +328,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             merge(
                 this.viewport.renderedRangeStream,
                 // MutationObserver fires whenever rows are added or removed from tbody
-                new Observable<void>((observer) => {
+                new Observable<void>(observer => {
                     if (!this.bodyRef) {
                         return;
                     }
@@ -362,7 +362,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             .pipe(
                 map(() => this.viewportEl.scrollLeft),
                 // Note: Filtering out vertical scroll events
-                filter((scrollLeft) => scrollLeft !== previousScrollLeft),
+                filter(scrollLeft => scrollLeft !== previousScrollLeft),
                 tap((scrollLeft: number) => {
                     previousScrollLeft = scrollLeft;
                     // Note: Simulating horizontal scroll by assigning margin-left to be equal to scrolled distance
@@ -390,11 +390,15 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             this.tableElRef?.classList || []
         );
         originalTableClasses.push("sticky-table-header-container");
-        originalTableClasses.forEach((cssClass) =>
+        originalTableClasses.forEach(cssClass =>
             this.renderer.addClass(this.stickyHeadContainer, cssClass)
         );
 
-        this.renderer.setAttribute(this.stickyHeadContainer, "aria-hidden", "true");
+        this.renderer.setAttribute(
+            this.stickyHeadContainer,
+            "aria-hidden",
+            "true"
+        );
 
         this.renderer.insertBefore(
             this.viewportEl.parentElement,

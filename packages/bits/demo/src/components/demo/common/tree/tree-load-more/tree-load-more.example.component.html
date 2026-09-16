@@ -4,28 +4,24 @@
             nui-button
             displayStyle="action"
             type="button"
-            disabled
-        ></button>
+            disabled></button>
         {{ node.name }}, fromPage: {{ node.page }}
     </cdk-nested-tree-node>
     <cdk-nested-tree-node
         #nestedNode="cdkNestedTreeNode"
         *cdkTreeNodeDef="let node; when: hasChild"
-        class="nui-tree"
-    >
+        class="nui-tree">
         <div
             class="nui-tree__header"
             (click)="onToggleClick(node, nestedNode)"
-            cdkTreeNodeToggle
-        >
+            cdkTreeNodeToggle>
             <nui-icon
                 class="nui-tree__header-icon"
                 icon="{{
                     treeControl.isExpanded(node)
                         ? 'triangle-down'
                         : 'triangle-right'
-                }}"
-            ></nui-icon>
+                }}"></nui-icon>
             <span class="nui-tree__header-title">{{ node.name }}</span>
         </div>
         <div
@@ -33,8 +29,7 @@
             [class.nui-tree__body--collapsed]="!treeControl.isExpanded(node)"
             [@expandedState]="
                 treeControl.isExpanded(node) ? 'expanded' : 'collapsed'
-            "
-        >
+            ">
             <ng-container cdkTreeNodeOutlet></ng-container>
             @if (node.hasPagination) {
             <div>
@@ -42,8 +37,7 @@
                     nui-button
                     displayStyle="action"
                     type="button"
-                    disabled
-                ></button>
+                    disabled></button>
                 @if (!node.isLoading) {
                 <a (click)="loadMoreItems(node, nestedNode)"
                     >Load another {{ pageSize }} (of

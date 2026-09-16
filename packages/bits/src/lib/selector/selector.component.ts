@@ -67,8 +67,8 @@ import { OverlayComponent } from "../overlay/overlay-component/overlay.component
 @Component({
     selector: "nui-selector",
     host: {
-        class: "nui-selector",
-        tabindex: "-1",
+        "class": "nui-selector",
+        "tabindex": "-1",
         "[attr.aria-label]": "ariaLabel",
     },
     templateUrl: "./selector.component.html",
@@ -138,7 +138,7 @@ export class SelectorComponent
             .subscribe(this.onCheckboxValueChange.bind(this));
         this.overlay.clickOutside
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((_) => this.overlay.hide());
+            .subscribe(_ => this.overlay.hide());
         // TODO: should change programmatically in scope of NUI-5937
         this.checkbox.checkboxLabel.nativeElement.setAttribute(
             "tabindex",

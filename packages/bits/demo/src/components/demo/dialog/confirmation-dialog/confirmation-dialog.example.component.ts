@@ -41,14 +41,14 @@ export class ConfirmationDialogExampleComponent {
                 setFocus: "confirm",
             })
             .result.then(
-                (result) => {
+                result => {
                     this.toastService.info({
                         message: result
                             ? $localize`Confirmed`
                             : $localize`Dismissed`,
                     });
                 },
-                (reason) => {
+                reason => {
                     console.log("Rejected:", reason);
                 }
             );
@@ -61,14 +61,14 @@ export class ConfirmationDialogExampleComponent {
                 setFocus: "dismiss",
             })
             .result.then(
-                (result) => {
+                result => {
                     this.toastService.info({
                         message: result
                             ? $localize`Confirmed`
                             : $localize`Dismissed`,
                     });
                 },
-                (reason) => {
+                reason => {
                     console.log("Rejected:", reason);
                 }
             );
@@ -81,14 +81,14 @@ export class ConfirmationDialogExampleComponent {
                 setFocus: "dismiss",
             })
             .result.then(
-                (result) => {
+                result => {
                     this.toastService.info({
                         message: result
                             ? $localize`Confirmed`
                             : $localize`Dismissed`,
                     });
                 },
-                (reason) => {
+                reason => {
                     console.log("Rejected:", reason);
                 }
             );

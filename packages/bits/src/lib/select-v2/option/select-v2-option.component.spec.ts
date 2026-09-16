@@ -85,7 +85,7 @@ describe("components >", () => {
                 component.active = false;
             });
 
-            ["hidden", "selected"].forEach((className) => {
+            ["hidden", "selected"].forEach(className => {
                 it(`is not have ${className} class name by default`, () => {
                     expect(
                         debug.nativeElement.classList.value.includes(className)

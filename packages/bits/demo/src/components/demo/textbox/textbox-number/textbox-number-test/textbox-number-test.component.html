@@ -14,8 +14,7 @@
                     id="test-textbox-number-min-max"
                     placeholder="Enter value between 1 and 10"
                     [minValue]="1"
-                    [maxValue]="10"
-                >
+                    [maxValue]="10">
                 </nui-textbox-number>
             </div>
             <hr />
@@ -27,8 +26,7 @@
             <nui-textbox-number
                 id="test-textbox-number-disabled"
                 value="-7"
-                [disabled]="true"
-            >
+                [disabled]="true">
             </nui-textbox-number>
             <hr />
         </div>
@@ -42,8 +40,7 @@
                     name="number"
                     [(ngModel)]="value"
                     [minValue]="1"
-                    [maxValue]="10"
-                >
+                    [maxValue]="10">
                 </nui-textbox-number>
                 <div>
                     VALID =
@@ -64,8 +61,7 @@
                     id="test-textbox-number-reactive"
                     formControlName="number"
                     [minValue]="1"
-                    [maxValue]="10"
-                >
+                    [maxValue]="10">
                 </nui-textbox-number>
                 <div>FORM VALUE = [{{ reactiveForm.value | json }}]</div>
             </div>

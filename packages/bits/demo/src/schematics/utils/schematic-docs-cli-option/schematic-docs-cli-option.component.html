@@ -6,6 +6,8 @@
         if so, what type. Default is <code>none</code>. The values currently
         supported for this option are listed{{
             forComponent ? "" : " below for each type of component"
+
+
         }}:
     </p>
     <ng-container
@@ -15,8 +17,7 @@
                 tpl: selectionModeTpl,
                 types: [componentType.list, componentType.table]
             }
-        "
-    ></ng-container>
+        "></ng-container>
     <ng-template #selectionModeTpl let-type="type">
         <ul>
             <li>
@@ -165,8 +166,7 @@
             <li>
                 <nui-expander
                     [open]="false"
-                    header="singleWithRequiredSelection"
-                >
+                    header="singleWithRequiredSelection">
                     <p>
                         Enables single-selection with no radio buttons and
                         deselection not allowed.
@@ -177,8 +177,7 @@
             <li>
                 <nui-expander
                     [open]="false"
-                    header="radioWithNonRequiredSelection"
-                >
+                    header="radioWithNonRequiredSelection">
                     <p>Enables single-selection with deselection allowed.</p>
                 </nui-expander>
             </li>
@@ -210,8 +209,7 @@
                             tpl: pagingModeVSTpl,
                             types: [componentType.list, componentType.table]
                         }
-                    "
-                ></ng-container>
+                    "></ng-container>
                 <ng-template #pagingModeVSTpl let-type="type">
                     @if (type === componentType.list) {
                     <p>
@@ -294,8 +292,7 @@
                     </p>
                     <nui-example-code
                         language="typescript"
-                        [code]="tableScrollingSetup.vars"
-                    />
+                        [code]="tableScrollingSetup.vars" />
                     <br />
                     <p>
                         Import
@@ -310,8 +307,7 @@
                     </p>
                     <nui-example-code
                         language="typescript"
-                        [code]="tableScrollingSetup.viewportManagerImport"
-                    />
+                        [code]="tableScrollingSetup.viewportManagerImport" />
                     <br />
                     <p>
                         Provide VirtualViewportManager on a component level
@@ -319,8 +315,7 @@
                     </p>
                     <nui-example-code
                         language="typescript"
-                        [code]="tableScrollingSetup.provideViewport"
-                    />
+                        [code]="tableScrollingSetup.provideViewport" />
                     <br />
                     <p>
                         Inject VirtualViewportManager type in the
@@ -328,8 +323,7 @@
                     </p>
                     <nui-example-code
                         language="typescript"
-                        [code]="tableScrollingSetup.injectViewport"
-                    />
+                        [code]="tableScrollingSetup.injectViewport" />
                     <br />
                     <p>
                         Use the Angular ViewChild decorator to get a reference
@@ -337,14 +331,12 @@
                     </p>
                     <nui-example-code
                         language="typescript"
-                        [code]="tableScrollingSetup.viewChildren"
-                    />
+                        [code]="tableScrollingSetup.viewChildren" />
                     <br />
                     <p>Register the virtual scroll filter on dataSource:</p>
                     <nui-example-code
                         language="typescript"
-                        [code]="tableScrollingSetup.registerScroll"
-                    />
+                        [code]="tableScrollingSetup.registerScroll" />
                     <br />
                     <p>
                         Optionally, subscribe to the
@@ -352,8 +344,7 @@
                     </p>
                     <nui-example-code
                         language="typescript"
-                        [code]="tableScrollingSetup.oninitSubscribeBusy"
-                    />
+                        [code]="tableScrollingSetup.oninitSubscribeBusy" />
                     <br />
                     <p>
                         Start setting up the
@@ -361,8 +352,7 @@
                     </p>
                     <nui-example-code
                         language="typescript"
-                        [code]="tableScrollingSetup.ngAfterViewInitStart"
-                    />
+                        [code]="tableScrollingSetup.ngAfterViewInitStart" />
                     <br />
                     Setting up the viewportManager listener and dataSource
                     handler in the
@@ -420,8 +410,7 @@
                     </ol>
                     <nui-example-code
                         language="typescript"
-                        [code]="tableScrollingSetup.ngAfterViewInitViewport"
-                    />
+                        [code]="tableScrollingSetup.ngAfterViewInitViewport" />
                     <br />
                     }
                 </ng-template>
@@ -491,8 +480,7 @@
                         a default service,
                         <a
                             target="_blank"
-                            href="../injectables/ClientSideDataSource.html"
-                        >
+                            href="../injectables/ClientSideDataSource.html">
                             <code>ClientSideDataSource</code></a
                         >, which provides default methods for working with
                         filters. In case you need something special (such as
@@ -506,8 +494,7 @@
                         method of
                         <a
                             target="_blank"
-                            href="../injectables/ClientSideDataSource.html"
-                        >
+                            href="../injectables/ClientSideDataSource.html">
                             <code>ClientSideDataSource</code></a
                         >.
                     </li>
@@ -525,22 +512,19 @@
                         method of
                         <a
                             target="_blank"
-                            href="../injectables/ClientSideDataSource.html"
-                        >
+                            href="../injectables/ClientSideDataSource.html">
                             <code>ClientSideDataSource</code></a
                         >. And, lastly, subscribe to
                         <code>outputsSubject</code> on
                         <a
                             target="_blank"
-                            href="../injectables/ClientSideDataSource.html"
-                        >
+                            href="../injectables/ClientSideDataSource.html">
                             <code>ClientSideDataSource</code></a
                         >
                         which will return an
                         <a
                             target="_blank"
-                            href="../interfaces/INovaFilteringOutputs.html"
-                        >
+                            href="../interfaces/INovaFilteringOutputs.html">
                             <code>INovaFilteringOutputs</code></a
                         >
                         object after each change in pagination.
@@ -644,8 +628,7 @@
                     </p>
                     <nui-example-code
                         language="typescript"
-                        [code]="dataSourceSetup.extendDS"
-                    />
+                        [code]="dataSourceSetup.extendDS" />
                     <br />
                     <p>
                         Define the following fields to work with the data
@@ -676,8 +659,7 @@
                     .
                     <nui-example-code
                         language="typescript"
-                        [code]="dataSourceSetup.defineFields"
-                    />
+                        [code]="dataSourceSetup.defineFields" />
                     <br />
                     <p>
                         Create a method that will fetch the data and perhaps
@@ -709,8 +691,7 @@
                     </p>
                     <nui-example-code
                         language="typescript"
-                        [code]="dataSourceSetup.getData"
-                    />
+                        [code]="dataSourceSetup.getData" />
                     <br />
                     <p>
                         The next step will be to implement the
@@ -736,8 +717,7 @@
                     </p>
                     <nui-example-code
                         language="typescript"
-                        [code]="dataSourceSetup.getFilteredData"
-                    />
+                        [code]="dataSourceSetup.getFilteredData" />
                     <br />
                     <p>
                         All data source preparation steps are finished at this
@@ -782,8 +762,7 @@
                 For remote data sources, which usually extend or use directly
                 <a
                     target="_blank"
-                    href="../injectables/ServerSideDataSource.html"
-                >
+                    href="../injectables/ServerSideDataSource.html">
                     <code>ServerSideDataSource</code></a
                 >, if you want searches to be performed as the user types, it's
                 advised to add a debounce to the filtering to avoid stressing
@@ -795,8 +774,7 @@
                 For local data sources, which usually extend or use directly
                 <a
                     target="_blank"
-                    href="../injectables/ClientSideDataSource.html"
-                >
+                    href="../injectables/ClientSideDataSource.html">
                     <code>ClientSideDataSource</code></a
                 >, you can use the <code>setSearchProperties</code> method of
                 <a
@@ -899,16 +877,14 @@
 <ng-template #helpRenderer let-types="types" let-tpl="tpl">
     @switch (forComponent ? forComponent : 'shared') { @default {
     <ng-container
-        *ngTemplateOutlet="tpl; context: { type: forComponent }"
-    ></ng-container>
+        *ngTemplateOutlet="tpl; context: { type: forComponent }"></ng-container>
     } @case ('shared') {
     <ul>
         @for (type of types; track type) {
         <li>
             <nui-expander [open]="false" header="{{ type }}">
                 <ng-container
-                    *ngTemplateOutlet="tpl; context: { type: type }"
-                ></ng-container>
+                    *ngTemplateOutlet="tpl; context: { type: type }"></ng-container>
             </nui-expander>
         </li>
         }

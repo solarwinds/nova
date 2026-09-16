@@ -108,9 +108,9 @@ export class TableWithSearchDataSource<T>
 
                 // transform backend API response (IServersApiResponse)
                 // to our frontend items collection (IServersCollection)
-                map((response) => ({
+                map(response => ({
                     items:
-                        response.items?.map((item) => ({
+                        response.items?.map(item => ({
                             name: item.name,
                             location: item.location,
                             status: item.status,
@@ -119,7 +119,7 @@ export class TableWithSearchDataSource<T>
                 })),
 
                 // error handle in case of any error
-                catchError((e) => {
+                catchError(e => {
                     this.logger.error(e);
                     return of({
                         items: [],

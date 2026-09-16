@@ -69,7 +69,7 @@ export class TableFiltersConverterService
     }
 
     public toPreview(form: FormGroup): void {
-        form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((form) => {
+        form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(form => {
             let preview = this.getPreview();
             preview = immutableSet(
                 preview,

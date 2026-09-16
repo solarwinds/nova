@@ -47,19 +47,17 @@ describe("ng-update", () => {
             skipTests: false,
             skipPackageJson: false,
         };
-        appTree = await runner
-            .runExternalSchematic(
-                "@schematics/angular",
-                "workspace",
-                workspaceOptions
-            )
-        appTree = await runner
-            .runExternalSchematic(
-                "@schematics/angular",
-                "application",
-                appOptions,
-                appTree
-            )
+        appTree = await runner.runExternalSchematic(
+            "@schematics/angular",
+            "workspace",
+            workspaceOptions
+        );
+        appTree = await runner.runExternalSchematic(
+            "@schematics/angular",
+            "application",
+            appOptions,
+            appTree
+        );
     });
 
     it("adds style to angular.json without property", async () => {
@@ -77,12 +75,11 @@ describe("ng-update", () => {
                 },
             })
         );
-        const afterTree = await runner
-            .runSchematic(
-                "nova-migration-v13",
-                { skipTsConfig: true, project: "bar", skipCss: false },
-                appTree
-            )
+        const afterTree = await runner.runSchematic(
+            "nova-migration-v13",
+            { skipTsConfig: true, project: "bar", skipCss: false },
+            appTree
+        );
         const file = JSON.parse(
             (afterTree.read("angular.json") ?? "").toString("utf-8")
         );
@@ -111,12 +108,11 @@ describe("ng-update", () => {
             })
         );
 
-        const afterTree = await runner
-            .runSchematic(
-                "nova-migration-v13",
-                { skipTsConfig: true, project: "bar", skipCss: false },
-                appTree
-            )
+        const afterTree = await runner.runSchematic(
+            "nova-migration-v13",
+            { skipTsConfig: true, project: "bar", skipCss: false },
+            appTree
+        );
         const file = JSON.parse(
             (afterTree.read("angular.json") ?? "")?.toString("utf-8")
         );
@@ -126,12 +122,11 @@ describe("ng-update", () => {
     });
 
     it("updates style array in angular.json", async () => {
-        const afterTree = await runner
-            .runSchematic(
-                "nova-migration-v13",
-                { skipTsConfig: true, project: "bar" },
-                appTree
-            )
+        const afterTree = await runner.runSchematic(
+            "nova-migration-v13",
+            { skipTsConfig: true, project: "bar" },
+            appTree
+        );
         const file = JSON.parse(
             (afterTree.read("angular.json") ?? "").toString("utf-8")
         );

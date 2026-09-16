@@ -146,7 +146,7 @@ export class WizardComponent
     }
 
     public ngAfterContentInit(): void {
-        const activeTabs = this.steps.filter((item) => item.active);
+        const activeTabs = this.steps.filter(item => item.active);
         this.arraySteps = this.steps.toArray();
         if (activeTabs.length === 0) {
             this.currentStep = this.steps.first;
@@ -160,7 +160,7 @@ export class WizardComponent
                 }
             });
         });
-        this.navigationControl.subscribe((value) => {
+        this.navigationControl.subscribe(value => {
             if (this.currentStep) {
                 this.currentStep.busyConfig = value.busyState;
             }
@@ -201,7 +201,7 @@ export class WizardComponent
         const instance: IWizardStepComponent = componentRef.instance;
         const wizardStepInputs = this.getInputsAndOutputs(wizardStep);
 
-        wizardStepInputs.forEach((key) => {
+        wizardStepInputs.forEach(key => {
             instance[key] = wizardStep[key];
         });
         this.handleStepControl(componentRef.instance);
@@ -241,7 +241,7 @@ export class WizardComponent
         this.steps.reset(this.arraySteps);
         this.stepIndex = this.steps
             .toArray()
-            .findIndex((s) => s === this.currentStep);
+            .findIndex(s => s === this.currentStep);
     }
 
     public disableStep(step: WizardStepComponent): void {
@@ -271,7 +271,7 @@ export class WizardComponent
     }
 
     public resetStep(step: WizardStepComponent): void {
-        let index = this.arraySteps.findIndex((s) => s === step);
+        let index = this.arraySteps.findIndex(s => s === step);
         const length = this.arraySteps.length;
 
         for (index; index < length; index++) {
@@ -312,7 +312,7 @@ export class WizardComponent
             if (previousStep.hidden || previousStep.disabled) {
                 previousStep = _find(
                     this.arraySteps.slice(0).reverse(),
-                    (step) => !step.hidden,
+                    step => !step.hidden,
                     _findIndex(
                         this.arraySteps.slice(0).reverse(),
                         this.arraySteps[this.stepIndex]
@@ -340,7 +340,7 @@ export class WizardComponent
             // this disabled does not let user to go forward when next is disabled. Needs to be changed after validation
             nextStep = _find(
                 this.arraySteps,
-                (step) => !step.hidden,
+                step => !step.hidden,
                 this.stepIndex + 1
             );
         }
@@ -365,7 +365,7 @@ export class WizardComponent
 
     public onCancelClick(): void {
         this.cancel.emit(
-            this.steps.toArray().filter((step) => step.complete).length !== 0
+            this.steps.toArray().filter(step => step.complete).length !== 0
         );
     }
 
@@ -386,13 +386,13 @@ export class WizardComponent
     }
 
     private disableFollowingSteps(): void {
-        this.arraySteps.slice(this.stepIndex + 1).map((item) => {
+        this.arraySteps.slice(this.stepIndex + 1).map(item => {
             item.disabled = true;
         });
     }
 
     private enableFollowingSteps(): void {
-        this.arraySteps.slice(this.stepIndex + 1).map((item) => {
+        this.arraySteps.slice(this.stepIndex + 1).map(item => {
             item.disabled = false;
         });
     }
@@ -400,7 +400,7 @@ export class WizardComponent
     private getInputsAndOutputs(compType: IWizardStepComponent): string[] {
         const inputs = compType.inputsList;
         const outputs = Object.keys(compType).filter(
-            (key) => compType[key] instanceof EventEmitter
+            key => compType[key] instanceof EventEmitter
         );
         return [...inputs, ...outputs];
     }
@@ -417,7 +417,7 @@ export class WizardComponent
 
     private getLargestLabelWidth() {
         const widths = this.stepTitles.map(
-            (title) => title.nativeElement.offsetWidth
+            title => title.nativeElement.offsetWidth
         );
 
         return Math.round(Math.max(...widths));

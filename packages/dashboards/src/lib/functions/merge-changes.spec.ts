@@ -128,7 +128,7 @@ describe("merge changes", () => {
                         nodes: ["header", "grid-layout"],
                     },
                 },
-                header: {
+                "header": {
                     id: "header",
                     componentType: "WidgetHeaderComponent",
                     properties: {
@@ -145,7 +145,7 @@ describe("merge changes", () => {
                 },
             };
             const configuration: any = {
-                header: {
+                "header": {
                     properties: {
                         widgetTitle: "KPI Widget!",
                         subtitle: "A bunch of number boxes",
@@ -156,14 +156,14 @@ describe("merge changes", () => {
                         nodes: ["kpi1", "kpi2"],
                     },
                 },
-                kpi1: {
+                "kpi1": {
                     id: "kpi1",
                     componentType: KpiComponent.lateLoadKey,
                     properties: {
                         elementClass: "flex-grow-1",
                     },
                 },
-                kpi2: {
+                "kpi2": {
                     id: "kpi2",
                     componentType: KpiComponent.lateLoadKey,
                     properties: {
@@ -200,7 +200,7 @@ describe("merge changes", () => {
 
             const result: any = mergeChanges(
                 {},
-                ...[structure, configuration, data].map((x) => ({
+                ...[structure, configuration, data].map(x => ({
                     previousValue: undefined,
                     currentValue: x,
                 }))

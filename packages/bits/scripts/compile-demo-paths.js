@@ -7,7 +7,7 @@ const dir = "demo/src/components/demo/";
 const files = [];
 const fileTypes = [".ts", ".html", ".less", ".css"];
 
-const getFilesRecursively = (directory) => {
+const getFilesRecursively = directory => {
     const filesInDirectory = fs.readdirSync(directory);
     for (const file of filesInDirectory) {
         const absolute = path.join(directory, file);
@@ -23,7 +23,7 @@ const getFilesRecursively = (directory) => {
 
 getFilesRecursively(dir);
 
-const trimmedFiles = files.map((filePath) =>
+const trimmedFiles = files.map(filePath =>
     filePath.replace(/\\/g, "/").replace(dir, "")
 );
 

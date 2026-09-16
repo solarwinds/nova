@@ -31,17 +31,20 @@ test.describe("USERCONTROL setFocus:", () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("common/set-focus", page);
-        carrotRadio = Helpers.page.locator("#nui-demo-setfocus-radio-carrot").locator(
-            Helpers.page.locator("input")
-        );
-        onionRadio = Helpers.page.locator("#nui-demo-setfocus-radio-onion").locator(
-            Helpers.page.locator("input")
-        );
+        carrotRadio = Helpers.page
+            .locator("#nui-demo-setfocus-radio-carrot")
+            .locator(Helpers.page.locator("input"));
+        onionRadio = Helpers.page
+            .locator("#nui-demo-setfocus-radio-onion")
+            .locator(Helpers.page.locator("input"));
         carrotBtnAtom = Atom.find<ButtonAtom>(
             ButtonAtom,
             "nui-demo-setfocus-button-carrot"
         );
-        onionBtnAtom = Atom.find<ButtonAtom>(ButtonAtom, "nui-demo-setfocus-button-onion");
+        onionBtnAtom = Atom.find<ButtonAtom>(
+            ButtonAtom,
+            "nui-demo-setfocus-button-onion"
+        );
     });
 
     test("click button that handle a prop bound to the 'nuiSetFocus' changes focus", async () => {
@@ -64,7 +67,7 @@ test.describe("USERCONTROL setFocus:", () => {
     async function expectIsSelected(finder: Locator) {
         await expect
             .poll(async () =>
-                finder.evaluate((el) => el === document.activeElement)
+                finder.evaluate(el => el === document.activeElement)
             )
             .toBe(true);
     }
@@ -72,7 +75,7 @@ test.describe("USERCONTROL setFocus:", () => {
     async function expectIsNotSelected(finder: Locator) {
         await expect
             .poll(async () =>
-                finder.evaluate((el) => el === document.activeElement)
+                finder.evaluate(el => el === document.activeElement)
             )
             .toBe(false);
     }

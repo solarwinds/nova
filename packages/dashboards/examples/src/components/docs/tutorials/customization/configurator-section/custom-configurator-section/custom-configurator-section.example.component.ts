@@ -178,8 +178,8 @@ export class CustomKpiDescriptionConfigurationComponent
 
         // eslint-disable-next-line import/no-deprecated
         this.subtitle$ = combineLatest([
-            labelValue?.pipe(map((t) => t || $localize`no label`)),
-        ]).pipe(map((labels) => labels.join(", ")));
+            labelValue?.pipe(map(t => t || $localize`no label`)),
+        ]).pipe(map(labels => labels.join(", ")));
 
         this.formReady.emit(this.form);
     }
@@ -216,7 +216,7 @@ export class AverageRatingKpiDataSource
     // provider definition in the widget configuration below to see how the interval is set)
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             // *** Make a resource request to an external API (if needed)
             this.http
                 .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
@@ -265,7 +265,7 @@ export class RatingsCountKpiDataSource
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             this.http
                 .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
                 .pipe(finalize(() => this.busy.next(false)))
