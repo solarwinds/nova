@@ -36,12 +36,13 @@
             [displayValueContext]="groupedItem"
             [value]="groupedItem"
         >
+            @if(!customTemplate) {
             <span
-                *ngIf="!customTemplate"
                 [innerHTML]="
                     groupedItem.displayValue | nuiHighlight : focusedTokenValue
                 "
             ></span>
+            }
         </nui-select-v2-option>
         } } @if (item.notice) { @for (groupedItem of item.items; track $index) {
         <div class="options-group">

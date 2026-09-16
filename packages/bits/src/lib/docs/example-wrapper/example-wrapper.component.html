@@ -61,10 +61,13 @@
                     fileContent="{{ getExampleComponents('less') }}"
                 ></nui-copy-text>
                 <div class="media-body">
-                    <nui-example-code
-                        *ngIf="!!getExampleComponents('less'); else noLess"
-                        [code]="getExampleComponents('less')"
-                    />
+                    @if (!!getExampleComponents('less')) {
+                    <nui-example-code [code]="getExampleComponents('less')" />
+                    } @else {
+                    <ng-template #noLess>
+                        <!-- existing noLess content goes here -->
+                    </ng-template>
+                    }
                     <ng-template #noLess>
                         <nui-image image="no-data-to-show"></nui-image>
                     </ng-template>

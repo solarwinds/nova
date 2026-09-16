@@ -32,10 +32,9 @@
                 </h5>
             </div>
             <div class="nui-source-inspector-code">
-                <nui-example-code
-                    *ngIf="shouldCodeRender"
-                    [code]="getSource(selectedFile)"
-                />
+                @if (shouldCodeRender){
+                <nui-example-code [code]="getSource(selectedFile)" />
+                }
             </div>
         </nui-expander>
     </div>
