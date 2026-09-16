@@ -134,5 +134,5 @@
     "visual:watch": "npx watch \"yarn run visual:base\" src demo spec --watch=1"
   },
   "typings": "public_api.d.ts",
-  "version": "20.0.10"
+  "version": "20.0.11"
 }

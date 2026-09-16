@@ -10,5 +10,5 @@
     "copy:json": "npx copyfiles -u 1 \"src/**/*.json\" ./dist",
     "test": "jasmine ./dist/**/*.spec.js"
   },
-  "version": "20.0.10"
+  "version": "20.0.11"
 }
