@@ -149,7 +149,7 @@ export class TimePickerKeyboardService {
     }
 
     private getSelectedIndex(): number {
-        return this.menuItems.findIndex((component) => {
+        return this.menuItems.findIndex(component => {
             const parent = component.menuItem.nativeElement.parentElement;
 
             return parent.classList.contains("nui-menu-item--selected");

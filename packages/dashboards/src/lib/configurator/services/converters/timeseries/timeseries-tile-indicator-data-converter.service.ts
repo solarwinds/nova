@@ -58,7 +58,7 @@ export class TimeseriesTileIndicatorDataConverterService extends BaseConverter {
             []
         ) as ITimeseriesWidgetSeries[];
         const currentSeries = series.find(
-            (s) => s.id === this.previewComponentId
+            s => s.id === this.previewComponentId
         );
         const selectedSeriesId =
             currentSeries && currentSeries.selectedSeriesId;
@@ -72,35 +72,33 @@ export class TimeseriesTileIndicatorDataConverterService extends BaseConverter {
     }
 
     public toPreview(form: FormGroup): void {
-        form.valueChanges
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((formData) => {
-                const selectedSeriesId = formData.id;
-                const preview = this.getPreview();
+        form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(formData => {
+            const selectedSeriesId = formData.id;
+            const preview = this.getPreview();
 
-                const seriesFromPreview = get(
+            const seriesFromPreview = get(
+                preview,
+                this.previewSeriesPath,
+                []
+            ) as ITimeseriesWidgetSeries[];
+            const currentSeriesIndex = seriesFromPreview.findIndex(
+                s => s.id === this.previewComponentId
+            );
+
+            if (currentSeriesIndex > -1) {
+                const newSeries = [...seriesFromPreview];
+                newSeries[currentSeriesIndex] = {
+                    ...newSeries[currentSeriesIndex],
+                    selectedSeriesId,
+                };
+
+                const updatedPreview = immutableSet(
                     preview,
-                    this.previewSeriesPath,
-                    []
-                ) as ITimeseriesWidgetSeries[];
-                const currentSeriesIndex = seriesFromPreview.findIndex(
-                    (s) => s.id === this.previewComponentId
+                    `${this.previewSeriesPath}`,
+                    newSeries
                 );
-
-                if (currentSeriesIndex > -1) {
-                    const newSeries = [...seriesFromPreview];
-                    newSeries[currentSeriesIndex] = {
-                        ...newSeries[currentSeriesIndex],
-                        selectedSeriesId,
-                    };
-
-                    const updatedPreview = immutableSet(
-                        preview,
-                        `${this.previewSeriesPath}`,
-                        newSeries
-                    );
-                    this.updatePreview(updatedPreview);
-                }
-            });
+                this.updatePreview(updatedPreview);
+            }
+        });
     }
 }

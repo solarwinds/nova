@@ -3,15 +3,12 @@
         [gaugeConfig]="gaugeConfig"
         [size]="donutSize"
         [annularGrowth]="annularGrowth"
-        [annularWidth]="thickness"
-    >
+        [annularWidth]="thickness">
     </donut-gauge-prototype>
     <linear-gauge-vertical-prototype
-        [gaugeConfig]="gaugeConfig"
-    ></linear-gauge-vertical-prototype>
+        [gaugeConfig]="gaugeConfig"></linear-gauge-vertical-prototype>
     <linear-gauge-horizontal-prototype
-        [gaugeConfig]="gaugeConfig"
-    ></linear-gauge-horizontal-prototype>
+        [gaugeConfig]="gaugeConfig"></linear-gauge-horizontal-prototype>
 </div>
 
 <div class="d-flex justify-content-center">
@@ -20,15 +17,13 @@
             <nui-form-field
                 caption="Donut Annular Growth"
                 hint="Set to zero to have the donut obey the manual thickness setting"
-                [showOptionalText]="false"
-            >
+                [showOptionalText]="false">
                 <nui-textbox-number
                     type="number"
                     [(ngModel)]="annularGrowth"
                     [minValue]="0"
                     [step]="0.01"
-                    customBoxWidth="75px"
-                ></nui-textbox-number>
+                    customBoxWidth="75px"></nui-textbox-number>
             </nui-form-field>
         </div>
         <div class="mb-2">
@@ -40,8 +35,7 @@
                 [minValue]="0"
                 [step]="25"
                 customBoxWidth="75px"
-                name="donutSizeInput"
-            ></nui-textbox-number>
+                name="donutSizeInput"></nui-textbox-number>
         </div>
     </div>
     <div class="column ml-5">
@@ -56,8 +50,7 @@
                 [maxValue]="maxValue"
                 [step]="valueStep"
                 customBoxWidth="75px"
-                name="valueInput"
-            ></nui-textbox-number>
+                name="valueInput"></nui-textbox-number>
         </div>
         <div class="mb-2">
             <label for="thicknessInput"> Thickness </label>
@@ -68,8 +61,7 @@
                 (ngModelChange)="onThicknessChange($event)"
                 [minValue]="0"
                 customBoxWidth="75px"
-                name="thicknessInput"
-            ></nui-textbox-number>
+                name="thicknessInput"></nui-textbox-number>
         </div>
         <div class="mb-2">
             <label for="lowThresholdInput"> Low Threshold </label>
@@ -82,8 +74,7 @@
                 [maxValue]="highThreshold - valueStep"
                 [step]="valueStep"
                 customBoxWidth="75px"
-                name="lowThresholdInput"
-            ></nui-textbox-number>
+                name="lowThresholdInput"></nui-textbox-number>
         </div>
         <div class="mb-2">
             <label for="highThresholdInput"> High Threshold </label>
@@ -96,8 +87,7 @@
                 [maxValue]="maxValue"
                 [step]="valueStep"
                 customBoxWidth="75px"
-                name="highThresholdInput"
-            ></nui-textbox-number>
+                name="highThresholdInput"></nui-textbox-number>
         </div>
     </div>
     <div class="column ml-5">
@@ -108,8 +98,7 @@
                     class="mb-2"
                     type="checkbox"
                     [ngModel]="warningEnabled"
-                    (ngModelChange)="onWarningEnabledChange($event)"
-                />
+                    (ngModelChange)="onWarningEnabledChange($event)" />
                 <label class="px-3" for="enable-warning">Warning Enabled</label>
             </div>
         </div>
@@ -120,8 +109,7 @@
                     class="mb-2"
                     type="checkbox"
                     [(ngModel)]="criticalEnabled"
-                    (ngModelChange)="onCriticalEnabledChange($event)"
-                />
+                    (ngModelChange)="onCriticalEnabledChange($event)" />
                 <label class="px-3" for="enable-critical"
                     >Critical Enabled</label
                 >
@@ -134,8 +122,7 @@
                     type="checkbox"
                     id="enable-markers"
                     [ngModel]="thresholdMarkersEnabled"
-                    (ngModelChange)="onEnableThresholdMarkersChange($event)"
-                />
+                    (ngModelChange)="onEnableThresholdMarkersChange($event)" />
                 <label class="px-3" for="enable-markers">Markers Enabled</label>
             </div>
         </div>
@@ -146,8 +133,7 @@
                     class="mb-2"
                     type="checkbox"
                     [ngModel]="reversed"
-                    (ngModelChange)="onReversedChange($event)"
-                />
+                    (ngModelChange)="onReversedChange($event)" />
                 <label class="px-3" for="reversed">Reversed</label>
             </div>
         </div>
@@ -158,8 +144,7 @@
                     class="mb-2"
                     type="checkbox"
                     [ngModel]="flipLabels"
-                    (ngModelChange)="onFlippedChange($event)"
-                />
+                    (ngModelChange)="onFlippedChange($event)" />
                 <label class="px-3" for="flip-labels">Flip Labels</label>
             </div>
         </div>
@@ -170,8 +155,7 @@
                     type="checkbox"
                     id="dark-theme"
                     [ngModel]="themeSwitcher.isDarkModeEnabledSubject | async"
-                    (ngModelChange)="themeSwitcher.setDarkTheme($event)"
-                />
+                    (ngModelChange)="themeSwitcher.setDarkTheme($event)" />
                 <label class="px-3" for="dark-theme">Dark Theme</label>
             </div>
         </div>

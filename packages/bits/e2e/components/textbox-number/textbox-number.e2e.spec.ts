@@ -195,7 +195,7 @@ test.describe("USERCONTROL textbox-number >", () => {
                 await component.toBeInvalid();
             });
 
-            each(["-", "+", "1e", "eee", "1-1", "1+1"], (invalidValue) => {
+            each(["-", "+", "1e", "eee", "1-1", "1+1"], invalidValue => {
                 test(`should reject incorrect string input: '${invalidValue}'`, async () => {
                     await component.acceptText(invalidValue);
                     await component.toBeInvalid();

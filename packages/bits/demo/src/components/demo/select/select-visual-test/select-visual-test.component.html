@@ -5,8 +5,7 @@
             <nui-select
                 id="nui-demo-basic-select"
                 [itemsSource]="datasetBasic.items"
-                placeholder="Select item"
-            >
+                placeholder="Select item">
             </nui-select>
         </div>
         <div class="col">
@@ -15,8 +14,7 @@
                 id="nui-demo-basic-select-disabled"
                 [itemsSource]="datasetDisabled.items"
                 [value]="datasetDisabled.selectedItem"
-                [isDisabled]="true"
-            >
+                [isDisabled]="true">
             </nui-select>
         </div>
     </div>
@@ -28,8 +26,7 @@
                 [itemsSource]="datasetBasic.items"
                 [isInErrorState]="isInErrorState()"
                 [value]="datasetBasic.selectedItem"
-                (changed)="valueChange($event)"
-            >
+                (changed)="valueChange($event)">
             </nui-select>
         </div>
         <div class="col">
@@ -38,8 +35,7 @@
                 id="nui-demo-select-separators"
                 [itemsSource]="datasetSeparator.itemsInGroups"
                 [value]="datasetSeparator.selectedItem"
-                (changed)="valueChange($event)"
-            >
+                (changed)="valueChange($event)">
             </nui-select>
         </div>
     </div>
@@ -55,8 +51,7 @@
                     id="nui-demo-inline-select"
                     [inline]="true"
                     [itemsSource]="datasetBasic.items"
-                    placeholder="Select item"
-                >
+                    placeholder="Select item">
                 </nui-select>
                 <span
                     >Ut enim ad minim veniam, quis nostrud exercitation ullamco
@@ -72,8 +67,7 @@
                 [value]="datasetBasic.selectedItem"
                 id="nui-demo-select-justified"
                 [justified]="true"
-                [itemsSource]="datasetBasic.items"
-            >
+                [itemsSource]="datasetBasic.items">
             </nui-select>
         </div>
     </div>
@@ -85,15 +79,13 @@
                     <nui-icon [icon]="item.icon"></nui-icon>
                     <div
                         class="media-body"
-                        class="select-examples-custom-template"
-                    >
+                        class="select-examples-custom-template">
                         <h2>{{ item.value }}</h2>
                         <h5>{{ item.name }}</h5>
                         <nui-progress
                             [showProgress]="true"
                             [show]="true"
-                            [percent]="item.progress"
-                        >
+                            [percent]="item.progress">
                         </nui-progress>
                     </div>
                 </div>
@@ -104,8 +96,7 @@
                 [justified]="true"
                 [itemsSource]="datasetCustom.items"
                 [displayValue]="datasetCustom.displayValue"
-                [customTemplate]="customSelectTemplate"
-            ></nui-select>
+                [customTemplate]="customSelectTemplate"></nui-select>
         </div>
         <div class="col">
             <h3>Select with Reactive Forms</h3>
@@ -120,8 +111,7 @@
                             myForm.controls['item'].touched
                         "
                         [itemsSource]="datasetBasic.items"
-                        (changed)="valueChange($event)"
-                    ></nui-select>
+                        (changed)="valueChange($event)"></nui-select>
                     <button nui-button type="submit" class="mt-1">
                         Submit
                     </button>

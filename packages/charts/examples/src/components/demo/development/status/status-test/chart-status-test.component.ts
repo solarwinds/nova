@@ -115,7 +115,7 @@ export class ChartStatusTestComponent implements AfterViewInit {
         const thresholdSeriesSet: IChartSeries<IStatusAccessors>[] = getData({
             numberOfSeries: 10,
             isRandom: true,
-        }).map((d) => ({
+        }).map(d => ({
             ...d,
             accessors,
             renderer,
@@ -125,7 +125,7 @@ export class ChartStatusTestComponent implements AfterViewInit {
         const bandSeriesSet: IChartSeries<IStatusAccessors>[] = getData({
             numberOfSeries: 1,
             isRandom: false,
-        }).map((d) => ({
+        }).map(d => ({
             ...d,
             accessors,
             renderer,
@@ -134,7 +134,7 @@ export class ChartStatusTestComponent implements AfterViewInit {
 
         this.chartThreshold.update(thresholdSeriesSet);
         this.chartThreshold.setSeriesStates(
-            thresholdSeriesSet.map((series) => ({
+            thresholdSeriesSet.map(series => ({
                 seriesId: series.id,
                 state: RenderState.deemphasized,
             }))
@@ -192,7 +192,7 @@ function getData(
         .map((series, i) => ({
             id: "series-" + i,
             name: "Series " + i,
-            data: series.map((d) => ({
+            data: series.map(d => ({
                 value: d.end - d.start,
                 status: d.status,
                 start: getDate(d.start),

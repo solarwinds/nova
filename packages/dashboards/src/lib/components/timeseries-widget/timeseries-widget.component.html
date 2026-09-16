@@ -2,8 +2,7 @@
     class="h-100 timeseries-widget-content"
     *ngIf="shouldShowChart()"
     (mouseleave)="toggleLeave()"
-    (mouseenter)="toggleEnter()"
->
+    (mouseenter)="toggleEnter()">
     <ng-container
         nuiComponentPortal
         componentId="timeseriesWidgetChart"
@@ -14,12 +13,10 @@
             collectionId: collectionId || configuration?.collectionId,
             zoomPlugins: zoomPlugins
         }"
-        #componentPortal="nuiComponentPortal"
-    >
+        #componentPortal="nuiComponentPortal">
         <ng-template
             [cdkPortalOutlet]="componentPortal.portal"
-            (attached)="componentPortal.attached($event)"
-        >
+            (attached)="componentPortal.attached($event)">
         </ng-template>
     </ng-container>
     <nui-timeseries-inspection-menu
@@ -33,8 +30,7 @@
         [plugin]="zoomPlugins[0]"
         [collectionId]="collectionId"
         [exploringEnabled]="isExploringEnabled()"
-        [metricIds]="configuration?.metricIds"
-    ></nui-timeseries-inspection-menu>
+        [metricIds]="configuration?.metricIds"></nui-timeseries-inspection-menu>
 </div>
 <div *ngIf="!shouldShowChart()">
     <nui-image image="no-data-to-show"></nui-image>

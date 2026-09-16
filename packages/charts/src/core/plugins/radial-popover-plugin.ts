@@ -32,8 +32,8 @@ export class RadialPopoverPlugin extends ChartPopoverPlugin {
             throw new Error("Chart parent node is not defined");
         }
 
-        const dataPointsLeft = Math.min(...valArr.map((d) => d.position.x));
-        const dataPointsTop = Math.min(...valArr.map((d) => d.position.y));
+        const dataPointsLeft = Math.min(...valArr.map(d => d.position.x));
+        const dataPointsTop = Math.min(...valArr.map(d => d.position.y));
         const left =
             chartElement.offsetLeft +
             this.chart.getGrid().config().dimension.margin.left +

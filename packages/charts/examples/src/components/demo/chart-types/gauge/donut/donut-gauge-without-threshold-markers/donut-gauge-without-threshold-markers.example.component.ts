@@ -32,7 +32,8 @@ import {
 
 @Component({
     selector: "donut-gauge-without-threshold-markers-example",
-    templateUrl: "./donut-gauge-without-threshold-markers.example.component.html",
+    templateUrl:
+        "./donut-gauge-without-threshold-markers.example.component.html",
     styleUrls: [
         "./donut-gauge-without-threshold-markers.example.component.less",
     ],

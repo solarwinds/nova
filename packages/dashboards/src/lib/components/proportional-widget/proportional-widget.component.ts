@@ -311,11 +311,11 @@ export class ProportionalWidgetComponent
         this.chartTypeSubscription$ = this.chartAssist.chart
             .getEventBus()
             .getStream(SELECT_DATA_POINT_EVENT)
-            .subscribe((event) => {
+            .subscribe(event => {
                 // event payload is a data point from the chart - since we display one data point for every series,
                 // we convert the data point to the original series
                 const series = this.widgetData.find(
-                    (s) => s.id === event.data.seriesId
+                    s => s.id === event.data.seriesId
                 );
                 this.onInteraction(series);
             });
@@ -404,7 +404,7 @@ export class ProportionalWidgetComponent
     private updateChartColors(): void {
         let colorProvider: IValueProvider<string>;
 
-        const dataColors = this.widgetData?.map((v) => v.color);
+        const dataColors = this.widgetData?.map(v => v.color);
         const configurationColors = this.configuration.chartColors;
 
         if (!this.configuration.prioritizeWidgetColors && some(dataColors)) {
@@ -429,7 +429,7 @@ export class ProportionalWidgetComponent
     ): IValueProvider<string> {
         let colorProvider: IValueProvider<string>;
 
-        const dataColors = widgetData?.map((v) => v.color).filter((v) => !!v);
+        const dataColors = widgetData?.map(v => v.color).filter(v => !!v);
 
         if (dataColors.length === widgetData.length) {
             const colorMap = widgetData.reduce(
@@ -442,7 +442,7 @@ export class ProportionalWidgetComponent
             colorProvider = new MappedValueProvider<string>(colorMap);
         } else {
             const widgetDataWithColor = widgetData.filter(
-                (series) => series.color
+                series => series.color
             );
 
             this.logger.warn(
@@ -467,7 +467,7 @@ export class ProportionalWidgetComponent
 
         // remove data colors since nui-chart takes them into consideration no matter what
         if (this.configuration.prioritizeWidgetColors && this.widgetData) {
-            this.widgetData = this.widgetData.map((origin) => {
+            this.widgetData = this.widgetData.map(origin => {
                 const series = { ...origin };
                 if (series.color) {
                     delete series.color;

@@ -52,7 +52,7 @@ export class DonutChartExampleComponent implements OnInit {
 
         // Invoke the chart assist's update method with the IChartAssistSeries collection as the argument
         this.chartAssist.update(
-            getData().map((s) => ({
+            getData().map(s => ({
                 ...s,
                 accessors,
                 scales,

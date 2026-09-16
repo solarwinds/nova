@@ -2,14 +2,14 @@
     "compilerOptions": {
         "baseUrl": ".",
         "declaration": true,
-        "outDir": "../dist/sdk/atoms-playwright",
         "module": "esnext",
         "moduleResolution": "bundler",
-        "target": "es6",
+        "outDir": "../dist/sdk/atoms-playwright",
         "paths": {
             "@test/*": ["./*"]
-        }
+        },
+        "target": "es6"
     },
-    "files": ["index.ts"],
     "extends": "../tsconfig.json",
+    "files": ["index.ts"]
 }

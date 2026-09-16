@@ -10,8 +10,7 @@
         displayValueTemplate ? null : isDropdownOpen ? 'nui-overlay' : null
     "
     [attr.aria-label]="displayValueTemplate ? null : accessibleLabel"
-    (keydown)="onKeyDown($event)"
->
+    (keydown)="onKeyDown($event)">
     <div *ngIf="!displayValueTemplate" class="nui-select-v2__value">
         <div *ngIf="!isEmpty" class="nui-select-v2__value-content">
             <span>{{ displayText || "\u00A0" }}</span>
@@ -23,8 +22,7 @@
         <nui-icon
             [style.transform]="isDropdownOpen ? 'rotate(180deg)' : ''"
             [icon]="caretIcon"
-            aria-hidden="true"
-        ></nui-icon>
+            aria-hidden="true"></nui-icon>
     </div>
 
     <ng-container
@@ -33,15 +31,13 @@
         [ngTemplateOutletContext]="{
             $implicit: getLastSelectedOption()?.displayValueContext || value,
             open: isDropdownOpen
-        }"
-    ></ng-container>
+        }"></ng-container>
 </div>
 <nui-overlay
     roleAttr="listbox"
     [ariaLabelledby]="triggerId"
     [toggleReference]="elRef.nativeElement"
     [viewportMargin]="popupViewportMargin"
-    [overlayConfig]="overlayConfig"
->
+    [overlayConfig]="overlayConfig">
     <ng-content></ng-content>
 </nui-overlay>

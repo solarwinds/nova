@@ -261,7 +261,7 @@ export class TableComponent<T>
         const columns: string[] = _keys(firstRow);
         this.tableStateHandlerService.tableColumns = columns;
 
-        columns.forEach((column) => {
+        columns.forEach(column => {
             const alignment = this.tableStateHandlerService.defineAlignment(
                 firstRow[column as keyof T]
             );

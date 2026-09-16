@@ -1,35 +1,29 @@
 <nui-widget-editor-accordion
     [formGroup]="form"
-    [state]="form | nuiWidgetEditorAccordionFormState | async"
->
+    [state]="form | nuiWidgetEditorAccordionFormState | async">
     <nui-widget-editor-accordion-header
         [subtitle]="subtitle"
         headerIcon="application"
-        headerTitle="Scroll type"
-    />
+        headerTitle="Scroll type" />
     <div
         class="table-filters-configuration__accordion-content"
-        formGroupName="paginatorConfiguration"
-    >
+        formGroupName="paginatorConfiguration">
         <div class="scroll-type-field d-flex align-items-end">
             <nui-form-field
                 [showOptionalText]="false"
                 caption="Scroll Type"
-                i18n-caption
-            >
+                i18n-caption>
                 <nui-select-v2
                     placeholder="Select scroll type"
                     i18n-placeholder
                     [popupViewportMargin]="configuratorHeading.height$ | async"
                     formControlName="scrollType"
-                    class="table-filters-configuration__accordion-content__sort-by-input"
-                >
+                    class="table-filters-configuration__accordion-content__sort-by-input">
                     <nui-select-v2-option
                         *ngFor="
                             let column of scrollTypeEditorService.loadStrategies
                         "
-                        [value]="column.id"
-                    >
+                        [value]="column.id">
                         {{ column.title }}
                     </nui-select-v2-option>
                 </nui-select-v2>
@@ -41,13 +35,11 @@
                     class=""
                     caption="Page size options set"
                     i18n-caption
-                    [showOptionalText]="false"
-                >
+                    [showOptionalText]="false">
                     <nui-menu
                         title="Select size options"
                         [appendToBody]="true"
-                        i18n-title
-                    >
+                        i18n-title>
                         <nui-menu-group header="Item Types" i18n-header>
                             <nui-menu-option
                                 *ngFor="let option of pageSizeSetOptions"
@@ -60,22 +52,19 @@
                     </nui-menu>
                     <nui-validation-message
                         [show]="displayPageSizeSetErrorMessage"
-                        i18n
-                    >
+                        i18n>
                         Page size set is required
                     </nui-validation-message>
                 </nui-form-field>
             </div>
             <div
                 *ngIf="pageSizeOptions.length > 0"
-                class="d-flex align-items-end"
-            >
+                class="d-flex align-items-end">
                 <nui-form-field
                     caption="Default page size"
                     i18n-caption
                     [showOptionalText]="false"
-                    [control]="form.controls['pageSize']"
-                >
+                    [control]="form.controls['pageSize']">
                     <nui-select-v2
                         placeholder="Select page size"
                         i18n-placeholder
@@ -83,19 +72,16 @@
                             configuratorHeading.height$ | async
                         "
                         formControlName="pageSize"
-                        class="table-filters-configuration__accordion-content__sort-by-input"
-                    >
+                        class="table-filters-configuration__accordion-content__sort-by-input">
                         <nui-select-v2-option
                             *ngFor="let option of pageSizeOptions"
-                            [value]="option"
-                        >
+                            [value]="option">
                             {{ option }}
                         </nui-select-v2-option>
                     </nui-select-v2>
                     <nui-validation-message
                         [show]="displayPageSizeErrorMessage"
-                        i18n
-                    >
+                        i18n>
                         Page size is required
                     </nui-validation-message>
                 </nui-form-field>

@@ -1,8 +1,7 @@
 <div class="nui-filter-group-composite" *ngIf="hasFilterOptions()">
     <nui-expander
         [open]="filterGroupItem?.expanded"
-        (openChange)="onOpenChanged($event)"
-    >
+        (openChange)="onOpenChanged($event)">
         <div nuiExpanderHeader>
             <ng-template #defaultExpander>
                 <span class="nui-filter-group-composite__header">{{
@@ -13,13 +12,11 @@
                 *ngTemplateOutlet="
                     expanderTemplateRef || defaultExpander;
                     context: { expander: filterGroupItem }
-                "
-            ></ng-container>
+                "></ng-container>
         </div>
         <nui-checkbox-group
             [values]="filterGroupItem.selectedFilterValues"
-            (valuesChange)="onValueChanged($event)"
-        >
+            (valuesChange)="onValueChanged($event)">
             <nui-checkbox
                 *ngFor="
                     let filterOption of filterGroupItem.allFilterOptions
@@ -27,12 +24,10 @@
                 "
                 [value]="filterOption.value"
                 [checked]="isChecked(filterOption.value)"
-                class="nui-checkbox--justified"
-            >
+                class="nui-checkbox--justified">
                 <ng-template #defaultCheckboxes>
                     <div
-                        class="d-flex justify-content-between nui-filter-group-composite__checkbox"
-                    >
+                        class="d-flex justify-content-between nui-filter-group-composite__checkbox">
                         <span
                             class="d-inline-block nui-filter-group-composite__checkbox-value"
                             >{{ filterOption.displayValue }}</span
@@ -47,8 +42,7 @@
                     *ngTemplateOutlet="
                         checkboxTemplateRef || defaultCheckboxes;
                         context: { checkbox: filterOption }
-                    "
-                ></ng-container>
+                    "></ng-container>
             </nui-checkbox>
         </nui-checkbox-group>
         <a
@@ -57,8 +51,7 @@
                 filterGroupItem?.allFilterOptions?.length >
                 getDisplayedFiltersCount()
             "
-            (click)="showFilterDialog()"
-        >
+            (click)="showFilterDialog()">
             Show all ({{ filterGroupItem.allFilterOptions.length }})
         </a>
     </nui-expander>

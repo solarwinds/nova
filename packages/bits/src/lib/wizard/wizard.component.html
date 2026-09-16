@@ -1,8 +1,7 @@
 <div class="nui-wizard">
     <div
         class="nui-wizard__header"
-        [class.nui-wizard__header--lines-stretched]="stretchStepLines"
-    >
+        [class.nui-wizard__header--lines-stretched]="stretchStepLines">
         @if (steps) {
         <ul class="nui-wizard__header-steps" role="tablist">
             @for (step of steps; track step; let first = $first; let last =
@@ -38,8 +37,7 @@
                     'nui-wizard__header-step--active': step.active,
                     'nui-wizard__header-step--complete': step.complete
                 }"
-                class="nui-wizard__header-step"
-            >
+                class="nui-wizard__header-step">
                 @if (!step.hidden) {
                 <div class="nui-wizard__header-step-container">
                     <div class="nui-wizard__header-step-row">
@@ -48,41 +46,34 @@
                                 <span class="nui-wizard__header-step-link">
                                     <span
                                         class="nui-wizard__header-step-title"
-                                        #stepTitle
-                                    >
+                                        #stepTitle>
                                         {{
                                             step.shortTitle || step.title
                                         }}</span
                                     >
                                     <div
-                                        class="nui-wizard__header-step-link-container"
-                                    >
+                                        class="nui-wizard__header-step-link-container">
                                         <div
-                                            class="nui-wizard__header-step-col nui-wizard__header-step-col-right"
-                                        >
+                                            class="nui-wizard__header-step-col nui-wizard__header-step-col-right">
                                             <div
                                                 class="nui-wizard__header-step-line"
                                                 [ngStyle]="{
                                                     'min-width.px':
                                                         stepLineWidth
-                                                }"
-                                            ></div>
+                                                }"></div>
                                         </div>
                                         <nui-icon
                                             [icon]="step.icon"
                                             [iconColor]="step.iconColor"
-                                            aria-hidden="true"
-                                        ></nui-icon>
+                                            aria-hidden="true"></nui-icon>
                                         <div
-                                            class="nui-wizard__header-step-col nui-wizard__header-step-col-left"
-                                        >
+                                            class="nui-wizard__header-step-col nui-wizard__header-step-col-left">
                                             <div
                                                 class="nui-wizard__header-step-line"
                                                 [ngStyle]="{
                                                     'min-width.px':
                                                         stepLineWidth
-                                                }"
-                                            ></div>
+                                                }"></div>
                                         </div>
                                     </div>
                                 </span>
@@ -102,8 +93,7 @@
         [id]="currentStep?.panelId"
         [attr.aria-labelledby]="currentStep?.stepId"
         [class.show-scroll]="enableScroll"
-        [style.height]="bodyContainerHeight"
-    >
+        [style.height]="bodyContainerHeight">
         <ng-content></ng-content>
         <ng-template #container></ng-template>
     </div>
@@ -112,8 +102,7 @@
             nui-button
             type="button"
             (click)="onCancelClick()"
-            class="nui-wizard__cancel-button"
-        >
+            class="nui-wizard__cancel-button">
             <span i18n>Cancel</span>
         </button>
         <ng-content select="[nui-button]"></ng-content>
@@ -124,8 +113,7 @@
             class="nui-wizard__back-button"
             [isBusy]="currentStep?.busyConfig?.busy"
             [icon]="'caret-left'"
-            (click)="onBackClick()"
-        >
+            (click)="onBackClick()">
             <span i18n>Back</span>
         </button>
         } @if (!steps.last.active) {
@@ -137,8 +125,7 @@
             [displayStyle]="'primary'"
             [icon]="'caret-right'"
             [iconRight]="true"
-            (click)="onNextClick()"
-        >
+            (click)="onNextClick()">
             <span>{{ currentStep?.nextText }}</span>
         </button>
         } @if (canFinish || steps.last.active) {
@@ -147,8 +134,7 @@
             type="button"
             class="nui-wizard__finish-button"
             [displayStyle]="'primary'"
-            (click)="onFinishClick()"
-        >
+            (click)="onFinishClick()">
             <span>{{ finishText }}</span>
         </button>
         }

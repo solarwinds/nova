@@ -95,14 +95,12 @@ export class ThresholdsBasicExampleComponent implements OnInit {
         // Zone definitions tell the threshold service where threshold zones begin and end
         const zoneDefinitions: ISimpleThresholdZone[] = getZoneDefinitions();
         // Here we define the main data series on the chart which will be visualized as lines
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
-            (d) => ({
-                ...d,
-                accessors,
-                renderer,
-                scales,
-            })
-        );
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
+            ...d,
+            accessors,
+            renderer,
+            scales,
+        }));
 
         const thresholds: IChartAssistSeries<IAccessors>[] = [];
         for (const s of seriesSet) {

@@ -103,9 +103,10 @@ export class ChartAtom extends Atom {
         }
         const visibleSeries = layer
             .all(Atom.getLocator(atomClass))
-            .filter(async (e) => this.isVisible(e));
+            .filter(async e => this.isVisible(e));
         const seriesIds: string[] = await visibleSeries.map(
-            async (series: ElementFinder | undefined) => series?.getAttribute("id")
+            async (series: ElementFinder | undefined) =>
+                series?.getAttribute("id")
         );
         return seriesIds.map((seriesId: string) =>
             Atom.findIn(atomClass, layer.element(by.id(seriesId)))

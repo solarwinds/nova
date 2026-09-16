@@ -90,9 +90,9 @@ describe("PresentationConfigurationComponent", () => {
                 ],
                 expectedFormatters: [rawFormatter, linkFormatter],
             },
-        ].forEach((testData) => {
+        ].forEach(testData => {
             const dataTypes = testData.providedDataFields.map(
-                (df) => df.dataType
+                df => df.dataType
             );
             it(`- case ${dataTypes}`, () => {
                 component.formatters = [rawFormatter, linkFormatter];

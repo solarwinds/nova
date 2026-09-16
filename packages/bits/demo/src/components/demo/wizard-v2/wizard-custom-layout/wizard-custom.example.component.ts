@@ -37,7 +37,7 @@ import { WizardDirective, WizardStepV2Component } from "@nova-ui/bits";
     templateUrl: "wizard-custom.component.html",
     styleUrls: ["wizard-custom.component.less"],
     host: {
-        class: "nui-wizard-custom-layout",
+        "class": "nui-wizard-custom-layout",
         "aria-orientation": "horizontal",
     },
     providers: [
@@ -102,7 +102,7 @@ export class WizardCustomExampleComponent implements AfterViewInit {
 
         this.wizard.selectionChange
             .pipe(
-                tap((i) => {
+                tap(i => {
                     update(i.selectedIndex);
                 })
             )
@@ -110,7 +110,7 @@ export class WizardCustomExampleComponent implements AfterViewInit {
 
         this.wizard.steps.changes
             .pipe(
-                tap((c) => {
+                tap(c => {
                     update(undefined, c.length);
                 })
             )
@@ -121,7 +121,7 @@ export class WizardCustomExampleComponent implements AfterViewInit {
         // mark all fields from current step as touched
         // in order to display the validation messages
         Object.keys((step.stepControl as FormGroup)?.controls || {}).forEach(
-            (key) => {
+            key => {
                 const field = this.wizard.selected.stepControl.get(key);
                 field?.markAsTouched();
             }

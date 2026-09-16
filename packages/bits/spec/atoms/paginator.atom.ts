@@ -55,7 +55,7 @@ export class PaginatorAtom extends Atom {
     }
 
     public getItemsRange = async (): Promise<string> =>
-        this.getStatusText().then((test) => {
+        this.getStatusText().then(test => {
             const pages = test.split(" ")[0].split("-");
             const start = parseInt(pages[0], 10);
             const end = parseInt(pages[1], 10);

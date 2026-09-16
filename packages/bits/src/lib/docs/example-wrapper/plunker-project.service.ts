@@ -57,7 +57,7 @@ export class PlunkerProjectService {
         // END HACK
 
         // example files
-        Object.keys(sources).forEach((key) => {
+        Object.keys(sources).forEach(key => {
             form.append(
                 this.formInput(
                     `${modifiedPrefix}.component`,

@@ -2,22 +2,19 @@
     class="nui-dashwiz-step animated h-100"
     [ngClass]="{ 'nui-dashwiz-step--active': active }"
     nui-busy
-    [busy]="busyConfig.busy"
->
+    [busy]="busyConfig.busy">
     <div
         cdkScrollable
         role="region"
         class="h-100 overflow-auto configurator-scrollable"
         tabindex="0"
-        [attr.aria-label]="title || null"
-    >
+        [attr.aria-label]="title || null">
         <ng-container *ngTemplateOutlet="stepTemplate"></ng-container>
     </div>
     <nui-spinner
         [percent]="busyConfig.percent"
         [allowCancel]="busyConfig.allowCancel"
         [message]="busyConfig.message"
-        [size]="spinnerSize"
-    >
+        [size]="spinnerSize">
     </nui-spinner>
 </div>

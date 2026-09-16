@@ -8,8 +8,7 @@
             *ngIf="chip.icon"
             [icon]="chip.icon"
             iconSize="small"
-            class="mr-1"
-        ></nui-icon>
+            class="mr-1"></nui-icon>
         {{ chip.label }}
     </nui-chip>
 </div>
@@ -22,8 +21,7 @@
     customClass="nui-chips-custom-styles"
     [itemsSource]="nuiChipsSet"
     (chipRemoved)="onClear($event)"
-    (removeAll)="onClearAll()"
->
+    (removeAll)="onClearAll()">
 </nui-chips>
 
 <h3>Unset Width</h3>
@@ -31,6 +29,5 @@
     <nui-chip
         *ngFor="let chip of widthChips"
         [item]="chip"
-        [customClass]="chip.customClass"
-    ></nui-chip>
+        [customClass]="chip.customClass"></nui-chip>
 </div>

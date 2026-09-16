@@ -1,13 +1,11 @@
 <nui-widget-editor-accordion
     [formGroup]="form"
-    [state]="form | nuiWidgetEditorAccordionFormState | async"
->
+    [state]="form | nuiWidgetEditorAccordionFormState | async">
     <div accordionHeader class="d-flex align-items-center px-4 py-2">
         <nui-icon
             class="align-self-start pt-2"
             [icon]="'tag'"
-            iconColor="gray"
-        ></nui-icon>
+            iconColor="gray"></nui-icon>
         <div class="d-flex flex-column ml-4 pt-1">
             <span class="nui-text-label" i18n>Entity formatting</span>
             <div class="nui-text-secondary" title="Show status icon">
@@ -17,24 +15,20 @@
     </div>
     <div
         class="entity-formatting__accordion-content"
-        formGroupName="dataFieldIds"
-    >
+        formGroupName="dataFieldIds">
         <div class="mb-3">
             <label class="nui-text-label" i18n>Icon</label>
             <div class="d-flex flex-grow-1">
                 <nui-form-field
                     class="d-flex flex-grow-1"
-                    [control]="getFieldMappingsControl.get('icon')"
-                >
+                    [control]="getFieldMappingsControl.get('icon')">
                     <nui-select-v2
                         placeholder="Select Item"
                         i18n-placeholder
-                        formControlName="icon"
-                    >
+                        formControlName="icon">
                         <nui-select-v2-option
                             *ngFor="let item of mappingKeys"
-                            [value]="item"
-                        >
+                            [value]="item">
                             {{ item }}
                         </nui-select-v2-option>
                     </nui-select-v2>
@@ -46,17 +40,14 @@
             <div class="d-flex flex-grow-1">
                 <nui-form-field
                     class="d-flex flex-grow-1"
-                    [control]="getFieldMappingsControl.get('status')"
-                >
+                    [control]="getFieldMappingsControl.get('status')">
                     <nui-select-v2
                         placeholder="Select Item"
                         i18n-placeholder
-                        formControlName="status"
-                    >
+                        formControlName="status">
                         <nui-select-v2-option
                             *ngFor="let item of mappingKeys"
-                            [value]="item"
-                        >
+                            [value]="item">
                             {{ item }}
                         </nui-select-v2-option>
                     </nui-select-v2>
@@ -68,17 +59,14 @@
             <div class="d-flex flex-grow-1">
                 <nui-form-field
                     class="d-flex flex-grow-1"
-                    [control]="getFieldMappingsControl.get('detailedUrl')"
-                >
+                    [control]="getFieldMappingsControl.get('detailedUrl')">
                     <nui-select-v2
                         placeholder="Select Item"
                         i18n-placeholder
-                        formControlName="detailedUrl"
-                    >
+                        formControlName="detailedUrl">
                         <nui-select-v2-option
                             *ngFor="let item of mappingKeys"
-                            [value]="item"
-                        >
+                            [value]="item">
                             {{ item }}
                         </nui-select-v2-option>
                     </nui-select-v2>
@@ -90,17 +78,14 @@
             <div class="d-flex flex-grow-1">
                 <nui-form-field
                     class="d-flex flex-grow-1"
-                    [control]="getFieldMappingsControl.get('label')"
-                >
+                    [control]="getFieldMappingsControl.get('label')">
                     <nui-select-v2
                         placeholder="Select Item"
                         i18n-placeholder
-                        formControlName="label"
-                    >
+                        formControlName="label">
                         <nui-select-v2-option
                             *ngFor="let item of mappingKeys"
-                            [value]="item"
-                        >
+                            [value]="item">
                             {{ item }}
                         </nui-select-v2-option>
                     </nui-select-v2>
@@ -112,17 +97,14 @@
             <div class="d-flex flex-grow-1">
                 <nui-form-field
                     class="d-flex flex-grow-1"
-                    [control]="getFieldMappingsControl.get('url')"
-                >
+                    [control]="getFieldMappingsControl.get('url')">
                     <nui-select-v2
                         placeholder="Select Item"
                         i18n-placeholder
-                        formControlName="url"
-                    >
+                        formControlName="url">
                         <nui-select-v2-option
                             *ngFor="let item of mappingKeys"
-                            [value]="item"
-                        >
+                            [value]="item">
                             {{ item }}
                         </nui-select-v2-option>
                     </nui-select-v2>

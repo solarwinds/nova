@@ -60,7 +60,7 @@ export class VerticalWithTimescaleBarChartTestComponent implements OnInit {
             })
         );
 
-        scales.x.fixDomain(seriesSet.map((s) => s.data[0].category));
+        scales.x.fixDomain(seriesSet.map(s => s.data[0].category));
 
         const scaleId = "bottom";
         const time = new TimeScale(scaleId);

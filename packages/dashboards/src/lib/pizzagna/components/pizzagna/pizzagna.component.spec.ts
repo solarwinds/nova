@@ -133,8 +133,7 @@ describe("Pizzagna", () => {
                 // locale id that you're using (default en-US)
                 { provide: LOCALE_ID, useValue: "fr" },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -281,11 +280,11 @@ describe("Pizzagna", () => {
                             nodes: ["header", "tiles"],
                         },
                     },
-                    header: {
+                    "header": {
                         id: "header",
                         componentType: WidgetHeaderComponent.lateLoadKey,
                     },
-                    tiles: {
+                    "tiles": {
                         id: "tiles",
                         componentType: TilesComponent.lateLoadKey,
                         properties: {
@@ -312,18 +311,18 @@ describe("Pizzagna", () => {
                             nodes: ["header", "stack"],
                         },
                     },
-                    header: {
+                    "header": {
                         id: "header",
                         componentType: WidgetHeaderComponent.lateLoadKey,
                     },
-                    stack: {
+                    "stack": {
                         id: "stack",
                         componentType: StackComponent.lateLoadKey,
                         properties: {
                             nodes: ["table"],
                         },
                     },
-                    table: {
+                    "table": {
                         id: "table",
                         componentType: TableWidgetComponent.lateLoadKey,
                         properties: {

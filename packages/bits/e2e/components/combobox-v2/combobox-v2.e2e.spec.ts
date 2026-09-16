@@ -197,11 +197,11 @@ test.describe("USERCONTROL Combobox v2 >", () => {
 
                 const containerHeight = (await container.boundingBox())?.height;
                 const containerTop = await container.evaluate(
-                    (el) => (el as HTMLElement).scrollTop
+                    el => (el as HTMLElement).scrollTop
                 );
                 const optionTop = await option
                     .getLocator()
-                    .evaluate((el) => (el as HTMLElement).offsetTop);
+                    .evaluate(el => (el as HTMLElement).offsetTop);
 
                 if (containerHeight == null) {
                     throw new Error("Unable to measure popup container height");

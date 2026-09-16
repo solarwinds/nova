@@ -58,16 +58,16 @@ import { REFRESH, SCROLL_NEXT_PAGE } from "../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
 
 interface BasicTableModel {
-    position: number;
-    name: string;
-    features: any;
-    status: string;
-    checks: any;
+    "position": number;
+    "name": string;
+    "features": any;
+    "status": string;
+    "checks": any;
     "cpu-load": number;
-    firstUrl: string;
-    firstUrlLabel: string;
-    secondUrl: string;
-    secondUrlLabel: string;
+    "firstUrl": string;
+    "firstUrlLabel": string;
+    "secondUrl": string;
+    "secondUrlLabel": string;
 }
 
 class MockDatasource extends ClientSideDataSource<any> {
@@ -137,54 +137,54 @@ const configuration: ITableWidgetConfig = {
 
 const tableData: BasicTableModel[] = [
     {
-        position: 1,
-        name: "FOCUS-SVR-02258",
-        features: ["remote-access-vpn-tunnel", "patch-manager01"],
-        status: "Active",
-        checks: {
+        "position": 1,
+        "name": "FOCUS-SVR-02258",
+        "features": ["remote-access-vpn-tunnel", "patch-manager01"],
+        "status": "Active",
+        "checks": {
             icon: "status_up",
             num: 25,
         },
         "cpu-load": 86,
-        firstUrl: "https://en.wikipedia.org/wiki/Brno",
-        firstUrlLabel: "Brno",
-        secondUrl: "https://en.wikipedia.org/wiki/VMware_Workstation",
-        secondUrlLabel: "Workstation",
+        "firstUrl": "https://en.wikipedia.org/wiki/Brno",
+        "firstUrlLabel": "Brno",
+        "secondUrl": "https://en.wikipedia.org/wiki/VMware_Workstation",
+        "secondUrlLabel": "Workstation",
     },
     {
-        position: 2,
-        name: "FOCUS-SVR-03312",
-        features: ["tools", "database", "orion-ape-backup"],
-        status: "Active",
-        checks: {
+        "position": 2,
+        "name": "FOCUS-SVR-03312",
+        "features": ["tools", "database", "orion-ape-backup"],
+        "status": "Active",
+        "checks": {
             icon: "status_critical",
             num: 25,
         },
         "cpu-load": 47,
-        firstUrl: "https://en.wikipedia.org/wiki/Brno",
-        firstUrlLabel: "Brno",
-        secondUrl: "https://en.wikipedia.org/wiki/VMware_Workstation",
-        secondUrlLabel: "Workstation",
+        "firstUrl": "https://en.wikipedia.org/wiki/Brno",
+        "firstUrlLabel": "Brno",
+        "secondUrl": "https://en.wikipedia.org/wiki/VMware_Workstation",
+        "secondUrlLabel": "Workstation",
     },
     {
-        position: 3,
-        name: "FOCUS-SVR-02258",
-        features: [
+        "position": 3,
+        "name": "FOCUS-SVR-02258",
+        "features": [
             "remote-access-vpn-tunnel",
             "database",
             "orion-ape-backup",
             "patch-manager01",
         ],
-        status: "Active",
-        checks: {
+        "status": "Active",
+        "checks": {
             icon: "status_down",
             num: 25,
         },
         "cpu-load": 53,
-        firstUrl: "https://en.wikipedia.org/wiki/Kyiv",
-        firstUrlLabel: "Kyiv",
-        secondUrl: "https://en.wikipedia.org/wiki/VMware_Workstation",
-        secondUrlLabel: "Workstation",
+        "firstUrl": "https://en.wikipedia.org/wiki/Kyiv",
+        "firstUrlLabel": "Kyiv",
+        "secondUrl": "https://en.wikipedia.org/wiki/VMware_Workstation",
+        "secondUrlLabel": "Workstation",
     },
 ];
 
@@ -440,7 +440,7 @@ describe("TableWidgetComponent", () => {
                 createSimpleChanges(configuration, tableData, dataFields)
             );
             const expectedSortableSet: any = {};
-            dataFields.forEach((df) => {
+            dataFields.forEach(df => {
                 expectedSortableSet[df.id] = df.sortable;
             });
             expect((<any>component).sortableSet).toEqual(expectedSortableSet);
@@ -453,7 +453,7 @@ describe("TableWidgetComponent", () => {
                 createSimpleChanges(configuration, tableData, dataFields)
             );
             const expectedColumns: ITableWidgetColumnConfig[] =
-                configuration.columns.map((c) => ({
+                configuration.columns.map(c => ({
                     ...c,
                     sortable: (<any>component).sortableSet[
                         c?.formatter?.properties?.dataFieldIds?.value
@@ -831,17 +831,15 @@ describe("TableWidgetComponent", () => {
 
     describe("search max length", () => {
         const getSearchQueryLimitWarningElement = () =>
-            fixture.debugElement.query(By.css(".nui-table-search-limit-warning"))?.nativeElement;
+            fixture.debugElement.query(
+                By.css(".nui-table-search-limit-warning")
+            )?.nativeElement;
 
         beforeEach(() => {
             spyOn(component.searchTerm$, "next");
             component.isSearchEnabled = true;
             component.ngOnChanges(
-                createSimpleChanges(
-                    configuration,
-                    tableData,
-                    dataFields
-                )
+                createSimpleChanges(configuration, tableData, dataFields)
             );
             fixture.detectChanges();
         });

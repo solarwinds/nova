@@ -1,9 +1,9 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
-        "experimentalDecorators": true,
         "baseUrl": ".",
         "declaration": false,
+        "experimentalDecorators": true,
         "lib": ["ES2019", "DOM"],
         "paths": {
             "@nova-ui/charts": ["./src/public-api.ts"]

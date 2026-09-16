@@ -636,12 +636,12 @@ export class GaugeUtil {
         const activeThreshold: IGaugeThresholdDatum | undefined = gaugeConfig
             .thresholds?.reversed
             ? thresholds?.find(
-                  (threshold) => !isUndefined(threshold.hit) && !threshold.hit
+                  threshold => !isUndefined(threshold.hit) && !threshold.hit
               )
             : thresholds
                   ?.slice()
                   .reverse()
-                  .find((threshold) => threshold.hit);
+                  .find(threshold => threshold.hit);
 
         return {
             thresholds,
@@ -667,7 +667,7 @@ export class GaugeUtil {
         }
 
         const thresholdDefs = gaugeConfig.thresholds?.definitions || {};
-        Object.keys(thresholdDefs || {}).forEach((thresholdId) => {
+        Object.keys(thresholdDefs || {}).forEach(thresholdId => {
             const threshold = thresholdDefs[thresholdId];
             if (threshold) {
                 if (threshold.value > gaugeConfig.max) {

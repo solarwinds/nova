@@ -115,7 +115,7 @@ describe("services >", () => {
                 serviceInstance.reorderable = true;
             });
 
-            columnReorderTestCases.forEach((test) => {
+            columnReorderTestCases.forEach(test => {
                 it(`should reorder columns when dragging from cell #${test.dragCell} to cell#${test.dropCell}
                 when drop position is ${test.dropCellOffsetX}px and cell width is ${test.dropCellWidth}px`, () => {
                     serviceInstance.dragCellIndex = test.dragCell;

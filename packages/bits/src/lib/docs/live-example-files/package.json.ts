@@ -17,10 +17,10 @@ export const PACKAGE_JSON = {
         "@nova-ui/dashboards": "",
         "core-js": "",
         "highlight.js": "",
-        lodash: "",
-        moment: "",
-        rxjs: "",
-        tslib: "",
+        "lodash": "",
+        "moment": "",
+        "rxjs": "",
+        "tslib": "",
         "zone.js": "",
     },
     devDependencies: {
@@ -28,6 +28,6 @@ export const PACKAGE_JSON = {
         "@angular/cli": "",
         "@angular/compiler-cli": "",
         "@types/node": "",
-        typescript: "",
+        "typescript": "",
     },
 };

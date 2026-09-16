@@ -63,8 +63,8 @@ import { MenuComponent } from "../menu";
     selector: "nui-toolbar",
     templateUrl: "./toolbar.component.html",
     host: {
-        class: "nui-toolbar nui-strip-layout nui-flex-container",
-        role: "toolbar",
+        "class": "nui-toolbar nui-strip-layout nui-flex-container",
+        "role": "toolbar",
         "[attr.aria-label]": "ariaLabel || null",
         "[attr.aria-labelledby]": "ariaLabelledBy || null",
         "[attr.aria-orientation]": "ariaOrientation || null",
@@ -264,10 +264,10 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         this.menuGroups = [];
         this.groups.forEach((group: ToolbarGroupComponent) => {
             const commandGroupItems = group.items.filter(
-                (item) => !item.menuHidden
+                item => !item.menuHidden
             );
             const menuGroupItems = group.items.filter(
-                (item) => !!item.menuHidden
+                item => !!item.menuHidden
             );
 
             if (commandGroupItems.length) {
@@ -327,7 +327,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
 
     public isFirstFocusableItem(commandItem: ToolbarItemComponent): boolean {
         for (const group of this.commandGroups) {
-            const firstEnabled = group.items.find((item) => !item.disabled);
+            const firstEnabled = group.items.find(item => !item.disabled);
             if (firstEnabled) {
                 return firstEnabled === commandItem;
             }
@@ -342,15 +342,15 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
                 this.toolbarItems = buttons
                     .toArray()
                     .slice()
-                    .map((b) => b["el"].nativeElement as HTMLElement)
-                    .filter((el) => !!el);
+                    .map(b => b["el"].nativeElement as HTMLElement)
+                    .filter(el => !!el);
 
                 if (this.menu) {
                     // In case all buttons are hidden within the Commands menu, or all visible buttons are disabled,
                     // we want this menu to receive the focus.
                     // If at least one enabled button is visible in the toolbar it should receive the focus first upon navigating onto the toolbar
                     const hasEnabledItem = this.toolbarItems.some(
-                        (el) => !(el as HTMLButtonElement).disabled
+                        el => !(el as HTMLButtonElement).disabled
                     );
                     const tabIndex = hasEnabledItem ? "-1" : "0";
 

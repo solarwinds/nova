@@ -18,7 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable } from "@angular/core";
 import {
     HttpEvent,
     HttpHandler,
@@ -26,6 +25,7 @@ import {
     HttpRequest,
     HttpResponse,
 } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { delay } from "rxjs/operators";
 
@@ -45,8 +45,7 @@ export class GoogleBooksInterceptor implements HttpInterceptor {
                 averageRating: 4.5,
                 ratingsCount: 120,
                 pageCount: 309,
-                infoLink:
-                    "https://books.google.com/books?id=5MQFrgEACAAJ",
+                infoLink: "https://books.google.com/books?id=5MQFrgEACAAJ",
             },
         },
         "zpvysRGsBlwC": {
@@ -58,8 +57,7 @@ export class GoogleBooksInterceptor implements HttpInterceptor {
                 averageRating: 4.3,
                 ratingsCount: 95,
                 pageCount: 341,
-                infoLink:
-                    "https://books.google.com/books?id=zpvysRGsBlwC",
+                infoLink: "https://books.google.com/books?id=zpvysRGsBlwC",
             },
         },
     };
@@ -116,9 +114,9 @@ export class GoogleBooksInterceptor implements HttpInterceptor {
             const mockData =
                 GoogleBooksInterceptor.MOCK_BOOKS[id] ??
                 GoogleBooksInterceptor.MOCK_BOOKS["5MQFrgEACAAJ"];
-            return of(
-                new HttpResponse({ status: 200, body: mockData })
-            ).pipe(delay(300));
+            return of(new HttpResponse({ status: 200, body: mockData })).pipe(
+                delay(300)
+            );
         }
 
         // Match search/list request: /volumes?q=...

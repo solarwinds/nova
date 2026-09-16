@@ -4,8 +4,7 @@
             <nui-chart-marker
                 [marker]="markers.get(firstSeriesId)"
                 [color]="colors.get(firstSeriesId)"
-                [drawLine]="true"
-            ></nui-chart-marker>
+                [drawLine]="true"></nui-chart-marker>
         </nui-basic-legend-tile>
     </nui-legend-series>
     <nui-legend-series>
@@ -13,13 +12,11 @@
             value="31.9"
             unitLabel="Kbps"
             i18n-unitLabel
-            [backgroundColor]="colors.get(secondSeriesId)"
-        >
+            [backgroundColor]="colors.get(secondSeriesId)">
             <nui-chart-marker
                 [marker]="markers.get(secondSeriesId)"
                 [color]="colors.get(secondSeriesId)"
-                rightEdge
-            ></nui-chart-marker>
+                rightEdge></nui-chart-marker>
         </nui-rich-legend-tile>
     </nui-legend-series>
 </nui-legend>

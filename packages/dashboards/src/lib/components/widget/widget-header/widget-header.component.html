@@ -8,8 +8,7 @@
         [class.nui-widget__header__container--expanded]="
             collapsible && !collapsed
         "
-        [@expandedState]="state"
-    >
+        [@expandedState]="state">
         @if (collapsed && collapsible) {
         <div
             class="collapse-container"
@@ -20,41 +19,35 @@
             [attr.aria-expanded]="false"
             (click)="toggleCollapsed()"
             (keydown.enter)="toggleCollapsed()"
-            (keydown.space)="$event.preventDefault(); toggleCollapsed()"
-        >
+            (keydown.space)="$event.preventDefault(); toggleCollapsed()">
             <span class="collapse-container__line"></span>
         </div>
         }
         <div class="nui-widget__header__content">
             <div
                 *ngIf="editMode"
-                class="nui-widget__header__content-drag-icon nui-dashboard__widget--drag-handle"
-            >
+                class="nui-widget__header__content-drag-icon nui-dashboard__widget--drag-handle">
                 <nui-icon
                     icon="drag"
                     iconColor="gray"
-                    aria-hidden="true"
-                ></nui-icon>
+                    aria-hidden="true"></nui-icon>
             </div>
             <div
                 #widgetHeaderCustomElement
-                class="nui-widget__header__content-custom-element"
-            >
+                class="nui-widget__header__content-custom-element">
                 <ng-content></ng-content>
             </div>
             <div
                 class="nui-widget__header__content-title-container nui-dashboard__widget--drag-handle"
                 [class.nui-widget__header__content-title-with-additional-content]="
                     withCustomElement || editMode
-                "
-            >
+                ">
                 <div class="nui-widget__header__content-title-row">
                     <!-- text only header with no url defined -->
                     @if (!url || editMode) {
                     <h2
                         class="nui-text-widget nui-widget__header__content-title"
-                        [title]="title"
-                    >
+                        [title]="title">
                         {{ title }}
                     </h2>
                     }
@@ -63,8 +56,7 @@
                     @if (url && !editMode) {
                     <h2
                         class="nui-text-widget nui-widget__header__content-title"
-                        [title]="title"
-                    >
+                        [title]="title">
                         <a
                             [href]="url"
                             (click)="prepareLink($event)"
@@ -76,20 +68,16 @@
                             >{{ title }}</a
                         >
                     </h2>
-                    }
-
-                    @if (showTitleIcon) {
+                    } @if (showTitleIcon) {
                     <span
                         class="nui-widget__header__content-title-icon"
                         [attr.aria-label]="titleIconTooltip || null"
                         [attr.role]="titleIconTooltip ? 'img' : null"
-                        [attr.title]="titleIconTooltip || null"
-                    >
+                        [attr.title]="titleIconTooltip || null">
                         <nui-icon
                             [icon]="titleIcon"
                             [iconSize]="titleIconSize"
-                            aria-hidden="true"
-                        ></nui-icon>
+                            aria-hidden="true"></nui-icon>
                     </span>
                     }
                 </div>
@@ -97,8 +85,7 @@
                 @if (subtitle) {
                 <div
                     class="nui-text-hint nui-widget__header__content-help-hint"
-                    [title]="subtitle"
-                >
+                    [title]="subtitle">
                     {{ subtitle }}
                 </div>
                 }
@@ -116,8 +103,7 @@
                     [nuiTooltip]="linkTooltip"
                     (mousedown)="
                         $event.stopPropagation(); $event.preventDefault()
-                    "
-                >
+                    ">
                 </a>
                 <button
                     *ngIf="editable && editMode"
@@ -130,8 +116,7 @@
                     i18n-aria-label
                     nuiTooltip="Edit widget"
                     i18n-nuiTooltip
-                    (click)="onEditWidget()"
-                ></button>
+                    (click)="onEditWidget()"></button>
                 <button
                     *ngIf="collapsible && !editMode"
                     class="nui-widget-header__action-toggle-collapsed"
@@ -143,15 +128,13 @@
                     nuiTooltip="Collapse header"
                     icon="double-caret-up"
                     [attr.aria-expanded]="true"
-                    (click)="toggleCollapsed()"
-                ></button>
+                    (click)="toggleCollapsed()"></button>
                 <nui-menu
                     *ngIf="!hideMenu && !editMode"
                     class="nui-widget__header__content-actions__menu"
                     icon="menu"
                     displayStyle="action"
-                    [appendToBody]="true"
-                >
+                    [appendToBody]="true">
                     @if (reloadable) {
                     <nui-menu-action (actionDone)="onReloadData()">
                         <nui-icon icon="reload" aria-hidden="true"></nui-icon>
@@ -164,8 +147,7 @@
                     #popup
                     class="nui-widget-header__action-remove"
                     [appendToBody]="true"
-                    *ngIf="removable && editMode"
-                >
+                    *ngIf="removable && editMode">
                     <span nuiTooltip="Remove widget" i18n-nuiTooltip>
                         <button
                             nui-button
@@ -179,8 +161,7 @@
                             aria-haspopup="menu"
                             [attr.aria-expanded]="
                                 popup?.isOpen ? 'true' : 'false'
-                            "
-                        ></button>
+                            "></button>
                     </span>
                     <div popupAreaContent class="nui-menu">
                         <nui-menu-action

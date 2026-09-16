@@ -48,7 +48,7 @@ export class AcmeEditWithClonerComponent
     public ngOnInit(): void {
         const titleCasePipe = new TitleCasePipe();
 
-        this.widgetItems = widgets.map((w) => {
+        this.widgetItems = widgets.map(w => {
             const typeDisplay = titleCasePipe.transform(w.type);
             return {
                 title: typeDisplay,

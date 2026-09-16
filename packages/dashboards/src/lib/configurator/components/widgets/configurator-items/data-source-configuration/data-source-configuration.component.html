@@ -1,18 +1,15 @@
 <nui-widget-editor-accordion
     [formGroup]="form"
-    [state]="form | nuiWidgetEditorAccordionFormState | async"
->
+    [state]="form | nuiWidgetEditorAccordionFormState | async">
     <nui-widget-editor-accordion-header
         [headerIcon]="form | nuiFormHeaderIconPipe : 'database' | async"
         [subtitle]="form.get('providerId')?.value"
-        headerTitle="Data Source"
-    />
+        headerTitle="Data Source" />
     <div class="datasource-configuration__accordion-content">
         <nui-form-field
             caption="Select Data Source"
             i18n-caption
-            [control]="form.get('providerId')"
-        >
+            [control]="form.get('providerId')">
             <nui-select-v2
                 placeholder="Data Sources"
                 i18n-placeholder
@@ -20,13 +17,11 @@
                 formControlName="providerId"
                 [popupViewportMargin]="configuratorHeading.height$ | async"
                 (valueSelected)="onDataSourceChange($event)"
-                class="datasource-configuration__accordion-content__datasource-input"
-            >
+                class="datasource-configuration__accordion-content__datasource-input">
                 <nui-select-v2-option
                     *ngFor="let dataSourceProvider of dataSourceProviders"
                     [title]="dataSourceProvider"
-                    [value]="dataSourceProvider"
-                >
+                    [value]="dataSourceProvider">
                     {{ dataSourceProvider }}
                 </nui-select-v2-option>
             </nui-select-v2>
@@ -38,12 +33,10 @@
             [outputs]="['errorState']"
             [properties]="{ dataSource: dataSource }"
             (output)="onErrorState($event.payload)"
-            #componentPortal="nuiComponentPortal"
-        >
+            #componentPortal="nuiComponentPortal">
             <ng-template
                 [cdkPortalOutlet]="componentPortal.portal"
-                (attached)="componentPortal.attached($event)"
-            >
+                (attached)="componentPortal.attached($event)">
             </ng-template>
         </ng-container>
     </div>

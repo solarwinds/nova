@@ -20,7 +20,11 @@
 
 import { Pipe, PipeTransform } from "@angular/core";
 
-import { UnitConversionService, UnitOption, unitConversionBases } from "@nova-ui/bits";
+import {
+    UnitConversionService,
+    UnitOption,
+    unitConversionBases,
+} from "@nova-ui/bits";
 
 import { DEFAULT_UNIT_CONVERSION_THRESHOLD } from "../constants";
 
@@ -53,7 +57,9 @@ export class DashboardUnitConversionPipe implements PipeTransform {
         if (
             valueAsNumber === undefined ||
             isNaN(valueAsNumber) ||
-            (valueAsNumber < defaultThreshold && units !== "percent" && units !== "milliseconds")
+            (valueAsNumber < defaultThreshold &&
+                units !== "percent" &&
+                units !== "milliseconds")
         ) {
             return value?.toString() || "";
         }

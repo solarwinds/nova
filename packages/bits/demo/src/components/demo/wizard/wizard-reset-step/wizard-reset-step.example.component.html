@@ -4,8 +4,7 @@
             <nui-form-field class="d-block mb-4" i18n-caption caption="Name">
                 <nui-textbox
                     id="stepInputName"
-                    formControlName="name"
-                ></nui-textbox>
+                    formControlName="name"></nui-textbox>
             </nui-form-field>
         </div>
         <div class="form-group">
@@ -13,32 +12,27 @@
                 class="d-block mb-4"
                 [control]="myForm.controls['email']"
                 i18n-caption
-                caption="Email"
-            >
+                caption="Email">
                 <nui-textbox
                     type="email"
                     id="stepInputEmail"
-                    formControlName="email"
-                ></nui-textbox>
+                    formControlName="email"></nui-textbox>
                 <nui-validation-message
                     for="required"
                     *ngIf="myForm.controls['email'].errors?.required"
-                    i18n
-                >
+                    i18n>
                     This is required
                 </nui-validation-message>
                 <nui-validation-message
                     for="pattern"
                     *ngIf="myForm.controls['email'].errors?.pattern"
-                    i18n
-                >
+                    i18n>
                     Please put at least "&#64;" to pass this validator
                 </nui-validation-message>
                 <nui-validation-message
                     for="email"
                     *ngIf="myForm.controls['email'].errors?.email"
-                    i18n
-                >
+                    i18n>
                     This should be a valid email
                 </nui-validation-message>
                 <nui-validation-message [show]="true" i18n>
@@ -51,13 +45,11 @@
                 class="d-block mb-4"
                 i18n-caption
                 caption="Password"
-                [showOptionalText]="false"
-            >
+                [showOptionalText]="false">
                 <nui-textbox
                     type="password"
                     id="stepInputPassword"
-                    formControlName="password"
-                ></nui-textbox>
+                    formControlName="password"></nui-textbox>
             </nui-form-field>
         </div>
     </form>
@@ -78,8 +70,7 @@
                 <nui-checkbox
                     [required]="true"
                     [checked]="false"
-                    formControlName="formCheckbox"
-                >
+                    formControlName="formCheckbox">
                     I need to be checked to go further
                 </nui-checkbox>
             </nui-form-field>
@@ -94,26 +85,22 @@
     id="nui-demo-wizard-validation"
     finishText="Finish"
     i18n-finishText
-    (selectionChange)="onSelectionChange($event)"
->
+    (selectionChange)="onSelectionChange($event)">
     <nui-wizard-step
         i18n-title
         title="Step with validation"
         [stepTemplate]="stepWithValidation"
-        [stepControl]="myForm.valid"
-    ></nui-wizard-step>
+        [stepControl]="myForm.valid"></nui-wizard-step>
     <nui-wizard-step
         #wizardStep2
         i18n-title
         title="Second step"
         [stepTemplate]="step2"
         [stepControl]="secondStepForm.valid"
-        (next)="updateValidity()"
-    ></nui-wizard-step>
+        (next)="updateValidity()"></nui-wizard-step>
     <nui-wizard-step
         i18n-title
         #wizardStep3
         title="Third step"
-        [stepTemplate]="step3"
-    ></nui-wizard-step>
+        [stepTemplate]="step3"></nui-wizard-step>
 </nui-wizard>

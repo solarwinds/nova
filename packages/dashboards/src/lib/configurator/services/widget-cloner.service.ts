@@ -28,7 +28,6 @@ import { WidgetClonerComponent } from "../components/widget-cloner/widget-cloner
 
 @Injectable()
 export class WidgetClonerService {
-
     private ref: ComponentRef<WidgetClonerComponent>;
 
     constructor(
@@ -58,8 +57,8 @@ export class WidgetClonerService {
             cloner.portalBundle = formPortal;
         }
 
-        cloner.previewPizzagnaComponent = () => this.ref.instance.configurator.getPreview();
-
+        cloner.previewPizzagnaComponent = () =>
+            this.ref.instance.configurator.getPreview();
 
         return this.configuratorService.open(cloner);
     }

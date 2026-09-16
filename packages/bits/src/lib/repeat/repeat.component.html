@@ -17,38 +17,31 @@
         "
         [class.nui-dnd-raised-state]="
             isItemDraggable(item) && mousedOver[itemIndex]
-        "
-    >
+        ">
         <div
             *ngIf="dragHandleTemplateRef && !virtualScroll"
             [class.hide]="!draggable"
             [class.invisible]="!isItemDraggable(item)"
-            class="nui-repeat-item__controls-drag-handle align-self-center"
-        >
+            class="nui-repeat-item__controls-drag-handle align-self-center">
             <div
                 cdkDragHandle
                 (mouseover)="mousedOver[itemIndex] = true"
                 (mouseout)="mousedOver[itemIndex] = false"
-                [class.nui-dnd-handle]="!drag.disabled"
-            >
+                [class.nui-dnd-handle]="!drag.disabled">
                 <ng-container
                     [ngTemplateOutlet]="dragHandleTemplateRef"
-                    [ngTemplateOutletContext]="{ item: item }"
-                ></ng-container>
+                    [ngTemplateOutletContext]="{ item: item }"></ng-container>
             </div>
         </div>
         <div
             *ngIf="dragPreviewTemplateRef && !virtualScroll"
-            class="nui-repeat-item__controls-drag-handle"
-        >
+            class="nui-repeat-item__controls-drag-handle">
             <div
                 *cdkDragPreview
-                [class.nui-dnd-preview]="!isItemDisabled(item)"
-            >
+                [class.nui-dnd-preview]="!isItemDisabled(item)">
                 <ng-container
                     [ngTemplateOutlet]="dragPreviewTemplateRef"
-                    [ngTemplateOutletContext]="{ item: item }"
-                ></ng-container>
+                    [ngTemplateOutletContext]="{ item: item }"></ng-container>
             </div>
         </div>
         <div class="nui-repeat-item__controls-container">
@@ -63,8 +56,7 @@
                     itemIndex !== undefined
                         ? 'nui-repeat-item-content-' + itemIndex
                         : null
-                "
-            >
+                ">
             </nui-checkbox>
             <nui-radio
                 *ngIf="isModeRadio()"
@@ -77,8 +69,7 @@
                     itemIndex !== undefined
                         ? 'nui-repeat-item-content-' + itemIndex
                         : null
-                "
-            >
+                ">
             </nui-radio>
         </div>
         <div
@@ -87,21 +78,17 @@
                 itemIndex !== undefined
                     ? 'nui-repeat-item-content-' + itemIndex
                     : null
-            "
-        >
+            ">
             <ng-container
                 [ngTemplateOutlet]="repeatItemTemplateRef"
-                [ngTemplateOutletContext]="{ item: item }"
-            ></ng-container>
+                [ngTemplateOutletContext]="{ item: item }"></ng-container>
         </div>
         <div
             class="nui-repeat-item__actions-container"
-            *ngIf="actionsTemplateRef"
-        >
+            *ngIf="actionsTemplateRef">
             <ng-container
                 [ngTemplateOutlet]="actionsTemplateRef"
-                [ngTemplateOutletContext]="{ item: item }"
-            >
+                [ngTemplateOutletContext]="{ item: item }">
             </ng-container>
         </div>
     </nui-repeat-item>
@@ -119,8 +106,7 @@
             [ngTemplateOutletContext]="{
                 item: sourceItem,
                 itemIndex: $index
-            }"
-        ></ng-container>
+            }"></ng-container>
         } } @if (virtualScroll && itemSize) {
         <cdk-virtual-scroll-viewport [itemSize]="itemSize">
             <ng-container
@@ -128,15 +114,13 @@
                     let sourceItem of itemsSource;
                     let i = index;
                     templateCacheSize: 0
-                "
-            >
+                ">
                 <ng-container
                     [ngTemplateOutlet]="repeatItems"
                     [ngTemplateOutletContext]="{
                         item: sourceItem,
                         itemIndex: i
-                    }"
-                ></ng-container>
+                    }"></ng-container>
             </ng-container>
         </cdk-virtual-scroll-viewport>
         }

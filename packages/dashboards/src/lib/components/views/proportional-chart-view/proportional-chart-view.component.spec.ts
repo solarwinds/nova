@@ -24,8 +24,8 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { UnitConversionService } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { NuiDashboardViewsModule } from "../views.module";
 import { IProportionalDataItem } from "../types";
+import { NuiDashboardViewsModule } from "../views.module";
 import { ProportionalChartViewComponent } from "./proportional-chart-view.component";
 
 @Component({
@@ -217,9 +217,7 @@ describe("ProportionalChartViewComponent", () => {
 
         const chartAssist1 = component.chartAssist;
 
-        host.data = [
-            { id: "x", name: "X", value: 100, color: "#fff" },
-        ];
+        host.data = [{ id: "x", name: "X", value: 100, color: "#fff" }];
         fixture.detectChanges();
 
         // Chart assist may be rebuilt due to color changes

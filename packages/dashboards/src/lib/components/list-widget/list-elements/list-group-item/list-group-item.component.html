@@ -5,14 +5,16 @@
     [ngClass]="{ 'widget-medium': isMedium, 'widget-small': isSmall }"
     (click)="onButtonClick()"
     (keydown.enter)="onButtonClick()"
-    (keydown.space)="$event.preventDefault(); onButtonClick()"
->
+    (keydown.space)="$event.preventDefault(); onButtonClick()">
     <div class="list-group-item__label" [title]="label">{{ label }}</div>
     <div class="list-group-item__statuses">
         <div class="statuses">
             @for (status of statuses; track status) {
             <div class="status-column">
-                <nui-icon [icon]="status.key" class="mr-2" aria-hidden="true"></nui-icon>
+                <nui-icon
+                    [icon]="status.key"
+                    class="mr-2"
+                    aria-hidden="true"></nui-icon>
                 <span class="status-column__label" [title]="status.value">{{
                     status.value
                 }}</span>

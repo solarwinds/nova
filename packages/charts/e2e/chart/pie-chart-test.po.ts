@@ -28,6 +28,8 @@ export class PieChartTestPage {
 
     constructor(page: Page) {
         this.root = page.locator(".nui-pie-chart-basic-test");
-        this.chart = new ChartAtom(this.root.locator(`.${ChartAtom.CSS_CLASS}`));
+        this.chart = new ChartAtom(
+            this.root.locator(`.${ChartAtom.CSS_CLASS}`)
+        );
     }
 }

@@ -5,12 +5,10 @@
             caption="Nickname"
             hint="Some pretty long text with hint"
             info="text"
-            [control]="fancyForm.controls['nickname']"
-        >
+            [control]="fancyForm.controls['nickname']">
             <nui-textbox
                 formControlName="nickname"
-                id="nui-form-field-visual-test-nickname"
-            ></nui-textbox>
+                id="nui-form-field-visual-test-nickname"></nui-textbox>
             <nui-validation-message for="required">
                 This is required
             </nui-validation-message>
@@ -18,8 +16,7 @@
         <nui-form-field caption="City" [control]="fancyForm.controls['city']">
             <nui-textbox
                 formControlName="city"
-                id="nui-form-field-visual-test-city"
-            ></nui-textbox>
+                id="nui-form-field-visual-test-city"></nui-textbox>
         </nui-form-field>
     </form>
     <h3>Custom error message styling</h3>
@@ -29,16 +26,14 @@
             caption="Textbox"
             i18n-hint
             hint="Try to leave empty this required field"
-            [control]="fancyForm.controls['textbox']"
-        >
+            [control]="fancyForm.controls['textbox']">
             <nui-textbox formControlName="textbox" type="textbox"></nui-textbox>
 
             <nui-custom-validation-message for="required">
                 <nui-icon
                     icon="status_critical"
                     iconSize="small"
-                    aria-hidden="true"
-                ></nui-icon>
+                    aria-hidden="true"></nui-icon>
                 <span class="ml-1"><em i18n>This is required</em></span>
             </nui-custom-validation-message>
         </nui-form-field>
@@ -51,12 +46,10 @@
                     caption="Textbox"
                     hint="This should be any valid email"
                     info="text"
-                    [control]="fancyForm.controls['textbox']"
-                >
+                    [control]="fancyForm.controls['textbox']">
                     <nui-textbox
                         id="nui-form-field-visual-test-textbox"
-                        formControlName="textbox"
-                    ></nui-textbox>
+                        formControlName="textbox"></nui-textbox>
                     <nui-validation-message for="required">
                         This field is required
                     </nui-validation-message>
@@ -71,12 +64,10 @@
                     caption="Checkbox"
                     hint="Some pretty long text with hint"
                     info="text"
-                    [control]="fancyForm.controls['checkbox']"
-                >
+                    [control]="fancyForm.controls['checkbox']">
                     <nui-checkbox
                         id="nui-form-field-visual-test-checkbox"
-                        formControlName="checkbox"
-                    ></nui-checkbox>
+                        formControlName="checkbox"></nui-checkbox>
                     <nui-validation-message for="required">
                         This field is required
                     </nui-validation-message>
@@ -87,12 +78,10 @@
                     caption="Switch"
                     hint="Some pretty long text with hint"
                     info="text"
-                    [control]="fancyForm.controls['switch']"
-                >
+                    [control]="fancyForm.controls['switch']">
                     <nui-switch
                         id="nui-form-field-visual-test-switch"
-                        formControlName="switch"
-                    ></nui-switch>
+                        formControlName="switch"></nui-switch>
                     <nui-validation-message for="required">
                         This field is required
                     </nui-validation-message>
@@ -106,17 +95,14 @@
                     caption="Checkbox Group"
                     hint="Some pretty long text with hint"
                     info="text"
-                    [control]="fancyForm.controls['checkboxGroup']"
-                >
+                    [control]="fancyForm.controls['checkboxGroup']">
                     <nui-checkbox-group
                         id="nui-form-field-visual-test-checkbox-group"
                         formControlName="checkboxGroup"
-                        name="vegetable"
-                    >
+                        name="vegetable">
                         <nui-checkbox
                             *ngFor="let vegetable of vegetables"
-                            [value]="vegetable"
-                        >
+                            [value]="vegetable">
                             {{ vegetable }}
                         </nui-checkbox>
                     </nui-checkbox-group>
@@ -130,18 +116,15 @@
                     caption="Radio Group"
                     hint="Some pretty long text with hint"
                     info="text"
-                    [control]="fancyForm.controls['radioGroup']"
-                >
+                    [control]="fancyForm.controls['radioGroup']">
                     <nui-radio-group
                         id="nui-form-field-visual-test-radio"
                         formControlName="radioGroup"
                         name="vegetable"
-                        required
-                    >
+                        required>
                         <nui-radio
                             *ngFor="let vegetable of vegetables"
-                            [value]="vegetable"
-                        >
+                            [value]="vegetable">
                             {{ vegetable }}
                         </nui-radio>
                     </nui-radio-group>
@@ -158,13 +141,11 @@
                     caption="Combobox"
                     hint="Some pretty long text with hint"
                     info="text"
-                    [control]="fancyForm.controls['combobox']"
-                >
+                    [control]="fancyForm.controls['combobox']">
                     <nui-combobox
                         id="nui-form-field-visual-test-combobox"
                         formControlName="combobox"
-                        [itemsSource]="vegetables"
-                    ></nui-combobox>
+                        [itemsSource]="vegetables"></nui-combobox>
                     <nui-validation-message for="required">
                         This field is required
                     </nui-validation-message>
@@ -175,13 +156,11 @@
                     caption="Select"
                     hint="Some pretty long text with hint"
                     info="text"
-                    [control]="fancyForm.controls['select']"
-                >
+                    [control]="fancyForm.controls['select']">
                     <nui-select
                         id="nui-form-field-visual-test-select"
                         formControlName="select"
-                        [itemsSource]="vegetables"
-                    ></nui-select>
+                        [itemsSource]="vegetables"></nui-select>
                     <nui-validation-message for="required">
                         This field is required
                     </nui-validation-message>
@@ -192,12 +171,10 @@
                     caption="Time Picker"
                     hint="Some pretty long text with hint"
                     info="text"
-                    [control]="fancyForm.controls['timePicker']"
-                >
+                    [control]="fancyForm.controls['timePicker']">
                     <nui-time-picker
                         id="nui-form-field-visual-test-timepicker"
-                        formControlName="timePicker"
-                    ></nui-time-picker>
+                        formControlName="timePicker"></nui-time-picker>
                     <nui-validation-message for="required">
                         This field is required
                     </nui-validation-message>
@@ -210,8 +187,7 @@
                     nui-button
                     class="btn"
                     id="nui-demo-mark-as-touched-button"
-                    (click)="markAsDirty()"
-                >
+                    (click)="markAsDirty()">
                     Mark as Dirty
                 </button>
             </div>

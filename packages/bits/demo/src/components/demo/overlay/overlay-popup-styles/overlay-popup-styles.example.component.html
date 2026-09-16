@@ -4,16 +4,14 @@
     type="button"
     [isEmpty]="false"
     (click)="overlayWithStyles.toggle()"
-    i18n
->
+    i18n>
     With popup styles
 </button>
 
 <nui-overlay
     #overlayWithStyles
     [toggleReference]="toggleButton['el'].nativeElement"
-    [overlayConfig]="overlayConfig"
->
+    [overlayConfig]="overlayConfig">
     <div style="width: 300px">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -32,15 +30,13 @@
     [isEmpty]="false"
     (click)="overlayNoStyles.toggle()"
     style="float: right"
-    i18n
->
+    i18n>
     No popup styles
 </button>
 
 <nui-overlay
     #overlayNoStyles
-    [toggleReference]="toggleButton2['el'].nativeElement"
->
+    [toggleReference]="toggleButton2['el'].nativeElement">
     <div style="width: 300px">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim

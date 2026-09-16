@@ -67,7 +67,7 @@ export class KpiStatusContentFallbackAdapter
         this.eventBus
             .getStream(DATA_SOURCE_DESTROYED)
             .pipe(takeUntil(this.destroy$))
-            .subscribe((event) => {
+            .subscribe(event => {
                 this.handleDataSourceDestroyed(event);
             });
     }

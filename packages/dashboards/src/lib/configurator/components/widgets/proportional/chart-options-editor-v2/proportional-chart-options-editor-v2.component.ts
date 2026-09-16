@@ -97,7 +97,7 @@ export class ProportionalChartOptionsEditorV2Component
         // broadcast chart type
         this.form.controls["type"].valueChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe((v) => this.chartTypeChanged$.next(v));
+            .subscribe(v => this.chartTypeChanged$.next(v));
     }
 
     public ngOnInit(): void {
@@ -131,7 +131,7 @@ export class ProportionalChartOptionsEditorV2Component
     public get chartTitle(): string | undefined {
         const currentChartType = this.form.get("type")?.value;
         const currentChartTypeDefinition = this.chartTypes.find(
-            (chartType) => chartType.id === currentChartType
+            chartType => chartType.id === currentChartType
         );
         return currentChartTypeDefinition?.label;
     }

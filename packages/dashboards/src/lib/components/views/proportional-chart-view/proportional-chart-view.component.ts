@@ -68,7 +68,10 @@ import {
     ViewLegendPlacement,
 } from "../types";
 
-const CHART_TYPE_MAP: Record<ProportionalChartType, ProportionalWidgetChartTypes> = {
+const CHART_TYPE_MAP: Record<
+    ProportionalChartType,
+    ProportionalWidgetChartTypes
+> = {
     donut: ProportionalWidgetChartTypes.DonutChart,
     pie: ProportionalWidgetChartTypes.PieChart,
     verticalBar: ProportionalWidgetChartTypes.VerticalBarChart,
@@ -82,7 +85,9 @@ const CHART_TYPE_MAP: Record<ProportionalChartType, ProportionalWidgetChartTypes
     encapsulation: ViewEncapsulation.Emulated,
     standalone: false,
 })
-export class ProportionalChartViewComponent implements AfterViewInit, OnChanges, OnDestroy {
+export class ProportionalChartViewComponent
+    implements AfterViewInit, OnChanges, OnDestroy
+{
     private static NO_SWITCH_LAYOUT_INTERVAL_SIZE = 20;
     private static MAX_ROW_LAYOUT_SIZE = 360;
     private static TICK_LABEL_MAX_WIDTH = 75;
@@ -111,13 +116,19 @@ export class ProportionalChartViewComponent implements AfterViewInit, OnChanges,
     private changeDetector = inject(ChangeDetectorRef);
     private ngZone = inject(NgZone);
     private kvDiffers = inject(KeyValueDiffers);
-    private differ: KeyValueDiffer<any, any> = this.kvDiffers.find(this.prioritizedGridRows).create();
+    private differ: KeyValueDiffer<any, any> = this.kvDiffers
+        .find(this.prioritizedGridRows)
+        .create();
     private renderer: Renderer<IAccessors>;
     private scales: Scales;
-    private chartPalette: IChartPalette = new ChartPalette(defaultColorProvider());
+    private chartPalette: IChartPalette = new ChartPalette(
+        defaultColorProvider()
+    );
     private resizeObserver: ResizeObserver;
     private chartTypeSubscription$: Subscription;
-    private unitConversionPipe = new DashboardUnitConversionPipe(inject(UnitConversionService));
+    private unitConversionPipe = new DashboardUnitConversionPipe(
+        inject(UnitConversionService)
+    );
     private chartSeries: Array<IChartAssistSeries<IAccessors>> = [];
 
     public get isEmpty(): boolean {
@@ -170,7 +181,7 @@ export class ProportionalChartViewComponent implements AfterViewInit, OnChanges,
         if (!this.interactive) {
             return;
         }
-        const item = this.data.find((d) => d.id === legendSeries?.id);
+        const item = this.data.find(d => d.id === legendSeries?.id);
         if (item) {
             this.itemClick.emit(item);
         }
@@ -184,7 +195,10 @@ export class ProportionalChartViewComponent implements AfterViewInit, OnChanges,
     private buildChart(chartType: ProportionalWidgetChartTypes): void {
         this.donutContentPlugin = null;
         const { grid, accessors, renderer, scales, preprocessor } =
-            CategoryChartUtilService.getChartAttributes(chartType, this.chartPalette?.standardColors);
+            CategoryChartUtilService.getChartAttributes(
+                chartType,
+                this.chartPalette?.standardColors
+            );
 
         this.chartAssist = new ChartAssist(
             new Chart(grid),
@@ -201,20 +215,24 @@ export class ProportionalChartViewComponent implements AfterViewInit, OnChanges,
         }
 
         if (chartType === ProportionalWidgetChartTypes.HorizontalBarChart) {
-            this.scales.x.formatters.tick = (value: string | number | undefined) =>
-                this.unitConversionPipe.transform(value);
+            this.scales.x.formatters.tick = (
+                value: string | number | undefined
+            ) => this.unitConversionPipe.transform(value);
             this.applyTickLabelMaxWidths();
-        } else if (chartType === ProportionalWidgetChartTypes.VerticalBarChart) {
-            this.scales.y.formatters.tick = (value: string | number | undefined) =>
-                this.unitConversionPipe.transform(value);
+        } else if (
+            chartType === ProportionalWidgetChartTypes.VerticalBarChart
+        ) {
+            this.scales.y.formatters.tick = (
+                value: string | number | undefined
+            ) => this.unitConversionPipe.transform(value);
         }
 
         this.chartTypeSubscription$?.unsubscribe();
         this.chartTypeSubscription$ = this.chartAssist.chart
             .getEventBus()
             .getStream(SELECT_DATA_POINT_EVENT)
-            .subscribe((event) => {
-                const item = this.data.find((d) => d.id === event.data.seriesId);
+            .subscribe(event => {
+                const item = this.data.find(d => d.id === event.data.seriesId);
                 if (item) {
                     this.onInteraction({ id: item.id });
                 }
@@ -229,9 +247,13 @@ export class ProportionalChartViewComponent implements AfterViewInit, OnChanges,
     }
 
     private applyTickLabelMaxWidths(): void {
-        const gridConfigAxis = (this.chartAssist.chart.getGrid().config() as XYGridConfig).axis;
-        gridConfigAxis.left.tickLabel.maxWidth = ProportionalChartViewComponent.TICK_LABEL_MAX_WIDTH;
-        gridConfigAxis.right.tickLabel.maxWidth = ProportionalChartViewComponent.TICK_LABEL_MAX_WIDTH;
+        const gridConfigAxis = (
+            this.chartAssist.chart.getGrid().config() as XYGridConfig
+        ).axis;
+        gridConfigAxis.left.tickLabel.maxWidth =
+            ProportionalChartViewComponent.TICK_LABEL_MAX_WIDTH;
+        gridConfigAxis.right.tickLabel.maxWidth =
+            ProportionalChartViewComponent.TICK_LABEL_MAX_WIDTH;
     }
 
     private onResize(): void {
@@ -241,10 +263,12 @@ export class ProportionalChartViewComponent implements AfterViewInit, OnChanges,
 
         switch (this.legendPlacement) {
             case "bottom":
-                this.prioritizedGridRows.bottom = this.containerHasRowLayoutWidth();
+                this.prioritizedGridRows.bottom =
+                    this.containerHasRowLayoutWidth();
                 break;
             case "right":
-                this.prioritizedGridRows.right = this.containerHasRowLayoutWidth();
+                this.prioritizedGridRows.right =
+                    this.containerHasRowLayoutWidth();
                 break;
         }
 
@@ -254,20 +278,26 @@ export class ProportionalChartViewComponent implements AfterViewInit, OnChanges,
     }
 
     private isContainerInNoSwitchLayoutInterval(): boolean {
-        const containerWidth = this.gridContainer.nativeElement.getBoundingClientRect().width;
+        const containerWidth =
+            this.gridContainer.nativeElement.getBoundingClientRect().width;
         return (
             containerWidth >
                 ProportionalChartViewComponent.MAX_ROW_LAYOUT_SIZE -
-                    ProportionalChartViewComponent.NO_SWITCH_LAYOUT_INTERVAL_SIZE / 2 &&
+                    ProportionalChartViewComponent.NO_SWITCH_LAYOUT_INTERVAL_SIZE /
+                        2 &&
             containerWidth <
                 ProportionalChartViewComponent.MAX_ROW_LAYOUT_SIZE +
-                    ProportionalChartViewComponent.NO_SWITCH_LAYOUT_INTERVAL_SIZE / 2
+                    ProportionalChartViewComponent.NO_SWITCH_LAYOUT_INTERVAL_SIZE /
+                        2
         );
     }
 
     private containerHasRowLayoutWidth(): boolean {
-        const containerWidth = this.gridContainer.nativeElement.getBoundingClientRect().width;
-        return containerWidth < ProportionalChartViewComponent.MAX_ROW_LAYOUT_SIZE;
+        const containerWidth =
+            this.gridContainer.nativeElement.getBoundingClientRect().width;
+        return (
+            containerWidth < ProportionalChartViewComponent.MAX_ROW_LAYOUT_SIZE
+        );
     }
 
     private updateChart(): void {
@@ -285,12 +315,17 @@ export class ProportionalChartViewComponent implements AfterViewInit, OnChanges,
     private updateChartColors(): void {
         let colorProvider: IValueProvider<string>;
 
-        const dataColors = this.data?.map((v) => v.color);
+        const dataColors = this.data?.map(v => v.color);
         const configColors = this.colors;
 
         if (some(dataColors)) {
             colorProvider = this.getDataDrivenColorProvider();
-        } else if (configColors && (Array.isArray(configColors) ? configColors.length > 0 : Object.keys(configColors).length > 0)) {
+        } else if (
+            configColors &&
+            (Array.isArray(configColors)
+                ? configColors.length > 0
+                : Object.keys(configColors).length > 0)
+        ) {
             colorProvider = this.getConfigurationColorProvider(configColors);
         } else {
             colorProvider = defaultColorProvider();
@@ -305,20 +340,27 @@ export class ProportionalChartViewComponent implements AfterViewInit, OnChanges,
     }
 
     private getDataDrivenColorProvider(): IValueProvider<string> {
-        const dataColors = this.data?.map((v) => v.color).filter((v): v is string => !!v);
+        const dataColors = this.data
+            ?.map(v => v.color)
+            .filter((v): v is string => !!v);
 
         if (dataColors.length === this.data.length) {
-            const colorMap = this.data.reduce((acc: Record<string, string>, next) => {
-                acc[next.id] = next.color!;
-                return acc;
-            }, {});
+            const colorMap = this.data.reduce(
+                (acc: Record<string, string>, next) => {
+                    acc[next.id] = next.color!;
+                    return acc;
+                },
+                {}
+            );
             return new MappedValueProvider<string>(colorMap);
         }
 
         return new SequentialColorProvider(dataColors);
     }
 
-    private getConfigurationColorProvider(colors: Array<string> | Record<string, string>): IValueProvider<string> {
+    private getConfigurationColorProvider(
+        colors: Array<string> | Record<string, string>
+    ): IValueProvider<string> {
         if (Array.isArray(colors)) {
             return new SequentialColorProvider(colors);
         }
@@ -326,7 +368,7 @@ export class ProportionalChartViewComponent implements AfterViewInit, OnChanges,
     }
 
     private mapDataToSeries(): Array<IChartAssistSeries<IAccessors>> {
-        return this.data.map((item) => ({
+        return this.data.map(item => ({
             id: item.id,
             name: item.name,
             data: [{ value: item.value }],

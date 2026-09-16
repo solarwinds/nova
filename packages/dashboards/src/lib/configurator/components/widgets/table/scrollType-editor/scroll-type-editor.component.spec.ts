@@ -32,7 +32,6 @@ import { DynamicComponentCreator } from "../../../../../pizzagna/services/dynami
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { PIZZAGNA_EVENT_BUS } from "../../../../../types";
 
-
 describe("TableScrollTypeEditorComponent", () => {
     let component: TableScrollTypeEditorComponent;
     let fixture: ComponentFixture<TableScrollTypeEditorComponent>;
@@ -136,9 +135,9 @@ describe("TableScrollTypeEditorComponent", () => {
 
             component.ngOnChanges(changes);
 
-            component.pageSizeSetOptions.forEach((option) => {
+            component.pageSizeSetOptions.forEach(option => {
                 component.paginatorConfiguration.pageSizeSet?.forEach(
-                    (pageValue) => {
+                    pageValue => {
                         if (option.value === pageValue) {
                             expect(option.checked).toBeTrue();
                         }
@@ -177,7 +176,7 @@ describe("TableScrollTypeEditorComponent", () => {
             expect(component.subtitle).toEqual(
                 "Scroll Type:  " +
                     component.scrollTypeEditorService.loadStrategies.find(
-                        (ls) => ls.id === ScrollType.virtual
+                        ls => ls.id === ScrollType.virtual
                     )?.title
             );
         });

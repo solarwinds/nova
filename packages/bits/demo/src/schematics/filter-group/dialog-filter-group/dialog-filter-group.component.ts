@@ -105,6 +105,6 @@ export class DialogFilterGroupCompositeComponent implements IFilterPub, OnInit {
     private getAllFilterOptionsList(
         filterGroupItems: IFilterGroupOption[]
     ): string[] {
-        return filterGroupItems.map((item) => item.value);
+        return filterGroupItems.map(item => item.value);
     }
 }

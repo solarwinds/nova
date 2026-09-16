@@ -91,7 +91,7 @@ export abstract class FormatterConfiguratorComponent
             const allowedDataTypes = this.formatterDefinition.dataTypes[next];
 
             result[next] = allowedDataTypes
-                ? this.dataFields.filter((df) =>
+                ? this.dataFields.filter(df =>
                       // dataTypes could be a string or an array of strings, so we're checking that here
                       typeof allowedDataTypes === "string"
                           ? df.dataType === allowedDataTypes

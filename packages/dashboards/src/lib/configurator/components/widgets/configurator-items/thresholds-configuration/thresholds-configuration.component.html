@@ -1,28 +1,23 @@
 <nui-widget-editor-accordion
     [formGroup]="form"
-    [state]="form | nuiWidgetEditorAccordionFormState | async"
->
+    [state]="form | nuiWidgetEditorAccordionFormState | async">
     <nui-widget-editor-accordion-header
         [headerIcon]="form | nuiFormHeaderIconPipe : 'thresholds' | async"
         [subtitle]="getThresholdsSubtitle(form.get('showThresholds')?.value)"
-        headerTitle="Thresholds"
-    />
+        headerTitle="Thresholds" />
     <div class="kpi-thresholds-configuration__accordion-content">
         <nui-form-field
             [control]="form.get('showThresholds')"
             caption="How do you want to set warning/critical thresholds?"
-            i18n-caption
-        >
+            i18n-caption>
             <nui-radio-group
                 formControlName="showThresholds"
                 [value]="radioButtonGroupValue"
                 name="showThresholds"
-                required
-            >
+                required>
                 <nui-radio
                     *ngFor="let thresholdOption of thresholdOptions"
-                    [value]="thresholdOption.value"
-                >
+                    [value]="thresholdOption.value">
                     {{ thresholdOption.displayValue }}
                 </nui-radio>
             </nui-radio-group>
@@ -36,13 +31,11 @@
                 <nui-form-field
                     caption="Warning value"
                     i18n-caption
-                    [control]="form.get('warningThresholdValue')"
-                >
+                    [control]="form.get('warningThresholdValue')">
                     <nui-textbox-number
                         formControlName="warningThresholdValue"
                         placeholder="Never show the warning state"
-                        i18n-placeholder
-                    ></nui-textbox-number>
+                        i18n-placeholder></nui-textbox-number>
                     <nui-validation-message for="required" i18n>
                         This field is required
                     </nui-validation-message>
@@ -61,13 +54,11 @@
                 <nui-form-field
                     caption="Critical value"
                     i18n-caption
-                    [control]="form.get('criticalThresholdValue')"
-                >
+                    [control]="form.get('criticalThresholdValue')">
                     <nui-textbox-number
                         formControlName="criticalThresholdValue"
                         placeholder="Set critical value"
-                        i18n-placeholder
-                    ></nui-textbox-number>
+                        i18n-placeholder></nui-textbox-number>
                     <nui-validation-message for="required" i18n>
                         This field is required
                     </nui-validation-message>
@@ -85,8 +76,7 @@
             <div class="mb-4">
                 <nui-form-field
                     [control]="form.get('reversedThresholds')"
-                    [showOptionalText]="false"
-                >
+                    [showOptionalText]="false">
                     <nui-checkbox formControlName="reversedThresholds" required>
                         <span class="nui-text-label" i18n
                             >Warning and critical when below threshold

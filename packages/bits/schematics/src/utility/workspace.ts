@@ -31,7 +31,7 @@ import { parse } from "jsonc-parser";
 
 export function getWorkspacePath(host: Tree): string {
     const possibleFiles = ["/angular.json", "/.angular.json"];
-    const path = possibleFiles.filter((p) => host.exists(p))[0];
+    const path = possibleFiles.filter(p => host.exists(p))[0];
     return path;
 }
 

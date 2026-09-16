@@ -5,8 +5,7 @@
     <ng-container *ngFor="let section of colors | keyvalue">
         <div
             *ngIf="section.key !== 'default' && section.value.length"
-            class="mb-4"
-        >
+            class="mb-4">
             <h2 class="mb-3">{{ section.key | titlecase }}</h2>
             <div class="d-flex flex-wrap ml-4">
                 <div
@@ -14,15 +13,13 @@
                         let colorItem of section.value
                             | keyvalue : keyValueCompare
                     "
-                    class="color-example-container d-flex flex-column mb-4"
-                >
+                    class="color-example-container d-flex flex-column mb-4">
                     <div
                         class="color-example mb-1"
                         [ngClass]="colorItem.value.color | slice : 1"
                         nuiClipboard
                         [nuiClipboard]="colorItem.value.color"
-                        (clipboardSuccess)="onClipboardSuccess()"
-                    ></div>
+                        (clipboardSuccess)="onClipboardSuccess()"></div>
                     <span class="nui-text-default mb-1">{{
                         colorItem.value.color
                     }}</span>

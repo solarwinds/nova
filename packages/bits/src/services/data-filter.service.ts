@@ -102,7 +102,7 @@ export class DataFilterService implements IFilterPub, OnDestroy {
     public ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
-        this.destroySubscriptions.forEach((subscription) =>
+        this.destroySubscriptions.forEach(subscription =>
             subscription.unsubscribe()
         );
     }

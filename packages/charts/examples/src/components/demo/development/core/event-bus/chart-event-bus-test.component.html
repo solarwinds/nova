@@ -21,13 +21,11 @@
         class="nui-checkbox-group-inline"
         name="eventFilter"
         [values]="selectedEventFilters"
-        (valuesChange)="onEventFilterChange($event)"
-    >
+        (valuesChange)="onEventFilterChange($event)">
         <nui-checkbox
             *ngFor="let filter of eventFilters"
             [value]="filter"
-            [checked]="isEventFilterChecked(filter)"
-        >
+            [checked]="isEventFilterChecked(filter)">
             {{ filter }}
         </nui-checkbox>
     </nui-checkbox-group>
@@ -42,17 +40,18 @@
         class="nui-checkbox-group-inline"
         name="interactionTypeFilter"
         [values]="selectedInteractionTypeFilters"
-        (valuesChange)="onInteractionTypeFilterChange($event)"
-    >
+        (valuesChange)="onInteractionTypeFilterChange($event)">
         <nui-checkbox
             *ngFor="let filter of interactionTypeFilters"
             [value]="filter"
-            [checked]="isInteractionTypeFilterChecked(filter)"
-        >
+            [checked]="isInteractionTypeFilterChecked(filter)">
             {{ filter }}
         </nui-checkbox>
     </nui-checkbox-group>
 </div>
 <div class="mt-3">
-    <nui-example-code *ngFor="let event of parsedEvents" language="typescript" [code]="event" />
+    <nui-example-code
+        *ngFor="let event of parsedEvents"
+        language="typescript"
+        [code]="event" />
 </div>

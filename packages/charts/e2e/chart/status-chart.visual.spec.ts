@@ -59,7 +59,10 @@ test.describe(`Visual tests: Charts - ${name}`, () => {
         ).hover();
         await camera.say.cheese(`${name} - Middle status bar hovered`);
 
-        const originalViewport = page.viewportSize() ?? { width: 1280, height: 720 };
+        const originalViewport = page.viewportSize() ?? {
+            width: 1280,
+            height: 720,
+        };
         await page.setViewportSize({ width: 340, height: 800 });
         await camera.say.cheese(
             `${name} - Layout is not affected by resize + icons are not be displayed if bar size is too low`

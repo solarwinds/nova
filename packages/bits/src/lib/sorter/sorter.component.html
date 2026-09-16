@@ -7,8 +7,7 @@
             class="nui-sorter__toggle-button"
             [icon]="getSortIcon()"
             [ariaLabel]="getAriaLabelForSortingButton()"
-            (click)="toggleSortDirection()"
-        >
+            (click)="toggleSortDirection()">
             <span class="nui-sorter__display-value">
                 {{ getSelectedItemTitle() }}
             </span>
@@ -28,8 +27,7 @@
             "
             [attr.aria-activedescendant]="
                 overlay.showing ? activeDescendant : null
-            "
-        ></button>
+            "></button>
     </div>
 
     <div #popupArea></div>
@@ -38,13 +36,11 @@
         #overlay
         [toggleReference]="toggleRef"
         [overlayConfig]="overlayConfig"
-        [customContainer]="customContainer"
-    >
+        [customContainer]="customContainer">
         <nui-menu-popup
             #popup
             [id]="'nui-sorter-menu-' + _id"
             [itemsSource]="items"
-            (menuItemClicked)="select($event)"
-        ></nui-menu-popup>
+            (menuItemClicked)="select($event)"></nui-menu-popup>
     </nui-overlay>
 </div>

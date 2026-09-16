@@ -9,15 +9,13 @@
                 class="searchBar"
                 [value]="searchTerm"
                 (search)="onSearch($event)"
-                #filteringSearch
-            >
+                #filteringSearch>
             </nui-search>
             <nui-repeat
                 class="repeater"
                 [itemsSource]="state.repeat?.itemsSource"
                 [repeatItemTemplateRef]="repeatItemTemplate"
-                #filteringRepeat
-            >
+                #filteringRepeat>
             </nui-repeat>
             <nui-paginator
                 class="paginator"
@@ -27,8 +25,7 @@
                 disabledClass="disabled"
                 showPrevNext="true"
                 (pagerAction)="changePagination()"
-                #filteringPaginator
-            >
+                #filteringPaginator>
             </nui-paginator>
         </div>
     </div>

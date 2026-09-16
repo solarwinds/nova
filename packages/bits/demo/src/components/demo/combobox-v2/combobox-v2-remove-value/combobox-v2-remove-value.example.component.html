@@ -3,8 +3,7 @@
     i18n-placeholder
     [formControl]="comboboxControl"
     [isRemoveValueEnabled]="false"
-    #combobox
->
+    #combobox>
     <nui-select-v2-option *ngFor="let item of items" [value]="item">
         <span [nuiComboboxV2OptionHighlight]="item"></span>
     </nui-select-v2-option>

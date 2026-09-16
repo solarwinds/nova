@@ -5,8 +5,7 @@
     (timeFrameChange)="changeTimeFrame($event, bar)"
     (undo)="bar.undo()"
     (clear)="bar.change()"
-    [historyIndex]="bar.history.index"
->
+    [historyIndex]="bar.history.index">
     <nui-icon icon="calendar" class="pr-3"></nui-icon>
     {{ bar.timeFrame | timeFrame }}
     <nui-quick-picker timeFrameSelection>
@@ -16,8 +15,7 @@
 
 <nui-time-frame-bar
     [id]="barNoQuickPick.id"
-    [(timeFrame)]="barNoQuickPick.timeFrame"
->
+    [(timeFrame)]="barNoQuickPick.timeFrame">
     <nui-icon icon="calendar" class="pr-3"></nui-icon>
     {{ barNoQuickPick.timeFrame | timeFrame }}
     <nui-time-frame-picker timeFrameSelection></nui-time-frame-picker>

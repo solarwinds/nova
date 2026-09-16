@@ -81,7 +81,7 @@ export class ConfiguratorService {
         if (configurator.portalBundle?.attached) {
             component.formPortalAttached
                 .pipe(takeUntil(this.close$))
-                .subscribe((e) => {
+                .subscribe(e => {
                     if (configurator?.portalBundle?.attached) {
                         configurator?.portalBundle?.attached(e);
                     }
@@ -147,7 +147,7 @@ export class ConfiguratorService {
     private updateDashboard =
         (dashboardComponent: DashboardComponent) =>
         (source: Observable<IWidget>) =>
-            new Observable<void>((observer) =>
+            new Observable<void>(observer =>
                 source.subscribe((widget: IWidget) => {
                     if (widget) {
                         widget.id = widget.id || uuid();
@@ -205,7 +205,7 @@ export class ConfiguratorService {
         if (this.router) {
             this.router.events
                 .pipe(
-                    filter((event) => event instanceof NavigationEnd),
+                    filter(event => event instanceof NavigationEnd),
                     takeUntil(this.close$)
                 )
                 .subscribe(() => this.close());

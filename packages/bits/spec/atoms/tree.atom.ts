@@ -44,7 +44,7 @@ export class TreeAtom extends Atom {
 
     public async getNodesByName(name: string): Promise<ElementFinder[]> {
         return this.getAllNestedNodes().filter(
-            async (item) => (await item.getText()) === name
+            async item => (await item.getText()) === name
         );
     }
 

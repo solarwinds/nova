@@ -31,7 +31,7 @@ export class AddDataPipe implements PipeTransform {
         origin: object | Array<any> | undefined,
         value: any,
         key?: string
-    ): object | Array<any>   | undefined {
+    ): object | Array<any> | undefined {
         if (isNil(origin)) {
             return;
         }

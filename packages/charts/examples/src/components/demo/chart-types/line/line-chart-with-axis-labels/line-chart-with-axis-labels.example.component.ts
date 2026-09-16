@@ -56,14 +56,12 @@ export class LineChartWithAxisLabelsExampleComponent implements OnInit {
             y: new LinearScale(),
         };
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
-            (d) => ({
-                ...d,
-                accessors,
-                renderer,
-                scales,
-            })
-        );
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
+            ...d,
+            accessors,
+            renderer,
+            scales,
+        }));
 
         // chart assist needs to be used to update data
         this.chartAssist.update(seriesSet);

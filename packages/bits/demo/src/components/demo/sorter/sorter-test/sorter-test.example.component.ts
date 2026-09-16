@@ -95,7 +95,7 @@ export class SorterTestExampleComponent implements OnInit {
     }
 
     private async delayPromise(delay: number = 0): Promise<void> {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             setTimeout(resolve, delay);
         });
     }

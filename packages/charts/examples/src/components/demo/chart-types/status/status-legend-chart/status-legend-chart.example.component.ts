@@ -85,7 +85,7 @@ export class StatusLegendChartExampleComponent implements OnInit {
             y: new BandScale().fixDomain(StatusAccessors.STATUS_DOMAIN),
         };
 
-        const seriesSet = getData().map((d) => ({
+        const seriesSet = getData().map(d => ({
             ...d,
             accessors,
             renderer,
@@ -103,7 +103,7 @@ export class StatusLegendChartExampleComponent implements OnInit {
         // This can help to generate stream of labels/icons/backgrounds:
         this.legendLabel$ = this.chartAssist
             .legendLabelData$(seriesSet[0])
-            .pipe(map((d) => d.status));
+            .pipe(map(d => d.status));
         this.legendIcon$ = this.legendLabel$.pipe(map(statusMarkers.get));
         this.legendBackground$ = this.legendLabel$.pipe(
             map(palette.backgroundColors.get)
@@ -156,7 +156,7 @@ function getData() {
                     start: new Date(2012, 5, 17),
                     end: new Date(2012, 5, 18),
                 },
-            ].map((d) => ({
+            ].map(d => ({
                 value: d.end,
                 status: d.status,
                 start: d.start,

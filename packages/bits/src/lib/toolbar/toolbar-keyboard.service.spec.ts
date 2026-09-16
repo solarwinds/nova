@@ -157,7 +157,7 @@ describe("Services > ", () => {
                 afterEach(() => {
                     const items = service["toolbarItems"];
 
-                    items.forEach((item) => item.removeAttribute("disabled"));
+                    items.forEach(item => item.removeAttribute("disabled"));
                 });
 
                 it("should skip a disabled item on pressing right arrow button", () => {

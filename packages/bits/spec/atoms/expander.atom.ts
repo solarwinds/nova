@@ -47,7 +47,7 @@ export class ExpanderAtom extends Atom {
             this.root.element(by.css(selector)).isDisplayed()
         );
 
-        return Promise.all(verifiers).then((result) =>
+        return Promise.all(verifiers).then(result =>
             result.every((resultItem: boolean) => resultItem)
         );
     }
@@ -63,7 +63,7 @@ export class ExpanderAtom extends Atom {
             this.root.element(by.css(selector)).isPresent()
         );
 
-        return Promise.all(verifiers).then((result) =>
+        return Promise.all(verifiers).then(result =>
             result.every((resultItem: boolean) => resultItem)
         );
     }

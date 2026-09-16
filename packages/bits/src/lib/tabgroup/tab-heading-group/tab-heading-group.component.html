@@ -4,21 +4,18 @@
     <div
         class="btn-caret-left"
         [class.disabled]="!rightTraverseEnabled"
-        (click)="traverseRight()"
-    >
+        (click)="traverseRight()">
         <nui-icon
             iconSize="default"
             icon="caret-left"
-            [iconColor]="!rightTraverseEnabled ? 'disabled-gray' : 'gray'"
-        ></nui-icon>
+            [iconColor]="!rightTraverseEnabled ? 'disabled-gray' : 'gray'"></nui-icon>
     </div>
     }
     <div class="nui-tab-headings">
         <div
             class="nui-tab-headings__container"
             #resizableArea
-            [class.flex-column]="vertical"
-        >
+            [class.flex-column]="vertical">
             <ng-content></ng-content>
         </div>
     </div>
@@ -27,13 +24,11 @@
     <div
         class="btn-caret-right"
         [class.disabled]="!leftTraverseEnabled"
-        (click)="traverseLeft()"
-    >
+        (click)="traverseLeft()">
         <nui-icon
             iconSize="default"
             icon="caret-right"
-            [iconColor]="!leftTraverseEnabled ? 'disabled-gray' : 'gray'"
-        ></nui-icon>
+            [iconColor]="!leftTraverseEnabled ? 'disabled-gray' : 'gray'"></nui-icon>
     </div>
     }
 </div>

@@ -100,7 +100,7 @@ export class ToolbarKeyboardService {
     // items disabled after the list was built are excluded here rather than at build time
     private get enabledItems(): HTMLElement[] {
         return this.toolbarItems.filter(
-            (el) =>
+            el =>
                 !el.hasAttribute("disabled") &&
                 el.getAttribute("aria-disabled") !== "true"
         );

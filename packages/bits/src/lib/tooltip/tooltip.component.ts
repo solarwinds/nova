@@ -57,7 +57,7 @@ const ANIMATION_DELAY = 200; // ms
     host: {
         "(body:click)": "this._handleBodyInteraction()",
         "aria-hidden": "true",
-        role: "tooltip",
+        "role": "tooltip",
     },
     template: `
         <nui-overlay
@@ -143,7 +143,7 @@ export class TooltipComponent implements OnDestroy, OnInit {
                     skip(1), // skip behavior subject 1st emit
                     take(1)
                 )
-                .subscribe((v) => this._show());
+                .subscribe(v => this._show());
         } else {
             this._show();
         }
@@ -249,7 +249,7 @@ export class TooltipComponent implements OnDestroy, OnInit {
 
         strategy.positionChanges
             .pipe(skip(1), takeUntil(this.destroy$))
-            .subscribe((change) => {
+            .subscribe(change => {
                 if (
                     change.scrollableViewProperties.isOverlayClipped &&
                     this.isVisible()

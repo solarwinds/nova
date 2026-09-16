@@ -1,126 +1,126 @@
 [
     {
-        "title": "Layout",
-        "file": "../layout.md"
+        "file": "../layout.md",
+        "title": "Layout"
     },
     {
-        "title": "Chart Types",
-        "file": "../chart-types/chart-types.md",
         "children": [
             {
-                "title": "Line",
-                "file": "../chart-types/line.md"
+                "file": "../chart-types/line.md",
+                "title": "Line"
             },
             {
-                "title": "Bar",
+                "children": [
+                    {
+                        "file": "../chart-types/bucketed-bar.md",
+                        "title": "Bucketed Bar"
+                    },
+                    {
+                        "file": "../chart-types/status.md",
+                        "title": "Status"
+                    },
+                    {
+                        "file": "../chart-types/waterfall.md",
+                        "title": "Waterfall"
+                    }
+                ],
                 "file": "../chart-types/bar.md",
-                "children": [
-                    {
-                        "title": "Bucketed Bar",
-                        "file": "../chart-types/bucketed-bar.md"
-                    },
-                    {
-                        "title": "Status",
-                        "file": "../chart-types/status.md"
-                    },
-                    {
-                        "title": "Waterfall",
-                        "file": "../chart-types/waterfall.md"
-                    }
-                ]
+                "title": "Bar"
             },
             {
-                "title": "Area",
-                "file": "../chart-types/area.md"
+                "file": "../chart-types/area.md",
+                "title": "Area"
             },
             {
-                "title": "Pie and Donut",
-                "file": "../chart-types/pie-and-donut.md"
+                "file": "../chart-types/pie-and-donut.md",
+                "title": "Pie and Donut"
             },
             {
-                "title": "Spark",
-                "file": "../chart-types/spark.md"
+                "file": "../chart-types/spark.md",
+                "title": "Spark"
             },
             {
-                "title": "Gauge",
-                "file": "../chart-types/gauge.md"
+                "file": "../chart-types/gauge.md",
+                "title": "Gauge"
             }
-        ]
+        ],
+        "file": "../chart-types/chart-types.md",
+        "title": "Chart Types"
     },
     {
-        "title": "Plugins",
+        "children": [
+            {
+                "file": "../plugins/tooltips.md",
+                "title": "Tooltips"
+            },
+            {
+                "file": "../plugins/popovers.md",
+                "title": "Popovers"
+            }
+        ],
         "file": "../plugins/overview.md",
+        "title": "Plugins"
+    },
+    {
+        "file": "../thresholds.md",
+        "title": "Thresholds"
+    },
+    {
+        "file": "../timeframe-selection.md",
+        "title": "Timeframe Selection"
+    },
+    {
         "children": [
             {
-                "title": "Tooltips",
-                "file": "../plugins/tooltips.md"
+                "file": "../advanced-usage/chart.md",
+                "title": "Chart"
             },
             {
-                "title": "Popovers",
-                "file": "../plugins/popovers.md"
-            }
-        ]
-    },
-    {
-        "title": "Thresholds",
-        "file": "../thresholds.md"
-    },
-    {
-        "title": "Timeframe Selection",
-        "file": "../timeframe-selection.md"
-    },
-    {
-        "title": "Advanced Usage",
-        "file": "../advanced-usage/overview.md",
-        "children": [
-            {
-                "title": "Chart",
-                "file": "../advanced-usage/chart.md"
+                "file": "../advanced-usage/legend.md",
+                "title": "Legend"
             },
             {
-                "title": "Legend",
-                "file": "../advanced-usage/legend.md"
-            },
-            {
-                "title": "Input Structure",
+                "children": [
+                    {
+                        "file": "../advanced-usage/accessors/data.md",
+                        "title": "Data"
+                    },
+                    {
+                        "file": "../advanced-usage/accessors/colors.md",
+                        "title": "Colors"
+                    },
+                    {
+                        "file": "../advanced-usage/accessors/markers.md",
+                        "title": "Markers"
+                    }
+                ],
                 "file": "../advanced-usage/accessors/overview.md",
+                "title": "Input Structure"
+            },
+            {
+                "file": "../advanced-usage/events.md",
+                "title": "Events"
+            },
+            {
+                "file": "../advanced-usage/grid-config/base-grid.md",
+                "title": "Grid"
+            },
+            {
                 "children": [
                     {
-                        "title": "Data",
-                        "file": "../advanced-usage/accessors/data.md"
+                        "file": "../advanced-usage/scales/domains.md",
+                        "title": "Domains"
                     },
                     {
-                        "title": "Colors",
-                        "file": "../advanced-usage/accessors/colors.md"
-                    },
-                    {
-                        "title": "Markers",
-                        "file": "../advanced-usage/accessors/markers.md"
+                        "file": "../advanced-usage/scales/formatters.md",
+                        "title": "Formatters"
                     }
-                ]
-            },
-            {
-                "title": "Events",
-                "file": "../advanced-usage/events.md"
-            },
-            {
-                "title": "Grid",
-                "file": "../advanced-usage/grid-config/base-grid.md"
-            },
-            {
-                "title": "Scales",
+                ],
                 "file": "../advanced-usage/scales/overview.md",
-                "children": [
-                    {
-                        "title": "Domains",
-                        "file": "../advanced-usage/scales/domains.md"
-                    },
-                    {
-                        "title": "Formatters",
-                        "file": "../advanced-usage/scales/formatters.md"
-                    }
-                ]
+                "title": "Scales"
             }
-        ]
+        ],
+        "file": "../advanced-usage/overview.md",
+        "title": "Advanced Usage"
     }
 ]

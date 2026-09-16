@@ -2,8 +2,7 @@
     [isInErrorState]="error"
     placeholder="Select Item"
     i18n-placeholder
-    class="w-50 d-inline-flex"
->
+    class="w-50 d-inline-flex">
     <ng-container *ngFor="let item of items">
         <nui-select-v2-option [value]="item">
             {{ item }}
@@ -15,7 +14,6 @@
     class="d-inline-flex"
     style="padding-left: 15px"
     [(value)]="error"
-    i18n
->
+    i18n>
     Toggle error state
 </nui-switch>

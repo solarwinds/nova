@@ -35,7 +35,7 @@ import { FoodNode, TREE_DATA } from "../data";
     standalone: false,
 })
 export class TreeBasicTestComponent {
-    treeControl = new NestedTreeControl<FoodNode>((node) => node.children);
+    treeControl = new NestedTreeControl<FoodNode>(node => node.children);
     dataSource = new ArrayDataSource(TREE_DATA);
 
     hasChild = (_: number, node: FoodNode): boolean => !!node.children?.length;

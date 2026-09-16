@@ -159,7 +159,7 @@ export class ImageComponent {
         effect(() => {
             const h = this.height();
             const w = this.width();
-            [h, w].forEach((item) => {
+            [h, w].forEach(item => {
                 if (
                     item != null &&
                     item !== "" &&
@@ -202,7 +202,7 @@ export class ImageComponent {
     }
 
     private getImage = (imageName: string): IImagesPresetItem | undefined =>
-        this.images.find((img) => img.name === imageName);
+        this.images.find(img => img.name === imageName);
 
     private isImageSizeValid(value: string): boolean {
         return (

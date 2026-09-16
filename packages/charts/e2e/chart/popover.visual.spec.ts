@@ -67,13 +67,19 @@ test.describe(`Visual Tests: Charts - ${name}`, () => {
     test(`${name} - Default look`, async ({ page }) => {
         await camera.turn.on();
 
-        const barSeries = await barChart.getDataSeriesById(SeriesAtom, "safari");
+        const barSeries = await barChart.getDataSeriesById(
+            SeriesAtom,
+            "safari"
+        );
         if (barSeries) {
             await barSeries.hover();
         }
         await camera.say.cheese(`${name} - Default look with bar hovered`);
 
-        const donutSeries = await donutChart.getDataSeriesById(SeriesAtom, "down");
+        const donutSeries = await donutChart.getDataSeriesById(
+            SeriesAtom,
+            "down"
+        );
         if (donutSeries) {
             await donutSeries.hover();
         }
@@ -81,19 +87,25 @@ test.describe(`Visual Tests: Charts - ${name}`, () => {
         await expect(
             page.locator(`#${barPopoverHostId} nui-popover-modal`)
         ).toHaveCount(0);
-        await camera.say.cheese(`${name} - Default look with donut series hovered`);
+        await camera.say.cheese(
+            `${name} - Default look with donut series hovered`
+        );
 
         await lineChart.hover();
         await expect(
             page.locator(`#${donutPopoverHostId} nui-popover-modal`)
         ).toHaveCount(0);
-        await camera.say.cheese(`${name} - Default look with line chart hovered`);
+        await camera.say.cheese(
+            `${name} - Default look with line chart hovered`
+        );
 
         await bottomPositionChart.hover();
         await expect(
             page.locator(`#${linePopoverHostId} nui-popover-modal`)
         ).toHaveCount(0);
-        await camera.say.cheese(`${name} - Default look with bottom position popover`);
+        await camera.say.cheese(
+            `${name} - Default look with bottom position popover`
+        );
 
         await camera.turn.off();
     });

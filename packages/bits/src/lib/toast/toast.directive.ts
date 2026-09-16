@@ -77,7 +77,7 @@ export class ToastDirective implements OnInit, OnDestroy {
 
         const currentItem = find(
             highlightArgs.items,
-            (item) =>
+            item =>
                 item[highlightArgs.itemIdentificator] ===
                 this.nuiToast[highlightArgs.itemIdentificator]
         );

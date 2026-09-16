@@ -39,8 +39,8 @@ import { NuiButtonModule } from "../button/button.module";
     standalone: true,
     imports: [FormsModule, NuiCommonModule, NuiButtonModule],
     host: {
-        class: "nui-search",
-        role: "search",
+        "class": "nui-search",
+        "role": "search",
         "[attr.aria-label]": "inputAriaLabel",
     },
     templateUrl: "./search.component.html",

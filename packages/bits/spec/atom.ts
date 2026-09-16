@@ -124,7 +124,7 @@ export class Atom {
     public static async getClasses(el: ElementFinder): Promise<string[]> {
         return (await el.getAttribute("class"))
             .split(/\s+/)
-            .filter((name) => !!name);
+            .filter(name => !!name);
     }
 
     public static async hasClass(
@@ -140,7 +140,7 @@ export class Atom {
         classNamesToSearch: string[]
     ): Promise<boolean> {
         const classes = await Atom.getClasses(el);
-        return classes.some((name) => classNamesToSearch.includes(name));
+        return classes.some(name => classNamesToSearch.includes(name));
     }
 
     public static async wait<T>(

@@ -121,9 +121,7 @@ export class WizardDirective
         this._steps.changes
             .pipe(startWith(this._steps), takeUntil(this._destroyed))
             .subscribe((steps: QueryList<WizardStepV2Component>) => {
-                this.steps.reset(
-                    steps.filter((step) => step._stepper === this)
-                );
+                this.steps.reset(steps.filter(step => step._stepper === this));
                 this.stepsArray = this.steps.toArray();
                 this.steps.notifyOnChanges();
                 this.setIds();
@@ -144,7 +142,7 @@ export class WizardDirective
                 ),
                 takeUntil(this._destroyed)
             )
-            .subscribe((event) => {
+            .subscribe(event => {
                 if ((event.toState as StepContentPositionState) === "current") {
                     this.animationDone.emit();
                 }
@@ -180,7 +178,7 @@ export class WizardDirective
 
     // Restores the completed wizard to the last step
     private restore(): void {
-        this.steps.toArray().forEach((step) => {
+        this.steps.toArray().forEach(step => {
             step.completed = true;
 
             if (step === this.steps.last) {

@@ -10,8 +10,7 @@
             [value]="searchTerm"
             (search)="onSearch($event)"
             (cancel)="onSearchCancel()"
-            #filteringSearch
-        >
+            #filteringSearch>
         </nui-search>
     </div>
     <table nui-table [dataSource]="dataSource" #filteringTable>
@@ -31,8 +30,7 @@
                 <nui-icon
                     *ngFor="let icon of element.features"
                     [icon]="icon"
-                    class="icon-margin"
-                ></nui-icon>
+                    class="icon-margin"></nui-icon>
             </td>
         </ng-container>
 

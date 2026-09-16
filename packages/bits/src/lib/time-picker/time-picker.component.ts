@@ -172,7 +172,7 @@ export class TimePickerComponent
         }
 
         this.itemToSelect = this.getItemToSelect();
-        this.inputChanged.pipe(debounceTime(500)).subscribe((value) => {
+        this.inputChanged.pipe(debounceTime(500)).subscribe(value => {
             this.updateInnerModel(value);
             this.itemToSelect = this.getItemToSelect();
             this.timeChanged.emit(this.innerModel);
@@ -191,7 +191,7 @@ export class TimePickerComponent
     public ngAfterViewInit(): void {
         this.overlay.clickOutside
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((_) => this.overlay.hide());
+            .subscribe(_ => this.overlay.hide());
 
         this.initPopupUtilities();
         this.keyboardService.initService(

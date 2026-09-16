@@ -65,7 +65,7 @@ export class AverageRatingKpiDataSource
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             // *** Make a resource request to an external API (if needed)
             this.http
                 .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
@@ -114,7 +114,7 @@ export class RatingsCountKpiDataSource
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             this.http
                 .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
                 .pipe(
@@ -165,7 +165,7 @@ export class MockKpiDataSource
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             of(this.value)
                 .pipe(
                     delay(5000),
@@ -280,7 +280,7 @@ export class KpiSyncBrokerForAllTilesExampleComponent implements OnInit {
     }
 
     private initializeDashboard(): void {
-        const widgetsWithStructure = widgetsConfig.map((w) =>
+        const widgetsWithStructure = widgetsConfig.map(w =>
             this.widgetTypesService.mergeWithWidgetType(w)
         );
         const widgetsIndex = keyBy(widgetsWithStructure, (w: IWidget) => w.id);

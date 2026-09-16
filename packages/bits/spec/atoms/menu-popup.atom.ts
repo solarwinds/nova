@@ -50,9 +50,9 @@ export class MenuPopupAtom extends Atom {
         if ((await items.count()) === 0) {
             return;
         }
-        const texts = (
-            await items.map<string>(async (el) => el?.getText())
-        ).map((text) => text.trim());
+        const texts = (await items.map<string>(async el => el?.getText())).map(
+            text => text.trim()
+        );
         const itemIndex = texts.indexOf(title);
         await this.click(itemIndex);
     }

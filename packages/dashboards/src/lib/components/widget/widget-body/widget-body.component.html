@@ -5,10 +5,8 @@
     [componentId]="nodeConfigs[0].id"
     [componentType]="nodeConfigs[0].componentType"
     [providers]="nodeConfigs[0].providers"
-    [properties]="nodeConfigs[0].properties"
->
+    [properties]="nodeConfigs[0].properties">
     <ng-template
         [cdkPortalOutlet]="componentPortal.portal"
-        (attached)="componentPortal.attached($event)"
-    ></ng-template>
+        (attached)="componentPortal.attached($event)"></ng-template>
 </ng-container>

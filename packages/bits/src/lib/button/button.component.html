@@ -1,8 +1,7 @@
 <div
     *ngIf="isBusy"
     [ngStyle]="getRippleContainerStyle()"
-    class="nui-button-ripple-container"
->
+    class="nui-button-ripple-container">
     <div class="ripple ripple-1"></div>
     <div class="ripple ripple-2"></div>
 </div>
@@ -12,8 +11,7 @@
     [icon]="icon"
     [iconSize]="getIconSize()"
     [iconColor]="iconColor"
-    [decorative]="true"
-></nui-icon>
+    [decorative]="true"></nui-icon>
 <div #contentContainer class="nui-button__content">
     <ng-content></ng-content>
 </div>

@@ -50,19 +50,17 @@ describe("ng-add", () => {
             standalone: false,
             skipPackageJson: false,
         };
-        appTree = await runner
-            .runExternalSchematic(
-                "@schematics/angular",
-                "workspace",
-                workspaceOptions
-            )
-        appTree = await runner
-            .runExternalSchematic(
-                "@schematics/angular",
-                "application",
-                appOptions,
-                appTree
-            )
+        appTree = await runner.runExternalSchematic(
+            "@schematics/angular",
+            "workspace",
+            workspaceOptions
+        );
+        appTree = await runner.runExternalSchematic(
+            "@schematics/angular",
+            "application",
+            appOptions,
+            appTree
+        );
     });
 
     it("adds styles to angular.json without property", async () => {
@@ -80,12 +78,11 @@ describe("ng-add", () => {
                 },
             })
         );
-        const afterTree = await runner
-            .runSchematic(
-                "ng-add",
-                { project: "bar", skipModuleUpdate: true },
-                appTree
-            );
+        const afterTree = await runner.runSchematic(
+            "ng-add",
+            { project: "bar", skipModuleUpdate: true },
+            appTree
+        );
         const file = JSON.parse(
             (afterTree.read("angular.json") ?? "").toString("utf-8")
         );
@@ -115,12 +112,11 @@ describe("ng-add", () => {
             })
         );
 
-        const afterTree = await runner
-            .runSchematic(
-                "ng-add",
-                { project: "bar", skipModuleUpdate: true },
-                appTree
-            )
+        const afterTree = await runner.runSchematic(
+            "ng-add",
+            { project: "bar", skipModuleUpdate: true },
+            appTree
+        );
         const file = JSON.parse(
             (afterTree.read("angular.json") ?? "").toString("utf-8")
         );
@@ -130,12 +126,11 @@ describe("ng-add", () => {
     });
 
     it("updates style array in angular.json", async () => {
-        const afterTree = await runner
-            .runSchematic(
-                "ng-add",
-                { project: "bar", skipModuleUpdate: true },
-                appTree
-            );
+        const afterTree = await runner.runSchematic(
+            "ng-add",
+            { project: "bar", skipModuleUpdate: true },
+            appTree
+        );
         const file = JSON.parse(
             (afterTree.read("angular.json") ?? "").toString("utf-8")
         );
@@ -145,12 +140,11 @@ describe("ng-add", () => {
     });
 
     it("adds imports to module", async () => {
-        const afterTree = await runner
-            .runSchematic(
-                "ng-add",
-                { project: "bar", skipCss: true },
-                appTree
-            );
+        const afterTree = await runner.runSchematic(
+            "ng-add",
+            { project: "bar", skipCss: true },
+            appTree
+        );
         const moduleFile = (
             afterTree.read(`/projects/bar/src/app/app-module.ts`) ?? ""
         ).toString("utf-8");
@@ -159,21 +153,20 @@ describe("ng-add", () => {
     });
 
     it("updates the dependencies in package.json with the dashboards peerDependencies", async () => {
-        const afterTree = await runner
-            .runSchematic(
-                "ng-add",
-                {
-                    project: "bar",
-                    skipCss: true,
-                    skipModuleUpdate: true,
-                },
-                appTree
-            );
+        const afterTree = await runner.runSchematic(
+            "ng-add",
+            {
+                project: "bar",
+                skipCss: true,
+                skipModuleUpdate: true,
+            },
+            appTree
+        );
         const file = JSON.parse(
             (afterTree.read("package.json") ?? "").toString("utf-8")
         );
         const { peerDependencies } = require("../../../package.json");
-        Object.keys(peerDependencies).forEach((key) => {
+        Object.keys(peerDependencies).forEach(key => {
             expect(
                 omitUpperPeerDependencyVersion(peerDependencies[key])
             ).toEqual(

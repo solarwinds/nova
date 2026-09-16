@@ -99,7 +99,7 @@ describe("LegendSeries >", () => {
 
             it("should be applied if the legend is active and the series render state is anything but 'hidden'", () => {
                 prepareComponent(new MockLegendComponent({ active: true }));
-                Object.keys(RenderState).forEach((state) => {
+                Object.keys(RenderState).forEach(state => {
                     if (state !== RenderState.hidden) {
                         series.seriesRenderState = <RenderState>state;
                         fixture.detectChanges();

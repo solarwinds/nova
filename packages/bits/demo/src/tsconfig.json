@@ -2,12 +2,12 @@
     "compilerOptions": {
         "baseUrl": ".",
         "declaration": false,
+        "esModuleInterop": true,
         "paths": {
             "@nova-ui/bits": ["../../src/public_api.ts"]
         },
-        "skipLibCheck": true,
         "resolveJsonModule": true,
-        "esModuleInterop": true
+        "skipLibCheck": true
     },
     "extends": "../../tsconfig.json",
     "files": ["index.ts", "polyfills.ts"],

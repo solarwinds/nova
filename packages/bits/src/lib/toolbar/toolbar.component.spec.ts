@@ -80,7 +80,6 @@ class TestWrapperComponent {
     public menuItemDisabled = false;
 }
 
-
 describe("components >", () => {
     describe("toolbar >", () => {
         let component: ToolbarComponent;
@@ -293,9 +292,7 @@ describe("components >", () => {
                 expect(
                     component.isFirstFocusableItem(disabledItem)
                 ).toBeFalse();
-                expect(
-                    component.isFirstFocusableItem(enabledItem)
-                ).toBeTrue();
+                expect(component.isFirstFocusableItem(enabledItem)).toBeTrue();
             });
 
             it("should return false for every item when all items are disabled", () => {

@@ -3,8 +3,7 @@
         <nui-search
             [value]="searchTerm"
             (search)="onSearch()"
-            (cancel)="onSearchCancel()"
-        >
+            (cancel)="onSearchCancel()">
         </nui-search>
     </div>
 
@@ -26,8 +25,7 @@
 
         <tr
             nui-header-row
-            *nuiHeaderRowDef="displayedColumns; sticky: true"
-        ></tr>
+            *nuiHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr nui-row *nuiRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
@@ -55,6 +53,5 @@
     [pageSize]="pageSize"
     [pageSizeSet]="[10, 20, 50, 100]"
     [total]="totalItems"
-    (pagerAction)="changePagination($event)"
->
+    (pagerAction)="changePagination($event)">
 </nui-paginator>

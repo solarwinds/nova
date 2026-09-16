@@ -1,7 +1,6 @@
 <nui-message
     [type]="getMessageType()"
     [allowDismiss]="false"
-    *ngIf="!!componentSrlc && !componentSrlc.hideIndicator"
->
+    *ngIf="!!componentSrlc && !componentSrlc.hideIndicator">
     <span [innerHTML]="getMessageText()"></span>
 </nui-message>

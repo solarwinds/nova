@@ -73,7 +73,7 @@ export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
 
         this.overlay.clickOutside
             .pipe(takeUntil(this.destroy$))
-            .subscribe((_) => this.overlay.hide());
+            .subscribe(_ => this.overlay.hide());
     }
 
     public handlePosition(): void {

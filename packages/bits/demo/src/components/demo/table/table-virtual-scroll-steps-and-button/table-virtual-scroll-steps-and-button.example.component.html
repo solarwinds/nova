@@ -16,16 +16,14 @@
         class="h-100"
         [itemSize]="24"
         #viewport
-        [tableStickyHeader]="makeSticky"
-    >
+        [tableStickyHeader]="makeSticky">
         <table
             nui-table
             [dataSource]="
                 users | async | sliceRange : viewport.getRenderedRange()
             "
             [resizable]="false"
-            [reorderable]="true"
-        >
+            [reorderable]="true">
             <ng-container nuiColumnDef="no" [columnWidth]="50">
                 <th nui-header-cell *nuiHeaderCellDef i18n>No.</th>
                 <td nui-cell *nuiCellDef="let element">{{ element.no }}</td>
@@ -86,8 +84,7 @@
                 <td
                     nui-cell
                     *nuiCellDef="let element"
-                    style="overflow: visible"
-                >
+                    style="overflow: visible">
                     {{ element.cell }}
                 </td>
             </ng-container>
@@ -97,8 +94,7 @@
                 nuiRowDef
                 cdkVirtualFor
                 [nuiRowDefColumns]="displayedColumns"
-                [cdkVirtualForOf]="users"
-            >
+                [cdkVirtualForOf]="users">
                 <tr nui-row density="tiny"></tr>
             </ng-template>
         </table>
@@ -116,19 +112,16 @@
         <div class="h-100 w-100">
             <div
                 *ngIf="isBusy; else defaultText"
-                class="d-flex justify-content-center align-items-center"
-            >
+                class="d-flex justify-content-center align-items-center">
                 <nui-spinner
                     class="mr-2 d-inline-flex"
                     [show]="isBusy"
-                    size="small"
-                ></nui-spinner>
+                    size="small"></nui-spinner>
                 <span>Loading next {{ itemsToLoad }} items...</span>
             </div>
             <ng-template #defaultText>
                 <div
-                    class="h-100 d-flex justify-content-center align-items-center"
-                >
+                    class="h-100 d-flex justify-content-center align-items-center">
                     Showing
                     <span class="px-2">
                         {{ users.value.length }}
@@ -147,16 +140,14 @@
 
                     <div
                         *ngIf="isChunkLoaded() && !isAllLoaded()"
-                        class="d-flex justify-content-center"
-                    >
+                        class="d-flex justify-content-center">
                         <button
                             btn
                             nui-button
                             type="button"
                             size="compact"
                             displayStyle="action"
-                            (click)="loadMore()"
-                        >
+                            (click)="loadMore()">
                             <div class="px-2">
                                 Load
                                 {{
