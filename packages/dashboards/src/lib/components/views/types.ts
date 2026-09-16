@@ -35,7 +35,11 @@ export interface IProportionalDataItem {
 }
 
 /** Chart type variants the view supports. */
-export type ProportionalChartType = "donut" | "pie" | "verticalBar" | "horizontalBar";
+export type ProportionalChartType =
+    | "donut"
+    | "pie"
+    | "verticalBar"
+    | "horizontalBar";
 
 /** Legend placement relative to the chart. */
 export type ViewLegendPlacement = "right" | "bottom" | "none";

@@ -111,7 +111,7 @@ describe("TransformerChangePoint", () => {
         const actualTransformedDataY = transformChangePoint(
             mockTimeSeriesData,
             false
-        ).map((d) => d.y);
+        ).map(d => d.y);
         expect(actualTransformedDataY).toEqual(expectedTransformedDataY);
     });
 });
@@ -203,7 +203,7 @@ describe("TransformerChangePoint", () => {
         const actualTransformedDataY = transformChangePoint(
             mockTimeSeriesDataTest2,
             false
-        ).map((d) => d.y);
+        ).map(d => d.y);
         expect(actualTransformedDataY).toEqual(expectedTransformedDataY);
     });
 });

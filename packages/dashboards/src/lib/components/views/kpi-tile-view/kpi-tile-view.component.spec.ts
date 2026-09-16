@@ -23,7 +23,10 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { BehaviorSubject } from "rxjs";
 
 import { NuiDashboardViewsModule } from "../views.module";
-import { IKpiTileViewBroker, KpiTileViewComponent } from "./kpi-tile-view.component";
+import {
+    IKpiTileViewBroker,
+    KpiTileViewComponent,
+} from "./kpi-tile-view.component";
 
 @Component({
     template: `
@@ -115,7 +118,9 @@ describe("KpiTileViewComponent", () => {
         host.backgroundColor = "#2cc079";
         fixture.detectChanges();
 
-        const bg = fixture.nativeElement.querySelector(".nui-kpi-indicator__background");
+        const bg = fixture.nativeElement.querySelector(
+            ".nui-kpi-indicator__background"
+        );
         expect(bg.style.backgroundColor).toBeTruthy();
     });
 
@@ -179,7 +184,9 @@ describe("KpiTileViewComponent", () => {
         host.link = "https://example.com";
         fixture.detectChanges();
 
-        const anchor = fixture.nativeElement.querySelector("a.nui-kpi-indicator");
+        const anchor = fixture.nativeElement.querySelector(
+            "a.nui-kpi-indicator"
+        );
         expect(anchor).toBeTruthy();
         expect(anchor.href).toContain("example.com");
     });
@@ -190,7 +197,9 @@ describe("KpiTileViewComponent", () => {
         host.link = "";
         fixture.detectChanges();
 
-        const div = fixture.nativeElement.querySelector("div.nui-kpi-indicator");
+        const div = fixture.nativeElement.querySelector(
+            "div.nui-kpi-indicator"
+        );
         expect(div).toBeTruthy();
     });
 
@@ -216,7 +225,9 @@ describe("KpiTileViewComponent", () => {
         host.value = 42;
         fixture.detectChanges();
 
-        expect(component.computedTextColor).toBe("var(--nui-color-bg-secondary)");
+        expect(component.computedTextColor).toBe(
+            "var(--nui-color-bg-secondary)"
+        );
     });
 
     it("should render custom value template when provided", () => {
@@ -234,8 +245,16 @@ describe("KpiTileViewComponent", () => {
     it("should return correct scale broker", () => {
         const mockBroker: IKpiTileViewBroker = {
             id: "value",
-            in$: new BehaviorSubject<any>({ id: "value", targetID: "", targetValue: 0 }),
-            out$: new BehaviorSubject<any>({ id: "value", targetID: "", targetValue: 0 }),
+            in$: new BehaviorSubject<any>({
+                id: "value",
+                targetID: "",
+                targetValue: 0,
+            }),
+            out$: new BehaviorSubject<any>({
+                id: "value",
+                targetID: "",
+                targetValue: 0,
+            }),
         };
         host.syncValuesBroker = [mockBroker];
         fixture.detectChanges();

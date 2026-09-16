@@ -113,8 +113,7 @@ describe("WidgetEditorComponent", () => {
                     useValue: mockLoggerService,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {

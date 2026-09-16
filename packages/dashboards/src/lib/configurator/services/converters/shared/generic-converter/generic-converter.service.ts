@@ -80,19 +80,17 @@ export class GenericConverterService extends BaseConverter {
     }
 
     public toPreview(form: FormGroup): void {
-        form.valueChanges
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((formData) => {
-                const updatedPreview = this.formParts.reduce((p, v) => {
-                    const outPath = v.previewOutputPath || v.previewPath;
-                    const fromPreview = get(p, outPath);
-                    const fromForm = pick(formData, v.keys);
-                    const merged = { ...fromPreview, ...fromForm };
+        form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(formData => {
+            const updatedPreview = this.formParts.reduce((p, v) => {
+                const outPath = v.previewOutputPath || v.previewPath;
+                const fromPreview = get(p, outPath);
+                const fromForm = pick(formData, v.keys);
+                const merged = { ...fromPreview, ...fromForm };
 
-                    return immutableSet(p, outPath, merged);
-                }, this.getPreview());
+                return immutableSet(p, outPath, merged);
+            }, this.getPreview());
 
-                this.updatePreview(updatedPreview);
-            });
+            this.updatePreview(updatedPreview);
+        });
     }
 }

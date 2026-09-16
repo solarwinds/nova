@@ -48,7 +48,7 @@ export class AcmeKpiDataSource
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
         if (!AcmeKpiDataSource.mockError) {
-            return new Promise((resolve) =>
+            return new Promise(resolve =>
                 setTimeout(() => {
                     this.busy.next(false);
                     return resolve({
@@ -60,7 +60,7 @@ export class AcmeKpiDataSource
                 }, 2000)
             );
         } else {
-            return new Promise((resolve) => {
+            return new Promise(resolve => {
                 // generate a 404
                 this.http
                     .get(
@@ -108,7 +108,7 @@ export class AcmeKpiDataSource2
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
         if (!AcmeKpiDataSource2.mockError) {
-            return new Promise((resolve) =>
+            return new Promise(resolve =>
                 setTimeout(() => {
                     this.busy.next(false);
                     return resolve({
@@ -122,7 +122,7 @@ export class AcmeKpiDataSource2
                 }, 4000)
             );
         } else {
-            return new Promise((resolve) => {
+            return new Promise(resolve => {
                 // generate a 403
                 this.http
                     .get(
@@ -163,7 +163,7 @@ export class AcmeKpiDataSource3
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise((resolve) =>
+        return new Promise(resolve =>
             setTimeout(() => {
                 this.busy.next(false);
                 return resolve({

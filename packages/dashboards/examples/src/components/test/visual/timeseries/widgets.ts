@@ -52,7 +52,7 @@ export interface IImageDef {
 }
 
 export const positions: Record<string, GridsterItem> = {
-    widget1: {
+    "widget1": {
         cols: 6,
         rows: 7,
         y: 0,
@@ -64,7 +64,7 @@ export const positions: Record<string, GridsterItem> = {
         y: 0,
         x: 6,
     },
-    widget2: {
+    "widget2": {
         cols: 6,
         rows: 7,
         y: 7,
@@ -76,7 +76,7 @@ export const positions: Record<string, GridsterItem> = {
         y: 7,
         x: 6,
     },
-    widget3: {
+    "widget3": {
         cols: 6,
         rows: 7,
         y: 14,
@@ -88,7 +88,7 @@ export const positions: Record<string, GridsterItem> = {
         y: 14,
         x: 6,
     },
-    widget4: {
+    "widget4": {
         cols: 6,
         rows: 7,
         y: 21,
@@ -100,7 +100,7 @@ export const positions: Record<string, GridsterItem> = {
         y: 21,
         x: 6,
     },
-    widget5: {
+    "widget5": {
         cols: 6,
         rows: 7,
         y: 28,

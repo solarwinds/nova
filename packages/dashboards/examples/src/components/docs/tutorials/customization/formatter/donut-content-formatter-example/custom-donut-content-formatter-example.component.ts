@@ -137,7 +137,7 @@ export class CustomDonutContentFormatterComponent
             // If current metric is not in the list of metrics any more we fall back to the very first one from the list we get from the datasource
             this.currentMetricData =
                 this.data.find(
-                    (item) => item.id === this.properties?.currentMetric
+                    item => item.id === this.properties?.currentMetric
                 )?.data[0] || this.data[0].data[0];
 
             // We either take the selected value, or fall back to the preselected default one
@@ -155,7 +155,7 @@ export class CustomDonutContentFormatterComponent
                 tap(
                     (data: IChartAssistEvent) =>
                         (this.emphasizedSeriesData = this.data.find(
-                            (item) => item.id === data.payload.seriesId
+                            item => item.id === data.payload.seriesId
                         ))
                 ),
                 tap(() => this.setContentValue()),
@@ -194,7 +194,7 @@ export class CustomDonutContentFormatterComponent
     public setMetricValue(): void {
         this.chartMetric = this.emphasizedSeriesData
             ? this.data.find(
-                  (item) =>
+                  item =>
                       this.getConvertedData(item.data[0]) ===
                       this.getConvertedData(this.emphasizedSeriesData?.data[0])
               )?.id
@@ -490,7 +490,7 @@ export class StatusesExampleDatasource
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
 
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             setTimeout(() => {
                 resolve({
                     result: randomStatusesWidgetData,

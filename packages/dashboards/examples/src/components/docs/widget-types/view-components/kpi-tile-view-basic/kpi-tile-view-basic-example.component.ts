@@ -40,7 +40,11 @@ export class KpiTileViewBasicExampleComponent {
     public interactive = false;
     public lastClicked = "";
 
-    public readonly stateOptions: KpiTileState[] = ["normal", "loading", "empty"];
+    public readonly stateOptions: KpiTileState[] = [
+        "normal",
+        "loading",
+        "empty",
+    ];
 
     public onTileClick(label: string): void {
         this.lastClicked = label;

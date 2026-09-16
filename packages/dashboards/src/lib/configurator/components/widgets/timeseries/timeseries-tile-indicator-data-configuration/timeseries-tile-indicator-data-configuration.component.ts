@@ -44,7 +44,8 @@ import { ConfiguratorHeadingService } from "../../../../services/configurator-he
 
 @Component({
     selector: "nui-timeseries-tile-indicator-data-configuration",
-    templateUrl: "./timeseries-tile-indicator-data-configuration.component.html",
+    templateUrl:
+        "./timeseries-tile-indicator-data-configuration.component.html",
     styleUrls: [
         "./timeseries-tile-indicator-data-configuration.component.less",
     ],
@@ -100,7 +101,7 @@ export class TimeseriesTileIndicatorDataConfigurationComponent
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.allSeries) {
             this.selectedSeries = this.allSeries.find(
-                (s) => this.selectedSeriesId === s.id
+                s => this.selectedSeriesId === s.id
             );
         }
 
@@ -109,7 +110,7 @@ export class TimeseriesTileIndicatorDataConfigurationComponent
                 return;
             }
             this.selectedSeries = this.allSeries.find(
-                (s) => this.selectedSeriesId === s.id
+                s => this.selectedSeriesId === s.id
             );
         }
     }

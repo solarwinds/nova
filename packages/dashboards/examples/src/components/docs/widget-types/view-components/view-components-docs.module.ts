@@ -34,11 +34,11 @@ import {
 } from "@nova-ui/bits";
 import { NuiDashboardViewsModule } from "@nova-ui/dashboards";
 
-import { getDemoFiles } from "../../../../demo-files-factory";
 import { KpiTileViewBasicExampleComponent } from "./kpi-tile-view-basic/kpi-tile-view-basic-example.component";
 import { KpiTileViewInteractiveExampleComponent } from "./kpi-tile-view-interactive/kpi-tile-view-interactive-example.component";
 import { ProportionalChartViewPlaygroundExampleComponent } from "./proportional-chart-view-playground/proportional-chart-view-playground-example.component";
 import { ViewComponentsDocsComponent } from "./view-components-docs.component";
+import { getDemoFiles } from "../../../../demo-files-factory";
 
 const routes: Routes = [
     {

@@ -1,30 +1,25 @@
 <nui-widget-editor-accordion
     [formGroup]="form"
-    [state]="form | nuiWidgetEditorAccordionFormState | async"
->
+    [state]="form | nuiWidgetEditorAccordionFormState | async">
     <nui-widget-editor-accordion-header
         [headerIcon]="form | nuiFormHeaderIconPipe : 'edit' | async"
         [iconColor]="form | nuiFormHeaderIconPipe : 'gray' : '' | async"
         [subtitle]="getSecondaryText()"
-        headerTitle="Timeseries metadata"
-    />
+        headerTitle="Timeseries metadata" />
     <div class="timeseries-metadata-configuration__accordion-content">
         <div class="mb-4">
             <nui-form-field
                 caption="Starting timespan"
                 i18n-caption
-                [control]="form.controls['startingTimespan']"
-            >
+                [control]="form.controls['startingTimespan']">
                 <nui-select-v2
                     placeholder="Starting Timespan"
                     i18n-placeholder
                     [popupViewportMargin]="configuratorHeading.height$ | async"
-                    formControlName="startingTimespan"
-                >
+                    formControlName="startingTimespan">
                     <nui-select-v2-option
                         *ngFor="let timeSpan of timeSpans"
-                        [value]="timeSpan"
-                    >
+                        [value]="timeSpan">
                         {{ timeSpan.name }}
                     </nui-select-v2-option>
                 </nui-select-v2>
@@ -38,18 +33,15 @@
             <nui-form-field
                 caption="Chart legend"
                 i18n-caption
-                [control]="form.controls['legendPlacement']"
-            >
+                [control]="form.controls['legendPlacement']">
                 <nui-select-v2
                     placeholder="Select Legend Orientation"
                     i18n-placeholder
                     [popupViewportMargin]="configuratorHeading.height$ | async"
-                    formControlName="legendPlacement"
-                >
+                    formControlName="legendPlacement">
                     <nui-select-v2-option
                         *ngFor="let legendPlacement of legendPlacements"
-                        [value]="legendPlacement.id"
-                    >
+                        [value]="legendPlacement.id">
                         {{ legendPlacement.label }}
                     </nui-select-v2-option>
                 </nui-select-v2>
@@ -63,13 +55,11 @@
             <nui-form-field
                 caption="Chart y-axis label"
                 i18n-caption
-                [control]="form.controls['leftAxisLabel']"
-            >
+                [control]="form.controls['leftAxisLabel']">
                 <nui-textbox
                     formControlName="leftAxisLabel"
                     placeholder="Set chart y-axis label"
-                    i18n-placeholder
-                ></nui-textbox>
+                    i18n-placeholder></nui-textbox>
 
                 <nui-validation-message for="required" i18n>
                     This field is required
@@ -80,14 +70,12 @@
         <nui-form-field
             caption="Chart type"
             i18n-caption
-            [control]="form.controls['preset']"
-        >
+            [control]="form.controls['preset']">
             <nui-select-v2
                 placeholder="Chart type"
                 i18n-placeholder
                 [popupViewportMargin]="configuratorHeading.height$ | async"
-                formControlName="preset"
-            >
+                formControlName="preset">
                 <nui-select-v2-option
                     *ngFor="let option of availableChartTypes"
                     [value]="option.value"

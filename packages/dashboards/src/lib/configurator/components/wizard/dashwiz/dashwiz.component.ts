@@ -67,7 +67,8 @@ import { IDashwizComponent } from "./model";
     standalone: false,
 })
 export class DashwizComponent
-    implements OnInit,
+    implements
+        OnInit,
         AfterContentInit,
         AfterViewChecked,
         OnDestroy,
@@ -165,7 +166,7 @@ export class DashwizComponent
     }
 
     public ngOnInit(): void {
-        this.scrollDispatcher.scrolled().subscribe((event) => {
+        this.scrollDispatcher.scrolled().subscribe(event => {
             const element = event?.getElementRef()?.nativeElement;
 
             if (element?.classList?.contains("configurator-scrollable")) {
@@ -199,7 +200,7 @@ export class DashwizComponent
     }
 
     public ngAfterContentInit(): void {
-        const activeTabs = this.steps.filter((item) => item.active);
+        const activeTabs = this.steps.filter(item => item.active);
         this.arraySteps = this.steps.toArray();
         if (activeTabs.length === 0) {
             this.currentStep = this.steps.first;
@@ -312,7 +313,7 @@ export class DashwizComponent
             if (previousStep.hidden || previousStep.disabled) {
                 previousStep = find(
                     this.arraySteps.slice(0).reverse(),
-                    (step) => !step.hidden,
+                    step => !step.hidden,
                     findIndex(
                         this.arraySteps.slice(0).reverse(),
                         this.arraySteps[this.stepIndex]
@@ -340,7 +341,7 @@ export class DashwizComponent
             // this disabled does not let user to go forward when next is disabled. Needs to be changed after validation
             nextStep = find(
                 this.arraySteps,
-                (step) => !step.hidden,
+                step => !step.hidden,
                 this.stepIndex + 1
             );
         }
@@ -363,7 +364,7 @@ export class DashwizComponent
 
     public onCancel = (): void => {
         this.cancel.emit(
-            this.steps.toArray().filter((step) => step.complete).length !== 0
+            this.steps.toArray().filter(step => step.complete).length !== 0
         );
     };
 
@@ -401,13 +402,13 @@ export class DashwizComponent
     }
 
     private disableFollowingSteps(): void {
-        this.arraySteps.slice(this.stepIndex + 1).map((item) => {
+        this.arraySteps.slice(this.stepIndex + 1).map(item => {
             item.disabled = true;
         });
     }
 
     private enableFollowingSteps(): void {
-        this.arraySteps.slice(this.stepIndex + 1).map((item) => {
+        this.arraySteps.slice(this.stepIndex + 1).map(item => {
             item.disabled = false;
         });
     }
@@ -424,7 +425,7 @@ export class DashwizComponent
 
     private getLargestLabelWidth() {
         const widths = this.stepTitles.map(
-            (title) => title.nativeElement.offsetWidth
+            title => title.nativeElement.offsetWidth
         );
 
         return Math.round(Math.max(...widths));

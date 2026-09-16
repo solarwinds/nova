@@ -47,11 +47,7 @@ describe(LinkConfiguratorComponent.name, () => {
                 NuiSwitchModule,
                 NuiValidationMessageModule,
             ],
-            providers: [
-                ConfiguratorHeadingService,
-                FormBuilder,
-                LoggerService,
-            ],
+            providers: [ConfiguratorHeadingService, FormBuilder, LoggerService],
         }).compileComponents();
 
         fixture = TestBed.createComponent(LinkConfiguratorComponent);

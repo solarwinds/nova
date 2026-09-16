@@ -3,10 +3,8 @@
     nuiComponentPortal
     [componentType]="contentFormatter?.componentType"
     [properties]="contentFormatterProperties"
-    #componentPortal="nuiComponentPortal"
->
+    #componentPortal="nuiComponentPortal">
     <ng-template
         [cdkPortalOutlet]="componentPortal.portal"
-        (attached)="componentPortal.attached($event)"
-    ></ng-template>
+        (attached)="componentPortal.attached($event)"></ng-template>
 </ng-container>

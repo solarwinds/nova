@@ -108,11 +108,11 @@ export class VirtualScrollFeatureAddonService {
             .pipe(
                 // Note: A special check to keep our server-client-side sorting in place
                 filter(
-                    (range) =>
+                    range =>
                         range.end >=
                         (this.widget.vscrollViewport?.getDataLength() ?? 0)
                 ),
-                tap((range) =>
+                tap(range =>
                     this.widget.zone.run(() => {
                         // TODO: Remove "page" in V10. Compute page on datasource level. - NUI-5830
                         // @ts-ignore: Provide a proper interface to DS

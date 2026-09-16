@@ -85,7 +85,7 @@ export class ComponentPortalDirective
     }
 
     public ngAfterViewInit(): void {
-        Object.keys(this.providerInstances).forEach((key) => {
+        Object.keys(this.providerInstances).forEach(key => {
             const provider = this.providerInstances[key];
             if (provider.ngAfterViewInit) {
                 provider.ngAfterViewInit();
@@ -186,7 +186,7 @@ export class ComponentPortalDirective
 
         this.changesSubscription = this.propertiesChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe((change) => this.applyPropertiesChange(change));
+            .subscribe(change => this.applyPropertiesChange(change));
     }
 
     private recreatePortal() {
@@ -325,7 +325,7 @@ export class ComponentPortalDirective
         }
 
         for (const output of this.outputs.filter(
-            (o) => this.component[o] instanceof EventEmitter
+            o => this.component[o] instanceof EventEmitter
         )) {
             this.component[output]
                 .pipe(takeUntil(this.destroy$))

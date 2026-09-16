@@ -5,8 +5,7 @@
             <nui-select-v2 [formControl]="stateControl">
                 <nui-select-v2-option
                     *ngFor="let opt of stateOptions"
-                    [value]="opt"
-                >
+                    [value]="opt">
                     {{ opt }}
                 </nui-select-v2-option>
             </nui-select-v2>
@@ -28,8 +27,7 @@
             [loading]="stateControl.value === 'loading'"
             [empty]="stateControl.value === 'empty'"
             [interactive]="interactive"
-            (tileClick)="onTileClick('Nodes Up')"
-        ></nui-kpi-tile-view>
+            (tileClick)="onTileClick('Nodes Up')"></nui-kpi-tile-view>
 
         <nui-kpi-tile-view
             class="flex-grow-1"
@@ -40,8 +38,7 @@
             [loading]="stateControl.value === 'loading'"
             [empty]="stateControl.value === 'empty'"
             [interactive]="interactive"
-            (tileClick)="onTileClick('Critical Alerts')"
-        ></nui-kpi-tile-view>
+            (tileClick)="onTileClick('Critical Alerts')"></nui-kpi-tile-view>
 
         <nui-kpi-tile-view
             class="flex-grow-1"
@@ -53,8 +50,7 @@
             [loading]="stateControl.value === 'loading'"
             [empty]="stateControl.value === 'empty'"
             [interactive]="interactive"
-            (tileClick)="onTileClick('Throughput')"
-        ></nui-kpi-tile-view>
+            (tileClick)="onTileClick('Throughput')"></nui-kpi-tile-view>
     </div>
 
     <p *ngIf="interactive && lastClicked" class="mb-0">

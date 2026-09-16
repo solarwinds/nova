@@ -1,16 +1,14 @@
 <nui-configurator-heading
     [configuratorTitle]="configuratorTitle"
     (close)="onCancel()"
-    [disableCloseButton]="busy"
-></nui-configurator-heading>
+    [disableCloseButton]="busy"></nui-configurator-heading>
 <nui-dashwiz
     [hideHeader]="true"
     finishText="Save Changes"
     i18n-finishText
     [navigationControl]="navigationControl"
     (finish)="onFinish()"
-    (cancel)="onCancel()"
->
+    (cancel)="onCancel()">
     <nui-dashwiz-step [stepTemplate]="step1"></nui-dashwiz-step>
 </nui-dashwiz>
 
@@ -20,8 +18,7 @@
             *ngIf="formPizzagna"
             #formPizzagnaComponent
             [rootNode]="formRoot"
-            [(pizzagna)]="formPizzagna"
-        >
+            [(pizzagna)]="formPizzagna">
         </nui-pizzagna>
     </div>
 </ng-template>

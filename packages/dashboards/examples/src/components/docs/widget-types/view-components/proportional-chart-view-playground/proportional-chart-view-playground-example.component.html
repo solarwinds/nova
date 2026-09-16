@@ -5,8 +5,7 @@
             <nui-select-v2 [formControl]="chartTypeControl">
                 <nui-select-v2-option
                     *ngFor="let opt of chartTypeOptions"
-                    [value]="opt"
-                >
+                    [value]="opt">
                     {{ opt }}
                 </nui-select-v2-option>
             </nui-select-v2>
@@ -16,8 +15,7 @@
             <nui-select-v2 [formControl]="legendPlacementControl">
                 <nui-select-v2-option
                     *ngFor="let opt of legendPlacementOptions"
-                    [value]="opt"
-                >
+                    [value]="opt">
                     {{ opt }}
                 </nui-select-v2-option>
             </nui-select-v2>
@@ -31,8 +29,7 @@
             [chartType]="chartTypeControl.value"
             [legendPlacement]="legendPlacementControl.value"
             [colors]="colors"
-            [donutContentTemplate]="donutContentTpl"
-        ></nui-proportional-chart-view>
+            [donutContentTemplate]="donutContentTpl"></nui-proportional-chart-view>
     </div>
 </div>
 

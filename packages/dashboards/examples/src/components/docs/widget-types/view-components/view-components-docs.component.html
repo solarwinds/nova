@@ -2,9 +2,10 @@
 
 <p>
     Nova Dashboards provides reusable view components that encapsulate the
-    rendering logic of proportional charts and KPI tiles <strong>without</strong>
-    requiring the Pizzagna framework. These components can be used directly in
-    any Angular application by importing <code>NuiDashboardViewsModule</code>.
+    rendering logic of proportional charts and KPI tiles
+    <strong>without</strong> requiring the Pizzagna framework. These components
+    can be used directly in any Angular application by importing
+    <code>NuiDashboardViewsModule</code>.
 </p>
 
 <nui-message type="info" [allowDismiss]="false">
@@ -19,7 +20,9 @@
 
 <p>Import the module in your feature module:</p>
 
-<nui-example-code language="typescript" [code]="installationSnippet"></nui-example-code>
+<nui-example-code
+    language="typescript"
+    [code]="installationSnippet"></nui-example-code>
 
 <hr />
 
@@ -27,9 +30,9 @@
 
 <p>
     The <code>&lt;nui-kpi-tile-view&gt;</code> component renders a single KPI
-    indicator tile with a label, value, units, and configurable background color.
-    It supports interactive click handling and custom value formatting via
-    <code>ng-template</code>.
+    indicator tile with a label, value, units, and configurable background
+    color. It supports interactive click handling and custom value formatting
+    via <code>ng-template</code>.
 </p>
 
 <h3>Playground &mdash; All States</h3>
@@ -40,16 +43,14 @@
 </p>
 <nui-example-wrapper
     filenamePrefix="kpi-tile-view-basic"
-    exampleTitle="KPI Tile View - Playground"
->
+    exampleTitle="KPI Tile View - Playground">
     <kpi-tile-view-basic-example></kpi-tile-view-basic-example>
 </nui-example-wrapper>
 
 <h3>Interactive with Custom Formatting</h3>
 <nui-example-wrapper
     filenamePrefix="kpi-tile-view-interactive"
-    exampleTitle="KPI Tile View - Interactive"
->
+    exampleTitle="KPI Tile View - Interactive">
     <kpi-tile-view-interactive-example></kpi-tile-view-interactive-example>
 </nui-example-wrapper>
 
@@ -73,8 +74,7 @@
 </p>
 <nui-example-wrapper
     filenamePrefix="proportional-chart-view-playground"
-    exampleTitle="Proportional Chart View - Playground"
->
+    exampleTitle="Proportional Chart View - Playground">
     <proportional-chart-view-playground-example></proportional-chart-view-playground-example>
 </nui-example-wrapper>
 
@@ -93,17 +93,72 @@
         </tr>
     </thead>
     <tbody>
-        <tr><td><code>value</code></td><td><code>string | number | null</code></td><td><code>null</code></td><td>The KPI value to display</td></tr>
-        <tr><td><code>label</code></td><td><code>string</code></td><td><code>""</code></td><td>KPI label text</td></tr>
-        <tr><td><code>units</code></td><td><code>string</code></td><td><code>""</code></td><td>Unit suffix (e.g., "%", "ms")</td></tr>
-        <tr><td><code>backgroundColor</code></td><td><code>string</code></td><td><code>""</code></td><td>Tile background color</td></tr>
-        <tr><td><code>textColor</code></td><td><code>string</code></td><td><code>""</code></td><td>Optional text color override; auto-computed if omitted</td></tr>
-        <tr><td><code>link</code></td><td><code>string</code></td><td><code>""</code></td><td>Optional drill-down URL (renders as anchor)</td></tr>
-        <tr><td><code>interactive</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Enable click interactions</td></tr>
-        <tr><td><code>loading</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Shows busy/spinner state</td></tr>
-        <tr><td><code>empty</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Shows empty state placeholder</td></tr>
-        <tr><td><code>valueTemplate</code></td><td><code>TemplateRef</code></td><td><code>null</code></td><td>Custom value rendering template</td></tr>
-        <tr><td><code>syncValuesBroker</code></td><td><code>IKpiTileViewBroker[]</code></td><td><code>[]</code></td><td>Brokers for multi-tile zoom synchronization</td></tr>
+        <tr
+            ><td><code>value</code></td
+            ><td><code>string | number | null</code></td
+            ><td><code>null</code></td
+            ><td>The KPI value to display</td></tr
+        >
+        <tr
+            ><td><code>label</code></td
+            ><td><code>string</code></td
+            ><td><code>""</code></td
+            ><td>KPI label text</td></tr
+        >
+        <tr
+            ><td><code>units</code></td
+            ><td><code>string</code></td
+            ><td><code>""</code></td
+            ><td>Unit suffix (e.g., "%", "ms")</td></tr
+        >
+        <tr
+            ><td><code>backgroundColor</code></td
+            ><td><code>string</code></td
+            ><td><code>""</code></td
+            ><td>Tile background color</td></tr
+        >
+        <tr
+            ><td><code>textColor</code></td
+            ><td><code>string</code></td
+            ><td><code>""</code></td
+            ><td>Optional text color override; auto-computed if omitted</td></tr
+        >
+        <tr
+            ><td><code>link</code></td
+            ><td><code>string</code></td
+            ><td><code>""</code></td
+            ><td>Optional drill-down URL (renders as anchor)</td></tr
+        >
+        <tr
+            ><td><code>interactive</code></td
+            ><td><code>boolean</code></td
+            ><td><code>false</code></td
+            ><td>Enable click interactions</td></tr
+        >
+        <tr
+            ><td><code>loading</code></td
+            ><td><code>boolean</code></td
+            ><td><code>false</code></td
+            ><td>Shows busy/spinner state</td></tr
+        >
+        <tr
+            ><td><code>empty</code></td
+            ><td><code>boolean</code></td
+            ><td><code>false</code></td
+            ><td>Shows empty state placeholder</td></tr
+        >
+        <tr
+            ><td><code>valueTemplate</code></td
+            ><td><code>TemplateRef</code></td
+            ><td><code>null</code></td
+            ><td>Custom value rendering template</td></tr
+        >
+        <tr
+            ><td><code>syncValuesBroker</code></td
+            ><td><code>IKpiTileViewBroker[]</code></td
+            ><td><code>[]</code></td
+            ><td>Brokers for multi-tile zoom synchronization</td></tr
+        >
     </tbody>
 </table>
 
@@ -113,7 +168,13 @@
         <tr><th>Output</th><th>Type</th><th>Description</th></tr>
     </thead>
     <tbody>
-        <tr><td><code>tileClick</code></td><td><code>EventEmitter&lt;void&gt;</code></td><td>Emitted when the tile is clicked (only when interactive)</td></tr>
+        <tr
+            ><td><code>tileClick</code></td
+            ><td><code>EventEmitter&lt;void&gt;</code></td
+            ><td
+                >Emitted when the tile is clicked (only when interactive)</td
+            ></tr
+        >
     </tbody>
 </table>
 
@@ -128,13 +189,51 @@
         </tr>
     </thead>
     <tbody>
-        <tr><td><code>data</code></td><td><code>IProportionalDataItem[]</code></td><td><code>[]</code></td><td>Array of chart data items</td></tr>
-        <tr><td><code>chartType</code></td><td><code>"donut" | "pie" | "verticalBar" | "horizontalBar"</code></td><td><code>"donut"</code></td><td>Chart type variant</td></tr>
-        <tr><td><code>legendPlacement</code></td><td><code>"right" | "bottom" | "none"</code></td><td><code>"right"</code></td><td>Legend position relative to chart</td></tr>
-        <tr><td><code>colors</code></td><td><code>string[] | Record&lt;string, string&gt;</code></td><td><code>[]</code></td><td>Color palette array or id-to-color map</td></tr>
-        <tr><td><code>interactive</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Enable click interactions on legend items</td></tr>
-        <tr><td><code>donutContentTemplate</code></td><td><code>TemplateRef</code></td><td><code>null</code></td><td>Custom donut center content template</td></tr>
-        <tr><td><code>legendItemTemplate</code></td><td><code>TemplateRef</code></td><td><code>null</code></td><td>Custom legend item template</td></tr>
+        <tr
+            ><td><code>data</code></td
+            ><td><code>IProportionalDataItem[]</code></td
+            ><td><code>[]</code></td
+            ><td>Array of chart data items</td></tr
+        >
+        <tr
+            ><td><code>chartType</code></td
+            ><td
+                ><code
+                    >"donut" | "pie" | "verticalBar" | "horizontalBar"</code
+                ></td
+            ><td><code>"donut"</code></td
+            ><td>Chart type variant</td></tr
+        >
+        <tr
+            ><td><code>legendPlacement</code></td
+            ><td><code>"right" | "bottom" | "none"</code></td
+            ><td><code>"right"</code></td
+            ><td>Legend position relative to chart</td></tr
+        >
+        <tr
+            ><td><code>colors</code></td
+            ><td><code>string[] | Record&lt;string, string&gt;</code></td
+            ><td><code>[]</code></td
+            ><td>Color palette array or id-to-color map</td></tr
+        >
+        <tr
+            ><td><code>interactive</code></td
+            ><td><code>boolean</code></td
+            ><td><code>false</code></td
+            ><td>Enable click interactions on legend items</td></tr
+        >
+        <tr
+            ><td><code>donutContentTemplate</code></td
+            ><td><code>TemplateRef</code></td
+            ><td><code>null</code></td
+            ><td>Custom donut center content template</td></tr
+        >
+        <tr
+            ><td><code>legendItemTemplate</code></td
+            ><td><code>TemplateRef</code></td
+            ><td><code>null</code></td
+            ><td>Custom legend item template</td></tr
+        >
     </tbody>
 </table>
 
@@ -144,9 +243,15 @@
         <tr><th>Output</th><th>Type</th><th>Description</th></tr>
     </thead>
     <tbody>
-        <tr><td><code>itemClick</code></td><td><code>EventEmitter&lt;IProportionalDataItem&gt;</code></td><td>Emitted when a chart segment or legend item is clicked</td></tr>
+        <tr
+            ><td><code>itemClick</code></td
+            ><td><code>EventEmitter&lt;IProportionalDataItem&gt;</code></td
+            ><td>Emitted when a chart segment or legend item is clicked</td></tr
+        >
     </tbody>
 </table>
 
 <h3><code>IProportionalDataItem</code> Interface</h3>
-<nui-example-code language="typescript" [code]="proportionalDataItemSnippet"></nui-example-code>
+<nui-example-code
+    language="typescript"
+    [code]="proportionalDataItemSnippet"></nui-example-code>

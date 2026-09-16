@@ -12,8 +12,7 @@
     [margin]="widgetData?.margin ?? 2"
     [syncValuesBroker]="syncValuesBroker"
     [valueTemplate]="configuration?.formatters?.Value ? formatterValueTpl : null"
-    (tileClick)="onInteraction()"
-></nui-kpi-tile-view>
+    (tileClick)="onInteraction()"></nui-kpi-tile-view>
 
 <ng-template #formatterValueTpl>
     <ng-container
@@ -21,13 +20,12 @@
         #componentPortal="nuiComponentPortal"
         componentId="KpiValueFormatter"
         [componentType]="configuration?.formatters?.Value?.formatter?.componentType"
-        [properties]="formattersProperties?.Value"
-    >
-        <span [ngClass]="configuration?.formatters?.Value?.formatter?.componentType === 'IconFormatterComponent' ? 'without-filter' : ''">
+        [properties]="formattersProperties?.Value">
+        <span
+            [ngClass]="configuration?.formatters?.Value?.formatter?.componentType === 'IconFormatterComponent' ? 'without-filter' : ''">
             <ng-template
                 [cdkPortalOutlet]="componentPortal.portal"
-                (attached)="componentPortal.attached($event)"
-            ></ng-template>
+                (attached)="componentPortal.attached($event)"></ng-template>
         </span>
     </ng-container>
 </ng-template>

@@ -76,7 +76,7 @@ export class DataSourceErrorComponent implements OnDestroy, OnChanges {
 
         this.dataSource?.outputsSubject
             .pipe(takeUntil(this.dataSourceClear$))
-            .subscribe((value) => {
+            .subscribe(value => {
                 this.data = isUndefined(value?.result) ? value : value?.result;
                 this.dataSourceError = value?.error;
                 this.errorState.emit(!!this.dataSourceError);

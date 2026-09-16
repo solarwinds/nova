@@ -18,7 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+    provideHttpClient,
+    withInterceptorsFromDi,
+} from "@angular/common/http";
 import { inject, NgModule, Type } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { InMemoryCache } from "@apollo/client/core";
@@ -26,7 +29,6 @@ import { provideApollo } from "apollo-angular";
 import { HttpLink } from "apollo-angular/http";
 
 import { NuiDocsModule, NuiMessageModule } from "@nova-ui/bits";
-
 
 const COUNTRIES_API = "https://countries.trevorblades.com/graphql";
 

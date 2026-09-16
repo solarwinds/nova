@@ -21,16 +21,12 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 
-import {
-    NuiBusyModule,
-    NuiCommonModule,
-    NuiIconModule,
-} from "@nova-ui/bits";
+import { NuiBusyModule, NuiCommonModule, NuiIconModule } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
-import { NuiDashboardsCommonModule } from "../../common/common.module";
 import { KpiTileViewComponent } from "./kpi-tile-view/kpi-tile-view.component";
 import { ProportionalChartViewComponent } from "./proportional-chart-view/proportional-chart-view.component";
+import { NuiDashboardsCommonModule } from "../../common/common.module";
 
 /**
  * A Pizzagna-free module that exports standalone view components for
@@ -46,13 +42,7 @@ import { ProportionalChartViewComponent } from "./proportional-chart-view/propor
         NuiIconModule,
         NuiDashboardsCommonModule,
     ],
-    declarations: [
-        ProportionalChartViewComponent,
-        KpiTileViewComponent,
-    ],
-    exports: [
-        ProportionalChartViewComponent,
-        KpiTileViewComponent,
-    ],
+    declarations: [ProportionalChartViewComponent, KpiTileViewComponent],
+    exports: [ProportionalChartViewComponent, KpiTileViewComponent],
 })
 export class NuiDashboardViewsModule {}

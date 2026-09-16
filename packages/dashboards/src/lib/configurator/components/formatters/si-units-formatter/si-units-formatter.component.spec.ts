@@ -157,7 +157,7 @@ describe("SiUnitsFormatterComponent", () => {
     });
 
     describe("value formatting > ", () => {
-        TEST_DATA.forEach((test) => {
+        TEST_DATA.forEach(test => {
             it("should correctly format Si units", () => {
                 const data = new SimpleChange(undefined, test.input, false);
 
