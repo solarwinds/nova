@@ -19,7 +19,12 @@
 //  THE SOFTWARE.
 
 import { DebugElement } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flushMicrotasks,
+    TestBed,
+} from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
 import { SearchComponent } from "./search.component";

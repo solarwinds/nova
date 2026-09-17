@@ -24,9 +24,14 @@ import {
     TRANSLATIONS,
     TRANSLATIONS_FORMAT,
 } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import noop from "lodash/noop";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flush,
+    TestBed,
+} from "@angular/core/testing";
 
 import { IToolbarSelectionState, ToolbarItemType } from "./public-api";
 import { ToolbarGroupComponent } from "./toolbar-group.component";
