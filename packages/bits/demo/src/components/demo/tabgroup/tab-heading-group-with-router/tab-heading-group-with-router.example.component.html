@@ -8,8 +8,7 @@
             [ariaLabel]="tab.id === 'tab-settings' ? tab.title : null"
             tabindex="-1"
             routerLink="/tabgroup/{{ tab.id }}"
-            [active]="currentTabRoute === tab.id"
-        >
+            [active]="currentTabRoute === tab.id">
             <div class="d-flex align-content-center">
                 <div class="d-inline-flex align-items-center">
                     <nui-icon
@@ -19,8 +18,7 @@
                             currentTabRoute === tab.id
                                 ? tab.icon.activeColor
                                 : tab.icon.inactiveColor
-                        "
-                    ></nui-icon>
+                        "></nui-icon>
                     <span
                         class="pl-2"
                         *ngIf="tab !== tabsetContent[0]"
@@ -38,8 +36,7 @@
         id="tabgroup-router-panel"
         [attr.aria-labelledby]="
             currentTabRoute ? 'tab-' + currentTabRoute : null
-        "
-    >
+        ">
         <!-- Tab content is placed below depending on the component used in a certain routing -->
         <router-outlet></router-outlet>
     </div>

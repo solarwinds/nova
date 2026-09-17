@@ -244,10 +244,10 @@ describe("components > tab group", () => {
                 "[role='tabpanel']"
             );
         const tabIds = Array.from(tabs as NodeListOf<HTMLElement>).map(
-            (tab) => tab.id
+            tab => tab.id
         );
         const panelIds = Array.from(panels as NodeListOf<HTMLElement>).map(
-            (panel) => panel.id
+            panel => panel.id
         );
 
         expect(new Set(tabIds).size).toBe(2);

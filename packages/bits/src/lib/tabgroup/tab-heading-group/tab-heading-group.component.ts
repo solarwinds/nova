@@ -47,7 +47,7 @@ import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
     styleUrls: ["./tab-heading-group.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        role: "tablist",
+        "role": "tablist",
         "[attr.aria-orientation]": "vertical ? 'vertical' : null",
     },
     standalone: false,
@@ -89,7 +89,7 @@ export class TabHeadingGroupComponent
 
     public ngAfterViewInit(): void {
         // Observing the size of the component to check traverse
-        this._ro = new ResizeObserver((entries) =>
+        this._ro = new ResizeObserver(entries =>
             entries.forEach(() => this.checkTraverse())
         );
         this.ngZone.runOutsideAngular(() => {
@@ -102,7 +102,7 @@ export class TabHeadingGroupComponent
         this._changesSubscription = this._tabs.changes.subscribe(
             (changedTabs: any) => {
                 this.setActiveTab();
-                this._tabSelectedSubscriptions.forEach((sub) =>
+                this._tabSelectedSubscriptions.forEach(sub =>
                     sub.unsubscribe()
                 );
                 this._tabSelectedSubscriptions = [];
@@ -117,7 +117,7 @@ export class TabHeadingGroupComponent
 
     public setActiveTab(): void {
         const activeTab = this.getActiveTab();
-        const firstEnabledTab = this._tabs.find((tab) => !tab.disabled);
+        const firstEnabledTab = this._tabs.find(tab => !tab.disabled);
 
         if (activeTab && !activeTab.disabled) {
             return;
@@ -318,7 +318,7 @@ export class TabHeadingGroupComponent
 
     public ngOnDestroy(): void {
         this._changesSubscription?.unsubscribe();
-        this._tabSelectedSubscriptions.forEach((sub) => sub.unsubscribe());
+        this._tabSelectedSubscriptions.forEach(sub => sub.unsubscribe());
         this._ro?.disconnect();
     }
 }
