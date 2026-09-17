@@ -1,32 +1,31 @@
 <div class="w-100 h-100" nui-busy [busy]="loading">
-    <ng-container *ngIf="link">
+    @if (link) {
+    <ng-container>
         <a class="nui-kpi-indicator" [href]="link">
             <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
         </a>
     </ng-container>
-
-    <ng-container *ngIf="!link">
+    } @if (!link) {
+    <ng-container>
         <div class="nui-kpi-indicator" (click)="onInteraction()">
             <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
         </div>
     </ng-container>
+    }
 </div>
 
 <ng-template #kpiContent>
     <div
         class="nui-kpi-indicator__background"
         [class.nui-kpi-indicator--interactive]="isInteractive"
-        [ngStyle]="{ 'background-color': backgroundColor }"
-    ></div>
+        [ngStyle]="{ 'background-color': backgroundColor }"></div>
     <div
         class="nui-kpi-indicator__text"
-        [ngStyle]="{ color: computedTextColor }"
-    >
+        [ngStyle]="{ color: computedTextColor }">
         <div class="nui-kpi-indicator__zoom-container">
             <div
                 class="nui-kpi-indicator__description nui-kpi-indicator__zoom-container__row"
-                [title]="label || ''"
-            >
+                [title]="label || ''">
                 <span
                     nuiZoomContent
                     [useZoom]="false"
@@ -37,54 +36,46 @@
                 >
             </div>
 
-            <ng-container *ngIf="valueTemplate; else kpiValueRaw">
-                <div
-                    class="nui-kpi-indicator__value nui-kpi-indicator__zoom-container__row"
-                >
-                    <span
-                        nuiZoomContent
-                        [useZoom]="false"
-                        [margin]="margin"
-                        [scaleIN$]="getScaleBroker('value')?.out$"
-                        [scaleOUT$]="getScaleBroker('value')?.in$"
-                    >
-                        <ng-container
-                            *ngTemplateOutlet="
-                                valueTemplate;
-                                context: {
-                                    $implicit: value,
-                                    label: label,
-                                    units: units
-                                }
-                            "
-                        ></ng-container>
-                    </span>
-                </div>
-            </ng-container>
-
+            @if (valueTemplate; as valueTemplate) {
+            <div
+                class="nui-kpi-indicator__value nui-kpi-indicator__zoom-container__row">
+                <span
+                    nuiZoomContent
+                    [useZoom]="false"
+                    [margin]="margin"
+                    [scaleIN$]="getScaleBroker('value')?.out$"
+                    [scaleOUT$]="getScaleBroker('value')?.in$">
+                    <ng-container
+                        *ngTemplateOutlet="
+                            valueTemplate;
+                            context: {
+                                $implicit: value,
+                                label: label,
+                                units: units
+                            }
+                        "></ng-container>
+                </span>
+            </div>
+            } @else {
             <ng-template #kpiValueRaw>
                 <div
                     class="nui-kpi-indicator__value nui-kpi-indicator__zoom-container__row"
                     [style.font-size]="fontSize"
-                    [title]="value"
-                >
+                    [title]="value">
                     <span
                         nuiZoomContent
                         [useZoom]="false"
                         [margin]="margin"
                         [scaleIN$]="getScaleBroker('value')?.out$"
-                        [scaleOUT$]="getScaleBroker('value')?.in$"
-                    >
+                        [scaleOUT$]="getScaleBroker('value')?.in$">
                         {{ value }}
                     </span>
                 </div>
             </ng-template>
-
+            } @if (units) {
             <div
                 class="nui-kpi-indicator__units nui-kpi-indicator__zoom-container__row"
-                *ngIf="units"
-                [title]="units"
-            >
+                [title]="units">
                 <span
                     nuiZoomContent
                     [useZoom]="false"
@@ -94,6 +85,7 @@
                     >{{ units }}</span
                 >
             </div>
+            }
         </div>
     </div>
 </ng-template>

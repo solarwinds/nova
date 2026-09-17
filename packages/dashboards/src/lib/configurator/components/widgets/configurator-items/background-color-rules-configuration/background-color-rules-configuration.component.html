@@ -33,14 +33,12 @@
                                 i18n-placeholder
                                 style="min-width: 220px"
                                 [formControl]="rule.get('comparisonType')">
-                                <nui-select-v2-option
-                                    *ngFor="
-                                        let item of availableComparators
-                                            | keyvalue
-                                    "
-                                    [value]="item.key">
+                                @for (item of availableComparators | keyvalue;
+                                track item.key) {
+                                <nui-select-v2-option [value]="item.key">
                                     {{ getLabel(item.key) }}
                                 </nui-select-v2-option>
+                                }
                             </nui-select-v2>
                         </nui-form-field>
 
