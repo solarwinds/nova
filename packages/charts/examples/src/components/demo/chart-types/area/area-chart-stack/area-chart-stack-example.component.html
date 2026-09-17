@@ -8,8 +8,7 @@
             i18n-seriesUnitLabel
             [active]="chartAssist.isLegendActive"
             [interactive]="true"
-            (mouseleave)="chartAssist.resetVisibleSeries()"
-        >
+            (mouseleave)="chartAssist.resetVisibleSeries()">
             @for ( legendSeries of chartAssist.legendSeriesSet; track
             legendSeries.id) {
             <nui-legend-series
@@ -21,8 +20,7 @@
                 [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                 (isSelectedChange)="
                     chartAssist.toggleSeries(legendSeries.id, $event)
-                "
-            >
+                ">
                 <!-- Specify 'undefined' for the formatter key since we're not applying any special formatting to the data values shown in the legend -->
                 <!-- Specify the 'y1' data accessor to let the chart assist know how to access the data for the legend. -->
                 <nui-rich-legend-tile
@@ -39,8 +37,7 @@
                     "
                     [color]="
                         chartAssist.palette.textColors.get(legendSeries.id)
-                    "
-                >
+                    ">
                     <nui-chart-marker
                         rightEdge
                         [marker]="chartAssist.markers.get(legendSeries.id)"
@@ -48,8 +45,7 @@
                             chartAssist.palette.standardColors.get(
                                 legendSeries.id
                             )
-                        "
-                    >
+                        ">
                     </nui-chart-marker>
                 </nui-rich-legend-tile>
             </nui-legend-series>

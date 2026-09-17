@@ -103,11 +103,11 @@ export class KpiDescriptionConfigurationComponent
         );
         // eslint-disable-next-line import/no-deprecated
         this.subtitle$ = combineLatest([
-            labelValue?.pipe(map((t) => t || $localize`no label`)),
+            labelValue?.pipe(map(t => t || $localize`no label`)),
             backgroundColorValue?.pipe(
-                map((t) => chartPaletteColorMap[t] || $localize`Default Color`)
+                map(t => chartPaletteColorMap[t] || $localize`Default Color`)
             ),
-        ]).pipe(map((labels) => labels.join(", ")));
+        ]).pipe(map(labels => labels.join(", ")));
 
         this.formReady.emit(this.form);
     }

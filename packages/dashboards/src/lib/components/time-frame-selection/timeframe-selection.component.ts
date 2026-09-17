@@ -118,7 +118,7 @@ export class TimeframeSelectionComponent
 
     public ngOnInit(): void {
         this.history.restart(this.currentTimeframe);
-        this.eventBus.getStream(SET_TIMEFRAME).subscribe((event) => {
+        this.eventBus.getStream(SET_TIMEFRAME).subscribe(event => {
             if (!event.payload) {
                 throw new Error(
                     "Unable to set timeframe. Event payload is undefined"

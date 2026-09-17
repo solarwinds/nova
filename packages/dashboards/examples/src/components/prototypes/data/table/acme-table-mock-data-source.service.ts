@@ -82,7 +82,7 @@ export class AcmeTableMockDataSource extends LocalFilteringDataSource<BasicTable
     ): Promise<ITableDataSourceOutput> {
         this.busy.next(true);
 
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             setTimeout(async () => {
                 // Set the data to the table
                 super.setData(TABLE_DATA);

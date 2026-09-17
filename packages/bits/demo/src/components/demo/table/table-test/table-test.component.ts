@@ -140,7 +140,7 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
     public ngOnInit(): void {
         this.optionsForm.valueChanges
             .pipe(debounceTime(500))
-            .subscribe((value) => {
+            .subscribe(value => {
                 this.alignment = value.alignment;
                 this.positionWidth = value.positionWidth;
                 this.density = value.density;

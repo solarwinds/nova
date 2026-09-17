@@ -137,7 +137,6 @@ describe("DataSourceConfigurationV2Component", () => {
                 deps: [],
             },
         });
-
     });
 
     afterEach(() => {

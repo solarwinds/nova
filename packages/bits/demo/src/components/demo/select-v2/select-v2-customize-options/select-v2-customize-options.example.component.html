@@ -3,8 +3,7 @@
     i18n-placeholder
     [formControl]="selectControl"
     [displayValueTemplate]="customTemplate"
-    #select
->
+    #select>
     @for (item of items; track item) {
     <nui-select-v2-option [value]="item.id" [displayValueContext]="item">
         Name is {{ item.name }} and icon is
@@ -26,7 +25,6 @@
 
         <nui-icon
             [style.transform]="select.isDropdownOpen ? 'rotate(180deg)' : ''"
-            icon="caret-down"
-        ></nui-icon>
+            icon="caret-down"></nui-icon>
     </div>
 </ng-template>

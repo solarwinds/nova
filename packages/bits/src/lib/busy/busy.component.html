@@ -2,8 +2,7 @@
     <div
         class="nui-nova-busy__overlay--align"
         [class.nui-nova-busy__overlay--hidden]="!busy"
-        [class.nui-nova-busy__overlay]="busy"
-    >
+        [class.nui-nova-busy__overlay]="busy">
         <div class="nui-nova-busy__container">
             @if (isProgressTemplate) {
             <ng-content select="nui-progress"></ng-content>

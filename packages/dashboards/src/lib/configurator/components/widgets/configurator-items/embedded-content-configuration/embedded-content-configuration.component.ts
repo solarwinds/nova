@@ -126,7 +126,7 @@ export class EmbeddedContentConfigurationComponent
     private initializeForm() {
         this.modeValue?.valueChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe((value) => {
+            .subscribe(value => {
                 if (value === EmbeddedContentMode.URL) {
                     this.customEmbeddedContentValue?.setValue(
                         this.form.get("urlCustomContent")?.value
@@ -144,13 +144,13 @@ export class EmbeddedContentConfigurationComponent
 
         this.urlCustomContent?.valueChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe((value) => {
+            .subscribe(value => {
                 this.customEmbeddedContentValue?.setValue(value);
             });
 
         this.htmlCustomContent?.valueChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe((value) => {
+            .subscribe(value => {
                 this.customEmbeddedContentValue?.setValue(value);
             });
     }

@@ -3,76 +3,121 @@
     "$schema": "http://json-schema.org/schema",
     "description": "Adds a list",
     "properties": {
-        "path": {
+        "dataSource": {
+            "default": "serverSide",
             "type": "string",
-            "format": "path",
-            "description": "The path at which to create the component file, relative to the current workspace. Default is a folder with the same name as the component in the project root.",
-            "visible": false
-        },
-        "project": {
-            "type": "string",
-            "description": "The name of the project",
-            "$default": {
-                "$source": "projectName"
+            "x-prompt": {
+                "items": [
+                    {
+                        "label": "The generated data source will retrieve data locally from a client side source.",
+                        "value": "clientSide"
+                    },
+                    {
+                        "label": "The generated data source will retrieve data remotely from a server side API.",
+                        "value": "serverSide"
+                    },
+                    {
+                        "label": "No data source will be generated, allowing you to create one from scratch.",
+                        "value": "custom"
+                    },
+                    {
+                        "label": "No data source will be generated and no accommodations for a data source, e.g. sorting or search, will be added to the generated code.",
+                        "value": "none"
+                    }
+                ],
+                "message": "What is the source of your data?",
+                "type": "list"
             }
         },
+        "dataSourceName": {
+            "description": "Specifies the datasource class name",
+            "type": "string"
+        },
+        "enableSearch": {
+            "default": true,
+            "description": "When true, enables the search functionality for the list",
+            "type": "boolean"
+        },
+        "enableSort": {
+            "default": true,
+            "description": "When true, enables the search functionality for the list",
+            "type": "boolean"
+        },
+
+        "export": {
+            "default": false,
+            "description": "When true, the declaring NgModule exports this component",
+            "type": "boolean"
+        },
+        "flat": {
+            "default": false,
+            "description": "When true, creates the new files at the top level of the current project",
+            "type": "boolean"
+        },
+        "lintFix": {
+            "default": false,
+            "description": "When true, applies lint fixes after generating the component",
+            "type": "boolean"
+        },
+        "module": {
+            "alias": "m",
+            "description": "The declaring NgModule",
+            "type": "string"
+        },
         "name": {
-            "type": "string",
-            "description": "The name of the component",
             "$default": {
                 "$source": "argv",
                 "index": 0
             },
+            "description": "The name of the component",
+            "type": "string",
             "x-prompt": "What name would you like to use for the component?"
         },
-        "prefix": {
+        "pagingMode": {
+            "default": "virtualScroll",
+            "description": "Paging mode to be used for the list",
+            "enum": ["none", "pagination", "virtualScroll"],
             "type": "string",
-            "description": "The prefix to apply to the generated component selector",
+            "x-prompt": {
+                "items": [
+                    { "label": "Pagination", "value": "pagination" },
+                    { "label": "Virtual Scroll", "value": "virtualScroll" },
+                    { "label": "None", "value": "none" }
+                ],
+                "message": "What paging mode would you like the list to use?",
+                "type": "list"
+            }
+        },
+        "path": {
+            "description": "The path at which to create the component file, relative to the current workspace. Default is a folder with the same name as the component in the project root.",
+            "format": "path",
+            "type": "string",
+            "visible": false
+        },
+        "prefix": {
             "alias": "p",
+            "description": "The prefix to apply to the generated component selector",
             "oneOf": [
                 {
                     "maxLength": 0
                 },
                 {
-                    "minLength": 1,
-                    "format": "html-selector"
+                    "format": "html-selector",
+                    "minLength": 1
                 }
-            ]
+            ],
+            "type": "string"
         },
-        "flat": {
-            "type": "boolean",
-            "description": "When true, creates the new files at the top level of the current project",
-            "default": false
-        },
-        "skipImport": {
-            "type": "boolean",
-            "description": "When true, does not import this component into the owning NgModule",
-            "default": false
-        },
-        "selector": {
-            "type": "string",
-            "format": "html-selector",
-            "description": "The HTML selector to use for this component"
-        },
-        "module": {
-            "type": "string",
-            "description": "The declaring NgModule",
-            "alias": "m"
-        },
-        "export": {
-            "type": "boolean",
-            "default": false,
-            "description": "When true, the declaring NgModule exports this component"
-        },
-        "lintFix": {
-            "type": "boolean",
-            "default": false,
-            "description": "When true, applies lint fixes after generating the component"
+        "project": {
+            "$default": {
+                "$source": "projectName"
+            },
+            "description": "The name of the project",
+            "type": "string"
         },
         "selectionMode": {
-            "description": "Selection mode to be used for the list",
-            "type": "string",
             "default": "none",
+            "description": "Selection mode to be used for the list",
             "enum": [
                 "none",
                 "multi",
@@ -81,83 +126,38 @@
                 "radio",
                 "radioWithNonRequiredSelection"
             ],
+            "type": "string",
             "x-prompt": {
+                "items": [
+                    { "label": "None (Selection Disabled)", "value": "none" },
+                    { "label": "Multi-Select (Checkboxes)", "value": "multi" },
+                    { "label": "Radio Buttons", "value": "radio" },
+                    {
+                        "label": "Radio Buttons with Deselection Allowed",
+                        "value": "radioWithNonRequiredSelection"
+                    },
+                    {
+                        "label": "Single-Select with No Radio Buttons",
+                        "value": "singleWithRequiredSelection"
+                    },
+                    {
+                        "label": "Single-Select with No Radio Buttons and Deselection Allowed",
+                        "value": "single"
+                    }
+                ],
                 "message": "What selection mode would you like the list to use?",
-                "type": "list",
-                "items": [
-                    { "value": "none", "label": "None (Selection Disabled)" },
-                    { "value": "multi", "label": "Multi-Select (Checkboxes)" },
-                    { "value": "radio", "label": "Radio Buttons" },
-                    {
-                        "value": "radioWithNonRequiredSelection",
-                        "label": "Radio Buttons with Deselection Allowed"
-                    },
-                    {
-                        "value": "singleWithRequiredSelection",
-                        "label": "Single-Select with No Radio Buttons"
-                    },
-                    {
-                        "value": "single",
-                        "label": "Single-Select with No Radio Buttons and Deselection Allowed"
-                    }
-                ]
+                "type": "list"
             }
         },
-        "pagingMode": {
-            "description": "Paging mode to be used for the list",
-            "type": "string",
-            "default": "virtualScroll",
-            "enum": ["none", "pagination", "virtualScroll"],
-            "x-prompt": {
-                "message": "What paging mode would you like the list to use?",
-                "type": "list",
-                "items": [
-                    { "value": "pagination", "label": "Pagination" },
-                    { "value": "virtualScroll", "label": "Virtual Scroll" },
-                    { "value": "none", "label": "None" }
-                ]
-            }
+        "selector": {
+            "description": "The HTML selector to use for this component",
+            "format": "html-selector",
+            "type": "string"
         },
-        "enableSearch": {
-            "type": "boolean",
-            "description": "When true, enables the search functionality for the list",
-            "default": true
-        },
-        "enableSort": {
-            "type": "boolean",
-            "description": "When true, enables the search functionality for the list",
-            "default": true
-        },
-
-        "dataSource": {
-            "type": "string",
-            "default": "serverSide",
-            "x-prompt": {
-                "message": "What is the source of your data?",
-                "type": "list",
-                "items": [
-                    {
-                        "value": "clientSide",
-                        "label": "The generated data source will retrieve data locally from a client side source."
-                    },
-                    {
-                        "value": "serverSide",
-                        "label": "The generated data source will retrieve data remotely from a server side API."
-                    },
-                    {
-                        "value": "custom",
-                        "label": "No data source will be generated, allowing you to create one from scratch."
-                    },
-                    {
-                        "value": "none",
-                        "label": "No data source will be generated and no accommodations for a data source, e.g. sorting or search, will be added to the generated code."
-                    }
-                ]
-            }
-        },
-        "dataSourceName": {
-            "type": "string",
-            "description": "Specifies the datasource class name"
+        "skipImport": {
+            "default": false,
+            "description": "When true, does not import this component into the owning NgModule",
+            "type": "boolean"
         }
     },
     "required": ["name", "selectionMode", "pagingMode"],

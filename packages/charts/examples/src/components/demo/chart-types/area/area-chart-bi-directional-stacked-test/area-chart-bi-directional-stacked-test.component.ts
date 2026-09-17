@@ -76,11 +76,11 @@ export class AreaChartBiDirectionalStackedTestComponent implements OnInit {
         // Area accessors let the renderer know how to access x and y domain data respectively from a chart's input data set(s).
         const accessors = new AreaAccessors();
         // 'x' defines access for values in the data that correspond to the horizontal axis
-        accessors.data.x = (d) => d.timeStamp;
+        accessors.data.x = d => d.timeStamp;
         // 'y0' defines the baseline, in other words, where the area starts
         accessors.data.y0 = () => 0;
         // 'y1' defines access to the numeric values we want to visualize, in other words, where the area ends
-        accessors.data.y1 = (d) => d.value;
+        accessors.data.y1 = d => d.value;
         // 'x' and 'y' accessors define the position of the marker. 'x' was already defined, so now we need to define 'y' as well.
         // Notice that the 'y' is assigned the 'absoluteY1' accessor which takes into account areas that may be stacked below
         // the current area and retrieves the absolute distance from the baseline to the area's value line.
@@ -110,7 +110,7 @@ export class AreaChartBiDirectionalStackedTestComponent implements OnInit {
 
         // Here we assemble the complete chart series.
         const seriesSetTop: IChartSeries<IAreaAccessors>[] = getDataTop().map(
-            (d) => ({
+            d => ({
                 ...d,
                 renderer,
                 accessors,
@@ -119,7 +119,7 @@ export class AreaChartBiDirectionalStackedTestComponent implements OnInit {
         );
 
         const seriesSetBottom: IChartSeries<IAreaAccessors>[] =
-            getDataBottom().map((d) => ({
+            getDataBottom().map(d => ({
                 ...d,
                 renderer,
                 accessors,

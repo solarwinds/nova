@@ -46,13 +46,13 @@ test.describe("USERCONTROL paginator", () => {
         const buttonTexts = await paginator
             .getLocator()
             .locator(".nui-paginator__list > li > button.nui-button")
-            .evaluateAll((buttons) =>
+            .evaluateAll(buttons =>
                 buttons
-                    .map((button) => (button.textContent || "").trim())
-                    .filter((text) => /^\d+$/.test(text))
+                    .map(button => (button.textContent || "").trim())
+                    .filter(text => /^\d+$/.test(text))
             );
 
-        return buttonTexts.map((text) => parseInt(text, 10));
+        return buttonTexts.map(text => parseInt(text, 10));
     };
 
     test.beforeEach(async ({ page }) => {

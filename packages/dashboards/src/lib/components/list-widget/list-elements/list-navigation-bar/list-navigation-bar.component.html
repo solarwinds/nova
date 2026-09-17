@@ -9,8 +9,7 @@
         aria-label="Back"
         i18n-aria-label
         [disabled]="!navBarConfig?.buttons?.back?.disabled"
-        (click)="onBack()"
-    ></button>
+        (click)="onBack()"></button>
     <button
         nui-button
         type="button"
@@ -19,8 +18,7 @@
         icon="overview"
         aria-label="Home"
         i18n-aria-label
-        (click)="onHome()"
-    ></button>
+        (click)="onHome()"></button>
     <div class="list-nav-bar__label">{{ navBarConfig?.label }}</div>
 </div>
 }

@@ -323,7 +323,7 @@ export class TableHeaderCellComponent
             this.subscriptions.push(
                 this.tableStateHandlerService.shouldHighlightEdge
                     .pipe(
-                        filter((value) => {
+                        filter(value => {
                             // When resize is in progress on other columns this one shouldn't be highlighted
                             this.resizeInProgress =
                                 value.columnIndex !== this.currentCellIndex &&
@@ -368,7 +368,7 @@ export class TableHeaderCellComponent
         if (this.isReorderable) {
             this.subscriptions.push(
                 this.tableStateHandlerService.draggedOverCell.subscribe(
-                    (draggedOverCell) => {
+                    draggedOverCell => {
                         this.rightEdgeActive = this.leftEdgeActive = false;
                         if (
                             draggedOverCell?.cellIndex === this.currentCellIndex
@@ -431,8 +431,6 @@ export class TableHeaderCellComponent
     }
 
     public ngOnDestroy(): void {
-        this.subscriptions.forEach((subscription) =>
-            subscription.unsubscribe()
-        );
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 }

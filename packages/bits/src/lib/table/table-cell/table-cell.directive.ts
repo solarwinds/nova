@@ -102,7 +102,7 @@ export class TableCellDirective
         if (this.tableStateHandlerService.reorderable) {
             this.subscribeToDraggedOverCell =
                 this.tableStateHandlerService.draggedOverCell.subscribe(
-                    (draggedOverCell) => {
+                    draggedOverCell => {
                         this.rightEdgeActive = this.leftEdgeActive = false;
                         if (
                             draggedOverCell?.cellIndex === this.currentCellIndex
@@ -122,8 +122,7 @@ export class TableCellDirective
                 this.tableStateHandlerService.shouldHighlightEdge
                     .pipe(
                         filter(
-                            (value) =>
-                                value.columnIndex === this.currentCellIndex
+                            value => value.columnIndex === this.currentCellIndex
                         )
                     )
                     .subscribe(() => {

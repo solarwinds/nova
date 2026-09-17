@@ -3,8 +3,7 @@
     i18n-placeholder
     class="action"
     #select
-    [displayValueTemplate]="customTemplate"
->
+    [displayValueTemplate]="customTemplate">
     @for (item of items; track item) {
     <nui-select-v2-option-group>
         <button
@@ -15,8 +14,7 @@
             class="custom-box"
             (click)="actionSimulation()"
             (keydown.enter)="actionSimulation()"
-            (keydown.space)="actionSimulation(); $event.preventDefault()"
-        >
+            (keydown.space)="actionSimulation(); $event.preventDefault()">
             Add new filtered state
         </button>
         <nui-divider size="extra-small"></nui-divider>
@@ -26,8 +24,7 @@
         @for (option of item.options; track option) {
         <nui-select-v2-option
             [value]="option.id"
-            [displayValueContext]="option"
-        >
+            [displayValueContext]="option">
             {{ option.name }}
             <button
                 nui-button
@@ -35,8 +32,7 @@
                 displayStyle="action"
                 [icon]="'menu'"
                 (click)="actionSimulation($event)"
-                (keydown)="$event.stopPropagation()"
-            ></button>
+                (keydown)="$event.stopPropagation()"></button>
         </nui-select-v2-option>
         }
     </nui-select-v2-option-group>
@@ -50,8 +46,7 @@
         role="combobox"
         aria-haspopup="listbox"
         [attr.aria-expanded]="open"
-        (keydown)="onKeyDown($event)"
-    >
+        (keydown)="onKeyDown($event)">
         @if (context) {
         <div class="custom-input-template">
             <span>{{ context.name }}</span>
@@ -63,7 +58,6 @@
 
         <nui-icon
             [style.transform]="open ? 'rotate(180deg)' : ''"
-            icon="caret-down"
-        ></nui-icon>
+            icon="caret-down"></nui-icon>
     </div>
 </ng-template>

@@ -78,13 +78,11 @@ import { InputValueTypes } from "../types";
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
-        class: "nui-combobox-v2",
-        // TODO: NUI-6293
-        // The host is presentational; the inner <input> carries the ARIA 1.2
-        // combobox semantics (role="combobox" + aria-controls pointing to the
-        // listbox overlay). Keeping the host as role="none" avoids a nested,
-        // redundant combobox role and the aria-required-attr violation it caused.
-        role: "none",
+        "class": "nui-combobox-v2",
+        "role": "combobox",
+        "[attr.aria-expanded]": "isDropdownOpen || false",
+        "aria-haspopup": "listbox",
+        "aria-owns": "nui-overlay",
     },
     standalone: false,
 })
@@ -254,9 +252,9 @@ export class ComboboxV2Component
             const value = (this.value as Array<IOptionValueObject>)[
                 item as number
             ];
-            option = this.options.find((o) => isEqual(o.value, value));
+            option = this.options.find(o => isEqual(o.value, value));
         } else {
-            option = this.options.find((o) => isEqual(o.value, item));
+            option = this.options.find(o => isEqual(o.value, item));
         }
 
         if (option) {
@@ -328,7 +326,7 @@ export class ComboboxV2Component
     ): void {
         if (this.multiselect) {
             this.selectedOptions.forEach(
-                (selectedOption) => (selectedOption.outfiltered = false)
+                selectedOption => (selectedOption.outfiltered = false)
             );
         }
         super.handleValueChange(value);
@@ -358,14 +356,14 @@ export class ComboboxV2Component
                         : filterValue;
             }
 
-            this.options.forEach((option) => {
+            this.options.forEach(option => {
                 const optionName = option.viewValue.toLowerCase();
                 option.outfiltered = !includes(optionName, filterValue);
             });
 
             if (this.multiselect) {
                 this.selectedOptions.forEach(
-                    (selectedOption) => (selectedOption.outfiltered = true)
+                    selectedOption => (selectedOption.outfiltered = true)
                 );
             }
 
@@ -375,7 +373,7 @@ export class ComboboxV2Component
 
     private emitSearchResults(): void {
         const allOutfiltered = !this.options.some(
-            (option) => !option.outfiltered
+            option => !option.outfiltered
         );
         this.searchEmpty.emit(allOutfiltered);
         this.canCreateOption.emit(this.isInputValueUnique());
@@ -388,9 +386,7 @@ export class ComboboxV2Component
 
         return Boolean(
             this.inputValue &&
-                !this.options.find(
-                    (option) => optionName(option) === inputValue
-                )
+                !this.options.find(option => optionName(option) === inputValue)
         );
     }
 }

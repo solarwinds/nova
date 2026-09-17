@@ -2,20 +2,17 @@
     #wizardComponent
     id="nui-demo-wizard-add-additional-button"
     finishText="Finish"
-    i18n-finishText
->
+    i18n-finishText>
     <nui-wizard-step
         #wizardStepAdditional
         [title]="'Additional button step'"
-        [stepTemplate]="step1"
-    ></nui-wizard-step>
+        [stepTemplate]="step1"></nui-wizard-step>
     <button
         nui-button
         type="button"
         id="nui-demo-additional-button"
         (click)="onAdditionalButtonClick()"
-        i18n
-    >
+        i18n>
         Additional button
     </button>
 </nui-wizard>

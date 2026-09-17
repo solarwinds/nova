@@ -116,10 +116,7 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
         this.popoverModalEventSubject.next("mouse-leave");
     }
 
-    constructor(
-        public elRef: ElementRef,
-        private cdRef: ChangeDetectorRef
-    ) {}
+    constructor(public elRef: ElementRef, private cdRef: ChangeDetectorRef) {}
 
     public ngOnInit(): void {
         const displayChangeSubscription = this.displayChange.subscribe(
@@ -157,7 +154,7 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
             clearTimeout(this.fadeInTimeout);
             this.fadeInTimeout = undefined;
         }
-        this.popoverModalSubscriptions.forEach((sub) => {
+        this.popoverModalSubscriptions.forEach(sub => {
             sub.unsubscribe();
         });
     }

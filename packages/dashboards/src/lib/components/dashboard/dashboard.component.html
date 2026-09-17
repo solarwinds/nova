@@ -2,15 +2,13 @@
 <gridster
     class="nui-dashboard__gridster"
     [options]="gridsterConfig"
-    (scroll)="onGridsterScroll()"
->
+    (scroll)="onGridsterScroll()">
     @for ( widget of dashboard.widgets | keyvalue : orderWidgets; track
     trackByFn($index, widget)) {
     <gridster-item
         [item]="dashboard.positions[widget.key]"
         class="nui-dashboard__gridster-item"
-        [nuiGridsterItemWidgetId]="widget.key"
-    >
+        [nuiGridsterItemWidgetId]="widget.key">
         @if (shouldWidgetRender(widget.key)) {
         <nui-widget
             [widget]="widget.value"
@@ -18,8 +16,7 @@
             [attr.widget-id]="widget.key"
             [attr.widget-type]="widget.value.type"
             [attr.widget-guid]="widget.value.uniqueKey"
-            class="w-100 h-100 d-block"
-        >
+            class="w-100 h-100 d-block">
         </nui-widget>
         } @else {
         <div class="w-100 h-100 d-block">

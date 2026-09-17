@@ -46,7 +46,7 @@ export class DialogActionBeforeClosureExampleComponent {
                 // Be sure to unsubscribe on dialog closure
                 takeUntil(this.activeDialog.closed$)
             )
-            .subscribe((event) => {
+            .subscribe(event => {
                 // A dialog will typically close in response to the escape key
                 if (event === NuiDialogEvent.EscapeKey) {
                     console.log($localize`ESC CLOSED`);

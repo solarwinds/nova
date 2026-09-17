@@ -17,36 +17,30 @@
         "
         [class.nui-dnd-raised-state]="
             isItemDraggable(item) && mousedOver[itemIndex]
-        "
-    >
+        ">
         @if (dragHandleTemplateRef && !virtualScroll) {
         <div
             [class.hide]="!draggable"
             [class.invisible]="!isItemDraggable(item)"
-            class="nui-repeat-item__controls-drag-handle align-self-center"
-        >
+            class="nui-repeat-item__controls-drag-handle align-self-center">
             <div
                 cdkDragHandle
                 (mouseover)="mousedOver[itemIndex] = true"
                 (mouseout)="mousedOver[itemIndex] = false"
-                [class.nui-dnd-handle]="!drag.disabled"
-            >
+                [class.nui-dnd-handle]="!drag.disabled">
                 <ng-container
                     [ngTemplateOutlet]="dragHandleTemplateRef"
-                    [ngTemplateOutletContext]="{ item: item }"
-                ></ng-container>
+                    [ngTemplateOutletContext]="{ item: item }"></ng-container>
             </div>
         </div>
         } @if (dragPreviewTemplateRef && !virtualScroll) {
         <div class="nui-repeat-item__controls-drag-handle">
             <div
                 *cdkDragPreview
-                [class.nui-dnd-preview]="!isItemDisabled(item)"
-            >
+                [class.nui-dnd-preview]="!isItemDisabled(item)">
                 <ng-container
                     [ngTemplateOutlet]="dragPreviewTemplateRef"
-                    [ngTemplateOutletContext]="{ item: item }"
-                ></ng-container>
+                    [ngTemplateOutletContext]="{ item: item }"></ng-container>
             </div>
         </div>
         }
@@ -62,8 +56,7 @@
                     itemIndex !== undefined
                         ? 'nui-repeat-item-content-' + itemIndex
                         : null
-                "
-            >
+                ">
             </nui-checkbox>
             } @if (isModeRadio()) {
             <nui-radio
@@ -76,8 +69,7 @@
                     itemIndex !== undefined
                         ? 'nui-repeat-item-content-' + itemIndex
                         : null
-                "
-            >
+                ">
             </nui-radio>
             }
         </div>
@@ -87,19 +79,16 @@
                 itemIndex !== undefined
                     ? 'nui-repeat-item-content-' + itemIndex
                     : null
-            "
-        >
+            ">
             <ng-container
                 [ngTemplateOutlet]="repeatItemTemplateRef"
-                [ngTemplateOutletContext]="{ item: item }"
-            ></ng-container>
+                [ngTemplateOutletContext]="{ item: item }"></ng-container>
         </div>
         @if (actionsTemplateRef) {
         <div class="nui-repeat-item__actions-container">
             <ng-container
                 [ngTemplateOutlet]="actionsTemplateRef"
-                [ngTemplateOutletContext]="{ item: item }"
-            >
+                [ngTemplateOutletContext]="{ item: item }">
             </ng-container>
         </div>
         }
@@ -118,8 +107,7 @@
             [ngTemplateOutletContext]="{
                 item: sourceItem,
                 itemIndex: $index
-            }"
-        ></ng-container>
+            }"></ng-container>
         } } @if (virtualScroll && itemSize) {
         <cdk-virtual-scroll-viewport [itemSize]="itemSize">
             <ng-container
@@ -127,15 +115,13 @@
                     let sourceItem of itemsSource;
                     let i = index;
                     templateCacheSize: 0
-                "
-            >
+                ">
                 <ng-container
                     [ngTemplateOutlet]="repeatItems"
                     [ngTemplateOutletContext]="{
                         item: sourceItem,
                         itemIndex: i
-                    }"
-                ></ng-container>
+                    }"></ng-container>
             </ng-container>
         </cdk-virtual-scroll-viewport>
         }

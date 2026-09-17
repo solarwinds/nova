@@ -64,7 +64,7 @@ export class VerticalWithLegendBarChartTestComponent implements OnInit {
             value.charAt(0).toUpperCase() + value.slice(1);
 
         this.chartAssist.update(
-            getData().map((s) => ({
+            getData().map(s => ({
                 ...s,
                 accessors,
                 renderer,

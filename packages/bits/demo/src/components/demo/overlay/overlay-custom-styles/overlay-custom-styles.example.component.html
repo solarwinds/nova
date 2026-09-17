@@ -5,8 +5,7 @@
 <nui-overlay
     #popup
     [toggleReference]="toggleButton['el'].nativeElement"
-    [overlayConfig]="config"
->
+    [overlayConfig]="config">
     @for (item of itemsSource; track item) {
     <nui-overlay-item class="list-item">{{ item }}</nui-overlay-item>
     }

@@ -19,8 +19,7 @@
             [value]="textToCopy"
             customBoxWidth="360px"
             (textChange)="onValueChange($event)"
-            required="true"
-        >
+            required="true">
         </nui-textbox>
         <button
             id="clipboardButton"
@@ -29,8 +28,7 @@
             (clipboardSuccess)="onClipboardSuccess()"
             (clipboardError)="onClipboardError()"
             type="button"
-            icon="copy"
-        >
+            icon="copy">
             Copy
         </button>
     </div>

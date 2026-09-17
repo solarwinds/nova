@@ -3,8 +3,7 @@
     (opened)="onMenuOpen($event)"
     [appendToBody]="appendToBody"
     [width]="widthOfPopup"
-    [contextClass]="contextClass + ' nui-menu-popup-host'"
->
+    [contextClass]="contextClass + ' nui-menu-popup-host'">
     <button
         #menuToggle
         nui-button
@@ -23,16 +22,14 @@
         [iconRight]="isTitlePresent()"
         class="menu-button no-shadow"
         [isEmpty]="!isTitlePresent()"
-        [ariaLabel]="menuAriaLabel"
-    >
+        [ariaLabel]="menuAriaLabel">
         <span>{{ title }}</span>
     </button>
     <div popupAreaContent [id]="popupContentId" role="menu">
         @if (itemsSource) {
         <nui-menu-popup
             [itemsSource]="itemsSource"
-            [size]="size"
-        ></nui-menu-popup>
+            [size]="size"></nui-menu-popup>
         } @else {
         <ng-content></ng-content>
         }

@@ -7,14 +7,12 @@
             [interactive]="false"
             orientation="horizontal"
             (mouseleave)="chartAssist.resetVisibleSeries()"
-            class="flex-wrap"
-        >
+            class="flex-wrap">
             @for ( legendSeries of chartAssist.legendSeriesSet; track
             legendSeries.id) {
             <nui-legend-series
                 [descriptionPrimary]="legendSeries.name"
-                (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
-            >
+                (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)">
                 <nui-basic-legend-tile>
                     <nui-chart-marker
                         [drawLine]="false"
@@ -23,8 +21,7 @@
                             chartAssist.palette.standardColors.get(
                                 legendSeries.id
                             )
-                        "
-                    >
+                        ">
                     </nui-chart-marker>
                 </nui-basic-legend-tile>
             </nui-legend-series>

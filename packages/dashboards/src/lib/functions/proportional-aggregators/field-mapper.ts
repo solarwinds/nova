@@ -40,9 +40,7 @@ export const fieldMapper: IProportionalAggregatorFn = (
 
     let metric: any = origin[0];
     if (properties?.activeMetricId) {
-        metric = origin.find(
-            (entry) => entry.id === properties?.activeMetricId
-        );
+        metric = origin.find(entry => entry.id === properties?.activeMetricId);
 
         if (!metric) {
             console.warn(

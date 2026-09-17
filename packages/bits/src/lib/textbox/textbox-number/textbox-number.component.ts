@@ -70,7 +70,11 @@ import { NuiFormFieldControl } from "../../form-field/public-api";
     styleUrls: ["../textbox.component.less", "./textbox-number.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: {
-        class: "nui-textbox-number-host",
+        "role": "spinbutton",
+        "[attr.aria-label]": "ariaLabel",
+        "[attr.aria-valuemin]": "minValue || null",
+        "[attr.aria-valuemax]": "maxValue || null",
+        "[attr.aria-valuenow]": "value || 0",
     },
     standalone: false,
 })

@@ -4,6 +4,5 @@
 <h3>Dynamic highlighting (for example, with search):</h3>
 <nui-search
     (inputChange)="changeSearchValue($event)"
-    [value]="term"
-></nui-search>
+    [value]="term"></nui-search>
 <p [innerHTML]="searchString | nuiHighlight : term"></p>

@@ -150,9 +150,7 @@ export class DroppableDirective implements OnInit, OnDestroy {
     @HostListener("dragleave", ["$event"])
     onDragLeave(event: IDragEvent): void {
         const payload = this.dragAndDropService.getDragPayload(event);
-        this.dragElements = this.dragElements.filter(
-            (el) => el !== event.target
-        );
+        this.dragElements = this.dragElements.filter(el => el !== event.target);
         if (this.validateDrop(payload) && this.dragElements.length === 0) {
             this.elRef.nativeElement.classList.remove(this.dragOverClass);
             if (!payload?.isExternal) {

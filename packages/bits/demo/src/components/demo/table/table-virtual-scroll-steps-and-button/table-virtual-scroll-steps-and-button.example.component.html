@@ -11,21 +11,22 @@
     </div>
 </div>
 
-<div [style.height.px]="gridHeight" [style.max-width.px]="1300" [style.overflow]="'hidden'">
+<div
+    [style.height.px]="gridHeight"
+    [style.max-width.px]="1300"
+    [style.overflow]="'hidden'">
     <cdk-virtual-scroll-viewport
         class="h-100"
         [itemSize]="24"
         [maxBufferPx]="1200"
         [minBufferPx]="400"
         #viewport
-        [tableStickyHeader]="makeSticky"
-    >
+        [tableStickyHeader]="makeSticky">
         <table
             nui-table
             [dataSource]="users | async"
             [resizable]="false"
-            [reorderable]="true"
-        >
+            [reorderable]="true">
             <ng-container nuiColumnDef="no" [columnWidth]="50">
                 <th nui-header-cell *nuiHeaderCellDef i18n>No.</th>
                 <td nui-cell *nuiCellDef="let element">{{ element.no }}</td>
@@ -86,14 +87,16 @@
                 <td
                     nui-cell
                     *nuiCellDef="let element"
-                    style="overflow: visible"
-                >
+                    style="overflow: visible">
                     {{ element.cell }}
                 </td>
             </ng-container>
 
             <tr nui-header-row *nuiHeaderRowDef="displayedColumns"></tr>
-            <tr nui-row density="tiny" *nuiRowDef="let row; columns: displayedColumns"></tr>
+            <tr
+                nui-row
+                density="tiny"
+                *nuiRowDef="let row; columns: displayedColumns"></tr>
         </table>
         @if (!makeSticky) {
         <div>
@@ -116,8 +119,7 @@
                 <nui-spinner
                     class="mr-2 d-inline-flex"
                     [show]="isBusy"
-                    size="small"
-                ></nui-spinner>
+                    size="small"></nui-spinner>
                 <span>Loading next {{ itemsToLoad }} items...</span>
             </div>
             } @else {
@@ -142,8 +144,7 @@
                         type="button"
                         size="compact"
                         displayStyle="action"
-                        (click)="loadMore()"
-                    >
+                        (click)="loadMore()">
                         <div class="px-2">
                             Load
                             {{

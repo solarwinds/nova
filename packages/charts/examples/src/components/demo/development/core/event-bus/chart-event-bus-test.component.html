@@ -21,8 +21,7 @@
         class="nui-checkbox-group-inline"
         name="eventFilter"
         [values]="selectedEventFilters"
-        (valuesChange)="onEventFilterChange($event)"
-    >
+        (valuesChange)="onEventFilterChange($event)">
         @for (filter of eventFilters; track filter) {
         <nui-checkbox [value]="filter" [checked]="isEventFilterChecked(filter)">
             {{ filter }}
@@ -40,13 +39,11 @@
         class="nui-checkbox-group-inline"
         name="interactionTypeFilter"
         [values]="selectedInteractionTypeFilters"
-        (valuesChange)="onInteractionTypeFilterChange($event)"
-    >
+        (valuesChange)="onInteractionTypeFilterChange($event)">
         @for (filter of interactionTypeFilters; track filter) {
         <nui-checkbox
             [value]="filter"
-            [checked]="isInteractionTypeFilterChecked(filter)"
-        >
+            [checked]="isInteractionTypeFilterChecked(filter)">
             {{ filter }}
         </nui-checkbox>
         }

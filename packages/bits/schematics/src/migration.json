@@ -2,9 +2,9 @@
     "$schema": "/node_modules/@angular-devkit/schematics/collection-schema.json",
     "schematics": {
         "nova-migration-v13": {
-            "version": "13",
             "description": "Updates the nova-bits from v12 to v13",
-            "factory": "./ng-update/index"
+            "factory": "./ng-update/index",
+            "version": "13"
         }
     }
 }

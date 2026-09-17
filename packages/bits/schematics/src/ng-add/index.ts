@@ -73,7 +73,7 @@ function addPackageJsonDependencies(): Rule {
 
         const dependencies: NodeDependency[] =
             assembleDependencies(peerDependencies);
-        dependencies.forEach((dependency) => {
+        dependencies.forEach(dependency => {
             addPackageJsonDependency(host, dependency);
             context.logger.info(
                 `✅️ Added "${dependency.name}" into ${dependency.type}`
@@ -100,7 +100,7 @@ function addProviders(options: any): Rule {
 
             const declarationRecorder = host.beginUpdate(modulePath);
             const spaceRegex = /\r?\n|\r| /g;
-            providers.forEach((provider) => {
+            providers.forEach(provider => {
                 const moduleSourceMinified = moduleSource.text.replace(
                     spaceRegex,
                     ""
@@ -121,7 +121,7 @@ function addProviders(options: any): Rule {
                         undefined
                     );
 
-                    providerChanges.forEach((change) => {
+                    providerChanges.forEach(change => {
                         if (change instanceof InsertChange) {
                             declarationRecorder.insertLeft(
                                 change.pos,
@@ -143,7 +143,7 @@ function addProviders(options: any): Rule {
                 { item: `TRANSLATIONS_FORMAT`, path: `@angular/core` },
             ];
 
-            imports.forEach((importable) => {
+            imports.forEach(importable => {
                 if (!moduleSource.text.includes(importable.item)) {
                     // since we are doing a "useValue" provide, we can't use the nice isImported
                     const importChange = insertImport(

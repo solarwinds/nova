@@ -95,11 +95,11 @@ export class LineRenderer extends XYRenderer<ILineAccessors> {
                 .classed("main", true)
                 // Assigning null value to match ValueMap<GElement, Datum> D3's signature
                 .attrs({
-                    stroke: strokeValue ?? null,
+                    "stroke": strokeValue ?? null,
                     "stroke-width": this.config.strokeWidth ?? null,
                     "stroke-dasharray": this.config.strokeStyle ?? null,
                     "stroke-linecap": this.config.strokeLinecap ?? null,
-                    fill: "none",
+                    "fill": "none",
                 });
         }
         this.drawLine(renderSeries, path);

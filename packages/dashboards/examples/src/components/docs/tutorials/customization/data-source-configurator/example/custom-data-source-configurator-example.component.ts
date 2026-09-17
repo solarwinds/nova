@@ -217,7 +217,7 @@ export class HarryPotterDataSourceConfiguratorComponent
         // Here we set the providerId to our only data source so when a new tile gets created it will default to it.
         this.form.get("providerId")?.setValue(AcmeKpiDataSource.providerId);
         // Here we subscribe to the form and if there are any changes we invoke the data source
-        this.form.valueChanges.subscribe((value) => {
+        this.form.valueChanges.subscribe(value => {
             if (!value.providerId) {
                 return;
             }
@@ -257,7 +257,7 @@ export class AcmeKpiDataSource
     public async getFilteredData(): Promise<IFilteringOutputs> {
         // For loading indicator to show
         this.busy.next(true);
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             // *** Make a resource request to an external API (if needed)
             this.http
                 .get(

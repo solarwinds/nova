@@ -68,8 +68,9 @@ import { OptionKeyControlService } from "../option-key-control.service";
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        class: "nui-select-v2",
-        role: "none",
+        "class": "nui-select-v2",
+        "role": "button",
+        "[attr.aria-label]": "accessibleLabel",
     },
     standalone: false,
 })

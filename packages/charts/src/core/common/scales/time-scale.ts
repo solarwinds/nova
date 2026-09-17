@@ -55,8 +55,6 @@ export class TimeScale extends Scale<Date> {
     }
 
     public isDomainValid(): boolean {
-        return (
-            -1 === this.domain().findIndex((value) => isNaN(value.getTime()))
-        );
+        return -1 === this.domain().findIndex(value => isNaN(value.getTime()));
     }
 }

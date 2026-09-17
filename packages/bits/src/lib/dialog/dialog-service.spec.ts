@@ -399,7 +399,7 @@ describe("nui-dialog", () => {
             let resolvedResult: any;
             fixture.componentInstance
                 .openTplClose()
-                .result.then((result) => (resolvedResult = result));
+                .result.then(result => (resolvedResult = result));
 
             // const resolvedResult = await fixture.componentInstance.openTplClose().result;
             fixture.detectChanges();
@@ -417,7 +417,7 @@ describe("nui-dialog", () => {
             let rejectReason: any;
             fixture.componentInstance
                 .openTplDismiss()
-                .result.catch((reason) => (rejectReason = reason));
+                .result.catch(reason => (rejectReason = reason));
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog();
 

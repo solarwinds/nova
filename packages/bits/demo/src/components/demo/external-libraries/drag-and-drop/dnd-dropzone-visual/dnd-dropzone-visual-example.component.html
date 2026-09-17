@@ -7,20 +7,17 @@
             [cdkDropListData]="companies"
             [cdkDropListSortingDisabled]="true"
             [cdkDropListEnterPredicate]="sourceAcceptsItem"
-            (cdkDropListDropped)="onItemDropped($event)"
-        >
+            (cdkDropListDropped)="onItemDropped($event)">
             <div class="items-container">
                 @for (company of companies; track company) {
                 <div
                     class="draggable-item"
                     cdkDrag
                     cdkDragPreviewClass="nui-dnd-preview"
-                    [cdkDragData]="company"
-                >
+                    [cdkDragData]="company">
                     <div
                         class="draggable-placeholder"
-                        *cdkDragPlaceholder
-                    ></div>
+                        *cdkDragPlaceholder></div>
                     {{ company.name }}
                 </div>
                 }
@@ -40,8 +37,7 @@
             [cdkDropListData]="industry.companies"
             nuiDndDropTarget
             [canBeDropped]="destinationAcceptsItem"
-            (cdkDropListDropped)="onItemDropped($event)"
-        >
+            (cdkDropListDropped)="onItemDropped($event)">
             @if ( dropTarget.isDropZoneActive || !industry.companies?.length ) {
             <div class="title">
                 {{ industry.name }}
@@ -58,8 +54,7 @@
                     cdkDrag
                     cdkDragPreviewClass="dropzone-preview"
                     [cdkDragData]="company"
-                    [class.invisible]="dropTarget.isDropZoneActive"
-                >
+                    [class.invisible]="dropTarget.isDropZoneActive">
                     {{ company.name }}
                 </div>
                 }
@@ -72,8 +67,7 @@
                     <nui-icon
                         icon="plus"
                         iconSize="medium"
-                        cssClass="drop-circle-permanent"
-                    ></nui-icon>
+                        cssClass="drop-circle-permanent"></nui-icon>
                 </div>
                 }
                 <!-- accepted item placeholder-->
@@ -82,8 +76,7 @@
                     <nui-icon
                         icon="plus"
                         iconSize="medium"
-                        cssClass="drop-circle-allowed"
-                    ></nui-icon>
+                        cssClass="drop-circle-allowed"></nui-icon>
                 </div>
                 }
                 <!-- reject item placeholder-->
@@ -96,8 +89,7 @@
                     <nui-icon
                         icon="close"
                         iconSize="medium"
-                        cssClass="drop-circle-not-allowed"
-                    ></nui-icon>
+                        cssClass="drop-circle-not-allowed"></nui-icon>
                 </div>
                 }
             </div>

@@ -3,8 +3,7 @@
     #nuiChips
     class="nui-chips media"
     [ngClass]="customClass"
-    [class.nui-chips__vertical]="orientation === 'vertical'"
->
+    [class.nui-chips__vertical]="orientation === 'vertical'">
     @if (!!title && orientation === 'vertical') {
     <h4 class="nui-chips__title-cell">
         <span class="nui-chips__title">{{ title }}:</span>
@@ -16,8 +15,7 @@
         #chipsMainCell
         role="list"
         [attr.aria-label]="ariaLabel"
-        [style.flex-grow]="isOverflowed ? 1 : 0"
-    >
+        [style.flex-grow]="isOverflowed ? 1 : 0">
         @if (itemsSource.flatItems?.length) { @for (flatItem of
         itemsSource.flatItems; track flatItem; let last = $last) {
         <nui-chip
@@ -26,15 +24,13 @@
             [customClass]="flatItem.customClass"
             [class.group-last]="last"
             [item]="flatItem"
-            (remove)="onRemove({ item: flatItem, group: undefined })"
-        ></nui-chip>
+            (remove)="onRemove({ item: flatItem, group: undefined })"></nui-chip>
         } } @for (group of itemsSource.groupedItems; track group; let lastGroup
         = $last) { @if (group.items?.length > 0) {
         <div
             class="nui-chips__group-name"
             [ngClass]="group.customClass"
-            #chipItem
-        >
+            #chipItem>
             <div class="nui-chips__group-label">
                 {{ group.label }}
             </div>
@@ -45,8 +41,7 @@
             [customClass]="groupItem.customClass"
             [class.group-last]="last && !lastGroup"
             [item]="groupItem"
-            (remove)="onRemove({ item: groupItem, group: group })"
-        ></nui-chip>
+            (remove)="onRemove({ item: groupItem, group: group })"></nui-chip>
         } } }
         <ng-content select=".nui-chips-overflowed"></ng-content>
     </div>

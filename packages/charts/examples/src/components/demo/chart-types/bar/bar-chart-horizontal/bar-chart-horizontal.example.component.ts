@@ -44,7 +44,7 @@ export class BarChartHorizontalExampleComponent implements OnInit {
         const scales = barScales(this.barConfig);
 
         this.chart.update(
-            getData().map((s) => ({
+            getData().map(s => ({
                 ...s,
                 accessors,
                 renderer,

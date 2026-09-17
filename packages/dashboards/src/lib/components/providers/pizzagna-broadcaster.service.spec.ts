@@ -65,7 +65,7 @@ describe("PizzagnaBroadcasterService > ", () => {
         const testValue = "UPDATED VALUE";
         const testPath = "configuration.customPath";
 
-        eventBus.getStream(SET_PROPERTY_VALUE).subscribe((v) => {
+        eventBus.getStream(SET_PROPERTY_VALUE).subscribe(v => {
             expect(v.payload?.value).toEqual(testValue);
             expect(v.payload?.path).toEqual(testPath);
         });
@@ -86,7 +86,7 @@ describe("PizzagnaBroadcasterService > ", () => {
         const testValue = "UPDATED VALUE 2";
         const testPath = "configuration.customPath";
 
-        eventBus.getStream(SET_PROPERTY_VALUE).subscribe((v) => {
+        eventBus.getStream(SET_PROPERTY_VALUE).subscribe(v => {
             expect(v.payload?.value).toEqual(testValue);
             expect(v.payload?.path).toEqual(testPath);
         });

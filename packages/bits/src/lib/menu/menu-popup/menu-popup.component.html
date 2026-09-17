@@ -2,8 +2,7 @@
 {
 <div
     class="nui-menu-item nui-menu-item--header"
-    (click)="stopClickPropagation($event)"
->
+    (click)="stopClickPropagation($event)">
     {{ group.header }}
 </div>
 } @for (item of group.itemsSource; track item) { @switch (item.itemType) { @case
@@ -13,8 +12,7 @@
     [icon]="item.icon"
     [hidden]="item.hidden"
     [type]="item.itemClass"
-    (click)="handleClick(item)"
->
+    (click)="handleClick(item)">
     <ng-container>
         {{ getDisplayValue(item) }}
     </ng-container>
@@ -26,8 +24,7 @@
     [target]="item.target"
     [icon]="item.icon"
     [hidden]="item.hidden"
-    (click)="handleClick(item)"
->
+    (click)="handleClick(item)">
     <ng-container>
         {{ getDisplayValue(item) }}
     </ng-container>
@@ -36,8 +33,7 @@
 <nui-menu-option
     [disabled]="item.disabled"
     [checked]="item.checked"
-    (click)="handleClick(item)"
->
+    (click)="handleClick(item)">
     <ng-container>
         {{ getDisplayValue(item) }}
     </ng-container>
@@ -46,8 +42,7 @@
 <nui-menu-switch
     [disabled]="item.disabled"
     [checked]="item.checked"
-    (click)="handleClick(item)"
->
+    (click)="handleClick(item)">
     <ng-container>
         {{ getDisplayValue(item) }}
     </ng-container>
@@ -55,15 +50,13 @@
 } @default {
 <nui-menu-item
     [ngClass]="{ 'nui-menu-item--selected': item.isSelected }"
-    (actionDone)="handleClick(item)"
->
+    (actionDone)="handleClick(item)">
     {{ getDisplayValue(item) }}
 </nui-menu-item>
 } } } @if (!last) {
 <div
     class="nui-menu-popup-divider--container"
-    (click)="stopClickPropagation($event)"
->
+    (click)="stopClickPropagation($event)">
     <nui-divider size="extra-small"></nui-divider>
 </div>
 } }

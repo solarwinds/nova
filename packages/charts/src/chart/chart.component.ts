@@ -125,7 +125,7 @@ export class ChartComponent
             this.chart.updateDimensions();
         });
 
-        [MOUSE_ACTIVE_EVENT, SERIES_STATE_CHANGE_EVENT].forEach((eventName) => {
+        [MOUSE_ACTIVE_EVENT, SERIES_STATE_CHANGE_EVENT].forEach(eventName => {
             eventBus.getStream(eventName).subscribe(() => {
                 this.ngZone.run(() => {
                     this.cd.markForCheck();

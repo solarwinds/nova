@@ -11,38 +11,32 @@
             !header && isCustomHeaderContentEmpty
         "
         (keydown)="onKeyDown($event)"
-        (click)="toggle()"
-    >
+        (click)="toggle()">
         <nui-icon
             class="nui-expander__header-icon"
             [iconColor]="getIconColor()"
             aria-hidden="true"
-            icon="{{ open ? 'triangle-down' : 'triangle-right' }}"
-        ></nui-icon>
+            icon="{{ open ? 'triangle-down' : 'triangle-right' }}"></nui-icon>
         <div
             class="nui-expander__header-content-wrapper"
             [class.nui-expander__custom-header--empty]="
                 isCustomHeaderContentEmpty
-            "
-        >
+            ">
             <div
                 #customHeaderContent
                 class="nui-expander__custom-header"
                 [class.nui-expander__custom-header--empty]="
                     isCustomHeaderContentEmpty
-                "
-            >
+                ">
                 <ng-content select="[nuiExpanderHeader]"></ng-content>
             </div>
             <div
                 class="nui-expander__header-content"
-                [class.nui-expander__header-content--with-icon]="!!icon"
-            >
+                [class.nui-expander__header-content--with-icon]="!!icon">
                 @if (!!icon) {
                 <nui-icon
                     class="nui-expander__header-content-icon"
-                    [icon]="icon"
-                ></nui-icon>
+                    [icon]="icon"></nui-icon>
                 }
                 <span class="nui-expander__header-title">{{ header }}</span>
             </div>
@@ -55,14 +49,12 @@
         class="nui-expander__body-wrapper"
         role="region"
         [id]="bodyId"
-        [attr.aria-labelledby]="'nui-expander-label-' + uniqueId"
-    >
+        [attr.aria-labelledby]="'nui-expander-label-' + uniqueId">
         @if (open) {
         <div
             class="nui-expander__body"
             [class.hide-left-border]="hideLeftBorder"
-            @expandContent
-        >
+            @expandContent>
             <ng-content></ng-content>
         </div>
         }

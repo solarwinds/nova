@@ -64,8 +64,8 @@ export class ComboboxTypeaheadExampleComponent {
         const val = searchQuery?.newValue?.toLowerCase();
         const label = searchQuery?.newValue?.label?.toLowerCase();
         this.displayedItems = _cloneDeep(this.dataset);
-        this.displayedItems.forEach((group) => {
-            group.items = group.items.filter((item) => {
+        this.displayedItems.forEach(group => {
+            group.items = group.items.filter(item => {
                 const itemLabel = item.label.toLowerCase();
                 return itemLabel.includes(val) || itemLabel.includes(label);
             });

@@ -1,15 +1,15 @@
 {
     "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
     "schematics": {
-        "ng-add": {
-            "description": "Installs and configures the dashboards library.",
-            "factory": "./ng-add/index",
-            "schema": "./ng-add/schema.json"
-        },
         "kpi-widget": {
             "description": "Adds a KPI widget.",
             "factory": "./kpi-widget/index",
             "schema": "./kpi-widget/schema.json"
+        },
+        "ng-add": {
+            "description": "Installs and configures the dashboards library.",
+            "factory": "./ng-add/index",
+            "schema": "./ng-add/schema.json"
         },
         "proportional-widget": {
             "description": "Adds a Proportional widget.",

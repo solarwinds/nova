@@ -54,7 +54,7 @@ export class TimeFrameBarTestPage {
     public async waitUntilReady(): Promise<void> {
         await expect(this.chartSeries.first()).toBeVisible({ timeout: 15000 });
         await this.page.waitForTimeout(1500);
-        await this.busyOverlay.evaluateAll((elements) => {
+        await this.busyOverlay.evaluateAll(elements => {
             for (const element of elements) {
                 const overlay = element as HTMLElement;
                 overlay.style.visibility = "hidden";

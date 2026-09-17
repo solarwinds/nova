@@ -5,8 +5,7 @@
     [displayWith]="displayFn"
     [isTypeaheadEnabled]="false"
     (valueChanged)="onValueChange($event)"
-    #combobox
->
+    #combobox>
     @for (item of filteredItems$ | async; track item) {
     <nui-select-v2-option [value]="item">
         <span [nuiComboboxV2OptionHighlight]="item.name"></span>

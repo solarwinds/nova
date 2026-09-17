@@ -124,7 +124,7 @@ export class WidgetSearchComponent implements OnInit, OnDestroy, OnChanges {
                         WidgetSearchComponent.defaultSearchDebounce
                 )
             )
-            .subscribe((searchTerm) => {
+            .subscribe(searchTerm => {
                 this.eventBus.getStream(REFRESH).next({});
                 this.eventBus.getStream(WIDGET_SEARCH).next({
                     payload: searchTerm,

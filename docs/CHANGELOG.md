@@ -15,6 +15,7 @@
 - Essentional A11y fixies
 - `@nova-ui/bits` | Added unique IDs to expander landmarks
 - `@nova-ui/bits` | A11y fixes for nui-toolbar
+- Prettier fix
 
 ## [21.0.3] 📅 2026-08-04
 

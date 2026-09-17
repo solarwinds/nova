@@ -3,8 +3,7 @@
     <nui-radio-group
         class="nui-radio-group-inline"
         [(value)]="mainCategory"
-        (valueChange)="updateMainCategory()"
-    >
+        (valueChange)="updateMainCategory()">
         @for (category of mainCategoryOptions; track category) {
         <nui-radio [value]="category">
             {{ category | titlecase }}
@@ -20,8 +19,7 @@
         <nui-legend
             [active]="chartAssist.isLegendActive"
             [interactive]="false"
-            (mouseleave)="chartAssist.resetVisibleSeries()"
-        >
+            (mouseleave)="chartAssist.resetVisibleSeries()">
             @for ( legendSeries of chartAssist.legendSeriesSet; track
             legendSeries.id) {
             <nui-legend-series
@@ -33,8 +31,7 @@
                 [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                 (isSelectedChange)="
                     chartAssist.toggleSeries(legendSeries.id, $event)
-                "
-            >
+                ">
                 <nui-rich-legend-tile
                     [value]="
                         accessors.data['value'](
@@ -49,14 +46,12 @@
                     "
                     [color]="
                         chartAssist.palette.textColors.get(legendSeries.id)
-                    "
-                >
+                    ">
                 </nui-rich-legend-tile>
                 @if (iconMap[legendSeries.id]) {
                 <nui-icon
                     [icon]="iconMap[legendSeries.id]"
-                    class="mt-1 ml-3"
-                ></nui-icon>
+                    class="mt-1 ml-3"></nui-icon>
                 }
             </nui-legend-series>
             }
@@ -66,8 +61,7 @@
         <nui-radio-group
             class="nui-radio-group-inline"
             [(value)]="chartType"
-            (valueChange)="updateChartType()"
-        >
+            (valueChange)="updateChartType()">
             @for (type of chartTypes; track type) {
             <nui-radio [value]="type">
                 {{ type | titlecase }}

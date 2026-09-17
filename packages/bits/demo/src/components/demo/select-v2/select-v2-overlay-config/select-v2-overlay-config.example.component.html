@@ -2,8 +2,7 @@
     placeholder="Select Item"
     i18n-placeholder
     [overlayConfig]="overlayConfig"
-    [syncWidth]="false"
->
+    [syncWidth]="false">
     @for (item of items; track item) {
     <nui-select-v2-option [value]="item">{{ item }}</nui-select-v2-option>
     }

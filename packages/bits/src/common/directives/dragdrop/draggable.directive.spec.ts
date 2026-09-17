@@ -19,7 +19,12 @@
 //  THE SOFTWARE.
 
 import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from "@angular/core";
-import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import _noop from "lodash/noop";
 
@@ -150,9 +155,7 @@ describe("directives >", () => {
             tick(0);
             const firstChild = draggableElement.nativeElement.firstChild;
             expect(
-                firstChild.classList.contains(
-                    "nui-drag__drag-source--overlay"
-                )
+                firstChild.classList.contains("nui-drag__drag-source--overlay")
             ).toBeTruthy();
         }));
 

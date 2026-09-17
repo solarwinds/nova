@@ -42,7 +42,7 @@ test.describe("a11y: panel", () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("panel/panel-visual-test", page);
-        expanders = expanderIds.map((id) => page.locator(`#${id}`));
+        expanders = expanderIds.map(id => page.locator(`#${id}`));
     });
 
     test("should check a11y of panel", async ({ runA11yScan }) => {

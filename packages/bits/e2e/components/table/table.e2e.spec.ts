@@ -416,7 +416,7 @@ test.describe("USERCONTROL table >", () => {
         });
 
         test("should equally distribute width of non-specified columns", async () => {
-            const columns = ["Features", "Location", "Checks"].map((name) =>
+            const columns = ["Features", "Location", "Checks"].map(name =>
                 resizableTable.getColumn(name)
             );
 
@@ -424,15 +424,12 @@ test.describe("USERCONTROL table >", () => {
                 .poll(async () => {
                     const widths = await Promise.all(
                         columns.map(
-                            async (column) =>
-                                (
-                                    await column.boundingBox()
-                                )?.width
+                            async column => (await column.boundingBox())?.width
                         )
                     );
                     const firstWidth = widths[0];
                     return widths.every(
-                        (width) =>
+                        width =>
                             firstWidth !== undefined &&
                             width !== undefined &&
                             Math.abs(width - firstWidth) < 1
@@ -489,11 +486,11 @@ test.describe("USERCONTROL table >", () => {
             );
             await expect(container).toBeVisible();
             const containerHeight = await container.evaluate(
-                (el) => (el as HTMLElement).clientHeight
+                el => (el as HTMLElement).clientHeight
             );
             const viewPortHeight = await Helpers.page
                 .locator("cdk-virtual-scroll-viewport")
-                .evaluate((el) => (el as HTMLElement).clientHeight);
+                .evaluate(el => (el as HTMLElement).clientHeight);
 
             // Table with sticky header actually consists of two tables (one for the header and one for the table itself).
             // Here we are getting the first one for access to the header.
@@ -505,7 +502,7 @@ test.describe("USERCONTROL table >", () => {
                 .getLocator()
                 .locator("thead")
                 .first()
-                .evaluate((el) => (el as HTMLElement).clientHeight);
+                .evaluate(el => (el as HTMLElement).clientHeight);
 
             expect(headerHeight + viewPortHeight).toEqual(containerHeight);
         });

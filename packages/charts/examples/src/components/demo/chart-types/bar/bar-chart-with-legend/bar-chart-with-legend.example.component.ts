@@ -58,7 +58,7 @@ export class BarChartWithLegendExampleComponent implements OnInit {
 
         // it is important to update the chart via the chartAssist so that the legend is also updated
         this.chartAssist.update(
-            getData().map((s) => ({
+            getData().map(s => ({
                 ...s,
                 accessors,
                 scales,

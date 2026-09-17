@@ -2,17 +2,17 @@
 
 The Nova Dashboards framework was built upon a couple of special requirements:
 
--   Consumers must have the ability to change the behavior, appearance, and/or functionality of existing
-    widgets without breaking the bond with existing framework-provided functionality.
--   Satisfaction of product-specific requirements can be achieved by swapping out, removing, or adding the
-    smallest piece necessary without having to rewrite an entire section of the framework.
+- Consumers must have the ability to change the behavior, appearance, and/or functionality of existing
+  widgets without breaking the bond with existing framework-provided functionality.
+- Satisfaction of product-specific requirements can be achieved by swapping out, removing, or adding the
+  smallest piece necessary without having to rewrite an entire section of the framework.
 
 Beyond the requirements, the framework strives to follow the paradigm of pure Angular components that adhere
 to the following important tenets:
 
--   one-way data flow
--   on-demand serializable state
--   centralized, event-based communication
+- one-way data flow
+- on-demand serializable state
+- centralized, event-based communication
 
 The diagrams below outline the main architectural players and their relationships to one another. You can also
 dive a little deeper on the [Pizzagna](./anatomy/pizzagna.html), [Configurator](./anatomy/configurator.html)

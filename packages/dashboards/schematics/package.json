@@ -1,17 +1,15 @@
 {
-  "name": "dashboards-schematics",
+  "keywords": ["schematics"],
   "license": "Apache-2.0",
-  "version": "21.0.4",
+  "name": "dashboards-schematics",
   "scripts": {
     "assemble": "run-s build copy:json copy:data test copy:dist",
     "build": "tsc -p tsconfig.json",
-    "test": "jasmine ./dist/**/*.spec.js",
-    "copy:json": "npx copyfiles -u 1 \"src/**/*.json\" ./dist",
     "copy:data": "npx copyfiles -u 1 \"src/**/files/**\" ./dist",
-    "copy:dist": "npx copyfiles -u 1 \"dist/**/*\" -e \"*.spec.*\" ../dist/sdk/schematics/"
+    "copy:dist": "npx copyfiles -u 1 \"dist/**/*\" -e \"*.spec.*\" ../dist/sdk/schematics/",
+    "copy:json": "npx copyfiles -u 1 \"src/**/*.json\" ./dist",
+    "test": "jasmine ./dist/**/*.spec.js"
   },
-  "keywords": [
-    "schematics"
-  ]
+  "version": "21.0.4"
 }
 

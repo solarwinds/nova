@@ -8,19 +8,16 @@
             <div
                 cdkDrag
                 (cdkDragStarted)="cdkDragStarted($event)"
-                class="nui-table-columns-configuration__node-item"
-            >
+                class="nui-table-columns-configuration__node-item">
                 <nui-drop-area
                     class="nui-table-columns-configuration__drop-area"
                     *cdkDragPlaceholder
-                    [style.height.px]="draggedItemHeight"
-                ></nui-drop-area>
+                    [style.height.px]="draggedItemHeight"></nui-drop-area>
                 <ng-template #headerText>
                     <ng-container>
                         <div
                             class="nui-table-columns-configuration__drag-handler"
-                            cdkDragHandle
-                        >
+                            cdkDragHandle>
                             <nui-icon icon="drag" aria-hidden="true"></nui-icon>
                         </div>
                     </ng-container>
@@ -31,8 +28,7 @@
                                 | nuiWidgetConfiguratorSectionHeader
                                     : i
                                     : columnLabel
-                        "
-                    >
+                        ">
                         {{
                             columnForm?.value.label
                                 | nuiWidgetConfiguratorSectionHeader
@@ -53,19 +49,16 @@
                             i18n-title
                             aria-label="Remove column"
                             i18n-aria-label
-                            (click)="removeItem(i)"
-                        ></button>
+                            (click)="removeItem(i)"></button>
                     </div>
                 </ng-template>
                 <nui-widget-configurator-section
                     class="no-margin"
                     [headerTextTemplate]="headerText"
-                    [headerButtonsTemplate]="headerButtons"
-                >
+                    [headerButtonsTemplate]="headerButtons">
                     <nui-table-column-configuration
                         [formControl]="columnForm"
-                        [isWidthMessageDisplayed]="isWidthMessageDisplayed"
-                    ></nui-table-column-configuration>
+                        [isWidthMessageDisplayed]="isWidthMessageDisplayed"></nui-table-column-configuration>
                 </nui-widget-configurator-section>
             </div>
             } @if ((emptyColumns$ | async) && form.touched) {
@@ -83,8 +76,7 @@
                 type="button"
                 class="ml-4 mb-4"
                 (click)="addColumn()"
-                i18n
-            >
+                i18n>
                 Add new column
             </button>
             <button
@@ -95,8 +87,7 @@
                 type="button"
                 class="ml-4 mb-4"
                 (click)="onResetColumns()"
-                i18n
-            >
+                i18n>
                 Reset columns
             </button>
         </div>

@@ -10,8 +10,7 @@
             id="nui-demo-checkbox-group-in-form"
             formControlName="checkboxGroup"
             name="vegetable"
-            required
-        >
+            required>
             @for (vegetable of vegetables; track vegetable) {
             <nui-checkbox [value]="vegetable">
                 {{ vegetable }}
@@ -23,8 +22,7 @@
         nui-button
         type="submit"
         [disabled]="myForm.disabled || myForm.controls['checkboxGroup'].invalid"
-        i18n
-    >
+        i18n>
         Submit
     </button>
 </form>

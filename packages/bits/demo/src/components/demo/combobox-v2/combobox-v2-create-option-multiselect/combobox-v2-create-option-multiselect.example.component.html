@@ -2,8 +2,7 @@
     [placeholder]="combobox.selectedOptions.length ? '' : 'Select Items'"
     [formControl]="comboboxControl"
     [multiselect]="true"
-    #combobox
->
+    #combobox>
     <ng-container selectedItems>
         @for (item of combobox?.value; track item) {
         <nui-chip
@@ -12,8 +11,7 @@
             closeButtonTooltip="Remove"
             [item]="convertToChip(item)"
             (remove)="combobox.deselectItem(item)"
-            (mouseup)="$event.stopPropagation()"
-        >
+            (mouseup)="$event.stopPropagation()">
         </nui-chip>
         }
     </ng-container>
@@ -25,8 +23,7 @@
     } @if (combobox.canCreateOption | async) {
     <nui-overlay-item
         class="nui-combobox-v2__create-option"
-        (click)="createOption(combobox.inputValue)"
-    >
+        (click)="createOption(combobox.inputValue)">
         Create option "{{ combobox.inputValue }}"
     </nui-overlay-item>
     } @if (combobox.searchEmpty | async) {

@@ -53,7 +53,7 @@ export class AcmeCloneSelectionComponent
     public ngOnInit(): void {
         const titleCasePipe = new TitleCasePipe();
 
-        this.widgetItems = widgets.map((w) => {
+        this.widgetItems = widgets.map(w => {
             const typeDisplay = titleCasePipe.transform(w.type);
             return {
                 title: typeDisplay,
@@ -61,7 +61,7 @@ export class AcmeCloneSelectionComponent
             };
         });
         this.onSelect([this.widgetItems[0]]);
-        widgets.forEach((widgetConfig) => {
+        widgets.forEach(widgetConfig => {
             this.addUnconfiguredWidgetWithConfigLayer(widgetConfig);
         });
     }

@@ -240,7 +240,7 @@ describe("ng-add", () => {
         );
         const file = readJsonFile(afterTree, "package.json");
         const { peerDependencies } = require("../../../package.json");
-        Object.keys(peerDependencies).forEach((key) => {
+        Object.keys(peerDependencies).forEach(key => {
             expect(
                 omitUpperPeerDependencyVersion(peerDependencies[key])
             ).toEqual(

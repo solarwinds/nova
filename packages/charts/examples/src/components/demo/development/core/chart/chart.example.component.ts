@@ -118,7 +118,7 @@ export class ChartExampleComponent implements OnInit {
             this.statusChartAssist.palette.standardColors
         );
 
-        return statusSeriesSet.map((dataSeries) => ({
+        return statusSeriesSet.map(dataSeries => ({
             ...dataSeries,
             scales: this.statusScales,
             renderer: this.statusLineRenderer,

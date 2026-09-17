@@ -58,7 +58,7 @@ export class TimeseriesMetadataConverterService
         let formPizzagna = this.pizzagnaService.pizzagna;
         const preview = this.getPreview();
         const timeSpans = Object.keys(this.timeframeService.currentPresets).map(
-            (k) => ({
+            k => ({
                 id: k,
                 name: this.timeframeService.currentPresets[k].name,
             })
@@ -77,7 +77,7 @@ export class TimeseriesMetadataConverterService
             "last7Days"
         ) as unknown as string;
         const selectedTimeSpan = timeSpans.find(
-            (timeSpan) => timeSpan.id === selectedPresetId
+            timeSpan => timeSpan.id === selectedPresetId
         );
         if (selectedTimeSpan) {
             formPizzagna = immutableSet(
@@ -113,7 +113,7 @@ export class TimeseriesMetadataConverterService
     }
 
     public toPreview(form: FormGroup): void {
-        form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((value) => {
+        form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
             let preview = this.getPreview();
 
             const presetId = get(value, "startingTimespan.id");

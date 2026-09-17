@@ -83,7 +83,7 @@ export class ItemsDynamicComponent
     public getItemForNode(
         node: IComponentConfiguration
     ): IItemConfiguration | undefined {
-        return this.items.find((item) => item.id === node.id);
+        return this.items.find(item => item.id === node.id);
     }
 
     public getNodes(): string[] {
@@ -97,8 +97,8 @@ export class ItemsDynamicComponent
 
     public onEvent(componentId: string, event: IEvent): void {
         // TODO: refactor
-        const item = this.items.find((i) => i.id === componentId);
-        const index = this.items.findIndex((i) => i.id === componentId);
+        const item = this.items.find(i => i.id === componentId);
+        const index = this.items.findIndex(i => i.id === componentId);
 
         if (event.id === "formReady" && item) {
             this.onFormReady(item, event.payload, index);
@@ -164,7 +164,7 @@ export class ItemsDynamicComponent
         }
 
         // remove item configuration - this will cause the onFormDestroy to be called for related form after component disappears from the view
-        this.itemsChange.emit(this.items.filter((it) => it !== item));
+        this.itemsChange.emit(this.items.filter(it => it !== item));
         this.items.splice(index, 1);
 
         this.nodes.splice(index, 1);

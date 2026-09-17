@@ -24,8 +24,7 @@
         (input)="handleInput(input.value)"
         (keydown)="onKeyDown($event)"
         (click)="selectTextInInput()"
-        #input
-    />
+        #input />
 </div>
 @if (isRemoveValueEnabled && (selectedOptions[0] || inputValue)) {
 <button
@@ -41,8 +40,7 @@
     title="Clear value"
     [nuiTooltip]="clearValueButtonTooltip"
     [class.disabled]="isDisabled"
-    [disabled]="isDisabled"
-></button>
+    [disabled]="isDisabled"></button>
 }
 <button
     tabindex="-1"
@@ -57,14 +55,12 @@
     [class.rotate]="isDropdownOpen"
     [class.disabled]="isDisabled"
     [disabled]="isDisabled"
-    (click)="selectTextInInput()"
-></button>
+    (click)="selectTextInInput()"></button>
 <nui-overlay
     roleAttr="listbox"
     [ariaLabelledby]="triggerId"
     [toggleReference]="elRef.nativeElement"
     [viewportMargin]="popupViewportMargin"
-    [overlayConfig]="overlayConfig"
->
+    [overlayConfig]="overlayConfig">
     <ng-content></ng-content>
 </nui-overlay>

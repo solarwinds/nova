@@ -8,8 +8,7 @@
     [openPopover]="plugin.openPopover$"
     [closePopover]="plugin.closePopover$"
     [hasPadding]="false"
-    [withGrowAfterOpen]="true"
->
+    [withGrowAfterOpen]="true">
 </nui-popover>
 
 <ng-template #popoverTemplate>
@@ -23,8 +22,7 @@
             i18n-title
             aria-label="Inspect selection in the data explorer"
             i18n-aria-label
-            (click)="explore(true)"
-        ></button>
+            (click)="explore(true)"></button>
         } @if (isZoomInAllowed()) {
         <button
             nui-button
@@ -34,8 +32,7 @@
             i18n-title
             aria-label="Zoom In"
             i18n-aria-label
-            (click)="zoomIn()"
-        ></button>
+            (click)="zoomIn()"></button>
         }
         <button
             nui-button
@@ -45,8 +42,7 @@
             i18n-title
             aria-label="Zoom Out"
             i18n-aria-label
-            (click)="zoomOut()"
-        ></button>
+            (click)="zoomOut()"></button>
         <button
             nui-button
             type="button"
@@ -55,7 +51,6 @@
             i18n-title
             aria-label="Clear selection"
             i18n-aria-label
-            (click)="clearZoom()"
-        ></button>
+            (click)="clearZoom()"></button>
     </div>
 </ng-template>

@@ -249,7 +249,7 @@ export class PresentationConfigurationV2Component
             const formatterId = this.form.get("componentType")?.value;
             return (
                 this.providedFormatters.find(
-                    (formatter) => formatter.componentType === formatterId
+                    formatter => formatter.componentType === formatterId
                 ) ?? null
             );
         }
@@ -266,7 +266,7 @@ export class PresentationConfigurationV2Component
             const dataFieldId = propertiesControl.value.dataFieldIds?.value;
             return (
                 this.dataFields.find(
-                    (dataField) => dataField.id === dataFieldId
+                    dataField => dataField.id === dataFieldId
                 ) ?? null
             );
         }
@@ -329,7 +329,7 @@ export class PresentationConfigurationV2Component
      */
     private createFormatterConfigurator() {
         const formatterDefinition = this.providedFormatters.find(
-            (formatter) =>
+            formatter =>
                 formatter.componentType ===
                 this.form.get("componentType")?.value
         );
@@ -367,15 +367,15 @@ export class PresentationConfigurationV2Component
 
         // allow by default RawFormatter which has null as dataType
         const sourceDataTypes: Record<string, boolean> = { null: true };
-        this._dataFields.forEach((f) => (sourceDataTypes[f.dataType] = true));
-        this._formatters = this.providedFormatters.filter((f) => {
+        this._dataFields.forEach(f => (sourceDataTypes[f.dataType] = true));
+        this._formatters = this.providedFormatters.filter(f => {
             // cast to array in case we have a single value
             const formatterDataTypes =
                 f.dataTypes.value instanceof Array
                     ? f.dataTypes.value
                     : [f.dataTypes.value];
 
-            return formatterDataTypes.some((v) => sourceDataTypes[v]);
+            return formatterDataTypes.some(v => sourceDataTypes[v]);
         });
         if (this.form) {
             this.createFormatterConfigurator();
@@ -387,7 +387,7 @@ export class PresentationConfigurationV2Component
 
         this.formattersRegistry.stateChanged$
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((formatters) => {
+            .subscribe(formatters => {
                 this.handleFormattersUpdate(formatters);
             });
     }
