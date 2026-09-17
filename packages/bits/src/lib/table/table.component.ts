@@ -23,6 +23,7 @@ import { Platform } from "@angular/cdk/platform";
 import {
     CdkVirtualScrollViewport,
     ViewportRuler,
+    CdkVirtualForOf,
 } from "@angular/cdk/scrolling";
 import {
     CDK_TABLE,
@@ -153,6 +154,7 @@ export class TableComponent<T>
     private stickyChangedSubscription: Subscription;
     private tableColumnsWidthSubscription: Subscription;
     @HostBinding("class.nui-table__table-fixed") layoutFixed = false;
+    @ContentChild(CdkVirtualForOf) public virtualFor?: CdkVirtualForOf<unknown>;
 
     private readonly virtualScrollViewport = inject(CdkVirtualScrollViewport, {
         optional: true,

@@ -146,6 +146,7 @@ export class ToolbarComponent
     private childrenSubscription: Subscription;
     private destructiveItems: any[];
     private destroy$: Subject<void> = new Subject<void>();
+    private moveToolbarItemsTimeout?: ReturnType<typeof setTimeout>;
     private _ariaOrientation?: "horizontal" | "vertical";
 
     constructor(
