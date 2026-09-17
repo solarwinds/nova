@@ -212,15 +212,18 @@ describe("ProportionalChartViewComponent", () => {
     });
 
     it("should update chart when data changes", () => {
-        host.data = mockData;
+        fixture.componentRef.setInput("data", mockData);
+
         fixture.detectChanges();
 
         const chartAssist1 = component.chartAssist;
 
-        host.data = [{ id: "x", name: "X", value: 100, color: "#fff" }];
+        fixture.componentRef.setInput("data", [
+            { id: "x", name: "X", value: 100, color: "#fff" },
+        ]);
+
         fixture.detectChanges();
 
-        // Chart assist may be rebuilt due to color changes
         expect(component.chartAssist).toBeTruthy();
     });
 

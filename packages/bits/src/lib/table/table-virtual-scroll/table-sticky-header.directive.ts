@@ -338,7 +338,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
                 })
             );
 
-        const dataStream$ = this.virtualFor.dataStream.pipe(
+        const dataStream$ = dataSource.pipe(
             // give CDK some time to render rows after a change
             delay(0, asyncScheduler),
             tap(() => this.updateNativeHeaderPlaceholder())
