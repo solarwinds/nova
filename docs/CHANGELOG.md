@@ -3,6 +3,10 @@
 ## [20.0.11] 📅 2026-09-16
 ### Fixes
 - Prettier formatting fixes across the project
+- `@nova-ui/bits` | Calendar navigation improvements
+- `@nova-ui/bits` | Improved tab accessibility by aligning tab and panel IDs, adding APG keyboard navigation with roving `tabindex`, exposing disabled states, and adding `ariaLabel` support. `nui-tab-heading` sets `aria-controls` when a controlled panel ID is provided through `ariaControls`.
+- `@nova-ui/bits` | Improved switch accessibility by enabling Enter key activation, correctly associating projected labels, preventing duplicate element IDs, and adding a localized fallback accessible name.
+- `@nova-ui/bits` | Improved date picker accessibility and keyboard navigation: added APG keyboard navigation (arrow keys, PageUp/PageDown, Home/End) across day, month, and year grids with roving `tabindex`, focus trapping in calendar overlay, focusable calendar toggle button with `aria-expanded` and WCAG touch target compliance, and fixed NVDA screen reader announcement issues.
 
 ## [20.0.10] 📅 2026-08-11
 ### Fixes
