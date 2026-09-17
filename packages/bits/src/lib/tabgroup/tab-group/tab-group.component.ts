@@ -82,14 +82,14 @@ export class TabGroupComponent
     }
 
     private setInitialActiveTab(): void {
-        const activeTab = this.tabs.find((tab) => tab.active);
-        const firstEnabledTab = this.tabs.find((tab) => !tab.disabled);
+        const activeTab = this.tabs.find(tab => tab.active);
+        const firstEnabledTab = this.tabs.find(tab => !tab.disabled);
 
         if (activeTab && !activeTab.disabled) {
             return;
         }
 
-        this.tabs.forEach((tab) => {
+        this.tabs.forEach(tab => {
             if (tab.active && tab !== firstEnabledTab) {
                 tab.active = false;
             }

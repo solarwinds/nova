@@ -4,8 +4,7 @@
             *ngFor="let tab of tabsetContent"
             [disabled]="tab.isDisabled"
             [tabId]="'horizontal-with-icons-only-' + tab.id"
-            [ariaLabel]="tab.title"
-        >
+            [ariaLabel]="tab.title">
             <div class="d-flex align-content-center">
                 <div class="d-inline-flex align-items-center">
                     <nui-icon
