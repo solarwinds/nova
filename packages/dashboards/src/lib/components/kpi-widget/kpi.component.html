@@ -12,7 +12,7 @@
     [margin]="widgetData?.margin ?? 2"
     [syncValuesBroker]="syncValuesBroker"
     [valueTemplate]="
-        configuration?.formatters?.Value ? formatterValueTpl : null
+        configuration?.formatters?.Value ? kpiContent : null
     "
     (tileClick)="onInteraction()"></nui-kpi-tile-view>
 

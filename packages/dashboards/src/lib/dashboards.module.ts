@@ -192,8 +192,9 @@ const entryComponents: IComponentWithLateLoadKey[] = [
 @NgModule({
     imports: [
         NuiDashboardsCommonModule,
+        Gridster,
+        GridsterItem,
         NuiDashboardViewsModule,
-        GridsterModule,
         NuiBusyModule,
         NuiButtonModule,
         NuiChartsModule,
