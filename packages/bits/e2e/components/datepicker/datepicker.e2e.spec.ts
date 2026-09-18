@@ -6,10 +6,10 @@ import { Atom } from "../../atom";
 import { Animations, Helpers, test, expect } from "../../setup";
 
 test.describe("USERCONTROL datepicker", () => {
-    const getTrimmedText = async (id: string) => {
-        const text = await Helpers.page.locator(`#${id}`).textContent();
-        return text?.trim() ?? "";
-    };
+    const getTrimmedText = async (id: string): Promise<string> =>
+        (
+            (await Atom.find<Atom>(Atom, id).getLocator().textContent()) ?? ""
+        ).trim();
 
     const activeDateValueId = "nui-demo-datepicker-active-date-value";
     const activeDateValueIdPreserved =
@@ -68,11 +68,6 @@ test.describe("USERCONTROL datepicker", () => {
             "nui-demo-datepicker-custom-date-format"
         );
     });
-
-    const getTrimmedText = async (id: string): Promise<string> =>
-        (
-            (await Atom.find<Atom>(Atom, id).getLocator().textContent()) ?? ""
-        ).trim();
 
     test("should show year in title and months in body upon click on title", async () => {
         const currentYear: string = moment().year().toString();
