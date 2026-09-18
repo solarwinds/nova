@@ -18,7 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Directive, HostListener, Input } from "@angular/core";
+import {
+    Directive,
+    ElementRef,
+    HostListener,
+    inject,
+    Input,
+} from "@angular/core";
 import { Subject } from "rxjs";
 
 @Directive({
@@ -31,6 +37,8 @@ export class DelayedMousePresenceDetectionDirective {
     @Input() delay: number = 500;
 
     private timeout: NodeJS.Timeout;
+
+    private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
     @HostListener("mouseenter") onHostMouseenter(): void {
         if (!this.enabled) {
@@ -46,6 +54,31 @@ export class DelayedMousePresenceDetectionDirective {
             return;
         }
         this.mousePresentSubject.next(true);
+    }
+
+    // Keyboard users never fire mouseenter, leaving the container overflow-hidden and arrow-key scrolling broken.
+    @HostListener("focusin") onHostFocusin(): void {
+        if (!this.enabled) {
+            return;
+        }
+        this.mousePresentSubject.next(true);
+    }
+
+    @HostListener("focusout", ["$event"]) onHostFocusout(
+        event: FocusEvent
+    ): void {
+        if (!this.enabled) {
+            return;
+        }
+
+        // Focus moving between elements inside the host still counts as present.
+        const relatedTarget = event.relatedTarget;
+        if (
+            !(relatedTarget instanceof HTMLElement) ||
+            !this.elementRef.nativeElement.contains(relatedTarget)
+        ) {
+            this.mousePresentSubject.next(false);
+        }
     }
 
     @HostListener("mouseleave") onHostMouseleave(): void {
