@@ -181,6 +181,33 @@ describe("components > ", () => {
 
                 expect(spy).toHaveBeenCalled();
             });
+
+            it("should not prevent default on space when skipSpace is enabled", () => {
+                const spaceEvent = {
+                    ...keyBoardEventMock,
+                    ...{ code: KEYBOARD_CODE.SPACE },
+                };
+                const spy = spyOn(spaceEvent, "preventDefault");
+                service.skipSpace = true;
+                service.popup.showing = true;
+
+                service.handleKeydown(spaceEvent as any);
+
+                expect(spy).not.toHaveBeenCalled();
+            });
+
+            it("should prevent default on space when skipSpace is disabled", () => {
+                const spaceEvent = {
+                    ...keyBoardEventMock,
+                    ...{ code: KEYBOARD_CODE.SPACE },
+                };
+                const spy = spyOn(spaceEvent, "preventDefault");
+                service.popup.showing = true;
+
+                service.handleKeydown(spaceEvent as any);
+
+                expect(spy).toHaveBeenCalled();
+            });
         });
         describe("setActiveItem", () => {
             it("should call keyboardEventsManager.setActiveItem method", () => {

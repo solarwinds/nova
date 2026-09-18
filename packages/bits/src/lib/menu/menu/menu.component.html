@@ -8,12 +8,12 @@
         #menuToggle
         nui-button
         nuiPopupToggle
+        [role]="'menu'"
         [toggleOnKey]="false"
-        [id]="menuTriggerId"
         [disabled]="isDisabled"
-        [attr.aria-expanded]="popup?.isOpen ? 'true' : 'false'"
-        [attr.aria-controls]="popup?.isOpen ? popupContentId : null"
-        aria-haspopup="menu"
+        [opened]="popup?.isOpen || false"
+        [ariaControls]="popup?.isOpen ? popupContentId : null"
+        [attr.aria-activedescendant]="popup?.isOpen ? activeDescendant : null"
         type="button"
         (blur)="onBlur($event)"
         [displayStyle]="displayStyle"
@@ -22,7 +22,7 @@
         [iconRight]="isTitlePresent()"
         class="menu-button no-shadow"
         [isEmpty]="!isTitlePresent()"
-        [attr.aria-label]="title || ariaLabel">
+        [ariaLabel]="menuAriaLabel">
         <span>{{ title }}</span>
     </button>
     <div popupAreaContent [id]="popupContentId" role="menu">
@@ -30,7 +30,7 @@
         <nui-menu-popup
             [itemsSource]="itemsSource"
             [size]="size"></nui-menu-popup>
-        } @if (!itemsSource) {
+        } @else {
         <ng-content></ng-content>
         }
     </div>

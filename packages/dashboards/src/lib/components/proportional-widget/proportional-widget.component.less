@@ -7,6 +7,9 @@
     }
 
     &__legend {
+        &:focus-visible {
+            .focus-outline();
+        }
         &--interactive {
             cursor: pointer !important;
         }

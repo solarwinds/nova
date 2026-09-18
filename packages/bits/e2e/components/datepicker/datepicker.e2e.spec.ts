@@ -6,6 +6,11 @@ import { Atom } from "../../atom";
 import { Animations, Helpers, test, expect } from "../../setup";
 
 test.describe("USERCONTROL datepicker", () => {
+    const getTrimmedText = async (id: string): Promise<string> =>
+        (
+            (await Atom.find<Atom>(Atom, id).getLocator().textContent()) ?? ""
+        ).trim();
+
     const activeDateValueId = "nui-demo-datepicker-active-date-value";
     const activeDateValueIdPreserved =
         "nui-demo-datepicker-active-date-value-preserve";
@@ -63,11 +68,6 @@ test.describe("USERCONTROL datepicker", () => {
             "nui-demo-datepicker-custom-date-format"
         );
     });
-
-    const getTrimmedText = async (id: string): Promise<string> =>
-        (
-            (await Atom.find<Atom>(Atom, id).getLocator().textContent()) ?? ""
-        ).trim();
 
     test("should show year in title and months in body upon click on title", async () => {
         const currentYear: string = moment().year().toString();
@@ -226,6 +226,7 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerMinMax.acceptText(
                 datepickerMinMax.formatDate(date, "en-US")
             );
+            await datepickerMinMax.isInputValid();
 
             // min date and larger dates can be selected
             date = moment(minDate);
@@ -329,6 +330,9 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerWithPreserve.toggle();
             const oldValue = await getTrimmedText(activeDateValueIdPreserved);
             await datepickerWithPreserve.selectDate(10);
+            await expect(
+                Atom.find<Atom>(Atom, activeDateValueIdPreserved).getLocator()
+            ).not.toHaveText(oldValue);
             const newValue = await getTrimmedText(activeDateValueIdPreserved);
 
             expect(newValue).not.toBe(oldValue);
@@ -340,6 +344,9 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerInline.selectDate(11);
             const oldValue = await getTrimmedText(activeDateValueId);
             await datepickerInline.selectDate(10);
+            await expect(
+                Atom.find<Atom>(Atom, activeDateValueId).getLocator()
+            ).not.toHaveText(oldValue);
             const newValue = await getTrimmedText(activeDateValueId);
 
             expect(newValue).not.toBe(oldValue);
@@ -403,17 +410,19 @@ test.describe("USERCONTROL datepicker", () => {
             const nextMonth = datepickerInline.getNextMonthTitle(currentMonth);
 
             await datepickerInline.goBack();
-            let updatedCurrentMonth =
-                await datepickerInline.getMonthFromTitle();
-            expect(updatedCurrentMonth).toEqual(previousMonth);
+            await expect(datepickerInline.getTitleText).toContainText(
+                previousMonth
+            );
 
             await datepickerInline.goNext();
-            updatedCurrentMonth = await datepickerInline.getMonthFromTitle();
-            expect(updatedCurrentMonth).toEqual(currentMonth);
+            await expect(datepickerInline.getTitleText).toContainText(
+                currentMonth
+            );
 
             await datepickerInline.goNext();
-            updatedCurrentMonth = await datepickerInline.getMonthFromTitle();
-            expect(updatedCurrentMonth).toEqual(nextMonth);
+            await expect(datepickerInline.getTitleText).toContainText(
+                nextMonth
+            );
         });
     });
 

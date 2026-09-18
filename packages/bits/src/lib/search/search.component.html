@@ -4,10 +4,11 @@
             class="sr-only"
             [attr.id]="resolvedInputId() + '-label'"
             [attr.for]="resolvedInputId()"
-            >{{ inputAriaLabel }}</label
+            >{{ ariaLabel() }}</label
         >
         <input
             class="nui-search__input-control form-control"
+            role="searchbox"
             [attr.id]="resolvedInputId()"
             [attr.name]="name()"
             type="text"
@@ -24,13 +25,12 @@
             @if (value()) {
             <button
                 nui-button
-                type="button"
+                type="reset"
                 [ariaLabel]="cancelAriaLabel"
                 [attr.aria-controls]="resolvedInputId()"
                 class="nui-search__button-cancel"
                 displayStyle="action"
                 icon="close"
-                (mousedown)="$event.preventDefault()"
                 (click)="onCancel()"></button>
             }
             <button

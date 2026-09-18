@@ -51,6 +51,9 @@
     z-index: 0;
     border-bottom: none;
     cursor: pointer;
+    &:focus-visible {
+        .focus-outline();
+    }
     &.disabled {
         cursor: auto;
     }

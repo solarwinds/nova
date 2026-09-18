@@ -136,6 +136,11 @@ export class TextboxNumberComponent
     @Input() public readonly = false;
 
     /**
+     * Unique id for the control.
+     */
+    @Input() public id: string;
+
+    /**
      * Step by which the value are increased/decreased
      * when clicking on up/down buttons
      */

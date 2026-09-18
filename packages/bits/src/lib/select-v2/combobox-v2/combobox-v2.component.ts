@@ -117,10 +117,19 @@ export class ComboboxV2Component
     }
 
     /** Value of the Combobox Input */
-    public inputValue: string | number;
+    public inputValue: string | number = "";
 
     /** Text of the Clear Button tooltip */
-    public clearValueButtonTooltip: string;
+    public clearValueButtonTooltip: string = "";
+
+    /**
+     * Accessible name for the combobox input. Falls back to a generic localized
+     * label so the input always has an accessible name (e.g. multiselect with
+     * selected chips and no placeholder).
+     */
+    public get accessibleLabel(): string | null {
+        return super.accessibleLabel ?? $localize`Combobox`;
+    }
 
     constructor(
         elRef: ElementRef,
@@ -130,6 +139,7 @@ export class ComboboxV2Component
         public liveAnnouncer: LiveAnnouncer
     ) {
         super(optionKeyControlService, cdRef, elRef, liveAnnouncer);
+        this.optionKeyControlService.skipSpace = true;
     }
 
     public ngAfterContentInit(): void {

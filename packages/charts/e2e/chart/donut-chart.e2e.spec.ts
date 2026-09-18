@@ -53,6 +53,25 @@ test.describe("Donut chart", () => {
 
         pageObject = new DonutChartTestPage();
 
+        // NOTE: the arcs are rendered asynchronously, so wait until all of them are present
+        await expect
+            .poll(
+                async () =>
+                    (
+                        await pageObject.chart.getAllVisibleDataSeries(
+                            RadialSeriesAtom as any
+                        )
+                    ).length
+            )
+            .toBeGreaterThanOrEqual(3);
+
+        allSeries = (await pageObject.chart.getAllVisibleDataSeries(
+            RadialSeriesAtom as any
+        )) as unknown as RadialSeriesAtom[];
+        blueArc = allSeries[0];
+        pinkArc = allSeries[1];
+        lilacArc = allSeries[2];
+
         content = DonutChartContentBooster.getContentElement(pageObject.chart);
         textPage = content.locator(".nui-text-page");
         textSecondary = content.locator(".nui-text-secondary");

@@ -15,6 +15,7 @@
                 [checked]="checked"
                 [disabled]="disabled"
                 [attr.aria-label]="ariaLabel || null"
+                [attr.aria-labelledby]="ariaLabelledby || null"
                 [attr.aria-checked]="checked"
                 (change)="changeHandler()"
                 (click)="onInputClick($event)" />

@@ -95,6 +95,14 @@ export class DateTimePickerComponent
         }
     }
 
+    public get dateAriaLabel(): string {
+        return $localize`${this._ariaLabel} date`;
+    }
+
+    public get timeAriaLabel(): string {
+        return $localize`${this._ariaLabel} time`;
+    }
+
     @ViewChild("nuiDatetimePicker", { static: true })
     public codeElement: ElementRef;
     /** Callback to invoke on model change */

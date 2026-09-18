@@ -36,6 +36,11 @@
 
     &-input {
         display: flex;
+        outline: none;
+
+        &:focus-visible {
+            .focus-outline();
+        }
 
         &__box {
             display: flex;

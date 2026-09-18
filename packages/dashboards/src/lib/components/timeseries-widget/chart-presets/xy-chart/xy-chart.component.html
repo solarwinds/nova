@@ -65,8 +65,9 @@
                     icon="remove"
                     type="button"
                     displayStyle="action"
-                    (click)="removeMetric(summarySerie.id)"
-                    displayStyle="action"></button>
+                    aria-label="Remove metric"
+                    i18n-aria-label
+                    (click)="removeMetric(summarySerie.id)"></button>
                 }
             </nui-legend-series>
             } @for ( legendSeries of chartAssist.legendSeriesSet; track
@@ -109,6 +110,7 @@
                     class="description-container d-flex nui-text-small justify-content-center">
                     <div class="descriptions">
                         @if (!legendSeries.link) {
+                        <!-- TODO: NUI-6288 - drill-down sits inside the nui-legend-series (role="checkbox") -->
                         <div
                             class="description description-primary"
                             [ngClass]="{
@@ -118,7 +120,7 @@
                             [title]="legendSeries.legendDescriptionPrimary">
                             {{ legendSeries.legendDescriptionPrimary }}
                         </div>
-                        } @if (legendSeries.link) {
+                        } @else {
                         <a
                             class="description description-primary nui-text-link-small link"
                             (click)="$event.stopPropagation()"
@@ -127,15 +129,15 @@
                             [title]="legendSeries.legendDescriptionPrimary">
                             {{ legendSeries.legendDescriptionPrimary }}
                         </a>
-                        } @if ( !legendSeries.secondaryLink &&
-                        !widgetData.summarySerie ) {
+                        } @if (!legendSeries.secondaryLink &&
+                        !widgetData.summarySerie) {
                         <div
                             class="description description-secondary"
                             [title]="legendSeries.legendDescriptionSecondary">
                             {{ legendSeries.legendDescriptionSecondary }}
                         </div>
-                        } @if ( legendSeries.secondaryLink &&
-                        !widgetData.summarySerie ) {
+                        } @else if (legendSeries.secondaryLink &&
+                        !widgetData.summarySerie) {
                         <a
                             class="description description-secondary nui-text-link-small link"
                             (click)="$event.stopPropagation()"
@@ -149,11 +151,13 @@
                     @if (legendSeries.realtime) {
                     <nui-icon
                         icon="fast-poll"
-                        iconColor="primary-blue"></nui-icon>
+                        iconColor="primary-blue"
+                        aria-hidden="true"></nui-icon>
                     } @if (legendSeries.transformer) {
                     <nui-icon
                         icon="performance"
-                        iconColor="primary-blue"></nui-icon>
+                        iconColor="primary-blue"
+                        aria-hidden="true"></nui-icon>
                     }
                 </div>
                 @if (displayLegendMenu()) {

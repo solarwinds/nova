@@ -41,7 +41,7 @@ export class CheckboxAtom extends Atom {
         !(await this.getInputElement.isEnabled());
 
     public isChecked = async (): Promise<boolean> =>
-        this.getInputElement.isChecked();
+        (await this.getInputElement.getAttribute("checked")) === "true";
 
     public toBeChecked = async (): Promise<void> => {
         await expect(this.getInputElement).toBeChecked();

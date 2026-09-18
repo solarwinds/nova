@@ -46,7 +46,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
         <a
             class="nui-menu-item__action nui-menu-item__link"
             href="#"
-            role="button"
+            role="menuitem"
             (click)="handleClick($event)"
             (keydown.enter)="handleClick($event)"
             (keydown.space)="handleClick($event)"
@@ -69,7 +69,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     ],
     styleUrls: ["./menu-action.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: { role: "menuitem" },
+    host: { role: "none" },
     standalone: false,
 })
 export class MenuActionComponent extends MenuItemBaseComponent {

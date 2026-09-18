@@ -53,6 +53,8 @@ test.describe("USERCONTROL Combobox v2 >", () => {
             test.beforeEach(async () => {
                 await comboboxError.waitElementVisible();
                 await Helpers.pressKey("Tab");
+                await comboboxError.toBeOpened();
+                await expect(comboboxError.activeOption).toHaveCount(1);
             });
 
             test.afterEach(async () => {
@@ -233,29 +235,16 @@ test.describe("USERCONTROL Combobox v2 >", () => {
                                 .first()
                                 .boundingBox()
                         )?.width;
-                        const toggleWidth = (
-                            await comboboxCustomControl.toggleButton
-                                .first()
-                                .boundingBox()
-                        )?.width;
-
-                        if (
-                            comboboxWidth == null ||
-                            overlayWidth == null ||
-                            toggleWidth == null
-                        ) {
+                        if (comboboxWidth == null || overlayWidth == null) {
                             return false;
                         }
-
-                        const widthDifference = Math.abs(
-                            Math.round(comboboxWidth) - Math.round(overlayWidth)
+                        return (
+                            Math.round(comboboxWidth) ===
+                            Math.round(overlayWidth)
                         );
-
-                        return widthDifference <= Math.ceil(toggleWidth);
                     })
                     .toBe(true);
             };
-
             test("width should match", async () => {
                 await Helpers.page.locator("#toggle").click();
                 await checkComboboxOverlayWidthEquality();
@@ -363,8 +352,10 @@ test.describe("USERCONTROL Combobox v2 >", () => {
             test("it should deactivate active option", async () => {
                 await Helpers.page.locator("#show").click();
                 await comboboxCustomControl.selectFirst(3);
-                await comboboxCustomControl.toggleButton.click();
-                await comboboxCustomControl.input.press("ArrowLeft");
+                await expect(comboboxCustomControl.chips).toHaveCount(3);
+                await expect(comboboxCustomControl.activeOption).toHaveCount(1);
+                await comboboxCustomControl.input.focus();
+                await Helpers.pressKey("ArrowLeft");
 
                 await expect
                     .poll(() => comboboxCustomControl.activeOption.count())

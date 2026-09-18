@@ -149,6 +149,7 @@ test.describe("USERCONTROL Wizard >", () => {
         });
 
         test("should display title similar to wizard step title", async () => {
+            await expect(wizardStep.stepTitle).toBeVisible();
             await expect(wizard.headerSteps.nth(0)).toContainText(
                 await wizardStep.getStepTitle()
             );
@@ -279,17 +280,24 @@ test.describe("USERCONTROL Wizard >", () => {
 
     test.describe("wizard constant height >", () => {
         test("should properly set wizard container height via input", async () => {
-            const height = await wizardConstantHeight.getContainerHeight();
-            expect(height).toEqual(200);
+            await expect(wizardConstantHeight.container).toHaveCSS(
+                "height",
+                "200px"
+            );
         });
 
         test("wizard container height should remain same on all steps", async () => {
-            expect(await wizardConstantHeight.getContainerHeight()).toEqual(
-                200
+            await expect(wizardConstantHeight.container).toHaveCSS(
+                "height",
+                "200px"
             );
             await wizardConstantHeight.next();
-            expect(await wizardConstantHeight.getContainerHeight()).toEqual(
-                200
+            await expect(wizardConstantHeight.headerSteps.nth(1)).toHaveClass(
+                /\bnui-wizard__header-step--active\b/
+            );
+            await expect(wizardConstantHeight.container).toHaveCSS(
+                "height",
+                "200px"
             );
         });
     });
