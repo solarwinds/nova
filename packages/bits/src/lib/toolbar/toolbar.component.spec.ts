@@ -20,6 +20,7 @@
 
 import {
     Component,
+    Input,
     NO_ERRORS_SCHEMA,
     TRANSLATIONS,
     TRANSLATIONS_FORMAT,
@@ -49,7 +50,7 @@ import { MenuComponent } from "../menu";
 @Component({
     selector: "nui-test-cmp",
     template: `
-        <nui-toolbar>
+        <nui-toolbar [ariaLabel]="ariaLabel" [ariaLabelledBy]="ariaLabelledBy" [ariaOrientation]="ariaOrientation">
             <nui-toolbar-group title="g1">
                 <nui-toolbar-item
                     type="primary"
@@ -81,6 +82,10 @@ import { MenuComponent } from "../menu";
     standalone: false,
 })
 class TestWrapperComponent {
+    @Input() public ariaLabel = "";
+    @Input() public ariaLabelledBy = "";
+    @Input() public ariaOrientation = "";
+
     public firstItemDisabled = false;
     public menuItemDisabled = false;
 }
@@ -236,24 +241,33 @@ describe("components >", () => {
             });
 
             it("should render aria-label when ariaLabel is set", () => {
-                component.ariaLabel = "Main toolbar";
+                fixture.componentRef.setInput("ariaLabel", "Main toolbar");
+
                 fixture.detectChanges();
+
                 expect(toolbarEl.getAttribute("aria-label")).toBe(
                     "Main toolbar"
                 );
             });
 
             it("should render aria-labelledby when ariaLabelledBy is set", () => {
-                component.ariaLabelledBy = "toolbar-heading";
+                fixture.componentRef.setInput(
+                    "ariaLabelledBy",
+                    "toolbar-heading"
+                );
+
                 fixture.detectChanges();
+
                 expect(toolbarEl.getAttribute("aria-labelledby")).toBe(
                     "toolbar-heading"
                 );
             });
 
             it("should render aria-orientation when ariaOrientation is set", () => {
-                component.ariaOrientation = "vertical";
+                fixture.componentRef.setInput("ariaOrientation", "vertical");
+
                 fixture.detectChanges();
+
                 expect(toolbarEl.getAttribute("aria-orientation")).toBe(
                     "vertical"
                 );
@@ -315,27 +329,31 @@ describe("components >", () => {
         describe("disabled items >", () => {
             it("should assign tabindex 0 to the first enabled item when the first item is disabled", () => {
                 const wrapper = fixture.componentInstance;
+
                 wrapper.firstItemDisabled = true;
-                fixture.detectChanges();
-                component.splitToolbarItems();
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
 
                 const buttons =
                     fixture.debugElement.nativeElement.querySelectorAll(
                         "button[nui-button]"
                     );
+
                 expect(buttons[0].getAttribute("tabindex")).toBe("-1");
                 expect(buttons[1].getAttribute("tabindex")).toBe("0");
             });
 
             it("should pass the disabled state of a menu item to nui-menu-action in the overflow menu", () => {
                 const wrapper = fixture.componentInstance;
+
                 wrapper.menuItemDisabled = true;
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
 
                 const menuActions = fixture.debugElement.queryAll(
                     By.css("nui-menu-action")
                 );
+
                 expect((menuActions[0].nativeElement as any).disabled).toBe(
                     true
                 );

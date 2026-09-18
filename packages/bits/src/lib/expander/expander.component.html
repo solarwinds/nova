@@ -30,6 +30,7 @@
                 ">
                 <ng-content select="[nuiExpanderHeader]"></ng-content>
             </div>
+            @if (isCustomHeaderContentEmpty) {
             <div
                 class="nui-expander__header-content"
                 [class.nui-expander__header-content--with-icon]="!!icon">
@@ -40,6 +41,7 @@
                 }
                 <span class="nui-expander__header-title">{{ header }}</span>
             </div>
+            }
             <span [id]="'nui-expander-label-' + uniqueId" class="sr-only">
                 {{ ariaLabel || header || defaultAriaLabel }}
             </span>

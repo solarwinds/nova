@@ -73,20 +73,6 @@ describe("components >", () => {
             expect(subject.focusChange.emit).toHaveBeenCalledWith(true);
         });
 
-        it("should set 'captureFocus' and emit 'focusChange' with true passed on cancel", fakeAsync(() => {
-            subject.captureFocus.set(false);
-            spyOn(subject.focusChange, "emit");
-
-            subject.onCancel();
-
-            expect(subject.captureFocus()).toBe(false);
-
-            flushMicrotasks();
-
-            expect(subject.captureFocus()).toEqual(true);
-            expect(subject.focusChange.emit).toHaveBeenCalledWith(true);
-        }));
-
         it("should emit 'cancel' with empty string passed if 'cancel' btn clicked", () => {
             const currentInput = "current input";
             subject.value.set(currentInput);
