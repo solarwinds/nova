@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ElementRef } from "@angular/core";
 import { fakeAsync, flush } from "@angular/core/testing";
 import { Subject } from "rxjs";
 
@@ -25,9 +26,13 @@ import { DelayedMousePresenceDetectionDirective } from "./delayed-mouse-presence
 
 describe("TableHideScrollBarDirective", () => {
     let directive: DelayedMousePresenceDetectionDirective;
+    let nativeElement: HTMLElement;
 
     beforeEach(() => {
-        directive = new DelayedMousePresenceDetectionDirective();
+        nativeElement = document.createElement("div");
+        directive = new DelayedMousePresenceDetectionDirective({
+            nativeElement,
+        } as ElementRef<HTMLElement>);
         directive.enabled = true;
         directive.mousePresentSubject = new Subject<boolean>();
     });
@@ -50,4 +55,50 @@ describe("TableHideScrollBarDirective", () => {
         directive.onHostMouseleave();
         expect(nextSpy).toHaveBeenCalledWith(false);
     }));
+
+    it("should return back true on the subject on focusin", () => {
+        const nextSpy = spyOn(directive.mousePresentSubject, "next");
+        directive.onHostFocusin();
+        expect(nextSpy).toHaveBeenCalledWith(true);
+    });
+
+    it("should return back false on the subject on focusout when relatedTarget is outside the host element", () => {
+        const nextSpy = spyOn(directive.mousePresentSubject, "next");
+        directive.onHostFocusout(
+            new FocusEvent("focusout", {
+                relatedTarget: document.createElement("span"),
+            })
+        );
+        expect(nextSpy).toHaveBeenCalledWith(false);
+    });
+
+    it("should return back false on the subject on focusout when relatedTarget is null", () => {
+        const nextSpy = spyOn(directive.mousePresentSubject, "next");
+        directive.onHostFocusout(
+            new FocusEvent("focusout", { relatedTarget: null })
+        );
+        expect(nextSpy).toHaveBeenCalledWith(false);
+    });
+
+    it("should NOT return false on the subject on focusout when relatedTarget is still inside the host element", () => {
+        const nextSpy = spyOn(directive.mousePresentSubject, "next");
+        const childElement = document.createElement("span");
+        nativeElement.appendChild(childElement);
+        directive.onHostFocusout(
+            new FocusEvent("focusout", { relatedTarget: childElement })
+        );
+        expect(nextSpy).not.toHaveBeenCalled();
+    });
+
+    it("should not update the subject when disabled on focusin or focusout", () => {
+        const nextSpy = spyOn(directive.mousePresentSubject, "next");
+        directive.enabled = false;
+        directive.onHostFocusin();
+        directive.onHostFocusout(
+            new FocusEvent("focusout", {
+                relatedTarget: document.createElement("span"),
+            })
+        );
+        expect(nextSpy).not.toHaveBeenCalled();
+    });
 });

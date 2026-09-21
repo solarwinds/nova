@@ -4,6 +4,7 @@
 
 ### Fixes
 
+- `@nova-ui/dashboards` | Fixed regression in keyboard scrolling in Modern Dashboard table widgets
 - Prettier fix
 
 ## [21.0.3] 📅 2026-08-04
