@@ -25,13 +25,14 @@
             @if (value()) {
             <button
                 nui-button
-                type="reset"
+                type="button"
                 [ariaLabel]="cancelAriaLabel"
                 [attr.aria-controls]="resolvedInputId()"
                 class="nui-search__button-cancel"
                 displayStyle="action"
                 icon="close"
-                (click)="onCancel()"></button>
+                (click)="onCancel()"
+                (mousedown)="$event.preventDefault()"></button>
             }
             <button
                 nui-button
