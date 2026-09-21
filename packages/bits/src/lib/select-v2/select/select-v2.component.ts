@@ -68,9 +68,8 @@ import { OptionKeyControlService } from "../option-key-control.service";
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        "class": "nui-select-v2",
-        "role": "button",
-        "[attr.aria-label]": "accessibleLabel",
+        class: "nui-select-v2",
+        role: "none",
     },
     standalone: false,
 })
@@ -141,19 +140,13 @@ export class SelectV2Component
     /** Sets value to the model */
     public writeValue(value: OptionValueType | OptionValueType[]): void {
         super.writeValue(value);
-        if (!this.multiselect) {
-            this.defineDisplayText();
-        }
+        this.defineDisplayText();
         this.cdRef.markForCheck();
     }
 
     /** Checks whether value of the Select is empty */
     public get isEmpty(): boolean {
         return !this.getLastSelectedOption();
-    }
-
-    public get accessibleLabel(): string | null {
-        return this.ariaLabel || this.displayText || this.placeholder || null;
     }
 
     /**
