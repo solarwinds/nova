@@ -78,11 +78,13 @@ import { InputValueTypes } from "../types";
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
-        "class": "nui-combobox-v2",
-        "role": "combobox",
-        "[attr.aria-expanded]": "isDropdownOpen || false",
-        "aria-haspopup": "listbox",
-        "aria-owns": "nui-overlay",
+        class: "nui-combobox-v2",
+        // TODO: NUI-6293
+        // The host is presentational; the inner <input> carries the ARIA 1.2
+        // combobox semantics (role="combobox" + aria-controls pointing to the
+        // listbox overlay). Keeping the host as role="none" avoids a nested,
+        // redundant combobox role and the aria-required-attr violation it caused.
+        role: "none",
     },
     standalone: false,
 })

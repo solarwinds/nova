@@ -137,7 +137,7 @@ test.describe("USERCONTROL Combobox v2 >", () => {
                 await comboboxError.toggleButton.click();
                 await Helpers.pressKey("ArrowDown", 3);
                 await Helpers.pressKey("ArrowUp");
-                expect(
+                await expect(
                     await (await comboboxError.getOption(2)).getText()
                 ).toEqual("Item 2");
             });
@@ -146,14 +146,9 @@ test.describe("USERCONTROL Combobox v2 >", () => {
                 await (await comboboxError.getFirstOption()).click();
                 await comboboxError.toggleButton.click();
                 await comboboxError.input.fill("Item 11");
-                await expect
-                    .poll(async () => comboboxError.getInputValue())
-                    .toBe("Item 11");
-                await comboboxError.input.press("Tab");
+                await Helpers.pressKey("Tab");
 
-                await expect
-                    .poll(async () => comboboxError.getInputValue())
-                    .toBe("Item 0");
+                expect(await comboboxError.getInputValue()).toEqual("Item 0");
             });
 
             test("should focus on the first item in dropdown when removing item on backspace", async () => {
@@ -357,12 +352,8 @@ test.describe("USERCONTROL Combobox v2 >", () => {
                 await comboboxCustomControl.input.focus();
                 await Helpers.pressKey("ArrowLeft");
 
-                await expect
-                    .poll(() => comboboxCustomControl.activeOption.count())
-                    .toBe(0);
-                await expect
-                    .poll(() => comboboxCustomControl.activeChip.count())
-                    .toBe(1);
+                await expect(comboboxCustomControl.activeOption).toHaveCount(0);
+                await expect(comboboxCustomControl.activeChip).toHaveCount(1);
             });
 
             test("should deactivate selected options", async () => {

@@ -146,7 +146,7 @@ test.describe("USERCONTROL Select V2 >", () => {
                 const option5 = await selectErrorState.getOption(5);
                 await option5.toBeActive();
 
-                await input.press("ArrowUp");
+                await Helpers.page.keyboard.press("ArrowUp");
                 const option4 = await selectErrorState.getOption(4);
                 await option4.toBeActive();
             });

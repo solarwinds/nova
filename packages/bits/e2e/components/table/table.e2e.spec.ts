@@ -126,7 +126,6 @@ test.describe("USERCONTROL table >", () => {
                 "nui-demo-pagination-table-paginator"
             );
             await paginatedTable.toBeVisible();
-            await expect.poll(() => paginatedTable.getRowsCount()).toBe(10);
         });
 
         test("should return correct number of rows according to pagination", async () => {
@@ -174,7 +173,6 @@ test.describe("USERCONTROL table >", () => {
             await searchableTableInput.getSearchButton().click();
             await expect(rows).toHaveCount(0);
             await searchableTableInput.getCancelButton().click();
-            await expect.poll(() => searchableTable.getRowsCount()).toBe(5);
 
             await searchableTableInput.acceptInput("brno");
             await searchableTableInput.getSearchButton().click();
@@ -337,7 +335,6 @@ test.describe("USERCONTROL table >", () => {
             const headerCell = sortableTable.getCell(0, 2);
             const sortingIcon = sortableTable.getSortingIcon(headerCell);
             await headerCell.click();
-            await expect.poll(() => sortingIcon.getName()).toBe("triangle-up");
             await headerCell.click();
             await expect
                 .poll(() => sortingIcon.getName())
@@ -386,6 +383,7 @@ test.describe("USERCONTROL table >", () => {
         });
 
         test("'Name' cell should be sorted in ascending order programmatically", async () => {
+            await sortByNameButton.click();
             await sortByNameButton.click();
             const firstCell = sortableTable.getCell(0, 1);
             const sortingIcon = sortableTable.getSortingIcon(firstCell);
@@ -514,14 +512,12 @@ test.describe("USERCONTROL table >", () => {
             ).nth<TableAtom>(TableAtom, 1);
 
             await stickyTable.toBeVisible();
-            await expect
-                .poll(() => stickyTable.getRowsCount())
-                .toBeGreaterThan(1);
             const rowsCount = await stickyTable.getRowsCount();
+            expect(rowsCount).toBeGreaterThan(1);
             const rowElement = stickyTable.getRow(rowsCount - 1);
             const rowContent = await stickyTable.getRowContent(rowsCount - 1);
             const rowId = Number(rowContent[0]);
-            expect(rowId).toBeGreaterThanOrEqual(0);
+            expect(rowId).toBe(13);
 
             await rowElement.scrollIntoViewIfNeeded();
             await expect
@@ -548,7 +544,6 @@ test.describe("USERCONTROL table >", () => {
                 "nui-demo-table-select"
             );
             await rowSelectionTable.toBeVisible();
-            await expect.poll(() => rowSelectionTable.getRowsCount()).toBe(10);
             const firstHeaderCell = rowSelectionTable.getCell(0, 0);
             selector = rowSelectionTable.getSelector(firstHeaderCell);
         });

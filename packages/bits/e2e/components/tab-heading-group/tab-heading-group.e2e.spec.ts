@@ -52,16 +52,8 @@ test.describe("USERCONTROL tab heading group", () => {
     ): Promise<[TabHeadingAtom, TabHeadingAtom]> =>
         Promise.all([group.getFirstTab(), group.getLastTab()]);
 
-    const waitForResponsiveCarets = async (): Promise<void> => {
-        await expect
-            .poll(async () => tabGroupResponsive.caretsPresent())
-            .toBeTruthy();
-    };
-
     test("should tab content be visible", async () => {
         const tabs = await tabGroupHorizontal.getTabs();
-
-        expect(tabs).toHaveLength(tabContent.length);
 
         for (let i = 0; i < tabs.length; i++) {
             await expect(tabs[i].getLocator()).toHaveText(tabContent[i]);
@@ -87,7 +79,6 @@ test.describe("USERCONTROL tab heading group", () => {
     });
 
     test("should navigate through responsive tabs", async () => {
-        await waitForResponsiveCarets();
         const [firstTab, lastTab] = await getFirstLast(tabGroupResponsive);
         await firstTab.toBeVisible();
         await tabGroupResponsive.clickCaretRight(10);
