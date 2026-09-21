@@ -146,7 +146,7 @@ export class SearchComponent implements IFilterPub {
         this.value.set("");
         this.cancel.emit(this.value());
         this.captureFocus.set(false);
-        queueMicrotask(() => {
+        setTimeout(() => {
             this.captureFocus.set(true);
             this.focusChange.emit(true);
         });
