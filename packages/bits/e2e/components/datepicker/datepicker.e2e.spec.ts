@@ -263,6 +263,7 @@ test.describe("USERCONTROL datepicker", () => {
             await datepickerMinMax.acceptText(
                 datepickerMinMax.formatDate(date, "en-US")
             );
+            await datepickerMinMax.isInputValid();
 
             // max date and smaller dates can be selected
             date = moment(maxDate);
