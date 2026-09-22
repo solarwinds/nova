@@ -76,9 +76,8 @@
             <div
                 class="d-flex flex-column pr-5"
                 *ngFor="let status of iconStatuses">
-                {{ status
-
-                }}<nui-icon icon="add" status="{{ status }}"></nui-icon>
+                {{ status }}
+                <nui-icon icon="add" status="{{ status }}"></nui-icon>
             </div>
         </div>
         <hr />
@@ -91,9 +90,8 @@
             <div
                 class="d-flex flex-column pr-5"
                 *ngFor="let status of iconStatuses">
-                {{ status
-
-                }}<nui-icon
+                {{ status }}
+                <nui-icon
                     icon="add"
                     status="up"
                     childStatus="{{ status }}"></nui-icon>
