@@ -100,6 +100,7 @@ describe("components >", () => {
 
         it("should expose the disabled state to assistive technology", () => {
             subject.disabled = true;
+            componentFixture.changeDetectorRef.markForCheck();
             componentFixture.detectChanges();
 
             const tab =
@@ -107,6 +108,7 @@ describe("components >", () => {
             expect(tab.getAttribute("aria-disabled")).toBe("true");
 
             subject.disabled = false;
+            componentFixture.changeDetectorRef.markForCheck();
             componentFixture.detectChanges();
             expect(tab.getAttribute("aria-disabled")).toBeNull();
         });

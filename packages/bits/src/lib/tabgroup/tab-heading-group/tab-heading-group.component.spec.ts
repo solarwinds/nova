@@ -246,7 +246,9 @@ describe("components >", () => {
             });
         }));
 
-        it("should relate headings to consumer-owned panels", () => {
+        it("should relate headings to consumer-owned panels", async () => {
+            componentFixture.detectChanges();
+            await componentFixture.whenStable();
             componentFixture.detectChanges();
 
             const tab =
@@ -261,7 +263,9 @@ describe("components >", () => {
             expect(panel.getAttribute("aria-labelledby")).toBe(tab.id);
         });
 
-        it("should keep only the active tab in the tab sequence", () => {
+        it("should keep only the active tab in the tab sequence", async () => {
+            componentFixture.detectChanges();
+            await componentFixture.whenStable();
             componentFixture.detectChanges();
 
             const tabs =
@@ -271,7 +275,9 @@ describe("components >", () => {
             expect(tabs[1].tabIndex).toBe(-1);
         });
 
-        it("should move focus with arrows, Home, and End including wrap-around", () => {
+        it("should move focus with arrows, Home, and End including wrap-around", async () => {
+            componentFixture.detectChanges();
+            await componentFixture.whenStable();
             componentFixture.detectChanges();
 
             const tabs =
@@ -325,9 +331,12 @@ describe("components >", () => {
             expect(document.activeElement).toBe(tabs[1]);
         });
 
-        it("should skip disabled tabs during arrow navigation", () => {
+        it("should skip disabled tabs during arrow navigation", async () => {
             subject.addTab(true); // Tab 3 (disabled)
             subject.addTab(false); // Tab 4 (enabled)
+            componentFixture.changeDetectorRef.markForCheck();
+            componentFixture.detectChanges();
+            await componentFixture.whenStable();
             componentFixture.detectChanges();
 
             const tabs =
@@ -353,8 +362,11 @@ describe("components >", () => {
             expect(document.activeElement).toBe(tabs[1]);
         });
 
-        it("should navigate vertically with ArrowDown and ArrowUp", () => {
+        it("should navigate vertically with ArrowDown and ArrowUp", async () => {
             subject.isVertical = true;
+            componentFixture.changeDetectorRef.markForCheck();
+            componentFixture.detectChanges();
+            await componentFixture.whenStable();
             componentFixture.detectChanges();
 
             const tabs =
@@ -387,10 +399,12 @@ describe("components >", () => {
             expect(document.activeElement).toBe(tabs[1]);
         });
 
-        it("should generate an id for a heading without one", () => {
+        it("should generate an id for a heading without one", async () => {
             const generatedFixture = TestBed.createComponent(
                 TestGeneratedTabHeadingComponent
             );
+            generatedFixture.detectChanges();
+            await generatedFixture.whenStable();
             generatedFixture.detectChanges();
 
             const tabs =
@@ -419,10 +433,12 @@ describe("components >", () => {
             });
         });
 
-        it("should select the first enabled heading when the first heading is disabled", () => {
+        it("should select the first enabled heading when the first heading is disabled", async () => {
             const disabledFixture = TestBed.createComponent(
                 TestFirstDisabledTabHeadingComponent
             );
+            disabledFixture.detectChanges();
+            await disabledFixture.whenStable();
             disabledFixture.detectChanges();
 
             const tabs =
@@ -435,10 +451,12 @@ describe("components >", () => {
             expect(tabs[1].tabIndex).toBe(0);
         });
 
-        it("should leave all headings inactive when every heading is disabled", () => {
+        it("should leave all headings inactive when every heading is disabled", async () => {
             const disabledFixture = TestBed.createComponent(
                 TestAllDisabledTabHeadingComponent
             );
+            disabledFixture.detectChanges();
+            await disabledFixture.whenStable();
             disabledFixture.detectChanges();
 
             const tabs =
