@@ -44,5 +44,101 @@ describe("components >", () => {
             subject.selectTab();
             expect(subject.selected.emit).toHaveBeenCalled();
         });
+
+        it("should emit one event when activated with Enter or Space", () => {
+            spyOn(subject.selected, "emit");
+            componentFixture.detectChanges();
+
+            const tab =
+                componentFixture.nativeElement.querySelector("[role='tab']");
+
+            const enterEvent = new KeyboardEvent("keydown", {
+                key: "Enter",
+                code: "Enter",
+                bubbles: true,
+                cancelable: true,
+            });
+            const spaceEvent = new KeyboardEvent("keydown", {
+                key: " ",
+                code: "Space",
+                bubbles: true,
+                cancelable: true,
+            });
+            tab.dispatchEvent(enterEvent);
+            tab.dispatchEvent(spaceEvent);
+
+            expect(subject.selected.emit).toHaveBeenCalledTimes(2);
+            expect(enterEvent.defaultPrevented).toBeTrue();
+            expect(spaceEvent.defaultPrevented).toBeTrue();
+        });
+
+        it("should not emit for unrelated or disabled keyboard input", () => {
+            spyOn(subject.selected, "emit");
+            componentFixture.detectChanges();
+
+            const tab =
+                componentFixture.nativeElement.querySelector("[role='tab']");
+            tab.dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    key: "ArrowRight",
+                    code: "ArrowRight",
+                    bubbles: true,
+                })
+            );
+            subject.disabled = true;
+            componentFixture.detectChanges();
+            tab.dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    key: "Enter",
+                    code: "Enter",
+                    bubbles: true,
+                })
+            );
+
+            expect(subject.selected.emit).not.toHaveBeenCalled();
+        });
+
+        it("should expose the disabled state to assistive technology", () => {
+            subject.disabled = true;
+            componentFixture.detectChanges();
+
+            const tab =
+                componentFixture.nativeElement.querySelector("[role='tab']");
+            expect(tab.getAttribute("aria-disabled")).toBe("true");
+
+            subject.disabled = false;
+            componentFixture.detectChanges();
+            expect(tab.getAttribute("aria-disabled")).toBeNull();
+        });
+
+        it("should expose an explicit id without assuming a controlled panel", () => {
+            subject.tabId = "overview";
+            componentFixture.detectChanges();
+
+            const tab =
+                componentFixture.nativeElement.querySelector("[role='tab']");
+            expect(tab.id).toBe("tab-overview");
+            expect(tab.getAttribute("aria-controls")).toBeNull();
+        });
+
+        it("should expose an explicitly provided controlled panel", () => {
+            subject.tabId = "overview";
+            subject.ariaControls = subject.panelId;
+            componentFixture.detectChanges();
+
+            const tab =
+                componentFixture.nativeElement.querySelector("[role='tab']");
+            expect(tab.id).toBe("tab-overview");
+            expect(tab.getAttribute("aria-controls")).toBe("panel-overview");
+        });
+
+        it("should expose an accessible name when provided", () => {
+            subject.ariaLabel = "Settings";
+            componentFixture.detectChanges();
+
+            const tab =
+                componentFixture.nativeElement.querySelector("[role='tab']");
+            expect(tab.getAttribute("aria-label")).toBe("Settings");
+        });
     });
 });
