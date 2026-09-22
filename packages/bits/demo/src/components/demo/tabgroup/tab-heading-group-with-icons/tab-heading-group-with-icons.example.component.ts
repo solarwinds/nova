@@ -32,6 +32,7 @@ export class TabHeadingGroupWithIconsExampleComponent {
         {
             id: "1",
             title: $localize`Tab 1`,
+            ariaLabel: $localize`Settings`,
             icon: {
                 name: "gear",
                 disabledColor: "disabled-gray",
@@ -43,6 +44,7 @@ export class TabHeadingGroupWithIconsExampleComponent {
         {
             id: "2",
             title: $localize`Tab 2`,
+            ariaLabel: $localize`Statistics`,
             icon: {
                 name: "check",
                 disabledColor: "disabled-gray",
@@ -54,6 +56,7 @@ export class TabHeadingGroupWithIconsExampleComponent {
         {
             id: "3",
             title: $localize`Tab 3`,
+            ariaLabel: $localize`Acknowledgements`,
             icon: {
                 name: "acknowledge",
                 disabledColor: "disabled-gray",
@@ -65,6 +68,7 @@ export class TabHeadingGroupWithIconsExampleComponent {
         {
             id: "4",
             title: $localize`Tab 4`,
+            ariaLabel: $localize`Add tab`,
             icon: {
                 name: "add",
                 disabledColor: "disabled-gray",
