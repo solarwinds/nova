@@ -19,7 +19,6 @@
 //  THE SOFTWARE.
 
 import {
-    AfterContentInit,
     AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -52,9 +51,7 @@ import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
     },
     standalone: false,
 })
-export class TabHeadingGroupComponent
-    implements OnDestroy, AfterViewInit, AfterContentInit
-{
+export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
     @ContentChildren(TabHeadingComponent) _tabs: QueryList<TabHeadingComponent>;
 
     @ViewChild("resizableArea") resizableArea: ElementRef;
@@ -98,6 +95,7 @@ export class TabHeadingGroupComponent
         });
 
         queueMicrotask(() => {
+            this.setActiveTab();
             this.subscribeToSelection();
             this.checkTraverse();
         });
@@ -113,10 +111,6 @@ export class TabHeadingGroupComponent
                 this.checkTraverse();
             }
         );
-    }
-
-    public ngAfterContentInit(): void {
-        this.setActiveTab();
     }
 
     public setActiveTab(): void {
