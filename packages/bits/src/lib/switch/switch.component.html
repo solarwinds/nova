@@ -7,13 +7,14 @@
         <div
             class="nui-switch__bar"
             (click)="toggle()"
-            (keyup.enter)="toggle()"
-            (keyup.space)="toggle()"
+            (keydown.enter)="$event.preventDefault(); toggle()"
+            (keydown.space)="$event.preventDefault(); toggle()"
             tabindex="{{ disabled ? -1 : 0 }}"
             role="checkbox"
             [attr.aria-checked]="value"
-            [attr.aria-label]="ariaLabel || null"
-            [attr.aria-labelledby]="ariaLabel ? null : labelId">
+            [attr.aria-disabled]="disabled || null"
+            [attr.aria-label]="accessibleLabel"
+            [attr.aria-labelledby]="labelIdIfProjected">
             <div class="nui-switch__on">
                 <svg
                     aria-hidden="true"
@@ -31,7 +32,7 @@
                     viewBox="0 0 7.1 6.7"></svg>
             </div>
         </div>
-        <label class="nui-switch__label" [attr.id]="labelId">
+        <label #switchLabel class="nui-switch__label" [attr.id]="labelId">
             <ng-content></ng-content>
         </label>
     </div>

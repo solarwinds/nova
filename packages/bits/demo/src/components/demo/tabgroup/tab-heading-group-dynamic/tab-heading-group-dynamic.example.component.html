@@ -1,7 +1,10 @@
 <div>
     <nui-tab-heading-group (selected)="updateContent($event)">
         @for (tab of tabsetContent; track tab) {
-        <nui-tab-heading [tabId]="tab.id" [active]="currentTabId === tab.id">
+        <nui-tab-heading
+            [tabId]="'dynamic-' + tab.id"
+            [ariaControls]="'panel-dynamic-' + tab.id"
+            [active]="currentTabId === 'dynamic-' + tab.id">
             <div class="d-flex align-content-center">
                 <div class="d-inline-flex align-items-center">
                     <div class="ellipsis">
@@ -14,8 +17,13 @@
     </nui-tab-heading-group>
 
     @for (tab of tabsetContent; track tab) {
-    <div>
-        @if (currentTabId === tab.id) {
+    <div
+        role="tabpanel"
+        tabindex="0"
+        [id]="'panel-dynamic-' + tab.id"
+        [attr.aria-labelledby]="'tab-dynamic-' + tab.id"
+        [hidden]="currentTabId !== 'dynamic-' + tab.id">
+        @if (currentTabId === 'dynamic-' + tab.id) {
         <nui-content size="small">
             <p>
                 Tab titeled <strong>{{ tab.title }}</strong> with id
