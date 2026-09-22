@@ -75,10 +75,8 @@
         <div class="d-flex flex-row">
             @for (status of iconStatuses; track status) {
             <div class="d-flex flex-column pr-5">
-                {{ status
-
-
-                }}<nui-icon icon="add" status="{{ status }}"></nui-icon>
+                {{ status }}
+                <nui-icon icon="add" status="{{ status }}"></nui-icon>
             </div>
             }
         </div>
@@ -91,10 +89,8 @@
         <div class="d-flex flex-row">
             @for (status of iconStatuses; track status) {
             <div class="d-flex flex-column pr-5">
-                {{ status
-
-
-                }}<nui-icon
+                {{ status }}
+                <nui-icon
                     icon="add"
                     status="up"
                     childStatus="{{ status }}"></nui-icon>

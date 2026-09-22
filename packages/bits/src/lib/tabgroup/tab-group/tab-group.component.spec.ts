@@ -124,6 +124,7 @@ describe("components > tab group", () => {
 
     it("should expose semantic state and activate a tab with Enter and Space", () => {
         subject.secondDisabled = true;
+        componentFixture.changeDetectorRef.markForCheck();
         componentFixture.detectChanges();
 
         const tablist =
@@ -167,6 +168,7 @@ describe("components > tab group", () => {
         expect(panels[0].getAttribute("tabindex")).toBe("0");
 
         subject.vertical = true;
+        componentFixture.changeDetectorRef.markForCheck();
         componentFixture.detectChanges();
         expect(tablist.getAttribute("aria-orientation")).toBe("vertical");
     });
@@ -189,6 +191,7 @@ describe("components > tab group", () => {
 
     it("should not activate a disabled tab with keyboard input", () => {
         subject.secondDisabled = true;
+        componentFixture.changeDetectorRef.markForCheck();
         componentFixture.detectChanges();
 
         const tabs =
@@ -312,6 +315,7 @@ describe("components > tab group", () => {
 
     it("should skip disabled tabs during arrow navigation", () => {
         subject.secondDisabled = true;
+        componentFixture.changeDetectorRef.markForCheck();
         componentFixture.detectChanges();
 
         const tabs =
@@ -337,6 +341,7 @@ describe("components > tab group", () => {
 
     it("should navigate vertically with ArrowDown and ArrowUp", () => {
         subject.vertical = true;
+        componentFixture.changeDetectorRef.markForCheck();
         componentFixture.detectChanges();
 
         const tabs =
