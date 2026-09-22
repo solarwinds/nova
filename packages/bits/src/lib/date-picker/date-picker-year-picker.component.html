@@ -1,65 +1,61 @@
-<table *ngIf="datePicker.datepickerMode === 'year'" role="grid">
-    <thead>
-        <tr>
-            <th>
-                <button
-                    nui-button
-                    type="button"
-                    icon="caret-left"
-                    displayStyle="action"
-                    ariaLabel="Previous page of years"
-                    i18n-ariaLabel="@@prevPageOfYears"
-                    title="Previous page of years"
-                    (click)="datePicker.move(-1, $event)"
-                    tabindex="-1"></button>
-            </th>
-            <th [attr.colspan]="3">
-                <button
-                    nui-button
-                    type="button"
-                    [id]="datePicker.uniqueId + '-title'"
-                    displayStyle="action"
-                    [disabled]="
-                        datePicker.datepickerMode === datePicker.maxMode
-                    "
-                    class="change-mode-button"
-                    [ngClass]="{
-                        disabled:
-                            datePicker.datepickerMode === datePicker.maxMode
-                    }"
-                    (click)="datePicker.toggleMode($event)"
-                    tabindex="-1">
-                    <span>{{ title }}</span>
-                </button>
-            </th>
-            <th>
-                <button
-                    nui-button
-                    type="button"
-                    icon="caret-right"
-                    displayStyle="action"
-                    ariaLabel="Next page of years"
-                    i18n-ariaLabel="@@nextPageOfYears"
-                    title="Next page of years"
-                    (click)="datePicker.move(1, $event)"
-                    tabindex="-1"></button>
-            </th>
-        </tr>
-    </thead>
+<div *ngIf="datePicker.datepickerMode === 'year'" class="nui-datepicker-nav">
+    <button
+        nui-button
+        type="button"
+        icon="caret-left"
+        displayStyle="action"
+        ariaLabel="Previous page of years"
+        i18n-ariaLabel="@@prevPageOfYears"
+        title="Previous page of years"
+        (click)="datePicker.move(-1, $event)"
+    ></button>
+    <button
+        nui-button
+        type="button"
+        [id]="datePicker.uniqueId + '-title'"
+        displayStyle="action"
+        [disabled]="
+            datePicker.datepickerMode === datePicker.maxMode
+        "
+        class="change-mode-button"
+        [ngClass]="{
+            disabled:
+                datePicker.datepickerMode === datePicker.maxMode
+        }"
+        (click)="datePicker.toggleMode($event)"
+    >
+        <span>{{ title }}</span>
+    </button>
+    <button
+        nui-button
+        type="button"
+        icon="caret-right"
+        displayStyle="action"
+        ariaLabel="Next page of years"
+        i18n-ariaLabel="@@nextPageOfYears"
+        title="Next page of years"
+        (click)="datePicker.move(1, $event)"
+    ></button>
+</div>
+<table *ngIf="datePicker.datepickerMode === 'year'" role="grid" [attr.aria-labelledby]="datePicker.uniqueId + '-title'">
     <tbody>
-        <tr *ngFor="let row of rows">
-            <td *ngFor="let cell of row" class="text-center year">
+        <tr *ngFor="let row of rows; trackBy: trackByIndex">
+            <td *ngFor="let cell of row; trackBy: trackByCellUid" class="text-center year" role="presentation">
                 <button
                     nui-button
                     type="button"
+                    #cellButton
+                    role="gridcell"
                     displayStyle="action"
                     [ngClass]="{
                         selected: cell.selected,
                         disabled: cell.disabled
                     }"
                     [disabled]="cell.disabled"
-                    (click)="datePicker.select(cell.date, $event)"
-                    tabindex="-1">
+                    [attr.tabindex]="cell.isFocusTarget ? 0 : -1"
+                    [ariaLabel]="cell.ariaLabel"
+                    [attr.aria-selected]="cell.selected ? true : null"
+                    (click)="datePicker.select(cell.date, $event)">
                     <span [ngClass]="{ 'text-info': cell.current }">{{
                         cell.label
                     }}</span>

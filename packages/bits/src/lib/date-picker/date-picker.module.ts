@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { A11yModule } from "@angular/cdk/a11y";
 import { NgModule } from "@angular/core";
 
 import { DayPickerComponent } from "./date-picker-day-picker.component";
@@ -41,6 +42,7 @@ import { NuiTextboxModule } from "../textbox/textbox.module";
         NuiIconModule,
         NuiButtonModule,
         NuiOverlayModule,
+        A11yModule,
     ],
     declarations: [
         YearPickerComponent,

@@ -15,18 +15,29 @@
             [ariaLabel]="ariaLabel"
             (keydown.arrowdown)="!isDisabled && overlay.show()">
         </nui-textbox>
-        <nui-icon
+        <button
+            #toggleButton
+            nui-button
+            type="button"
+            displayStyle="action"
             class="nui-datepicker__icon"
             icon="calendar"
-            aria-hidden="true"
-            [iconColor]="getIconColor()"></nui-icon>
+            [iconColor]="getIconColor()"
+            [disabled]="isDisabled"
+            ariaLabel="Open calendar"
+            i18n-ariaLabel="@@openCalendar"
+            title="Open calendar"
+            i18n-title="@@openCalendarTitle"
+            [attr.aria-expanded]="overlay.showing"></button>
     </div>
     <nui-overlay
         #overlay
         [toggleReference]="toggleRef"
         [overlayConfig]="overlayConfig"
         [customContainer]="customContainer">
-        <ng-container *ngTemplateOutlet="datePickerInner"></ng-container>
+        <div cdkTrapFocus (keydown)="onOverlayKeyDown($event)">
+            <ng-container *ngTemplateOutlet="datePickerInner"></ng-container>
+        </div>
     </nui-overlay>
     } @if (inline) {
     <div>
@@ -64,8 +75,8 @@
         [onlyCurrentMonth]="onlyCurrentMonth"
         [handleTimezone]="handleTimezone"
         [value]="value">
-        <nui-day-picker tabindex="0"></nui-day-picker>
-        <nui-month-picker tabindex="0"></nui-month-picker>
-        <nui-year-picker tabindex="0"></nui-year-picker>
+        <nui-day-picker></nui-day-picker>
+        <nui-month-picker></nui-month-picker>
+        <nui-year-picker></nui-year-picker>
     </nui-date-picker-inner>
 </ng-template>

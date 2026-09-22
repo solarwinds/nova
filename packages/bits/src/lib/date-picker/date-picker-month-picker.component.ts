@@ -18,7 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import {
+    Component,
+    ElementRef,
+    OnInit,
+    QueryList,
+    ViewChildren,
+} from "@angular/core";
 import moment from "moment/moment";
 import { Moment } from "moment/moment";
 
@@ -30,6 +36,9 @@ import { DatePickerInnerComponent } from "./date-picker-inner.component";
     standalone: false,
 })
 export class MonthPickerComponent implements OnInit {
+    @ViewChildren("cellButton", { read: ElementRef })
+    private cellButtons!: QueryList<ElementRef<HTMLButtonElement>>;
+
     title: string;
     rows: any[] = [];
     maxMode: string;
@@ -53,12 +62,17 @@ export class MonthPickerComponent implements OnInit {
 
             for (let i = 0; i < 12; i++) {
                 date = date.clone().set("month", i);
-                months[i] = picker.createDateObject(date, picker.formatMonth);
+                months[i] = picker.createDateObject(
+                    date,
+                    picker.formatMonth,
+                    "MMMM YYYY"
+                );
                 months[i].uid = picker.uniqueId + "-" + i;
             }
 
             this.title = picker.formatDate(date, picker.formatMonthTitle);
             this.rows = picker.split(months, 3);
+            picker.resolveFocusTarget(this.rows.flat());
         }, "month");
 
         this.datePicker.setCompareHandler(
@@ -69,5 +83,27 @@ export class MonthPickerComponent implements OnInit {
             },
             "month"
         );
+    }
+
+    /**
+     * Focuses the roving-tabindex cell (focus target, else current).
+     */
+    public focusActiveCell(): void {
+        const cells = this.rows.flat();
+        let activeIndex = cells.findIndex((cell: any) => cell.isFocusTarget);
+        if (activeIndex === -1) {
+            activeIndex = cells.findIndex((cell: any) => cell.current);
+        }
+        const activeButton = this.cellButtons?.toArray()[activeIndex];
+
+        activeButton?.nativeElement.focus();
+    }
+
+    public trackByIndex(index: number): number {
+        return index;
+    }
+
+    public trackByCellUid(_index: number, cell: any): string {
+        return cell.uid;
     }
 }
