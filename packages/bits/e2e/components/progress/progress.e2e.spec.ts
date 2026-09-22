@@ -87,7 +87,7 @@ test.describe("USERCONTROL progress", () => {
         });
 
         test("should show and hide progress bar when click button in compact progress", async () => {
-            expect(await compactProgress.isProgressBarDisplayed()).toBe(true);
+            await compactProgress.toBeProgressBarDisplayed();
             await compactProgressBtn.click();
             await compactProgress.toBeHidden();
         });
