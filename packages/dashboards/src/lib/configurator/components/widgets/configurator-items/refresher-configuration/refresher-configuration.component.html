@@ -17,25 +17,22 @@
         class="d-flex flex-column nui-refresher-configuration__accordion-content">
         <div>
             <nui-form-field [control]="form.get('enabled')">
-                <nui-switch formControlName="enabled" i18n
-                    >Refresh widget periodically</nui-switch
-                >
+                <nui-switch formControlName="enabled" i18n>
+                    Refresh widget periodically
+                </nui-switch>
             </nui-form-field>
         </div>
         <div [class.hidden]="!form.get('enabled')?.value">
             <div class="mt-4">
                 <nui-form-field [control]="form.get('overrideDefaultSettings')">
-                    <nui-switch formControlName="overrideDefaultSettings"
-                        >{{ overrideDefaultSettingsCaption }}
-                        @if (!form.get('overrideDefaultSettings')?.value) {
+                    <nui-switch formControlName="overrideDefaultSettings">
+                        {{ overrideDefaultSettingsCaption }} @if
+                        (!form.get('overrideDefaultSettings')?.value) {
                         <div class="nui-help-hint" i18n>
                             By default, the widget will refresh every
                             {{
-                                getDurationLabel(
-                                    refresherSettings.refreshRateSeconds
-                                )
-
-
+                            getDurationLabel(
+                            refresherSettings.refreshRateSeconds )
                             }}.
                         </div>
                         }

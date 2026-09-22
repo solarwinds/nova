@@ -1,4 +1,7 @@
-<div class="nui-tab-headings__holder" (click)="$event.preventDefault()">
+<div
+    class="nui-tab-headings__holder"
+    (click)="$event.preventDefault()"
+    (keydown)="onKeyDown($event)">
     @if (hasTraverse) {
     <div
         class="btn-caret-left"

@@ -1,4 +1,4 @@
-// © 2022 SolarWinds Worldwide, LLC. All rights reserved.
+// © 2026 SolarWinds Worldwide, LLC. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -18,10 +18,5 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./uuid";
-export * from "./unique-id";
-export * from "./immutable-set";
-export * from "./remove-errors";
-export * from "./traverse";
-export * from "./nameof";
-export * from "./color.helper";
+export const TAB_ID_PREFIX = "tab-";
+export const TAB_PANEL_ID_PREFIX = "panel-";

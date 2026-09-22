@@ -3,10 +3,10 @@
     @switch (name) { @case ('selectionMode') {
     <p>
         This string option allows you to select whether to enable selection and,
-        if so, what type. Default is <code>none</code>. The values currently
-        supported for this option are listed{{
-            forComponent ? "" : " below for each type of component"
-
+        if so, what type. Default is
+        <code>none</code>
+        . The values currently supported for this option are listed{{
+        forComponent ? "" : " below for each type of component"
 
         }}:
     </p>
@@ -30,7 +30,10 @@
                     <p>
                         This option enables the possibility to select one or
                         more rows in the
-                        {{ forComponent ? forComponent : "component" }}.
+                        {{ forComponent ? forComponent :
+                        "component"
+
+                        }}.
                     </p>
                     @if (type === componentType.table) {
                     <p>
@@ -39,105 +42,125 @@
                     </p>
                     <ol>
                         <li>
-                            Set the <code>selectable</code> input to
-                            <code>true</code>.
+                            Set the
+                            <code>selectable</code>
+                            input to
+                            <code>true</code>
+                            .
                         </li>
                         <li>
                             Bind a trackBy handler to the
-                            <code
-                                ><a
+                            <code>
+                                <a
                                     href="https://material.angular.io/cdk/table/overview#connecting-the-table-to-a-data-source"
                                     rel="noopener noreferrer"
-                                    target="_blank"
-                                    >trackBy</a
-                                ></code
-                            >
+                                    target="_blank">
+                                    trackBy
+                                </a>
+                            </code>
                             property inherited from
-                            <code
-                                ><a
+                            <code>
+                                <a
                                     href="https://material.angular.io/cdk/table/overview"
                                     rel="noopener noreferrer"
-                                    target="_blank"
-                                    >CdkTable</a
-                                ></code
-                            >. The trackBy handler should return a value that
+                                    target="_blank">
+                                    CdkTable
+                                </a>
+                            </code>
+                            . The trackBy handler should return a value that
                             uniquely identifies each item in the table.
                             <br />
-                            <strong>Note:</strong> When <code>trackBy</code> is
-                            used, the
-                            <code
-                                ><a
+                            <strong>Note:</strong>
+                            When
+                            <code>trackBy</code>
+                            is used, the
+                            <code>
+                                <a
                                     href="../interfaces/ISelection.html"
-                                    target="_blank"
-                                    >ISelection</a
-                                ></code
-                            >
+                                    target="_blank">
+                                    ISelection
+                                </a>
+                            </code>
                             will consist of the
-                            <code>trackBy</code> property values only and will
-                            not contain entire representations of the selected
-                            objects. As a result, it may be beneficial to keep a
-                            separate index that maps the selected item IDs to
-                            the corresponding objects.
+                            <code>trackBy</code>
+                            property values only and will not contain entire
+                            representations of the selected objects. As a
+                            result, it may be beneficial to keep a separate
+                            index that maps the selected item IDs to the
+                            corresponding objects.
                         </li>
                         <li>
                             Pass the row object to
-                            <code>nui-row</code> using the
-                            <code>rowObject</code> input.
+                            <code>nui-row</code>
+                            using the
+                            <code>rowObject</code>
+                            input.
                         </li>
                         <li>
                             Bind to the selection event using the
-                            <code>(selectionChange)</code> output. The event's
-                            payload is an
-                            <code
-                                ><a
+                            <code>(selectionChange)</code>
+                            output. The event's payload is an
+                            <code>
+                                <a
                                     href="../interfaces/ISelection.html"
-                                    target="_blank"
-                                    >ISelection</a
-                                ></code
-                            >
+                                    target="_blank">
+                                    ISelection
+                                </a>
+                            </code>
                             object which should be converted to selected items
                             by calling the
                             <code>getSelectedItems</code>
                             function on the
-                            <code
-                                ><a
+                            <code>
+                                <a
                                     href="../injectables/SelectorService.html"
-                                    target="_blank"
-                                    >SelectorService</a
-                                ></code
-                            >.
+                                    target="_blank">
+                                    SelectorService
+                                </a>
+                            </code>
+                            .
                         </li>
                     </ol>
                     <p>
-                        <b>Note 1:</b>To preselect rows in a table or to
-                        programmatically change the selection you can use the
-                        <code>selection</code> input which is of type
-                        <code
-                            ><a
+                        <b>Note 1:</b>
+                        To preselect rows in a table or to programmatically
+                        change the selection you can use the
+                        <code>selection</code>
+                        input which is of type
+                        <code>
+                            <a
                                 href="../interfaces/ISelection.html"
-                                target="_blank"
-                                >ISelection</a
-                            ></code
-                        >.
+                                target="_blank">
+                                ISelection
+                            </a>
+                        </code>
+                        .
                     </p>
                     <p>
-                        <b>Note 2:</b> If you need to use
-                        <code>nui-paginator</code> with row selection, you need
-                        to pass the total number of items on all pages into the
-                        <code>totalItems</code> input.
+                        <b>Note 2:</b>
+                        If you need to use
+                        <code>nui-paginator</code>
+                        with row selection, you need to pass the total number of
+                        items on all pages into the
+                        <code>totalItems</code>
+                        input.
                     </p>
                     <nui-message [allowDismiss]="false" type="warning">
                         <p>
-                            <strong>Important:</strong> When working with data
-                            that's coming across the wire, it's necessary to
-                            bind a <code>trackBy</code> handler as mentioned
-                            above. This will allow selection tracking to be
-                            based on the identifier returned by the
-                            <code>trackBy</code> handler. If a
-                            <code>trackBy</code> is not provided, comparisons to
-                            determine whether items are selected will be based
-                            on object reference which of course won't work with
-                            items coming from a backend.
+                            <strong>Important:</strong>
+                            When working with data that's coming across the
+                            wire, it's necessary to bind a
+                            <code>trackBy</code>
+                            handler as mentioned above. This will allow
+                            selection tracking to be based on the identifier
+                            returned by the
+                            <code>trackBy</code>
+                            handler. If a
+                            <code>trackBy</code>
+                            is not provided, comparisons to determine whether
+                            items are selected will be based on object reference
+                            which of course won't work with items coming from a
+                            backend.
                         </p>
                         Take a look at the source on the "Selection" tab example
                         to see how.
@@ -188,19 +211,23 @@
     <p>
         This string option allows you to select the paging mode of the data
         presentation. Default is
-        <code>virtualScroll</code>. The values currently supported for this
-        option are:
+        <code>virtualScroll</code>
+        . The values currently supported for this option are:
     </p>
     <ul>
         <li>
             <nui-expander [open]="false" header="virtualScroll">
                 <p>
                     This setting allows us to use
-                    <a href="https://material.angular.io/cdk/scrolling/overview"
-                        >CDK Virtual Scroll</a
-                    >
-                    by setting <code>pagingMode</code> to
-                    <code>virtualScroll</code>.
+                    <a
+                        href="https://material.angular.io/cdk/scrolling/overview">
+                        CDK Virtual Scroll
+                    </a>
+                    by setting
+                    <code>pagingMode</code>
+                    to
+                    <code>virtualScroll</code>
+                    .
                 </p>
                 <ng-container
                     *ngTemplateOutlet="
@@ -213,41 +240,45 @@
                 <ng-template #pagingModeVSTpl let-type="type">
                     @if (type === componentType.list) {
                     <p>
-                        The <code>nui-repeat</code> used inside this schematic
-                        allows you to manage the virtual viewport by exposing
-                        its
+                        The
+                        <code>nui-repeat</code>
+                        used inside this schematic allows you to manage the
+                        virtual viewport by exposing its
                         <code>{{ getRepeatPropKey("viewportRef") }}</code>
                         property which is an instance of
-                        <code
-                            ><a
-                                href="https://material.angular.io/cdk/scrolling/api#CdkVirtualScrollViewport"
-                                >CdkVirtualScrollViewport</a
-                            ></code
-                        >. The example below uses Nova's
-                        <code
-                            ><a href="/injectables/VirtualViewportManager.html"
-                                >VirtualViewportManager</a
-                            ></code
-                        >
+                        <code>
+                            <a
+                                href="https://material.angular.io/cdk/scrolling/api#CdkVirtualScrollViewport">
+                                CdkVirtualScrollViewport
+                            </a>
+                        </code>
+                        . The example below uses Nova's
+                        <code>
+                            <a href="/injectables/VirtualViewportManager.html">
+                                VirtualViewportManager
+                            </a>
+                        </code>
                         to handle the viewport management duties via the
                         <code>{{ getRepeatPropKey("viewportRef") }}</code>
                         property.
                     </p>
                     } @if (type === componentType.table) { The
-                    <code>nui-table</code> used inside this schematic API is
-                    using
+                    <code>nui-table</code>
+                    used inside this schematic API is using
                     <a
-                        href="../directives/TableVirtualScrollLinearDirective.html#info"
-                        >nui table virtual scroll directive</a
-                    >. It makes it possible to load items in chunks. The amount
+                        href="../directives/TableVirtualScrollLinearDirective.html#info">
+                        nui table virtual scroll directive
+                    </a>
+                    . It makes it possible to load items in chunks. The amount
                     of items loaded per fetch can be configured by setting the
-                    <code>range</code> variable.
+                    <code>range</code>
+                    variable.
                     <nui-message [allowDismiss]="false" type="warning">
                         The following examples use custom Nova
                         <a
-                            href="../directives/TableVirtualScrollLinearDirective.html#info"
-                            >TableVirtualScrollLinearDirective</a
-                        >
+                            href="../directives/TableVirtualScrollLinearDirective.html#info">
+                            TableVirtualScrollLinearDirective
+                        </a>
                         to perform scrolling based on scrolling indexes within
                         the virtual scroll viewport. Customers are free to
                         create their own directive and\or scrolling strategy if
@@ -255,7 +286,9 @@
                     </nui-message>
                     <nui-message [allowDismiss]="false" type="warning">
                         There are some known
-                        <strong>technical limitations</strong>:<br />
+                        <strong>technical limitations</strong>
+                        :
+                        <br />
                         <ol>
                             <li>
                                 Data for the table should be provided in a
@@ -269,11 +302,11 @@
                             </li>
                             <li>
                                 <a
-                                    href="https://github.com/angular/components/issues/10113"
-                                    >Angular doesn't subport virtual scrolling
+                                    href="https://github.com/angular/components/issues/10113">
+                                    Angular doesn't subport virtual scrolling
                                     over a list of items whose size is not known
-                                    and needs to be measured</a
-                                >
+                                    and needs to be measured
+                                </a>
                             </li>
                             <li>
                                 When CDK Viewport is used in context of
@@ -287,8 +320,10 @@
                     } @if (type === componentType.table) {
                     <p>
                         To make the scrolling working with
-                        <code>nui-table</code> start with declaring the
-                        following variables:<br /><br />
+                        <code>nui-table</code>
+                        start with declaring the following variables:
+                        <br />
+                        <br />
                     </p>
                     <nui-example-code
                         language="typescript"
@@ -298,12 +333,13 @@
                         Import
                         <a
                             href="../injectables/VirtualViewportManager.html"
-                            target="_blank"
-                            >VirtualViewportManager</a
-                        >
+                            target="_blank">
+                            VirtualViewportManager
+                        </a>
                         (provides a mechanism for sequencing the rendered range
                         stream emitted from the CDK Viewport into distinct page
-                        ranges):<br />
+                        ranges):
+                        <br />
                     </p>
                     <nui-example-code
                         language="typescript"
@@ -311,15 +347,16 @@
                     <br />
                     <p>
                         Provide VirtualViewportManager on a component level
-                        providers:<br />
+                        providers:
+                        <br />
                     </p>
                     <nui-example-code
                         language="typescript"
                         [code]="tableScrollingSetup.provideViewport" />
                     <br />
                     <p>
-                        Inject VirtualViewportManager type in the
-                        constructor:<br />
+                        Inject VirtualViewportManager type in the constructor:
+                        <br />
                     </p>
                     <nui-example-code
                         language="typescript"
@@ -327,7 +364,8 @@
                     <br />
                     <p>
                         Use the Angular ViewChild decorator to get a reference
-                        to the scrolling viewport (CdkVirtualScrollViewport):<br />
+                        to the scrolling viewport (CdkVirtualScrollViewport):
+                        <br />
                     </p>
                     <nui-example-code
                         language="typescript"
@@ -340,7 +378,8 @@
                     <br />
                     <p>
                         Optionally, subscribe to the
-                        <code>busy</code> state changes:
+                        <code>busy</code>
+                        state changes:
                     </p>
                     <nui-example-code
                         language="typescript"
@@ -348,7 +387,9 @@
                     <br />
                     <p>
                         Start setting up the
-                        <code>ngAfterViewInit()</code> lifecycle hook:<br />
+                        <code>ngAfterViewInit()</code>
+                        lifecycle hook:
+                        <br />
                     </p>
                     <nui-example-code
                         language="typescript"
@@ -356,56 +397,71 @@
                     <br />
                     Setting up the viewportManager listener and dataSource
                     handler in the
-                    <code>ngAfterViewInit</code>:
+                    <code>ngAfterViewInit</code>
+                    :
                     <ol>
                         <li>
-                            Use the <strong>setViewport</strong> method to
-                            initialize <code>VirtualViewportManager</code>.
+                            Use the
+                            <strong>setViewport</strong>
+                            method to initialize
+                            <code>VirtualViewportManager</code>
+                            .
                         </li>
                         <li>
                             Chain the
-                            <strong>observeNextPage$</strong> method with the
-                            required parameters (<a
-                                href="../interfaces/IVirtualPageConfig.html"
-                                >IVirtualPageConfig)</a
-                            >.
+                            <strong>observeNextPage$</strong>
+                            method with the required parameters (
+                            <a href="../interfaces/IVirtualPageConfig.html">
+                                IVirtualPageConfig)
+                            </a>
+                            .
                         </li>
                         <li>
-                            <b><i>Optional</i></b> You may like to ignore
+                            <b><i>Optional</i></b>
+                            You may like to ignore
                             <code>VirtualViewportManager</code>
                             emissions when the
-                            <code>totalItems</code> number is reached. To do
-                            this, you can use the RxJS
-                            <code>filter</code> operator as in example.<br />
+                            <code>totalItems</code>
+                            number is reached. To do this, you can use the RxJS
+                            <code>filter</code>
+                            operator as in example.
+                            <br />
                             <b>Note:</b>
-                            <code>VirtualViewportManager</code> has its own
-                            mechanism of stopping when the length of the last
-                            received page is less than the page size requested.
+                            <code>VirtualViewportManager</code>
+                            has its own mechanism of stopping when the length of
+                            the last received page is less than the page size
+                            requested.
                             <br />
                             In the example, we use the
-                            <code>filter</code> operator to avoid making the
-                            additional requests when the dataset's last page has
-                            enough data.
+                            <code>filter</code>
+                            operator to avoid making the additional requests
+                            when the dataset's last page has enough data.
                         </li>
                         <li>
                             Finally, call
-                            <code>datasource.applyFilters()</code> to trigger
-                            fetching of the data.
+                            <code>datasource.applyFilters()</code>
+                            to trigger fetching of the data.
                         </li>
                         <li>
                             To avoid having two listeners (the next page
                             observer and the data source's outputsSubject), we
-                            can combine them together into one stream <br />
+                            can combine them together into one stream
+                            <br />
                             with the RxJS
-                            <code>switchMap</code> operator. In the example, we
-                            map to an inner subscription which contains all new
-                            data related operations: <br />
-                            <code>totalItems</code> update, assigning new data,
-                            and triggering the change detector. <br />
-                            <b>Alternative</b>: You can subscribe to the
-                            <code>this.dataSource.outputsSubject</code>code> in
-                            the ngOnInit method using the same RxJS pipe
-                            operators.
+                            <code>switchMap</code>
+                            operator. In the example, we map to an inner
+                            subscription which contains all new data related
+                            operations:
+                            <br />
+                            <code>totalItems</code>
+                            update, assigning new data, and triggering the
+                            change detector.
+                            <br />
+                            <b>Alternative</b>
+                            : You can subscribe to the
+                            <code>this.dataSource.outputsSubject</code>
+                            code> in the ngOnInit method using the same RxJS
+                            pipe operators.
                         </li>
                     </ol>
                     <nui-example-code
@@ -423,12 +479,17 @@
                 <ol>
                     @if (for(componentType.list)) {
                     <li>
-                        <strong>For <code>list</code>'s only</strong>: set the
-                        <code>itemSize</code> component input to a valid value.
-                        It's mandatory to have this input set as there is a
-                        technical limitation on the Angular side. If the input
-                        is omitted, you'll see this error message in the console
-                        output:
+                        <strong>
+                            For
+                            <code>list</code>
+                            's only
+                        </strong>
+                        : set the
+                        <code>itemSize</code>
+                        component input to a valid value. It's mandatory to have
+                        this input set as there is a technical limitation on the
+                        Angular side. If the input is omitted, you'll see this
+                        error message in the console output:
                         <mark>
                             "ERROR: To use virtual scroll feature please set
                             correct value to the 'itemSize' input!"
@@ -436,12 +497,14 @@
                     </li>
                     }
                     <li>
-                        Set the <code>height</code> of the component element
-                        (either through a css/less file or inline in the
-                        ng-container). This sets the viewport for the virtual
-                        scroll. If this action is omitted, the viewport will
-                        have a height of <code>0px</code> and no content will be
-                        visible on the page.
+                        Set the
+                        <code>height</code>
+                        of the component element (either through a css/less file
+                        or inline in the ng-container). This sets the viewport
+                        for the virtual scroll. If this action is omitted, the
+                        viewport will have a height of
+                        <code>0px</code>
+                        and no content will be visible on the page.
                     </li>
                 </ol>
                 <nui-message [allowDismiss]="false" type="warning">
@@ -457,12 +520,14 @@
                             <a
                                 href="https://github.com/angular/components/issues/13981"
                                 rel="noopener noreferrer"
-                                target="_blank"
-                                >known CDK issue</a
-                            >, make sure that the
-                            <code>nui-repeat</code> component hosting the
-                            virtual scroll is visible in order for the virtual
-                            scroll functionality to work properly.
+                                target="_blank">
+                                known CDK issue
+                            </a>
+                            , make sure that the
+                            <code>nui-repeat</code>
+                            component hosting the virtual scroll is visible in
+                            order for the virtual scroll functionality to work
+                            properly.
                         </li>
                     </ol>
                 </nui-message>
@@ -471,7 +536,8 @@
         <li>
             <nui-expander [open]="false" header="pagination">
                 Data is displayed using standard pagination with a
-                <code>nui-paginator</code> component.
+                <code>nui-paginator</code>
+                component.
                 <p>To enable pagination, do the following:</p>
                 <ol>
                     <li>
@@ -481,8 +547,9 @@
                         <a
                             target="_blank"
                             href="../injectables/ClientSideDataSource.html">
-                            <code>ClientSideDataSource</code></a
-                        >, which provides default methods for working with
+                            <code>ClientSideDataSource</code>
+                        </a>
+                        , which provides default methods for working with
                         filters. In case you need something special (such as
                         filtering on a back-end or more complex sorting
                         capability), you may extend this service and override
@@ -490,67 +557,81 @@
                     </li>
                     <li>
                         In your component's constructor, provide an initial
-                        dataset via the <code>setData</code>
+                        dataset via the
+                        <code>setData</code>
                         method of
                         <a
                             target="_blank"
                             href="../injectables/ClientSideDataSource.html">
-                            <code>ClientSideDataSource</code></a
-                        >.
+                            <code>ClientSideDataSource</code>
+                        </a>
+                        .
                     </li>
                     <li>
                         Get the paginator component via
-                        <code>&#64;ViewChild</code>.
+                        <code>&#64;ViewChild</code>
+                        .
                     </li>
                     <li>
-                        In your component's <code>ngAfterViewInit</code>, pass
-                        the paginator to the
+                        In your component's
+                        <code>ngAfterViewInit</code>
+                        , pass the paginator to the
                         <code>componentTree</code>
-                        property of <code>ClientSideDataSource</code>. Then,
-                        invoke the
+                        property of
+                        <code>ClientSideDataSource</code>
+                        . Then, invoke the
                         <code>applyFilters</code>
                         method of
                         <a
                             target="_blank"
                             href="../injectables/ClientSideDataSource.html">
-                            <code>ClientSideDataSource</code></a
-                        >. And, lastly, subscribe to
-                        <code>outputsSubject</code> on
+                            <code>ClientSideDataSource</code>
+                        </a>
+                        . And, lastly, subscribe to
+                        <code>outputsSubject</code>
+                        on
                         <a
                             target="_blank"
                             href="../injectables/ClientSideDataSource.html">
-                            <code>ClientSideDataSource</code></a
-                        >
+                            <code>ClientSideDataSource</code>
+                        </a>
                         which will return an
                         <a
                             target="_blank"
                             href="../interfaces/INovaFilteringOutputs.html">
-                            <code>INovaFilteringOutputs</code></a
-                        >
+                            <code>INovaFilteringOutputs</code>
+                        </a>
                         object after each change in pagination.
                     </li>
                     <li>
-                        In the <code>outputsSubject</code> subscription handler,
-                        overwrite your
+                        In the
+                        <code>outputsSubject</code>
+                        subscription handler, overwrite your
                         <code>dataSource</code>
                         with the
-                        <code>itemsSource</code> you receive and pass the number
-                        of pages to the paginator's <code>total</code> input.
+                        <code>itemsSource</code>
+                        you receive and pass the number of pages to the
+                        paginator's
+                        <code>total</code>
+                        input.
                     </li>
                     <li>
                         Bind to the paginator's
-                        <code>pagerAction</code> output, and invoke the
-                        <code>applyFilters</code> method of
+                        <code>pagerAction</code>
+                        output, and invoke the
+                        <code>applyFilters</code>
+                        method of
                         <a
                             target="_blank"
-                            href="../injectables/ClientSideDataSource.html"
-                            ><code>ClientSideDataSource</code></a
-                        >
+                            href="../injectables/ClientSideDataSource.html">
+                            <code>ClientSideDataSource</code>
+                        </a>
                         in the output handler.
                     </li>
                     <li>
-                        Unsubscribe from the <code>outputsSubject</code> in your
-                        component's
+                        Unsubscribe from the
+                        <code>outputsSubject</code>
+                        in your component's
                         <code>ngOnDestroy</code>
                         method.
                     </li>
@@ -566,22 +647,24 @@
     } @case ('dataSource') {
     <p>
         This string option allows you to select the way data is retrieved for
-        displaying in the
-        {{ forComponent ? forComponent : "component" }}. Default is
-        <code>serverSide</code>. The values currently supported for this option
-        are:
+        displaying in the {{ forComponent ? forComponent : "component" }}.
+        Default is
+        <code>serverSide</code>
+        . The values currently supported for this option are:
     </p>
     <nui-expander [open]="false" header="serverSide">
         The generated data source will retrieve data remotely from a server side
         API, usually achieved by extending the
-        <a target="_blank" href="../injectables/DataSourceService.html"
-            ><code>DataSourceService</code></a
-        >
+        <a target="_blank" href="../injectables/DataSourceService.html">
+            <code>DataSourceService</code>
+        </a>
         class.
         <nui-message [allowDismiss]="false" type="info">
             When this option is chosen, the schematic automatically generates a
-            loading indicator (<code>nui-busy</code>) which is displayed as an
-            overlay on the list during data retrieval.
+            loading indicator (
+            <code>nui-busy</code>
+            ) which is displayed as an overlay on the list during data
+            retrieval.
         </nui-message>
     </nui-expander>
     <nui-expander [open]="false" header="custom">
@@ -593,9 +676,9 @@
     <nui-expander [open]="false" header="clientSide">
         Generated data source will retrieve data locally from a client side
         source, usually via the
-        <a target="_blank" href="../injectables/ClientSideDataSource.html"
-            ><code>ClientSideDataSource</code></a
-        >
+        <a target="_blank" href="../injectables/ClientSideDataSource.html">
+            <code>ClientSideDataSource</code>
+        </a>
         class.
     </nui-expander>
     <nui-expander [open]="false" header="none">
@@ -611,7 +694,8 @@
             <p>
                 Both local and remote setup are feasible for custom data
                 sources, while the remote setup is feasible for the
-                <code>serverSide</code> option.
+                <code>serverSide</code>
+                option.
             </p>
             <nui-expander [open]="false" header="Remote DataSource Setup">
                 <div>
@@ -620,11 +704,14 @@
                         to use the Nova
                         <code>DataSourceService</code>
                         which can be imported from
-                        <code>"&#64;nova-ui/bits"</code>.
+                        <code>"&#64;nova-ui/bits"</code>
+                        .
                     </p>
                     <p>
-                        Create the <code>&#64;Injectable</code> class that
-                        extends the data source service mentioned above.
+                        Create the
+                        <code>&#64;Injectable</code>
+                        class that extends the data source service mentioned
+                        above.
                     </p>
                     <nui-example-code
                         language="typescript"
@@ -632,28 +719,34 @@
                     <br />
                     <p>
                         Define the following fields to work with the data
-                        source.<br />
-                        <mark
-                            ><sup><strong>Hint!</strong></sup> The list below is
-                            a required minimum. Feel free to define other fields
-                            required to work with your API.
+                        source.
+                        <br />
+                        <mark>
+                            <sup><strong>Hint!</strong></sup>
+                            The list below is a required minimum. Feel free to
+                            define other fields required to work with your API.
                         </mark>
                     </p>
                     <br />
-                    <code><b>url</b></code> - This is where you store your API
-                    url. <br />
-                    <code><b>cache</b></code> - This is where you store the
-                    cached list data. Because we fetch the data in chunks, every
-                    time a user fetches a new chunk of data it is appended to
-                    that array immediately, and then the updated array is sent
-                    to the list.<br />
-                    <code><sup>(Optional)</sup><b>busy</b></code> - This sets
-                    the busy state. The state is considered busy only when the
-                    data is being fetched, and it's used to display loading
-                    indicator components on the view while the data is being
-                    fetched. This is optional.
-                    <mark
-                        >Consult with your UX team about using busy state and
+                    <code><b>url</b></code>
+                    - This is where you store your API url.
+                    <br />
+                    <code><b>cache</b></code>
+                    - This is where you store the cached list data. Because we
+                    fetch the data in chunks, every time a user fetches a new
+                    chunk of data it is appended to that array immediately, and
+                    then the updated array is sent to the list.
+                    <br />
+                    <code>
+                        <sup>(Optional)</sup>
+                        <b>busy</b>
+                    </code>
+                    - This sets the busy state. The state is considered busy
+                    only when the data is being fetched, and it's used to
+                    display loading indicator components on the view while the
+                    data is being fetched. This is optional.
+                    <mark>
+                        Consult with your UX team about using busy state and
                         busy components in your list
                     </mark>
                     .
@@ -664,15 +757,21 @@
                     <p>
                         Create a method that will fetch the data and perhaps
                         convert the response to an expected format. It should
-                        have two parameters, <code>start</code> and
-                        <code>end</code>, which are the current values of the
-                        scrolling indices within the scrolling viewport. The
-                        calculation <code>end - start</code> will give you the
-                        number of items to fetch. If your API supports returning
-                        data by page, the <code>page</code> variable will be
-                        useful in that case, but if not, use the
-                        <code>end</code> index as the starting point for the
-                        next chunk of data.<br />
+                        have two parameters,
+                        <code>start</code>
+                        and
+                        <code>end</code>
+                        , which are the current values of the scrolling indices
+                        within the scrolling viewport. The calculation
+                        <code>end - start</code>
+                        will give you the number of items to fetch. If your API
+                        supports returning data by page, the
+                        <code>page</code>
+                        variable will be useful in that case, but if not, use
+                        the
+                        <code>end</code>
+                        index as the starting point for the next chunk of data.
+                        <br />
                         Next, prepare the URI to be fetched. It can, and
                         probably will, vary by API implementation. Your goal
                         here is to return the requested number of items.
@@ -684,10 +783,11 @@
                         convert the returned dataset into the structure expected
                         by the component. The received data will be concatenated
                         with
-                        <code>this.cache</code>, so the dataset must be in the
-                        format expected by the list's
-                        <code>dataSource</code> input in order to render the
-                        items correctly.
+                        <code>this.cache</code>
+                        , so the dataset must be in the format expected by the
+                        list's
+                        <code>dataSource</code>
+                        input in order to render the items correctly.
                     </p>
                     <nui-example-code
                         language="typescript"
@@ -695,25 +795,37 @@
                     <br />
                     <p>
                         The next step will be to implement the
-                        <code>getFilteredData</code> method of the
-                        <code>DataSourceService</code>. This method is called
-                        whenever the <code>applyFilters</code> method of current
-                        data source is called in the code, so this is where data
-                        operations will be triggered. Optionally, notify the
-                        <code>busy</code> observable to toggle the busy state to
-                        "on". Then, retrieve the <code>virtualScroll</code> from
-                        the available filters passed into the method as an
-                        argument. The <code>virtualScroll</code> filter is
-                        registered with the data source farther down in the code
-                        listing of the list implementation.<br /><br />
-                        From the <code>virtualScroll</code> filter you can
-                        retrieve the <code>start</code> and
-                        <code>end</code> indices for the scrolling viewport. Use
-                        them to fetch to correct amount of data. Then, update
-                        the cache with the items you just got from the server,
-                        and return the data in the format that would contain AT
-                        LEAST the total number of items the API is able to
-                        return and the list's cached data.
+                        <code>getFilteredData</code>
+                        method of the
+                        <code>DataSourceService</code>
+                        . This method is called whenever the
+                        <code>applyFilters</code>
+                        method of current data source is called in the code, so
+                        this is where data operations will be triggered.
+                        Optionally, notify the
+                        <code>busy</code>
+                        observable to toggle the busy state to "on". Then,
+                        retrieve the
+                        <code>virtualScroll</code>
+                        from the available filters passed into the method as an
+                        argument. The
+                        <code>virtualScroll</code>
+                        filter is registered with the data source farther down
+                        in the code listing of the list implementation.
+                        <br />
+                        <br />
+                        From the
+                        <code>virtualScroll</code>
+                        filter you can retrieve the
+                        <code>start</code>
+                        and
+                        <code>end</code>
+                        indices for the scrolling viewport. Use them to fetch to
+                        correct amount of data. Then, update the cache with the
+                        items you just got from the server, and return the data
+                        in the format that would contain AT LEAST the total
+                        number of items the API is able to return and the list's
+                        cached data.
                     </p>
                     <nui-example-code
                         language="typescript"
@@ -731,11 +843,12 @@
                     extend
                     <a
                         target="_blank"
-                        href="../injectables/ClientSideDataSource.html"
-                        ><code>ClientSideDataSource</code></a
-                    >
+                        href="../injectables/ClientSideDataSource.html">
+                        <code>ClientSideDataSource</code>
+                    </a>
                     which can be imported from
-                    <code>"&#64;nova-ui/bits"</code>.
+                    <code>"&#64;nova-ui/bits"</code>
+                    .
                 </p>
             </nui-expander>
         </nui-expander>
@@ -744,16 +857,22 @@
     <p>
         This boolean option allows you to enable/disable search functionality.
         Default is
-        <code>true</code>.
+        <code>true</code>
+        .
     </p>
     <p>
         To subscribe to the search events, use search's
-        <code>onSearch</code> or <code>inputChange</code> (and, if needed,
-        <code>onSearchCancel</code>) hooks to invoke the
-        <code>applyFilters</code> method of the
-        <a target="_blank" href="../injectables/DataSourceService.html"
-            ><code>DataSourceService</code></a
-        >
+        <code>onSearch</code>
+        or
+        <code>inputChange</code>
+        (and, if needed,
+        <code>onSearchCancel</code>
+        ) hooks to invoke the
+        <code>applyFilters</code>
+        method of the
+        <a target="_blank" href="../injectables/DataSourceService.html">
+            <code>DataSourceService</code>
+        </a>
         class in order to perform the actual search.
     </p>
     <nui-message [allowDismiss]="false" type="warning">
@@ -763,25 +882,29 @@
                 <a
                     target="_blank"
                     href="../injectables/ServerSideDataSource.html">
-                    <code>ServerSideDataSource</code></a
-                >, if you want searches to be performed as the user types, it's
+                    <code>ServerSideDataSource</code>
+                </a>
+                , if you want searches to be performed as the user types, it's
                 advised to add a debounce to the filtering to avoid stressing
                 out the backend API by using
-                <code>pipe(debounceTime(Integer_Value))</code> between search
-                subscriptions.
+                <code>pipe(debounceTime(Integer_Value))</code>
+                between search subscriptions.
             </li>
             <li>
                 For local data sources, which usually extend or use directly
                 <a
                     target="_blank"
                     href="../injectables/ClientSideDataSource.html">
-                    <code>ClientSideDataSource</code></a
-                >, you can use the <code>setSearchProperties</code> method of
+                    <code>ClientSideDataSource</code>
+                </a>
+                , you can use the
+                <code>setSearchProperties</code>
+                method of
                 <a
                     target="_blank"
-                    href="../injectables/ClientSideDataSource.html"
-                    ><code>ClientSideDataSource</code></a
-                >
+                    href="../injectables/ClientSideDataSource.html">
+                    <code>ClientSideDataSource</code>
+                </a>
                 to specify which columns the search should apply to; if not set,
                 the search will be performed on all columns.
             </li>
@@ -791,56 +914,86 @@
     <p>
         This boolean option allows you to enable/disable sorting functionality.
         Default is
-        <code>true</code>.
+        <code>true</code>
+        .
     </p>
     @if (for(componentType.table)) {
     <p>To use sorting in a table you need to:</p>
     <ol>
-        <li>Set <code>[sortable]="true"</code> on <code>nui-table</code>.</li>
-        <li>Get table component via <code>&#64;ViewChild</code>.</li>
+        <li>
+            Set
+            <code>[sortable]="true"</code>
+            on
+            <code>nui-table</code>
+            .
+        </li>
+        <li>
+            Get table component via
+            <code>&#64;ViewChild</code>
+            .
+        </li>
         <li>
             Set up the filtering component tree. To get table filtering
-            components use <code>getFilterComponents()</code>
+            components use
+            <code>getFilterComponents()</code>
             function of table component. This will give filtering mechanism an
             ability to receive data for sorting at the moment you'll call
-            <code>applyFilters</code> method of
-            <a target="_blank" href="../injectables/ClientSideDataSource.html"
-                ><code>ClientSideDataSource</code></a
-            >.
-        </li>
-        <li>
-            Set <code>[isColumnSortingDisabled]="true"</code> on the
-            table-header-cell to prevent table from sorting by this property.
-        </li>
-        <li>
-            Subscribe to <code>outputsSubject</code> on
+            <code>applyFilters</code>
+            method of
             <a target="_blank" href="../injectables/ClientSideDataSource.html">
-                <code>ClientSideDataSource</code></a
-            >
+                <code>ClientSideDataSource</code>
+            </a>
+            .
+        </li>
+        <li>
+            Set
+            <code>[isColumnSortingDisabled]="true"</code>
+            on the table-header-cell to prevent table from sorting by this
+            property.
+        </li>
+        <li>
+            Subscribe to
+            <code>outputsSubject</code>
+            on
+            <a target="_blank" href="../injectables/ClientSideDataSource.html">
+                <code>ClientSideDataSource</code>
+            </a>
             which will return you
             <a target="_blank" href="../interfaces/INovaFilteringOutputs.html">
-                <code>INovaFilteringOutputs</code></a
-            >
+                <code>INovaFilteringOutputs</code>
+            </a>
             object after each change of sorting.
         </li>
         <li>
-            In the <code>outputsSubject</code> subscription handler, overwrite
-            your <code>dataSource</code> with the <code>itemsSource</code> you
-            receive.
+            In the
+            <code>outputsSubject</code>
+            subscription handler, overwrite your
+            <code>dataSource</code>
+            with the
+            <code>itemsSource</code>
+            you receive.
         </li>
         <li>
-            On <code>(sortOrderChanged)</code> event call
-            <code>applyFilters</code> method of
-            <a target="_blank" href="../injectables/ClientSideDataSource.html"
-                ><code>ClientSideDataSource</code></a
-            >. <code>(sortOrderChanged)</code> event will emit you
+            On
+            <code>(sortOrderChanged)</code>
+            event call
+            <code>applyFilters</code>
+            method of
+            <a target="_blank" href="../injectables/ClientSideDataSource.html">
+                <code>ClientSideDataSource</code>
+            </a>
+            .
+            <code>(sortOrderChanged)</code>
+            event will emit you
             <a target="_blank" href="../interfaces/ISortedItem.html">
-                <code>ISortedItem</code></a
-            >
+                <code>ISortedItem</code>
+            </a>
             object.
         </li>
         <li>
-            Unsubscribe from the <code>outputsSubject</code> in your component's
+            Unsubscribe from the
+            <code>outputsSubject</code>
+            in your component's
             <code>ngOnDestroy</code>
             method.
         </li>
@@ -850,16 +1003,18 @@
             <li>
                 If you need to apply a more complicated sorting algorithm, you
                 can extend
-                <code>ClientSideDataSource</code> and override its sorting
-                methods.
+                <code>ClientSideDataSource</code>
+                and override its sorting methods.
             </li>
             <li>
                 If you need to sort some column by default (or
                 programmatically), you can do that by passing
                 <a target="_blank" href="../interfaces/ISortedItem.html">
-                    <code>ISortedItem</code></a
-                >
-                to <code>[sortingColumn]</code> input of the table.
+                    <code>ISortedItem</code>
+                </a>
+                to
+                <code>[sortingColumn]</code>
+                input of the table.
             </li>
         </ul>
     </nui-message>
@@ -867,7 +1022,8 @@
     <p>
         This boolean option allows you to enable/disable chips functionality.
         Default is
-        <code>true</code>.
+        <code>true</code>
+        .
     </p>
     } @default {
     <ng-content></ng-content>
