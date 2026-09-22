@@ -38,15 +38,6 @@ import { _uniqueId } from "../../functions/unique-id";
     templateUrl: "./progress.component.html",
     styleUrls: ["./progress.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: {
-        "role": "progressbar",
-        "aria-valuemin": "0",
-        "aria-valuemax": "100",
-        "[attr.aria-label]": "ariaLabel",
-        "[attr.aria-valuenow]": "percent",
-        "[attr.aria-describedby]":
-            "message ? messageId : (helpText ? helpId : null)",
-    },
     standalone: false,
 })
 export class ProgressComponent implements OnChanges {
