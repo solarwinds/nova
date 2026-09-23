@@ -47,9 +47,9 @@
     </div>
     <div
         class="nui-expander__body-wrapper"
-        role="region"
         [id]="bodyId"
-        [attr.aria-labelledby]="'nui-expander-label-' + uniqueId">
+        [attr.role]="useRegionLandmark ? 'region' : null"
+        [attr.aria-labelledby]="useRegionLandmark ? 'nui-expander-label-' + uniqueId : null">
         <div
             class="nui-expander__body"
             [class.hide-left-border]="hideLeftBorder"
