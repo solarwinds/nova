@@ -93,6 +93,25 @@ export class WizardV2Atom extends Atom {
         }
     };
 
+    public async getSelectedIndex(): Promise<number> {
+        await expect(this.headers.first()).toBeVisible();
+        const posInSet = await this.headers.evaluateAll(headers =>
+            headers
+                .find(header =>
+                    header.classList.contains(
+                        "nui-wizard-step-header--selected"
+                    )
+                )
+                ?.getAttribute("aria-posinset")
+        );
+
+        if (!posInSet) {
+            throw new Error("Unable to determine selected wizard step");
+        }
+
+        return Number(posInSet) - 1;
+    }
+
     public toHaveStepsCount = async (expected: number): Promise<void> => {
         await expect(this.steps).toHaveCount(expected);
     };
