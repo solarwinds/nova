@@ -217,32 +217,12 @@ test.describe("USERCONTROL datepicker", () => {
             getTrimmedText("nui-demo-datepicker-max-date");
 
         test("should forbid selection of date via text input, less than minDate", async () => {
-            const rawMinDate = await getMinDate();
-
-            console.log("Raw minDate:", rawMinDate);
-
-            const minDate: Moment = moment(rawMinDate);
-
-            console.log("Parsed minDate:", minDate.format());
-            console.log("minDate valid:", minDate.isValid());
-
+            const minDate: Moment = moment(await getMinDate());
             let date: Moment = moment(minDate);
 
             date.date(date.date() + 1);
-
-            const formattedDate = datepickerMinMax.formatDate(date, "en-US");
-
-            console.log(
-                "Timezone:",
-                Intl.DateTimeFormat().resolvedOptions().timeZone
-            );
-            console.log("Moment:", date.format());
-            console.log("ISO:", date.toISOString());
-            console.log("Formatted:", formattedDate);
-
             await datepickerMinMax.toggle();
             await datepickerMinMax.clearText();
-
             await datepickerMinMax.acceptText(
                 datepickerMinMax.formatDate(date, "en-US")
             );
