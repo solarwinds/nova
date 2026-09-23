@@ -80,13 +80,16 @@ export class WizardV2Atom extends Atom {
     };
 
     public moveToFinalStep = async (): Promise<void> => {
-        const count = await this.steps.count();
-        for (let i = 0; i < count; i++) {
-            const nextButton = this.footer.nextButton;
-            if (!(await nextButton.getLocator().isVisible())) {
-                return;
-            }
-            await nextButton.click();
+        const finalStepIndex = (await this.steps.count()) - 1;
+        let selectedIndex = await this.getSelectedIndex();
+
+        while (selectedIndex < finalStepIndex) {
+            const nextIndex = selectedIndex + 1;
+            await this.footer.nextButton.click();
+            await expect
+                .poll(async () => this.getSelectedIndex())
+                .toBe(nextIndex);
+            selectedIndex = nextIndex;
         }
     };
 
