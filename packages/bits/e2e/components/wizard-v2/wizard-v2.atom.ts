@@ -80,17 +80,28 @@ export class WizardV2Atom extends Atom {
     };
 
     public moveToFinalStep = async (): Promise<void> => {
-        const finalStepIndex = (await this.steps.count()) - 1;
+        const count = await this.steps.count();
+
+        if (count === 0) {
+            return;
+        }
+
         let selectedIndex = await this.getSelectedIndex();
 
-        while (selectedIndex < finalStepIndex) {
+        while (selectedIndex < count - 1) {
             const nextIndex = selectedIndex + 1;
 
             await this.footer.nextButton.click();
 
-            await expect(this.getHeader(nextIndex).getLocator()).toHaveClass(
-                /nui-wizard-step-header--selected/
-            );
+            await expect
+                .poll(async () => {
+                    try {
+                        return await this.getSelectedIndex();
+                    } catch {
+                        return selectedIndex;
+                    }
+                })
+                .toBe(nextIndex);
 
             selectedIndex = nextIndex;
         }
@@ -99,11 +110,7 @@ export class WizardV2Atom extends Atom {
     public async getSelectedIndex(): Promise<number> {
         const posInSet = await this.headers.evaluateAll(headers =>
             headers
-                .find(header =>
-                    header.classList.contains(
-                        "nui-wizard-step-header--selected"
-                    )
-                )
+                .find(header => header.getAttribute("aria-selected") === "true")
                 ?.getAttribute("aria-posinset")
         );
 
