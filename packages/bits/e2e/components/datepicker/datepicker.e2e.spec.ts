@@ -221,8 +221,20 @@ test.describe("USERCONTROL datepicker", () => {
             let date: Moment = moment(minDate);
 
             date.date(date.date() + 1);
+
+            const formattedDate = datepickerMinMax.formatDate(date, "en-US");
+
+            console.log(
+                "Timezone:",
+                Intl.DateTimeFormat().resolvedOptions().timeZone
+            );
+            console.log("Moment:", date.format());
+            console.log("ISO:", date.toISOString());
+            console.log("Formatted:", formattedDate);
+
             await datepickerMinMax.toggle();
             await datepickerMinMax.clearText();
+
             await datepickerMinMax.acceptText(
                 datepickerMinMax.formatDate(date, "en-US")
             );
