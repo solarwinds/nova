@@ -25,7 +25,7 @@ import { By } from "@angular/platform-browser";
 import { ExpanderComponent } from "./expander.component";
 
 @Component({
-    template: `<nui-expander [open]="open"
+    template: `<nui-expander [open]="open" [useRegionLandmark]="true"
         ><div nuiExpanderHeader=""><p>Custom Projected Header</p></div>
         <div><span>Covfefe</span></div></nui-expander
     >`,
@@ -240,6 +240,7 @@ describe("components >", () => {
                 fixture = TestBed.createComponent(ExpanderComponent);
                 subject = fixture.componentInstance;
                 subject.header = "Standard header";
+                subject.useRegionLandmark = true;
                 fixture.detectChanges();
 
                 const expectedLabelId = `nui-expander-label-${subject.uniqueId}`;
@@ -312,6 +313,7 @@ describe("components >", () => {
                 subject = fixture.componentInstance;
                 subject.header = "";
                 subject.ariaLabel = "Fallback accessible name";
+                subject.useRegionLandmark = true;
                 fixture.detectChanges();
 
                 const expectedLabelId = `nui-expander-label-${subject.uniqueId}`;
@@ -339,6 +341,7 @@ describe("components >", () => {
                 fixture = TestBed.createComponent(ExpanderComponent);
                 subject = fixture.componentInstance;
                 subject.header = "";
+                subject.useRegionLandmark = true;
                 fixture.detectChanges();
 
                 const expectedLabelId = `nui-expander-label-${subject.uniqueId}`;
@@ -381,6 +384,27 @@ describe("components >", () => {
                 expect(
                     headerEl.nativeElement.getAttribute("aria-controls")
                 ).toBe(subject.bodyId);
+                expect(bodyWrapperEl.nativeElement.getAttribute("id")).toBe(
+                    subject.bodyId
+                );
+            });
+
+            it("does not expose the body as a landmark by default", () => {
+                fixture = TestBed.createComponent(ExpanderComponent);
+                subject = fixture.componentInstance;
+                subject.header = "Standard header";
+                fixture.detectChanges();
+
+                const bodyWrapperEl = fixture.debugElement.query(
+                    By.css(".nui-expander__body-wrapper")
+                );
+
+                expect(
+                    bodyWrapperEl.nativeElement.getAttribute("role")
+                ).toBeNull();
+                expect(
+                    bodyWrapperEl.nativeElement.getAttribute("aria-labelledby")
+                ).toBeNull();
                 expect(bodyWrapperEl.nativeElement.getAttribute("id")).toBe(
                     subject.bodyId
                 );

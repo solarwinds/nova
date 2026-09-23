@@ -16,7 +16,8 @@ export enum Animations {
 interface AxeFixture {
     runA11yScan: (
         context?: string | any,
-        disabledRules?: string[]
+        disabledRules?: string[],
+        additionalTags?: string[]
     ) => Promise<void>;
 }
 
@@ -24,28 +25,39 @@ export { expect } from "@playwright/test";
 
 export const test = base.extend<AxeFixture>({
     runA11yScan: async ({ page }, use) => {
-        await use(async (context?: any | string, disabledRules = []) => {
-            const builder = new AxeBuilder({ page }).withTags([
-                "wcag2a",
-                "wcag21a",
-                "wcag21aa",
-                "wcag22a",
-                "wcag22aa",
-            ]);
-            if (context) {
-                const locator =
-                    typeof context === "string"
-                        ? context
-                        : Atom.getSelector(context);
-                if (locator != null) {
-                    await expect(page.locator(locator).first()).toBeVisible();
+        await use(
+            async (
+                context?: any | string,
+                disabledRules: string[] = [],
+                additionalTags: string[] = []
+            ) => {
+                const builder = new AxeBuilder({ page }).withTags([
+                    "wcag2a",
+                    "wcag21a",
+                    "wcag21aa",
+                    "wcag22a",
+                    "wcag22aa",
+                    ...additionalTags,
+                ]);
+                if (context) {
+                    const locator =
+                        typeof context === "string"
+                            ? context
+                            : Atom.getSelector(context);
+                    if (locator != null) {
+                        await expect(
+                            page.locator(locator).first()
+                        ).toBeVisible();
+                    }
+                    builder.include(locator ?? "");
                 }
-                builder.include(locator ?? "");
-            }
 
-            const results = await builder.disableRules(disabledRules).analyze();
-            expect(results.violations).toEqual([]);
-        });
+                const results = await builder
+                    .disableRules(disabledRules)
+                    .analyze();
+                expect(results.violations).toEqual([]);
+            }
+        );
     },
 });
 
