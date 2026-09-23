@@ -70,6 +70,13 @@ export class ExpanderComponent implements AfterContentInit {
      */
     @Input() ariaLabel: string;
     /**
+     * Exposes the expander body as a `region` landmark, labelled by the header.
+     * Opt-in, because several expanders on one page would otherwise flood
+     * screen reader landmark navigation with near-identical regions.
+     * @see https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
+     */
+    @Input() useRegionLandmark: boolean = false;
+    /**
      * Use this to have expander opened by default.
      */
     @Input() set open(value: boolean) {
