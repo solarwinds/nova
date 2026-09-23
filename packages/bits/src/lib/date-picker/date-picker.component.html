@@ -12,7 +12,8 @@
             [isInErrorState]="isInErrorState"
             (textChange)="onInputActiveDateChanged($event)"
             (blurred)="updateTouchedState()"
-            [ariaLabel]="ariaLabel">
+            [ariaLabel]="ariaLabel"
+            (keydown.arrowdown)="!isDisabled && overlay.show()">
         </nui-textbox>
         <nui-icon
             class="nui-datepicker__icon"

@@ -31,6 +31,9 @@ test.describe("a11y: expander", () => {
         "aria-command-name",
         "nested-interactive",
     ];
+    // landmark-unique is tagged best-practice only, so the default WCAG-only
+    // scan would never run it — and OO-50773 would stay invisible.
+    const additionalTags: string[] = ["best-practice"];
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("expander/expander-visual-test", page);
@@ -47,6 +50,6 @@ test.describe("a11y: expander", () => {
     test("should check a11y of expander", async ({ runA11yScan }) => {
         await basicExpander.toggle();
         await lineLessExpander.toggle();
-        await runA11yScan(ExpanderAtom, rulesToDisable);
+        await runA11yScan(ExpanderAtom, rulesToDisable, additionalTags);
     });
 });

@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { A11yModule } from "@angular/cdk/a11y";
 import { OverlayModule } from "@angular/cdk/overlay";
 import { PortalModule } from "@angular/cdk/portal";
 import { CommonModule } from "@angular/common";
@@ -32,7 +33,7 @@ import { OverlayPositionService } from "./overlay-position.service";
 @NgModule({
     declarations: [OverlayComponent],
     exports: [OverlayComponent],
-    imports: [OverlayModule, PortalModule, CommonModule],
+    imports: [OverlayModule, PortalModule, CommonModule, A11yModule],
     providers: [OverlayPositionService],
 })
 export class NuiOverlayModule {}

@@ -21,13 +21,23 @@ export class OverlayAtom extends Atom {
     public static CDK_CONTAINER_PANE = "cdk-overlay-pane";
 
     public async isOpened(): Promise<boolean> {
-        return this.cdkContainerPane.first().isVisible();
+        const count = await this.cdkContainerPane.count();
+        if (count === 0) {
+            return false;
+        }
+
+        for (let i = 0; i < count; i++) {
+            if (await this.cdkContainerPane.nth(i).isVisible()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public async toBeOpened(): Promise<void> {
         await expect(this.cdkContainerPane).toBeVisible();
     }
-    public async toNotBeOpened(): Promise<boolean> {
-        return this.cdkContainerPane.isHidden();
+    public async toNotBeOpened(): Promise<void> {
+        await expect(this.cdkContainerPane).toBeHidden();
     }
 }

@@ -56,6 +56,21 @@ export class RangeFilterComponent implements OnDestroy {
     public readonly rangeChange = output<RangeValue>();
 
     protected readonly labelId = `nui-range-filter-label-${RangeFilterComponent.nextLabelId++}`;
+
+    /** Localized label for the low/minimum slider handle */
+    protected get lowHandleAriaLabel(): string {
+        const prefix = this.label();
+        const suffix = $localize`Minimum value`;
+        return prefix ? `${prefix}, ${suffix}` : suffix;
+    }
+
+    /** Localized label for the high/maximum slider handle */
+    protected get highHandleAriaLabel(): string {
+        const prefix = this.label();
+        const suffix = $localize`Maximum value`;
+        return prefix ? `${prefix}, ${suffix}` : suffix;
+    }
+
     protected readonly dragHandle = signal<"low" | "high" | null>(null);
     protected readonly resolvedLow = computed(() => {
         const resolvedHigh = this.snapAndClamp(

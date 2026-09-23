@@ -28,6 +28,8 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 
+import { _uniqueId } from "../../functions/unique-id";
+
 /**
  * <example-url>./../examples/index.html#/progress</example-url>
  */
@@ -39,6 +41,8 @@ import {
     standalone: false,
 })
 export class ProgressComponent implements OnChanges {
+    public readonly messageId = _uniqueId("nui-progress-message-");
+    public readonly helpId = _uniqueId("nui-progress-help-");
     @Input() public show: boolean;
     @Input() public showProgress = true;
     @Input() public message: string;
@@ -49,7 +53,7 @@ export class ProgressComponent implements OnChanges {
     @Input() public helpText?: string;
     @Input() public stacked: boolean;
     @Input() public compactMode: boolean;
-    @Input() public ariaLabel: string = "Progress bar";
+    @Input() public ariaLabel: string = $localize`Progress bar`;
 
     /**
      * Help template content displayed under the progress bar.

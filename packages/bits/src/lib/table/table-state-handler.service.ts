@@ -83,6 +83,7 @@ export interface ColumnType {
 export interface ITableSortingState {
     sortingIcon?: string;
     isColumnSorted: boolean;
+    sortDirection?: SorterDirection;
 }
 
 /** @ignore */
@@ -736,6 +737,7 @@ export class TableStateHandlerService {
         if (this.state.sortedColumn) {
             return {
                 sortingIcon: this.sortIcons[this.state.sortedColumn.direction],
+                sortDirection: this.state.sortedColumn.direction,
                 // comparing column index with index of sorted column
                 isColumnSorted:
                     cellIndex ===

@@ -66,6 +66,14 @@ export class ProgressAtom extends Atom {
         return await this.root.locator(".nui-progress__hint").innerText();
     }
 
+    public async toBeProgressBarDisplayed(): Promise<void> {
+        await expect(this.root.locator(".nui-progress__bar")).toBeVisible();
+    }
+
+    /**
+     * @Deprecated: use ProgressAtom.toBeProgressBarDisplayed.
+     * see ../../ASSERTING_VALUE.md
+     */
     public async isProgressBarDisplayed(): Promise<boolean> {
         const bar = this.root.locator(".nui-progress__bar");
         return await bar.isVisible();
