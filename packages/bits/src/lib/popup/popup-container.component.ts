@@ -41,6 +41,9 @@ import { PositionService } from "../../services/position.service";
             class="nui-popup-container nui-popup--opened nui-popup--detached"
             [style.left.px]="left"
             [style.top.px]="top"
+            role="dialog"
+            aria-label="Popup container"
+            i18n-aria-label="@@popupContainer"
         >
             <ng-content></ng-content>
         </div>

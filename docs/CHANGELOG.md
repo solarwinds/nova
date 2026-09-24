@@ -2,8 +2,19 @@
 
 ## [21.0.4] 📅 2026-09-16
 
+### Added
+
+- `@nova-ui/dashboards` | Decoupled KPI tile and proportional chart into reusable view components (`KpiTileViewComponent`, `ProportionalChartViewComponent`)
+- `@nova-ui/dashboards` | Added `ViewsModule` exposing reusable module-based view components for use outside of widget context
+
 ### Fixes
 
+- `@nova-ui/bits` | A11y fixies for Home Summary
+- `@nova-ui/bits` | A11y fixies for Search component
+- `@nova-ui/bits` | new accessible blue for active menu button text
+- Essentional A11y fixies
+- `@nova-ui/bits` | Added unique IDs to expander landmarks
+- `@nova-ui/bits` | A11y fixes for nui-toolbar
 - Prettier fix
 
 ## [21.0.3] 📅 2026-08-04

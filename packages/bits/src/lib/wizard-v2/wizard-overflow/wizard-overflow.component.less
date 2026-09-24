@@ -50,6 +50,11 @@
 .nui-wizard-overflow {
     position: relative;
 
+    nui-popover:focus-visible {
+        .focus-outline();
+        border-radius: @nui-radius-default;
+    }
+
     .nui-tag {
         z-index: 1;
         width: 35px;

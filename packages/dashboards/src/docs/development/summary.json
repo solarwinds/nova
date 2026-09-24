@@ -152,8 +152,12 @@
                 "title": "Embedded Content"
             },
             {
-                "file": "../pages/widget-types/drilldown.md",
-                "title": "Drilldown"
+                "title": "Drilldown",
+                "file": "../pages/widget-types/drilldown.md"
+            },
+            {
+                "title": "Standalone View Components",
+                "file": "../pages/widget-types/view-components.md"
             }
         ],
         "file": "../pages/widget-types/overview.md",

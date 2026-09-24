@@ -11,14 +11,12 @@
                 We can automatically change the background color when the value
                 meets certain conditions.
             </p>
+            <!-- TODO: NUI-6281 - Fix no keyboard alternative for drag-to-reorder -->
             <div cdkDropList (cdkDropListDropped)="drop($event)">
-                @for ( rule of formLocal.get('rules')?.value.controls; track
+                @for (rule of formLocal.get("rules")?.value.controls; track
                 rule; let i = $index) {
                 <div
-                    class="kpi-color-rule d-flex pt-3"
-                    [formGroup]="rule"
-                    cdkDrag
-                    (cdkDragStarted)="cdkDragStarted($event)">
+                    class="kpi-color-rule__control justify-content-center d-flex">
                     <div
                         class="kpi-color-rule__control justify-content-center d-flex">
                         <nui-icon
@@ -35,20 +33,22 @@
                                 i18n-placeholder
                                 style="min-width: 220px"
                                 [formControl]="rule.get('comparisonType')">
-                                @for ( item of availableComparators | keyvalue ;
-                                track item) {
+                                @for (item of availableComparators | keyvalue;
+                                track item.key) {
                                 <nui-select-v2-option [value]="item.key">
                                     {{ getLabel(item.key) }}
                                 </nui-select-v2-option>
                                 }
                             </nui-select-v2>
                         </nui-form-field>
+
                         <nui-form-field
                             class="mr-3 mb-3"
                             [control]="rule.get('value')"
                             style="max-width: 100px">
                             <nui-textbox formControlName="value"></nui-textbox>
                         </nui-form-field>
+
                         <nui-form-field
                             class="mr-3 mb-3"
                             [control]="rule.get('color')">
@@ -62,6 +62,8 @@
                         icon="delete"
                         displayStyle="action"
                         type="button"
+                        aria-label="Remove rule"
+                        i18n-aria-label
                         class="kpi-color-rule__control"
                         (click)="removeRule(i)"></button>
                     <nui-drop-area

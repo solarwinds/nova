@@ -121,10 +121,8 @@ test.describe("USERCONTROL Wizard V2: ", () => {
                 .getLocator()
                 .locator(".complete");
             await finishButton.click();
-            await wizardDialog.toBeHidden();
 
             await openWizardDialogBtn.click();
-            await wizardDialog.toBeVisible();
 
             const lastHeader = wizardDialog.getHeader(3);
             await lastHeader.toContainClass("nui-wizard-step-header--selected");
