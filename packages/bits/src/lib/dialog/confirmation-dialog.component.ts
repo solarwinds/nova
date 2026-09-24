@@ -30,7 +30,8 @@ import { ConfirmationDialogButtons, SeverityLevels } from "./public-api";
     selector: "nui-confirmation-dialog-window",
     templateUrl: "./confirmation-dialog.component.html",
     host: {
-        "role": "dialog",
+        role: "dialog",
+        "aria-modal": "true",
         "[attr.aria-label]": "getAriaLabel()",
     },
     standalone: false,

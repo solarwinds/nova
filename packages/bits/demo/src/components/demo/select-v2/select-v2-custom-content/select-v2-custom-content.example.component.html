@@ -12,7 +12,9 @@
             displayStyle="action"
             [icon]="'add'"
             class="custom-box"
-            (click)="actionSimulation()">
+            (click)="actionSimulation()"
+            (keydown.enter)="actionSimulation()"
+            (keydown.space)="actionSimulation(); $event.preventDefault()">
             Add new filtered state
         </button>
         <nui-divider size="extra-small"></nui-divider>
@@ -29,7 +31,8 @@
                 type="button"
                 displayStyle="action"
                 [icon]="'menu'"
-                (click)="actionSimulation($event)"></button>
+                (click)="actionSimulation($event)"
+                (keydown)="$event.stopPropagation()"></button>
         </nui-select-v2-option>
         }
     </nui-select-v2-option-group>
@@ -37,14 +40,20 @@
 </nui-select-v2>
 
 <ng-template #customTemplate let-context let-open="open">
-    <div class="custom-container">
+    <div
+        class="custom-container"
+        tabindex="0"
+        role="combobox"
+        aria-haspopup="listbox"
+        [attr.aria-expanded]="open"
+        (keydown)="onKeyDown($event)">
         @if (context) {
         <div class="custom-input-template">
             <span>{{ context.name }}</span>
             <nui-icon class="ml-2" [icon]="context.icon"></nui-icon>
         </div>
         } @else {
-        <span class="nui-select-v2__placeholder">Select Item</span>
+        <ng-template [ngTemplateOutlet]="empty"></ng-template>
         }
 
         <nui-icon

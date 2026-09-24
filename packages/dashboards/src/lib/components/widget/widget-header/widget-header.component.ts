@@ -92,6 +92,9 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input() public collapsible = false;
     @Input() public reloadable = true;
     @Input() public title: string;
+    @Input() public titleIcon: string;
+    @Input() public titleIconSize: string = "small";
+    @Input() public titleIconTooltip: string;
     @Input() public subtitle: string;
     @Input() public hideMenu: boolean = false;
     @Input() public url: string;
@@ -112,6 +115,14 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
     public get state(): "expanded" | "collapsed" {
         return this.collapsed && this.collapsible ? "collapsed" : "expanded";
+    }
+
+    public get hasTitleIcon(): boolean {
+        return !!this.titleIcon;
+    }
+
+    public get showTitleIcon(): boolean {
+        return this.hasTitleIcon;
     }
 
     public linkTooltip = $localize`Explore this data`;

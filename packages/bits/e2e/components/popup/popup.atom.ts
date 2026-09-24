@@ -2,10 +2,11 @@ import { Locator } from "playwright-core";
 
 import { OverlayContentAtom } from "./overlay-content.atom";
 import { Atom, IAtomClass } from "../../atom";
-import { expect } from "../../setup";
+import { expect, Helpers } from "../../setup";
 
 export class PopupAtom extends Atom {
     public static CSS_CLASS = "nui-popup";
+    public detachedPopupContextClass?: string;
 
     public static findIn<T extends Atom>(
         atomClass: IAtomClass<T>,
@@ -23,6 +24,14 @@ export class PopupAtom extends Atom {
     }
 
     public get popupBoxDetached(): OverlayContentAtom {
+        if (this.detachedPopupContextClass) {
+            return new OverlayContentAtom(
+                Helpers.page.locator(
+                    `.nui-overlay.${this.detachedPopupContextClass}`
+                )
+            );
+        }
+
         return Atom.findIn<OverlayContentAtom>(OverlayContentAtom);
     }
 
@@ -36,7 +45,6 @@ export class PopupAtom extends Atom {
     }
 
     public async isNotOpened(): Promise<void> {
-        await expect(this.getPopupBox).toBeHidden();
         await expect(this.popupBox.getLocator()).toHaveCount(0);
     }
 

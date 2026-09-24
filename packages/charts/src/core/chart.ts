@@ -125,9 +125,11 @@ export class Chart implements IChart {
         this.target = select<HTMLElement, SVGElement>(this.element)
             .append("svg")
             .attrs({
-                class: "nui-chart",
-                height: "100%",
-                width: "100%",
+                "class": "nui-chart",
+                "height": "100%",
+                "width": "100%",
+                // aria-hidden: the accessible label is carried by the nui-chart host element (role="img")
+                "aria-hidden": "true",
             });
 
         this.configureCssFilters();
