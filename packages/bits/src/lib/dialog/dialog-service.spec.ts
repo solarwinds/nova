@@ -110,10 +110,10 @@ export class WithActiveDialogComponent {
             </button>
         </ng-template>
         <ng-template #contentWithIf>
-            @if (show) {
-            <button type="button" id="if" (click)="show = false">
-                Click me
-            </button>
+            @if (show){
+                <button type="button" id="if" (click)="show = false">
+                    Click me
+                </button>
             }
         </ng-template>
         <button type="button" id="open" (click)="open('from button')">
@@ -397,7 +397,7 @@ describe("nui-dialog", () => {
             let resolvedResult: any;
             fixture.componentInstance
                 .openTplClose()
-                .result.then((result) => (resolvedResult = result));
+                .result.then(result => (resolvedResult = result));
 
             // const resolvedResult = await fixture.componentInstance.openTplClose().result;
             fixture.detectChanges();
@@ -415,7 +415,7 @@ describe("nui-dialog", () => {
             let rejectReason: any;
             fixture.componentInstance
                 .openTplDismiss()
-                .result.catch((reason) => (rejectReason = reason));
+                .result.catch(reason => (rejectReason = reason));
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog();
 

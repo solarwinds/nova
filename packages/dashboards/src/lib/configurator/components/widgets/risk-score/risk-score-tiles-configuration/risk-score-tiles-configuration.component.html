@@ -2,8 +2,7 @@
     [items]="tiles"
     [nodes]="nodes"
     (itemsChange)="onItemsChange($event)"
-    (formReady)="onFormReady($event)"
-></nui-items-dynamic>
+    (formReady)="onFormReady($event)"></nui-items-dynamic>
 
 @if ((emptyItems$ | async) && form.touched) {
 <div class="pl-4 pr-4">
@@ -21,7 +20,6 @@
     type="button"
     class="ml-4 mb-4"
     (click)="addTile()"
-    i18n
->
+    i18n>
     Add new value
 </button>

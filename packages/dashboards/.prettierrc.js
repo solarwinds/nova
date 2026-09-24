@@ -1,2 +1,2 @@
 // just reuse root config
-module.export = require("../../.prettierrc.js");
+module.exports = require("../../.prettierrc.js");

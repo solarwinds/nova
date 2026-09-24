@@ -5,8 +5,7 @@
     [class.nui-panel--animating]="isAnimating"
     role="tabpanel"
     [attr.aria-expanded]="!isCollapsible || !isCollapsed"
-    [attr.aria-hidden]="isCollapsible && isCollapsed"
->
+    [attr.aria-hidden]="isCollapsible && isCollapsed">
     <div
         class="nui-panel__side-pane"
         [ngClass]="panelBackgroundColor"
@@ -22,15 +21,13 @@
         [resizerDisabled]="!isPanelResizable()"
         [resizerValue]="getPaneSizeMeasurement()"
         (resizerSizeChanged)="onSizeChanged($event)"
-        #sidePaneContainer
-    >
+        #sidePaneContainer>
         <div class="nui-panel__container" #paneContainer>
             @if (displayPanelHeader) {
             <div
                 class="nui-panel__header"
                 [class.nui-panel__header--no-padding]="!headerPadding"
-                #headerContent
-            >
+                #headerContent>
                 <ng-content select="[nuiPanelEmbeddedIcon]"></ng-content>
                 @if (!heading) {
                 <ng-content select="[nuiPanelEmbeddedHeading]"></ng-content>
@@ -44,8 +41,7 @@
                 </div>
                 } @if (showDefaultIcon) {
                 <div
-                    class="nui-panel__header-container nui-panel__header-container--default"
-                >
+                    class="nui-panel__header-container nui-panel__header-container--default">
                     @if (!isClosable) { @if (isCollapsible) {
                     <button
                         nui-button
@@ -54,8 +50,9 @@
                         displayStyle="action"
                         [icon]="mainIcon"
                         [disabled]="isAnimating"
-                        (click)="toggleCollapsedOnClick()"
-                    ></button>
+                        [ariaLabel]="expandCollapseAriaLabel"
+                        [title]="expandCollapseAriaLabel"
+                        (click)="toggleCollapsedOnClick()"></button>
                     } } @if (isClosable) {
                     <button
                         nui-button
@@ -63,8 +60,10 @@
                         class="nui-panel__header-btn nui-panel__header-btn--close"
                         type="button"
                         icon="close"
-                        (click)="toggleCollapsedOnClick()"
-                    ></button>
+                        ariaLabel="Close panel"
+                        i18n-ariaLabel
+                        title="Close panel"
+                        (click)="toggleCollapsedOnClick()"></button>
                     }
                 </div>
                 }
@@ -77,8 +76,7 @@
                     [class.nui-panel__side-pane-body--no-padding]="
                         !sidePaneBodyPadding
                     "
-                    [style.min-width]="paneBodyWidth"
-                >
+                    [style.min-width]="paneBodyWidth">
                     <ng-content select="[nuiPanelEmbeddedBody]"></ng-content>
                 </div>
                 }

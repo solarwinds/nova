@@ -20,7 +20,11 @@
 
 import { Directionality } from "@angular/cdk/bidi";
 import { Platform } from "@angular/cdk/platform";
-import { CdkVirtualScrollViewport, ViewportRuler } from "@angular/cdk/scrolling";
+import {
+    CdkVirtualScrollViewport,
+    ViewportRuler,
+    CdkVirtualForOf,
+} from "@angular/cdk/scrolling";
 import {
     CDK_TABLE,
     CdkTable,
@@ -70,31 +74,29 @@ import { ISortedItem, SorterDirection } from "../sorter/public-api";
     // so we can be up to date with the CDK table template.
     // CDK_TABLE_TEMPLATE export was removed in angular CDK 20 so we had to copy the template here - https://github.com/angular/components/pull/30956/files.
     template: `
-        <ng-content select="caption"/>
-        <ng-content select="colgroup, col"/>
+        <ng-content select="caption" />
+        <ng-content select="colgroup, col" />
 
         @if (_isServer) {
-          <ng-content/>
-        }
-
-        @if (_isNativeHtmlTable) {
-          <thead role="rowgroup">
-            <ng-container headerRowOutlet/>
-          </thead>
-          <tbody role="rowgroup">
-            <ng-container rowOutlet/>
-            <ng-container noDataRowOutlet/>
-          </tbody>
-          <tfoot role="rowgroup">
-            <ng-container footerRowOutlet/>
-          </tfoot>
+        <ng-content />
+        } @if (_isNativeHtmlTable) {
+        <thead role="rowgroup">
+            <ng-container headerRowOutlet />
+        </thead>
+        <tbody role="rowgroup">
+            <ng-container rowOutlet />
+            <ng-container noDataRowOutlet />
+        </tbody>
+        <tfoot role="rowgroup">
+            <ng-container footerRowOutlet />
+        </tfoot>
         } @else {
-          <ng-container headerRowOutlet/>
-          <ng-container rowOutlet/>
-          <ng-container noDataRowOutlet/>
-          <ng-container footerRowOutlet/>
+        <ng-container headerRowOutlet />
+        <ng-container rowOutlet />
+        <ng-container noDataRowOutlet />
+        <ng-container footerRowOutlet />
         }
-  `,
+    `,
     exportAs: "nuiTable",
     host: {
         class: "nui-table__table",
@@ -152,6 +154,7 @@ export class TableComponent<T>
     private stickyChangedSubscription: Subscription;
     private tableColumnsWidthSubscription: Subscription;
     @HostBinding("class.nui-table__table-fixed") layoutFixed = false;
+    @ContentChild(CdkVirtualForOf) public virtualFor?: CdkVirtualForOf<unknown>;
 
     private readonly virtualScrollViewport = inject(CdkVirtualScrollViewport, {
         optional: true,
@@ -253,7 +256,7 @@ export class TableComponent<T>
         const columns: string[] = _keys(firstRow);
         this.tableStateHandlerService.tableColumns = columns;
 
-        columns.forEach((column) => {
+        columns.forEach(column => {
             const alignment = this.tableStateHandlerService.defineAlignment(
                 firstRow[column as keyof T]
             );
@@ -268,10 +271,12 @@ export class TableComponent<T>
                     }
                 );
             const parentWidth =
-                this._elementRef.nativeElement.parentElement.getBoundingClientRect().width ?
-                    this._elementRef.nativeElement.parentElement.getBoundingClientRect()
-                        .width : this._elementRef.nativeElement.parentElement.parentElement.getBoundingClientRect()
-                        .width;
+                this._elementRef.nativeElement.parentElement.getBoundingClientRect()
+                    .width
+                    ? this._elementRef.nativeElement.parentElement.getBoundingClientRect()
+                          .width
+                    : this._elementRef.nativeElement.parentElement.parentElement.getBoundingClientRect()
+                          .width;
             this.layoutFixed = true;
             this.tableStateHandlerService.tableParentWidth = parentWidth;
         }
@@ -404,6 +409,7 @@ export class TableComponent<T>
         // @ts-ignore: Call parent method in case cdk adds it later
         super.ngAfterContentInit?.();
         // Note: Identifying if table is using virtual scroll.
-        this.tableStateHandlerService.hasVirtualScroll = !!this.virtualScrollViewport && !this.paginatorUsed;
+        this.tableStateHandlerService.hasVirtualScroll =
+            !!this.virtualFor && !this.paginatorUsed;
     }
 }

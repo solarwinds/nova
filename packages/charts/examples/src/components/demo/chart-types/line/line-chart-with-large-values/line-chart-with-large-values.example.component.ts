@@ -57,14 +57,12 @@ export class LineChartWithLargeValuesExampleComponent implements OnInit {
             y: new LinearScale(),
         };
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
-            (d) => ({
-                ...d,
-                accessors,
-                renderer,
-                scales,
-            })
-        );
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
+            ...d,
+            accessors,
+            renderer,
+            scales,
+        }));
 
         (this.chart.getGrid().config() as XYGridConfig).axis.left.fit = true;
 

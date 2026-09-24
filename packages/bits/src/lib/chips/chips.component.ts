@@ -77,7 +77,6 @@ import {
     styleUrls: ["./chips.component.less"],
     encapsulation: ViewEncapsulation.None,
     providers: [ChipsOverflowService],
-    host: { "[attr.role]": "role" },
     standalone: false,
 })
 export class ChipsComponent
@@ -108,6 +107,10 @@ export class ChipsComponent
      * (previous ng1 implementation did not allow that, it handled only one type of items).
      */
     @Input() public itemsSource: IChipsItemsSource;
+    /**
+     * Input to set aria label text
+     */
+    @Input() public ariaLabel: string = $localize`Chips`;
     /**
      * Can be set to 'vertical' to switch chips to vertical list mode. Otherwise horizontal mode is used.
      */
@@ -153,10 +156,6 @@ export class ChipsComponent
 
     private readonly destroy$ = new Subject<void>();
 
-    get role(): string | null {
-        return this.getItemsCount() ? "list" : null;
-    }
-
     constructor(
         private zone: NgZone,
         private chipsOverflowService: ChipsOverflowService
@@ -198,7 +197,7 @@ export class ChipsComponent
         let count = _size(this.itemsSource.flatItems);
         if (!_isEmpty(this.itemsSource.groupedItems)) {
             count += (this.itemsSource.groupedItems || [])
-                .map<number>((group) => group.items.length)
+                .map<number>(group => group.items.length)
                 .reduce((sum, val) => sum + val);
         }
         return count;

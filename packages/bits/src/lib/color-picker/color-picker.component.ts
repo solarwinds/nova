@@ -109,7 +109,10 @@ export class ColorPickerComponent
     public palette: Partial<IPaletteColor[]>;
     public isBlackTick: boolean;
     public isInErrorState: boolean;
-    public ariaLabel?: string | undefined;
+    @Input() public ariaLabel?: string | undefined;
+
+    /** Unique id for the control. */
+    @Input() public id: string;
 
     protected overlayUtilities: OverlayUtilitiesService =
         new OverlayUtilitiesService();
@@ -144,17 +147,17 @@ export class ColorPickerComponent
         }
 
         this.palette =
-            this.colorPalette || this.colors.map((color) => ({ color }));
+            this.colorPalette || this.colors.map(color => ({ color }));
 
         this.initOverlayUtilities();
 
         this.select.valueSelected
             .pipe(
-                tap((value) => this.writeValue(value as any)),
-                tap((value) => this.onChange(value)),
+                tap(value => this.writeValue(value as any)),
+                tap(value => this.onChange(value)),
                 takeUntil(this.destroy$)
             )
-            .subscribe((value) => {
+            .subscribe(value => {
                 if (value) {
                     this.isBlackTick = this.determineBlackTick(
                         value.toString()
@@ -167,8 +170,10 @@ export class ColorPickerComponent
         const positionStrategy = this.cdkOverlay
             .position()
             .flexibleConnectedTo(this.select.elRef.nativeElement)
-            .withPush(false)
-            .withViewportMargin(0)
+            .withPush(true)
+            .withViewportMargin(8)
+            .withFlexibleDimensions(true)
+            .withGrowAfterOpen(true)
             .withPositions([
                 positions["bottom-right"],
                 positions["bottom-left"],

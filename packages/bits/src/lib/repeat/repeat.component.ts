@@ -478,7 +478,7 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
             this.selection = [...this.selection, item];
         } else {
             this.selection = this.selection.filter(
-                (selectionItem) => selectionItem !== item
+                selectionItem => selectionItem !== item
             );
         }
         this.selectionChange.emit(this.selection);
@@ -497,7 +497,11 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
 
     /* START - ITEM BEHAVIOUR DECIDERS */
     public isItemClickable(item: T): boolean {
-        return !this.preventRowClick && !this.isItemDisabled(item);
+        return (
+            this.selectionMode !== RepeatSelectionMode.none &&
+            !this.preventRowClick &&
+            !this.isItemDisabled(item)
+        );
     }
 
     public isItemSelectable(item: T): boolean {
@@ -545,13 +549,13 @@ export class RepeatComponent<T extends IRepeatItem = unknown>
             // self-destroyed subscription
             this.dropListRef.dropped
                 .pipe(
-                    tap((event) => this.itemDropped(event)),
+                    tap(event => this.itemDropped(event)),
                     takeUntil(this.dropListDestroyed)
                 )
                 .subscribe();
 
             this.dropListRef.withItems(
-                this.draggableElements.map((item) => item._dragRef)
+                this.draggableElements.map(item => item._dragRef)
             );
         }
     }

@@ -20,11 +20,9 @@
         [componentType]="configuration?.componentType"
         [properties]="getPropsFor(item)"
         [outputs]="['navigated']"
-        (output)="onListItemEvent(item)"
-    >
+        (output)="onListItemEvent(item)">
         <ng-template
             [cdkPortalOutlet]="componentPortal.portal"
-            (attached)="componentPortal.attached($event)"
-        ></ng-template>
+            (attached)="componentPortal.attached($event)"></ng-template>
     </ng-container>
 </ng-template>

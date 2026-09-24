@@ -3,8 +3,7 @@
     i18n-placeholder
     [formControl]="comboboxControl"
     [displayWith]="displayFn"
-    #combobox
->
+    #combobox>
     @for (itemGroup of items; track itemGroup; let last = $last) {
     <nui-select-v2-option-group>
         <span class="nui-select-v2-option-group--header">{{

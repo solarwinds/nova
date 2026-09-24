@@ -3,8 +3,7 @@
     i18n-placeholder
     [formControl]="comboboxControl"
     [displayWith]="displayFn"
-    #combobox
->
+    #combobox>
     @for (item of items; track item) {
     <nui-select-v2-option [value]="item">
         <span class="mr-3" [nuiComboboxV2OptionHighlight]="item.name"></span>

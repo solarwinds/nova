@@ -62,7 +62,7 @@ describe("Line Renderer >", () => {
         expect(
             renderer
                 .getRequiredLayers()
-                .find((layer) => layer.name === RenderLayerName.unclippedData)
+                .find(layer => layer.name === RenderLayerName.unclippedData)
                 ?.clipped
         ).toEqual(false);
     });
@@ -223,7 +223,7 @@ describe("Line Renderer >", () => {
                         "circle"
                     );
 
-                lineCaps.nodes().forEach((node) => {
+                lineCaps.nodes().forEach(node => {
                     expect(node.getAttribute("style")).toEqual(
                         `stroke-width: ${renderer.config.enhancedLineCap?.strokeWidth}; ` +
                             `fill: ${renderer.config.enhancedLineCap?.fill}; stroke: ${renderer.config.enhancedLineCap?.stroke};`
@@ -245,7 +245,7 @@ describe("Line Renderer >", () => {
                         "circle"
                     );
 
-                lineCaps.nodes().forEach((node) => {
+                lineCaps.nodes().forEach(node => {
                     expect(node.getAttribute("r")).toEqual(
                         renderer.config.enhancedLineCap?.radius?.toString() as string
                     );

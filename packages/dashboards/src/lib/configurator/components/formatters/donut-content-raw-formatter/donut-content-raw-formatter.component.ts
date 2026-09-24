@@ -73,7 +73,7 @@ export class DonutContentRawFormatterComponent implements OnChanges {
     @Input() config: IProportionalWidgetConfig;
 
     public ngOnChanges(): void {
-        this.sum = sumBy(this.data, (s) => s.data[0]);
+        this.sum = sumBy(this.data, s => s.data[0]);
         this.convertedValue = this.unitConversionPipe.transform(this.sum);
     }
 }

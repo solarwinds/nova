@@ -211,7 +211,7 @@ export class PresentationConfigurationComponent
             const formatterId = this.formatterForm.get("componentType")?.value;
             return (
                 this._providedFormatters.find(
-                    (formatter) => formatter.componentType === formatterId
+                    formatter => formatter.componentType === formatterId
                 ) ?? null
             );
         }
@@ -229,7 +229,7 @@ export class PresentationConfigurationComponent
                 propertiesControl.get("dataFieldIds")?.value.value;
             return (
                 this.dataFields.find(
-                    (dataField) => dataField.id === dataFieldId
+                    dataField => dataField.id === dataFieldId
                 ) ?? null
             );
         }
@@ -258,7 +258,7 @@ export class PresentationConfigurationComponent
      */
     private createFormatterConfigurator() {
         const formatterDefinition = this._providedFormatters.find(
-            (formatter) =>
+            formatter =>
                 formatter.componentType ===
                 this.formatterForm.get("componentType")?.value
         );
@@ -297,15 +297,15 @@ export class PresentationConfigurationComponent
 
         // allow by default RawFormatter which has null as dataType
         const sourceDataTypes: Record<string, boolean> = { null: true };
-        this._dataFields.forEach((f) => (sourceDataTypes[f.dataType] = true));
-        this._formatters = this._providedFormatters.filter((f) => {
+        this._dataFields.forEach(f => (sourceDataTypes[f.dataType] = true));
+        this._formatters = this._providedFormatters.filter(f => {
             // cast to array in case we have a single value
             const formatterDataTypes =
                 f.dataTypes.value instanceof Array
                     ? f.dataTypes.value
                     : [f.dataTypes.value];
 
-            return formatterDataTypes.some((v) => sourceDataTypes[v]);
+            return formatterDataTypes.some(v => sourceDataTypes[v]);
         });
         if (this.formatterForm) {
             this.createFormatterConfigurator();

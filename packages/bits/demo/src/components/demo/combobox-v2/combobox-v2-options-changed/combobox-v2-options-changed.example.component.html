@@ -4,8 +4,7 @@
     placeholder="Select Item"
     i18n-placeholder
     [formControl]="comboboxControl"
-    #combobox
->
+    #combobox>
     @for (item of items; track item) {
     <nui-select-v2-option [value]="item">
         <span [nuiComboboxV2OptionHighlight]="item"></span>
@@ -18,8 +17,7 @@
     type="button"
     displayStyle="action"
     i18n
-    (click)="setItems(0)"
->
+    (click)="setItems(0)">
     Set items: 1, 2, 3, 4
 </button>
 <button
@@ -27,8 +25,7 @@
     type="button"
     displayStyle="action"
     i18n
-    (click)="setItems(1)"
->
+    (click)="setItems(1)">
     Set items: 3, 4, 5, 6
 </button>
 
@@ -39,8 +36,7 @@
 <nui-combobox-v2
     [formControl]="multiselectControl"
     [multiselect]="true"
-    #multiselect
->
+    #multiselect>
     <ng-container selectedItems>
         @for (option of multiselect?.value; track option) {
         <nui-chip
@@ -49,8 +45,7 @@
             closeButtonTooltip="Remove"
             [item]="convertToChip(option)"
             (remove)="multiselect.deselectItem(option)"
-            (mouseup)="$event.stopPropagation()"
-        >
+            (mouseup)="$event.stopPropagation()">
         </nui-chip>
         }
     </ng-container>
@@ -66,8 +61,7 @@
     type="button"
     displayStyle="action"
     i18n
-    (click)="setMultiselectItems(0)"
->
+    (click)="setMultiselectItems(0)">
     Set items: 1, 2, 3, 4
 </button>
 <button
@@ -75,7 +69,6 @@
     type="button"
     displayStyle="action"
     i18n
-    (click)="setMultiselectItems(1)"
->
+    (click)="setMultiselectItems(1)">
     Set items: 3, 4, 5, 6
 </button>

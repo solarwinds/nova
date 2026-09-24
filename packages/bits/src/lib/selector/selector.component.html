@@ -8,13 +8,12 @@
         class="nui-selector__checkbox-button"
         [displayStyle]="'default'"
         (click)="handleSelectorClick($event)"
-    >
-        <div class="nui-selector__checkbox-container">
+        (keydown.space)="$event.preventDefault(); handleSelectorClick($event)">
+        <div class="nui-selector__checkbox-container" aria-hidden="true">
             <nui-checkbox
                 #checkbox
                 [checked]="checkboxChecked"
-                [indeterminate]="indeterminate"
-            >
+                [indeterminate]="indeterminate">
             </nui-checkbox>
         </div>
     </button>
@@ -24,10 +23,16 @@
         type="button"
         class="nui-selector__toggle"
         ariaLabel="Open Selector Menu"
+        i18n-ariaLabel
         [displayStyle]="'default'"
         [icon]="'caret-down'"
-        (click)="overlay.toggle()"
-    ></button>
+        aria-haspopup="menu"
+        [attr.aria-expanded]="overlay.showing"
+        [attr.aria-controls]="
+            overlay.showing ? 'nui-selector-menu-' + _id : null
+        "
+        [attr.aria-activedescendant]="overlay.showing ? activeDescendant : null"
+        (click)="overlay.toggle()"></button>
     }
 </div>
 
@@ -37,10 +42,9 @@
     #overlay
     [toggleReference]="toggleButton"
     [overlayConfig]="overlayConfig"
-    [customContainer]="customContainer"
->
+    [customContainer]="customContainer">
     <nui-menu-popup
+        [id]="'nui-selector-menu-' + _id"
         [itemsSource]="items"
-        (menuItemClicked)="handleItemClick($event)"
-    ></nui-menu-popup>
+        (menuItemClicked)="handleItemClick($event)"></nui-menu-popup>
 </nui-overlay>

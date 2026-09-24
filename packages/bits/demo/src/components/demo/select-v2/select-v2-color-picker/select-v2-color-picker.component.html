@@ -6,8 +6,7 @@ Don't forget to disable the width synchronization, so that the overlay does not 
     class="color-picker-select"
     [overlayConfig]="overlayConfig"
     [syncWidth]="false"
-    [displayValueTemplate]="colorSelectTemplate"
->
+    [displayValueTemplate]="colorSelectTemplate">
     <!-- The following block (along with the corresponding ng-template below) builds the markup of the color picker boxes inside the overlay. -->
     <div class="color-picker-container">
         @for (item of backgroundColors; track item) {
@@ -16,17 +15,14 @@ Don't forget to disable the width synchronization, so that the overlay does not 
                 [value]="item"
                 [displayValueContext]="item"
                 class="w-100 h-100 reset-box-sizes"
-                #option
-            >
+                #option>
                 <!-- This block defines the overlay color boxes markup -->
                 <div
                     class="color-picker-option"
-                    [class.color-picker-option--selected]="option?.selected"
-                >
+                    [class.color-picker-option--selected]="option?.selected">
                     <div
                         class="color-picker-option__color-box"
-                        [style.background-color]="item"
-                    >
+                        [style.background-color]="item">
                         <!-- Notice here how 'mix-blend-mode' is used conditionally. Since the glyph sign is always white and is being set as a background image,
               we need a way to make it visible on white background. Since white background is default for the light theme, we bind to that and
               apply the property to mix and differ two backgrounds - the glyph and the underlaying box color background -->
@@ -35,8 +31,7 @@ Don't forget to disable the width synchronization, so that the overlay does not 
                             class="color-picker-option__glyph"
                             [style.mix-blend-mode]="
                                 item === defaultColor ? 'difference' : null
-                            "
-                        ></div>
+                            "></div>
                         }
                     </div>
                 </div>
@@ -48,18 +43,24 @@ Don't forget to disable the width synchronization, so that the overlay does not 
 
 <!-- This template defines the input markup -->
 <ng-template #colorSelectTemplate let-item let-open="open">
-    <div class="color-picker-input">
+    <div
+        class="color-picker-input"
+        role="combobox"
+        aria-haspopup="listbox"
+        [attr.aria-expanded]="open"
+        [attr.aria-label]="item || 'Select color'"
+        [attr.aria-controls]="open ? 'nui-overlay' : null"
+        tabindex="0">
         <div class="color-picker-input__box">
             <div
                 class="color-picker-input__color-box"
-                [style.background-color]="item"
-            ></div>
+                [style.background-color]="item"></div>
         </div>
         <div class="color-picker-input__toggle">
             <nui-icon
                 [style.transform]="open ? 'rotate(180deg)' : ''"
                 icon="caret-down"
-            ></nui-icon>
+                aria-hidden="true"></nui-icon>
         </div>
     </div>
 </ng-template>

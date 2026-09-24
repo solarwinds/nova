@@ -2,8 +2,7 @@
     placeholder="Select Item"
     i18n-placeholder
     [overlayConfig]="config"
-    style="max-width: 50%"
->
+    style="max-width: 50%">
     @for (item of items; track item) {
     <nui-select-v2-option [value]="item">{{ item }}</nui-select-v2-option>
     }

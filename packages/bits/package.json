@@ -13,7 +13,7 @@
     "apollo-angular": "13.0.0",
     "bootstrap-less-port": "0.3.0",
     "graphql": "16.8.1",
-    "modernizr": "3.12.0",
+    "modernizr": "3.13.1",
     "proxyquire": "2.1.3"
   },
   "exports": {
@@ -104,5 +104,5 @@
     "test:dev": "ng test lib -c dev"
   },
   "typings": "public_api.d.ts",
-  "version": "21.0.1"
+  "version": "21.0.4"
 }

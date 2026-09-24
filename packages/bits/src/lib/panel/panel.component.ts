@@ -217,6 +217,12 @@ export class PanelComponent
     public isHoverable = false;
     public isAnimating = false;
 
+    public get expandCollapseAriaLabel(): string {
+        return this._isCollapsed
+            ? $localize`Expand panel`
+            : $localize`Collapse panel`;
+    }
+
     private _isCollapsed: boolean;
     private _isHidden: boolean = false;
     private _viewInitialized = false;
@@ -236,10 +242,10 @@ export class PanelComponent
         this.defineSizes();
         this.defineState();
         this.togglesSubscription = this.toggles
-            .pipe(filter((toggle) => toggle === this._isCollapsed))
+            .pipe(filter(toggle => toggle === this._isCollapsed))
             .pipe(distinctUntilChanged())
             .pipe(debounceTime(PanelComponent.ANIMATION_TIME))
-            .subscribe((_) => this.toggleHideOrCollapsed());
+            .subscribe(_ => this.toggleHideOrCollapsed());
     }
 
     public ngOnChanges(changes: SimpleChanges): void {

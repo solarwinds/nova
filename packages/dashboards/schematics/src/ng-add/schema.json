@@ -4,26 +4,26 @@
     "description": "bootstraps a project for dashboards consumption",
     "properties": {
         "project": {
-            "type": "string",
-            "description": "The name of the project.",
             "$default": {
                 "$source": "projectName"
-            }
-        },
-        "skipModuleUpdate": {
-            "type": "boolean",
-            "description": "Skip updating the module configuration",
-            "default": false
+            },
+            "description": "The name of the project.",
+            "type": "string"
         },
         "skipCss": {
-            "type": "boolean",
+            "default": false,
             "description": "Skip setting styles",
-            "default": false
+            "type": "boolean"
+        },
+        "skipModuleUpdate": {
+            "default": false,
+            "description": "Skip updating the module configuration",
+            "type": "boolean"
         },
         "skipPackageJson": {
-            "type": "boolean",
+            "default": false,
             "description": "Skip updating package.json dependencies",
-            "default": false
+            "type": "boolean"
         }
     },
     "required": [],

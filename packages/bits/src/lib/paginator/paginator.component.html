@@ -4,50 +4,50 @@
         <ul
             class="nui-paginator__list"
             aria-label="List of pages"
-            i18n-aria-label
-        >
+            i18n-aria-label="@@paginatorPagesList">
             @for (item of itemsList; track item) {
             <li
                 title="{{ item.title }}"
                 [ngClass]="item.style"
-                value="{{ item.value }}"
-            >
+                value="{{ item.value }}">
                 @if (item.iconName) {
                 <button
                     nui-button
                     type="button"
                     displayStyle="action"
+                    [ariaLabel]="item.title"
                     [disabled]="item.style"
                     class="move-icon"
                     [icon]="item.iconName"
-                    (click)="item.action?.($event)"
-                ></button>
+                    (click)="item.action?.($event)"></button>
                 } @if (item.value !== dots && !item.iconName) {
                 <button
                     nui-button
                     type="button"
                     displayStyle="action"
+                    [ariaLabel]="item.title"
                     (click)="item.action?.($event)"
                     [isEmpty]="false"
-                >
+                    [attr.aria-current]="
+                        item.style === activeClass ? 'page' : null
+                    ">
                     {{ item.value }}
                 </button>
                 } @if (item.value === dots) {
                 <nui-popup
                     [appendToBody]="appendToBody"
-                    [baseElementSelector]="popupBaseElementSelector"
-                >
+                    [baseElementSelector]="popupBaseElementSelector">
                     <button
                         nui-button
                         type="button"
                         nuiPopupToggle
                         displayStyle="action"
+                        [ariaLabel]="item.title"
                         [ngClass]="item.imageClass"
                         [isEmpty]="false"
-                        aria-haspopup="menu"
+                        [role]="'menu'"
                         (click)="handleDotsClick()"
-                        class="nui-paginator__dots"
-                    >
+                        class="nui-paginator__dots">
                         {{ item.value }}
                     </button>
                     <ul popupAreaContent class="nui-paginator__elipsis-pages">
@@ -56,27 +56,23 @@
                                 class="nui-paginator__page-table"
                                 [ngClass]="{
                                     'native-scroll': !item.useVirtualScroll
-                                }"
-                            >
+                                }">
                                 @if (item.useVirtualScroll) {
                                 <cdk-virtual-scroll-viewport
                                     [style.width.px]="item.popupWidth"
                                     [style.height.px]="130"
                                     [itemSize]="40"
                                     [maxBufferPx]="130"
-                                    [minBufferPx]="130"
-                                >
+                                    [minBufferPx]="130">
                                     <ng-container
                                         *cdkVirtualFor="
                                             let pages of item.pageRows
-                                        "
-                                    >
+                                        ">
                                         <div
                                             [ngTemplateOutlet]="tableRow"
                                             [ngTemplateOutletContext]="{
                                                 pages: pages
-                                            }"
-                                        ></div>
+                                            }"></div>
                                     </ng-container>
                                 </cdk-virtual-scroll-viewport>
                                 } @if (!item.useVirtualScroll) {
@@ -86,8 +82,7 @@
                                         [ngTemplateOutlet]="tableRow"
                                         [ngTemplateOutletContext]="{
                                             pages: pages
-                                        }"
-                                    >
+                                        }">
                                     </ng-container>
                                     }
                                 </tbody>
@@ -108,9 +103,9 @@
         </div>
         <nui-select-v2
             ariaLabel="Items per page"
+            i18n-ariaLabel
             [value]="pageSize"
-            (valueSelected)="onPageSizeChange($event)"
-        >
+            (valueSelected)="onPageSizeChange($event)">
             @for (item of pageSizeSet; track item) {
             <nui-select-v2-option [value]="item">{{
                 item
@@ -129,7 +124,7 @@
                 type="button"
                 displayStyle="action"
                 (click)="goToPage(value)"
-            >
+                [ariaLabel]="getPageAriaLabel(value)">
                 <!-- This tag span was added to display value properly on Safari brouser inside a button in ngFor directive -->
                 <span>{{ value }}</span>
             </button>

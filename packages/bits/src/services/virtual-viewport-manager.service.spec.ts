@@ -165,7 +165,7 @@ describe("services >", () => {
             component.repeat.viewportRef.scrollToIndex(
                 component.repeat.viewportRef.getDataLength()
             );
-            component.items$.pipe(skip(1), take(1)).subscribe((r) => {
+            component.items$.pipe(skip(1), take(1)).subscribe(r => {
                 expect(component.items$.getValue().length).toEqual(
                     component.pageSize * 2
                 );
@@ -188,7 +188,7 @@ describe("services >", () => {
                     // Taking last emission to perform check
                     skip(pagesToScroll - 1),
                     take(1),
-                    tap((users) => {
+                    tap(users => {
                         expect(users.length).toEqual(
                             component.pageSize * pagesToScroll
                         );
@@ -198,7 +198,7 @@ describe("services >", () => {
                 .subscribe();
         });
 
-        it(`should not try to load more data if the last loaded page is not complete`, (done) => {
+        it(`should not try to load more data if the last loaded page is not complete`, done => {
             const pages = 6;
             component.pageSize = 10;
             component.totalItems = component.pageSize * pages + 9;
@@ -233,7 +233,7 @@ describe("services >", () => {
                 .subscribe();
         });
 
-        it("should start over on reset call", (done) => {
+        it("should start over on reset call", done => {
             const pagesToScroll = 5;
             component.items$
                 .pipe(
@@ -247,7 +247,7 @@ describe("services >", () => {
                     }),
                     skip(pagesToScroll - 1),
                     take(1),
-                    switchMap((users) => {
+                    switchMap(users => {
                         expect(users.length).toEqual(
                             component.pageSize * pagesToScroll
                         );
@@ -274,7 +274,7 @@ describe("services >", () => {
                 .subscribe();
         });
 
-        it("should keep the first page after reset when emitFirstPage is false", (done) => {
+        it("should keep the first page after reset when emitFirstPage is false", done => {
             const pagesToScroll = 5;
 
             component.items$
@@ -287,7 +287,7 @@ describe("services >", () => {
                     }),
                     skip(pagesToScroll - 1),
                     take(1),
-                    tap((users) => {
+                    tap(users => {
                         expect(users.length).toEqual(
                             component.pageSize * pagesToScroll
                         );

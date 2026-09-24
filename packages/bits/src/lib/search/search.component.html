@@ -4,10 +4,11 @@
             class="sr-only"
             [attr.id]="resolvedInputId() + '-label'"
             [attr.for]="resolvedInputId()"
-            >{{ inputAriaLabel }}</label
+            >{{ ariaLabel() }}</label
         >
         <input
             class="nui-search__input-control form-control"
+            role="searchbox"
             [attr.id]="resolvedInputId()"
             [attr.name]="name()"
             type="text"
@@ -19,8 +20,7 @@
             [nuiSetFocus]="captureFocus()"
             (focusChange)="onFocusChange($event)"
             (input)="onInputChange()"
-            (keyup)="onKeyup($event)"
-        />
+            (keyup)="onKeyup($event)" />
         <div class="nui-search__button input-group-btn">
             @if (value()) {
             <button
@@ -31,9 +31,8 @@
                 class="nui-search__button-cancel"
                 displayStyle="action"
                 icon="close"
-                (mousedown)="$event.preventDefault()"
                 (click)="onCancel()"
-            ></button>
+                (mousedown)="$event.preventDefault()"></button>
             }
             <button
                 nui-button
@@ -45,8 +44,7 @@
                 icon="search"
                 [disabled]="isButtonDisabled()"
                 [attr.aria-hidden]="isButtonDisabled() ? 'true' : null"
-                (click)="onSearch()"
-            ></button>
+                (click)="onSearch()"></button>
         </div>
     </div>
 </div>

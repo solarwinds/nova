@@ -49,7 +49,7 @@ export class DonutChartTestComponent implements OnInit {
         const renderer = new RadialRenderer();
 
         this.chartAssist.update(
-            getData().map((s) => ({
+            getData().map(s => ({
                 ...s,
                 accessors,
                 scales,

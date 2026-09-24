@@ -45,8 +45,8 @@ export class SrlcIndicatorComponent implements OnInit {
     public ngOnInit(): void {
         this.router.events
             .pipe(
-                filter((event) => event instanceof RoutesRecognized),
-                map((event) => {
+                filter(event => event instanceof RoutesRecognized),
+                map(event => {
                     let route = (<RoutesRecognized>event).state.root;
                     while (route.firstChild) {
                         route = route.firstChild;
@@ -54,7 +54,7 @@ export class SrlcIndicatorComponent implements OnInit {
                     return route;
                 })
             )
-            .subscribe((route) => {
+            .subscribe(route => {
                 const routeDataSrlc = (route.data || {}).srlc;
                 this.componentSrlc = defaults(
                     routeDataSrlc || {},

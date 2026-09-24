@@ -2,8 +2,7 @@
     <nui-dialog-header
         title="Dialog title"
         i18n-title
-        (closed)="closeFromHeader()"
-    ></nui-dialog-header>
+        (closed)="closeFromHeader()"></nui-dialog-header>
     <div class="dialog-body">
         <p i18n>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
@@ -25,8 +24,7 @@
             type="button"
             displayStyle="primary"
             (click)="actionDone()"
-            i18n
-        >
+            i18n>
             Action
         </button>
     </nui-dialog-footer>
@@ -37,7 +35,6 @@
     nui-button
     type="button"
     (click)="open(content)"
-    i18n
->
+    i18n>
     Click me!
 </button>

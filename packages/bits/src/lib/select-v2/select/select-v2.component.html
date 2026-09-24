@@ -1,11 +1,16 @@
 <div
-    tabindex="0"
     #input
     [id]="triggerId"
     class="nui-select-v2__container"
-    [attr.aria-label]="ariaLabel"
-    (keydown)="onKeyDown($event)"
->
+    [attr.role]="displayValueTemplate ? 'none' : 'combobox'"
+    [attr.tabindex]="displayValueTemplate ? -1 : isDisabled ? -1 : 0"
+    [attr.aria-haspopup]="displayValueTemplate ? null : 'listbox'"
+    [attr.aria-expanded]="displayValueTemplate ? null : isDropdownOpen || false"
+    [attr.aria-controls]="
+        displayValueTemplate ? null : isDropdownOpen ? 'nui-overlay' : null
+    "
+    [attr.aria-label]="displayValueTemplate ? null : accessibleLabel"
+    (keydown)="onKeyDown($event)">
     @if (!displayValueTemplate) {
     <div class="nui-select-v2__value">
         @if (!isEmpty) {
@@ -20,7 +25,7 @@
         <nui-icon
             [style.transform]="isDropdownOpen ? 'rotate(180deg)' : ''"
             [icon]="caretIcon"
-        ></nui-icon>
+            aria-hidden="true"></nui-icon>
     </div>
     } @if (displayValueTemplate) {
     <ng-container
@@ -28,16 +33,14 @@
         [ngTemplateOutletContext]="{
             $implicit: getLastSelectedOption()?.displayValueContext || value,
             open: isDropdownOpen
-        }"
-    ></ng-container>
+        }"></ng-container>
     }
 </div>
 <nui-overlay
     roleAttr="listbox"
-    [ariaLabelledBy]="triggerId"
+    [ariaLabelledby]="triggerId"
     [toggleReference]="elRef.nativeElement"
     [viewportMargin]="popupViewportMargin"
-    [overlayConfig]="overlayConfig"
->
+    [overlayConfig]="overlayConfig">
     <ng-content></ng-content>
 </nui-overlay>

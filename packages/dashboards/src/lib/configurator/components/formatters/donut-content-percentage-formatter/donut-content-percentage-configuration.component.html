@@ -4,8 +4,7 @@
             caption="Metrics"
             i18n-caption
             class="mb-3"
-            [control]="currentMetric"
-        >
+            [control]="currentMetric">
             <nui-select-v2 formControlName="currentMetric">
                 @for (itemValue of dsOutput?.result; track itemValue) {
                 <nui-select-v2-option [value]="itemValue?.id">

@@ -108,7 +108,7 @@ export abstract class BaseLayout
 
         this.nodeComponentsConfigs =
             nodes &&
-            nodes.map((n) => {
+            nodes.map(n => {
                 const c = this.pizzagnaService.getComponent(n);
                 if (typeof c === "undefined") {
                     throw new Error(

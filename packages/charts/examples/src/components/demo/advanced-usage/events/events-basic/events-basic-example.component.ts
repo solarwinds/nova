@@ -61,14 +61,12 @@ export class EventsBasicExampleComponent implements OnInit {
             y: new LinearScale(),
         };
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
-            (d) => ({
-                ...d,
-                accessors,
-                renderer,
-                scales,
-            })
-        );
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
+            ...d,
+            accessors,
+            renderer,
+            scales,
+        }));
 
         // - subscribe to a chosen chart event
         // - unsubscribing is not necessary as the chart will be destroyed when the component used to place it on the page will be destroyed;

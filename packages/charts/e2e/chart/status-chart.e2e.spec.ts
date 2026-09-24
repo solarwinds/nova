@@ -128,7 +128,7 @@ test.describe("Status chart", () => {
                     bar
                         .getLocator()
                         .boundingBox()
-                        .then((b) => b?.height ?? 0)
+                        .then(b => b?.height ?? 0)
                 )
                 .toBeLessThan(minIconSize);
 

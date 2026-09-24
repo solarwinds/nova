@@ -2,8 +2,7 @@
     <nui-dialog-header
         i18n-title
         title="Restore Wizard State"
-        (closed)="closeDialog()"
-    >
+        (closed)="closeDialog()">
     </nui-dialog-header>
     @if (form) {
     <form class="dialog-body compact-mode" [formGroup]="form">
@@ -11,15 +10,13 @@
             <nui-wizard-step-v2
                 label="Person Details"
                 formGroupName="personDetails"
-                [stepControl]="form.get(['personDetails'])"
-            >
+                [stepControl]="form.get(['personDetails'])">
                 <div class="px-5 pb-5">
                     <nui-form-field
                         [control]="form.get(['personDetails', 'name'])"
                         class="d-block mb-4 mt-4"
                         i18n-caption
-                        caption="Name"
-                    >
+                        caption="Name">
                         <nui-textbox formControlName="name"></nui-textbox>
                         @if ( form.get(['personDetails', 'name'])?.errors
                         ?.required ) {
@@ -29,8 +26,7 @@
                         }
                     </nui-form-field>
                     <nui-form-field
-                        [control]="form.get(['personDetails', 'privacy'])"
-                    >
+                        [control]="form.get(['personDetails', 'privacy'])">
                         <nui-checkbox formControlName="privacy" [value]="true">
                             Privacy Policy
                         </nui-checkbox>
@@ -44,28 +40,24 @@
                 </div>
                 <ng-template nuiWizardStepFooter>
                     <ng-container
-                        *ngTemplateOutlet="wizardCancel"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container
                         *ngTemplateOutlet="
                             wizardNext;
                             context: { form: 'personDetails' }
-                        "
-                    ></ng-container>
+                        "></ng-container>
                 </ng-template>
             </nui-wizard-step-v2>
             <nui-wizard-step-v2
                 label="Organization"
                 formGroupName="organization"
-                [stepControl]="form.get(['organization'])"
-            >
+                [stepControl]="form.get(['organization'])">
                 <div class="p-5">
                     <nui-form-field
                         [control]="form.get(['organization', 'title'])"
                         class="d-block mb-4"
                         i18n-caption
-                        caption="Organization"
-                    >
+                        caption="Organization">
                         <nui-textbox formControlName="title"></nui-textbox>
                         @if ( form.get(['organization', 'title'])?.errors
                         ?.required ) {
@@ -77,12 +69,10 @@
                     <nui-form-field
                         caption="Date"
                         class="d-block mb-4"
-                        [control]="form.get(['organization', 'date'])"
-                    >
+                        [control]="form.get(['organization', 'date'])">
                         <nui-date-picker
                             formControlName="date"
-                            i18n
-                        ></nui-date-picker>
+                            i18n></nui-date-picker>
                         @if ( form.get(['organization', 'date'])?.errors
                         ?.required ) {
                         <nui-validation-message for="required" i18n>
@@ -94,12 +84,10 @@
                         [control]="
                             form.get(['organization', 'createDynamicStep1'])
                         "
-                        class="d-block"
-                    >
+                        class="d-block">
                         <nui-checkbox
                             formControlName="createDynamicStep1"
-                            [value]="true"
-                        >
+                            [value]="true">
                             Add first step dynamically
                         </nui-checkbox>
                     </nui-form-field>
@@ -107,29 +95,24 @@
                         [control]="
                             form.get(['organization', 'createDynamicStep2'])
                         "
-                        class="d-block"
-                    >
+                        class="d-block">
                         <nui-checkbox
                             formControlName="createDynamicStep2"
-                            [value]="true"
-                        >
+                            [value]="true">
                             Add second step dynamically
                         </nui-checkbox>
                     </nui-form-field>
                 </div>
                 <ng-template nuiWizardStepFooter>
                     <ng-container
-                        *ngTemplateOutlet="wizardCancel"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container
-                        *ngTemplateOutlet="wizardPrevious"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardPrevious"></ng-container>
                     <ng-container
                         *ngTemplateOutlet="
                             wizardNext;
                             context: { form: 'organization' }
-                        "
-                    ></ng-container>
+                        "></ng-container>
                 </ng-template>
             </nui-wizard-step-v2>
             @for (step of dynamicSteps; track step) {
@@ -137,13 +120,11 @@
                 <ng-template nuiWizardStepLabel>{{ step.title }}</ng-template>
                 <div class="p-5">
                     <ng-container
-                        *ngTemplateOutlet="step.templateRef"
-                    ></ng-container>
+                        *ngTemplateOutlet="step.templateRef"></ng-container>
                 </div>
                 <ng-template nuiWizardStepFooter>
                     <ng-container
-                        *ngTemplateOutlet="wizardPrevious"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardPrevious"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
                 </ng-template>
             </nui-wizard-step-v2>
@@ -151,8 +132,7 @@
             <nui-wizard-step-v2
                 formGroupName="contactDetails"
                 [stepControl]="form.get(['contactDetails'])"
-                #finalStep
-            >
+                #finalStep>
                 <ng-template nuiWizardStepLabel>
                     <span>Contact Details</span>
                 </ng-template>
@@ -161,12 +141,10 @@
                         [control]="form.get(['contactDetails', 'email'])"
                         class="d-block mb-4 mt-4"
                         i18n-caption
-                        caption="Email"
-                    >
+                        caption="Email">
                         <nui-textbox
                             type="email"
-                            formControlName="email"
-                        ></nui-textbox>
+                            formControlName="email"></nui-textbox>
                         @if ( form.get(['contactDetails', 'email'])?.errors
                         ?.required ) {
                         <nui-validation-message for="required" i18n>
@@ -181,8 +159,7 @@
                     </nui-form-field>
                     <nui-form-field
                         caption="Select"
-                        [control]="form.get(['contactDetails', 'options'])"
-                    >
+                        [control]="form.get(['contactDetails', 'options'])">
                         <nui-select-v2 formControlName="options">
                             <nui-select-v2-option value="Item 1"
                                 >Item 1</nui-select-v2-option
@@ -199,22 +176,18 @@
                         class="btn-reset"
                         type="button"
                         icon="reset"
-                        (click)="resetStep(finalStep)"
-                    >
+                        (click)="resetStep(finalStep)">
                         Reset step
                     </button>
                     <ng-container
-                        *ngTemplateOutlet="wizardCancel"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container
-                        *ngTemplateOutlet="wizardPrevious"
-                    ></ng-container>
+                        *ngTemplateOutlet="wizardPrevious"></ng-container>
                     <button
                         type="button"
                         nui-button
                         displayStyle="primary"
-                        (click)="completeWizard('contactDetails', finalStep)"
-                    >
+                        (click)="completeWizard('contactDetails', finalStep)">
                         Finish
                     </button>
                 </ng-template>
@@ -224,8 +197,7 @@
                     type="button"
                     nuiWizardPrevious
                     nui-button
-                    icon="caret-left"
-                >
+                    icon="caret-left">
                     Back
                 </button>
             </ng-template>
@@ -237,8 +209,7 @@
                     displayStyle="primary"
                     icon="caret-right"
                     iconRight="true"
-                    (click)="validateStep(form)"
-                >
+                    (click)="validateStep(form)">
                     Next
                 </button>
             </ng-template>
@@ -247,8 +218,7 @@
                     type="button"
                     nui-button
                     displayStyle="action"
-                    (click)="closeDialog()"
-                >
+                    (click)="closeDialog()">
                     Cancel
                 </button>
             </ng-template>

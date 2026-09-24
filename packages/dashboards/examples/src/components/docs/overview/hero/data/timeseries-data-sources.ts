@@ -123,5 +123,5 @@ async function delay(
     value: ITimeseriesOutput,
     ms: number
 ): Promise<ITimeseriesOutput> {
-    return new Promise((resolve) => setTimeout(() => resolve(value), ms));
+    return new Promise(resolve => setTimeout(() => resolve(value), ms));
 }

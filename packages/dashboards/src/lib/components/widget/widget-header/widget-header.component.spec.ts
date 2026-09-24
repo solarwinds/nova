@@ -79,7 +79,7 @@ describe("WidgetHeaderComponent", () => {
     });
 
     describe("removable configuration >", () => {
-        [true, false].forEach((removable) => {
+        [true, false].forEach(removable => {
             it(`is removable button shown ${removable}`, () => {
                 component.removable = removable;
                 fixture.changeDetectorRef.markForCheck();
@@ -100,7 +100,7 @@ describe("WidgetHeaderComponent", () => {
     });
 
     describe("editable configuration > ", () => {
-        [true, false].forEach((editable) => {
+        [true, false].forEach(editable => {
             it(`is edit button shown ${editable}`, () => {
                 component.editable = editable;
                 fixture.changeDetectorRef.markForCheck();
@@ -117,6 +117,43 @@ describe("WidgetHeaderComponent", () => {
                 ".nui-widget-header__action-edit"
             );
             expect(pencilEl).toBeTruthy();
+        });
+    });
+
+    describe("title icon", () => {
+        it("shows the title icon on the right side of the title when provided", () => {
+            component.title = "Widget title";
+            component.titleIcon = "clock_off";
+            component.titleIconTooltip =
+                "Not affected by dashboard time filter";
+
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+
+            const titleIcon = bannerElement.querySelector(
+                ".nui-widget__header__content-title-icon"
+            ) as HTMLElement;
+
+            expect(titleIcon).toBeTruthy();
+            expect(titleIcon.getAttribute("title")).toBe(
+                "Not affected by dashboard time filter"
+            );
+            expect(titleIcon.getAttribute("aria-label")).toBe(
+                "Not affected by dashboard time filter"
+            );
+        });
+
+        it("does not render the title icon when no icon is provided", () => {
+            component.title = "Widget title";
+
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+
+            expect(
+                bannerElement.querySelector(
+                    ".nui-widget__header__content-title-icon"
+                )
+            ).toBeNull();
         });
     });
 

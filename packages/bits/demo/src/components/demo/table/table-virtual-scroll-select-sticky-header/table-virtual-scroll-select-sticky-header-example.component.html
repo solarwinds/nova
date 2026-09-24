@@ -4,16 +4,14 @@
         class="h-100"
         [itemSize]="itemSize"
         [maxBufferPx]="1200"
-        [minBufferPx]="400"
-    >
+        [minBufferPx]="400">
         <table
             nui-table
             [dataSource]="items"
             [trackBy]="trackByNo"
             [sortable]="true"
             [selectionConfig]="selectionConfig"
-            [(selection)]="selection"
-        >
+            [(selection)]="selection">
             @for (column of displayedColumns; track column) {
             <ng-container [nuiColumnDef]="column">
                 <th nui-header-cell *nuiHeaderCellDef>{{ column }}</th>
@@ -24,7 +22,10 @@
             }
 
             <tr nui-header-row *nuiHeaderRowDef="displayedColumns"></tr>
-            <tr nui-row *nuiRowDef="let row; columns: displayedColumns" [rowObject]="row"></tr>
+            <tr
+                nui-row
+                *nuiRowDef="let row; columns: displayedColumns"
+                [rowObject]="row"></tr>
         </table>
     </cdk-virtual-scroll-viewport>
 </div>

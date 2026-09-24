@@ -67,7 +67,11 @@ import { NuiFormFieldControl } from "../form-field/public-api";
             multi: true,
         },
     ],
-    host: { role: "radiogroup", "[attr.aria-label]": "ariaLabel || null" },
+    host: {
+        "role": "radiogroup",
+        "[attr.aria-label]": "ariaLabel || null",
+        "[attr.id]": "id",
+    },
     standalone: false,
 })
 export class RadioGroupComponent
@@ -77,6 +81,9 @@ export class RadioGroupComponent
      * Input to set aria label text
      */
     @Input() public ariaLabel: string = "";
+
+    /** Unique id for the control. */
+    @Input() public id: string;
 
     /**
      * Sets the "name" attribute for each radio button in the group
@@ -131,13 +138,13 @@ export class RadioGroupComponent
     }
 
     public ngAfterContentInit(): void {
-        this.children.toArray().forEach((child) => this.registerChild(child));
+        this.children.toArray().forEach(child => this.registerChild(child));
         this.children.changes.subscribe(
             (radioComponentQueryList: QueryList<RadioComponent>) => {
-                this.subscriptions.forEach((sub) => sub.unsubscribe());
+                this.subscriptions.forEach(sub => sub.unsubscribe());
                 radioComponentQueryList
                     .toArray()
-                    .forEach((child) => this.registerChild(child));
+                    .forEach(child => this.registerChild(child));
             }
         );
     }
@@ -166,7 +173,7 @@ export class RadioGroupComponent
     }
 
     public ngOnDestroy(): void {
-        this.subscriptions.forEach((sub) => sub.unsubscribe());
+        this.subscriptions.forEach(sub => sub.unsubscribe());
     }
 
     private setChildDisabled = (child: RadioComponent) => {
@@ -187,7 +194,7 @@ export class RadioGroupComponent
             this.selectedRadio !== null &&
             this.selectedRadio.value === this._value;
         if (this.children && !isAlreadySelected) {
-            this.children.forEach((radio) => {
+            this.children.forEach(radio => {
                 radio.checked = this.value === radio.value;
                 if (radio.checked) {
                     this.selectedRadio = radio;
@@ -265,6 +272,11 @@ export class RadioComponent implements OnInit, OnDestroy {
      * Input to set aria label text
      */
     @Input() public ariaLabel: string = "";
+
+    /**
+     * Input to set aria-labelledby text/id
+     */
+    @Input() public ariaLabelledby: string = "";
 
     @ViewChild("inputViewContainer", { static: true, read: ViewContainerRef })
     public inputViewContainer: ViewContainerRef;

@@ -114,7 +114,7 @@ export class DrilldownDataSourceRealApi<T = any>
         return of(data)
             .pipe(
                 filter(() => !!this.drillState),
-                map((countries) => {
+                map(countries => {
                     const lastHistory = () => getLast(this.groupedDataHistory);
 
                     if (!this.drillState.length && !this.groupBy.length) {
@@ -139,7 +139,7 @@ export class DrilldownDataSourceRealApi<T = any>
 
                     for (const drill of drillToGroup) {
                         const drillIdx = fullDrillState.findIndex(
-                            (v) => v === drill
+                            v => v === drill
                         );
                         const group = this.groupBy[drillIdx];
 
@@ -182,12 +182,12 @@ export class DrilldownDataSourceRealApi<T = any>
         return mainRequest.valueChanges.pipe(
             // mock delay
             delay(300),
-            filter((res) => !res.loading && !!res.data),
+            filter(res => !res.loading && !!res.data),
             // data mapping, !DS specific!
-            map((res) => res.data!.countries),
+            map(res => res.data!.countries),
             // adds mock icons to be displayed on leaf nodes !DS specific!
             map((res: any[]) =>
-                res.map((v) => ({
+                res.map(v => ({
                     ...v,
                     icon: "virtual-host",
                     icon_status: IconStatus.Up,
@@ -197,7 +197,7 @@ export class DrilldownDataSourceRealApi<T = any>
                         v.subregion?.region?.name || "No Region Specified",
                 }))
             ),
-            catchError((e) => {
+            catchError(e => {
                 this.logger.error(e);
                 return of({} as any);
             })
@@ -253,7 +253,7 @@ export class DrilldownDataSourceRealApi<T = any>
     }
 
     private getGroupsWidgetData(groupByObj: Record<string, T[]>) {
-        return Object.keys(groupByObj).map((property) => ({
+        return Object.keys(groupByObj).map(property => ({
             id: property,
             label: property,
             // statuses that will be displayed on group item

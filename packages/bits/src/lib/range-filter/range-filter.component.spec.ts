@@ -209,7 +209,7 @@ describe("components >", () => {
             expect(component["displayHigh"]()).toBe(18);
         });
 
-        it("emits rangeChange immediately when debounceMs is 0", (done) => {
+        it("emits rangeChange immediately when debounceMs is 0", done => {
             setInputs({
                 min: 0,
                 max: 100,
@@ -281,7 +281,7 @@ describe("components >", () => {
             expect(spy).not.toHaveBeenCalled();
         });
 
-        it("increments high value on ArrowRight", (done) => {
+        it("increments high value on ArrowRight", done => {
             setInputs({
                 min: 0,
                 max: 100,
@@ -304,7 +304,7 @@ describe("components >", () => {
             );
         });
 
-        it("decrements low value on ArrowLeft", (done) => {
+        it("decrements low value on ArrowLeft", done => {
             setInputs({
                 min: 0,
                 max: 100,
@@ -328,7 +328,7 @@ describe("components >", () => {
             );
         });
 
-        it("moves high to max on End key", (done) => {
+        it("moves high to max on End key", done => {
             setInputs({ min: 0, max: 100, valueHigh: 50, debounceMs: 0 });
 
             component.rangeChange.subscribe((value: RangeValue) => {
@@ -341,7 +341,7 @@ describe("components >", () => {
             );
         });
 
-        it("moves high to min floor on Home key", (done) => {
+        it("moves high to min floor on Home key", done => {
             setInputs({
                 min: 0,
                 max: 100,
@@ -361,7 +361,7 @@ describe("components >", () => {
             );
         });
 
-        it("moves by large step on Shift+Arrow", (done) => {
+        it("moves by large step on Shift+Arrow", done => {
             setInputs({
                 min: 0,
                 max: 200,
@@ -384,7 +384,7 @@ describe("components >", () => {
             );
         });
 
-        it("keeps emitted values inside the declared range when step does not divide max", (done) => {
+        it("keeps emitted values inside the declared range when step does not divide max", done => {
             setInputs({
                 min: 0,
                 max: 10,
@@ -406,7 +406,7 @@ describe("components >", () => {
             );
         });
 
-        it("emits low:min in single mode regardless of valueLow", (done) => {
+        it("emits low:min in single mode regardless of valueLow", done => {
             setInputs({
                 min: 10,
                 max: 100,

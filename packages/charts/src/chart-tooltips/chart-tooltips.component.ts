@@ -112,7 +112,7 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
         const currentTooltipDirectivesIndex: {
             [seriesId: string]: ChartTooltipDirective;
         } = {};
-        this.tooltips.forEach((tooltip) => {
+        this.tooltips.forEach(tooltip => {
             // this is how we identify which series does the tooltip belong to
             const seriesId: string | undefined =
                 tooltip.elementRef.nativeElement.getAttribute("series-id") ??
@@ -170,7 +170,7 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
         // extracted tooltip positions from tooltip directives
         const tooltipPositions: { [seriesId: string]: IPosition } = {};
 
-        this.tooltips.forEach((tooltip) => {
+        this.tooltips.forEach(tooltip => {
             const element = tooltip.getOverlayElement();
 
             // this is how we identify which series does the tooltip belong to
@@ -213,7 +213,7 @@ export class ChartTooltipsComponent implements OnChanges, OnDestroy {
         tooltipIndex: { [p: string]: ChartTooltipDirective },
         tooltipPositions: { [seriesId: string]: IPosition }
     ) {
-        const nodes = Object.keys(tooltipPositions).map((seriesId) => {
+        const nodes = Object.keys(tooltipPositions).map(seriesId => {
             const position = tooltipPositions[seriesId];
 
             if (isNil(position.height) || isNil(position.width)) {

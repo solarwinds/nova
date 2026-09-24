@@ -125,7 +125,7 @@ const routes: Routes = [
         path: "data-source-service",
         loadChildren: async () =>
             import("./data-source/data-source.module").then(
-                (m) => m.DataSourceModule
+                m => m.DataSourceModule
             ) as Promise<any>,
         data: {
             srlc: {
@@ -158,7 +158,7 @@ const routes: Routes = [
         path: "badge",
         loadChildren: async () =>
             import("./badge/badge.module").then(
-                (m) => m.BadgeModule
+                m => m.BadgeModule
             ) as Promise<any>,
         data: {
             srlc: {
@@ -169,7 +169,7 @@ const routes: Routes = [
     {
         path: "tag",
         loadChildren: async () =>
-            import("./tag/tag.module").then((m) => m.TagModule) as Promise<any>,
+            import("./tag/tag.module").then(m => m.TagModule) as Promise<any>,
         data: {
             srlc: {
                 stage: SrlcStage.ga,
@@ -179,7 +179,7 @@ const routes: Routes = [
     {
         path: "tree",
         loadChildren: async () =>
-            import("./tree/tree.module").then((m) => m.TreeModule) as Promise<
+            import("./tree/tree.module").then(m => m.TreeModule) as Promise<
                 Type<any>
             >,
     },
@@ -192,7 +192,7 @@ const routes: Routes = [
         loadChildren: async () =>
             import(
                 "./unit-conversion-service/unit-conversion-service-example.module"
-            ).then((m) => m.UnitConversionServiceExampleModule) as Promise<
+            ).then(m => m.UnitConversionServiceExampleModule) as Promise<
                 Type<any>
             >,
     },

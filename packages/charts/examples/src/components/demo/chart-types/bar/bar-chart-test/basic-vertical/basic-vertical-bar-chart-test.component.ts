@@ -46,7 +46,7 @@ export class BasicVerticalBarChartTestComponent implements OnInit {
         const scales = barScales();
 
         this.chartAssist.update(
-            getData().map((s) => ({
+            getData().map(s => ({
                 ...s,
                 accessors,
                 renderer,

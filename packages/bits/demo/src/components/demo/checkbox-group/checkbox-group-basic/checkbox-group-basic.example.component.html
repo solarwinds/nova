@@ -2,15 +2,13 @@
     id="nui-demo-checkbox-group-basic"
     name="vegetable"
     [values]="selectedVegetables"
-    (valuesChange)="onValueChange($event)"
->
+    (valuesChange)="onValueChange($event)">
     @for (vegetable of vegetables; track vegetable) {
     <nui-checkbox
         [value]="vegetable"
         i18n-hint
         hint="This is some help text"
-        [checked]="isChecked(vegetable)"
-    >
+        [checked]="isChecked(vegetable)">
         {{ vegetable }}
     </nui-checkbox>
     }

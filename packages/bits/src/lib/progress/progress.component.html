@@ -2,10 +2,10 @@
     @if (message && !compactMode) {
     <div
         class="nui-progress__header"
-        [ngClass]="{ 'nui-progress__header--stacked': stacked }"
-    >
+        [ngClass]="{ 'nui-progress__header--stacked': stacked }">
         <span
             class="nui-progress__message nui-text-label nui-progress__header-item"
+            [id]="messageId"
             >{{ message }}</span
         >
     </div>
@@ -17,23 +17,21 @@
         aria-valuemax="100"
         [attr.aria-label]="ariaLabel"
         [attr.aria-valuenow]="percent || null"
-    >
+        [attr.aria-describedby]="message ? messageId : helpText ? helpId : null">
         <div
             class="nui-progress__bar"
             [ngClass]="{
                 'nui-progress--indeterminate': isIndeterminate,
                 'nui-progress__bar--compact': compactMode
-            }"
-        >
+            }">
             <div
                 class="nui-progress__bar-value"
                 [ngStyle]="{ 'width.%': percent }"
-            ></div>
+                aria-hidden="true"></div>
         </div>
         @if (showNumber && !compactMode) {
         <div
-            class="nui-progress__number nui-progress__header-item nui-text-small"
-        >
+            class="nui-progress__number nui-progress__header-item nui-text-small">
             {{ percent }}%
         </div>
         } @if (allowCancel && !compactMode) {
@@ -44,24 +42,22 @@
             icon="close"
             (click)="cancelProgress()"
             displayStyle="action"
-            [nuiTooltip]="'Cancel'"
-        ></button>
+            [nuiTooltip]="'Cancel'"></button>
         }
     </div>
     } @if (!compactMode) {
     <div
         class="nui-progress__hint"
         [class.nui-progress__hint--stacked]="stacked"
-    >
+        [id]="helpId">
         <ng-container
             [ngTemplateOutlet]="
                 helpTemplateRef ? helpTemplateRef : defaultHelpTemplateRef
-            "
-        ></ng-container>
+            "></ng-container>
     </div>
     }
 </div>
 
 <ng-template #defaultHelpTemplateRef>
-    <span class="nui-text-small-secondary">{{ helpText }}</span>
+    <span class="nui-text-small-secondary" [id]="helpId">{{ helpText }}</span>
 </ng-template>

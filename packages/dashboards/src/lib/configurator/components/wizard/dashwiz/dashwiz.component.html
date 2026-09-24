@@ -2,14 +2,25 @@
     @if (!hideHeader) {
     <div
         class="nui-dashwiz__header"
-        [class.nui-dashwiz__header--lines-stretched]="stretchStepLines"
-    >
+        [class.nui-dashwiz__header--lines-stretched]="stretchStepLines">
         @if (steps) {
-        <ul class="nui-dashwiz__header-steps">
+        <ul class="nui-dashwiz__header-steps" role="tablist">
             @for (step of steps; track step; let first = $first; let last =
             $last) {
             <li
+                role="tab"
+                [attr.tabindex]="step.active ? '0' : '-1'"
+                [attr.aria-selected]="step.active ? 'true' : 'false'"
+                [attr.aria-disabled]="
+                    step.disabled ||
+                    !step.visited ||
+                    currentStep.busyConfig.busy
+                        ? 'true'
+                        : null
+                "
                 (click)="selectStep(step)"
+                (keydown.enter)="selectStep(step)"
+                (keydown.space)="$event.preventDefault(); selectStep(step)"
                 [ngClass]="{
                     'nui-dashwiz__header-step--first': first,
                     'nui-dashwiz__header-step--last': last,
@@ -21,8 +32,7 @@
                     'nui-dashwiz__header-step--active': step.active,
                     'nui-dashwiz__header-step--complete': step.complete
                 }"
-                class="nui-dashwiz__header-step"
-            >
+                class="nui-dashwiz__header-step">
                 @if (!step.hidden) {
                 <div class="nui-dashwiz__header-step-container">
                     <div class="nui-dashwiz__header-step-row">
@@ -31,38 +41,32 @@
                                 <span class="nui-dashwiz__header-step-link">
                                     <span
                                         class="nui-dashwiz__header-step-title"
-                                        #stepTitle
-                                    >
+                                        #stepTitle>
                                         {{ step.title }}
                                     </span>
                                     <div
-                                        class="nui-dashwiz__header-step-link-container"
-                                    >
+                                        class="nui-dashwiz__header-step-link-container">
                                         <div
-                                            class="nui-dashwiz__header-step-col nui-dashwiz__header-step-col-right"
-                                        >
+                                            class="nui-dashwiz__header-step-col nui-dashwiz__header-step-col-right">
                                             <div
                                                 class="nui-dashwiz__header-step-line"
                                                 [ngStyle]="{
                                                     'min-width.px':
                                                         stepLineWidth
-                                                }"
-                                            ></div>
+                                                }"></div>
                                         </div>
                                         <nui-icon
                                             [icon]="step.icon"
                                             [iconColor]="step.iconColor"
-                                        ></nui-icon>
+                                            aria-hidden="true"></nui-icon>
                                         <div
-                                            class="nui-dashwiz__header-step-col nui-dashwiz__header-step-col-left"
-                                        >
+                                            class="nui-dashwiz__header-step-col nui-dashwiz__header-step-col-left">
                                             <div
                                                 class="nui-dashwiz__header-step-line"
                                                 [ngStyle]="{
                                                     'min-width.px':
                                                         stepLineWidth
-                                                }"
-                                            ></div>
+                                                }"></div>
                                         </div>
                                     </div>
                                 </span>
@@ -95,12 +99,10 @@
             [properties]="buttonProperties"
             [outputs]="['cancel', 'next', 'back', 'finish']"
             (output)="onButtonPortalOutput($event)"
-            #componentPortal="nuiComponentPortal"
-        >
+            #componentPortal="nuiComponentPortal">
             <ng-template
                 [cdkPortalOutlet]="componentPortal.portal"
-                (attached)="componentPortal.attached($event)"
-            ></ng-template>
+                (attached)="componentPortal.attached($event)"></ng-template>
         </ng-container>
     </div>
 </div>

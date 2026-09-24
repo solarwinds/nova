@@ -32,12 +32,21 @@ import { LegendOrientation } from "./types";
 
 @Component({
     selector: "nui-legend",
-    host: { class: "d-inline-block" },
+    host: {
+        class: "d-inline-block",
+        "[attr.role]": "interactive ? 'group' : 'list'",
+        "[attr.aria-label]": "ariaLabel",
+    },
     templateUrl: "./legend.component.html",
     encapsulation: ViewEncapsulation.Emulated,
     standalone: false,
 })
 export class LegendComponent implements OnChanges, OnDestroy {
+    /**
+     * The accessible name of the legend. Defaults to "Legend".
+     */
+    @Input() public ariaLabel: string = $localize`Legend`;
+
     /**
      * EventEmitter for notifying subscribers of a change in the active state
      */

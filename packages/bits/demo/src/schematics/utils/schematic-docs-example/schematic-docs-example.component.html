@@ -7,8 +7,7 @@
                 <nui-recursive-object-view
                     [object]="item.value"
                     [objectTemplate]="objectTemplate"
-                    [notObjectTemplate]="notObjectTemplate"
-                >
+                    [notObjectTemplate]="notObjectTemplate">
                     {{ item.key }}
                 </nui-recursive-object-view>
             </nui-expander>
@@ -21,8 +20,7 @@
         <nui-expander
             [disabled]="!selectedFile"
             [open]="isSelectedFileOpen()"
-            (openChange)="onSelectedFileOpenChange($event)"
-        >
+            (openChange)="onSelectedFileOpenChange($event)">
             <div nuiExpanderHeader>
                 <h5 class="m-0">
                     Selected file:
@@ -32,7 +30,7 @@
                 </h5>
             </div>
             <div class="nui-source-inspector-code">
-                @if (shouldCodeRender) {
+                @if (shouldCodeRender){
                 <nui-example-code [code]="getSource(selectedFile)" />
                 }
             </div>
@@ -55,8 +53,7 @@
         type="button"
         displayStyle="action"
         icon="xml-file"
-        (click)="selectFile(key)"
-    >
+        (click)="selectFile(key)">
         {{ key }}
     </button>
 </ng-template>

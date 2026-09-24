@@ -307,8 +307,8 @@ export class DialogFilterGroupExampleComponent
     }
 
     private recalculateCounts(filterData: INovaFilteringOutputs) {
-        this.filterGroupItems.forEach((filterGroupItem) => {
-            filterGroupItem.allFilterOptions.forEach((filterOption) => {
+        this.filterGroupItems.forEach(filterGroupItem => {
+            filterGroupItem.allFilterOptions.forEach(filterOption => {
                 const counts = filterData[filterGroupItem.id];
                 filterOption.count = counts[filterOption.value];
             });

@@ -37,12 +37,11 @@ xdescribe("ng-generate filtered-view 2", () => {
             newProjectRoot: "projects",
             version: "17.0.0",
         };
-        beforeTree = await runner
-            .runExternalSchematic(
-                "@schematics/angular",
-                "workspace",
-                workspaceOptions
-            )
+        beforeTree = await runner.runExternalSchematic(
+            "@schematics/angular",
+            "workspace",
+            workspaceOptions
+        );
 
         beforeTree.create(
             "package.json",
@@ -72,12 +71,11 @@ xdescribe("ng-generate filtered-view 2", () => {
             })
         );
 
-        const afterTree = await runner
-            .runSchematic(
-                "filtered-view",
-                { name: "foo", project: "lib" },
-                beforeTree
-            )
+        const afterTree = await runner.runSchematic(
+            "filtered-view",
+            { name: "foo", project: "lib" },
+            beforeTree
+        );
 
         const fileContents = afterTree
             .read("foo/foo.component.ts")

@@ -13,16 +13,16 @@ absorb into your product's code base.
 
 ## Prerequisites
 
--   The consumer app must be Angular-based
--   Your development environment includes Node.js®, a package manager such as npm, and the Angular CLI
--   Your package manager registries are set
--   Nova Bits has been installed using the following command:
+- The consumer app must be Angular-based
+- Your development environment includes Node.js®, a package manager such as npm, and the Angular CLI
+- Your package manager registries are set
+- Nova Bits has been installed using the following command:
 
 ```sh
 ng add @nova-ui/bits
 ```
 
-If needed, further instructions for Bits installation can be found [here](https://nova-ui.solarwinds.io/#/bits/release_v13.0.x/).
+If needed, further instructions for Bits installation can be found [here](https://nova-ui.solarwinds.io/#/bits/main/).
 
 ### Installing NodeJS and npm
 
@@ -58,10 +58,10 @@ ng add @nova-ui/dashboards
 
 Tasks performed by this command:
 
--   Adds the `@nova-ui/dashboards` package and its associated dependencies to your package.json
--   Performs an `npm install`
--   Adds the necessary imports to your app's main module
--   Adds the necessary style definitions to your app's angular.json file.
+- Adds the `@nova-ui/dashboards` package and its associated dependencies to your package.json
+- Performs an `npm install`
+- Adds the necessary imports to your app's main module
+- Adds the necessary style definitions to your app's angular.json file.
 
 ### Manual Installation and Setup
 
@@ -110,6 +110,6 @@ addition to the styles source paths:
 
 ## Start Implementing Your Dashboards
 
-There is an [online overview](https://nova-ui.solarwinds.io/#/dashboards/release_v13.0.x/additional-documentation/overview.html) of Nova Dashboards, but if you'd prefer to dive right in, you can start with our [Hello, Dashboards! tutorial](https://nova-ui.solarwinds.io/#/dashboards/release_v13.0.x/additional-documentation/tutorials/hello-dashboards.html).
+There is an [online overview](https://nova-ui.solarwinds.io/#/dashboards/main/additional-documentation/overview.html) of Nova Dashboards, but if you'd prefer to dive right in, you can start with our [Hello, Dashboards! tutorial](https://nova-ui.solarwinds.io/#/dashboards/main/additional-documentation/tutorials/hello-dashboards.html).
 
 [//]: # "Line breaks leave breathing room when the user scrolls to the bottom"

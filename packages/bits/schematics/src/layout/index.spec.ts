@@ -24,7 +24,7 @@ import {
 } from "@angular-devkit/schematics/testing";
 import {
     AngularApplicationOptionsSchema,
-    SchematicsAngularApplicationStyle
+    SchematicsAngularApplicationStyle,
 } from "@angular/cli/lib/config/workspace-schema";
 
 describe("layout", () => {
@@ -53,28 +53,25 @@ describe("layout", () => {
             standalone: false,
             skipPackageJson: false,
         };
-        appTree = await runner
-            .runExternalSchematic(
-                "@schematics/angular",
-                "workspace",
-                workspaceOptions
-            )
-        appTree = await runner
-            .runExternalSchematic(
-                "@schematics/angular",
-                "application",
-                appOptions,
-                appTree
-            )
+        appTree = await runner.runExternalSchematic(
+            "@schematics/angular",
+            "workspace",
+            workspaceOptions
+        );
+        appTree = await runner.runExternalSchematic(
+            "@schematics/angular",
+            "application",
+            appOptions,
+            appTree
+        );
     });
 
     it("adds basic component", async () => {
-        const afterTree = await runner
-            .runSchematic(
-                "layout",
-                { project: "bar", name: "comp" },
-                appTree
-            )
+        const afterTree = await runner.runSchematic(
+            "layout",
+            { project: "bar", name: "comp" },
+            appTree
+        );
         const htmlFile = afterTree.readContent(
             "/projects/bar/src/app/comp/comp.component.html"
         );

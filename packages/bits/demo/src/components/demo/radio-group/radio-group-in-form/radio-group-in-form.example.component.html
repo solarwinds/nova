@@ -5,14 +5,12 @@
         hint="Some pretty long text with hint"
         i18n-hint
         info="text"
-        [control]="fancyForm.controls['radioGroup']"
-    >
+        [control]="fancyForm.controls['radioGroup']">
         <nui-radio-group
             id="input-radioGroup"
             formControlName="radioGroup"
             name="vegetable"
-            required
-        >
+            required>
             @for (vegetable of vegetables; track vegetable) {
             <nui-radio [value]="vegetable">
                 {{ vegetable }}

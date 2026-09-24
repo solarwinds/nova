@@ -99,7 +99,7 @@ export class FieldMapperAggregatorConfiguratorComponent
                     ))?.chartSeriesDataFields$
                         ?.pipe(takeUntil(this.destroy$))
                         .subscribe(
-                            (dataFields) =>
+                            dataFields =>
                                 (this.chartSeriesDataFields = dataFields)
                         );
                 }

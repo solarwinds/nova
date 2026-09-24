@@ -1,6 +1,5 @@
 <div
-    class="configurator-heading d-flex justify-content-between align-items-center p-4"
->
+    class="configurator-heading d-flex justify-content-between align-items-center p-4">
     <span class="nui-text-panel nui-text-ellipsis" [title]="configuratorTitle">
         {{ configuratorTitle }}
     </span>
@@ -9,7 +8,8 @@
         type="button"
         displayStyle="action"
         icon="close"
+        aria-label="Close configurator"
+        i18n-aria-label
         [disabled]="disableCloseButton"
-        (click)="this.close.emit()"
-    ></button>
+        (click)="this.close.emit()"></button>
 </div>

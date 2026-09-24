@@ -68,7 +68,8 @@ const isMouseEvent = (event: Event): event is MouseEvent =>
             id="nui-overlay"
             class="nui-overlay"
             [attr.role]="roleAttr || null"
-            [attr.aria-labelledby]="ariaLabelledBy || null"
+            [attr.aria-label]="ariaLabel || null"
+            [attr.aria-labelledby]="ariaLabelledby || null"
             [ngClass]="{ empty: empty$ | async }"
         >
             <ng-content></ng-content>
@@ -98,10 +99,10 @@ export class OverlayComponent
     @Input() public overlayConfig: OverlayConfig;
 
     /** Element to which the Popup is attached */
-    @Input() public toggleReference: HTMLElement;
+    @Input() public toggleReference!: HTMLElement;
 
     /** Popup viewport margins */
-    @Input() viewportMargin: number;
+    @Input() viewportMargin!: number;
 
     /** Sets custom container for CDK Overlay. Selector OR ElementRef */
     @Input() customContainer: OverlayContainerType;
@@ -109,8 +110,11 @@ export class OverlayComponent
     /** Sets the role attribute */
     @Input() roleAttr: string;
 
+    /** Sets the aria-label attribute for accessibility */
+    @Input() ariaLabel?: string;
+
     /** Sets the aria-labelledby attribute for accessibility */
-    @Input() ariaLabelledBy?: string;
+    @Input() ariaLabelledby?: string;
 
     /** Emits MouseEvent when click occurs outside Select/Combobox */
     @Output() public readonly clickOutside = new EventEmitter<MouseEvent>();
@@ -149,7 +153,7 @@ export class OverlayComponent
         const overlayPropsToMap = ["toggleReference", "customContainer"];
 
         if (changes) {
-            overlayPropsToMap.forEach((key) => {
+            overlayPropsToMap.forEach(key => {
                 if (changes[key]) {
                     set(this.overlayService, key, changes[key].currentValue);
                 }
@@ -201,11 +205,11 @@ export class OverlayComponent
     private overlayClickOutside(): Observable<MouseEvent> {
         return this.eventBusService.getStream(DOCUMENT_CLICK_EVENT).pipe(
             filter(isMouseEvent),
-            filter((event) => {
+            filter(event => {
                 const clickTarget = event.target as HTMLElement;
                 const notOrigin = !some(
                     event.composedPath(),
-                    (p) => p === this.toggleReference
+                    p => p === this.toggleReference
                 ); // the toggle elem
                 const notOverlay =
                     this.overlayService
@@ -224,7 +228,7 @@ export class OverlayComponent
 
         clicksOutsideStream$
             .pipe(takeUntil(this.hide$))
-            .subscribe((v) => this.clickOutside.emit(v));
+            .subscribe(v => this.clickOutside.emit(v));
     }
 
     private setOverlayConfig(): void {

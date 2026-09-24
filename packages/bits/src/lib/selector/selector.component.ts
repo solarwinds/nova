@@ -18,12 +18,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ActiveDescendantKeyManager } from "@angular/cdk/a11y";
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
     AfterViewInit,
     Component,
     ElementRef,
     EventEmitter,
+    HostListener,
     Input,
     OnChanges,
     OnDestroy,
@@ -36,6 +38,8 @@ import { Subject } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
 
 import { CheckboxStatus, SelectionType } from "./public-api";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
+import { _uniqueId } from "../../functions/unique-id";
 import {
     IFilter,
     IFilterPub,
@@ -43,6 +47,8 @@ import {
 } from "../../services/data-source/public-api";
 import { CheckboxComponent } from "../checkbox/checkbox.component";
 import { CheckboxChangeEvent } from "../checkbox/public-api";
+import { MenuItemBaseComponent } from "../menu/menu-item/menu-item/menu-item-base";
+import { MenuPopupComponent } from "../menu/menu-popup/menu-popup.component";
 import { IMenuGroup, IMenuItem } from "../menu/public-api";
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
@@ -67,8 +73,8 @@ import { OverlayComponent } from "../overlay/overlay-component/overlay.component
 @Component({
     selector: "nui-selector",
     host: {
-        class: "nui-selector",
-        tabindex: "-1",
+        "class": "nui-selector",
+        "tabindex": "-1",
         "[attr.aria-label]": "ariaLabel",
     },
     templateUrl: "./selector.component.html",
@@ -94,6 +100,8 @@ export class SelectorComponent
     @Input()
     public ariaLabel: string = "Selector";
 
+    public _id = _uniqueId("nui-selector-");
+
     @Output()
     public selectionChange = new EventEmitter<SelectionType>();
 
@@ -104,6 +112,8 @@ export class SelectorComponent
 
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
 
+    @ViewChild(MenuPopupComponent) public popup: MenuPopupComponent;
+
     public customContainer: ElementRef | undefined;
     public checkboxChecked = false;
     public indeterminate = false;
@@ -113,6 +123,7 @@ export class SelectorComponent
     };
 
     private status: SelectionType;
+    private keyboardEventsManager!: ActiveDescendantKeyManager<MenuItemBaseComponent>;
 
     private selectionHasChanged = false;
 
@@ -138,18 +149,32 @@ export class SelectorComponent
             .subscribe(this.onCheckboxValueChange.bind(this));
         this.overlay.clickOutside
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((_) => this.overlay.hide());
+            .subscribe(_ => this.overlay.hide());
         // TODO: should change programmatically in scope of NUI-5937
         this.checkbox.checkboxLabel.nativeElement.setAttribute(
             "tabindex",
             "-1"
         );
+        this.initKeyboardManager();
     }
 
     public ngOnDestroy(): void {
         this.checkbox.valueChange.unsubscribe();
         this.onDestroy$.next();
         this.onDestroy$.complete();
+    }
+
+    @HostListener("keydown", ["$event"])
+    public onKeyDown(event: KeyboardEvent): void {
+        if (this.overlay.showing) {
+            this.handleOpenedMenu(event);
+        } else {
+            this.handleClosedMenu(event);
+        }
+    }
+
+    public get activeDescendant(): string | null {
+        return this.keyboardEventsManager?.activeItem?.id || null;
     }
 
     public getFilters(): IFilter<ISelectorFilter> {
@@ -217,5 +242,50 @@ export class SelectorComponent
         // propagate selection
         this.selectionChange.emit(selection);
         this.overlay.hide();
+    }
+
+    private initKeyboardManager(): void {
+        if (this.popup) {
+            this.keyboardEventsManager =
+                new ActiveDescendantKeyManager<MenuItemBaseComponent>(
+                    this.popup.menuItems
+                ).withWrap();
+        }
+    }
+
+    private handleOpenedMenu(event: KeyboardEvent): void {
+        const { code } = event;
+
+        if (code === KEYBOARD_CODE.ESCAPE || code === KEYBOARD_CODE.TAB) {
+            this.overlay.hide();
+            return;
+        }
+
+        if (
+            code === KEYBOARD_CODE.ARROW_DOWN ||
+            code === KEYBOARD_CODE.ARROW_UP
+        ) {
+            event.preventDefault();
+            this.keyboardEventsManager.onKeydown(event);
+            this.keyboardEventsManager.activeItem?.menuItem?.nativeElement?.scrollIntoView(
+                { block: "nearest" }
+            );
+        }
+
+        if (code === KEYBOARD_CODE.ENTER || code === KEYBOARD_CODE.SPACE) {
+            event.preventDefault();
+            this.keyboardEventsManager.activeItem?.doAction(event);
+        }
+    }
+
+    private handleClosedMenu(event: KeyboardEvent): void {
+        const { code } = event;
+
+        if (code === KEYBOARD_CODE.ARROW_DOWN) {
+            event.preventDefault();
+            this.initKeyboardManager();
+            this.overlay.show();
+            this.keyboardEventsManager?.setFirstItemActive();
+        }
     }
 }

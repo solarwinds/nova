@@ -1,14 +1,20 @@
-<div class="w-100 h-100" nui-busy [busy]="busy">
-    @if (widgetData?.link) {
-    <a class="nui-kpi-indicator" [href]="widgetData.link">
-        <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
-    </a>
-    } @if (!widgetData?.link) {
-    <div class="nui-kpi-indicator" (click)="onInteraction()">
-        <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
-    </div>
-    }
-</div>
+<nui-kpi-tile-view
+    [value]="widgetData?.value"
+    [label]="widgetData?.label"
+    [units]="widgetData?.units"
+    [backgroundColor]="backgroundColor || widgetData?.backgroundColor"
+    [textColor]="widgetData?.textColor"
+    [link]="widgetData?.link"
+    [interactive]="interactive"
+    [loading]="busy"
+    [empty]="showEmpty"
+    [fontSize]="widgetData?.fontSize"
+    [margin]="widgetData?.margin ?? 2"
+    [syncValuesBroker]="syncValuesBroker"
+    [valueTemplate]="
+        configuration?.formatters?.Value ? kpiContent : null
+    "
+    (tileClick)="onInteraction()"></nui-kpi-tile-view>
 
 <ng-template #kpiContent>
     <div
@@ -16,8 +22,7 @@
         [class.nui-kpi-indicator--interactive]="interactive"
         [ngStyle]="{
             'background-color': backgroundColor || widgetData?.backgroundColor
-        }"
-    ></div>
+        }"></div>
     <div
         class="nui-kpi-indicator__text"
         [ngStyle]="{
@@ -26,13 +31,11 @@
                 backgroundColor ||
                 widgetData?.backgroundColor ||
                 defaultColor
-        }"
-    >
+        }">
         <div class="nui-kpi-indicator__zoom-container">
             <div
                 class="nui-kpi-indicator__description nui-kpi-indicator__zoom-container__row"
-                [title]="widgetData?.label"
-            >
+                [title]="widgetData?.label">
                 <span
                     nuiZoomContent
                     [useZoom]="false"
@@ -51,11 +54,9 @@
                 [componentType]="
                     configuration?.formatters?.Value?.formatter?.componentType
                 "
-                [properties]="formattersProperties.Value"
-            >
+                [properties]="formattersProperties.Value">
                 <div
-                    class="nui-kpi-indicator__value nui-kpi-indicator__zoom-container__row"
-                >
+                    class="nui-kpi-indicator__value nui-kpi-indicator__zoom-container__row">
                     <span
                         nuiZoomContent
                         [ngClass]="
@@ -67,12 +68,10 @@
                         [useZoom]="false"
                         [margin]="widgetData?.margin ?? 2"
                         [scaleIN$]="getScaleBroker('value')?.out$"
-                        [scaleOUT$]="getScaleBroker('value')?.in$"
-                    >
+                        [scaleOUT$]="getScaleBroker('value')?.in$">
                         <ng-template
                             [cdkPortalOutlet]="componentPortal.portal"
-                            (attached)="componentPortal.attached($event)"
-                        ></ng-template>
+                            (attached)="componentPortal.attached($event)"></ng-template>
                     </span>
                 </div>
             </ng-container>
@@ -80,23 +79,20 @@
             <div
                 class="nui-kpi-indicator__value nui-kpi-indicator__zoom-container__row"
                 [style.font-size]="widgetData?.fontSize"
-                [title]="widgetData?.value"
-            >
+                [title]="widgetData?.value">
                 <span
                     nuiZoomContent
                     [useZoom]="false"
                     [margin]="widgetData?.margin ?? 2"
                     [scaleIN$]="getScaleBroker('value')?.out$"
-                    [scaleOUT$]="getScaleBroker('value')?.in$"
-                >
+                    [scaleOUT$]="getScaleBroker('value')?.in$">
                     {{ widgetData?.value }}</span
                 >
             </div>
             } @if (widgetData?.units) {
             <div
                 class="nui-kpi-indicator__units nui-kpi-indicator__zoom-container__row"
-                [title]="widgetData?.units"
-            >
+                [title]="widgetData?.units">
                 <span
                     nuiZoomContent
                     [useZoom]="false"

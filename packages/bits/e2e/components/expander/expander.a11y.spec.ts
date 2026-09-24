@@ -28,7 +28,6 @@ test.describe("a11y: expander", () => {
     const rulesToDisable: string[] = [
         "aria-required-children",
         "aria-dialog-name",
-        "landmark-unique",
         "aria-command-name",
         "nested-interactive",
     ];
@@ -46,8 +45,8 @@ test.describe("a11y: expander", () => {
     });
 
     test("should check a11y of expander", async ({ runA11yScan }) => {
-        await basicExpander.toggle();
-        await lineLessExpander.toggle();
+        await basicExpander.expand();
+        await lineLessExpander.expand();
         await runA11yScan(ExpanderAtom, rulesToDisable);
     });
 });

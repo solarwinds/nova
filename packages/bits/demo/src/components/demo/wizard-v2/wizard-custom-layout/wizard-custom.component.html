@@ -25,8 +25,7 @@
                     [selected]="selectedIndex === i"
                     [active]="step.completed || selectedIndex === i || !linear"
                     [step]="step"
-                    [errorMessage]="step.errorMessage"
-                >
+                    [errorMessage]="step.errorMessage">
                 </nui-wizard-step-header>
                 @if (!isLast) {
                 <div class="nui-wizard-horizontal-line"></div>
@@ -36,8 +35,7 @@
                 <h2>
                     @if (selected.stepLabel) {
                     <ng-container
-                        [ngTemplateOutlet]="selected.stepLabel.template"
-                    ></ng-container>
+                        [ngTemplateOutlet]="selected.stepLabel.template"></ng-container>
                     } @if (!selected.stepLabel) {
                     {{ selected.label }}
                     }
@@ -49,11 +47,9 @@
                     role="tabpanel"
                     [id]="_getStepContentId(i)"
                     [attr.aria-labelledby]="_getStepLabelId(i)"
-                    [attr.aria-expanded]="selectedIndex === i"
-                >
+                    [attr.aria-expanded]="selectedIndex === i">
                     <ng-container
-                        [ngTemplateOutlet]="step.content"
-                    ></ng-container>
+                        [ngTemplateOutlet]="step.content"></ng-container>
                 </div>
                 }
             </div>

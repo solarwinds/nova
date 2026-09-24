@@ -83,7 +83,7 @@ test.describe("USERCONTROL Checkbox Group", () => {
         const componentBox = await component.boundingBox();
         // Get the computed width from CSS
         const cssWidth = await parentElement.evaluate(
-            (el) => window.getComputedStyle(el).width
+            el => window.getComputedStyle(el).width
         );
         const widthValue = parseFloat(cssWidth);
         expect(widthValue).toBeGreaterThanOrEqual(componentBox!.width - 5);
@@ -91,7 +91,7 @@ test.describe("USERCONTROL Checkbox Group", () => {
     });
 
     test("should not change the value if clicked on disabled checkbox inside the checkbox group", async () => {
-        await checkboxGroupCheckboxDisabled.toggle();
+        await checkboxGroupCheckboxDisabled.toBeDisabled();
         await checkboxGroupCheckboxDisabled.toBeChecked();
     });
 

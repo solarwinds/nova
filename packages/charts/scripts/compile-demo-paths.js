@@ -4,7 +4,7 @@ const path = require("path");
 const dir = "examples/src/components/demo/";
 const files = [];
 
-const getFilesRecursively = (directory) => {
+const getFilesRecursively = directory => {
     const filesInDirectory = fs.readdirSync(directory);
     for (const file of filesInDirectory) {
         const absolute = path.join(directory, file);
@@ -18,7 +18,7 @@ const getFilesRecursively = (directory) => {
 
 getFilesRecursively(dir);
 
-const trimmedFiles = files.map((filePath) =>
+const trimmedFiles = files.map(filePath =>
     filePath.replaceAll("\\", "/").replace(dir, "")
 );
 

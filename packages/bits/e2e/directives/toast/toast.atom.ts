@@ -56,7 +56,7 @@ export class ToastAtom extends Atom {
         (await this.getBodyElement().innerText()) ?? "";
 
     public getBodyHtml = async (): Promise<string> =>
-        await this.getBodyElement().evaluate((el) => el.innerHTML);
+        await this.getBodyElement().evaluate(el => el.innerHTML);
 
     public isSuccessType = async (): Promise<boolean> =>
         this.isToastType("success");
@@ -73,7 +73,7 @@ export class ToastAtom extends Atom {
     public waitUntilNotDisplayed = async (
         timeOut: number = ToastAtom.toastTimeout
     ): Promise<void> => {
-        await expect(this.root).toBeHidden();
+        await expect(this.root).toBeHidden({ timeout: timeOut });
     };
 
     public getToastsContainerPositioning = async (

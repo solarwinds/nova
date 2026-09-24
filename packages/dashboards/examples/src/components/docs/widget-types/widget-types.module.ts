@@ -35,6 +35,7 @@ export enum WidgetTypesRoute {
     proportional = "proportional",
     embedded = "embedded",
     drilldown = "drilldown",
+    viewComponents = "view-components",
 }
 
 const routes: Routes = [
@@ -111,6 +112,18 @@ const routes: Routes = [
         loadChildren: async () =>
             import(
                 "./drilldown/drilldown-widget-docs.module"
+            ) as object as Promise<Type<any>>,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+        },
+    },
+    {
+        path: WidgetTypesRoute.viewComponents,
+        loadChildren: async () =>
+            import(
+                "./view-components/view-components-docs.module"
             ) as object as Promise<Type<any>>,
         data: {
             srlc: {

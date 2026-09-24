@@ -96,8 +96,8 @@ export class DonutGaugeThresholdsRenderer extends RadialRenderer {
             .append("circle")
             .attr("class", GAUGE_THRESHOLD_MARKER_CLASS)
             .merge(markerSelection)
-            .attr("cx", (d) => markerGenerator.centroid(d)[0])
-            .attr("cy", (d) => markerGenerator.centroid(d)[1])
+            .attr("cx", d => markerGenerator.centroid(d)[0])
+            .attr("cy", d => markerGenerator.centroid(d)[1])
             .attr("r", this.config.markerRadius as number)
             .style(
                 "fill",

@@ -84,8 +84,8 @@ export class StackedBarChartComponent extends XYChartComponent {
         colorProvider: IValueProvider<string>
     ): IAccessors {
         const accessors = barAccessors({ horizontal: false }, colorProvider);
-        accessors.data.category = (d) => d.x;
-        accessors.data.value = (d) => d.y;
+        accessors.data.category = d => d.x;
+        accessors.data.value = d => d.y;
 
         return accessors;
     }

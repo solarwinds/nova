@@ -120,6 +120,12 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
     @Output()
     submitQuery = new EventEmitter();
 
+    /** Unique id for the control. */
+    @Input() public id: string;
+
+    /** Input to set aria label text */
+    @Input() public ariaLabel: string;
+
     @ViewChild("queryselect", { static: true })
     querySelect: SelectV2Component;
     @ViewChild("messageTextarea", { static: false })
@@ -188,11 +194,11 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
 
         this.bodyControl.valueChanges
             .pipe(takeUntil(this.destroy$$))
-            .subscribe((value) => this.onValueChange(value));
+            .subscribe(value => this.onValueChange(value));
         this.registerListeners();
         this.cursorSetter$
             .pipe(takeUntil(this.destroy$$))
-            .subscribe((pos) => setTimeout(() => this.setCursorToPos(pos)));
+            .subscribe(pos => setTimeout(() => this.setCursorToPos(pos)));
         if (this.value) {
             this.onValueChange(this.value);
             setTimeout(() => {
@@ -206,7 +212,7 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
         this.renderer2.listen(
             this.querySelect.inputElement.nativeElement,
             "focusout",
-            ($event) => {
+            $event => {
                 const selectedOption =
                     this.querySelect.inputElement.nativeElement.parentElement.contains(
                         $event.currentTarget.parentElement
@@ -403,7 +409,7 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
         this.focusedTokenValue = this.focusedToken
             ? this.focusedToken.value
             : "";
-        this.tokens.forEach((token) => {
+        this.tokens.forEach(token => {
             token.focused =
                 token.start <= this.cursorPosition &&
                 token.end >= this.cursorPosition;

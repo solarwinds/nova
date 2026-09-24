@@ -41,6 +41,7 @@ import { filter, pluck } from "rxjs/operators";
 import { TableColumnDefDirective } from "./table-column-def.directive";
 import { IDragEvent } from "../../../common/directives/public-api";
 import { UtilService } from "../../../services/util.service";
+import { SorterDirection } from "../../sorter/public-api";
 import { FIXED_WIDTH_CLASS } from "../constants";
 import { TableResizePhase } from "../table-resizer/table-resizer.directive";
 import {
@@ -131,6 +132,31 @@ export class TableHeaderCellComponent
         return this.sortingState.isColumnSorted;
     }
 
+    /**
+     * Exposes the current sort direction of a sortable column to assistive
+     * technologies (WCAG 4.1.2). Returns null for non-sortable columns.
+     */
+    @HostBinding("attr.aria-sort")
+    get ariaSort(): string | null {
+        if (!this.isSortable) {
+            return null;
+        }
+        if (!this.sortingState.isColumnSorted) {
+            return "none";
+        }
+        return this.sortingState.sortDirection === SorterDirection.descending
+            ? "descending"
+            : "ascending";
+    }
+
+    /**
+     * Makes sortable column headers reachable by keyboard (WCAG 2.1.1).
+     */
+    @HostBinding("attr.tabindex")
+    get sortTabindex(): number | null {
+        return this.isSortable ? 0 : null;
+    }
+
     @HostBinding("attr.draggable")
     @HostBinding("class.nui-table__table-header-cell--reorderable")
     get isReorderable(): boolean {
@@ -165,6 +191,23 @@ export class TableHeaderCellComponent
 
     @HostListener("click")
     clicked(): void {
+        this.triggerSort();
+    }
+
+    @HostListener("keydown.enter")
+    onEnterKey(): void {
+        this.triggerSort();
+    }
+
+    // Space activates the sort and must suppress the page scroll. Angular types
+    // the key-filtered ($event) as a generic Event under strict templates.
+    @HostListener("keydown.space", ["$event"])
+    onSpaceKey(event: Event): void {
+        event.preventDefault();
+        this.triggerSort();
+    }
+
+    private triggerSort(): void {
         if (
             this.tableStateHandlerService.sortable &&
             !this.isColumnSortingDisabled &&
@@ -280,7 +323,7 @@ export class TableHeaderCellComponent
             this.subscriptions.push(
                 this.tableStateHandlerService.shouldHighlightEdge
                     .pipe(
-                        filter((value) => {
+                        filter(value => {
                             // When resize is in progress on other columns this one shouldn't be highlighted
                             this.resizeInProgress =
                                 value.columnIndex !== this.currentCellIndex &&
@@ -325,7 +368,7 @@ export class TableHeaderCellComponent
         if (this.isReorderable) {
             this.subscriptions.push(
                 this.tableStateHandlerService.draggedOverCell.subscribe(
-                    (draggedOverCell) => {
+                    draggedOverCell => {
                         this.rightEdgeActive = this.leftEdgeActive = false;
                         if (
                             draggedOverCell?.cellIndex === this.currentCellIndex
@@ -388,8 +431,6 @@ export class TableHeaderCellComponent
     }
 
     public ngOnDestroy(): void {
-        this.subscriptions.forEach((subscription) =>
-            subscription.unsubscribe()
-        );
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 }

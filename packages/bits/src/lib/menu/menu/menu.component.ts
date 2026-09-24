@@ -56,7 +56,7 @@ import { IMenuGroup } from "../public-api";
 @Component({
     selector: "nui-menu",
     host: {
-        class: "nui-menu",
+        "class": "nui-menu",
         "[attr.aria-label]": "title || ariaLabel",
     },
     templateUrl: "./menu.component.html",
@@ -123,6 +123,13 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     public readonly menuTriggerId = _uniqueId("nui-menu-trigger-");
     public readonly popupContentId = _uniqueId("nui-menu-content-");
 
+    /**
+     * Accessible name for the menu toggle.
+     */
+    public get menuAriaLabel(): string | null {
+        return this.ariaLabel || (this.title ? null : "Menu");
+    }
+
     private menuKeyControlListeners: Function[] = [];
     private focusMonitorSubscription: Subscription;
     private suppressNextToggleClick = false;
@@ -163,19 +170,6 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
                         }
 
                         this.keyControlService.handleKeydown(event);
-                    }
-                }
-            )
-        );
-        this.menuKeyControlListeners.push(
-            this.renderer.listen(
-                this.menuToggle.nativeElement,
-                "click",
-                (event: MouseEvent) => {
-                    if (this.suppressNextToggleClick) {
-                        this.suppressNextToggleClick = false;
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
                     }
                 }
             )
@@ -222,6 +216,12 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.menuOpenStream.next();
     }
 
+    public get activeDescendant(): string | null {
+        return (
+            this.keyControlService.keyboardEventsManager?.activeItem?.id || null
+        );
+    }
+
     public isJustified(): boolean {
         return this.contextClass?.includes("nui-select--justified");
     }
@@ -237,7 +237,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        this.menuKeyControlListeners.forEach((listener) => listener());
+        this.menuKeyControlListeners.forEach(listener => listener());
         this.focusMonitorSubscription.unsubscribe();
         this.focusMonitor.stopMonitoring(this.menuToggle);
     }

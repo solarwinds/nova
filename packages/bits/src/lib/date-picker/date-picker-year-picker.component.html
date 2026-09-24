@@ -8,9 +8,11 @@
                     type="button"
                     icon="caret-left"
                     displayStyle="action"
+                    ariaLabel="Previous page of years"
+                    i18n-ariaLabel="@@prevPageOfYears"
+                    title="Previous page of years"
                     (click)="datePicker.move(-1, $event)"
-                    tabindex="-1"
-                ></button>
+                    tabindex="-1"></button>
             </th>
             <th [attr.colspan]="3">
                 <button
@@ -27,8 +29,7 @@
                             datePicker.datepickerMode === datePicker.maxMode
                     }"
                     (click)="datePicker.toggleMode($event)"
-                    tabindex="-1"
-                >
+                    tabindex="-1">
                     <span>{{ title }}</span>
                 </button>
             </th>
@@ -38,9 +39,11 @@
                     type="button"
                     icon="caret-right"
                     displayStyle="action"
+                    ariaLabel="Next page of years"
+                    i18n-ariaLabel="@@nextPageOfYears"
+                    title="Next page of years"
                     (click)="datePicker.move(1, $event)"
-                    tabindex="-1"
-                ></button>
+                    tabindex="-1"></button>
             </th>
         </tr>
     </thead>
@@ -59,8 +62,7 @@
                     }"
                     [disabled]="cell.disabled"
                     (click)="datePicker.select(cell.date, $event)"
-                    tabindex="-1"
-                >
+                    tabindex="-1">
                     <span [ngClass]="{ 'text-info': cell.current }">{{
                         cell.label
                     }}</span>

@@ -41,7 +41,7 @@ export class CheckboxAtom extends Atom {
         !(await this.getInputElement.isEnabled());
 
     public isChecked = async (): Promise<boolean> =>
-        this.getInputElement.isChecked();
+        (await this.getInputElement.getAttribute("checked")) === "true";
 
     public toBeChecked = async (): Promise<void> => {
         await expect(this.getInputElement).toBeChecked();
@@ -57,7 +57,9 @@ export class CheckboxAtom extends Atom {
      * @returns {Promise<void>}
      */
     public toggle = async (): Promise<void> =>
-        this.getInputElement.evaluate((input: HTMLInputElement) => input.click());
+        this.getInputElement.evaluate((input: HTMLInputElement) =>
+            input.click()
+        );
 
     /**
      * Sets the checkbox value to the given value
@@ -76,7 +78,6 @@ export class CheckboxAtom extends Atom {
             await this.toNotBeChecked();
         }
     }
-
 
     private getLink(): Locator {
         return super.getLocator().locator(".link-in-checkbox");

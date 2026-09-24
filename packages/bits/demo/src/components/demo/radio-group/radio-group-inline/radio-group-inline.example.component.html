@@ -3,8 +3,7 @@
     id="fruit-radio-group-inline"
     name="fruit"
     class="nui-radio-group-inline"
-    [(value)]="selectedFruit"
->
+    [(value)]="selectedFruit">
     @for (fruit of fruits; track fruit) {
     <nui-radio [value]="fruit" [checked]="fruit === 'Orange'">
         {{ fruit }}

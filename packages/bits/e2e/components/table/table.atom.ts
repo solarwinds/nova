@@ -42,15 +42,10 @@ export class TableAtom extends Atom {
      * @deprecated use haveCount
      */
     public async getRowsCount(): Promise<number> {
-        const bodyRows = this.getLocator().locator("tbody tr");
-        const bodyRowsCount = await bodyRows.count();
-
-        if (bodyRowsCount > 0) {
-            return bodyRowsCount;
-        }
-
-        const allRowsCount = await this.getLocator().locator("tr").count();
-        return Math.max(allRowsCount - 1, 0); // keep legacy behavior for non-native/fallback tables
+        return this.getLocator()
+            .locator("tr")
+            .count()
+            .then(value => value - 1); // -1 because we don't need to count header row
     }
 
     /**
@@ -149,11 +144,16 @@ export class TableAtom extends Atom {
                 throw new Error("row is not defined");
             }
             const cell = this.getCell(rowIndex, 0);
-            const selectionControl = cell.getByRole("checkbox");
             if (enabled) {
-                await expect(selectionControl.first()).toBeVisible();
+                await Atom.findIn<CheckboxAtom>(
+                    CheckboxAtom,
+                    cell
+                ).toBeVisible();
             } else {
-                await expect(selectionControl).toHaveCount(0);
+                await Atom.findIn<CheckboxAtom>(
+                    CheckboxAtom,
+                    cell
+                ).toBeHidden();
             }
 
             selectionValidationPassed++;

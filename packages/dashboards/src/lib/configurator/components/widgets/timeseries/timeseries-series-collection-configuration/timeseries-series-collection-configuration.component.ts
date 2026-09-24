@@ -95,7 +95,7 @@ export class TimeseriesSeriesCollectionConfigurationComponent
         this.form = form as FormGroup;
         this.formReady.emit(form);
         this.emptySeries$ = this.form.valueChanges.pipe(
-            map((result) => result.length === 0)
+            map(result => result.length === 0)
         );
     }
 
@@ -134,7 +134,7 @@ export class TimeseriesSeriesCollectionConfigurationComponent
         series: ITimeseriesItemConfiguration[]
     ) {
         const parentPath = "series";
-        const componentIds = series.map((tile) => tile.id);
+        const componentIds = series.map(tile => tile.id);
         this.pizzagnaService.createComponentsFromTemplate(
             parentPath,
             componentIds

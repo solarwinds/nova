@@ -257,7 +257,7 @@ export class EventSamplerComponent implements OnInit {
     }
 
     private subscribeToChart() {
-        each(this.eventFilters, (filter) => {
+        each(this.eventFilters, filter => {
             this.chartAssist.chart
                 .getEventBus()
                 .getStream(filter.id)
@@ -384,9 +384,9 @@ export class EventSamplerComponent implements OnInit {
                     const accessors = new LineAccessors(
                         this.palette.standardColors
                     );
-                    accessors.data.x = (d) => d.category;
-                    accessors.data.y = (d) => d.value;
-                    accessors.data.value = (d) => d.value;
+                    accessors.data.x = d => d.category;
+                    accessors.data.y = d => d.value;
+                    accessors.data.value = d => d.value;
                     return accessors;
                 },
                 scaleFunction: () => ({

@@ -5,19 +5,16 @@
         'prioritize-rows__right': prioritizedGridRows.right,
         'prioritize-rows__bottom': prioritizedGridRows.bottom,
         'empty-grid': !(widgetData && widgetData.length > 0 && chartAssist)
-    }"
->
+    }">
     @if (!isEmpty) {
     <div class="d-flex chart has-overlay">
         <nui-chart class="w-100" [chart]="chartAssist.chart"></nui-chart>
         @if (donutContentPlugin) {
         <nui-chart-donut-content
             class="nui-proportional-widget__chart-donut-content"
-            [plugin]="donutContentPlugin"
-        >
+            [plugin]="donutContentPlugin">
             <div
-                class="h-100 w-100 d-flex justify-content-center align-items-center text-center"
-            >
+                class="h-100 w-100 d-flex justify-content-center align-items-center text-center">
                 <div class="d-inline-block" nuiZoomContent [useZoom]="false">
                     <!-- OLD CONFIG HERE -->
                     @if (!configuration?.chartOptions?.donutContentConfig) {
@@ -28,12 +25,10 @@
                             'DonutContentRawFormatterComponent'
                         "
                         [properties]="contentFormatterProperties"
-                        #componentPortal2="nuiComponentPortal"
-                    >
+                        #componentPortal2="nuiComponentPortal">
                         <ng-template
                             [cdkPortalOutlet]="componentPortal2.portal"
-                            (attached)="componentPortal2.attached($event)"
-                        ></ng-template>
+                            (attached)="componentPortal2.attached($event)"></ng-template>
                     </ng-container>
                     }
                     <!-- NEW CONFIG HERE -->
@@ -43,8 +38,7 @@
                         [donutConfig]="
                             configuration?.chartOptions?.donutContentConfig
                         "
-                        [chartAssist]="chartAssist"
-                    ></nui-proportional-donut-content>
+                        [chartAssist]="chartAssist"></nui-proportional-donut-content>
                     }
                 </div>
             </div>
@@ -56,16 +50,14 @@
         class="w-100 d-flex legend"
         [ngClass]="[
             legendShouldBeAlignedRight() ? 'scrollable' : 'legend-bottom'
-        ]"
-    >
+        ]">
         <nui-legend
             class="w-100 m-auto"
             [interactive]="false"
             (mouseleave)="chartAssist.resetVisibleSeries()"
             [orientation]="
                 legendShouldBeAlignedRight() ? 'vertical' : 'horizontal'
-            "
-        >
+            ">
             @for ( legendSeries of chartAssist.legendSeriesSet; track
             legendSeries.id; let i = $index) {
             <nui-legend-series
@@ -83,10 +75,15 @@
                 "
                 (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
                 (click)="onInteraction(legendSeries)"
+                (keydown.enter)="onInteraction(legendSeries)"
+                (keydown.space)="
+                    $event.preventDefault(); onInteraction(legendSeries)
+                "
+                [attr.role]="interactive ? 'button' : null"
+                [tabindex]="interactive ? 0 : -1"
                 [class.nui-proportional-widget__legend--interactive]="
                     interactive
-                "
-            >
+                ">
                 @if ( legendFormatter && legendFormatter.componentType) {
                 <div>
                     <div description>
@@ -94,12 +91,10 @@
                             nuiComponentPortal
                             [componentType]="legendFormatter.componentType"
                             [properties]="{ data: widgetData[i] }"
-                            #componentPortal="nuiComponentPortal"
-                        >
+                            #componentPortal="nuiComponentPortal">
                             <ng-template
                                 [cdkPortalOutlet]="componentPortal.portal"
-                                (attached)="componentPortal.attached($event)"
-                            ></ng-template>
+                                (attached)="componentPortal.attached($event)"></ng-template>
                         </ng-container>
                     </div>
                 </div>
@@ -115,37 +110,35 @@
                     "
                     [backgroundColor]="
                         chartAssist.palette.standardColors.get(legendSeries.id)
-                    "
-                >
+                    ">
                 </nui-rich-legend-tile>
                 @if ( seriesToIconMap && seriesToIconMap[legendSeries.id] ) {
                 <nui-icon
                     legendTransclusion
                     class="align-items-center"
                     [icon]="seriesToIconMap[legendSeries.id]"
-                ></nui-icon>
+                    aria-hidden="true"></nui-icon>
                 }
                 <div
-                    description
-                    class="description-container d-flex flex-column nui-text-small justify-content-center"
-                >
+                    class="description description-primary"
+                    [ngClass]="{
+                        'nui-text-link-small link': interactive
+                    }">
                     @if (!legendSeries.link) {
                     <div
                         class="description description-primary"
                         [ngClass]="{
                             'nui-text-link-small link': interactive
-                        }"
-                    >
+                        }">
                         {{ legendSeries.name }}
                     </div>
-                    } @if (legendSeries.link) {
+                    } @else {
                     <a
                         class="description description-primary nui-text-link-small link"
                         (click)="$event.stopPropagation()"
                         [href]="legendSeries.link"
                         rel="noopener noreferrer"
-                        [title]="legendSeries.name"
-                    >
+                        [title]="legendSeries.name">
                         {{ legendSeries.name }}
                     </a>
                     }

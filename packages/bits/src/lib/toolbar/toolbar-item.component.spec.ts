@@ -52,5 +52,9 @@ describe("components >", () => {
                 expect(testComponent.menuHidden).toBeFalsy();
             });
         });
+
+        it("should default disabled to false", () => {
+            expect(testComponent.disabled).toBeFalse();
+        });
     });
 });

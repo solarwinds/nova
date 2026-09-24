@@ -1,8 +1,7 @@
 <nui-checkbox-group
     id="nui-demo-checkbox-group-justified"
     name="vegetable"
-    [values]="selectedVegetables"
->
+    [values]="selectedVegetables">
     @for (vegetable of vegetables; track vegetable) {
     <nui-checkbox
         [value]="vegetable"
@@ -13,8 +12,7 @@
                 : null
         "
         [checked]="isChecked(vegetable)"
-        class="nui-checkbox--justified"
-    >
+        class="nui-checkbox--justified">
         {{ vegetable }}
     </nui-checkbox>
     }

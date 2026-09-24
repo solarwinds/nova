@@ -15,8 +15,7 @@
         [preventRowClick]="preventRowClick"
         [selection]="selectedColors"
         (selectionChange)="selectedColors = $event"
-        [repeatItemTemplateRef]="repeatItemColorBoxTemplate"
-    ></nui-repeat>
+        [repeatItemTemplateRef]="repeatItemColorBoxTemplate"></nui-repeat>
 </div>
 
 <ng-template #repeatItemColorBoxTemplate let-item="item">

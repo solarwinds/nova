@@ -65,8 +65,8 @@ const ADAPTER_OVERLAY_CONFIG: OverlayConfig = {
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
-        class: "nui-popup",
-        role: "dialog",
+        "class": "nui-popup",
+        "role": "dialog",
         "[attr.aria-label]": "ariaLabel",
     },
     standalone: false,
@@ -94,7 +94,7 @@ export class PopupComponent
     @Input() public appendToBody: boolean = false;
     @Input() public baseElementSelector: string;
     @Input() public isHostToggleRef: boolean;
-    @Input() public ariaLabel: string = "Popup";
+    @Input() public ariaLabel: string = $localize`Popup`;
 
     @Input() set isOpen(open: boolean) {
         if (this.isContentInitialized) {
@@ -342,7 +342,7 @@ export class PopupComponent
         );
 
         if (this.contextClass) {
-            this.contextClass.split(" ").forEach((contextClass) => {
+            this.contextClass.split(" ").forEach(contextClass => {
                 this.popupAreaContainer.nativeElement.classList.add(
                     contextClass
                 );

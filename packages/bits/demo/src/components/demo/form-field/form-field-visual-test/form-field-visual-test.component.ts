@@ -52,7 +52,7 @@ export class FormFieldVisualTestComponent {
     }
 
     markAsDirty(): void {
-        Object.keys(this.fancyForm.controls).forEach((key) => {
+        Object.keys(this.fancyForm.controls).forEach(key => {
             this.fancyForm.get(key)?.markAsDirty();
             this.fancyForm.get(key)?.updateValueAndValidity();
         });
