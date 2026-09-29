@@ -33,8 +33,14 @@
 <h2>Color</h2>
 <p>
     The color of <code>&lt;nui-icon&gt;</code> can be set by passing one of the
-    following color string values to the <code>iconColor</code> input: "white",
-    "light-blue", "gray", "disabled-gray", "primary-blue", or "orange".
+    following predefined color string values to the
+    <code>iconColor</code> input: "white", "gray", "black", "primary-black",
+    "primary-blue", "orange", "red", or "disabled-gray". To use any CSS color
+    value, set the optional <code>iconCustomColor</code> input instead, for
+    example <code>iconCustomColor=&quot;#7E57C2&quot;</code>. Custom colors
+    apply to the fill by default and to the stroke when
+    <code>brushType=&quot;stroked&quot;</code>. When both color inputs are set,
+    <code>iconCustomColor</code> takes precedence.
 </p>
 <nui-example-wrapper filenamePrefix="icon-color" exampleTitle="Color">
     <nui-icon-color-example></nui-icon-color-example>

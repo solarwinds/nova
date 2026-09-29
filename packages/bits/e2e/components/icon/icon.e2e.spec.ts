@@ -77,6 +77,18 @@ test.describe("USERCONTROL icon", () => {
         await iconColor.toContainClass("orange-icon");
     });
 
+    test("should recolor icon with a custom color", async () => {
+        const iconColor = Atom.find<IconAtom>(
+            IconAtom,
+            "nui-demo-icon-custom-color"
+        );
+        await iconColor.toBeVisible();
+        await iconColor.toContainClass("nui-icon-custom-color");
+        expect(await iconColor.getLocator().getAttribute("style")).toContain(
+            "--nui-icon-custom-color: #7E57C2"
+        );
+    });
+
     test("should recolor icon on hover effect to gray color", async () => {
         const iconHover = Atom.find<IconAtom>(IconAtom, "nui-demo-icon-hover");
         await iconHover.toBeVisible();
