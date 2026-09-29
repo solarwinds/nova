@@ -133,6 +133,14 @@
         .setCssVariable(stroke, nui-color-icon-disabled);
     }
 
+    &.nui-icon-custom-color.filled svg * {
+        fill: var(--nui-icon-custom-color);
+    }
+
+    &.nui-icon-custom-color.stroked svg * {
+        stroke: var(--nui-icon-custom-color);
+    }
+
     &.nui-icon-not-found {
         background-color: magenta;
     }
