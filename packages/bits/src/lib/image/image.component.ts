@@ -160,7 +160,11 @@ export class ImageComponent {
             const h = this.height();
             const w = this.width();
             [h, w].forEach(item => {
-                if (item !== undefined && !this.isImageSizeValid(item)) {
+                if (
+                    item != null &&
+                    item !== "" &&
+                    !this.isImageSizeValid(item)
+                ) {
                     this.logger.error(
                         "Image size should be specified in 'px', '%', or 'auto"
                     );
@@ -175,7 +179,7 @@ export class ImageComponent {
                     svg.setAttribute("width", "100%");
                     svg.setAttribute("height", "100%");
                 } else {
-                    console.warn(
+                    this.logger.warn(
                         "Can't apply 'autoFill' to nui-image, because it is only applicable to SVG type of images"
                     );
                 }
@@ -201,13 +205,10 @@ export class ImageComponent {
         this.images.find(img => img.name === imageName);
 
     private isImageSizeValid(value: string): boolean {
-        if (value === "auto") {
-            return true;
-        }
-
         return (
-            !isNaN(parseFloat(value)) &&
-            (value.includes("px") || value.includes("%"))
+            value === "auto" ||
+            (!isNaN(parseFloat(value)) &&
+                (value.includes("px") || value.includes("%")))
         );
     }
 }

@@ -10,9 +10,9 @@
     <nui-overlay
         [toggleReference]="toggleReference"
         [overlayConfig]="overlayConfig"
+        [customContainer]="customContainer"
         roleAttr="dialog"
-        [ariaLabel]="ariaLabel"
-        [customContainer]="customContainer">
+        [ariaLabel]="ariaLabel">
         <div class="nui-popup__area">
             <div class="nui-popup__area--container">
                 <ng-content select="[popupAreaContent]"></ng-content>

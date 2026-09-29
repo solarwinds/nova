@@ -12,8 +12,8 @@ Before you begin, make sure your development environment includes the following:
 
 - Node.js®
 - A package manager such as [npm](https://www.npmjs.com/get-npm)
-- Angular CLI v15
-- Angular CDK v15 as a devDependency
+- Angular CLI v21
+- Angular CDK v21 as a devDependency
 
 ### Installing NodeJS and `npm`
 

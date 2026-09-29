@@ -68,9 +68,14 @@ export class PaginatorAtom extends Atom {
         await li.click();
     }
 
+    public pageLink(pageNumber: number): Locator {
+        return this.getLocator().locator(
+            `.nui-paginator__list li[value='${pageNumber}']`
+        );
+    }
+
     public async pageLinkVisible(pageNumber: number): Promise<boolean> {
-        const pageButton = this.getPageLinkButton(pageNumber);
-        return await pageButton.isVisible();
+        return this.pageLink(pageNumber).isVisible();
     }
 
     public async ellipsedPageLinkClick(pageNumber: number): Promise<void> {
@@ -111,11 +116,14 @@ export class PaginatorAtom extends Atom {
     }
 
     public async activePage(): Promise<number> {
-        const activeLi = this.getLocator()
+        const text = await this.activePageLink.textContent();
+        return text ? parseInt(text, 10) : -1;
+    }
+
+    public get activePageLink(): Locator {
+        return this.getLocator()
             .locator(".nui-paginator__list li.active")
             .first();
-        const text = await activeLi.textContent();
-        return text ? parseInt(text, 10) : -1;
     }
 
     public async isActivePage(page: number): Promise<boolean> {

@@ -8,12 +8,12 @@
     [formControl]="selectControl"
     [manualDropdownControl]="true"
     [displayValueTemplate]="customTemplate">
-    @for ( item of readonly ? [] : currentHelp; track item; let idx = $index;
+    @for (item of (readonly ? [] : currentHelp); track $index; let idx = $index;
     let last = $last; let first = $first) { @if (!item.items) {
     <nui-select-v2-option [displayValueContext]="item" [value]="item">
         <div class="d-inline-flex align-items-center">
             @if (item.icon) {
-            <nui-icon class="mr-2" [icon]="item.icon"></nui-icon>
+            <nui-icon class="mr-2" [icon]="item.icon || ''"></nui-icon>
             }
             <span
                 [innerHTML]="
@@ -21,28 +21,26 @@
                 "></span>
         </div>
     </nui-select-v2-option>
-    } @if (item.items && item.items !== []) {
-    <nui-select-v2-option-group [ariaLabel]="item.header">
+    } @if (item.items && item.items.length > 0) {
+    <nui-select-v2-option-group [ariaLabel]="item.header || ''">
         @if (last && idx > 1) {
         <nui-divider size="extra-small"></nui-divider>
         } @if (item.header) {
         <span class="nui-select-v2-option-group--header">{{
             item.header
         }}</span>
-        } @if (!item.notice) { @for (groupedItem of item.items; track
-        groupedItem) {
+        } @if (!item.notice) { @for (groupedItem of item.items; track $index) {
         <nui-select-v2-option
             [displayValueContext]="groupedItem"
             [value]="groupedItem">
-            @if (!customTemplate) {
+            @if(!customTemplate) {
             <span
                 [innerHTML]="
                     groupedItem.displayValue | nuiHighlight : focusedTokenValue
                 "></span>
             }
         </nui-select-v2-option>
-        } } @if (item.notice) { @for (groupedItem of item.items; track
-        groupedItem) {
+        } } @if (item.notice) { @for (groupedItem of item.items; track $index) {
         <div class="options-group">
             <nui-icon
                 iconSize="small"

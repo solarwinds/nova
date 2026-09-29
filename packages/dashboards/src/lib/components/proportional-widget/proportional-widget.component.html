@@ -76,7 +76,9 @@
                 (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
                 (click)="onInteraction(legendSeries)"
                 (keydown.enter)="onInteraction(legendSeries)"
-                (keydown.space)="$event.preventDefault(); onInteraction(legendSeries)"
+                (keydown.space)="
+                    $event.preventDefault(); onInteraction(legendSeries)
+                "
                 [attr.role]="interactive ? 'button' : null"
                 [tabindex]="interactive ? 0 : -1"
                 [class.nui-proportional-widget__legend--interactive]="
@@ -118,8 +120,10 @@
                     aria-hidden="true"></nui-icon>
                 }
                 <div
-                    description
-                    class="description-container d-flex flex-column nui-text-small justify-content-center">
+                    class="description description-primary"
+                    [ngClass]="{
+                        'nui-text-link-small link': interactive
+                    }">
                     @if (!legendSeries.link) {
                     <div
                         class="description description-primary"
@@ -128,7 +132,7 @@
                         }">
                         {{ legendSeries.name }}
                     </div>
-                    } @if (legendSeries.link) {
+                    } @else {
                     <a
                         class="description description-primary nui-text-link-small link"
                         (click)="$event.stopPropagation()"

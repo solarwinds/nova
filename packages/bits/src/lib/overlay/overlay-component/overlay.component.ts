@@ -108,10 +108,10 @@ export class OverlayComponent
     @Input() public overlayConfig: OverlayConfig;
 
     /** Element to which the Popup is attached */
-    @Input() public toggleReference: HTMLElement;
+    @Input() public toggleReference!: HTMLElement;
 
     /** Popup viewport margins */
-    @Input() viewportMargin: number;
+    @Input() viewportMargin!: number;
 
     /** Sets custom container for CDK Overlay. Selector OR ElementRef */
     @Input() customContainer: OverlayContainerType;

@@ -46,11 +46,11 @@
         <ng-content select=".nui-chips-overflowed"></ng-content>
     </div>
 
-    @if (allowRemoveAll && getItemsCount() > 0) {
+    @if(allowRemoveAll && getItemsCount() > 0) {
     <div class="nui-chips__clear-cell" #clearAll>
-        <a href class="nui-chips__clear" (click)="onRemoveAll($event)">{{
-            removeAllLinkText
-        }}</a>
+        <a href class="nui-chips__clear" (click)="onRemoveAll($event)">
+            {{ removeAllLinkText }}
+        </a>
     </div>
     }
 </div>

@@ -154,6 +154,10 @@
             {
                 "file": "../pages/widget-types/drilldown.md",
                 "title": "Drilldown"
+            },
+            {
+                "file": "../pages/widget-types/view-components.md",
+                "title": "Standalone View Components"
             }
         ],
         "file": "../pages/widget-types/overview.md",

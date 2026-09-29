@@ -23,6 +23,7 @@ test.describe("USERCONTROL Popup", () => {
             PopupAtom,
             "nui-demo-popup-append-to-body"
         );
+        popupAppendToBody.detachedPopupContextClass = "additional-host-class";
     });
 
     test("should respect the isOpen Input", async () => {
@@ -65,17 +66,19 @@ test.describe("USERCONTROL Popup", () => {
 
     test("should respect context class", async () => {
         await popupAppendToBody.open(true);
-        await expect(popupAppendToBody.getPopupBoxDetached).toHaveClass(
-            "nui-overlay additional-host-class"
+        await expect(popupAppendToBody.getPopupBoxDetached).toContainClass(
+            "nui-overlay"
+        );
+        await expect(popupAppendToBody.getPopupBoxDetached).toContainClass(
+            "additional-host-class"
         );
     });
 
     test("should remove the appended to body popup container on close", async () => {
-        await popupAppendToBody.getPopupToggle.click();
-        await expect(popupAppendToBody.getPopupBoxDetached).toBeVisible();
+        await popupAppendToBody.open(true);
 
         await popupAppendToBody.getPopupToggle.click();
-        await expect(popupAppendToBody.getPopupBoxDetached).toBeHidden();
+        await popupAppendToBody.isNotOpenedAppendToBody();
     });
 
     test("should accept custom width", async () => {

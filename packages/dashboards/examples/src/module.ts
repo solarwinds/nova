@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { CommonModule, DatePipe } from "@angular/common";
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
@@ -34,6 +34,7 @@ import { NuiChartsModule } from "@nova-ui/charts";
 import { AppComponent } from "./components";
 import { AppRoutingModule } from "./components/app/app-routing.module";
 import { AnimationsModule } from "./environments/environment";
+import { GoogleBooksInterceptor } from "./google-books.interceptor";
 
 @NgModule({
     imports: [
@@ -49,7 +50,15 @@ import { AnimationsModule } from "./environments/environment";
         NuiSwitchModule,
     ],
     declarations: [AppComponent],
-    providers: [DatePipe, LocalFilteringDataSource],
+    providers: [
+        DatePipe,
+        LocalFilteringDataSource,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: GoogleBooksInterceptor,
+            multi: true,
+        },
+    ],
     bootstrap: [AppComponent],
 })
 export class DashboardsDemoModule {}

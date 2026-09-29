@@ -10,11 +10,9 @@
         nuiPopupToggle
         [role]="'menu'"
         [toggleOnKey]="false"
-        [id]="menuTriggerId"
         [disabled]="isDisabled"
         [opened]="popup?.isOpen || false"
-        [attr.aria-expanded]="!!popup?.isOpen"
-        [attr.aria-controls]="popup?.isOpen ? popupContentId : null"
+        [ariaControls]="popup?.isOpen ? popupContentId : null"
         [attr.aria-activedescendant]="popup?.isOpen ? activeDescendant : null"
         type="button"
         (blur)="onBlur($event)"
@@ -32,7 +30,7 @@
         <nui-menu-popup
             [itemsSource]="itemsSource"
             [size]="size"></nui-menu-popup>
-        } @if (!itemsSource) {
+        } @else {
         <ng-content></ng-content>
         }
     </div>

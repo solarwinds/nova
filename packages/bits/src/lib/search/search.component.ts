@@ -126,7 +126,7 @@ export class SearchComponent implements IFilterPub {
     /** Whether the search button should be disabled (empty value). */
     public isButtonDisabled = computed(() => !this.value()?.trim());
     /** Accessible label for the cancel (clear) button. */
-    public cancelAriaLabel = $localize`Cancel search`;
+    public cancelAriaLabel = $localize`Clear search`;
     /** Accessible label for the submit (search) button. */
     public submitAriaLabel = $localize`Submit search`;
 

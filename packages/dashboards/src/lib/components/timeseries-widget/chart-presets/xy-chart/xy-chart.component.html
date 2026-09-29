@@ -120,7 +120,7 @@
                             [title]="legendSeries.legendDescriptionPrimary">
                             {{ legendSeries.legendDescriptionPrimary }}
                         </div>
-                        } @if (legendSeries.link) {
+                        } @else {
                         <a
                             class="description description-primary nui-text-link-small link"
                             (click)="$event.stopPropagation()"
@@ -129,15 +129,15 @@
                             [title]="legendSeries.legendDescriptionPrimary">
                             {{ legendSeries.legendDescriptionPrimary }}
                         </a>
-                        } @if ( !legendSeries.secondaryLink &&
-                        !widgetData.summarySerie ) {
+                        } @if (!legendSeries.secondaryLink &&
+                        !widgetData.summarySerie) {
                         <div
                             class="description description-secondary"
                             [title]="legendSeries.legendDescriptionSecondary">
                             {{ legendSeries.legendDescriptionSecondary }}
                         </div>
-                        } @if ( legendSeries.secondaryLink &&
-                        !widgetData.summarySerie ) {
+                        } @else if (legendSeries.secondaryLink &&
+                        !widgetData.summarySerie) {
                         <a
                             class="description description-secondary nui-text-link-small link"
                             (click)="$event.stopPropagation()"

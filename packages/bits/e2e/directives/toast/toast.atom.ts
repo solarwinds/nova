@@ -73,7 +73,7 @@ export class ToastAtom extends Atom {
     public waitUntilNotDisplayed = async (
         timeOut: number = ToastAtom.toastTimeout
     ): Promise<void> => {
-        await expect(this.root).toBeHidden();
+        await expect(this.root).toBeHidden({ timeout: timeOut });
     };
 
     public getToastsContainerPositioning = async (

@@ -11,7 +11,13 @@
                 role="tab"
                 [attr.tabindex]="step.active ? '0' : '-1'"
                 [attr.aria-selected]="step.active ? 'true' : 'false'"
-                [attr.aria-disabled]="(step.disabled || !step.visited || currentStep.busyConfig.busy) ? 'true' : null"
+                [attr.aria-disabled]="
+                    step.disabled ||
+                    !step.visited ||
+                    currentStep.busyConfig.busy
+                        ? 'true'
+                        : null
+                "
                 (click)="selectStep(step)"
                 (keydown.enter)="selectStep(step)"
                 (keydown.space)="$event.preventDefault(); selectStep(step)"
@@ -68,9 +74,9 @@
                         </div>
                     </div>
                 </div>
-                } </li
-            ><!--
-            -->}
+                }
+            </li>
+            }
         </ul>
         }
     </div>

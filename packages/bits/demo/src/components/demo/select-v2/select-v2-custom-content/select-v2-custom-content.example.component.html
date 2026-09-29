@@ -53,7 +53,7 @@
             <nui-icon class="ml-2" [icon]="context.icon"></nui-icon>
         </div>
         } @else {
-        <span class="nui-select-v2__placeholder">Select Item</span>
+        <ng-template [ngTemplateOutlet]="empty"></ng-template>
         }
 
         <nui-icon

@@ -56,7 +56,7 @@ export class PopupToggleDirective {
     /**
      * The id of the popup (for aria-controls)
      */
-    @Input() ariaControls: string;
+    @Input() ariaControls: string | null;
 
     @Output() toggle = new EventEmitter();
 

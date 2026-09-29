@@ -32,7 +32,7 @@
     }
 
     <!--  Visible items container -->
-    @for ( step of isInResponsiveMode ? visibleSteps : steps; track step; let i
+    @for (step of (isInResponsiveMode ? visibleSteps : steps); track step; let i
     = $index; let isFirst = $first) {
     <div class="nui-wizard-horizontal-header-wrapper">
         <ng-template
