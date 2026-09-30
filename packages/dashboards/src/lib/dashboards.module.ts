@@ -69,6 +69,7 @@ import { ProportionalWidgetComponent } from "./components/proportional-widget/pr
 import { RefresherSettingsService } from "./components/providers/refresher-settings.service";
 import { RiskScoreTileComponent } from "./components/risk-score-tile/risk-score-tile.component";
 import { DelayedMousePresenceDetectionDirective } from "./components/table-widget/delayed-mouse-presence-detection.directive";
+import { FocusableScrollRegionDirective } from "./components/table-widget/focusable-scroll-region.directive";
 import { TableWidgetComponent } from "./components/table-widget/table-widget.component";
 import { TemplateLoadErrorComponent } from "./components/template-load-error/template-load-error.component";
 import { TimeframeSelectionComponent } from "./components/time-frame-selection/timeframe-selection.component";
@@ -142,6 +143,7 @@ const dashboardComponents = [
     StatusBarChartComponent,
     TableWidgetComponent,
     DelayedMousePresenceDetectionDirective,
+    FocusableScrollRegionDirective,
     TemplateLoadErrorComponent,
     TilesComponent,
     TimeframeSelectionComponent,

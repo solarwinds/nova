@@ -18,7 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-export * from "./types";
-export * from "./table-widget.component";
-export * from "./delayed-mouse-presence-detection.directive";
-export * from "./focusable-scroll-region.directive";
+import { WidgetConfigurationService } from "./widget-configuration.service";
+
+describe("WidgetConfigurationService", () => {
+    it("assigns unique title ids to instances", () => {
+        const firstService = new WidgetConfigurationService();
+        const secondService = new WidgetConfigurationService();
+
+        expect(firstService.titleId).toMatch(/^nui-widget-title-\d+$/);
+        expect(secondService.titleId).toMatch(/^nui-widget-title-\d+$/);
+        expect(firstService.titleId).not.toBe(secondService.titleId);
+    });
+});

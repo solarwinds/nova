@@ -30,6 +30,13 @@
         .virtual-scroll-disabled.cdk-virtual-scroll-viewport {
             overflow: hidden !important;
         }
+
+        .cdk-virtual-scroll-viewport:focus-visible {
+            // Outline instead of the inset box-shadow mixin, which table rows would paint over.
+            outline: @nui-line-medium solid
+                fade(@nui-color-selected-contrast, 50%);
+            outline-offset: -@nui-line-medium;
+        }
     }
 
     .nui-table-search-limit-warning {

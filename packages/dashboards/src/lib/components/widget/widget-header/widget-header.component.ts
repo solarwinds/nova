@@ -32,6 +32,7 @@ import {
     ElementRef,
     HostBinding,
     Inject,
+    inject,
     Input,
     OnDestroy,
     OnInit,
@@ -51,6 +52,7 @@ import {
     WIDGET_EDIT,
     WIDGET_REMOVE,
 } from "../../../services/types";
+import { WidgetConfigurationService } from "../../../services/widget-configuration.service";
 import { WidgetToDashboardEventProxyService } from "../../../services/widget-to-dashboard-event-proxy.service";
 import {
     HEADER_LINK_PROVIDER,
@@ -126,6 +128,15 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     public linkTooltip = $localize`Explore this data`;
+
+    private readonly widgetConfigurationService = inject(
+        WidgetConfigurationService,
+        { optional: true }
+    );
+
+    public get titleId(): string | null {
+        return (this.title && this.widgetConfigurationService?.titleId) || null;
+    }
 
     constructor(
         @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,

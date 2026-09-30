@@ -28,6 +28,7 @@ import { NuiDashboardsModule } from "../../../dashboards.module";
 import { DynamicComponentCreator } from "../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { REFRESH, WIDGET_EDIT, WIDGET_REMOVE } from "../../../services/types";
+import { WidgetConfigurationService } from "../../../services/widget-configuration.service";
 import { WidgetToDashboardEventProxyService } from "../../../services/widget-to-dashboard-event-proxy.service";
 import { HEADER_LINK_PROVIDER, PIZZAGNA_EVENT_BUS } from "../../../types";
 
@@ -36,6 +37,20 @@ class TestHeaderLinkProviderService implements IHeaderLinkProvider {
         return template + "toe";
     }
 }
+
+const widgetHeaderProviders = [
+    PizzagnaService,
+    DynamicComponentCreator,
+    WidgetToDashboardEventProxyService,
+    {
+        provide: PIZZAGNA_EVENT_BUS,
+        useClass: EventBus,
+    },
+    {
+        provide: HEADER_LINK_PROVIDER,
+        useClass: TestHeaderLinkProviderService,
+    },
+];
 
 describe("WidgetHeaderComponent", () => {
     let component: WidgetHeaderComponent;
@@ -46,19 +61,7 @@ describe("WidgetHeaderComponent", () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
-            providers: [
-                PizzagnaService,
-                DynamicComponentCreator,
-                WidgetToDashboardEventProxyService,
-                {
-                    provide: PIZZAGNA_EVENT_BUS,
-                    useClass: EventBus,
-                },
-                {
-                    provide: HEADER_LINK_PROVIDER,
-                    useClass: TestHeaderLinkProviderService,
-                },
-            ],
+            providers: widgetHeaderProviders,
         }).compileComponents();
     }));
 
@@ -262,5 +265,55 @@ describe("WidgetHeaderComponent", () => {
                 "tictactoe"
             );
         });
+    });
+
+    describe("titleId without WidgetConfigurationService", () => {
+        it("returns null", () => {
+            component.title = "Widget title";
+            fixture.detectChanges();
+
+            expect(component.titleId).toBeNull();
+        });
+    });
+});
+
+describe("WidgetHeaderComponent titleId", () => {
+    let component: WidgetHeaderComponent;
+    let fixture: ComponentFixture<WidgetHeaderComponent>;
+    let widgetConfigurationService: WidgetConfigurationService;
+
+    beforeEach(waitForAsync(() => {
+        TestBed.configureTestingModule({
+            imports: [NuiDashboardsModule],
+            providers: [...widgetHeaderProviders, WidgetConfigurationService],
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(WidgetHeaderComponent);
+        component = fixture.componentInstance;
+        widgetConfigurationService = TestBed.inject(WidgetConfigurationService);
+    });
+
+    it("sets the rendered h2 id from WidgetConfigurationService when titled", () => {
+        component.title = "Widget title";
+        fixture.detectChanges();
+
+        const titleElement = fixture.nativeElement.querySelector("h2");
+
+        expect(component.titleId).toBe(widgetConfigurationService.titleId);
+        expect(titleElement.getAttribute("id")).toBe(
+            widgetConfigurationService.titleId
+        );
+    });
+
+    it("returns null and omits the h2 id when the title is empty", () => {
+        component.title = "";
+        fixture.detectChanges();
+
+        const titleElement = fixture.nativeElement.querySelector("h2");
+
+        expect(component.titleId).toBeNull();
+        expect(titleElement.hasAttribute("id")).toBeFalse();
     });
 });
