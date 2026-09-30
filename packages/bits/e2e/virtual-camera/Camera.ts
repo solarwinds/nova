@@ -64,7 +64,25 @@ export class Camera {
     private async cheese(label: string, timeout: number = 710) {
         await test.step(`cheese ${label}`, async () => {
             await this.currentPage.waitForTimeout(timeout);
+            await this.waitForStableLayout();
             await this.engine.takePhoto(label);
+        });
+    }
+
+    // Force all web fonts to load and let layout settle, otherwise text may be invisible (font block period) or shifted in snapshots
+    private async waitForStableLayout(): Promise<void> {
+        await this.currentPage.evaluate(async () => {
+            const faces: FontFace[] = [];
+            document.fonts.forEach(font => faces.push(font));
+            await Promise.all(
+                faces.map(font => font.load().catch(() => undefined))
+            );
+            await document.fonts.ready;
+            await new Promise<void>(resolve =>
+                requestAnimationFrame(() =>
+                    requestAnimationFrame(() => resolve())
+                )
+            );
         });
     }
 

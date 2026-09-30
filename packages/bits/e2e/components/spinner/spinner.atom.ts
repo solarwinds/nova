@@ -51,6 +51,15 @@ export class SpinnerAtom extends Atom {
         return await this.root.locator(".nui-spinner__message").innerText();
     }
 
+    public async toBeAnimated(): Promise<void> {
+        const circular = this.root.locator(".nui-spinner__circular");
+        const path = this.root.locator(".nui-spinner__path");
+        await expect(circular).toHaveCSS("animation-name", "rotate");
+        await expect(circular).toHaveCSS("animation-play-state", "running");
+        await expect(path).toHaveCSS("animation-name", "dash");
+        await expect(path).toHaveCSS("animation-play-state", "running");
+    }
+
     public async cancel(): Promise<void> {
         const cancelButton = this.root.locator("button");
         if (await cancelButton.isVisible()) {

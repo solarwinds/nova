@@ -70,6 +70,17 @@ export class ProgressAtom extends Atom {
         await expect(this.root.locator(".nui-progress__bar")).toBeVisible();
     }
 
+    public async toBeIndeterminateAnimated(): Promise<void> {
+        const barValue = this.root.locator(
+            ".nui-progress--indeterminate .nui-progress__bar-value"
+        );
+        await expect(barValue).toHaveCSS(
+            "animation-name",
+            "indeterminate-progress"
+        );
+        await expect(barValue).toHaveCSS("animation-play-state", "running");
+    }
+
     /**
      * @Deprecated: use ProgressAtom.toBeProgressBarDisplayed.
      * see ../../ASSERTING_VALUE.md

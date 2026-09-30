@@ -63,6 +63,11 @@ test.describe("USERCONTROL progress", () => {
             expect(await indeterminateProgress.canCancel()).toBe(false);
         });
 
+        // Percy snapshots freeze animations, so the animation itself is verified here
+        test("should animate indeterminate progress bar", async () => {
+            await indeterminateProgress.toBeIndeterminateAnimated();
+        });
+
         test("should be possible to display tooltip on close button", async ({
             page,
         }) => {
