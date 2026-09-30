@@ -143,7 +143,6 @@ const dashboardComponents = [
     StatusBarChartComponent,
     TableWidgetComponent,
     DelayedMousePresenceDetectionDirective,
-    FocusableScrollRegionDirective,
     TemplateLoadErrorComponent,
     TilesComponent,
     TimeframeSelectionComponent,
@@ -221,6 +220,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
         NuiPopoverModule,
         NuiPaginatorModule,
         NuiMessageModule,
+        FocusableScrollRegionDirective,
     ],
     declarations: dashboardComponents,
     providers: [
@@ -229,7 +229,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
         DecimalPipe,
         RefresherSettingsService,
     ],
-    exports: dashboardComponents,
+    exports: [...dashboardComponents, FocusableScrollRegionDirective],
 })
 export class NuiDashboardsModule {
     constructor(

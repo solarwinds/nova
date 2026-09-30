@@ -35,7 +35,7 @@ import { FocusableScrollRegionDirective } from "./focusable-scroll-region.direct
                 [style.height.px]="contentHeight"></div>
         </div>
     `,
-    standalone: false,
+    imports: [FocusableScrollRegionDirective],
 })
 class FocusableScrollRegionTestHostComponent {
     public labelledBy = "widget-title table";
@@ -50,10 +50,7 @@ describe("FocusableScrollRegionDirective", () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                FocusableScrollRegionTestHostComponent,
-                FocusableScrollRegionDirective,
-            ],
+            imports: [FocusableScrollRegionTestHostComponent],
         });
 
         fixture = TestBed.createComponent(

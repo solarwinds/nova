@@ -36,7 +36,6 @@ import {
  */
 @Directive({
     selector: "[nuiFocusableScrollRegion]",
-    standalone: false,
 })
 export class FocusableScrollRegionDirective
     implements AfterViewInit, OnChanges, OnDestroy
