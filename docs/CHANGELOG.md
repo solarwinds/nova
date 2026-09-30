@@ -1,12 +1,17 @@
 # Changelog
 
-## [20.0.11] 📅 2026-09-23
+## [20.0.12] 📅 2026-09-30
 
 ### Fixes
 
 - `@nova-ui/bits` | Improved tab accessibility by aligning tab and panel IDs, adding APG keyboard navigation with roving `tabindex`, exposing disabled states, and adding `ariaLabel` support. `nui-tab-heading` sets `aria-controls` when a controlled panel ID is provided through `ariaControls`.
 - `@nova-ui/bits` | Improved switch accessibility by enabling Enter key activation, correctly associating projected labels, preventing duplicate element IDs, and adding a localized fallback accessible name.
-- `@nova-ui/dashboards` | Fixed regression in keyboard scrolling in Modern Dashboard table widgets
+- `@nova-ui/dashboards` | Table widget scroll area is reachable by the Tab key when its content overflows, even without focusable content inside, and is exposed as a region named by the widget title (WCAG 2.1.1).
+
+## [20.0.11] 📅 2026-09-16
+
+### Fixes
+
 - Prettier formatting fixes across the project
 
 ## [20.0.10] 📅 2026-08-11

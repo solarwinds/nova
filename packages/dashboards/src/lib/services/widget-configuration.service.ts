@@ -24,6 +24,11 @@ import { IWidget } from "../components/widget/types";
 
 @Injectable()
 export class WidgetConfigurationService {
+    private static nextId = 0;
+
+    /** Unique per widget instance, so the same widget rendered twice (e.g. dashboard and preview) gets distinct ids */
+    public readonly titleId = `nui-widget-title-${WidgetConfigurationService.nextId++}`;
+
     private widget: IWidget;
 
     public updateWidget(widget: IWidget): void {

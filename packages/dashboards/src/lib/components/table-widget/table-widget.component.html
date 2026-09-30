@@ -37,6 +37,7 @@
             class="calc-height"
             style="height: calc(100% - 2px)"
             tableStickyHeader
+            [nuiFocusableScrollRegion]="scrollRegionLabelledBy"
             [itemSize]="rowHeight"
             [ngClass]="{
                 'virtual-scroll-disabled':
@@ -46,6 +47,7 @@
             <table
                 class="nui-table-widget__main"
                 nui-table
+                [attr.id]="tableId"
                 aria-label="Data table"
                 i18n-aria-label
                 [reorderable]="configuration?.reorderable"
