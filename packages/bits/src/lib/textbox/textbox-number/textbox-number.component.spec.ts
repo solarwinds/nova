@@ -77,6 +77,25 @@ describe("components >", () => {
             inputControl = debugElement.query(By.css(".input-control"));
         });
 
+        it("should expose number semantics and ARIA values on the native input", () => {
+            fixture.componentRef.setInput("minValue", 1);
+            fixture.componentRef.setInput("maxValue", 10);
+            fixture.componentRef.setInput("value", 5);
+            fixture.detectChanges();
+
+            const hostElement = fixture.nativeElement as HTMLElement;
+            const inputElement = hostElement.querySelector(
+                "input"
+            ) as HTMLInputElement;
+
+            expect(hostElement.getAttribute("role")).toBeNull();
+            expect(hostElement.getAttribute("aria-valuenow")).toBeNull();
+            expect(inputElement.type).toBe("number");
+            expect(inputElement.getAttribute("aria-valuemin")).toBe("1");
+            expect(inputElement.getAttribute("aria-valuemax")).toBe("10");
+            expect(inputElement.getAttribute("aria-valuenow")).toBe("5");
+        });
+
         describe("onValueChange > ", () => {
             it("keeps invalid input", () => {
                 testComponent.onValueChange("yyy");
