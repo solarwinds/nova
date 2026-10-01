@@ -32,7 +32,7 @@ import { NuiTabsModule } from "../tabs.module";
             <nui-tab heading="Disabled" [disabled]="true">Content 3</nui-tab>
         </nui-tab-group>
     `,
-    standalone: false,
+    imports: [NuiTabsModule],
 })
 class TestTabGroupComponent {}
 
@@ -43,8 +43,7 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [TestTabGroupComponent],
-                imports: [NuiTabsModule],
+                imports: [TestTabGroupComponent],
             });
 
             fixture = TestBed.createComponent(TestTabGroupComponent);

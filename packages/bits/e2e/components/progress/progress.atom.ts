@@ -23,6 +23,12 @@ import { expect, Locator } from "@playwright/test";
 import { Atom } from "../../atom";
 import { ButtonAtom } from "../button/button.atom";
 
+const readStyle = (locator: Locator, property: string) =>
+    locator.evaluate(
+        (el, prop) => getComputedStyle(el).getPropertyValue(prop),
+        property
+    );
+
 export class ProgressAtom extends Atom {
     public static CSS_CLASS = "nui-progress";
 
@@ -79,6 +85,10 @@ export class ProgressAtom extends Atom {
             "indeterminate-progress"
         );
         await expect(barValue).toHaveCSS("animation-play-state", "running");
+        const initialMarginLeft = await readStyle(barValue, "margin-left");
+        await expect
+            .poll(() => readStyle(barValue, "margin-left"))
+            .not.toBe(initialMarginLeft);
     }
 
     /**

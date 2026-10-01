@@ -38,6 +38,7 @@ import {
     Component,
     EventEmitter,
     Input,
+    inject,
     OnChanges,
     OnDestroy,
     OnInit,
@@ -167,13 +168,13 @@ export class OverlayComponent
     private focusTrap: ConfigurableFocusTrap | null = null;
     private previouslyFocusedElement: HTMLElement | null = null;
 
-    constructor(
-        public overlayPositionService: OverlayPositionService,
-        protected overlayService: OverlayService,
-        protected cdkOverlay: Overlay,
-        private eventBusService: EventBusService,
-        private focusTrapFactory: ConfigurableFocusTrapFactory
-    ) {
+    public overlayPositionService = inject(OverlayPositionService);
+    protected overlayService = inject(OverlayService);
+    protected cdkOverlay = inject(Overlay);
+    private eventBusService = inject(EventBusService);
+    private focusTrapFactory = inject(ConfigurableFocusTrapFactory);
+
+    constructor() {
         this.show$ = this.overlayService.show$;
         this.hide$ = this.overlayService.hide$;
     }

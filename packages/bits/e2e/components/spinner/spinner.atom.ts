@@ -22,6 +22,12 @@ import { Locator, expect } from "@playwright/test";
 
 import { Atom } from "../../atom";
 
+const readStyle = (locator: Locator, property: string) =>
+    locator.evaluate(
+        (el, prop) => getComputedStyle(el).getPropertyValue(prop),
+        property
+    );
+
 export class SpinnerAtom extends Atom {
     public static CSS_CLASS = "nui-spinner";
     public static defaultDelay = 250;
@@ -58,6 +64,14 @@ export class SpinnerAtom extends Atom {
         await expect(circular).toHaveCSS("animation-play-state", "running");
         await expect(path).toHaveCSS("animation-name", "dash");
         await expect(path).toHaveCSS("animation-play-state", "running");
+        const initialTransform = await readStyle(circular, "transform");
+        await expect
+            .poll(() => readStyle(circular, "transform"))
+            .not.toBe(initialTransform);
+        const initialDashOffset = await readStyle(path, "stroke-dashoffset");
+        await expect
+            .poll(() => readStyle(path, "stroke-dashoffset"))
+            .not.toBe(initialDashOffset);
     }
 
     public async cancel(): Promise<void> {

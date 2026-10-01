@@ -118,7 +118,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
     ) {}
 
     @HostListener("window:keydown.shift.tab", ["$event"])
-    onShiftTab(event: any): void {
+    onShiftTab(event: KeyboardEvent): void {
         const activeElement = this.document.activeElement;
         // When the focus is inside another overlay (e.g. a nui-overlay rendered
         // on top of this dialog), let that overlay manage its own focus trapping.
@@ -135,7 +135,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     @HostListener("window:keydown.tab", ["$event"])
-    onTab(event: any): void {
+    onTab(event: KeyboardEvent): void {
         const activeElement = this.document.activeElement;
         // When the focus is inside another overlay (e.g. a nui-overlay rendered
         // on top of this dialog), let that overlay manage its own focus trapping.

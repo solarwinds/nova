@@ -37,9 +37,9 @@ import {
 import { Subject } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
 
-import { _uniqueId } from "../../functions/unique-id";
 import { CheckboxStatus, SelectionType } from "./public-api";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
+import { _uniqueId } from "../../functions/unique-id";
 import {
     IFilter,
     IFilterPub,

@@ -18,10 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Atom } from "../../atom";
 import { Helpers, test, expect } from "../../setup";
-import { DialogAtom } from "../dialog/dialog.atom";
-import { SelectV2Atom } from "../select-v2/select-v2.atom";
 
 test.describe("Dialog Focus Trap", () => {
     test.beforeEach(async ({ page }) => {
@@ -47,8 +44,7 @@ test.describe("Dialog Focus Trap", () => {
         const actionBtn = dialog.locator(".btn-primary");
 
         // 3. Verify initial focus is in dialog
-        // Small delay to ensure focus containment is active
-        await page.waitForTimeout(500);
+        await expect(closeBtn).toBeFocused();
 
         // We start by focusing the Cancel button to have a stable starting point
         await cancelBtn.focus();

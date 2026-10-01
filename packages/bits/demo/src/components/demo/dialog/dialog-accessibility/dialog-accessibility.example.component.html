@@ -1,0 +1,26 @@
+<ng-template #dialogTemplate let-close="close">
+    <nui-dialog-header
+        title="Delete report"
+        (closed)="close()"></nui-dialog-header>
+    <div class="dialog-body">
+        <p id="nui-dialog-a11y-description" i18n>
+            The report will be permanently deleted. This action cannot be
+            undone.
+        </p>
+    </div>
+    <nui-dialog-footer>
+        <button nui-button type="button" (click)="close()" i18n>
+            Cancel
+        </button>
+        <button
+            nui-button
+            type="button"
+            displayStyle="destructive"
+            (click)="close()"
+            i18n>
+            Delete
+        </button>
+    </nui-dialog-footer>
+</ng-template>
+
+<button nui-button type="button" (click)="open()" i18n> Delete report </button>
