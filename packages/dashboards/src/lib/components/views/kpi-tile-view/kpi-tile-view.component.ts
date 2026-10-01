@@ -100,7 +100,7 @@ export class KpiTileViewComponent {
 
     public getScaleBroker(id: string): IKpiTileViewBroker | undefined {
         if (this.syncValuesBroker) {
-            return this.syncValuesBroker.find((b) => b.id === id);
+            return this.syncValuesBroker.find(b => b.id === id);
         }
         return undefined;
     }

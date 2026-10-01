@@ -49,7 +49,7 @@ import { IOptionedComponent } from "../types";
     styleUrls: ["./select-v2-option-group.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        role: "group",
+        "role": "group",
         "[attr.aria-label]": "ariaLabel",
     },
     standalone: false,

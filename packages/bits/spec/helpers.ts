@@ -224,7 +224,7 @@ export class Helpers {
     }
 
     static async saveScreenShot(filename: string): Promise<void> {
-        return browser.takeScreenshot().then((data) => {
+        return browser.takeScreenshot().then(data => {
             const stream = fs.createWriteStream(filename);
             stream.write(Buffer.from(data, "base64"));
             stream.end();
@@ -239,7 +239,7 @@ export class Helpers {
     }
 
     static async delayPromise(timeout: number): Promise<void> {
-        return new Promise<void>((resolve) => {
+        return new Promise<void>(resolve => {
             setTimeout(() => resolve(), timeout);
         });
     }

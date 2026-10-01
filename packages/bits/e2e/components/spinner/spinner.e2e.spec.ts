@@ -77,6 +77,13 @@ test.describe("USERCONTROL Spinner", () => {
         expect(size.height).toBe(20);
     });
 
+    // Percy snapshots freeze animations, so the animation itself is verified here
+    test("should be animated while displayed", async () => {
+        await button2.click();
+        await spinner2.waitForDisplayed(SpinnerAtom.defaultDelay * 2);
+        await spinner2.toBeAnimated();
+    });
+
     test.skip("will wait for display", async ({ page }) => {
         const startPoint: number = await page.evaluate(() => performance.now());
         await delayedButton.click();

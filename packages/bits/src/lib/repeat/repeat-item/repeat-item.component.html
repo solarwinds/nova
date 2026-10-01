@@ -7,8 +7,7 @@
     (click)="clickable ? rowClicked.emit($event) : null"
     (keydown.enter)="onKeyActivate($event)"
     (keydown.space)="onKeyActivate($event)"
-    [tabindex]="clickable ? 0 : -1"
->
+    [tabindex]="clickable ? 0 : -1">
     <div class="nui-repeat-item__content">
         <ng-content></ng-content>
     </div>

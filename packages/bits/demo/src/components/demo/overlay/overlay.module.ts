@@ -38,6 +38,7 @@ import {
     NuiOverlayModule,
     NuiSearchModule,
     NuiSelectV2Module,
+    NuiTextboxModule,
     SrlcStage,
 } from "@nova-ui/bits";
 
@@ -48,6 +49,7 @@ import {
     OverlayCustomDialogComponent,
     OverlayCustomStylesExampleComponent,
     OverlayDocsComponent,
+    OverlayFocusTrapExampleComponent,
     OverlayPopupStylesExampleComponent,
     OverlayShowHideToggleExampleComponent,
     OverlaySimpleExampleComponent,
@@ -79,6 +81,15 @@ const routes = [
     {
         path: "with-popup-styles",
         component: OverlayPopupStylesExampleComponent,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+        },
+    },
+    {
+        path: "focus-trap",
+        component: OverlayFocusTrapExampleComponent,
         data: {
             srlc: {
                 hideIndicator: true,
@@ -186,6 +197,7 @@ const routes = [
         OverlayCustomStylesExampleComponent,
         OverlayCustomContainerExampleComponent,
         OverlayDocsComponent,
+        OverlayFocusTrapExampleComponent,
         OverlayViewportMarginExampleComponent,
         OverlayArrowExampleComponent,
         OverlayPopupStylesExampleComponent,
