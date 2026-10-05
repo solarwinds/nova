@@ -69,13 +69,46 @@ export class Camera {
         });
     }
 
-    // Force all web fonts to load and let layout settle, otherwise text may be invisible (font block period) or shifted in snapshots
+    // Wait for fonts used by visible text and layout to settle before snapshots.
     private async waitForStableLayout(): Promise<void> {
         await this.currentPage.evaluate(async () => {
-            const faces: FontFace[] = [];
-            document.fonts.forEach(font => faces.push(font));
-            await Promise.all(
-                faces.map(font => font.load().catch(() => undefined))
+            const fontRequests = new Map<string, string>();
+            const textWalker = document.createTreeWalker(
+                document.body,
+                NodeFilter.SHOW_TEXT
+            );
+
+            while (textWalker.nextNode()) {
+                const textNode = textWalker.currentNode;
+                const text = textNode.textContent?.trim();
+                const element = textNode.parentElement;
+                if (
+                    !text ||
+                    !element ||
+                    element.getClientRects().length === 0
+                ) {
+                    continue;
+                }
+
+                const style = getComputedStyle(element);
+                if (
+                    style.display === "none" ||
+                    style.visibility === "hidden" ||
+                    Number(style.opacity) === 0
+                ) {
+                    continue;
+                }
+
+                fontRequests.set(
+                    style.font,
+                    `${fontRequests.get(style.font) ?? ""}${text}`
+                );
+            }
+
+            await Promise.allSettled(
+                Array.from(fontRequests, ([font, text]) =>
+                    document.fonts.load(font, text)
+                )
             );
             await document.fonts.ready;
             await new Promise<void>(resolve =>
