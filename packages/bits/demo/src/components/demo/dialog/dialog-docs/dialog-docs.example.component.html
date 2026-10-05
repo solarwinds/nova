@@ -184,12 +184,14 @@
 
 <h2>Accessibility</h2>
 <p>
-    Every dialog needs an accessible name. Pass <code>ariaLabelledby</code> with
-    the id of the element containing the dialog title, or
-    <code>ariaLabel</code> when there is no visible title, in the
-    <code>options</code> of <code>DialogService.open</code>. Use
-    <code>ariaDescribedby</code> to point to the element with the main message,
-    so screen readers announce it when the dialog opens.
+    Every dialog needs an accessible name. When the dialog contains
+    <code>nui-dialog-header</code>, it is labelled by the header title
+    automatically. If you use a custom title element, pass its id as
+    <code>ariaLabelledby</code>; if there is no visible title, pass
+    <code>ariaLabel</code> in the <code>options</code> of
+    <code>DialogService.open</code>. Use <code>ariaDescribedby</code> to point
+    to the element with the main message, so screen readers announce it when the
+    dialog opens.
 </p>
 <nui-example-wrapper
     filenamePrefix="dialog-accessibility"

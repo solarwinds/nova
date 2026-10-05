@@ -34,7 +34,6 @@ export class DialogAccessibilityExampleComponent {
 
     public open(): void {
         this.dialogService.open(this.dialogTemplate, {
-            ariaLabel: "Delete report",
             ariaDescribedby: "nui-dialog-a11y-description",
         });
     }

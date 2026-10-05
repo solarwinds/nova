@@ -22,6 +22,7 @@ import { CdkScrollable, ScrollDispatcher } from "@angular/cdk/scrolling";
 import { DOCUMENT } from "@angular/common";
 import {
     AfterViewInit,
+    afterNextRender,
     Component,
     ElementRef,
     EventEmitter,
@@ -115,7 +116,9 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
         private elRef: ElementRef,
         private renderer: Renderer2,
         private router: Router
-    ) {}
+    ) {
+        afterNextRender(() => this.labelByHeaderTitle());
+    }
 
     @HostListener("window:keydown.shift.tab", ["$event"])
     onShiftTab(event: KeyboardEvent): void {
@@ -202,6 +205,22 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
             this.elRef.nativeElement["focus"].apply(
                 this.elRef.nativeElement,
                 []
+            );
+        }
+    }
+
+    private labelByHeaderTitle(): void {
+        if (this.ariaLabel || this.ariaLabelledby) {
+            return;
+        }
+
+        const title =
+            this.elRef.nativeElement.querySelector(".dialog-title[id]");
+        if (title) {
+            this.renderer.setAttribute(
+                this.elRef.nativeElement,
+                "aria-labelledby",
+                title.id
             );
         }
     }

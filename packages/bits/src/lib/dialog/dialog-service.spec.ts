@@ -92,6 +92,14 @@ export class WithActiveDialogComponent {
 }
 
 @Component({
+    selector: "nui-dialog-header-content-cmpt",
+    template:
+        "<nui-dialog-header title='Component report'></nui-dialog-header>",
+    imports: [NuiDialogModule],
+})
+class WithDialogHeaderComponent {}
+
+@Component({
     selector: "nui-test-cmpt",
     template: `
         <div id="testContainer"></div>
@@ -116,6 +124,9 @@ export class WithActiveDialogComponent {
                 </button>
             }
         </ng-template>
+        <ng-template #contentWithDialogHeader>
+            <nui-dialog-header title="Template report"></nui-dialog-header>
+        </ng-template>
         <button type="button" id="open" (click)="open('from button')">
             Open
         </button>
@@ -135,6 +146,8 @@ class TestComponent {
     @ViewChild("contentWithClose", { static: true }) tplContentWithClose: any;
     @ViewChild("contentWithDismiss", { static: true })
     tplContentWithDismiss: any;
+    @ViewChild("contentWithDialogHeader", { static: true })
+    tplContentWithDialogHeader: any;
     @ViewChild("contentWithIf", { static: true }) tplContentWithIf: any;
 
     constructor(public dialogService: DialogService) {}
@@ -167,6 +180,12 @@ class TestComponent {
     openTplDismiss(options?: object) {
         return this.dialogService.open(this.tplContentWithDismiss, options);
     }
+    openTplWithDialogHeader(options?: object) {
+        return this.dialogService.open(
+            this.tplContentWithDialogHeader,
+            options
+        );
+    }
     openTplIf(options?: object) {
         return this.dialogService.open(this.tplContentWithIf, options);
     }
@@ -180,7 +199,7 @@ class TestComponent {
         WithActiveDialogComponent,
     ],
     exports: [TestComponent, DestroyableComponent],
-    imports: [CommonModule, NuiDialogModule],
+    imports: [CommonModule, NuiDialogModule, WithDialogHeaderComponent],
     providers: [SpyService],
 })
 class DialogTestModule {}
@@ -315,6 +334,125 @@ describe("nui-dialog", () => {
             dialogInstance.close("some result");
             fixture.detectChanges();
             expect(fixture.nativeElement).not.toHaveDialog();
+        });
+
+        it("should label dialog by the title in template content", async () => {
+            const dialogRef =
+                fixture.componentInstance.openTplWithDialogHeader();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const dialogs = document.querySelectorAll("nui-dialog-window");
+            const dialog = dialogs[dialogs.length - 1] as HTMLElement;
+            const accessibleName = document
+                .getElementById(dialog.getAttribute("aria-labelledby")!)
+                ?.textContent?.trim();
+
+            expect(accessibleName).toBe("Template report");
+
+            dialogRef.close();
+            fixture.detectChanges();
+        });
+
+        it("should label dialog by the title in component content", async () => {
+            const dialogRef = fixture.componentInstance.openCmpt(
+                WithDialogHeaderComponent
+            );
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const dialogs = document.querySelectorAll("nui-dialog-window");
+            const dialog = dialogs[dialogs.length - 1] as HTMLElement;
+            const accessibleName = document
+                .getElementById(dialog.getAttribute("aria-labelledby")!)
+                ?.textContent?.trim();
+
+            expect(accessibleName).toBe("Component report");
+
+            dialogRef.close();
+            fixture.detectChanges();
+        });
+
+        it("should label each stacked dialog by its own title", async () => {
+            const templateDialogRef =
+                fixture.componentInstance.openTplWithDialogHeader();
+            const componentDialogRef = fixture.componentInstance.openCmpt(
+                WithDialogHeaderComponent
+            );
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const dialogs = Array.from(
+                document.querySelectorAll("nui-dialog-window")
+            );
+            const expectedTitles = ["Template report", "Component report"];
+
+            expect(dialogs.length).toBe(2);
+            dialogs.forEach((dialog, index) => {
+                const labelledby = dialog.getAttribute("aria-labelledby");
+                const title = document.getElementById(labelledby ?? "");
+
+                expect(title).not.toBeNull();
+                expect(dialog.contains(title)).toBeTrue();
+                expect(title?.textContent?.trim()).toBe(expectedTitles[index]);
+            });
+
+            componentDialogRef.close();
+            templateDialogRef.close();
+            fixture.detectChanges();
+        });
+
+        it("should not reference a missing title when the dialog has no header", async () => {
+            const dialogRef = fixture.componentInstance.openTpl();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const dialogs = document.querySelectorAll("nui-dialog-window");
+            const dialog = dialogs[dialogs.length - 1] as HTMLElement;
+
+            expect(dialog.hasAttribute("aria-labelledby")).toBeFalse();
+
+            dialogRef.close();
+            fixture.detectChanges();
+        });
+
+        it("should not set an automatic label when ariaLabel is provided", async () => {
+            const dialogRef = fixture.componentInstance.openTplWithDialogHeader(
+                {
+                    ariaLabel: "Report dialog",
+                }
+            );
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const dialogs = document.querySelectorAll("nui-dialog-window");
+            const dialog = dialogs[dialogs.length - 1] as HTMLElement;
+
+            expect(dialog.getAttribute("aria-label")).toBe("Report dialog");
+            expect(dialog.hasAttribute("aria-labelledby")).toBeFalse();
+
+            dialogRef.close();
+            fixture.detectChanges();
+        });
+
+        it("should keep an explicit ariaLabelledby value", async () => {
+            const dialogRef = fixture.componentInstance.openTplWithDialogHeader(
+                {
+                    ariaLabelledby: "custom-dialog-title",
+                }
+            );
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const dialogs = document.querySelectorAll("nui-dialog-window");
+            const dialog = dialogs[dialogs.length - 1] as HTMLElement;
+
+            expect(dialog.getAttribute("aria-labelledby")).toBe(
+                "custom-dialog-title"
+            );
+
+            dialogRef.close();
+            fixture.detectChanges();
         });
 
         it("should properly destroy TemplateRef content", () => {

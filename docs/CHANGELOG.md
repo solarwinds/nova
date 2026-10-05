@@ -12,6 +12,7 @@
 
 - `@nova-ui/bits` | SkipSpace a11y regression fixed
 - `@nova-ui/bits` | A11y fixes for nui-progress, nui-dialog, nui-textbox-number, nui-tab-group, nui-message, nui-toast, nui-range-filter, nui-date-picker and nui-menu
+- `@nova-ui/bits` | **nui-dialog** is labelled by its **nui-dialog-header** title automatically
 - `@nova-ui/dashboards` | Keyboard access for KPI tiles, risk score tiles and table widget rows
 
 ## [21.0.4] 📅 2026-09-16
