@@ -29,7 +29,7 @@ CircleCI runs the UI tests **without** `PERCY_TOKEN`, so every snapshot is a Pla
 
 - Percy does not re-render the page; `percyCSS` and other Percy lens options have no effect in CI.
 - Snapshot stability must be ensured before/while the screenshot is taken:
-  - `camera.say.cheese()` waits, forces all web fonts to load and waits two animation frames (prevents invisible or shifted text and misplaced overlays/tooltips).
+  - `camera.say.cheese()` loads font faces used by visible text, then waits for font and layout work to settle before taking the screenshot.
   - The Eyes lens takes screenshots with `animations: "disabled"` and `caret: "hide"`, so infinite CSS animations (spinners, progress bars) are frozen.
 - To reproduce CI snapshots locally, run the visual tests without `PERCY_TOKEN` and inspect the PNGs in `_snapshots/`.
 

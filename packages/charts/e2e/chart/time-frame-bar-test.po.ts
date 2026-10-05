@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import type { Locator, Page } from "@playwright/test";
+import { expect, type Locator, type Page } from "@playwright/test";
 
 import { TimeFrameBarAtom } from "@nova-ui/bits/sdk/atoms-playwright";
 
@@ -42,8 +42,8 @@ export class TimeFrameBarTestPage {
     }
 
     public async removeDelay(): Promise<void> {
-        if (await this.delayCheckbox.isChecked()) {
-            await this.delayCheckbox.click();
-        }
+        await expect(this.delayCheckbox).toBeChecked();
+        await this.delayCheckbox.uncheck();
+        await expect(this.delayCheckbox).not.toBeChecked();
     }
 }
