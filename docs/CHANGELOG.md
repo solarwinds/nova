@@ -10,6 +10,7 @@
 ### Added
 
 - `@nova-ui/bits` | Added `panel-collapse` and `panel-expand` icons.
+- `@nova-ui/bits` | **nui-expander** new input `useRegionLandmark`; the body is no longer a `region` landmark by default
 
 ## [20.0.11] 📅 2026-09-23
 
@@ -19,7 +20,6 @@
 - `@nova-ui/bits` | Improved switch accessibility by enabling Enter key activation, correctly associating projected labels, preventing duplicate element IDs, and adding a localized fallback accessible name.
 - `@nova-ui/dashboards` | Fixed regression in keyboard scrolling in Modern Dashboard table widgets
 - Prettier formatting fixes across the project
-- `@nova-ui/bits` | _OO-50773_ | **nui-expander** no longer exposes its body as a `region` landmark by default; opt in with `useRegionLandmark`.
 
 ## [20.0.10] 📅 2026-08-11
 
