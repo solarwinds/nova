@@ -24,6 +24,7 @@ export * from "./button/button.atom";
 export * from "./checkbox/checkbox.atom";
 export * from "./checkbox-group/checkbox-group.atom";
 export * from "./chips/chips.atom";
+export * from "./convenience/time-frame-bar/time-frame-bar.atom";
 export * from "./datepicker/datepicker.atom";
 export * from "./datetimepicker/datetimepicker.atom";
 export * from "./dialog/dialog.atom";
