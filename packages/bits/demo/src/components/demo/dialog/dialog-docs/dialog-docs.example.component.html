@@ -182,6 +182,23 @@
     <nui-dialog-with-keyboard-example></nui-dialog-with-keyboard-example>
 </nui-example-wrapper>
 
+<h2>Accessibility</h2>
+<p>
+    Every dialog needs an accessible name. When the dialog contains
+    <code>nui-dialog-header</code>, it is labelled by the header title
+    automatically. If you use a custom title element, pass its id as
+    <code>ariaLabelledby</code>; if there is no visible title, pass
+    <code>ariaLabel</code> in the <code>options</code> of
+    <code>DialogService.open</code>. Use <code>ariaDescribedby</code> to point
+    to the element with the main message, so screen readers announce it when the
+    dialog opens.
+</p>
+<nui-example-wrapper
+    filenamePrefix="dialog-accessibility"
+    exampleTitle="Dialog Accessibility">
+    <nui-dialog-accessibility-example></nui-dialog-accessibility-example>
+</nui-example-wrapper>
+
 <h2>Static Backdrop</h2>
 <p>
     By default, nui-dialog closes if user clicks outside the dialog. It is handy

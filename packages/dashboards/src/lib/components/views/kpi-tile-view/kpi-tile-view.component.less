@@ -19,6 +19,10 @@
     height: 100%;
     width: 100%;
 
+    &:focus-visible {
+        .focus-outline();
+    }
+
     &__background {
         height: 100%;
         width: 100%;
@@ -85,11 +89,15 @@
         width: 100%;
         height: 100%;
     }
-    &__zoom-container:has(.nui-kpi-indicator__zoom-container__row:nth-child(3)) {
+    &__zoom-container:has(
+            .nui-kpi-indicator__zoom-container__row:nth-child(3)
+        ) {
         grid-template-rows: 30% 40% 30%;
     }
 
-    &__zoom-container:not(:has(.nui-kpi-indicator__zoom-container__row:nth-child(3))) {
+    &__zoom-container:not(
+            :has(.nui-kpi-indicator__zoom-container__row:nth-child(3))
+        ) {
         grid-template-rows: 30% 70%;
     }
     &--interactive {

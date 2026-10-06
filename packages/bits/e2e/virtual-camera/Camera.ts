@@ -64,7 +64,58 @@ export class Camera {
     private async cheese(label: string, timeout: number = 710) {
         await test.step(`cheese ${label}`, async () => {
             await this.currentPage.waitForTimeout(timeout);
+            await this.waitForStableLayout();
             await this.engine.takePhoto(label);
+        });
+    }
+
+    // Wait for fonts used by visible text and layout to settle before snapshots.
+    private async waitForStableLayout(): Promise<void> {
+        await this.currentPage.evaluate(async () => {
+            const fontRequests = new Map<string, string>();
+            const textWalker = document.createTreeWalker(
+                document.body,
+                NodeFilter.SHOW_TEXT
+            );
+
+            while (textWalker.nextNode()) {
+                const textNode = textWalker.currentNode;
+                const text = textNode.textContent?.trim();
+                const element = textNode.parentElement;
+                if (
+                    !text ||
+                    !element ||
+                    element.getClientRects().length === 0
+                ) {
+                    continue;
+                }
+
+                const style = getComputedStyle(element);
+                if (
+                    style.display === "none" ||
+                    style.visibility === "hidden" ||
+                    Number(style.opacity) === 0
+                ) {
+                    continue;
+                }
+
+                fontRequests.set(
+                    style.font,
+                    `${fontRequests.get(style.font) ?? ""}${text}`
+                );
+            }
+
+            await Promise.allSettled(
+                Array.from(fontRequests, ([font, text]) =>
+                    document.fonts.load(font, text)
+                )
+            );
+            await document.fonts.ready;
+            await new Promise<void>(resolve =>
+                requestAnimationFrame(() =>
+                    requestAnimationFrame(() => resolve())
+                )
+            );
         });
     }
 

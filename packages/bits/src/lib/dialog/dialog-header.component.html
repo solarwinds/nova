@@ -3,7 +3,7 @@
         @if (severityIcon) {
         <nui-icon [icon]="severityIcon" aria-hidden="true"></nui-icon>
         }
-        <h1 class="dialog-title">{{ title }}</h1>
+        <h1 class="dialog-title" [id]="titleId">{{ title }}</h1>
     </div>
     <div class="btn-group">
         <ng-content></ng-content>
@@ -17,7 +17,6 @@
             icon="close"
             ariaLabel="Close"
             i18n-ariaLabel
-            (click)="innerClose($event)"
-        ></button>
+            (click)="innerClose($event)"></button>
     </div>
 </div>

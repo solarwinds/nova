@@ -15,8 +15,8 @@ Goals:
 ## Setup
 
 - Playwright config at `packages/bits/playwright.config.ts` defines a `visual` project and outputs artifacts to `test-results/`.
-- Manual snapshots: set `SNAPSHOTS_UPLOAD=manual` to write PNGs to `_snapshots/`.
-- Percy (optional): set `PERCY_TOKEN` in your environment and run via `percy exec`.
+- Without `PERCY_TOKEN` (default, also in CI): the Eyes lens saves full-page Playwright screenshots as PNGs to `_snapshots/`.
+- With `PERCY_TOKEN`: the Percy lens sends DOM snapshots via `@percy/playwright` (run via `percy exec`); `PERCY_DEFAULT_CONFIG` (widths, `percyCSS`) applies only here.
 
 ## Virtual Camera API
 
@@ -27,12 +27,21 @@ Import from `packages/bits/e2e/virtual-camera`:
 - `camera.say.cheese(label)` – capture a snapshot with an optional stabilization delay
 - `camera.be.responsive(widths, callback?)` – set responsive widths and optional callback that receives the Playwright `page`
 
-By default, the Camera engine selects the Percy lens when `process.env.PERCY` is present. Otherwise, with `SNAPSHOTS_UPLOAD=manual`, it saves PNGs.
+The Camera engine selects the Percy lens only when `process.env.PERCY_TOKEN` is set; otherwise it uses the Eyes lens (PNG screenshots).
+
+### How CI produces Percy snapshots
+
+CircleCI runs the UI tests **without** `PERCY_TOKEN`, so every snapshot is a Playwright screenshot written to `_snapshots/` by the Eyes lens. A later step uploads these images with `percy upload _snapshots`. Consequences:
+
+- Percy does not re-render the page; `percyCSS` and other Percy lens options have no effect in CI.
+- Snapshot stability must be ensured before/while the screenshot is taken:
+  - `camera.say.cheese()` loads font faces used by visible text, then waits for font and layout work to settle before taking the screenshot.
+  - The Eyes lens takes screenshots with `animations: "disabled"` and `caret: "hide"`, so infinite CSS animations (spinners, progress bars) are frozen.
+- To reproduce CI snapshots locally, run the visual tests without `PERCY_TOKEN` and inspect the PNGs in `_snapshots/`.
 
 ## Best Practices
 
-- Disable CSS animations for visual runs:
-  - `await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS)`
+- Animations are frozen by the camera at screenshot time. `Helpers.disableCSSAnimations(...)` injects its styles via `page.addInitScript`, so it only affects pages loaded after the call (not the page already opened by `Helpers.prepareBrowser`).
 - Interact via Atoms (see `docs/E2E/ATOMS.md`) to keep tests resilient.
 - Use meaningful snapshot labels tied to user actions.
 - Prefer consistent viewport widths; set `camera.be.responsive([1920])` as needed.

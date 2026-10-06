@@ -7,7 +7,13 @@
     </ng-container>
     } @if (!link) {
     <ng-container>
-        <div class="nui-kpi-indicator" (click)="onInteraction()">
+        <div
+            class="nui-kpi-indicator"
+            [attr.role]="isInteractive ? 'button' : null"
+            [attr.tabindex]="isInteractive ? 0 : null"
+            (click)="onInteraction()"
+            (keydown.enter)="onInteraction()"
+            (keydown.space)="$event.preventDefault(); onInteraction()">
             <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
         </div>
     </ng-container>

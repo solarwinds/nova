@@ -37,7 +37,7 @@ export class OverlayAtom extends Atom {
     public async toBeOpened(): Promise<void> {
         await expect(this.cdkContainerPane).toBeVisible();
     }
-    public async toNotBeOpened(): Promise<boolean> {
-        return this.cdkContainerPane.isHidden();
+    public async toNotBeOpened(): Promise<void> {
+        await expect(this.cdkContainerPane).toBeHidden();
     }
 }
