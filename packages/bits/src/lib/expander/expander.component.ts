@@ -48,6 +48,7 @@ let nextExpanderId = 0;
 })
 export class ExpanderComponent implements AfterContentInit {
     private static nextUniqueId = 0;
+    private readonly instanceId = ExpanderComponent.nextUniqueId++;
 
     /**
      * Adds "disabled" attribute to expander
@@ -66,11 +67,15 @@ export class ExpanderComponent implements AfterContentInit {
      */
     @Input() hideLeftBorder: boolean = false;
     /**
-     * Accessible label for the expander toggle.
+     * Accessible name of the toggle for a header without visible text, i.e. when neither
+     * `header` nor projected header content exist. Visible header text always names the
+     * toggle itself (WCAG 2.5.3 Label in Name). A localized default is used when empty.
      */
-    @Input() ariaLabel: string;
+    @Input() ariaLabel: string = "";
+    public readonly defaultAriaLabel: string = $localize`Expander`;
     /**
-     * Exposes the expander body as a `region` landmark, labelled by the header.
+     * Exposes the expander body as a `region` landmark, labelled by the header,
+     * only while the expander is open.
      * Opt-in, because several expanders on one page would otherwise flood
      * screen reader landmark navigation with near-identical regions.
      * @see https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
@@ -89,6 +94,14 @@ export class ExpanderComponent implements AfterContentInit {
     get open(): boolean {
         return this.state === "expanded";
     }
+
+    public get expanderToggleAriaLabel(): string | null {
+        if (this.header || !this.isCustomHeaderContentEmpty) {
+            return null;
+        }
+
+        return this.ariaLabel || this.defaultAriaLabel;
+    }
     /**
      * Is emitted when expander is expanded/collapsed
      */
@@ -101,23 +114,10 @@ export class ExpanderComponent implements AfterContentInit {
     public isCustomHeaderContentEmpty: boolean = false;
     public uniqueId: string;
 
-    private readonly instanceId = ExpanderComponent.nextUniqueId++;
-
-    /** Unique id for the expander header button. */
+    /** Unique id for the expander header. */
     public readonly headerId = `nui-expander-header-${this.instanceId}`;
-
     /** Unique id for the expander body. */
     public readonly bodyId = `nui-expander-body-${this.instanceId}`;
-
-    /** Returns an accessible label only when no visible text content exists in the header. */
-    public get expanderToggleAriaLabel(): string | null {
-        if (this.ariaLabel) {
-            return this.ariaLabel;
-        }
-        return !this.header && this.isCustomHeaderContentEmpty
-            ? $localize`Expander toggle`
-            : null;
-    }
 
     private actionKeys = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
 

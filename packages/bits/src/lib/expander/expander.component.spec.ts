@@ -234,94 +234,101 @@ describe("components >", () => {
         });
 
         describe("accessibility >", () => {
-            it("names the header button from its visible text and labels the body region with it", () => {
+            it("uses the visible standard header text as the button name", () => {
                 fixture = TestBed.createComponent(ExpanderComponent);
                 subject = fixture.componentInstance;
                 subject.header = "Standard header";
-                subject.useRegionLandmark = true;
                 fixture.detectChanges();
 
                 const headerEl = fixture.debugElement.query(
                     By.css(".nui-expander__header")
                 );
-                const bodyWrapperEl = fixture.debugElement.query(
-                    By.css(".nui-expander__body-wrapper")
-                );
-
-                // the visible header text is the accessible name, so nothing may override it
                 expect(
                     headerEl.nativeElement.getAttribute("aria-label")
                 ).toBeNull();
-                expect(headerEl.nativeElement.textContent).toContain(
-                    "Standard header"
-                );
+                expect(
+                    headerEl.nativeElement.getAttribute("aria-labelledby")
+                ).toBeNull();
                 expect(headerEl.nativeElement.getAttribute("id")).toBe(
                     subject.headerId
                 );
-                expect(
-                    bodyWrapperEl.nativeElement.getAttribute("aria-labelledby")
-                ).toBe(subject.headerId);
+                expect(headerEl.nativeElement.textContent).toContain(
+                    "Standard header"
+                );
             });
 
-            it("names the header button from the projected custom header content", () => {
+            it("uses projected custom header content as the button name", () => {
                 const usageFixture = TestBed.createComponent(
                     ExpanderUsageWithContentComponent
                 );
                 usageFixture.detectChanges();
-                const expanderSubject: ExpanderComponent =
-                    usageFixture.debugElement.query(
-                        By.directive(ExpanderComponent)
-                    ).componentInstance;
-
                 const headerEl = usageFixture.debugElement.query(
                     By.css(".nui-expander__header")
                 );
-                const bodyWrapperEl = usageFixture.debugElement.query(
-                    By.css(".nui-expander__body-wrapper")
-                );
-
                 expect(
                     headerEl.nativeElement.getAttribute("aria-label")
+                ).toBeNull();
+                expect(
+                    headerEl.nativeElement.getAttribute("aria-labelledby")
                 ).toBeNull();
                 expect(headerEl.nativeElement.textContent).toContain(
                     "Custom Projected Header"
                 );
-                expect(
-                    bodyWrapperEl.nativeElement.getAttribute("aria-labelledby")
-                ).toBe(expanderSubject.headerId);
-                expect(
-                    usageFixture.debugElement.query(By.css(".sr-only"))
-                ).toBeNull();
             });
 
-            it("labels the header button and body region with a custom ariaLabel when there is no header", () => {
+            it("uses ariaLabel when there is no header", () => {
                 fixture = TestBed.createComponent(ExpanderComponent);
                 subject = fixture.componentInstance;
                 subject.header = "";
                 subject.ariaLabel = "Fallback accessible name";
-                subject.useRegionLandmark = true;
                 fixture.detectChanges();
 
                 const headerEl = fixture.debugElement.query(
                     By.css(".nui-expander__header")
                 );
-                const bodyWrapperEl = fixture.debugElement.query(
-                    By.css(".nui-expander__body-wrapper")
-                );
-
                 expect(headerEl.nativeElement.getAttribute("aria-label")).toBe(
                     "Fallback accessible name"
                 );
-                expect(
-                    bodyWrapperEl.nativeElement.getAttribute("aria-labelledby")
-                ).toBe(subject.headerId);
             });
 
-            it("still has a valid accessible name from the default label when there is no header", () => {
+            it("does not override visible header text with ariaLabel", () => {
+                fixture = TestBed.createComponent(ExpanderComponent);
+                subject = fixture.componentInstance;
+                subject.header = "Visible header";
+                subject.ariaLabel = "Fallback accessible name";
+                fixture.detectChanges();
+
+                const headerEl = fixture.debugElement.query(
+                    By.css(".nui-expander__header")
+                );
+                expect(
+                    headerEl.nativeElement.getAttribute("aria-label")
+                ).toBeNull();
+                expect(headerEl.nativeElement.textContent).toContain(
+                    "Visible header"
+                );
+            });
+
+            it("uses the localized default label with no header or projected content", () => {
                 fixture = TestBed.createComponent(ExpanderComponent);
                 subject = fixture.componentInstance;
                 subject.header = "";
+                fixture.detectChanges();
+
+                const headerEl = fixture.debugElement.query(
+                    By.css(".nui-expander__header")
+                );
+                expect(headerEl.nativeElement.getAttribute("aria-label")).toBe(
+                    subject.defaultAriaLabel
+                );
+            });
+
+            it("exposes an open opt-in body as a region labelled by the header button", () => {
+                fixture = TestBed.createComponent(ExpanderComponent);
+                subject = fixture.componentInstance;
+                subject.header = "Standard header";
                 subject.useRegionLandmark = true;
+                subject.open = true;
                 fixture.detectChanges();
 
                 const headerEl = fixture.debugElement.query(
@@ -331,16 +338,38 @@ describe("components >", () => {
                     By.css(".nui-expander__body-wrapper")
                 );
 
-                const headerAriaLabel =
-                    headerEl.nativeElement.getAttribute("aria-label");
-                expect(headerAriaLabel).toBe(subject.expanderToggleAriaLabel);
-                expect(headerAriaLabel).toBeTruthy();
+                expect(bodyWrapperEl.nativeElement.getAttribute("role")).toBe(
+                    "region"
+                );
                 expect(
                     bodyWrapperEl.nativeElement.getAttribute("aria-labelledby")
                 ).toBe(subject.headerId);
+                expect(
+                    fixture.nativeElement.querySelector(`#${subject.headerId}`)
+                ).toBe(headerEl.nativeElement);
             });
 
-            it("points aria-controls of the header button at the body region", () => {
+            it("does not expose a closed opt-in body as a region", () => {
+                fixture = TestBed.createComponent(ExpanderComponent);
+                subject = fixture.componentInstance;
+                subject.header = "Standard header";
+                subject.useRegionLandmark = true;
+                subject.open = false;
+                fixture.detectChanges();
+
+                const bodyWrapperEl = fixture.debugElement.query(
+                    By.css(".nui-expander__body-wrapper")
+                );
+
+                expect(
+                    bodyWrapperEl.nativeElement.getAttribute("role")
+                ).toBeNull();
+                expect(
+                    bodyWrapperEl.nativeElement.getAttribute("aria-labelledby")
+                ).toBeNull();
+            });
+
+            it("links the header button to the body wrapper and reflects the open state", () => {
                 fixture = TestBed.createComponent(ExpanderComponent);
                 subject = fixture.componentInstance;
                 subject.header = "Standard header";
@@ -352,6 +381,17 @@ describe("components >", () => {
                 const bodyWrapperEl = fixture.debugElement.query(
                     By.css(".nui-expander__body-wrapper")
                 );
+
+                expect(
+                    headerEl.nativeElement.getAttribute("aria-expanded")
+                ).toBe("false");
+
+                subject.toggle();
+                fixture.detectChanges();
+
+                expect(
+                    headerEl.nativeElement.getAttribute("aria-expanded")
+                ).toBe("true");
 
                 expect(
                     headerEl.nativeElement.getAttribute("aria-controls")
@@ -365,6 +405,7 @@ describe("components >", () => {
                 fixture = TestBed.createComponent(ExpanderComponent);
                 subject = fixture.componentInstance;
                 subject.header = "Standard header";
+                subject.open = true;
                 fixture.detectChanges();
 
                 const bodyWrapperEl = fixture.debugElement.query(
