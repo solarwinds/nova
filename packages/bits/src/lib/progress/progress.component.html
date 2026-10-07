@@ -10,17 +10,17 @@
         >
     </div>
 
-    <div
-        *ngIf="show && showProgress"
-        class="nui-progress__container"
-        role="progressbar"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        [attr.aria-label]="ariaLabel"
-        [attr.aria-valuenow]="percent || null"
-        [attr.aria-describedby]="message ? messageId : helpText ? helpId : null">
+    <div *ngIf="show && showProgress" class="nui-progress__container">
         <div
             class="nui-progress__bar"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-valuenow]="isIndeterminate ? null : percent"
+            [attr.aria-describedby]="
+                compactMode ? null : message ? messageId : helpText ? helpId : null
+            "
             [ngClass]="{
                 'nui-progress--indeterminate': isIndeterminate,
                 'nui-progress__bar--compact': compactMode
@@ -42,6 +42,8 @@
             type="button"
             class="nui-progress__cancel"
             icon="close"
+            ariaLabel="Cancel"
+            i18n-ariaLabel
             *ngIf="allowCancel && !compactMode"
             (click)="cancelProgress()"
             displayStyle="action"

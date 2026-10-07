@@ -1,6 +1,6 @@
 # Changelog
 
-## [20.0.12] 📅 2026-10-06
+## [20.0.12] 📅 2026-10-12
 
 ### Added
 
@@ -9,6 +9,7 @@
 ### Fixes
 
 - `@nova-ui/bits` | A11y fixes for nui-progress
+- `@nova-ui/bits` | A11y fixes for nui-expander
 
 ## [20.0.11] 📅 2026-09-23
 
