@@ -41,6 +41,7 @@ export class CameraEngine {
             );
         }
 
+        // CI runs tests without PERCY_TOKEN (EyesLens PNGs, later sent via "percy upload"), so PercyLens options such as percyCSS do not apply there
         this.settings.globalLens = process.env.PERCY_TOKEN
             ? LensType.Percy
             : LensType.Eyes;
