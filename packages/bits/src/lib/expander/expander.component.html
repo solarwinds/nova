@@ -48,8 +48,8 @@
     <div
         class="nui-expander__body-wrapper"
         [id]="bodyId"
-        [attr.role]="useRegionLandmark ? 'region' : null"
-        [attr.aria-labelledby]="useRegionLandmark ? headerId : null">
+        [attr.role]="useRegionLandmark && open ? 'region' : null"
+        [attr.aria-labelledby]="useRegionLandmark && open ? headerId : null">
         @if (open) {
         <div
             class="nui-expander__body"

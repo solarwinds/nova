@@ -29,6 +29,11 @@ import {
 } from "@angular/core";
 
 import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
+import {
+    TAB_ID_PREFIX,
+    TAB_PANEL_ID_PREFIX,
+} from "../../../constants/tabgroup.constants";
+import { _uniqueId } from "../../../functions/unique-id";
 
 /** @ignore */
 
@@ -58,13 +63,37 @@ export class TabHeadingComponent {
         return this._active;
     }
 
-    /** Tab id */
-    @Input() tabId: string;
+    /**
+     * Identifier used to associate this tab with its consumer-owned panel.
+     * Can be supplied by a consumer or generated automatically.
+     */
+    @Input()
+    set tabId(tabId: string) {
+        this._tabId = tabId || _uniqueId("nui-tab-heading-");
+    }
+    get tabId(): string {
+        return this._tabId;
+    }
+
+    /** ID of the panel controlled by this tab, when a consumer-owned panel exists. */
+    @Input() public ariaControls: string | null;
+
+    /** Accessible name for tabs whose projected content is not sufficient. */
+    @Input() public ariaLabel: string | null;
+
+    public get tabControlId(): string {
+        return TAB_ID_PREFIX + this.tabId;
+    }
+
+    public get panelId(): string {
+        return TAB_PANEL_ID_PREFIX + this.tabId;
+    }
 
     /** Event is fired when tab became active, $event:Tab equals to selected instance of Tab component */
     @Output() selected: EventEmitter<TabHeadingComponent> = new EventEmitter();
 
     protected _active: boolean;
+    private _tabId = _uniqueId("nui-tab-heading-");
 
     constructor(
         private changeDetector: ChangeDetectorRef,
@@ -83,7 +112,12 @@ export class TabHeadingComponent {
             event.code === KEYBOARD_CODE.SPACE
         ) {
             event.preventDefault();
-            this.elementRef.nativeElement.click();
+            this.selectTab();
+            // Forwards activation to host-level directives such as routerLink,
+            // which only react to clicks.
+            if (!this.disabled) {
+                this.elementRef.nativeElement.click();
+            }
         }
     }
 }

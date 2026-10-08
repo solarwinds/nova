@@ -69,7 +69,7 @@ test.describe("USERCONTROL tab heading group", () => {
 
     test("should not allow disabled tabs to get selected", async () => {
         const disabledTab = await tabGroupHorizontal.getTabByText("Tab 3");
-        await disabledTab.click();
+        await disabledTab.getLocator().click({ force: true });
         await disabledTab.toNotBeActive();
     });
 
@@ -93,5 +93,206 @@ test.describe("USERCONTROL tab heading group", () => {
         const lastTab = await tabGroupResponsive.getLastTab();
         await lastTab.click();
         await lastTab.toBeActive();
+    });
+
+    test("should activate a focused tab with Enter and Space", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("tabgroup", page);
+
+        const tabs = page.locator(
+            "nui-tab-heading-group-dynamic-example [role='tab']"
+        );
+
+        await tabs.nth(1).focus();
+        await page.keyboard.press("Enter");
+        await expect(tabs.nth(1)).toHaveAttribute("aria-selected", "true");
+        await expect(tabs.nth(0)).toHaveAttribute("aria-selected", "false");
+
+        await tabs.nth(0).focus();
+        await page.keyboard.press("Space");
+        await expect(tabs.nth(0)).toHaveAttribute("aria-selected", "true");
+        await expect(tabs.nth(1)).toHaveAttribute("aria-selected", "false");
+    });
+
+    test("should use roving tabindex for keyboard navigation", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("tabgroup", page);
+
+        const tabs = page.locator(
+            "nui-tab-heading-group-dynamic-example [role='tab']"
+        );
+        const panel = page.locator(
+            "nui-tab-heading-group-dynamic-example [role='tabpanel']:not([hidden])"
+        );
+
+        await expect(tabs.nth(0)).toHaveAttribute("tabindex", "0");
+        await expect(tabs.nth(1)).toHaveAttribute("tabindex", "-1");
+
+        // Forward arrow navigation
+        await tabs.nth(0).focus();
+        await page.keyboard.press("ArrowRight");
+        await expect(tabs.nth(1)).toBeFocused();
+        await expect(tabs.nth(0)).toHaveAttribute("aria-selected", "true");
+        await expect(tabs.nth(1)).toHaveAttribute("aria-selected", "false");
+
+        // Wrap around from last to first
+        await page.keyboard.press("ArrowRight");
+        await expect(tabs.nth(0)).toBeFocused();
+        await expect(tabs.nth(0)).toHaveAttribute("tabindex", "0");
+        await expect(tabs.nth(1)).toHaveAttribute("tabindex", "-1");
+
+        // Wrap around from first to last with ArrowLeft
+        await page.keyboard.press("ArrowLeft");
+        await expect(tabs.nth(1)).toBeFocused();
+        await expect(tabs.nth(0)).toHaveAttribute("tabindex", "0");
+        await expect(tabs.nth(1)).toHaveAttribute("tabindex", "-1");
+
+        await page.keyboard.press("Home");
+        await expect(tabs.nth(0)).toBeFocused();
+
+        await page.keyboard.press("End");
+        await expect(tabs.nth(1)).toBeFocused();
+
+        // Tab moves focus from active tab into the active tabpanel
+        await tabs.nth(0).focus();
+        await page.keyboard.press("Tab");
+        await expect(panel).toBeFocused();
+    });
+
+    test("should navigate vertical tabs using ArrowDown and ArrowUp", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("tabgroup", page);
+
+        const verticalTabs = page.locator(
+            "nui-tab-heading-group-vertical-example [role='tab']"
+        );
+
+        await verticalTabs.nth(0).focus();
+        await page.keyboard.press("ArrowDown");
+        await expect(verticalTabs.nth(1)).toBeFocused();
+
+        await page.keyboard.press("ArrowUp");
+        await expect(verticalTabs.nth(0)).toBeFocused();
+    });
+
+    test("should provide accessible names for icon-only tabs", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("tabgroup", page);
+
+        const tabs = page.locator(
+            "nui-tab-heading-group-with-icons-example [role='tab']"
+        );
+        const accessibleNames = [
+            "Settings",
+            "Statistics",
+            "Acknowledgements",
+            "Add tab",
+        ];
+
+        await expect(tabs).toHaveCount(accessibleNames.length);
+        for (let index = 0; index < accessibleNames.length; index++) {
+            await expect(tabs.nth(index)).toHaveAccessibleName(
+                accessibleNames[index]
+            );
+        }
+    });
+
+    test("should relate every routed tab to the shared panel", async ({
+        page,
+    }) => {
+        const routes = ["tab-settings", "tab-statistics", "tab-about"];
+
+        for (const route of routes) {
+            await Helpers.prepareBrowser(`tabgroup/${route}`, page);
+
+            const routerExample = page.locator(
+                "nui-tab-heading-group-with-router-example"
+            );
+            const tabs = routerExample.locator("[role='tab']");
+            const panel = routerExample.locator("[role='tabpanel']");
+
+            await expect(tabs).toHaveCount(3);
+            await expect(tabs.nth(0)).toHaveAccessibleName("Settings");
+            await expect(tabs.nth(1)).toHaveAttribute(
+                "aria-controls",
+                "tabgroup-router-panel"
+            );
+            await expect(tabs.nth(2)).toHaveAttribute(
+                "aria-controls",
+                "tabgroup-router-panel"
+            );
+            await expect(panel).toHaveCount(1);
+            await expect(panel).toHaveAttribute("id", "tabgroup-router-panel");
+            await expect(panel).toHaveAttribute(
+                "aria-labelledby",
+                `tab-${route}`
+            );
+        }
+    });
+
+    test("should provide accessible names for switches in routed content", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("tabgroup/tab-settings", page);
+
+        const routerExample = page.locator(
+            "nui-tab-heading-group-with-router-example"
+        );
+        const statisticsTab = routerExample.locator("[role='tab']").nth(1);
+        await statisticsTab.focus();
+        await page.keyboard.press("Enter");
+
+        await expect(page).toHaveURL(/\/#\/tabgroup\/tab-statistics$/);
+
+        const switches = page.locator(
+            "nui-content-statistics-example [role='checkbox']"
+        );
+        await expect(switches.nth(0)).toHaveAccessibleName("Enable Statistics");
+        await expect(switches.nth(1)).toHaveAccessibleName("Enable Thresholds");
+        await expect(switches.nth(2)).toHaveAccessibleName(
+            "Activate Superpower"
+        );
+    });
+
+    test("should update the routed panel relationship when switching tabs", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("tabgroup/tab-settings", page);
+
+        const routerExample = page.locator(
+            "nui-tab-heading-group-with-router-example"
+        );
+        const statisticsTab = routerExample.locator("[role='tab']").nth(1);
+        await statisticsTab.focus();
+        await page.keyboard.press("Enter");
+
+        await expect(page).toHaveURL(/\/\#\/tabgroup\/tab-statistics$/);
+
+        const tabs = routerExample.locator("[role='tab']");
+        const panel = routerExample.locator("[role='tabpanel']");
+
+        await expect(tabs.nth(1)).toHaveAttribute("aria-selected", "true");
+        await expect(panel).toHaveAttribute("id", "tabgroup-router-panel");
+        await expect(panel).toHaveAttribute(
+            "aria-labelledby",
+            "tab-tab-statistics"
+        );
+        await expect(tabs).toHaveCount(3);
+        for (let index = 0; index < 3; index++) {
+            await expect(tabs.nth(index)).toHaveAttribute(
+                "aria-controls",
+                "tabgroup-router-panel"
+            );
+        }
+        await expect(
+            routerExample.locator("[role='tab'][tabindex='0']")
+        ).toHaveCount(1);
+        await expect(
+            routerExample.locator("[role='tab'][tabindex='-1']")
+        ).toHaveCount(2);
     });
 });
