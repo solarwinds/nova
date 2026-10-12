@@ -1,7 +1,7 @@
 import { Locator } from "playwright-core";
 
 import { Atom } from "../../atom";
-import { Helpers } from "../../setup";
+import { expect, Helpers } from "../../setup";
 
 export class ChipsAtom extends Atom {
     public static CSS_CLASS = "nui-chips";
@@ -26,11 +26,15 @@ export class ChipsAtom extends Atom {
         return this.getLocator().locator(`.${ChipsAtom.itemClass}`).nth(index);
     }
 
-    public removeItem = async (index: number): Promise<void> =>
-        this.getLocator()
+    public removeItem = async (index: number): Promise<void> => {
+        const count = await this.getChipElements.count();
+        await this.getLocator()
             .locator(Helpers.page.locator(`.${ChipsAtom.itemRemoveIconClass}`))
             .nth(index)
             .click();
+        // wait for re-render so a following index-based call targets the updated list
+        await expect(this.getChipElements).toHaveCount(count - 1);
+    };
 
     public clearAll = async (): Promise<void> => {
         await this.getLocator()

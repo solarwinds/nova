@@ -1,5 +1,16 @@
 # Changelog
 
+## [20.0.12] 📅 2026-10-12
+
+### Added
+
+- `@nova-ui/bits` | **nui-expander** new input `useRegionLandmark`; the body is no longer a `region` landmark by default
+
+### Fixes
+
+- `@nova-ui/bits` | A11y fixes for nui-progress
+- `@nova-ui/bits` | A11y fixes for nui-expander
+
 ## [20.0.11] 📅 2026-09-23
 
 ### Fixes
