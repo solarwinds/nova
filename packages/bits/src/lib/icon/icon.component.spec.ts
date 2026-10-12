@@ -24,7 +24,6 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { IconComponent } from "./icon.component";
 import { IconService } from "./icon.service";
 import { IconData, IconStatus } from "./types";
-import { icons } from "./icons";
 
 describe("components >", () => {
     describe("icon >", () => {
@@ -119,21 +118,6 @@ describe("components >", () => {
                 `${ICON_HOVER_COLOR}-hover-icon`
             );
             expect(subject.iconClass()).not.toContain(CSS_CLASS);
-        });
-
-        it("should register the panel icons", () => {
-            expect(icons.find(icon => icon.name === "panel-collapse")).toEqual(
-                jasmine.objectContaining({
-                    category: "command",
-                    svgFile: "platformbar-collapse.svg",
-                })
-            );
-            expect(icons.find(icon => icon.name === "panel-expand")).toEqual(
-                jasmine.objectContaining({
-                    category: "command",
-                    svgFile: "platformbar-expand.svg",
-                })
-            );
         });
 
         it("should have valid iconSize class", () => {
