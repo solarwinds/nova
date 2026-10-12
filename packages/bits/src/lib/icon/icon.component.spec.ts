@@ -121,17 +121,6 @@ describe("components >", () => {
             expect(subject.iconClass()).not.toContain(CSS_CLASS);
         });
 
-        it("should apply a custom icon color", () => {
-            fixture.componentRef.setInput("icon", "printer");
-            fixture.componentRef.setInput("iconCustomColor", "#123456");
-            fixture.detectChanges();
-
-            expect(subject.iconClass()).toContain("nui-icon-custom-color");
-            expect(subject.iconCustomColorStyle()).toEqual({
-                "--nui-icon-custom-color": "#123456",
-            });
-        });
-
         it("should register the panel icons", () => {
             expect(icons.find(icon => icon.name === "panel-collapse")).toEqual(
                 jasmine.objectContaining({

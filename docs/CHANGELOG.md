@@ -4,7 +4,7 @@
 
 ### Added
 
-- `@nova-ui/bits` | Added `panel-collapse` and `panel-expand` icons and optional `iconCustomColor` support for custom icon colors.
+- `@nova-ui/bits` | Added `panel-collapse` and `panel-expand` icons.
 
 ## [21.0.5] 📅 2026-10-01
 
