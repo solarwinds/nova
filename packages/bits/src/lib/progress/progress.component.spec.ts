@@ -91,6 +91,24 @@ describe("components >", () => {
             ).not.toBeNull();
         });
 
+        it("describes the progressbar by the help text with a unique id", () => {
+            component.helpText = "Help text";
+            component.compactMode = false;
+            fixture.detectChanges();
+
+            const progressbar = fixture.nativeElement.querySelector(
+                progressbarSelector
+            ) as HTMLElement;
+
+            expect(progressbar.getAttribute("aria-describedby")).toBe(
+                component.helpId
+            );
+            expect(
+                fixture.nativeElement.querySelectorAll(`#${component.helpId}`)
+                    .length
+            ).toBe(1);
+        });
+
         it("renders the cancel button and percent number outside the progressbar", () => {
             component.allowCancel = true;
             component.showNumber = true;
