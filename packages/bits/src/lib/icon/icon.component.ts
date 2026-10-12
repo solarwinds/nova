@@ -62,10 +62,6 @@ export class IconComponent {
     private sanitizer = inject(DomSanitizer);
 
     public iconColor = input<string>();
-    /**
-     * Optional CSS color value used to recolor the icon.
-     */
-    public iconCustomColor = input<string>();
     public brushType = input<string>("filled");
     public iconHoverColor = input<string>();
     public iconSize = input<string>();
@@ -126,10 +122,6 @@ export class IconComponent {
                 classes.push("custom-icon-color", `${iconColor}-icon`);
             }
 
-            if (this.iconCustomColor()) {
-                classes.push("nui-icon-custom-color");
-            }
-
             const iconHoverColor = this.iconHoverColor();
             if (iconHoverColor) {
                 classes.push(`${iconHoverColor}-hover-icon`);
@@ -176,13 +168,6 @@ export class IconComponent {
         }
 
         return this.sanitizer.bypassSecurityTrustHtml(svg);
-    });
-
-    public iconCustomColorStyle = computed(() => {
-        const iconCustomColor = this.iconCustomColor();
-        return iconCustomColor
-            ? { "--nui-icon-custom-color": iconCustomColor }
-            : undefined;
     });
 
     private a11y = computed(() => {
