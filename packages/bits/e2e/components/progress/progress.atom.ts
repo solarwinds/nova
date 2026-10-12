@@ -23,6 +23,12 @@ import { expect, Locator } from "@playwright/test";
 import { Atom } from "../../atom";
 import { ButtonAtom } from "../button/button.atom";
 
+const readStyle = (locator: Locator, property: string) =>
+    locator.evaluate(
+        (el, prop) => getComputedStyle(el).getPropertyValue(prop),
+        property
+    );
+
 export class ProgressAtom extends Atom {
     public static CSS_CLASS = "nui-progress";
 
@@ -66,6 +72,29 @@ export class ProgressAtom extends Atom {
         return await this.root.locator(".nui-progress__hint").innerText();
     }
 
+    public async toBeProgressBarDisplayed(): Promise<void> {
+        await expect(this.root.locator(".nui-progress__bar")).toBeVisible();
+    }
+
+    public async toBeIndeterminateAnimated(): Promise<void> {
+        const barValue = this.root.locator(
+            ".nui-progress--indeterminate .nui-progress__bar-value"
+        );
+        await expect(barValue).toHaveCSS(
+            "animation-name",
+            "indeterminate-progress"
+        );
+        await expect(barValue).toHaveCSS("animation-play-state", "running");
+        const initialMarginLeft = await readStyle(barValue, "margin-left");
+        await expect
+            .poll(() => readStyle(barValue, "margin-left"))
+            .not.toBe(initialMarginLeft);
+    }
+
+    /**
+     * @Deprecated: use ProgressAtom.toBeProgressBarDisplayed.
+     * see ../../ASSERTING_VALUE.md
+     */
     public async isProgressBarDisplayed(): Promise<boolean> {
         const bar = this.root.locator(".nui-progress__bar");
         return await bar.isVisible();

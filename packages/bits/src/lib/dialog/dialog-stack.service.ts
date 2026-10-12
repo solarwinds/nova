@@ -43,7 +43,15 @@ import { OverlayContainerService } from "../overlay/public-api";
  */
 @Injectable({ providedIn: "root" })
 export class DialogStackService {
-    private windowAttributes = ["backdrop", "keyboard", "size", "windowClass"];
+    private windowAttributes = [
+        "backdrop",
+        "keyboard",
+        "size",
+        "windowClass",
+        "ariaLabel",
+        "ariaLabelledby",
+        "ariaDescribedby",
+    ];
 
     constructor(
         private applicationRef: ApplicationRef,

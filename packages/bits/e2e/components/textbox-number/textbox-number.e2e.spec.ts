@@ -112,7 +112,7 @@ test.describe("USERCONTROL textbox-number >", () => {
         });
 
         test("should disable all the child components", async () => {
-            expect(await component.isDisabled()).toBe(true);
+            await expect.poll(() => component.isDisabled()).toBe(true);
         });
     });
 

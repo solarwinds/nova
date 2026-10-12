@@ -27,5 +27,6 @@ export * from "./overlay-test/overlay-test.example.component";
 export * from "./overlay-viewport-margin/overlay-viewport-margin-example.component";
 export * from "./overlay-arrow/overlay-arrow.example.component";
 export * from "./overlay-popup-styles/overlay-popup-styles.example.component";
+export * from "./overlay-focus-trap/overlay-focus-trap.example.component";
 export * from "./overlay-custom-dialog/overlay-custom-dialog.component";
 export * from "./overlay-custom-confirmation-inside-dialog/overlay-custom-confirmation-inside-dialog.component";

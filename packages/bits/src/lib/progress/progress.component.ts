@@ -39,7 +39,7 @@ import { _uniqueId } from "../../functions/unique-id";
     styleUrls: ["./progress.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: {
-        role: "progressbar",
+        "role": "progressbar",
         "aria-valuemin": "0",
         "aria-valuemax": "100",
         "[attr.aria-label]": "ariaLabel",

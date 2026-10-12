@@ -70,7 +70,7 @@ const containerPaddingsWithScroll = 37;
     encapsulation: ViewEncapsulation.None,
     providers: [PopupContainerService],
     host: {
-        role: "navigation",
+        "role": "navigation",
         "[attr.aria-label]": "ariaLabel",
     },
     standalone: false,

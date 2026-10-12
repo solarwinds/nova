@@ -33,7 +33,7 @@ import { LegendOrientation } from "./types";
 @Component({
     selector: "nui-legend",
     host: {
-        class: "d-inline-block",
+        "class": "d-inline-block",
         "[attr.role]": "interactive ? 'group' : 'list'",
         "[attr.aria-label]": "ariaLabel",
     },

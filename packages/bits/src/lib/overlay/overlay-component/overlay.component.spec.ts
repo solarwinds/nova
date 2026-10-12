@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ConfigurableFocusTrapFactory } from "@angular/cdk/a11y";
 import { Overlay } from "@angular/cdk/overlay";
 import {
     AfterViewInit,
@@ -27,7 +28,13 @@ import {
     NO_ERRORS_SCHEMA,
     ViewChild,
 } from "@angular/core";
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flush,
+    TestBed,
+    waitForAsync,
+} from "@angular/core/testing";
 import { first } from "rxjs/operators";
 
 import { OverlayComponent } from "./overlay.component";
@@ -164,6 +171,65 @@ describe("components >", () => {
             });
         });
 
+        describe("focus trapping", () => {
+            let focusTrapFactory: ConfigurableFocusTrapFactory;
+
+            beforeEach(() => {
+                focusTrapFactory = TestBed.inject(ConfigurableFocusTrapFactory);
+            });
+
+            it("should not create a focus trap by default", fakeAsync(() => {
+                const createSpy = spyOn(
+                    focusTrapFactory,
+                    "create"
+                ).and.callThrough();
+
+                component.show();
+                flush();
+
+                expect(createSpy).not.toHaveBeenCalled();
+            }));
+
+            it("should move focus into the overlay when opened with trapFocus", fakeAsync(() => {
+                const outsideButton = document.createElement("button");
+                document.body.appendChild(outsideButton);
+                outsideButton.focus();
+                component.trapFocus = true;
+
+                component.show();
+                const insideButton = document.createElement("button");
+                component
+                    .getOverlayRef()
+                    .overlayElement.appendChild(insideButton);
+                flush();
+
+                expect(document.activeElement).toBe(insideButton);
+                outsideButton.remove();
+            }));
+
+            it("should restore focus to the previously focused element when hidden", fakeAsync(() => {
+                const outsideButton = document.createElement("button");
+                document.body.appendChild(outsideButton);
+                outsideButton.focus();
+                component.trapFocus = true;
+
+                component.show();
+                flush();
+
+                const insideButton = document.createElement("button");
+                component
+                    .getOverlayRef()
+                    .overlayElement.appendChild(insideButton);
+                insideButton.focus();
+                expect(document.activeElement).toBe(insideButton);
+
+                component.hide();
+
+                expect(document.activeElement).toBe(outsideButton);
+                outsideButton.remove();
+            }));
+        });
+
         describe("hide()", () => {
             it("should hide dropdown", () => {
                 wrapperComponent.dropdown.show();
@@ -207,6 +273,36 @@ describe("components >", () => {
                 wrapperFixture.detectChanges();
 
                 expect(spy).toHaveBeenCalled();
+            });
+        });
+
+        describe("A11y and ID attributes", () => {
+            it("should apply custom id, role, and ARIA attributes to overlay container", () => {
+                wrapperComponent.dropdown.idAttr = "custom-overlay-id";
+                wrapperComponent.dropdown.roleAttr = "dialog";
+                wrapperComponent.dropdown.ariaLabel = "Custom Label";
+                wrapperComponent.dropdown.ariaLabelledby = "some-title-id";
+                wrapperComponent.dropdown.ariaDescribedby = "some-desc-id";
+                wrapperComponent.dropdown.ariaModal = true;
+                wrapperComponent.dropdown.ngOnInit();
+                wrapperComponent.dropdown.show();
+
+                const overlayElement =
+                    wrapperComponent.dropdown.getOverlayRef().overlayElement;
+                const innerOverlay =
+                    overlayElement.querySelector("#custom-overlay-id");
+                expect(innerOverlay).toBeTruthy();
+                expect(innerOverlay?.getAttribute("role")).toBe("dialog");
+                expect(innerOverlay?.getAttribute("aria-label")).toBe(
+                    "Custom Label"
+                );
+                expect(innerOverlay?.getAttribute("aria-labelledby")).toBe(
+                    "some-title-id"
+                );
+                expect(innerOverlay?.getAttribute("aria-describedby")).toBe(
+                    "some-desc-id"
+                );
+                expect(innerOverlay?.getAttribute("aria-modal")).toBe("true");
             });
         });
     });

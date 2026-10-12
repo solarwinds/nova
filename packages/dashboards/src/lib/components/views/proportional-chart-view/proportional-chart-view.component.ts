@@ -181,7 +181,7 @@ export class ProportionalChartViewComponent
         if (!this.interactive) {
             return;
         }
-        const item = this.data.find((d) => d.id === legendSeries?.id);
+        const item = this.data.find(d => d.id === legendSeries?.id);
         if (item) {
             this.itemClick.emit(item);
         }
@@ -231,10 +231,8 @@ export class ProportionalChartViewComponent
         this.chartTypeSubscription$ = this.chartAssist.chart
             .getEventBus()
             .getStream(SELECT_DATA_POINT_EVENT)
-            .subscribe((event) => {
-                const item = this.data.find(
-                    (d) => d.id === event.data.seriesId
-                );
+            .subscribe(event => {
+                const item = this.data.find(d => d.id === event.data.seriesId);
                 if (item) {
                     this.onInteraction({ id: item.id });
                 }
@@ -317,7 +315,7 @@ export class ProportionalChartViewComponent
     private updateChartColors(): void {
         let colorProvider: IValueProvider<string>;
 
-        const dataColors = this.data?.map((v) => v.color);
+        const dataColors = this.data?.map(v => v.color);
         const configColors = this.colors;
 
         if (some(dataColors)) {
@@ -343,7 +341,7 @@ export class ProportionalChartViewComponent
 
     private getDataDrivenColorProvider(): IValueProvider<string> {
         const dataColors = this.data
-            ?.map((v) => v.color)
+            ?.map(v => v.color)
             .filter((v): v is string => !!v);
 
         if (dataColors.length === this.data.length) {
@@ -370,7 +368,7 @@ export class ProportionalChartViewComponent
     }
 
     private mapDataToSeries(): Array<IChartAssistSeries<IAccessors>> {
-        return this.data.map((item) => ({
+        return this.data.map(item => ({
             id: item.id,
             name: item.name,
             data: [{ value: item.value }],

@@ -46,9 +46,9 @@ export class TimeFrameBarTestPage {
     }
 
     public async removeDelay(): Promise<void> {
-        if (await this.delayCheckbox.isChecked()) {
-            await this.delayCheckbox.click();
-        }
+        await expect(this.delayCheckbox).toBeChecked();
+        await this.delayCheckbox.uncheck();
+        await expect(this.delayCheckbox).not.toBeChecked();
     }
 
     public async waitUntilReady(): Promise<void> {

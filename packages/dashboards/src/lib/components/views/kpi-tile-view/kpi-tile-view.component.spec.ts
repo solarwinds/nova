@@ -203,6 +203,59 @@ describe("KpiTileViewComponent", () => {
         expect(div).toBeTruthy();
     });
 
+    it("should expose keyboard interaction for an interactive tile without a link", () => {
+        host.value = 42;
+        host.interactive = true;
+        host.link = "";
+        fixture.detectChanges();
+
+        const tile = fixture.nativeElement.querySelector(
+            "div.nui-kpi-indicator"
+        ) as HTMLElement;
+        const emitSpy = spyOn(component.tileClick, "emit");
+
+        expect(tile.getAttribute("role")).toBe("button");
+        expect(tile.getAttribute("tabindex")).toBe("0");
+
+        tile.dispatchEvent(
+            new KeyboardEvent("keydown", { key: "Enter", cancelable: true })
+        );
+        fixture.detectChanges();
+        expect(emitSpy).toHaveBeenCalledTimes(1);
+
+        const spaceEvent = new KeyboardEvent("keydown", {
+            key: " ",
+            cancelable: true,
+        });
+        tile.dispatchEvent(spaceEvent);
+        fixture.detectChanges();
+
+        expect(spaceEvent.defaultPrevented).toBe(true);
+        expect(emitSpy).toHaveBeenCalledTimes(2);
+    });
+
+    it("should not expose keyboard interaction when the tile is not interactive", () => {
+        host.value = 42;
+        host.interactive = false;
+        host.link = "";
+        fixture.detectChanges();
+
+        const tile = fixture.nativeElement.querySelector(
+            "div.nui-kpi-indicator"
+        ) as HTMLElement;
+        const emitSpy = spyOn(component.tileClick, "emit");
+
+        expect(tile.hasAttribute("role")).toBe(false);
+        expect(tile.hasAttribute("tabindex")).toBe(false);
+
+        tile.dispatchEvent(
+            new KeyboardEvent("keydown", { key: "Enter", cancelable: true })
+        );
+        fixture.detectChanges();
+
+        expect(emitSpy).not.toHaveBeenCalled();
+    });
+
     it("should compute text color from background when no explicit textColor", () => {
         host.value = 42;
         host.backgroundColor = "#ff0000";

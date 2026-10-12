@@ -84,6 +84,10 @@
     cursor: default; // to prevent text selection cursor
     .setCssVariable(background-color, nui-color-bg-content);
 
+    &:focus-visible {
+        .focus-outline();
+    }
+
     &:not(.nui-legend-series--horizontal):not(:last-child) {
         margin-bottom: 1px;
     }

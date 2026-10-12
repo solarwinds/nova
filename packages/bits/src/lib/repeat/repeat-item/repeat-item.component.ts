@@ -51,7 +51,8 @@ export class RepeatItemComponent {
 
     public onKeyActivate(event: KeyboardEvent): void {
         if (this.clickable) {
-            this.rowClicked.emit(event as any);
+            event.preventDefault();
+            this.rowClicked.emit(event as unknown as MouseEvent);
         }
     }
 

@@ -135,6 +135,30 @@
 
 <!-- ------------------------------------------------------------------------------------------- -->
 
+<h2>Accessibility and Focus Trapping</h2>
+<p>
+    When the overlay behaves like a small dialog (it contains form fields or
+    actions), set <code>trapFocus</code> to <code>true</code>. While the overlay
+    is open, keyboard focus stays inside it, and when it closes, focus returns
+    to the element that was focused before. It is disabled by default, so
+    dropdown-like usages (select, combobox) keep their behavior.
+</p>
+<p>
+    Use <code>roleAttr</code>, <code>ariaLabel</code> or
+    <code>ariaLabelledby</code>, <code>ariaDescribedby</code> and
+    <code>ariaModal</code> to describe the overlay container to assistive
+    technologies. The container gets a unique id automatically; use
+    <code>idAttr</code> to set your own, e.g. to reference it from
+    <code>aria-controls</code> of the toggle.
+</p>
+<nui-example-wrapper
+    filenamePrefix="overlay-focus-trap.example"
+    exampleTitle="Accessible Overlay with Focus Trap">
+    <nui-overlay-focus-trap-example></nui-overlay-focus-trap-example>
+</nui-example-wrapper>
+
+<!-- ------------------------------------------------------------------------------------------- -->
+
 <h2>Custom Styles</h2>
 <p>
     In case tweaking the <code>nui-overlay</code> overlay styles via the

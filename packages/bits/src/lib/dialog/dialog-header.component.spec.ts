@@ -57,5 +57,24 @@ describe("components >", () => {
 
             expect(subject.closed.emit).toHaveBeenCalledWith(event);
         });
+
+        it("should give each title a unique id", () => {
+            fixture.detectChanges();
+            const secondFixture = TestBed.createComponent(
+                DialogHeaderComponent
+            );
+            secondFixture.detectChanges();
+
+            const firstTitle =
+                fixture.nativeElement.querySelector(".dialog-title");
+            const secondTitle =
+                secondFixture.nativeElement.querySelector(".dialog-title");
+
+            expect(firstTitle.id).not.toBe("");
+            expect(secondTitle.id).not.toBe("");
+            expect(firstTitle.id).not.toBe(secondTitle.id);
+
+            secondFixture.destroy();
+        });
     });
 });

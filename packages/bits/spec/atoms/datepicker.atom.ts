@@ -117,7 +117,7 @@ export class DatepickerAtom extends Atom {
     public async getLargerPeriodTitle(): Promise<string> {
         let newTitle: string;
 
-        return this.getTitleText().then(async (currentTitle) => {
+        return this.getTitleText().then(async currentTitle => {
             if (currentTitle.length === 4) {
                 const currentYear: number = Math.floor(
                     parseInt(currentTitle, 10)

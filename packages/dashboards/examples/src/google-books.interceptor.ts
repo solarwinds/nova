@@ -48,7 +48,7 @@ export class GoogleBooksInterceptor implements HttpInterceptor {
                 infoLink: "https://books.google.com/books?id=5MQFrgEACAAJ",
             },
         },
-        zpvysRGsBlwC: {
+        "zpvysRGsBlwC": {
             kind: "books#volume",
             id: "zpvysRGsBlwC",
             volumeInfo: {

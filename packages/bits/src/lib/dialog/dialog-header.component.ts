@@ -21,6 +21,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
 import { SeverityLevels } from "./public-api";
+import { _uniqueId } from "../../functions/unique-id";
 
 /**
  * @ignore
@@ -47,6 +48,7 @@ export class DialogHeaderComponent implements OnInit {
 
     public severityClass = "";
     public severityIcon = "";
+    public readonly titleId = _uniqueId("nui-dialog-title-");
 
     public ngOnInit(): void {
         if (this.severity) {

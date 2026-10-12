@@ -72,11 +72,23 @@ describe("components >", () => {
             });
 
             it("aria attributes", () => {
+                fixture.componentInstance.ariaLabel = "Dialog Label";
+                fixture.componentInstance.ariaLabelledby = "title-id";
+                fixture.componentInstance.ariaDescribedby = "desc-id";
                 fixture.detectChanges();
 
                 expect(fixture.nativeElement.getAttribute("role")).toBe(
                     "dialog"
                 );
+                expect(fixture.nativeElement.getAttribute("aria-label")).toBe(
+                    "Dialog Label"
+                );
+                expect(
+                    fixture.nativeElement.getAttribute("aria-labelledby")
+                ).toBe("title-id");
+                expect(
+                    fixture.nativeElement.getAttribute("aria-describedby")
+                ).toBe("desc-id");
             });
 
             it("should contain focus trap attribute", () => {

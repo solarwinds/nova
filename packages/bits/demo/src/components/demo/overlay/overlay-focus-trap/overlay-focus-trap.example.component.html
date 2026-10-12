@@ -1,0 +1,34 @@
+<button nui-button #toggle type="button" (click)="overlay.toggle()" i18n>
+    Edit name
+</button>
+
+<nui-overlay
+    #overlay
+    [toggleReference]="toggle"
+    [overlayConfig]="{ panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS }"
+    roleAttr="dialog"
+    ariaLabelledby="nui-overlay-focus-trap-title"
+    [ariaModal]="true"
+    [trapFocus]="true">
+    <h4 id="nui-overlay-focus-trap-title" i18n>Edit name</h4>
+    <nui-textbox
+        id="nui-overlay-focus-trap-name"
+        ariaLabel="Name"
+        i18n-ariaLabel
+        [(ngModel)]="name"></nui-textbox>
+    <button nui-button type="button" (click)="overlay.hide()" i18n>
+        Cancel
+    </button>
+    <button
+        nui-button
+        type="button"
+        displayStyle="primary"
+        (click)="saveName()"
+        i18n>
+        Save
+    </button>
+</nui-overlay>
+
+@if (savedName) {
+<p i18n>Saved name: {{ savedName }}</p>
+}

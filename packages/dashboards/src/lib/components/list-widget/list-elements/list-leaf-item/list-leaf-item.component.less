@@ -1,11 +1,17 @@
 @import (reference) "@nova-ui/bits/sdk/less/nui-framework-variables";
 
+@import (reference) "@nova-ui/bits/sdk/less/mixins";
+
 .nui-list-leaf-item {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: @nui-space-xs 0;
+
+    &:focus-visible {
+        .focus-outline();
+    }
 
     &__info-container {
         display: flex;

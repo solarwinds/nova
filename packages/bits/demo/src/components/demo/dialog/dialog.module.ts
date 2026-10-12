@@ -47,6 +47,7 @@ import {
     ConfirmationDialogExampleComponent,
     DialogActionBeforeClosureExampleComponent,
     DialogAfterOpenedExampleComponent,
+    DialogAccessibilityExampleComponent,
     DialogContentExampleComponent,
     DialogCustomClassExampleComponent,
     DialogDocsComponent,
@@ -106,6 +107,15 @@ const routes = [
         },
     },
     {
+        path: "accessibility",
+        component: DialogAccessibilityExampleComponent,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+        },
+    },
+    {
         path: "dialog-visual-test",
         component: DialogVisualTestComponent,
         data: {
@@ -145,6 +155,7 @@ const routes = [
     declarations: [
         DialogContentExampleComponent,
         ComponentAsContentExampleComponent,
+        DialogAccessibilityExampleComponent,
         ConfirmationDialogExampleComponent,
         DialogCustomClassExampleComponent,
         DialogDocsComponent,
