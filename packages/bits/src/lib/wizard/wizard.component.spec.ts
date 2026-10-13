@@ -170,7 +170,7 @@ describe("components >", () => {
                 );
                 expect(document.activeElement).toBe(
                     fixture.nativeElement.querySelector(
-                        '[role="tab"][aria-selected="true"]'
+                        "[role=\"tab\"][aria-selected=\"true\"]"
                     )
                 );
             });
@@ -201,7 +201,7 @@ describe("components >", () => {
                 );
                 expect(document.activeElement).toBe(
                     fixture.nativeElement.querySelector(
-                        '[role="tab"][aria-selected="true"]'
+                        "[role=\"tab\"][aria-selected=\"true\"]"
                     )
                 );
             });
@@ -260,7 +260,7 @@ describe("components >", () => {
                 );
                 expect(document.activeElement).toBe(
                     fixture.nativeElement.querySelector(
-                        '[role="tab"][aria-selected="true"]'
+                        "[role=\"tab\"][aria-selected=\"true\"]"
                     )
                 );
             });
