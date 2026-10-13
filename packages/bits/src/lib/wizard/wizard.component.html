@@ -7,6 +7,7 @@
             @for (step of steps; track step; let first = $first; let last =
             $last) { @if (!step.hidden) {
             <li
+                #stepHeader
                 role="tab"
                 [id]="step.stepId"
                 [attr.aria-controls]="step.panelId"

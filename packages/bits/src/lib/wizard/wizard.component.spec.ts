@@ -65,6 +65,23 @@ describe("components >", () => {
             fixture.detectChanges();
         });
 
+        it("should preserve external focus during initial rendering", () => {
+            const opener = document.createElement("button");
+            document.body.appendChild(opener);
+            opener.focus();
+            const initialFixture =
+                TestBed.createComponent(TestWrapperComponent);
+
+            try {
+                initialFixture.detectChanges();
+
+                expect(document.activeElement).toBe(opener);
+            } finally {
+                initialFixture.destroy();
+                opener.remove();
+            }
+        });
+
         describe("selectionChange >", () => {
             it("should notify with updated IWizardSelectionEvent", () => {
                 spyOn(component.selectionChange, "emit");
@@ -196,28 +213,70 @@ describe("components >", () => {
             });
 
             it("should move to next wizard step", () => {
+                const nextButton: HTMLButtonElement =
+                    fixture.nativeElement.querySelector(
+                        ".nui-wizard__next-button"
+                    );
+                nextButton.focus();
                 component.onNextClick();
+                fixture.detectChanges();
                 expect(component.currentStep).toBe(
                     component.steps.toArray()[1]
+                );
+                expect(document.activeElement).toBe(
+                    fixture.nativeElement.querySelector(
+                        '[role="tab"][aria-selected="true"]'
+                    )
                 );
             });
 
             it("should move to next step only after delay (simulating long action on exit step)", () => {
+                const nextButton: HTMLButtonElement =
+                    fixture.nativeElement.querySelector(
+                        ".nui-wizard__next-button"
+                    );
+                nextButton.focus();
                 component.navigationControl.next({
                     busyState: { busy: false },
                     allowStepChange: false,
                 });
                 component.onNextClick();
+                fixture.detectChanges();
                 expect(component.currentStep).toBe(
                     component.steps.toArray()[0]
                 );
+                expect(document.activeElement).toBe(nextButton);
                 component.navigationControl.next({
                     busyState: { busy: false },
                     allowStepChange: true,
                 });
+                fixture.detectChanges();
                 expect(component.currentStep).toBe(
                     component.steps.toArray()[1]
                 );
+                expect(document.activeElement).toBe(
+                    fixture.nativeElement.querySelector(
+                        '[role="tab"][aria-selected="true"]'
+                    )
+                );
+            });
+
+            it("should leave focus alone when the step changes while focus is outside the wizard", () => {
+                const outside = document.createElement("button");
+                document.body.appendChild(outside);
+
+                try {
+                    outside.focus();
+                    component.onNextClick();
+                    fixture.detectChanges();
+
+                    expect(component.currentStep).toBe(
+                        component.steps.toArray()[1]
+                    );
+                    expect(document.activeElement).toBe(outside);
+                } finally {
+                    outside.remove();
+                }
             });
         });
 
@@ -242,10 +301,22 @@ describe("components >", () => {
         describe("onBackClick >", () => {
             it("should move to previous wizard step", () => {
                 component.onNextClick();
+                fixture.detectChanges();
+                const backButton: HTMLButtonElement =
+                    fixture.nativeElement.querySelector(
+                        ".nui-wizard__back-button"
+                    );
+                backButton.focus();
 
                 component.onBackClick();
+                fixture.detectChanges();
                 expect(component.currentStep).toBe(
                     component.steps.toArray()[0]
+                );
+                expect(document.activeElement).toBe(
+                    fixture.nativeElement.querySelector(
+                        '[role="tab"][aria-selected="true"]'
+                    )
                 );
             });
 
