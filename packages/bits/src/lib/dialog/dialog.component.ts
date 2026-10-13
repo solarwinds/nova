@@ -189,8 +189,15 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
         this.dismissEvent.emit(reason);
     }
 
+    /** For DialogStackService only; not part of the public API. */
+    public captureFocus(element: Element | null): void {
+        this.elWithFocus = element;
+    }
+
     public ngOnInit(): void {
-        this.elWithFocus = this.document.activeElement;
+        if (!this.elWithFocus) {
+            this.captureFocus(this.document.activeElement);
+        }
         this.renderer.addClass(this.document.body, "dialog-open");
         this.router.events
             .pipe(

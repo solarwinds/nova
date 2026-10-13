@@ -139,11 +139,17 @@ test.describe("USERCONTROL Wizard V2: ", () => {
 
         test("should select the second step", async () => {
             await wizard.selectStep(0);
-            await wizard.next();
+            await wizard.footer.nextButton.getLocator().focus();
+            await Helpers.pressKey("Enter");
 
             await wizard
                 .getHeader(1)
                 .toContainClass("nui-wizard-step-header--selected");
+            await expect(wizard.getHeader(1).getLocator()).toBeFocused();
+
+            await wizard.footer.backButton.getLocator().focus();
+            await Helpers.pressKey("Enter");
+            await expect(wizard.getHeader(0).getLocator()).toBeFocused();
         });
     });
 

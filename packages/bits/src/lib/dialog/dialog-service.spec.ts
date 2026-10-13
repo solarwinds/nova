@@ -326,6 +326,21 @@ describe("nui-dialog", () => {
             expect(fixture.nativeElement).not.toHaveDialog();
         });
 
+        it("should restore the opener when projected content receives focus before the dialog initializes", () => {
+            fixture.detectChanges();
+            const opener: HTMLButtonElement =
+                fixture.nativeElement.querySelector("#open");
+            opener.focus();
+
+            const dialogInstance = fixture.componentInstance.openTplClose();
+            document.querySelector<HTMLButtonElement>("#close")!.focus();
+            fixture.detectChanges();
+
+            dialogInstance.dismiss();
+
+            expect(document.activeElement).toBe(opener);
+        });
+
         it("should open and close dialog from a TemplateRef content", () => {
             const dialogInstance = fixture.componentInstance.openTpl();
             fixture.detectChanges();

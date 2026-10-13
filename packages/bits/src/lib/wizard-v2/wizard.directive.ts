@@ -27,6 +27,7 @@ import {
 } from "@angular/cdk/stepper";
 import {
     AfterContentInit,
+    AfterViewChecked,
     AfterViewInit,
     ContentChildren,
     Directive,
@@ -53,7 +54,12 @@ import { WizardStepHeaderComponent } from "./wizard-step-header/wizard-step-head
 })
 export class WizardDirective
     extends CdkStepper
-    implements OnChanges, AfterContentInit, AfterViewInit, OnDestroy
+    implements
+        OnChanges,
+        AfterContentInit,
+        AfterViewInit,
+        AfterViewChecked,
+        OnDestroy
 {
     static ngAcceptInputTypeEditable: BooleanInput = undefined;
     static ngAcceptInputTypeOptional: BooleanInput = undefined;
@@ -92,6 +98,8 @@ export class WizardDirective
 
     /** Stream of animation `done` events when the body expands/collapses. */
     _animationDone = new Subject<AnimationEvent>();
+
+    private focusPending = false;
 
     /** Steps that the stepper holds. */
     @ContentChildren(WizardStepV2Component, { descendants: true })
@@ -155,6 +163,18 @@ export class WizardDirective
         if (this.state?.finished) {
             this.restore();
         }
+
+        // _containsFocus is private in CdkStepper (checked against CDK 20); the focus specs fail if it is renamed.
+        this.selectionChange.pipe(takeUntil(this._destroyed)).subscribe(() => {
+            this.focusPending = this["_containsFocus"]();
+        });
+    }
+
+    public ngAfterViewChecked(): void {
+        if (this.focusPending) {
+            this.focusPending = false;
+            this.focusSelectedStepHeader();
+        }
     }
 
     public ngOnDestroy(): void {
@@ -196,5 +216,16 @@ export class WizardDirective
         this.stepContentIds = this.stepsArray.map((step, index) =>
             this._getStepContentId(index)
         );
+    }
+
+    private focusSelectedStepHeader(): void {
+        const header = this._stepHeader?.find(
+            candidate => candidate.index === this.selectedIndex
+        );
+        if (header) {
+            // _keyManager is private in CdkStepper; keeps arrow-key navigation in step with the focused header.
+            this["_keyManager"].updateActiveItem(header);
+        }
+        header?.focus();
     }
 }

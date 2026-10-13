@@ -68,6 +68,8 @@ export class WizardComponent
 
     @ContentChildren(WizardStepComponent) steps: QueryList<WizardStepComponent>;
     @ViewChildren("stepTitle") stepTitles: QueryList<ElementRef>;
+    @ViewChildren("stepHeader")
+    private stepHeaders: QueryList<ElementRef<HTMLElement>>;
     @ViewChild("container", { read: ViewContainerRef }) dynamicStep: any;
 
     /**
@@ -126,6 +128,7 @@ export class WizardComponent
     private stepIndex: number;
     private previousStepIndex = 0;
     private futureStep?: WizardStepComponent;
+    private focusPending = false;
 
     private arraySteps: any[];
     private dynamicSubscriptions = new Map();
@@ -182,6 +185,11 @@ export class WizardComponent
                 this.stepLineWidth = newWidth;
                 this.changeDetector.markForCheck();
             }
+        }
+
+        if (this.focusPending) {
+            this.focusPending = false;
+            this.stepHeaders?.get(this.stepIndex)?.nativeElement.focus();
         }
     }
 
@@ -370,6 +378,10 @@ export class WizardComponent
     }
 
     public enterAnotherStep(): void {
+        const stepChanged =
+            !!this.currentStep && this.currentStep !== this.futureStep;
+        const host: HTMLElement = this.viewContainerRef.element.nativeElement;
+        const focusInside = host.contains(host.ownerDocument.activeElement);
         this.currentStep?.applyExitingStep();
         this.futureStep?.enterStep();
         this.currentStep = this.futureStep;
@@ -383,6 +395,7 @@ export class WizardComponent
         };
         this.selectionChange.emit(this.selectionEvent);
         this.previousStepIndex = this.stepIndex;
+        this.focusPending ||= stepChanged && focusInside;
     }
 
     private disableFollowingSteps(): void {

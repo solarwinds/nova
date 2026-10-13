@@ -22,17 +22,28 @@ import { ChangeDetectorRef, Component, NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { WizardHorizontalComponent } from "./wizard-horizontal.component";
-import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
+import { NuiWizardV2Module } from "../wizard.module";
 
 @Component({
     selector: "nui-test-cmp",
     template: ` <nui-wizard-horizontal>
-        <nui-wizard-step-v2 label="step 1">
+        <nui-wizard-step-v2 label="step 1" [completed]="true">
             <input aria-label="First step value" />
+            <ng-template nuiWizardStepFooter>
+                <button type="button" nuiWizardNext>Next</button>
+            </ng-template>
         </nui-wizard-step-v2>
-
-        <nui-wizard-step-v2 label="step 2">
+        <nui-wizard-step-v2 label="step 2" [completed]="true">
             <input aria-label="Second step value" />
+            <ng-template nuiWizardStepFooter>
+                <button type="button" nuiWizardPrevious>Back</button>
+                <button type="button" nuiWizardNext>Next</button>
+            </ng-template>
+        </nui-wizard-step-v2>
+        <nui-wizard-step-v2 label="step 3" [completed]="true">
+            <ng-template nuiWizardStepFooter>
+                <button type="button" nuiWizardPrevious>Back</button>
+            </ng-template>
         </nui-wizard-step-v2>
     </nui-wizard-horizontal>`,
     standalone: false,
@@ -46,11 +57,8 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [
-                    WizardHorizontalComponent,
-                    WizardStepV2Component,
-                    TestWrapperComponent,
-                ],
+                imports: [NuiWizardV2Module],
+                declarations: [TestWrapperComponent],
                 providers: [ChangeDetectorRef],
                 schemas: [NO_ERRORS_SCHEMA],
             });
@@ -150,7 +158,7 @@ describe("components >", () => {
 
         describe("ngAfterViewInit", () => {
             it("should cache the steps array", () => {
-                expect(component["stepsCachedArray"].length).toBe(2);
+                expect(component["stepsCachedArray"].length).toBe(3);
             });
 
             it("should call checkHeadingsView()", () => {
@@ -167,6 +175,77 @@ describe("components >", () => {
                 expect(
                     component.selectionChange.observers.length
                 ).toBeGreaterThan(oldObservers);
+            });
+        });
+
+        describe("responsive focus order", () => {
+            function navigate(direction: "Next" | "Back"): void {
+                const buttons = Array.from<HTMLButtonElement>(
+                    fixture.nativeElement.querySelectorAll(
+                        "wizard-footer button"
+                    )
+                );
+                const button = buttons.find(
+                    candidate => candidate.textContent?.trim() === direction
+                )!;
+                button.focus();
+                button.click();
+                fixture.detectChanges();
+                TestBed.tick();
+            }
+
+            beforeEach(() => {
+                component["headerResizeObserver"].disconnect();
+                component.hasOverflow = true;
+                component.isInResponsiveMode = true;
+                component.visibleSteps = component.stepsArray.slice(0, 2);
+                component.overflownStepsStart = [];
+                component.overflownStepsEnd = component.stepsArray.slice(2);
+                fixture.detectChanges();
+            });
+
+            it("should focus the selected rendered header after Next and Back cross the overflow boundary", () => {
+                navigate("Next");
+                navigate("Next");
+
+                expect(component.selectedIndex).toBe(2);
+                expect(component.overflownStepsStart.length).toBe(1);
+                expect(document.activeElement).toBe(
+                    fixture.nativeElement.querySelector(
+                        "nui-wizard-step-header[aria-selected='true']"
+                    )
+                );
+
+                navigate("Back");
+
+                expect(component.selectedIndex).toBe(1);
+                expect(document.activeElement).toBe(
+                    fixture.nativeElement.querySelector(
+                        "nui-wizard-step-header[aria-selected='true']"
+                    )
+                );
+            });
+
+            it("should preserve external focus during initialization and programmatic navigation", () => {
+                const outside = document.createElement("button");
+                document.body.appendChild(outside);
+                outside.focus();
+                const initialFixture =
+                    TestBed.createComponent(TestWrapperComponent);
+
+                try {
+                    initialFixture.detectChanges();
+                    TestBed.tick();
+                    expect(document.activeElement).toBe(outside);
+
+                    component.selectedIndex = 1;
+                    fixture.detectChanges();
+                    TestBed.tick();
+                    expect(document.activeElement).toBe(outside);
+                } finally {
+                    initialFixture.destroy();
+                    outside.remove();
+                }
             });
         });
     });
