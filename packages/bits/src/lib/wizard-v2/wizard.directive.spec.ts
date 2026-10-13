@@ -18,12 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { AnimationEvent } from "@angular/animations";
 import { CdkStepper } from "@angular/cdk/stepper";
 import {
     ChangeDetectorRef,
     Component,
     ElementRef,
+    forwardRef,
     NO_ERRORS_SCHEMA,
+    QueryList,
 } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
@@ -41,18 +44,33 @@ import { WizardDirective } from "./wizard.directive";
 @Component({
     selector: "nui-test-cmp",
     template: ` <div>
-        <nui-wizard-step-v2 label="step1"></nui-wizard-step-v2>
-        <nui-wizard-step-v2 label="step2"></nui-wizard-step-v2>
-        <nui-wizard-step-v2 label="step3"></nui-wizard-step-v2>
+        <button type="button">Navigate</button>
+        <ng-content></ng-content>
     </div>`,
+    providers: [
+        {
+            provide: CdkStepper,
+            useExisting: forwardRef(() => TestWrapperComponent),
+        },
+    ],
     standalone: false,
 })
 class TestWrapperComponent extends WizardDirective {}
 
+@Component({
+    template: `<nui-test-cmp>
+        <nui-wizard-step-v2 label="step1"></nui-wizard-step-v2>
+        <nui-wizard-step-v2 label="step2"></nui-wizard-step-v2>
+        <nui-wizard-step-v2 label="step3"></nui-wizard-step-v2>
+    </nui-test-cmp>`,
+    standalone: false,
+})
+class TestHostComponent {}
+
 describe("directives >", () => {
     describe("WizardDirective", () => {
         let component: TestWrapperComponent;
-        let fixture: ComponentFixture<TestWrapperComponent>;
+        let fixture: ComponentFixture<TestHostComponent>;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
@@ -66,6 +84,7 @@ describe("directives >", () => {
                     WizardStepperNextDirective,
                     WizardStepperPreviousDirective,
                     TestWrapperComponent,
+                    TestHostComponent,
                 ],
                 providers: [
                     CdkStepper,
@@ -78,8 +97,8 @@ describe("directives >", () => {
                 schemas: [NO_ERRORS_SCHEMA],
             });
 
-            fixture = TestBed.createComponent(TestWrapperComponent);
-            component = fixture.componentInstance;
+            fixture = TestBed.createComponent(TestHostComponent);
+            component = fixture.debugElement.children[0].componentInstance;
             fixture.detectChanges();
         });
 
@@ -103,6 +122,63 @@ describe("directives >", () => {
 
                 component.ngOnChanges(changes as any);
                 expect(component.state).toEqual(changes.state.currentValue);
+            });
+        });
+
+        describe("focus management on step change >", () => {
+            let firstHeader: jasmine.SpyObj<WizardStepHeaderComponent>;
+            let secondHeader: jasmine.SpyObj<WizardStepHeaderComponent>;
+
+            beforeEach(() => {
+                firstHeader = jasmine.createSpyObj<WizardStepHeaderComponent>(
+                    "WizardStepHeaderComponent",
+                    ["focus"]
+                );
+                secondHeader = jasmine.createSpyObj<WizardStepHeaderComponent>(
+                    "WizardStepHeaderComponent",
+                    ["focus"]
+                );
+                firstHeader.index = 0;
+                secondHeader.index = 1;
+                component._stepHeader =
+                    new QueryList<WizardStepHeaderComponent>();
+                component._stepHeader.reset([firstHeader, secondHeader]);
+            });
+
+            it("should preserve initial completion notifications without moving focus regardless of initialization order", () => {
+                const animationDone = spyOn(component.animationDone, "emit");
+
+                component._animationDone.next({
+                    fromState: "void",
+                    toState: "next",
+                } as AnimationEvent);
+                component._animationDone.next({
+                    fromState: "void",
+                    toState: "current",
+                } as AnimationEvent);
+
+                expect(animationDone).toHaveBeenCalledTimes(1);
+                expect(firstHeader.focus).not.toHaveBeenCalled();
+                expect(secondHeader.focus).not.toHaveBeenCalled();
+            });
+
+            it("should focus the selected header once after a real selection renders without requiring an animation event", () => {
+                component.linear = false;
+                fixture.nativeElement.querySelector("button").focus();
+
+                component.selectedIndex = 1;
+                expect(secondHeader.focus).not.toHaveBeenCalled();
+                fixture.detectChanges();
+                fixture.detectChanges();
+
+                expect(secondHeader.focus).toHaveBeenCalledTimes(1);
+                expect(firstHeader.focus).not.toHaveBeenCalled();
+
+                component.selectedIndex = 0;
+                fixture.detectChanges();
+
+                expect(firstHeader.focus).toHaveBeenCalledTimes(1);
+                expect(secondHeader.focus).toHaveBeenCalledTimes(1);
             });
         });
     });
