@@ -479,8 +479,11 @@ export abstract class XYChartComponent
         ) {
             const submetricsCount = this.chartAssist.legendSeriesSet.length;
             const strVal = `${val ?? 0}`;
+            const aggregatedCount = legendSeries.aggregatedCount || 1;
+            const adjustedValue =
+                (parseFloat(strVal ?? "0") * submetricsCount) / aggregatedCount;
 
-            return `${parseFloat(strVal ?? "0") * submetricsCount} %`;
+            return `${+adjustedValue.toFixed(2)} %`;
         }
 
         return val;
