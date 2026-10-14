@@ -1,7 +1,9 @@
 <div class="set-container-max-width">
     <nui-tab-heading-group (selected)="updateContent($event)">
         @for (tab of tabsetContent; track tab) {
-        <nui-tab-heading [disabled]="tab.isDisabled" [tabId]="tab.id">
+        <nui-tab-heading
+            [disabled]="tab.isDisabled"
+            [tabId]="'responsive-' + tab.id">
             <div class="d-flex align-content-center">
                 <div class="d-inline-flex align-items-center">
                     <div>

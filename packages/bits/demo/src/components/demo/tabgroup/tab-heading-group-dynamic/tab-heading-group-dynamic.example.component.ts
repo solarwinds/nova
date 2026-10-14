@@ -57,8 +57,12 @@ export class TabHeadingGroupDynamicExampleComponent {
             // no sense to remove last tab
             return;
         }
-        if (this.tabsetContent[lastIndex].id === this.currentTabId) {
-            this.currentTabId = this.tabsetContent[lastIndex - 1].id;
+        if (
+            `dynamic-${this.tabsetContent[lastIndex].id}` === this.currentTabId
+        ) {
+            this.currentTabId = `dynamic-${
+                this.tabsetContent[lastIndex - 1].id
+            }`;
         }
         this.tabsetContent.pop();
     }

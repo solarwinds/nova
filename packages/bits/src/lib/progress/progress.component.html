@@ -10,16 +10,17 @@
         >
     </div>
     } @if (show && showProgress) {
-    <div
-        class="nui-progress__container"
-        role="progressbar"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        [attr.aria-label]="ariaLabel"
-        [attr.aria-valuenow]="percent || null"
-        [attr.aria-describedby]="message ? messageId : helpText ? helpId : null">
+    <div class="nui-progress__container">
         <div
             class="nui-progress__bar"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-valuenow]="isIndeterminate ? null : percent"
+            [attr.aria-describedby]="
+                compactMode ? null : message ? messageId : helpText ? helpId : null
+            "
             [ngClass]="{
                 'nui-progress--indeterminate': isIndeterminate,
                 'nui-progress__bar--compact': compactMode
@@ -61,5 +62,5 @@
 </div>
 
 <ng-template #defaultHelpTemplateRef>
-    <span class="nui-text-small-secondary" [id]="helpId">{{ helpText }}</span>
+    <span class="nui-text-small-secondary">{{ helpText }}</span>
 </ng-template>
