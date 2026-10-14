@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixes
+
+- `@nova-ui/bits` | Exposed progressbar semantics only on the progress bar, including determinate zero and indeterminate values.
+
 ### Added
 
 - `@nova-ui/bits` | Added `panel-collapse` and `panel-expand` icons.
