@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- `@nova-ui/bits` | Added `panel-collapse` and `panel-expand` icons.
+
 ## [21.0.5] 📅 2026-10-01
 
 ### Added
