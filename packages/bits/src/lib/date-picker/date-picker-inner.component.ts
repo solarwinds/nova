@@ -86,6 +86,9 @@ export class DatePickerInnerComponent
 
     public calendarMoved: Subject<Moment> = new Subject<Moment>();
 
+    // Emits on mode switches so the host can refocus the grid.
+    public modeChanged: Subject<string> = new Subject<string>();
+
     protected _value: Moment | undefined;
     protected _todayDate: Moment = moment();
 
@@ -241,10 +244,18 @@ export class DatePickerInnerComponent
         }
     }
 
-    public createDateObject(date: Moment, format: string): any {
+    /**
+     * @param ariaFormat - full-text format for assistive tech; defaults to `format`
+     */
+    public createDateObject(
+        date: Moment,
+        format: string,
+        ariaFormat?: string
+    ): any {
         return {
             date: date.clone().toISOString(this.handleTimezone),
             label: this.formatDate(date, format),
+            ariaLabel: this.formatDate(date, ariaFormat ?? format),
             selected: this.compare(date, this.selectedDate) === 0,
             disabled: this.isDisabled(date),
             current: this.compare(date, this.value) === 0,
@@ -262,6 +273,20 @@ export class DatePickerInnerComponent
         return arrays;
     }
 
+    /**
+     * Marks the roving-tabindex cell: current, else today, else first enabled.
+     */
+    public resolveFocusTarget(cells: any[]): void {
+        const target =
+            cells.find((cell) => cell.current) ??
+            cells.find((cell) => cell.today && !cell.disabled) ??
+            cells.find((cell) => !cell.disabled);
+
+        for (const cell of cells) {
+            cell.isFocusTarget = cell === target;
+        }
+    }
+
     public select(date: string, event: any): void {
         this.value = this.handleTimezone
             ? moment.parseZone(date)
@@ -272,6 +297,7 @@ export class DatePickerInnerComponent
         } else {
             this.datepickerMode =
                 this.modes[this.modes.indexOf(this.datepickerMode) - 1];
+            this.modeChanged.next(this.datepickerMode);
             event.stopPropagation();
         }
 
@@ -326,7 +352,9 @@ export class DatePickerInnerComponent
 
         this.datepickerMode =
             this.modes[this.modes.indexOf(this.datepickerMode) + direction];
+        // Populate the grid before emitting, so refocus listeners find a rendered cell.
         this.refreshView();
+        this.modeChanged.next(this.datepickerMode);
         event.stopPropagation();
     }
 
@@ -385,5 +413,6 @@ export class DatePickerInnerComponent
 
     public ngOnDestroy(): void {
         this.calendarMoved.complete();
+        this.modeChanged.complete();
     }
 }

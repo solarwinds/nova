@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ElementRef, QueryList } from "@angular/core";
 import _isUndefined from "lodash/isUndefined";
 import _keys from "lodash/keys";
 
@@ -50,6 +51,52 @@ describe("components >", () => {
             monthPicker.ngOnInit();
             expect(inner.setRefreshViewHandler).toHaveBeenCalled();
             expect(inner.setCompareHandler).toHaveBeenCalled();
+        });
+
+        describe("focusActiveCell >", () => {
+            let container: HTMLElement;
+            let otherButton: HTMLButtonElement;
+            let activeButton: HTMLButtonElement;
+
+            beforeEach(() => {
+                container = document.createElement("div");
+                document.body.appendChild(container);
+                otherButton = document.createElement("button");
+                activeButton = document.createElement("button");
+                container.appendChild(otherButton);
+                container.appendChild(activeButton);
+            });
+
+            afterEach(() => {
+                container.remove();
+            });
+
+            it("should focus the button of the active (current) month cell", () => {
+                monthPicker.rows = [
+                    [{ current: false }, { current: true }, { current: false }],
+                ];
+                const buttons = new QueryList<ElementRef<HTMLButtonElement>>();
+                buttons.reset([
+                    new ElementRef(otherButton),
+                    new ElementRef(activeButton),
+                ]);
+                (monthPicker as any).cellButtons = buttons;
+
+                monthPicker.focusActiveCell();
+
+                expect(document.activeElement).toBe(activeButton);
+            });
+
+            it("should do nothing when there is no active month cell", () => {
+                monthPicker.rows = [[{ current: false }]];
+                const buttons = new QueryList<ElementRef<HTMLButtonElement>>();
+                buttons.reset([new ElementRef(otherButton)]);
+                (monthPicker as any).cellButtons = buttons;
+
+                document.body.focus();
+                expect(() => monthPicker.focusActiveCell()).not.toThrow();
+                expect(document.activeElement).toBe(document.body);
+            });
         });
     });
 });

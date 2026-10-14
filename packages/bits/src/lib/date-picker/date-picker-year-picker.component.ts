@@ -18,7 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, OnInit } from "@angular/core";
+import {
+    Component,
+    ElementRef,
+    OnInit,
+    QueryList,
+    ViewChildren,
+} from "@angular/core";
 import moment from "moment/moment";
 import { Moment } from "moment/moment";
 
@@ -30,6 +36,9 @@ import { DatePickerInnerComponent } from "./date-picker-inner.component";
     standalone: false,
 })
 export class YearPickerComponent implements OnInit {
+    @ViewChildren("cellButton", { read: ElementRef })
+    private cellButtons!: QueryList<ElementRef<HTMLButtonElement>>;
+
     title: string;
     rows: any[] = [];
 
@@ -63,6 +72,7 @@ export class YearPickerComponent implements OnInit {
                 years[picker.yearRange - 1].label,
             ].join(" - ");
             this.rows = picker.split(years, 5);
+            picker.resolveFocusTarget(this.rows.flat());
         }, "year");
 
         this.datePicker.setCompareHandler(
@@ -72,9 +82,31 @@ export class YearPickerComponent implements OnInit {
         );
     }
 
+    /**
+     * Focuses the roving-tabindex cell (focus target, else current).
+     */
+    public focusActiveCell(): void {
+        const cells = this.rows.flat();
+        let activeIndex = cells.findIndex((cell: any) => cell.isFocusTarget);
+        if (activeIndex === -1) {
+            activeIndex = cells.findIndex((cell: any) => cell.current);
+        }
+        const activeButton = this.cellButtons?.toArray()[activeIndex];
+
+        activeButton?.nativeElement.focus();
+    }
+
+    public trackByIndex(index: number): number {
+        return index;
+    }
+
+    public trackByCellUid(_index: number, cell: any): string {
+        return cell.uid;
+    }
+
     protected getStartingYear(year: number): number {
         return (
-            ((year - 1) / this.datePicker.yearRange) *
+            Math.floor((year - 1) / this.datePicker.yearRange) *
                 this.datePicker.yearRange +
             1
         );

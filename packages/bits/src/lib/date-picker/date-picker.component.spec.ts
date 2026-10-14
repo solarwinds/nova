@@ -32,6 +32,7 @@ import momentTz from "moment-timezone";
 
 import { DayPickerComponent } from "./date-picker-day-picker.component";
 import { DatePickerInnerComponent } from "./date-picker-inner.component";
+import { DatePickerKeyboardService } from "./date-picker-keyboard.service";
 import { MonthPickerComponent } from "./date-picker-month-picker.component";
 import { DatePickerSpecHelpers } from "./date-picker-spec-helpers/date-picker-spec-helpers";
 import { YearPickerComponent } from "./date-picker-year-picker.component";
@@ -319,6 +320,238 @@ describe("components >", () => {
                         datePickerDefaults.dateFormat
                     );
                 });
+            });
+        });
+
+        describe("keyboard accessibility >", () => {
+            const getToggleButton = (): HTMLButtonElement =>
+                debugElement.query(By.css("button.nui-datepicker__icon"))
+                    .nativeElement;
+
+            beforeEach(() => {
+                componentInstance.inline = false;
+                fixture.detectChanges();
+            });
+
+            it("should render the calendar toggle as an accessible, focusable button", () => {
+                const toggleButton = debugElement.query(
+                    By.css("button.nui-datepicker__icon")
+                );
+
+                expect(toggleButton).toBeTruthy();
+                expect(toggleButton.attributes["aria-label"]).toBe(
+                    "Open calendar"
+                );
+                expect(toggleButton.attributes["aria-expanded"]).toBe("false");
+            });
+
+            it("should reflect aria-expanded when the overlay is opened", () => {
+                componentInstance.overlay.toggle();
+                fixture.detectChanges();
+
+                const toggleButton = debugElement.query(
+                    By.css("button.nui-datepicker__icon")
+                );
+
+                expect(toggleButton.attributes["aria-expanded"]).toBe("true");
+            });
+
+            it("should toggle the overlay exactly once when the toggle button is clicked", () => {
+                spyOn(componentInstance.overlay, "toggle").and.callThrough();
+
+                getToggleButton().click();
+
+                expect(componentInstance.overlay.toggle).toHaveBeenCalledTimes(
+                    1
+                );
+            });
+
+            it("should open the calendar on ArrowDown when it is closed", fakeAsync(() => {
+                expect(componentInstance.overlay.showing).toBeFalsy();
+
+                debugElement.nativeElement.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        code: "ArrowDown",
+                        bubbles: true,
+                        cancelable: true,
+                    })
+                );
+                tick();
+
+                expect(componentInstance.overlay.showing).toBeTruthy();
+            }));
+
+            it("should close the calendar and restore focus to the toggle button on Escape", () => {
+                componentInstance.overlay.show();
+                fixture.detectChanges();
+
+                const toggleButton = getToggleButton();
+                spyOn(toggleButton, "focus");
+
+                expect(
+                    (componentInstance as any).keyboardService["toggleButton"]
+                ).toBe(toggleButton);
+
+                debugElement.nativeElement.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        code: "Escape",
+                        bubbles: true,
+                        cancelable: true,
+                    })
+                );
+
+                expect(componentInstance.overlay.showing).toBeFalsy();
+                expect(toggleButton.focus).toHaveBeenCalled();
+            });
+
+            it("should navigate to the next day in the grid on ArrowRight", fakeAsync(() => {
+                const startDate = moment().startOf("month").add(10, "days");
+                componentInstance.writeValue(startDate.clone());
+                componentInstance.overlay.show();
+                fixture.detectChanges();
+
+                debugElement.nativeElement.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        code: "ArrowRight",
+                        bubbles: true,
+                        cancelable: true,
+                    })
+                );
+                fixture.detectChanges();
+                tick();
+
+                expect(
+                    componentInstance._datePicker.value?.isSame(
+                        startDate.clone().add(1, "days"),
+                        "day"
+                    )
+                ).toBeTruthy();
+            }));
+
+            it("should navigate to the previous month on PageUp", fakeAsync(() => {
+                const startDate = moment().startOf("month").add(10, "days");
+                componentInstance.writeValue(startDate.clone());
+                componentInstance.overlay.show();
+                fixture.detectChanges();
+
+                debugElement.nativeElement.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        code: "PageUp",
+                        bubbles: true,
+                        cancelable: true,
+                    })
+                );
+                fixture.detectChanges();
+                tick();
+
+                expect(
+                    componentInstance._datePicker.value?.isSame(
+                        startDate.clone().subtract(1, "months"),
+                        "day"
+                    )
+                ).toBeTruthy();
+            }));
+
+            it("should refocus the active grid cell when the view mode changes", () => {
+                const keyboardService =
+                    fixture.debugElement.injector.get<DatePickerKeyboardService>(
+                        DatePickerKeyboardService
+                    );
+                const focusSpy = spyOn(keyboardService, "focusActiveCellSync");
+
+                componentInstance._datePicker.modeChanged.next("month");
+
+                expect(focusSpy).toHaveBeenCalled();
+            });
+
+            it("should trap focus within the open calendar overlay", () => {
+                componentInstance.overlay.show();
+                fixture.detectChanges();
+
+                expect(
+                    document.querySelector(".nui-overlay [cdkTrapFocus]")
+                ).toBeTruthy();
+            });
+
+            it("should wrap Tab focus within a reopened calendar overlay", () => {
+                componentInstance.overlay.show();
+                componentInstance.overlay.hide();
+                componentInstance.overlay.show();
+                fixture.detectChanges();
+                const container = document.querySelector<HTMLElement>(
+                    ".nui-overlay [cdkTrapFocus]"
+                )!;
+                const focusableElements = Array.from(
+                    container.querySelectorAll<HTMLElement>(
+                        "button:not([disabled]):not([tabindex='-1']), input:not([disabled]):not([tabindex='-1']), select:not([disabled]):not([tabindex='-1']), textarea:not([disabled]):not([tabindex='-1']), [href], [tabindex]:not([tabindex='-1'])"
+                    )
+                ).filter((element) => element.getClientRects().length > 0);
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements.at(-1)!;
+
+                lastElement.focus();
+                const tabEvent = new KeyboardEvent("keydown", {
+                    key: "Tab",
+                    bubbles: true,
+                    cancelable: true,
+                });
+                lastElement.dispatchEvent(tabEvent);
+
+                expect(tabEvent.defaultPrevented).toBe(true);
+                expect(document.activeElement).toBe(firstElement);
+
+                firstElement.focus();
+                const shiftTabEvent = new KeyboardEvent("keydown", {
+                    key: "Tab",
+                    shiftKey: true,
+                    bubbles: true,
+                    cancelable: true,
+                });
+                firstElement.dispatchEvent(shiftTabEvent);
+
+                expect(shiftTabEvent.defaultPrevented).toBe(true);
+                expect(document.activeElement).toBe(lastElement);
+            });
+
+            it("should move focus into the grid on every open", fakeAsync(() => {
+                componentInstance.overlay.show();
+                tick();
+
+                expect(document.activeElement?.closest(".day")).toBeTruthy();
+
+                componentInstance.overlay.hide();
+                componentInstance.overlay.show();
+                tick();
+
+                expect(document.activeElement?.closest(".day")).toBeTruthy();
+            }));
+
+            it("should hide the overlay and restore focus to the toggle button on selection", () => {
+                componentInstance.overlay.show();
+                fixture.detectChanges();
+                spyOn(componentInstance.overlay, "hide").and.callThrough();
+                const toggleButton =
+                    componentInstance.toggleButtonRef.nativeElement;
+                spyOn(toggleButton, "focus");
+
+                componentInstance.onSelectionDone(moment());
+
+                expect(componentInstance.overlay.hide).toHaveBeenCalled();
+                expect(toggleButton.focus).toHaveBeenCalled();
+            });
+
+            it("should refocus the active cell on selection when inline (no overlay)", () => {
+                componentInstance.inline = true;
+                fixture.detectChanges();
+                const keyboardService =
+                    fixture.debugElement.injector.get<DatePickerKeyboardService>(
+                        DatePickerKeyboardService
+                    );
+                const focusSpy = spyOn(keyboardService, "focusActiveCell");
+
+                componentInstance.onSelectionDone(moment());
+
+                expect(focusSpy).toHaveBeenCalled();
             });
         });
     });

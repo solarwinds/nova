@@ -27,6 +27,7 @@ import {
     EventEmitter,
     forwardRef,
     HostBinding,
+    HostListener,
     Input,
     OnChanges,
     OnDestroy,
@@ -51,7 +52,11 @@ import moment, { Moment } from "moment/moment";
 import { Subject, Subscription } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
 
+import { DayPickerComponent } from "./date-picker-day-picker.component";
 import { DatePickerInnerComponent } from "./date-picker-inner.component";
+import { DatePickerKeyboardService } from "./date-picker-keyboard.service";
+import { MonthPickerComponent } from "./date-picker-month-picker.component";
+import { YearPickerComponent } from "./date-picker-year-picker.component";
 import {
     datePickerDateFormats,
     datePickerDefaults,
@@ -83,6 +88,7 @@ import { TextboxComponent } from "../textbox/textbox.component";
             useExisting: forwardRef(() => DatePickerComponent),
             multi: true,
         },
+        DatePickerKeyboardService,
     ],
     styleUrls: ["./date-picker.component.less"],
     encapsulation: ViewEncapsulation.None,
@@ -171,6 +177,7 @@ export class DatePickerComponent
         this.updateTextboxValue();
     }
 
+    /** Callback to invoke when a date selection is finalized. */
     @Output()
     selectionDone: EventEmitter<Moment> = new EventEmitter<Moment>();
 
@@ -178,19 +185,32 @@ export class DatePickerComponent
     @Output()
     valueChange: EventEmitter<Moment> = new EventEmitter<Moment>();
 
+    /** Callback to invoke when calendar navigation changes the displayed month or year. */
     @Output()
     calendarNavigated: EventEmitter<Moment> = new EventEmitter<Moment>();
 
+    /** Callback to invoke when the date input field loses focus. */
     @Output()
     inputBlurred: EventEmitter<any> = new EventEmitter<Moment>();
 
     @ViewChild(DatePickerInnerComponent)
     _datePicker: DatePickerInnerComponent;
 
+    @ViewChild(DayPickerComponent)
+    dayPicker: DayPickerComponent;
+
+    @ViewChild(MonthPickerComponent)
+    monthPicker: MonthPickerComponent;
+
+    @ViewChild(YearPickerComponent)
+    yearPicker: YearPickerComponent;
+
     @ViewChild("date") textbox: TextboxComponent;
 
     @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
+    @ViewChild("toggleButton", { read: ElementRef })
+    toggleButtonRef: ElementRef<HTMLButtonElement>;
 
     public onDestroy$ = new Subject<void>();
     public customContainer: ElementRef | undefined;
@@ -208,7 +228,10 @@ export class DatePickerComponent
     private momentDateFormat: string;
     private calendarChanged: Subscription;
 
-    constructor(private cd: ChangeDetectorRef) {}
+    constructor(
+        private cd: ChangeDetectorRef,
+        private keyboardService: DatePickerKeyboardService
+    ) {}
 
     public ngOnInit(): void {
         _defaults(this, datePickerDefaults);
@@ -266,9 +289,10 @@ export class DatePickerComponent
             // so in case datePicker.value is invalid it will build the calendar from the scratch
             // and not keep its previous state.
 
-            this.overlay.show$
-                .pipe(takeUntil(this.onDestroy$))
-                .subscribe(_ => this._datePicker.refreshView());
+            this.overlay.show$.pipe(takeUntil(this.onDestroy$)).subscribe(_ => {
+                this._datePicker.refreshView();
+                this.keyboardService.focusActiveCell();
+            });
             this.overlay.hide$.pipe(takeUntil(this.onDestroy$)).subscribe(_ => {
                 const currentDateValid = this.value?.isValid();
                 if (!currentDateValid) {
@@ -276,6 +300,53 @@ export class DatePickerComponent
                     this._datePicker.datepickerMode = "day";
                 }
             });
+        }
+
+        this.keyboardService.initService(
+            this._datePicker,
+            this.dayPicker,
+            this.overlay,
+            this.toggleButtonRef?.nativeElement,
+            this.monthPicker,
+            this.yearPicker
+        );
+
+        // Refocus the grid on mode switch; force sync render first so
+        // focus never drops to <body> mid-switch.
+        this._datePicker.modeChanged
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => {
+                this.cd.detectChanges();
+                this.keyboardService.focusActiveCellSync();
+            });
+    }
+
+    @HostListener("keydown", ["$event"])
+    public onKeyDown(event: KeyboardEvent): void {
+        this.keyboardService.onKeyDown(event);
+    }
+
+    public onOverlayKeyDown(event: KeyboardEvent): void {
+        if (event.key !== "Tab") {
+            return;
+        }
+
+        const container = event.currentTarget as HTMLElement;
+        const focusableElements = Array.from(
+            container.querySelectorAll<HTMLElement>(
+                "button:not([disabled]):not([tabindex='-1']), input:not([disabled]):not([tabindex='-1']), select:not([disabled]):not([tabindex='-1']), textarea:not([disabled]):not([tabindex='-1']), [href], [tabindex]:not([tabindex='-1'])"
+            )
+        ).filter(element => element.getClientRects().length > 0);
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements.at(-1);
+        const activeElement = container.ownerDocument.activeElement;
+
+        if (
+            (event.shiftKey && activeElement === firstElement) ||
+            (!event.shiftKey && activeElement === lastElement)
+        ) {
+            event.preventDefault();
+            (event.shiftKey ? lastElement : firstElement)?.focus();
         }
     }
 
@@ -336,7 +407,15 @@ export class DatePickerComponent
 
     public onSelectionDone(value: Moment): void {
         this.value = value;
-        this.overlay?.hide();
+
+        if (this.overlay) {
+            // Popup: return focus to the toggle button on close.
+            this.overlay.hide();
+            this.toggleButtonRef?.nativeElement.focus();
+        } else {
+            // Inline: keep focus on the selected cell.
+            this.keyboardService.focusActiveCell();
+        }
     }
 
     private updateTextboxValue(value: any = this._value) {

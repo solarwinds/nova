@@ -261,5 +261,56 @@ describe("components >", () => {
             inner.ngAfterContentInit();
             expect(inner.refreshView).toHaveBeenCalled();
         });
+
+        describe("resolveFocusTarget >", () => {
+            it("should mark the current cell as the focus target", () => {
+                const cells: any[] = [
+                    { current: false, today: true, disabled: false },
+                    { current: true, today: false, disabled: false },
+                ];
+
+                inner.resolveFocusTarget(cells);
+
+                expect(cells[0].isFocusTarget).toBe(false);
+                expect(cells[1].isFocusTarget).toBe(true);
+            });
+
+            it("should fall back to today when there is no current cell", () => {
+                const cells: any[] = [
+                    { current: false, today: false, disabled: false },
+                    { current: false, today: true, disabled: false },
+                ];
+
+                inner.resolveFocusTarget(cells);
+
+                expect(cells[1].isFocusTarget).toBe(true);
+            });
+
+            it("should skip a disabled today cell and fall back to the first enabled cell", () => {
+                const cells: any[] = [
+                    { current: false, today: true, disabled: true },
+                    { current: false, today: false, disabled: true },
+                    { current: false, today: false, disabled: false },
+                ];
+
+                inner.resolveFocusTarget(cells);
+
+                expect(cells[0].isFocusTarget).toBe(false);
+                expect(cells[2].isFocusTarget).toBe(true);
+            });
+
+            it("should mark no cell when every cell is disabled and none is current", () => {
+                const cells: any[] = [
+                    { current: false, today: false, disabled: true },
+                    { current: false, today: false, disabled: true },
+                ];
+
+                inner.resolveFocusTarget(cells);
+
+                expect(cells.every((cell) => cell.isFocusTarget === false)).toBe(
+                    true
+                );
+            });
+        });
     });
 });

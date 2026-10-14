@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ElementRef, QueryList } from "@angular/core";
 import _isUndefined from "lodash/isUndefined";
 import _keys from "lodash/keys";
 import moment from "moment/moment";
@@ -92,6 +93,109 @@ describe("components >", () => {
                 )
             ).toBe(true);
             expect(dates.length).toBe(10);
+        });
+
+        describe("focusActiveCell >", () => {
+            let container: HTMLElement;
+            let otherButton: HTMLButtonElement;
+            let targetButton: HTMLButtonElement;
+
+            beforeEach(() => {
+                container = document.createElement("div");
+                document.body.appendChild(container);
+                otherButton = document.createElement("button");
+                targetButton = document.createElement("button");
+                container.appendChild(otherButton);
+                container.appendChild(targetButton);
+            });
+
+            afterEach(() => {
+                container.remove();
+            });
+
+            it("should move DOM focus to the button representing the active (current) day cell", () => {
+                dayPicker.rows = [
+                    {
+                        isRowVisible: true,
+                        days: [
+                            { isCellVisible: true, current: false },
+                            { isCellVisible: true, current: true },
+                        ],
+                    },
+                ];
+                const buttons = new QueryList<ElementRef<HTMLButtonElement>>();
+                buttons.reset([
+                    new ElementRef(otherButton),
+                    new ElementRef(targetButton),
+                ]);
+                (dayPicker as any).dayCellButtons = buttons;
+
+                dayPicker.focusActiveCell();
+
+                expect(document.activeElement).toBe(targetButton);
+            });
+
+            it("should focus the isFocusTarget cell even when it is not the current cell", () => {
+                dayPicker.rows = [
+                    {
+                        isRowVisible: true,
+                        days: [
+                            { isCellVisible: true, current: true },
+                            { isCellVisible: true, isFocusTarget: true },
+                        ],
+                    },
+                ];
+                const buttons = new QueryList<ElementRef<HTMLButtonElement>>();
+                buttons.reset([
+                    new ElementRef(otherButton),
+                    new ElementRef(targetButton),
+                ]);
+                (dayPicker as any).dayCellButtons = buttons;
+
+                dayPicker.focusActiveCell();
+
+                expect(document.activeElement).toBe(targetButton);
+            });
+
+            it("should skip cells that are hidden (not visible in the current view)", () => {
+                dayPicker.rows = [
+                    {
+                        isRowVisible: true,
+                        days: [
+                            { isCellVisible: false, current: true },
+                            { isCellVisible: true, current: false },
+                        ],
+                    },
+                    {
+                        isRowVisible: false,
+                        days: [{ isCellVisible: true, current: true }],
+                    },
+                ];
+                const buttons = new QueryList<ElementRef<HTMLButtonElement>>();
+                buttons.reset([new ElementRef(otherButton)]);
+                (dayPicker as any).dayCellButtons = buttons;
+
+                document.body.focus();
+                dayPicker.focusActiveCell();
+
+                expect(document.activeElement).toBe(document.body);
+            });
+
+            it("should do nothing when there is no active day cell", () => {
+                dayPicker.rows = [
+                    {
+                        isRowVisible: true,
+                        days: [{ isCellVisible: true, current: false }],
+                    },
+                ];
+                const buttons = new QueryList<ElementRef<HTMLButtonElement>>();
+                buttons.reset([new ElementRef(otherButton)]);
+                (dayPicker as any).dayCellButtons = buttons;
+
+                document.body.focus();
+                expect(() => dayPicker.focusActiveCell()).not.toThrow();
+                expect(document.activeElement).toBe(document.body);
+            });
         });
     });
 });
