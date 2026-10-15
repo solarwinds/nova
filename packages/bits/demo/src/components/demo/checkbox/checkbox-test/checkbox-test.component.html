@@ -27,3 +27,32 @@
         >
     </div>
 </div>
+
+<div class="container mt-4">
+    <h4>Checkbox Description</h4>
+    <p id="checkbox-delivery-instructions">Messages are sent once a day.</p>
+    <p id="checkbox-delivery-updated-instructions"
+        >Messages are sent once a week.</p
+    >
+    <p id="checkbox-delivery-error">Confirm your email address first.</p>
+    <div id="nui-demo-checkbox-description">
+        <nui-checkbox
+            [id]="'checkbox-description-input'"
+            ariaLabel="Send email notifications"
+            [ariaDescribedby]="descriptionIds">
+            Send email notifications
+        </nui-checkbox>
+    </div>
+    <button
+        type="button"
+        id="checkbox-update-description"
+        (click)="descriptionIds = 'checkbox-delivery-updated-instructions checkbox-delivery-error'">
+        Update description
+    </button>
+    <button
+        type="button"
+        id="checkbox-remove-description"
+        (click)="descriptionIds = undefined">
+        Remove description
+    </button>
+</div>
