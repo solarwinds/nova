@@ -10,6 +10,7 @@
         displayValueTemplate ? null : isDropdownOpen ? 'nui-overlay' : null
     "
     [attr.aria-label]="displayValueTemplate ? null : accessibleLabel"
+    [attr.aria-describedby]="displayValueTemplate ? null : ariaDescribedby"
     (keydown)="onKeyDown($event)">
     @if (!displayValueTemplate) {
     <div class="nui-select-v2__value">

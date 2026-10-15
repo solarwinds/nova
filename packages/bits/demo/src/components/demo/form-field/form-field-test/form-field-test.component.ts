@@ -29,6 +29,9 @@ import moment from "moment/moment";
 })
 export class FormFieldTestComponent implements OnInit {
     public dynamicForm;
+    public adapterHint = $localize`Provide a value.`;
+    public dynamicCaption = $localize`Primary email`;
+    public showDynamicControl = true;
 
     public dateTimePickerModel: string;
     public vegetables = [

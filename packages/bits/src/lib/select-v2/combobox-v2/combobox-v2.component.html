@@ -17,6 +17,7 @@
         [attr.aria-expanded]="isDropdownOpen || false"
         [id]="triggerId"
         [attr.aria-label]="accessibleLabel"
+        [attr.aria-describedby]="ariaDescribedby"
         [class.has-error]="isInErrorState"
         [disabled]="isDisabled"
         [(ngModel)]="inputValue"
