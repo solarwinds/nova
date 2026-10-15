@@ -54,8 +54,14 @@ describe("components >", () => {
     describe("WizardHorizontalComponent", () => {
         let component: WizardHorizontalComponent;
         let fixture: ComponentFixture<TestWrapperComponent>;
+        let resizeObserver: jasmine.SpyObj<ResizeObserver>;
 
         beforeEach(() => {
+            resizeObserver = jasmine.createSpyObj<ResizeObserver>(
+                "ResizeObserver",
+                ["observe", "unobserve", "disconnect"]
+            );
+            spyOn(window, "ResizeObserver").and.returnValue(resizeObserver);
             TestBed.configureTestingModule({
                 imports: [NuiWizardV2Module],
                 declarations: [TestWrapperComponent],
@@ -152,29 +158,21 @@ describe("components >", () => {
         describe("ngOnInit", () => {
             it("should set linear true", () => {
                 component.ngOnInit();
-                expect(component["linear"]).toBeTrue();
+                expect(component.linear).toBeTrue();
             });
         });
 
         describe("ngAfterViewInit", () => {
-            it("should cache the steps array", () => {
-                expect(component["stepsCachedArray"].length).toBe(3);
+            it("should render the step headers", () => {
+                expect(component.stepHeaders.length).toBe(3);
             });
 
-            it("should call checkHeadingsView()", () => {
-                const spy = spyOn(component, "checkHeadingsView" as never);
-
-                component.ngAfterViewInit();
-                expect(spy).toHaveBeenCalled();
-            });
-
-            it("should add ResizeObserver subscription", () => {
-                const oldObservers = component.selectionChange.observers.length;
-
-                component.ngAfterViewInit();
-                expect(
-                    component.selectionChange.observers.length
-                ).toBeGreaterThan(oldObservers);
+            it("should observe the header container and disconnect on destroy", () => {
+                expect(resizeObserver.observe).toHaveBeenCalledWith(
+                    component.headerContainer.nativeElement
+                );
+                fixture.destroy();
+                expect(resizeObserver.disconnect).toHaveBeenCalled();
             });
         });
 
@@ -195,7 +193,6 @@ describe("components >", () => {
             }
 
             beforeEach(() => {
-                component["headerResizeObserver"].disconnect();
                 component.hasOverflow = true;
                 component.isInResponsiveMode = true;
                 component.visibleSteps = component.stepsArray.slice(0, 2);
@@ -224,6 +221,27 @@ describe("components >", () => {
                         "nui-wizard-step-header[aria-selected='true']"
                     )
                 );
+            });
+
+            it("should support arrow navigation from the header focused after Next", () => {
+                navigate("Next");
+                const selectedHeader = document.activeElement as HTMLElement;
+
+                selectedHeader.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        key: "ArrowLeft",
+                        code: "ArrowLeft",
+                        keyCode: 37,
+                        bubbles: true,
+                    })
+                );
+
+                expect(document.activeElement).toBe(
+                    fixture.nativeElement.querySelectorAll(
+                        "nui-wizard-step-header"
+                    )[0]
+                );
+                expect(document.activeElement).not.toBe(selectedHeader);
             });
 
             it("should preserve external focus during initialization and programmatic navigation", () => {
