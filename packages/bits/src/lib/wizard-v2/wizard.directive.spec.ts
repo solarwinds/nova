@@ -26,7 +26,6 @@ import {
     ElementRef,
     forwardRef,
     NO_ERRORS_SCHEMA,
-    QueryList,
 } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
@@ -45,6 +44,16 @@ import { WizardDirective } from "./wizard.directive";
     selector: "nui-test-cmp",
     template: ` <div>
         <button type="button">Navigate</button>
+        @for (step of steps; track step; let index = $index) {
+            <nui-wizard-step-header
+                [step]="step"
+                [index]="index"
+                [label]="step.label"
+                [selected]="selectedIndex === index"
+                [tabIndex]="selectedIndex === index ? 0 : -1"
+                (keydown)="_onKeydown($event)">
+            </nui-wizard-step-header>
+        }
         <ng-content></ng-content>
     </div>`,
     providers: [
@@ -126,27 +135,11 @@ describe("directives >", () => {
         });
 
         describe("focus management on step change >", () => {
-            let firstHeader: jasmine.SpyObj<WizardStepHeaderComponent>;
-            let secondHeader: jasmine.SpyObj<WizardStepHeaderComponent>;
-
-            beforeEach(() => {
-                firstHeader = jasmine.createSpyObj<WizardStepHeaderComponent>(
-                    "WizardStepHeaderComponent",
-                    ["focus"]
-                );
-                secondHeader = jasmine.createSpyObj<WizardStepHeaderComponent>(
-                    "WizardStepHeaderComponent",
-                    ["focus"]
-                );
-                firstHeader.index = 0;
-                secondHeader.index = 1;
-                component._stepHeader =
-                    new QueryList<WizardStepHeaderComponent>();
-                component._stepHeader.reset([firstHeader, secondHeader]);
-            });
-
             it("should preserve initial completion notifications without moving focus regardless of initialization order", () => {
                 const animationDone = spyOn(component.animationDone, "emit");
+                const button: HTMLButtonElement =
+                    fixture.nativeElement.querySelector("button");
+                button.focus();
 
                 component._animationDone.next({
                     fromState: "void",
@@ -158,27 +151,27 @@ describe("directives >", () => {
                 } as AnimationEvent);
 
                 expect(animationDone).toHaveBeenCalledTimes(1);
-                expect(firstHeader.focus).not.toHaveBeenCalled();
-                expect(secondHeader.focus).not.toHaveBeenCalled();
+                expect(document.activeElement).toBe(button);
             });
 
-            it("should focus the selected header once after a real selection renders without requiring an animation event", () => {
+            it("should focus the selected rendered header without requiring an animation event", async () => {
                 component.linear = false;
                 fixture.nativeElement.querySelector("button").focus();
+                const headers = fixture.nativeElement.querySelectorAll(
+                    "nui-wizard-step-header"
+                );
 
                 component.selectedIndex = 1;
-                expect(secondHeader.focus).not.toHaveBeenCalled();
                 fixture.detectChanges();
-                fixture.detectChanges();
+                await fixture.whenStable();
 
-                expect(secondHeader.focus).toHaveBeenCalledTimes(1);
-                expect(firstHeader.focus).not.toHaveBeenCalled();
+                expect(document.activeElement).toBe(headers[1]);
 
                 component.selectedIndex = 0;
                 fixture.detectChanges();
+                await fixture.whenStable();
 
-                expect(firstHeader.focus).toHaveBeenCalledTimes(1);
-                expect(secondHeader.focus).toHaveBeenCalledTimes(1);
+                expect(document.activeElement).toBe(headers[0]);
             });
         });
     });

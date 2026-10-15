@@ -27,11 +27,14 @@ import {
 } from "@angular/cdk/stepper";
 import {
     AfterContentInit,
-    AfterViewChecked,
     AfterViewInit,
+    afterNextRender,
     ContentChildren,
     Directive,
+    ElementRef,
     EventEmitter,
+    inject,
+    Injector,
     Input,
     OnChanges,
     OnDestroy,
@@ -54,12 +57,7 @@ import { WizardStepHeaderComponent } from "./wizard-step-header/wizard-step-head
 })
 export class WizardDirective
     extends CdkStepper
-    implements
-        OnChanges,
-        AfterContentInit,
-        AfterViewInit,
-        AfterViewChecked,
-        OnDestroy
+    implements OnChanges, AfterContentInit, AfterViewInit, OnDestroy
 {
     static ngAcceptInputTypeEditable: BooleanInput = undefined;
     static ngAcceptInputTypeOptional: BooleanInput = undefined;
@@ -94,12 +92,14 @@ export class WizardDirective
 
     /** The list of step headers of the steps in the stepper. */
     @ViewChildren(WizardStepHeaderComponent)
-    declare _stepHeader: QueryList<WizardStepHeaderComponent>;
+    private focusHeaders!: QueryList<WizardStepHeaderComponent>;
 
     /** Stream of animation `done` events when the body expands/collapses. */
     _animationDone = new Subject<AnimationEvent>();
 
     private focusPending = false;
+    private readonly focusHost = inject<ElementRef<HTMLElement>>(ElementRef);
+    private readonly focusInjector = inject(Injector);
 
     /** Steps that the stepper holds. */
     @ContentChildren(WizardStepV2Component, { descendants: true })
@@ -158,23 +158,30 @@ export class WizardDirective
     }
 
     public ngAfterViewInit(): void {
+        this._stepHeader = this.focusHeaders;
         super.ngAfterViewInit();
 
         if (this.state?.finished) {
             this.restore();
         }
 
-        // _containsFocus is private in CdkStepper (checked against CDK 20); the focus specs fail if it is renamed.
         this.selectionChange.pipe(takeUntil(this._destroyed)).subscribe(() => {
-            this.focusPending = this["_containsFocus"]();
+            const host = this.focusHost.nativeElement;
+            if (
+                this.focusPending ||
+                !host.contains(host.ownerDocument.activeElement)
+            ) {
+                return;
+            }
+            this.focusPending = true;
+            afterNextRender(
+                () => {
+                    this.focusPending = false;
+                    this.focusSelectedStepHeader();
+                },
+                { injector: this.focusInjector }
+            );
         });
-    }
-
-    public ngAfterViewChecked(): void {
-        if (this.focusPending) {
-            this.focusPending = false;
-            this.focusSelectedStepHeader();
-        }
     }
 
     public ngOnDestroy(): void {
@@ -219,7 +226,7 @@ export class WizardDirective
     }
 
     private focusSelectedStepHeader(): void {
-        const header = this._stepHeader?.find(
+        const header = this.focusHeaders?.find(
             candidate => candidate.index === this.selectedIndex
         );
         if (header) {
