@@ -153,6 +153,17 @@ export abstract class BaseSelectV2
         }
     }
 
+    @Input() public get ariaDescribedby(): string {
+        return this._ariaDescribedby;
+    }
+
+    public set ariaDescribedby(value: string) {
+        if (value !== this._ariaDescribedby) {
+            this._ariaDescribedby = value;
+            this.cdRef.markForCheck();
+        }
+    }
+
     /** Corresponds to the Textbox of the Combobox */
     @ViewChild("input", { static: false }) inputElement: ElementRef;
 
@@ -194,6 +205,7 @@ export abstract class BaseSelectV2
     private _selectedOptions: SelectV2OptionComponent[] = [];
 
     private _ariaLabel: string = "";
+    private _ariaDescribedby: string;
 
     public get accessibleLabel(): string | null {
         return (

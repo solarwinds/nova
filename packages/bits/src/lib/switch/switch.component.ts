@@ -65,6 +65,7 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
      * Input to set aria label text
      */
     @Input() public ariaLabel?: string;
+    @Input() public ariaDescribedby?: string;
 
     /** Unique id for the control. */
     @Input() public id: string;

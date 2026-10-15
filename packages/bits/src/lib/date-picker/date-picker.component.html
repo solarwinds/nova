@@ -13,6 +13,7 @@
             (textChange)="onInputActiveDateChanged($event)"
             (blurred)="updateTouchedState()"
             [ariaLabel]="ariaLabel"
+            [ariaDescribedby]="ariaDescribedby"
             (keydown.arrowdown)="!isDisabled && overlay.show()">
         </nui-textbox>
         <nui-icon

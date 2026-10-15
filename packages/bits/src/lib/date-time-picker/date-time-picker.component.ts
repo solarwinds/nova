@@ -95,6 +95,19 @@ export class DateTimePickerComponent
         }
     }
 
+    @Input() public get ariaDescribedby(): string {
+        return this._ariaDescribedby;
+    }
+
+    public set ariaDescribedby(value: string) {
+        if (value !== this._ariaDescribedby) {
+            this._ariaDescribedby = value;
+            this.cd.markForCheck();
+        }
+    }
+
+    private _ariaDescribedby: string;
+
     public get dateAriaLabel(): string {
         return $localize`${this._ariaLabel} date`;
     }

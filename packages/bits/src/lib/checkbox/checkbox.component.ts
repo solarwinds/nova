@@ -107,7 +107,18 @@ export class CheckboxComponent
     @Input() ariaLabelledby: string | null = null;
 
     /** The 'aria-describedby' attribute is read after the element's label and field type. */
-    @Input() ariaDescribedby: string;
+    @Input() public get ariaDescribedby(): string {
+        return this._ariaDescribedby;
+    }
+
+    public set ariaDescribedby(value: string) {
+        if (value !== this._ariaDescribedby) {
+            this._ariaDescribedby = value;
+            this.changeDetector.markForCheck();
+        }
+    }
+
+    private _ariaDescribedby: string;
 
     /** Unique id for the control. */
     @Input() public id: string;

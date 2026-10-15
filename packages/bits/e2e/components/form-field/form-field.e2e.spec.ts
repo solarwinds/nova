@@ -215,6 +215,133 @@ test.describe("USERCONTROL form-field >", () => {
         });
     });
 
+    test("preserves explicit names in captionless fields after creation and reload", async ({
+        page,
+    }) => {
+        const dashboardName = page.locator(
+            "#nui-form-field-test-captionless input"
+        );
+        const dashboardDescription = page.locator(
+            "#nui-form-field-test-empty-caption textarea"
+        );
+
+        await expect(dashboardName).toHaveAccessibleName("Dashboard name");
+        await expect(dashboardDescription).toHaveAccessibleName(
+            "Dashboard description"
+        );
+        await dashboardName.fill("Monitoring overview");
+        await expect(dashboardName).toHaveValue("Monitoring overview");
+        await expect(dashboardName).toHaveAccessibleName("Dashboard name");
+
+        await page.reload();
+
+        await expect(dashboardName).toHaveAccessibleName("Dashboard name");
+        await expect(dashboardDescription).toHaveAccessibleName(
+            "Dashboard description"
+        );
+        await expect(textbox.input).toHaveAccessibleName("Textbox");
+    });
+
+    test("describes supported controls from visible field help and removes cleared hints", async ({
+        page,
+    }) => {
+        const targets = [
+            "#nui-form-field-test-textbox input",
+            "#nui-form-field-test-textbox-number input",
+            "#nui-form-field-test-switch [role=checkbox]",
+            "#nui-form-field-test-radio",
+            "#nui-form-field-test-checkbox label",
+            "#nui-form-field-test-checkbox-group",
+            "nui-color-picker [role=combobox]",
+            "#nui-form-field-test-datepicker input",
+            "#nui-form-field-test-timepicker input",
+            "#nui-form-field-test-datetimepicker nui-date-picker input",
+            "#nui-form-field-test-datetimepicker nui-time-picker input",
+            "#nui-form-field-test-select [role=combobox]",
+            "#nui-form-field-test-combobox input",
+        ];
+
+        for (const clearHints of [false, true]) {
+            if (clearHints) {
+                await page
+                    .getByRole("button", {
+                        name: "Clear field hints",
+                        exact: true,
+                    })
+                    .click();
+            }
+            for (const selector of targets) {
+                const target = page.locator(selector);
+                const help = target
+                    .locator("xpath=ancestor::nui-form-field[1]")
+                    .locator(".nui-form-field__help");
+                const text = (await help.innerText())
+                    .replace(/\s+/g, " ")
+                    .trim();
+                const helpId = await help.getAttribute("id");
+                await expect(target).toHaveAccessibleDescription(text);
+                if (text) {
+                    await expect(target).toHaveAttribute(
+                        "aria-describedby",
+                        helpId!
+                    );
+                    await expect(page.locator(`[id="${helpId}"]`)).toHaveCount(
+                        1
+                    );
+                } else {
+                    await expect(target).not.toHaveAttribute(
+                        "aria-describedby"
+                    );
+                }
+            }
+        }
+    });
+
+    test("updates, clears and restores the caption name and names a recreated control", async ({
+        page,
+    }) => {
+        const field = page.locator("#nui-form-field-test-dynamic-caption");
+        const input = field.locator("input");
+        await expect(input).toHaveAccessibleName("Primary email");
+        await input.fill("person@example.com");
+        await page
+            .getByRole("button", { name: "Update caption", exact: true })
+            .click();
+        await expect(input).toHaveAccessibleName("Recovery email");
+        await expect(field.locator("label")).toHaveText("Recovery email");
+        await expect(input).toHaveValue("person@example.com");
+        await page
+            .getByRole("button", { name: "Clear caption", exact: true })
+            .click();
+        await expect(input).toHaveAccessibleName("Notification email");
+        await expect(field.locator("label")).toHaveCount(0);
+        await page
+            .getByRole("button", { name: "Restore caption", exact: true })
+            .click();
+        await expect(input).toHaveAccessibleName("Primary email");
+        await page
+            .getByRole("button", {
+                name: "Toggle captioned control",
+                exact: true,
+            })
+            .click();
+        await expect(input).toHaveCount(0);
+        await page
+            .getByRole("button", { name: "Update caption", exact: true })
+            .click();
+        await page
+            .getByRole("button", {
+                name: "Toggle captioned control",
+                exact: true,
+            })
+            .click();
+        await expect(input).toHaveAccessibleName("Recovery email");
+        await expect(input).toHaveAttribute(
+            "id",
+            (await field.locator("label").getAttribute("for"))!
+        );
+    });
+
     test("should set initial disabled state to the fields of form", async () => {
         await textbox.toBeDisabled();
         await textboxNumber.toBeDisabled();

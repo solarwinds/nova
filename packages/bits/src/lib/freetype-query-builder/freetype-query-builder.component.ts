@@ -125,6 +125,7 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
 
     /** Input to set aria label text */
     @Input() public ariaLabel: string;
+    @Input() public ariaDescribedby: string;
 
     @ViewChild("queryselect", { static: true })
     querySelect: SelectV2Component;

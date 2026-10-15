@@ -21,6 +21,7 @@
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ContentChildren,
     EventEmitter,
@@ -60,6 +61,7 @@ import { NuiFormFieldControl } from "../form-field/public-api";
         "[attr.id]": "id",
         "[attr.aria-label]": "ariaLabel || null",
         "[attr.aria-labelledby]": "ariaLabelledby || null",
+        "[attr.aria-describedby]": "ariaDescribedby || null",
     },
     standalone: false,
 })
@@ -94,12 +96,35 @@ export class CheckboxGroupComponent
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel = "Checkbox Group";
+    @Input() public get ariaLabel(): string {
+        return this._ariaLabel;
+    }
+
+    public set ariaLabel(value: string) {
+        if (value !== this._ariaLabel) {
+            this._ariaLabel = value;
+            this.changeDetector.markForCheck();
+        }
+    }
+
+    private _ariaLabel = "Checkbox Group";
 
     /**
      * Input to set aria label text
      */
     @Input() public ariaLabelledby = "";
+    @Input() public get ariaDescribedby(): string {
+        return this._ariaDescribedby;
+    }
+
+    public set ariaDescribedby(value: string) {
+        if (value !== this._ariaDescribedby) {
+            this._ariaDescribedby = value;
+            this.changeDetector.markForCheck();
+        }
+    }
+
+    private _ariaDescribedby: string;
 
     /** Unique id for the control. */
     @Input() public id: string;
@@ -107,7 +132,10 @@ export class CheckboxGroupComponent
     private subscriptionsArray = new Array<Subscription>();
     private disabled: boolean = false;
 
-    constructor(private renderer: Renderer2) {}
+    constructor(
+        private renderer: Renderer2,
+        private changeDetector: ChangeDetectorRef
+    ) {}
 
     /**
      * Subscribe to nui-checkbox-group children values change
