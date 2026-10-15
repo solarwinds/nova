@@ -21,7 +21,7 @@
 import { Locator } from "playwright-core";
 
 import { PanelAtom } from "./panel.atom";
-import { test, Helpers } from "../../setup";
+import { test, Helpers, expect } from "../../setup";
 
 test.describe("a11y: panel", () => {
     const rulesToDisable: string[] = [];
@@ -50,5 +50,64 @@ test.describe("a11y: panel", () => {
             await expander.click();
         }
         await runA11yScan(PanelAtom, rulesToDisable);
+    });
+
+    test("should expose primary content and the toggle while the sidebar is collapsed", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("panel/collapsible", page);
+        const panel = page.locator("#nui-demo-collapsible-panel");
+        const root = panel.locator(":scope > .nui-panel");
+        const primaryContent = panel.locator(".nui-panel__center-pane p");
+        const sidebarBody = panel.locator(".nui-panel__side-pane-body");
+        await expect(primaryContent).toBeVisible();
+        const primaryText = (await primaryContent.innerText())
+            .replace(/\s+/g, " ")
+            .trim();
+        const session = await page.context().newCDPSession(page);
+        const expectPrimaryExposure = async () => {
+            await expect(primaryContent).toBeVisible();
+            const { nodes } = await session.send("Accessibility.getFullAXTree");
+            expect(
+                nodes.some(
+                    node =>
+                        !node.ignored &&
+                        node.role?.value === "StaticText" &&
+                        node.name?.value.replace(/\s+/g, " ").trim() ===
+                            primaryText
+                )
+            ).toBe(true);
+        };
+
+        try {
+            await expect(root).toHaveClass(/nui-panel--is-collapsed/);
+            await expect(sidebarBody).toHaveCount(0);
+            const expandButton = panel.getByRole("button", {
+                name: "Expand panel",
+                exact: true,
+            });
+            await expect(expandButton).toBeVisible();
+            await expect(expandButton).toBeEnabled();
+            await expectPrimaryExposure();
+
+            await expandButton.click();
+            const collapseButton = panel.getByRole("button", {
+                name: "Collapse panel",
+                exact: true,
+            });
+            await expect(collapseButton).toBeEnabled();
+            await expect(sidebarBody).toBeVisible();
+            await expect(root).not.toHaveClass(/nui-panel--is-collapsed/);
+            await expectPrimaryExposure();
+
+            await collapseButton.click();
+            await expect(root).toHaveClass(/nui-panel--is-collapsed/);
+            await expect(sidebarBody).toHaveCount(0);
+            await expect(expandButton).toBeVisible();
+            await expect(expandButton).toBeEnabled();
+            await expectPrimaryExposure();
+        } finally {
+            await session.detach();
+        }
     });
 });
