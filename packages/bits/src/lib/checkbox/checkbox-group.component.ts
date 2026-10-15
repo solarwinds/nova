@@ -55,7 +55,12 @@ import { NuiFormFieldControl } from "../form-field/public-api";
             multi: true,
         },
     ],
-    host: { "role": "group", "[attr.id]": "id" },
+    host: {
+        "role": "group",
+        "[attr.id]": "id",
+        "[attr.aria-label]": "ariaLabel || null",
+        "[attr.aria-labelledby]": "ariaLabelledby || null",
+    },
     standalone: false,
 })
 /**
