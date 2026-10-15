@@ -100,7 +100,7 @@ export class DayPickerComponent implements OnInit {
                         days[j].date,
                         picker.formatDayHeader
                     ),
-                    full: picker.formatDate(days[j].date, "EEEE"),
+                    full: picker.formatDate(days[j].date, "dddd"),
                 };
             }
 

@@ -46,6 +46,58 @@ test.describe("USERCONTROL time-frame-picker", () => {
             await basicTimeFramePickerPopover.open();
         });
 
+        test("should expose distinct endpoint names and visible group labels", async ({
+            page,
+        }) => {
+            const picker = page.locator("nui-time-frame-picker:visible");
+            await expect(
+                picker.locator(".nui-datetime-picker[aria-label]")
+            ).toHaveCount(0);
+            for (const endpoint of ["Start", "End"]) {
+                const group = picker.getByRole("group", {
+                    name: endpoint,
+                    exact: true,
+                });
+                await expect(group).toHaveCount(1);
+                await expect(
+                    group.locator("nui-date-picker input")
+                ).toHaveAccessibleName(`${endpoint} date`);
+                await expect(
+                    group.locator("nui-time-picker input")
+                ).toHaveAccessibleName(`${endpoint} time`);
+                const labelId = await group.getAttribute("aria-labelledby");
+                await expect(page.locator(`[id="${labelId}"]`)).toHaveCount(1);
+                await expect(page.locator(`[id="${labelId}"]`)).toBeVisible();
+                await expect(page.locator(`[id="${labelId}"]`)).toHaveText(
+                    endpoint
+                );
+            }
+
+            await picker
+                .getByRole("textbox", { name: "Start date", exact: true })
+                .press("ArrowDown");
+            const calendar = page.getByRole("dialog", {
+                name: "Calendar",
+                exact: true,
+            });
+            for (const weekday of [
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+            ]) {
+                await expect(
+                    calendar.getByRole("columnheader", {
+                        name: weekday,
+                        exact: true,
+                    })
+                ).toHaveCount(1);
+            }
+        });
+
         test("should not have Use button before any control value is changed", async () => {
             const useButton = Atom.find(
                 ButtonAtom,
