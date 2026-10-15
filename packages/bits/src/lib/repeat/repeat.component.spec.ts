@@ -174,6 +174,141 @@ describe("components >", () => {
             expect(component.selection).toEqual([mockItemsSource[1]]);
         });
 
+        describe("item relationships >", () => {
+            it("should preserve standalone item selection unless ariaSelected is supplied", () => {
+                const itemFixture =
+                    TestBed.createComponent(RepeatItemComponent);
+                itemFixture.componentRef.setInput("selectable", true);
+                itemFixture.componentRef.setInput("selected", true);
+                itemFixture.detectChanges();
+
+                const row: HTMLElement =
+                    itemFixture.nativeElement.querySelector("li");
+                expect(row.getAttribute("aria-selected")).toBe("true");
+
+                itemFixture.componentRef.setInput("selected", false);
+                itemFixture.detectChanges();
+                expect(row.getAttribute("aria-selected")).toBe("false");
+
+                itemFixture.componentRef.setInput("selected", true);
+                itemFixture.componentRef.setInput("ariaSelected", false);
+                itemFixture.detectChanges();
+                expect(row.getAttribute("aria-selected")).toBe("false");
+                itemFixture.destroy();
+            });
+
+            [RepeatSelectionMode.multi, RepeatSelectionMode.radio].forEach(
+                selectionMode => {
+                    it(`should keep '${selectionMode}' label references within each repeat instance`, () => {
+                        fixture.componentRef.setInput(
+                            "selectionMode",
+                            selectionMode
+                        );
+                        fixture.detectChanges();
+
+                        const otherFixture =
+                            TestBed.createComponent(RepeatComponent);
+                        otherFixture.componentRef.setInput(
+                            "itemsSource",
+                            mockItemsSource
+                        );
+                        otherFixture.componentRef.setInput(
+                            "selectionMode",
+                            selectionMode
+                        );
+                        otherFixture.detectChanges();
+
+                        const contentIds: string[] = [];
+                        [fixture, otherFixture].forEach(repeatFixture => {
+                            const root: HTMLElement =
+                                repeatFixture.nativeElement;
+                            root.querySelectorAll("li.nui-repeat-item").forEach(
+                                row => {
+                                    const content = row.querySelector(
+                                        ".nui-repeat-item__content-container"
+                                    );
+                                    const control =
+                                        row.querySelector("[aria-labelledby]");
+                                    expect(content?.id).toBeTruthy();
+                                    expect(
+                                        control?.getAttribute("aria-labelledby")
+                                    ).toBe(content?.id);
+                                    contentIds.push(content?.id ?? "");
+                                }
+                            );
+                        });
+                        expect(contentIds.length).toBe(
+                            mockItemsSource.length * 2
+                        );
+                        expect(new Set(contentIds).size).toBe(
+                            contentIds.length
+                        );
+                        otherFixture.destroy();
+                    });
+                }
+            );
+
+            Object.values(RepeatSelectionMode).forEach(selectionMode => {
+                it(`should expose matching item roles in '${selectionMode}' mode`, () => {
+                    component.selection = [BLUE_COLOR];
+                    fixture.componentRef.setInput(
+                        "selectionMode",
+                        selectionMode
+                    );
+                    fixture.detectChanges();
+
+                    const root: HTMLElement = fixture.nativeElement;
+                    const isListbox =
+                        selectionMode !== RepeatSelectionMode.none;
+                    expect(root.getAttribute("role")).toBe(
+                        isListbox ? "listbox" : "list"
+                    );
+                    expect(
+                        root
+                            .querySelector("ul.repeat-group")
+                            ?.getAttribute("role")
+                    ).toBe("presentation");
+                    expect(
+                        root
+                            .querySelector("ul.repeat-group")
+                            ?.hasAttribute("aria-dropeffect")
+                    ).toBeFalse();
+
+                    const hosts = root.querySelectorAll("nui-repeat-item");
+                    expect(hosts.length).toBe(mockItemsSource.length);
+                    hosts.forEach((host, index) => {
+                        expect(host.getAttribute("role")).toBe("presentation");
+                        const row = host.querySelector("li.nui-repeat-item");
+                        expect(row?.getAttribute("role")).toBe(
+                            isListbox ? "option" : "listitem"
+                        );
+                        expect(row?.getAttribute("aria-selected")).toBe(
+                            isListbox
+                                ? String(
+                                      component.isItemSelected(
+                                          mockItemsSource[index]
+                                      )
+                                  )
+                                : null
+                        );
+                        expect(row?.getAttribute("aria-disabled")).toBe(
+                            isListbox &&
+                                component.isItemDisabled(mockItemsSource[index])
+                                ? "true"
+                                : null
+                        );
+                        if (component.isItemDisabled(mockItemsSource[index])) {
+                            expect(
+                                row?.classList.contains(
+                                    "nui-repeat-item--selected"
+                                )
+                            ).toBeFalse();
+                        }
+                    });
+                });
+            });
+        });
+
         describe("changeDetection > ", () => {
             it("should be triggered on dataSource items update", () => {
                 component.itemsSource.push({

@@ -35,7 +35,7 @@ import {
     templateUrl: "./repeat-item.component.html",
     styleUrls: ["./repeat-item.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: { "[attr.role]": "role" },
+    host: { role: "presentation" },
     standalone: false,
 })
 export class RepeatItemComponent {
@@ -45,7 +45,11 @@ export class RepeatItemComponent {
 
     @Input() public selected = false;
 
+    @Input() public ariaSelected: boolean | undefined;
+
     @Input() public selectable = false;
+
+    @Input() public disabled = false;
 
     @Output() public rowClicked = new EventEmitter<MouseEvent>();
 

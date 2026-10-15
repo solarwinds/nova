@@ -1,9 +1,11 @@
 <li
     class="nui-repeat-item"
+    [attr.role]="role"
     [class.nui-repeat-item--selected]="selected"
     [class.text-nowrap]="nowrap"
     [class.nui-repeat-item--clickable]="clickable"
-    [attr.aria-selected]="selectable ? selected : null"
+    [attr.aria-selected]="selectable ? (ariaSelected ?? selected) : null"
+    [attr.aria-disabled]="selectable && disabled ? true : null"
     (click)="clickable ? rowClicked.emit($event) : null"
     (keydown.enter)="onKeyActivate($event)"
     (keydown.space)="onKeyActivate($event)"
