@@ -28,9 +28,13 @@ import {
 import {
     AfterContentInit,
     AfterViewInit,
+    afterNextRender,
     ContentChildren,
     Directive,
+    ElementRef,
     EventEmitter,
+    inject,
+    Injector,
     Input,
     OnChanges,
     OnDestroy,
@@ -88,10 +92,14 @@ export class WizardDirective
 
     /** The list of step headers of the steps in the stepper. */
     @ViewChildren(WizardStepHeaderComponent)
-    declare _stepHeader: QueryList<WizardStepHeaderComponent>;
+    private focusHeaders!: QueryList<WizardStepHeaderComponent>;
 
     /** Stream of animation `done` events when the body expands/collapses. */
     _animationDone = new Subject<AnimationEvent>();
+
+    private focusPending = false;
+    private readonly focusHost = inject<ElementRef<HTMLElement>>(ElementRef);
+    private readonly focusInjector = inject(Injector);
 
     /** Steps that the stepper holds. */
     @ContentChildren(WizardStepV2Component, { descendants: true })
@@ -150,11 +158,30 @@ export class WizardDirective
     }
 
     public ngAfterViewInit(): void {
+        this._stepHeader = this.focusHeaders;
         super.ngAfterViewInit();
 
         if (this.state?.finished) {
             this.restore();
         }
+
+        this.selectionChange.pipe(takeUntil(this._destroyed)).subscribe(() => {
+            const host = this.focusHost.nativeElement;
+            if (
+                this.focusPending ||
+                !host.contains(host.ownerDocument.activeElement)
+            ) {
+                return;
+            }
+            this.focusPending = true;
+            afterNextRender(
+                () => {
+                    this.focusPending = false;
+                    this.focusSelectedStepHeader();
+                },
+                { injector: this.focusInjector }
+            );
+        });
     }
 
     public ngOnDestroy(): void {
@@ -196,5 +223,16 @@ export class WizardDirective
         this.stepContentIds = this.stepsArray.map((step, index) =>
             this._getStepContentId(index)
         );
+    }
+
+    private focusSelectedStepHeader(): void {
+        const header = this.focusHeaders?.find(
+            candidate => candidate.index === this.selectedIndex
+        );
+        if (header) {
+            // _keyManager is private in CdkStepper; keeps arrow-key navigation in step with the focused header.
+            this["_keyManager"].updateActiveItem(header);
+        }
+        header?.focus();
     }
 }
