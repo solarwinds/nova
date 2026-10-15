@@ -35,6 +35,8 @@ export class CheckboxGroupTestComponent {
     public vegetables = [this.cabbage, this.potato, this.tomato, this.carrot];
     public hints = [this.cabbage, this.tomato];
     public selectedVegetables = [this.potato, this.tomato, this.disabledOne];
+    public groupAriaLabel = "Vegetable choices";
+    public groupAriaLabelledby = "nui-demo-checkbox-group-heading";
     public testForm;
 
     constructor(private formBuilder: FormBuilder) {

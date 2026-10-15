@@ -67,6 +67,40 @@ test.describe("USERCONTROL Checkbox Group", () => {
         checkbox4 = checkboxGroup.getCheckbox("Carrot");
     });
 
+    test("should associate the group with its supplied heading and update its name", async ({
+        page,
+    }) => {
+        const group = page.locator("#nui-demo-checkbox-group-basic");
+        await expect(group).toHaveAttribute("role", "group");
+        await expect(group).toHaveAccessibleName("Vegetables");
+        await expect(group).toHaveAttribute("aria-label", "Vegetable choices");
+        await expect(group.locator(".nui-checkbox-group")).not.toHaveAttribute(
+            "aria-labelledby"
+        );
+
+        await page
+            .getByRole("button", { name: "Use direct label", exact: true })
+            .click();
+        await expect(group).toHaveAccessibleName("Vegetable choices");
+
+        await page
+            .getByRole("button", { name: "Update direct label", exact: true })
+            .click();
+        await expect(group).toHaveAccessibleName("Updated vegetable choices");
+
+        await page
+            .getByRole("button", { name: "Clear group name", exact: true })
+            .click();
+        await expect(group).toHaveAccessibleName("");
+        await expect(group).not.toHaveAttribute("aria-label");
+        await expect(group).not.toHaveAttribute("aria-labelledby");
+
+        await page
+            .getByRole("button", { name: "Use heading label", exact: true })
+            .click();
+        await expect(group).toHaveAccessibleName("Vegetables");
+    });
+
     test("checking works in a pre-checked group", async () => {
         await checkbox1?.toNotBeChecked();
         await checkbox2?.toBeChecked();
