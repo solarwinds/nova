@@ -101,6 +101,24 @@ test.describe("USERCONTROL expander", () => {
         await openChangeExpander.toggle();
     });
 
+    test("names the button from the projected header without adding a default region", async () => {
+        const expander = headerCustomContent.getLocator();
+        const header = expander.locator(".nui-expander__header");
+        const body = expander.locator(".nui-expander__body-wrapper");
+        const bodyId = await body.getAttribute("id");
+
+        await expect(header).toHaveAccessibleName(/^Advanced options\b/);
+        await expect(expander.locator("[role=region]")).toHaveCount(0);
+        expect(bodyId).toBeTruthy();
+        await expect(header).toHaveAttribute("aria-controls", bodyId!);
+        await expect(header).toHaveAttribute("aria-expanded", "false");
+        await header.press("Enter");
+        await expect(header).toHaveAttribute("aria-expanded", "true");
+        await expect(body).toContainText("Content is here");
+        await expect(header).toHaveAccessibleName(/^Advanced options\b/);
+        await expect(expander.locator("[role=region]")).toHaveCount(0);
+    });
+
     test("menu items should be clickable", async ({ page }) => {
         const menu = Atom.find<MenuAtom>(
             MenuAtom,
