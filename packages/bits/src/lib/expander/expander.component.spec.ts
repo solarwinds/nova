@@ -25,14 +25,17 @@ import { By } from "@angular/platform-browser";
 import { ExpanderComponent } from "./expander.component";
 
 @Component({
-    template: `<nui-expander [open]="open"
-        ><div nuiExpanderHeader=""><p>Custom Projected Header</p></div>
+    template: `<nui-expander [open]="open" [ariaLabel]="ariaLabel" [header]="header"
+        ><div nuiExpanderHeader=""><p>{{ projectedHeader }}</p></div>
         <div><span>Covfefe</span></div></nui-expander
     >`,
     standalone: false,
 })
 class ExpanderUsageWithContentComponent {
     @Input() open = false;
+    public ariaLabel = "";
+    public header = "";
+    public projectedHeader = "Custom Projected Header";
 }
 
 @Component({
@@ -265,7 +268,7 @@ describe("components >", () => {
                 );
             });
 
-            it("does not include projected custom header content in the accessible name", () => {
+            it("references the projected header for both the button and region and keeps text updates", () => {
                 const usageFixture = TestBed.createComponent(
                     ExpanderUsageWithContentComponent
                 );
@@ -274,7 +277,7 @@ describe("components >", () => {
                     usageFixture.debugElement.query(
                         By.directive(ExpanderComponent)
                     ).componentInstance;
-                const expectedLabelId = `nui-expander-label-${expanderSubject.uniqueId}`;
+                const expectedLabelId = `nui-expander-custom-header-${expanderSubject.uniqueId}`;
 
                 const headerEl = usageFixture.debugElement.query(
                     By.css(".nui-expander__header")
@@ -293,17 +296,57 @@ describe("components >", () => {
                 const labelEl = usageFixture.debugElement.query(
                     By.css(`#${expectedLabelId}`)
                 );
-                expect(labelEl.nativeElement.classList).toContain("sr-only");
-                expect(
-                    labelEl.nativeElement.querySelector(
-                        ".nui-expander__custom-header"
-                    )
-                ).toBeNull();
-                expect(labelEl.nativeElement.textContent).not.toContain(
+                expect(labelEl.nativeElement.textContent.trim()).toBe(
                     "Custom Projected Header"
                 );
+                usageFixture.componentInstance.projectedHeader =
+                    "Updated Header";
+                usageFixture.detectChanges();
                 expect(labelEl.nativeElement.textContent.trim()).toBe(
-                    expanderSubject.defaultAriaLabel
+                    "Updated Header"
+                );
+            });
+
+            it("preserves explicit naming overrides and restores the projected reference when cleared", () => {
+                const usageFixture = TestBed.createComponent(
+                    ExpanderUsageWithContentComponent
+                );
+                const usage = usageFixture.componentInstance;
+                usage.ariaLabel = "Explicit accessible name";
+                usage.header = "Configured header";
+                usageFixture.detectChanges();
+                const expander: ExpanderComponent =
+                    usageFixture.debugElement.query(
+                        By.directive(ExpanderComponent)
+                    ).componentInstance;
+                const root: HTMLElement = usageFixture.nativeElement;
+                const button = root.querySelector("[role='button']")!;
+                const region = root.querySelector("[role='region']")!;
+                const label = root.querySelector(".sr-only")!;
+                expect(button.getAttribute("aria-labelledby")).toBe(
+                    `nui-expander-label-${expander.uniqueId}`
+                );
+                expect(region.getAttribute("aria-labelledby")).toBe(
+                    button.getAttribute("aria-labelledby")
+                );
+                expect(label.textContent?.trim()).toBe(
+                    "Explicit accessible name"
+                );
+
+                usage.ariaLabel = "";
+                usageFixture.detectChanges();
+                expect(label.textContent?.trim()).toBe("Configured header");
+                expect(button.getAttribute("aria-labelledby")).toBe(
+                    `nui-expander-label-${expander.uniqueId}`
+                );
+
+                usage.header = "";
+                usageFixture.detectChanges();
+                expect(button.getAttribute("aria-labelledby")).toBe(
+                    `nui-expander-custom-header-${expander.uniqueId}`
+                );
+                expect(region.getAttribute("aria-labelledby")).toBe(
+                    button.getAttribute("aria-labelledby")
                 );
             });
 

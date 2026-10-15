@@ -3,7 +3,7 @@
         class="nui-expander__header"
         tabindex="0"
         role="button"
-        [attr.aria-labelledby]="'nui-expander-label-' + uniqueId"
+        [attr.aria-labelledby]="labelId"
         [attr.aria-expanded]="state === 'expanded'"
         [attr.aria-disabled]="disabled"
         [attr.aria-controls]="bodyId"
@@ -25,6 +25,7 @@
             <div
                 #customHeaderContent
                 class="nui-expander__custom-header"
+                [id]="'nui-expander-custom-header-' + uniqueId"
                 [class.nui-expander__custom-header--empty]="
                     isCustomHeaderContentEmpty
                 ">
@@ -49,7 +50,7 @@
         class="nui-expander__body-wrapper"
         role="region"
         [id]="bodyId"
-        [attr.aria-labelledby]="'nui-expander-label-' + uniqueId">
+        [attr.aria-labelledby]="labelId">
         <div
             class="nui-expander__body"
             [class.hide-left-border]="hideLeftBorder"
