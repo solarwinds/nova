@@ -146,6 +146,32 @@ describe("components >", () => {
             expect(activeDateValue).toBe(activeDateDay);
         });
 
+        it("should name weekday column headers with their localized full names", () => {
+            componentInstance.overlay.toggle();
+            fixture.detectChanges();
+            const dayPicker = debugElement.query(
+                By.directive(DayPickerComponent)
+            ).componentInstance as DayPickerComponent;
+            const headers = Array.from(
+                fixture.nativeElement.querySelectorAll(
+                    "thead tr:nth-child(2) th[aria-label]"
+                )
+            ) as HTMLElement[];
+
+            expect(
+                headers.map(header => header.getAttribute("aria-label"))
+            ).toEqual(dayPicker.labels.map(label => label.full));
+            expect(headers.length).toBe(7);
+            expect(dayPicker.labels.map(label => label.full)).toEqual(
+                moment.weekdays()
+            );
+            expect(
+                fixture.nativeElement.querySelector(
+                    ".day-label span[aria-label]"
+                )
+            ).toBeNull();
+        });
+
         it("should notify about active date change", () => {
             spyOn(componentInstance.valueChange, "emit").and.callThrough();
             componentInstance.value = moment().add(7, "month");
