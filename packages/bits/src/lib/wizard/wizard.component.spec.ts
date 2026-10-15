@@ -32,11 +32,18 @@ import { LoggerService } from "../../services/log-service";
 
 @Component({
     selector: "nui-test-cmp",
-    template: ` <nui-wizard finishText="Finish">
+    template: ` <nui-wizard #wizard finishText="Finish">
         <nui-wizard-step [title]="'step1'"></nui-wizard-step>
-        <nui-wizard-step [title]="'step2'"></nui-wizard-step>
+        <nui-wizard-step
+            [title]="'step2'"
+            [stepTemplate]="removableStep"></nui-wizard-step>
         <nui-wizard-step [title]="'step3'"></nui-wizard-step>
-    </nui-wizard>`,
+    </nui-wizard>
+    <ng-template #removableStep>
+        <button type="button" (click)="wizard.removeStep(1)">
+            Remove active step
+        </button>
+    </ng-template>`,
     standalone: false,
 })
 class TestWrapperComponent {}
@@ -170,7 +177,7 @@ describe("components >", () => {
                 );
                 expect(document.activeElement).toBe(
                     fixture.nativeElement.querySelector(
-                        "[role=\"tab\"][aria-selected=\"true\"]"
+                        "[role='tab'][aria-selected='true']"
                     )
                 );
             });
@@ -201,7 +208,7 @@ describe("components >", () => {
                 );
                 expect(document.activeElement).toBe(
                     fixture.nativeElement.querySelector(
-                        "[role=\"tab\"][aria-selected=\"true\"]"
+                        "[role='tab'][aria-selected='true']"
                     )
                 );
             });
@@ -260,7 +267,7 @@ describe("components >", () => {
                 );
                 expect(document.activeElement).toBe(
                     fixture.nativeElement.querySelector(
-                        "[role=\"tab\"][aria-selected=\"true\"]"
+                        "[role='tab'][aria-selected='true']"
                     )
                 );
             });
@@ -348,6 +355,53 @@ describe("components >", () => {
                 component.selectStep(toSelectStep);
                 component.removeStep(index);
                 expect(spy).toHaveBeenCalled();
+            });
+
+            it("should move focus to the selected step header when the active step is removed", () => {
+                component.selectStep(component.steps.toArray()[1]);
+                fixture.detectChanges();
+                const backButton: HTMLButtonElement =
+                    fixture.nativeElement.querySelector(
+                        ".nui-wizard__back-button"
+                    );
+                backButton.focus();
+
+                component.removeStep(1);
+                fixture.detectChanges();
+
+                expect(component.currentStep).toBe(
+                    component.steps.toArray()[0]
+                );
+                expect(document.activeElement).toBe(
+                    fixture.nativeElement.querySelector(
+                        "[role='tab'][aria-selected='true']"
+                    )
+                );
+            });
+
+            it("should restore header focus when the focused remove button is destroyed with the active step content", () => {
+                const dynamicStep = component.addStepDynamic(
+                    component.steps.toArray()[1],
+                    1
+                );
+                component.selectStep(component.steps.toArray()[1]);
+                fixture.detectChanges();
+                const removeButton: HTMLButtonElement = fixture.debugElement
+                    .queryAll(By.directive(WizardStepComponent))
+                    .find(step => step.componentInstance === dynamicStep)!
+                    .nativeElement.querySelector("button");
+                removeButton.focus();
+                expect(document.activeElement).toBe(removeButton);
+
+                removeButton.click();
+                fixture.detectChanges();
+
+                expect(removeButton.isConnected).toBeFalse();
+                expect(document.activeElement).toBe(
+                    fixture.nativeElement.querySelector(
+                        "[role='tab'][aria-selected='true']"
+                    )
+                );
             });
         });
 

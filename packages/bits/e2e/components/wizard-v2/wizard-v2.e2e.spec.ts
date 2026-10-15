@@ -87,6 +87,31 @@ test.describe("USERCONTROL Wizard V2: ", () => {
             await Helpers.pressKey("Enter");
             await expect(wizard.getHeader(0).getLocator()).toBeFocused();
         });
+
+        test("should retain header focus across responsive overflow on desktop", async ({
+            page,
+        }) => {
+            await page.setViewportSize({ width: 1280, height: 900 });
+            const responsiveWizard = Atom.find<WizardV2Atom>(
+                WizardV2Atom,
+                "nui-wizard-v2-responsive-headers",
+                true
+            );
+            const selectedHeader = responsiveWizard
+                .getLocator()
+                .locator("nui-wizard-step-header[aria-selected='true']");
+
+            for (let index = 0; index < 10; index++) {
+                await responsiveWizard.footer.nextButton.getLocator().focus();
+                await Helpers.pressKey("Enter");
+                await expect(selectedHeader).toBeFocused();
+            }
+
+            await responsiveWizard.footer.backButton.getLocator().focus();
+            await Helpers.pressKey("Enter");
+            await expect(selectedHeader).toHaveAttribute("aria-posinset", "10");
+            await expect(selectedHeader).toBeFocused();
+        });
     });
 
     test.describe("wizard in dialog > ", () => {
