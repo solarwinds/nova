@@ -15,7 +15,7 @@
             (justified ? 'nui-select--justified ' : '') +
             'nui-select-popup-host'
         "
-        [attr.aria-label]="ariaLabel">
+        [ariaLabel]="ariaLabel">
         @if (isRemoveValueEnabled) {
         <nui-menu-action (actionDone)="select(null)">
             {{ removeValueText }}
