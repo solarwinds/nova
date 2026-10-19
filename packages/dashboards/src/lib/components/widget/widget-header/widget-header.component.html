@@ -47,6 +47,7 @@
                     @if (!url || editMode) {
                     <h2
                         class="nui-text-widget nui-widget__header__content-title"
+                        [attr.id]="titleId"
                         [title]="title">
                         {{ title }}
                     </h2>
@@ -56,6 +57,7 @@
                     @if (url && !editMode) {
                     <h2
                         class="nui-text-widget nui-widget__header__content-title"
+                        [attr.id]="titleId"
                         [title]="title">
                         <a
                             [href]="url"
