@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Fixes
+
+- `@nova-ui/bits` | Exposed progressbar semantics only on the progress bar, including determinate zero and indeterminate values.
+- `@nova-ui/dashboards` | Table widget scroll area is reachable by the Tab key when its content overflows, even without focusable content inside, and is exposed as a region named by the widget title (WCAG 2.1.1).
+
 ### Added
 
 - `@nova-ui/bits` | Added `panel-collapse` and `panel-expand` icons.
@@ -30,6 +35,7 @@
 
 ### Fixes
 
+- `@nova-ui/dashboards` | Fixed regression in keyboard scrolling in Modern Dashboard table widgets
 - `@nova-ui/bits` | new accessible blue for active menu button text
 - Essentional A11y fixies
 - `@nova-ui/bits` | A11y fixes for nui-toolbar

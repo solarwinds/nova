@@ -121,6 +121,7 @@ export class TableWidgetComponent
     implements AfterViewInit, OnChanges, OnDestroy, OnInit
 {
     static lateLoadKey = "TableWidgetComponent";
+    private static nextId = 0;
 
     @Input() public widgetData: any[];
     @Input() public componentId: string;
@@ -175,6 +176,7 @@ export class TableWidgetComponent
     private idle: boolean = false;
     public isSearchLimitWarningDisplayed = signal(false);
     private readonly defaultMaxSearchLength: number = 2000;
+    public readonly tableId = `nui-table-widget-table-${TableWidgetComponent.nextId++}`;
 
     constructor(
         @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>,
@@ -193,6 +195,12 @@ export class TableWidgetComponent
         private formattersRegistryService: TableFormatterRegistryService,
         private selectorService: SelectorService
     ) {}
+
+    /** Region name is "<widget title> <table label>"; a missing title id is skipped by accname */
+    public get scrollRegionLabelledBy(): string {
+        const titleId = this.widgetConfigurationService?.titleId;
+        return titleId ? `${titleId} ${this.tableId}` : this.tableId;
+    }
 
     public get headerTooltipsEnabled(): boolean {
         // Note: If tooltip state is not provided treat is as true;
