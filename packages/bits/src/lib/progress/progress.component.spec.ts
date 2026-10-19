@@ -62,6 +62,11 @@ describe("ProgressComponent", () => {
         fixture.detectChanges();
     });
 
+    function detectChanges(): void {
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
+    }
+
     it("exposes progressbar semantics only on the bar", () => {
         const host = fixture.nativeElement.querySelector(
             "nui-progress"
@@ -83,7 +88,7 @@ describe("ProgressComponent", () => {
 
     it("exposes a determinate zero value", () => {
         fixture.componentInstance.percent = 0;
-        fixture.detectChanges();
+        detectChanges();
 
         const bar = fixture.nativeElement.querySelector(
             ".nui-progress__bar"
@@ -94,7 +99,7 @@ describe("ProgressComponent", () => {
 
     it("omits the current value for indeterminate progress", () => {
         fixture.componentInstance.percent = undefined;
-        fixture.detectChanges();
+        detectChanges();
 
         const bar = fixture.nativeElement.querySelector(
             ".nui-progress__bar"
@@ -120,7 +125,7 @@ describe("ProgressComponent", () => {
     it("describes default help text without duplicating its id", () => {
         fixture.componentInstance.helpText = "Upload complete";
         fixture.componentInstance.useHelpTemplate = false;
-        fixture.detectChanges();
+        detectChanges();
 
         const bar = fixture.nativeElement.querySelector(
             ".nui-progress__bar"
@@ -137,7 +142,7 @@ describe("ProgressComponent", () => {
 
     it("gives the cancel button an accessible name", () => {
         fixture.componentInstance.allowCancel = true;
-        fixture.detectChanges();
+        detectChanges();
 
         const cancelButton = fixture.nativeElement.querySelector(
             ".nui-progress__cancel"
@@ -148,7 +153,7 @@ describe("ProgressComponent", () => {
 
     it("omits the description in compact mode", () => {
         fixture.componentInstance.compactMode = true;
-        fixture.detectChanges();
+        detectChanges();
 
         const bar = fixture.nativeElement.querySelector(
             ".nui-progress__bar"

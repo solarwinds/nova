@@ -276,6 +276,7 @@ describe("WidgetHeaderComponent", () => {
     describe("titleId without WidgetConfigurationService", () => {
         it("returns null", () => {
             component.title = "Widget title";
+            fixture.changeDetectorRef.markForCheck();
             fixture.detectChanges();
 
             expect(component.titleId).toBeNull();

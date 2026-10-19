@@ -70,6 +70,11 @@ describe("FocusableScrollRegionDirective", () => {
         );
     };
 
+    function detectChanges(): void {
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
+    }
+
     function expectOverflowAttributes(labelledBy: string | null): void {
         expect(hostElement.getAttribute("tabindex")).toBe("0");
         expect(hostElement.getAttribute("role")).toBe("region");
@@ -78,7 +83,7 @@ describe("FocusableScrollRegionDirective", () => {
 
     it("sets region attributes when content overflows horizontally", async () => {
         testHost.contentWidth = 200;
-        fixture.detectChanges();
+        detectChanges();
         await nextFrames();
 
         expectOverflowAttributes("widget-title table");
@@ -86,7 +91,7 @@ describe("FocusableScrollRegionDirective", () => {
 
     it("sets region attributes when content overflows vertically only", async () => {
         testHost.contentHeight = 100;
-        fixture.detectChanges();
+        detectChanges();
         await nextFrames();
 
         expectOverflowAttributes("widget-title table");
@@ -100,13 +105,13 @@ describe("FocusableScrollRegionDirective", () => {
 
     it("removes region attributes after overflowing content shrinks", async () => {
         testHost.contentWidth = 200;
-        fixture.detectChanges();
+        detectChanges();
         await nextFrames();
         expectOverflowAttributes("widget-title table");
 
         testHost.contentWidth = 50;
         testHost.contentHeight = 25;
-        fixture.detectChanges();
+        detectChanges();
         await nextFrames();
 
         expect(hostElement.getAttribute("tabindex")).toBeNull();
@@ -116,11 +121,11 @@ describe("FocusableScrollRegionDirective", () => {
 
     it("updates aria-labelledby when the input changes", async () => {
         testHost.contentWidth = 200;
-        fixture.detectChanges();
+        detectChanges();
         await nextFrames();
 
         testHost.labelledBy = "updated-title updated-table";
-        fixture.detectChanges();
+        detectChanges();
 
         expect(hostElement.getAttribute("aria-labelledby")).toBe(
             "updated-title updated-table"
@@ -130,7 +135,7 @@ describe("FocusableScrollRegionDirective", () => {
     it("omits aria-labelledby when labelledBy is empty", async () => {
         testHost.labelledBy = "";
         testHost.contentWidth = 200;
-        fixture.detectChanges();
+        detectChanges();
         await nextFrames();
 
         expectOverflowAttributes(null);
