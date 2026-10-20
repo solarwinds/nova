@@ -27,9 +27,13 @@ import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
 @Component({
     selector: "nui-test-cmp",
     template: ` <nui-wizard-horizontal>
-        <nui-wizard-step-v2 label="step 1"> </nui-wizard-step-v2>
+        <nui-wizard-step-v2 label="step 1">
+            <input aria-label="First step value" />
+        </nui-wizard-step-v2>
 
-        <nui-wizard-step-v2 label="step 2"> </nui-wizard-step-v2>
+        <nui-wizard-step-v2 label="step 2">
+            <input aria-label="Second step value" />
+        </nui-wizard-step-v2>
     </nui-wizard-horizontal>`,
     standalone: false,
 })
@@ -55,6 +59,86 @@ describe("components >", () => {
             component = fixture.debugElement.children[0].componentInstance;
 
             fixture.detectChanges();
+        });
+
+        it("hides inactive panels without destroying their content", () => {
+            const tablist: HTMLElement =
+                fixture.nativeElement.querySelector("[role=tablist]");
+            expect(
+                tablist.querySelector("nui-wizard-step-header")
+            ).not.toBeNull();
+            expect(tablist.querySelector("[role=tabpanel]")).toBeNull();
+            const panels: NodeListOf<HTMLElement> =
+                fixture.nativeElement.querySelectorAll("[role=tabpanel]");
+            const firstInput = panels[0].querySelector("input")!;
+            firstInput.value = "Retained value";
+            expect(panels[0].hidden).toBeFalse();
+            expect(panels[1].hidden).toBeTrue();
+            expect(getComputedStyle(panels[1]).display).toBe("none");
+
+            component.selectedIndex = 1;
+            fixture.detectChanges();
+            expect(panels[0].hidden).toBeTrue();
+            expect(panels[1].hidden).toBeFalse();
+
+            component.selectedIndex = 0;
+            fixture.detectChanges();
+            expect(panels[0].hidden).toBeFalse();
+            expect(panels[0].querySelector("input")).toBe(firstInput);
+            expect(firstInput.value).toBe("Retained value");
+        });
+
+        it("does not expose panels whose responsive headers are in closed overflow", () => {
+            component.isInResponsiveMode = true;
+            component.hasOverflow = true;
+            component.visibleSteps = [component.stepsArray[0]];
+            component.overflownStepsEnd = [component.stepsArray[1]];
+            component["cdRef"].markForCheck();
+            fixture.detectChanges();
+
+            const panels: NodeListOf<HTMLElement> =
+                fixture.nativeElement.querySelectorAll("[role=tabpanel]");
+            expect(panels[0].hidden).toBeFalse();
+            expect(
+                fixture.nativeElement.querySelectorAll(
+                    `[id="${panels[0].getAttribute("aria-labelledby")}"]`
+                ).length
+            ).toBe(1);
+            expect(panels[1].hidden).toBeTrue();
+            expect(getComputedStyle(panels[1]).display).toBe("none");
+            expect(
+                fixture.nativeElement.querySelectorAll(
+                    `[id="${panels[1].getAttribute("aria-labelledby")}"]`
+                ).length
+            ).toBe(0);
+        });
+
+        it("retains the selected panel label when navigating into and back from overflow", () => {
+            component.isInResponsiveMode = true;
+            component.hasOverflow = true;
+            component.visibleSteps = [component.stepsArray[0]];
+            component.overflownStepsEnd = [component.stepsArray[1]];
+            component["cdRef"].markForCheck();
+            fixture.detectChanges();
+
+            for (const index of [1, 0]) {
+                component.selectedIndex = index;
+                fixture.detectChanges();
+                const panel: HTMLElement = fixture.nativeElement.querySelector(
+                    `[id="${component.stepContentIds[index]}"]`
+                );
+                expect(panel.hidden).toBeFalse();
+                expect(
+                    fixture.nativeElement.querySelectorAll(
+                        `[id="${panel.getAttribute("aria-labelledby")}"]`
+                    ).length
+                ).toBe(1);
+                expect(
+                    fixture.nativeElement.querySelectorAll(
+                        "[role=tabpanel]:not([hidden])"
+                    ).length
+                ).toBe(1);
+            }
         });
 
         describe("ngOnInit", () => {
