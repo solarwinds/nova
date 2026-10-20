@@ -18,9 +18,25 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import {
+    CdkVirtualForOf,
+    CdkVirtualScrollViewport,
+} from "@angular/cdk/scrolling";
 import { CdkTableModule } from "@angular/cdk/table";
-import { NO_ERRORS_SCHEMA, SimpleChanges, Type } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+    ElementRef,
+    NO_ERRORS_SCHEMA,
+    RendererFactory2,
+    SimpleChanges,
+    Type,
+} from "@angular/core";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
+import { EMPTY, Subject } from "rxjs";
 
 import { TableHeaderCellComponent } from "./table-cell/table-header-cell.component";
 import {
@@ -41,6 +57,7 @@ import {
 } from "./table-spec-helpers";
 import { TableSpecHelpers } from "./table-spec-helpers/table-spec-helpers";
 import { TableStateHandlerService } from "./table-state-handler.service";
+import { TableStickyHeaderDirective } from "./table-virtual-scroll/table-sticky-header.directive";
 import { TableComponent } from "./table.component";
 import {
     ClickableRowOptions,
@@ -120,6 +137,152 @@ describe("components >", () => {
             }
             fixture.detectChanges();
         }
+
+        describe("virtual sticky header accessibility >", () => {
+            let directive: TableStickyHeaderDirective;
+            let host: HTMLDivElement;
+            let nativeTable: HTMLTableElement;
+            let header: HTMLTableSectionElement;
+            let columnsChange$: Subject<void>;
+
+            function initialize(ariaOwns?: string): void {
+                host = document.createElement("div");
+                host.innerHTML = `<div><table><thead id="sticky-test-head"><tr><th id="sticky-test-column">Name</th></tr></thead><tbody><tr><td>Alice</td></tr></tbody><tfoot><tr><td>Total: 1</td></tr></tfoot></table></div>`;
+                document.body.appendChild(host);
+                const viewportElement =
+                    host.firstElementChild as HTMLDivElement;
+                nativeTable = viewportElement.querySelector("table")!;
+                header = nativeTable.tHead!;
+                if (ariaOwns !== undefined) {
+                    nativeTable.setAttribute("aria-owns", ariaOwns);
+                }
+                const viewport = {
+                    elementRef: new ElementRef(viewportElement),
+                    _contentWrapper: new ElementRef(viewportElement),
+                    elementScrolled: () => EMPTY,
+                } as unknown as CdkVirtualScrollViewport;
+                const renderer = TestBed.inject(
+                    RendererFactory2
+                ).createRenderer(null, null);
+                directive = new TableStickyHeaderDirective(renderer, viewport);
+                columnsChange$ = new Subject<void>();
+                directive.table = {
+                    resizable: false,
+                    columnsOrderChange: columnsChange$,
+                    columnsWidthChange: EMPTY,
+                    _contentColumnDefs: { changes: EMPTY },
+                } as unknown as TableComponent<unknown>;
+                directive.virtualFor = {
+                    dataStream: EMPTY,
+                } as unknown as CdkVirtualForOf<unknown>;
+                directive.ngAfterViewInit();
+            }
+
+            afterEach(() => {
+                directive.ngOnDestroy();
+                host.remove();
+            });
+
+            it("owns the live header before the body and footer", fakeAsync(() => {
+                initialize();
+                tick();
+                const ownedIds = nativeTable
+                    .getAttribute("aria-owns")!
+                    .split(" ");
+                expect(ownedIds).toEqual([
+                    header.id,
+                    nativeTable.tBodies[0].id,
+                    nativeTable.tFoot!.id,
+                ]);
+                expect(
+                    header.parentElement?.getAttribute("aria-hidden")
+                ).toBeNull();
+                expect(host.querySelectorAll("#sticky-test-head").length).toBe(
+                    1
+                );
+                expect(
+                    host.querySelectorAll("#sticky-test-column").length
+                ).toBe(1);
+            }));
+
+            it("keeps the sizing clone hidden and free of duplicate IDs", fakeAsync(() => {
+                initialize();
+                tick();
+                const placeholder = nativeTable.querySelector(
+                    ".sticky-header-placeholder"
+                ) as HTMLElement;
+                expect(placeholder.getAttribute("aria-hidden")).toBe("true");
+                expect(placeholder.style.visibility).toBe("collapse");
+                expect(placeholder.hasAttribute("id")).toBeFalse();
+                expect(placeholder.querySelectorAll("[id]").length).toBe(0);
+                expect(header.querySelector("th")?.id).toBe(
+                    "sticky-test-column"
+                );
+            }));
+
+            it("restores native ownership and the original live header on mode changes", fakeAsync(() => {
+                initialize("consumer-owned-section");
+                tick();
+                expect(nativeTable.getAttribute("aria-owns")).toContain(
+                    "consumer-owned-section"
+                );
+                directive.tableStickyHeader = false;
+                expect(nativeTable.tHead).toBe(header);
+                expect(nativeTable.getAttribute("aria-owns")).toBe(
+                    "consumer-owned-section"
+                );
+                expect(
+                    nativeTable.querySelector(".sticky-header-placeholder")
+                ).toBeNull();
+                directive.tableStickyHeader = true;
+                tick();
+                expect(
+                    nativeTable.getAttribute("aria-owns")?.split(" ")[0]
+                ).toBe(header.id);
+                expect(
+                    host.querySelectorAll("#sticky-test-column").length
+                ).toBe(1);
+            }));
+
+            it("does not replace the live native header in a pending placeholder update", fakeAsync(() => {
+                initialize();
+                columnsChange$.next();
+                directive.tableStickyHeader = false;
+                tick();
+                expect(nativeTable.tHead).toBe(header);
+                expect(nativeTable.hasAttribute("aria-owns")).toBeFalse();
+                expect(
+                    nativeTable.querySelector(".sticky-header-placeholder")
+                ).toBeNull();
+            }));
+
+            it("rebuilds layout clones without cloning live IDs", fakeAsync(() => {
+                initialize();
+                tick();
+                const originalPlaceholder = nativeTable.tHead;
+                columnsChange$.next();
+                tick();
+                expect(nativeTable.tHead).not.toBe(originalPlaceholder);
+                expect(nativeTable.tHead?.getAttribute("aria-hidden")).toBe(
+                    "true"
+                );
+                expect(host.querySelectorAll("#sticky-test-head").length).toBe(
+                    1
+                );
+                expect(
+                    host.querySelectorAll("#sticky-test-column").length
+                ).toBe(1);
+            }));
+
+            it("restores consumer ownership on destruction", fakeAsync(() => {
+                initialize("consumer-owned-section");
+                tick();
+                directive.ngOnDestroy();
+                expect(nativeTable.getAttribute("aria-owns")).toBe(
+                    "consumer-owned-section"
+                );
+            }));
+        });
 
         describe("pinned header table >", () => {
             beforeEach(() => {
