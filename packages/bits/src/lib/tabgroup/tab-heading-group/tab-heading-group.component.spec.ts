@@ -22,8 +22,8 @@ import { Component, QueryList, ViewChild, ViewChildren } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { TabHeadingGroupComponent } from "./tab-heading-group.component";
-import { IconComponent } from "../../icon/icon.component";
 import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
+import { NuiTabsModule } from "../tabs.module";
 
 /**
  * @ignore
@@ -111,7 +111,7 @@ class TestTabHeadingComponent {
             [attr.aria-labelledby]="secondTab.tabControlId"
         ></div>
     `,
-    standalone: false,
+    imports: [NuiTabsModule],
 })
 class TestGeneratedTabHeadingComponent {
     @ViewChildren(TabHeadingComponent)
@@ -125,7 +125,7 @@ class TestGeneratedTabHeadingComponent {
             <nui-tab-heading>Enabled</nui-tab-heading>
         </nui-tab-heading-group>
     `,
-    standalone: false,
+    imports: [NuiTabsModule],
 })
 class TestFirstDisabledTabHeadingComponent {}
 
@@ -136,7 +136,7 @@ class TestFirstDisabledTabHeadingComponent {}
             <nui-tab-heading [disabled]="true">Second</nui-tab-heading>
         </nui-tab-heading-group>
     `,
-    standalone: false,
+    imports: [NuiTabsModule],
 })
 class TestAllDisabledTabHeadingComponent {}
 
@@ -147,15 +147,13 @@ describe("components >", () => {
 
         beforeEach(waitForAsync(() => {
             TestBed.configureTestingModule({
-                imports: [IconComponent],
-                declarations: [
-                    TabHeadingGroupComponent,
-                    TabHeadingComponent,
-                    TestTabHeadingComponent,
+                imports: [
+                    NuiTabsModule,
                     TestGeneratedTabHeadingComponent,
                     TestFirstDisabledTabHeadingComponent,
                     TestAllDisabledTabHeadingComponent,
                 ],
+                declarations: [TestTabHeadingComponent],
             })
                 .compileComponents()
                 .then(() => {

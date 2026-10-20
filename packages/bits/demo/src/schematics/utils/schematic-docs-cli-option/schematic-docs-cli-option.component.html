@@ -6,9 +6,7 @@
         if so, what type. Default is
         <code>none</code>
         . The values currently supported for this option are listed{{
-        forComponent ? "" : " below for each type of component"
-
-
+            forComponent ? "" : " below for each type of component"
         }}:
     </p>
     <ng-container
@@ -31,10 +29,7 @@
                     <p>
                         This option enables the possibility to select one or
                         more rows in the
-                        {{ forComponent ? forComponent :
-                        "component"
-
-                        }}.
+                        {{ forComponent ? forComponent : "component" }}.
                     </p>
                     @if (type === componentType.table) {
                     <p>
@@ -1041,7 +1036,10 @@
         <li>
             <nui-expander [open]="false" header="{{ type }}">
                 <ng-container
-                    *ngTemplateOutlet="tpl; context: { type: type }"></ng-container>
+                    *ngTemplateOutlet="
+                        tpl;
+                        context: { type: type }
+                    "></ng-container>
             </nui-expander>
         </li>
         }

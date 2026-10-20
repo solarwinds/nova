@@ -22,13 +22,14 @@ import { ChangeDetectorRef, Component } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { SwitchComponent } from "./switch.component";
+import { NuiSwitchModule } from "./switch.module";
 
 import createSpy = jasmine.createSpy;
 import Spy = jasmine.Spy;
 
 @Component({
     template: `<nui-switch id="public-switch-id">Refresh widget</nui-switch>`,
-    standalone: false,
+    imports: [NuiSwitchModule],
 })
 class SwitchHostComponent {}
 
@@ -41,7 +42,7 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [SwitchComponent, SwitchHostComponent],
+                imports: [NuiSwitchModule, SwitchHostComponent],
                 providers: [ChangeDetectorRef],
             });
 

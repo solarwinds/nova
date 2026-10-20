@@ -29,6 +29,15 @@
             "options": {
                 "tabWidth": 1
             }
+        },
+        {
+            "files": [
+                "**/schematic-docs-cli-option/schematic-docs-cli-option.component.html",
+                "**/refresher-configuration/refresher-configuration.component.html"
+            ],
+            "options": {
+                "embeddedLanguageFormatting": "auto"
+            }
         }
     ]
 }
