@@ -23,7 +23,7 @@ import { expect, Locator } from "@playwright/test";
 import { Atom } from "../../atom";
 import { ButtonAtom } from "../button/button.atom";
 
-const readStyle = (locator: Locator, property: string) =>
+const readStyle = async (locator: Locator, property: string): Promise<string> =>
     locator.evaluate(
         (el, prop) => getComputedStyle(el).getPropertyValue(prop),
         property
@@ -87,7 +87,7 @@ export class ProgressAtom extends Atom {
         await expect(barValue).toHaveCSS("animation-play-state", "running");
         const initialMarginLeft = await readStyle(barValue, "margin-left");
         await expect
-            .poll(() => readStyle(barValue, "margin-left"))
+            .poll(async () => readStyle(barValue, "margin-left"))
             .not.toBe(initialMarginLeft);
     }
 

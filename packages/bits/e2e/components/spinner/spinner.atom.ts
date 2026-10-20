@@ -22,7 +22,7 @@ import { Locator, expect } from "@playwright/test";
 
 import { Atom } from "../../atom";
 
-const readStyle = (locator: Locator, property: string) =>
+const readStyle = async (locator: Locator, property: string): Promise<string> =>
     locator.evaluate(
         (el, prop) => getComputedStyle(el).getPropertyValue(prop),
         property
@@ -66,11 +66,11 @@ export class SpinnerAtom extends Atom {
         await expect(path).toHaveCSS("animation-play-state", "running");
         const initialTransform = await readStyle(circular, "transform");
         await expect
-            .poll(() => readStyle(circular, "transform"))
+            .poll(async () => readStyle(circular, "transform"))
             .not.toBe(initialTransform);
         const initialDashOffset = await readStyle(path, "stroke-dashoffset");
         await expect
-            .poll(() => readStyle(path, "stroke-dashoffset"))
+            .poll(async () => readStyle(path, "stroke-dashoffset"))
             .not.toBe(initialDashOffset);
     }
 

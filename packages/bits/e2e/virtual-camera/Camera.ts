@@ -106,7 +106,7 @@ export class Camera {
             }
 
             await Promise.allSettled(
-                Array.from(fontRequests, ([font, text]) =>
+                Array.from(fontRequests, async ([font, text]) =>
                     document.fonts.load(font, text)
                 )
             );

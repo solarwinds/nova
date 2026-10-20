@@ -18,7 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Component, DebugElement, Input } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    DebugElement,
+    Input,
+} from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
@@ -29,6 +34,7 @@ import { ExpanderComponent } from "./expander.component";
         ><div nuiExpanderHeader=""><p>Custom Projected Header</p></div>
         <div><span>Covfefe</span></div></nui-expander
     >`,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false,
 })
 class ExpanderUsageWithContentComponent {
@@ -236,6 +242,37 @@ describe("components >", () => {
         });
 
         describe("accessibility >", () => {
+            it("updates the toggle and opt-in region inside an OnPush host", () => {
+                const usageFixture = TestBed.createComponent(
+                    ExpanderUsageWithContentComponent
+                );
+                usageFixture.detectChanges();
+
+                const header = usageFixture.nativeElement.querySelector(
+                    ".nui-expander__header"
+                ) as HTMLElement;
+                const body = usageFixture.nativeElement.querySelector(
+                    ".nui-expander__body-wrapper"
+                ) as HTMLElement;
+
+                expect(header.getAttribute("aria-expanded")).toBe("false");
+                expect(body.getAttribute("role")).toBeNull();
+
+                header.click();
+                usageFixture.detectChanges();
+
+                expect(header.getAttribute("aria-expanded")).toBe("true");
+                expect(body.getAttribute("role")).toBe("region");
+                expect(body.getAttribute("aria-labelledby")).toBe(header.id);
+
+                header.click();
+                usageFixture.detectChanges();
+
+                expect(header.getAttribute("aria-expanded")).toBe("false");
+                expect(body.getAttribute("role")).toBeNull();
+                expect(body.getAttribute("aria-labelledby")).toBeNull();
+            });
+
             it("uses the visible standard header text as the button name", () => {
                 fixture = TestBed.createComponent(ExpanderComponent);
                 subject = fixture.componentInstance;

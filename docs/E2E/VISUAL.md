@@ -3,6 +3,7 @@
 This project uses Playwright for visual tests and a thin Virtual Camera API to keep tests clean and portable.
 
 Goals:
+
 - Framework-agnostic test code using Atoms and Helpers
 - Centralize visual capture via a Camera (Percy or manual PNGs)
 - Stable screenshots (disable animations, consistent widths)
@@ -16,6 +17,7 @@ Goals:
 ## Virtual Camera API
 
 Import from `packages/bits/e2e/virtual-camera`:
+
 - `new Camera().loadFilm(page, testName, suiteName?)` – initialize camera
 - `camera.turn.on()` / `camera.turn.off()` – enable/disable lens CSS and configuration
 - `camera.say.cheese(label)` – capture a snapshot with an optional stabilization delay
@@ -80,12 +82,14 @@ test.describe(`Visual tests: ${name}`, () => {
 ## Running Visual Tests
 
 - Run the visual project:
+
 ```powershell
 cd packages/bits
 yarn e2e:playwright:base --project=visual
 ```
 
 - With Percy:
+
 ```powershell
 cd packages/bits
 percy exec -- yarn e2e:playwright:base --project=visual

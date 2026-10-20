@@ -65,6 +65,26 @@
     <nui-expander-custom-header-example></nui-expander-custom-header-example>
 </nui-example-wrapper>
 
+<h2>Accessibility</h2>
+<p>
+    The visible header text or projected custom header content provides the
+    accessible name of the expander toggle. When the header has no text, set
+    <code>ariaLabel</code> to a meaningful name. Otherwise, a localized
+    <code>Expander</code> label is used as a fallback.
+</p>
+<p>
+    The body is not a <code>region</code> landmark by default. To expose it as a
+    landmark, set <code>[useRegionLandmark]="true"</code>. The region is named
+    by the header and is exposed only while the expander is open. Enable this
+    option only when the panel benefits from landmark navigation; enabling it on
+    many expanders can clutter screen reader navigation.
+</p>
+<p>
+    Regardless of this option, the toggle remains linked to the body through
+    <code>aria-controls</code> and exposes its state through
+    <code>aria-expanded</code>.
+</p>
+
 <h2>Initially Expanded</h2>
 <p>
     If you want to have <code>&lt;nui-expander&gt;</code> opened by default you
