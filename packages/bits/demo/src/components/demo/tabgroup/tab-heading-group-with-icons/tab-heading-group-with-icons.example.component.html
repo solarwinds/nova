@@ -1,7 +1,10 @@
 <div>
     <nui-tab-heading-group [vertical]="true" (selected)="updateContent($event)">
         @for (tab of tabsetContent; track tab) {
-        <nui-tab-heading [disabled]="tab.isDisabled" [tabId]="tab.id">
+        <nui-tab-heading
+            [disabled]="tab.isDisabled"
+            [tabId]="'with-icons-' + tab.id"
+            [ariaLabel]="tab.ariaLabel">
             <div class="d-flex align-content-center">
                 <div class="d-inline-flex align-items-center">
                     <nui-icon
@@ -9,7 +12,7 @@
                         [iconColor]="
                             tab.isDisabled
                                 ? tab.icon.disabledColor
-                                : currentTabId === tab.id
+                                : currentTabId === 'with-icons-' + tab.id
                                 ? tab.icon.activeColor
                                 : tab.icon.inactiveColor
                         ">

@@ -1,7 +1,10 @@
 <div>
     <nui-tab-heading-group (selected)="updateContent($event)">
         @for (tab of tabsetContent; track tab) {
-        <nui-tab-heading [disabled]="tab.isDisabled" [tabId]="tab.id">
+        <nui-tab-heading
+            [disabled]="tab.isDisabled"
+            [tabId]="'with-content-' + tab.id"
+            [ariaControls]="'panel-with-content-' + tab.id">
             <div class="d-flex align-content-center">
                 <div class="d-inline-flex align-items-center">
                     @if (icon) {
@@ -11,7 +14,7 @@
                         [iconColor]="
                             tab.isDisabled
                                 ? tab.icon.disabledColor
-                                : currentTabId === tab.id
+                                : currentTabId === 'with-content-' + tab.id
                                 ? tab.icon.activeColor
                                 : tab.icon.inactiveColor
                         "></nui-icon>
@@ -26,8 +29,13 @@
     </nui-tab-heading-group>
 
     @for (tab of tabsetContent; track tab) {
-    <div>
-        @if (currentTabId === tab.id) {
+    <div
+        role="tabpanel"
+        tabindex="0"
+        [id]="'panel-with-content-' + tab.id"
+        [attr.aria-labelledby]="'tab-with-content-' + tab.id"
+        [hidden]="currentTabId !== 'with-content-' + tab.id">
+        @if (currentTabId === 'with-content-' + tab.id) {
         <nui-content size="small">
             <p>
                 Tab titeled <strong>{{ tab.title }}</strong> with id
