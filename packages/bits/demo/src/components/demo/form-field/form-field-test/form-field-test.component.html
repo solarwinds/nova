@@ -291,3 +291,49 @@
         i18n-ariaLabel
         [rows]="2"></nui-textbox>
 </nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-research-query-primary"
+    caption="Primary device query"
+    hint="Enter the query for primary devices."
+    i18n-caption
+    i18n-hint>
+    <nui-freetype-query-builder
+        [cursorSetter$]="researchCursor$"
+        [tokenizer]="researchTokenizer"
+        [renderer]="researchRenderer"
+        ariaLabel="Primary device query"
+        i18n-ariaLabel></nui-freetype-query-builder>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-research-query-secondary"
+    caption="Backup device query"
+    hint="Enter the query for backup devices."
+    i18n-caption
+    i18n-hint>
+    <nui-freetype-query-builder
+        [cursorSetter$]="researchCursor$"
+        [tokenizer]="researchTokenizer"
+        [renderer]="researchRenderer"
+        ariaLabel="Backup device query"
+        i18n-ariaLabel></nui-freetype-query-builder>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-research-textarea"
+    caption="Maintenance notes"
+    hint="Include the maintenance window and contact."
+    i18n-caption
+    i18n-hint>
+    <nui-textbox [rows]="3"></nui-textbox>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-research-inline-date"
+    caption="Maintenance date"
+    hint="Choose the maintenance date in local time."
+    i18n-caption
+    i18n-hint>
+    <nui-date-picker [inline]="true"></nui-date-picker>
+</nui-form-field>

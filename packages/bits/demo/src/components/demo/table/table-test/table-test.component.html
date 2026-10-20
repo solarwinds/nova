@@ -316,3 +316,14 @@
     (pagerAction)="changePagination()"
     #filteringPaginator>
 </nui-paginator>
+
+<table nui-table [dataSource]="[]" id="nui-research-table-footer">
+    <ng-container nuiColumnDef="researchTotal">
+        <th nui-header-cell *nuiHeaderCellDef i18n>Devices</th>
+        <td nui-cell *nuiCellDef="let device">{{ device }}</td>
+        <td nuiFooterCell *nuiFooterCellDef i18n>Total devices: 0</td>
+    </ng-container>
+    <tr nui-header-row *nuiHeaderRowDef="['researchTotal']"></tr>
+    <tr nui-row *nuiRowDef="let row; columns: ['researchTotal']"></tr>
+    <tr nui-footer-row *nuiFooterRowDef="['researchTotal']"></tr>
+</table>

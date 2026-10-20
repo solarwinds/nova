@@ -31,6 +31,7 @@ import {
     NuiDateTimePickerModule,
     NuiDocsModule,
     NuiFormFieldModule,
+    NuiFreetypeQueryModule,
     NuiIconModule,
     NuiRadioModule,
     NuiSelectModule,
@@ -105,6 +106,7 @@ const routes = [
     imports: [
         NuiButtonModule,
         NuiFormFieldModule,
+        NuiFreetypeQueryModule,
         NuiValidationMessageModule,
         NuiTextboxModule,
         FormsModule,
