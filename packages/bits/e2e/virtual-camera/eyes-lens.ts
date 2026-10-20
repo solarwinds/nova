@@ -14,14 +14,23 @@ export class EyesLens implements ILens {
     public async takeSnapshot(label: string): Promise<void> {
         await this.ensureDir();
         const filePath = this.buildFilePath(label);
-        const buffer = await this.page.screenshot({ fullPage: false });
+        // CI uploads these PNGs to Percy, so infinite CSS animations (spinners, progress bars) must be frozen here
+        const buffer = await this.page.screenshot({
+            fullPage: false,
+            animations: "disabled",
+            caret: "hide",
+        });
         await fs.promises.writeFile(filePath, buffer);
     }
 
     public async takeFullScreenSnapshot(label: string): Promise<void> {
         await this.ensureDir();
         const filePath = this.buildFilePath(label);
-        const buffer = await this.page.screenshot({ fullPage: true });
+        const buffer = await this.page.screenshot({
+            fullPage: true,
+            animations: "disabled",
+            caret: "hide",
+        });
         await fs.promises.writeFile(filePath, buffer);
     }
 
