@@ -45,6 +45,7 @@ import {
 
 import { FormFieldBasicHintExampleComponent } from "./basic-hint/form-field-hint.example.component";
 import { FormFieldBasicReactiveCustomValidationExampleComponent } from "./basic-reactive/basic-reactive-form-field-custom-validation.example.component";
+import { FormFieldLegacyTestComponent } from "./form-field-legacy-test/form-field-legacy-test.component";
 import {
     FirstCustomFormExampleComponent,
     FormFieldBasicExampleComponent,
@@ -85,6 +86,15 @@ const routes = [
     {
         path: "form-field-visual-test",
         component: FormFieldVisualTestComponent,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+        },
+    },
+    {
+        path: "form-field-legacy-test",
+        component: FormFieldLegacyTestComponent,
         data: {
             srlc: {
                 hideIndicator: true,
@@ -134,6 +144,7 @@ const routes = [
         FormFieldDynamicDisablingExampleComponent,
         FormFieldInFormExampleComponent,
         FormFieldTestComponent,
+        FormFieldLegacyTestComponent,
         FormFieldVisualTestComponent,
         FormFieldWithHTMLExampleComponent,
         NestedFormsAsComponentExampleComponent,
