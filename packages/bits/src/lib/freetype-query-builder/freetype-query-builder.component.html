@@ -80,7 +80,7 @@
                         [placeholder]="placeholder"
                         [maxLength]="maxLength"
                         [attr.aria-describedby]="ariaDescribedby"
-                        aria-label="Freetype query">
+                        [attr.aria-label]="ariaLabel || 'Freetype query'">
                     </textarea>
                     <div class="overlay-holder" #textHighlightOverlayHolder>
                         <nui-text-highlight-overlay

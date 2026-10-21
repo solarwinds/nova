@@ -68,6 +68,8 @@ export class DatePickerInnerComponent
     @Input() initDate: Moment;
     @Input() inline: boolean;
     @Input() selectedDate: Moment;
+    @Input() ariaLabel?: string;
+    @Input() ariaDescribedby?: string;
     /** Is used to handle timezone of date value */
     @Input() handleTimezone: boolean;
 
@@ -83,6 +85,7 @@ export class DatePickerInnerComponent
 
     public uniqueId: string;
     public isTodayButtonDisabled: boolean;
+    public readonly defaultAriaLabel = $localize`:@@calendar:Calendar`;
 
     public calendarMoved: Subject<Moment> = new Subject<Moment>();
 
