@@ -376,9 +376,9 @@ describe("components >", () => {
                     ".nui-panel__header-btn"
                 );
                 expect(centerPane.textContent).toContain(CENTER_PANE_CONTENT);
-                expect(centerPane.closest('[aria-hidden="true"]')).toBeNull();
+                expect(centerPane.closest("[aria-hidden=true]")).toBeNull();
                 if (panelMode === PanelModes.collapsible) {
-                    expect(toggle.closest('[aria-hidden="true"]')).toBeNull();
+                    expect(toggle.closest("[aria-hidden=true]")).toBeNull();
                     expect(toggle.getAttribute("aria-label")).toBe(
                         "Expand panel"
                     );
@@ -398,7 +398,7 @@ describe("components >", () => {
                 fixture.detectChanges();
 
                 expect(panel.isCollapsed).toBeFalse();
-                expect(centerPane.closest('[aria-hidden="true"]')).toBeNull();
+                expect(centerPane.closest("[aria-hidden=true]")).toBeNull();
                 if (panelMode === PanelModes.collapsible) {
                     expect(toggle.getAttribute("aria-label")).toBe(
                         "Collapse panel"
@@ -419,7 +419,7 @@ describe("components >", () => {
                 fixture.detectChanges();
 
                 expect(panel.isCollapsed).toBeTrue();
-                expect(centerPane.closest('[aria-hidden="true"]')).toBeNull();
+                expect(centerPane.closest("[aria-hidden=true]")).toBeNull();
                 expect(
                     fixture.nativeElement.querySelector(
                         ".nui-panel__side-pane-body"
