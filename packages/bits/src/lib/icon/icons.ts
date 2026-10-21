@@ -442,6 +442,20 @@ export const icons: ITypedIconData[] = [
         code: "<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'>\n    <path fill='#767676'\n          d='M12.59,3H11V1h8V9H17V7.41l-.29.29L15.29,6.29,17,4.59V3H15.41L13.71,4.71,12.29,3.29ZM4.29,17.29a1.13,1.13,0,0,1-1.59,0,1.12,1.12,0,0,1,0-1.59l2-2L3.29,12.29l-2,2a3.12,3.12,0,0,0,4.41,4.41l2-2L6.29,15.29Zm15.06-3.94-6,6a.5.5,0,0,1-.71,0l-12-12a.5.5,0,0,1,0-.71l6-6a.5.5,0,0,1,.71,0l12,12A.5.5,0,0,1,19.35,13.35ZM4,9.29,9.29,4,7,1.71,1.71,7Zm6,6L15.29,10,10,4.71,4.71,10ZM18.29,13,16,10.71,10.71,16,13,18.29ZM7.45,9.07a.81.81,0,1,0,.81.81A.81.81,0,0,0,7.45,9.07ZM9.88,6.64a.81.81,0,1,0,.81.81A.81.81,0,0,0,9.88,6.64Zm0,4.85a.81.81,0,1,0,.81.81A.81.81,0,0,0,9.88,11.49ZM12.3,9.07a.81.81,0,1,0,.81.81A.81.81,0,0,0,12.3,9.07Z'/>\n</svg>\n",
     },
     {
+        svgFile: "platformbar-collapse.svg",
+        name: "panel-collapse",
+        cat_namespace: IconCategoryNamespace.Command,
+        category: IconCategory.Command,
+        code: "<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'>\n    <path fill-rule='evenodd' clip-rule='evenodd' d='M19 19H1V1H19V19ZM11 18H18V2H11V18ZM2 18H10V2H2V18Z' fill='#297994'/>\n    <path d='M3 3.57143H9V4.85714H3V3.57143Z' fill='#297994'/>\n    <path d='M3 6.14286H9V7.42857H3V6.14286Z' fill='#297994'/>\n    <path d='M3 8.71429H9V10H3V8.71429Z' fill='#297994'/>\n    <path d='M3 11.2857H9V12.5714H3V11.2857Z' fill='#297994'/>\n    <path d='M3 13.8571H9V15.1429H3V13.8571Z' fill='#297994'/>\n    <path d='M12.5714 3.57143H16.4286V4.85714H12.5714V3.57143Z' fill='#297994'/>\n    <path d='M15.1429 6.14286H16.4286V15.1429H15.1429V6.14286Z' fill='#297994'/>\n    <path d='M12.5714 6.14286H13.8571V15.1429H12.5714V6.14286Z' fill='#297994'/>\n</svg>\n",
+    },
+    {
+        svgFile: "platformbar-expand.svg",
+        name: "panel-expand",
+        cat_namespace: IconCategoryNamespace.Command,
+        category: IconCategory.Command,
+        code: "<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'>\n    <path fill-rule='evenodd' clip-rule='evenodd' d='M18 19H2V1H18V19ZM3 18H17V2H3V18Z' fill='#297994'/>\n    <path d='M5.69231 4.85714H6.92308V6.14286H5.69231V4.85714Z' fill='#297994'/>\n    <path d='M8.15385 4.85714H9.38462V6.14286H8.15385V4.85714Z' fill='#297994'/>\n    <path d='M10.6154 4.85714H11.8462V6.14286H10.6154V4.85714Z' fill='#297994'/>\n    <path d='M13.0769 4.85714H14.3077V6.14286H13.0769V4.85714Z' fill='#297994'/>\n    <path d='M5.69231 7.42857H6.92308V15.1429H5.69231V7.42857Z' fill='#297994'/>\n    <path d='M8.15385 7.42857H9.38462V15.1429H8.15385V7.42857Z' fill='#297994'/>\n    <path d='M10.6154 7.42857H11.8462V15.1429H10.6154V7.42857Z' fill='#297994'/>\n    <path d='M13.0769 7.42857H14.3077V15.1429H13.0769V7.42857Z' fill='#297994'/>\n</svg>\n",
+    },
+    {
         svgFile: "plus.svg",
         name: "plus",
         cat_namespace: IconCategoryNamespace.Command,

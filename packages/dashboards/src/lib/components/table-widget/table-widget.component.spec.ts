@@ -55,6 +55,7 @@ import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-compone
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { ProviderRegistryService } from "../../services/provider-registry.service";
 import { REFRESH, SCROLL_NEXT_PAGE } from "../../services/types";
+import { WidgetConfigurationService } from "../../services/widget-configuration.service";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
 
 interface BasicTableModel {
@@ -902,6 +903,31 @@ describe("TableWidgetComponent", () => {
             expect(getSearchQueryLimitWarningElement()).toBeUndefined();
             expect(component.isSearchLimitWarningDisplayed()).toBeFalse();
             expect(component.searchTerm$.next).toHaveBeenCalled();
+        });
+    });
+
+    describe("scroll region labeling >", () => {
+        it("includes the widget title and table ids when the service exists", () => {
+            const widgetConfigurationService = new WidgetConfigurationService();
+            (component as any).widgetConfigurationService =
+                widgetConfigurationService;
+            const tableElement = fixture.nativeElement.querySelector(
+                "table"
+            ) as HTMLTableElement;
+
+            expect(component.scrollRegionLabelledBy.split(" ")).toEqual([
+                widgetConfigurationService.titleId,
+                tableElement.id,
+            ]);
+        });
+
+        it("uses only the table id when the service is absent", () => {
+            (component as any).widgetConfigurationService = null;
+            const tableElement = fixture.nativeElement.querySelector(
+                "table"
+            ) as HTMLTableElement;
+
+            expect(component.scrollRegionLabelledBy).toBe(tableElement.id);
         });
     });
 });
