@@ -177,6 +177,11 @@ describe("components >", () => {
         });
 
         describe("responsive focus order", () => {
+            const selectedPanel = (): HTMLElement =>
+                fixture.nativeElement.querySelector(
+                    "[role='tabpanel'][aria-expanded='true']"
+                );
+
             function navigate(direction: "Next" | "Back"): void {
                 const buttons = Array.from<HTMLButtonElement>(
                     fixture.nativeElement.querySelectorAll(
@@ -201,47 +206,102 @@ describe("components >", () => {
                 fixture.detectChanges();
             });
 
-            it("should focus the selected rendered header after Next and Back cross the overflow boundary", () => {
+            it("should focus the selected content panel after Next and Back cross the overflow boundary", () => {
                 navigate("Next");
                 navigate("Next");
 
                 expect(component.selectedIndex).toBe(2);
                 expect(component.overflownStepsStart.length).toBe(1);
-                expect(document.activeElement).toBe(
-                    fixture.nativeElement.querySelector(
-                        "nui-wizard-step-header[aria-selected='true']"
-                    )
-                );
+                expect(document.activeElement).toBe(selectedPanel());
 
                 navigate("Back");
 
                 expect(component.selectedIndex).toBe(1);
-                expect(document.activeElement).toBe(
-                    fixture.nativeElement.querySelector(
-                        "nui-wizard-step-header[aria-selected='true']"
-                    )
-                );
+                expect(document.activeElement).toBe(selectedPanel());
             });
 
-            it("should support arrow navigation from the header focused after Next", () => {
-                navigate("Next");
-                const selectedHeader = document.activeElement as HTMLElement;
+            for (const activation of [
+                { key: "Enter", code: "Enter", keyCode: 13 },
+                { key: " ", code: "Space", keyCode: 32 },
+            ]) {
+                it(`should activate the focused step with ${activation.code} after overflow shifts the headers`, () => {
+                    navigate("Next");
+                    navigate("Next");
+                    expect(component.overflownStepsStart.length).toBe(1);
+                    fixture.nativeElement
+                        .querySelector(
+                            "nui-wizard-step-header[aria-selected='true']"
+                        )
+                        .focus();
 
-                selectedHeader.dispatchEvent(
+                    document.activeElement!.dispatchEvent(
+                        new KeyboardEvent("keydown", {
+                            key: "ArrowLeft",
+                            code: "ArrowLeft",
+                            keyCode: 37,
+                            bubbles: true,
+                        })
+                    );
+                    const focusedHeader = document.activeElement!;
+                    expect(focusedHeader.getAttribute("aria-posinset")).toBe(
+                        "2"
+                    );
+                    expect(component.selectedIndex).toBe(2);
+                    const event = new KeyboardEvent("keydown", {
+                        ...activation,
+                        bubbles: true,
+                        cancelable: true,
+                    });
+
+                    focusedHeader.dispatchEvent(event);
+                    fixture.detectChanges();
+                    TestBed.tick();
+
+                    expect(event.defaultPrevented).toBeTrue();
+                    expect(component.selectedIndex).toBe(1);
+                    expect(component.selected).toBe(component.stepsArray[1]);
+                    expect(document.activeElement).toBe(selectedPanel());
+                });
+            }
+
+            it("should block header activation until the previous step completes", () => {
+                component.isInResponsiveMode = false;
+                component.hasOverflow = false;
+                fixture.detectChanges();
+                const firstHeader: HTMLElement =
+                    fixture.nativeElement.querySelector(
+                        "nui-wizard-step-header"
+                    );
+                firstHeader.focus();
+                firstHeader.dispatchEvent(
                     new KeyboardEvent("keydown", {
-                        key: "ArrowLeft",
-                        code: "ArrowLeft",
-                        keyCode: 37,
+                        key: "ArrowRight",
+                        keyCode: 39,
                         bubbles: true,
                     })
                 );
+                const secondHeader = document.activeElement!;
+                expect(secondHeader.getAttribute("aria-posinset")).toBe("2");
 
-                expect(document.activeElement).toBe(
-                    fixture.nativeElement.querySelectorAll(
-                        "nui-wizard-step-header"
-                    )[0]
-                );
-                expect(document.activeElement).not.toBe(selectedHeader);
+                for (const completed of [false, true]) {
+                    component.steps.first.completed = completed;
+                    const event = new KeyboardEvent("keydown", {
+                        key: "Enter",
+                        keyCode: 13,
+                        bubbles: true,
+                        cancelable: true,
+                    });
+
+                    secondHeader.dispatchEvent(event);
+                    fixture.detectChanges();
+                    TestBed.tick();
+
+                    expect(event.defaultPrevented).toBeTrue();
+                    expect(component.selectedIndex).toBe(completed ? 1 : 0);
+                    expect(document.activeElement).toBe(
+                        completed ? selectedPanel() : secondHeader
+                    );
+                }
             });
 
             it("should preserve external focus during initialization and programmatic navigation", () => {
