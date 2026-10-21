@@ -741,6 +741,41 @@ describe("nui-dialog", () => {
     });
 
     describe("focus management", () => {
+        for (const action of ["close", "dismiss"] as const) {
+            it(`should allow closed$ to hand off focus after ${action} when the opener is removed`, () => {
+                fixture.detectChanges();
+                const opener: HTMLButtonElement =
+                    fixture.nativeElement.querySelector("#open");
+                const nextAction = document.createElement("button");
+                nextAction.textContent = "Next item";
+                fixture.nativeElement.appendChild(nextAction);
+                const spyService =
+                    fixture.debugElement.injector.get(SpyService);
+                opener.focus();
+                const dialog = fixture.componentInstance.openDestroyableTpl();
+                fixture.detectChanges();
+                opener.remove();
+                const subscription = dialog.closed$.subscribe(() => {
+                    expect(
+                        document.querySelector("nui-dialog-window")
+                    ).toBeNull();
+                    expect(
+                        document.querySelector("nui-dialog-backdrop")
+                    ).toBeNull();
+                    expect(spyService.called).toBeTrue();
+                    nextAction.focus();
+                });
+
+                try {
+                    dialog[action]();
+
+                    expect(document.activeElement).toBe(nextAction);
+                } finally {
+                    subscription.unsubscribe();
+                }
+            });
+        }
+
         it("should focus dialog window and return focus to previously focused element", () => {
             fixture.detectChanges();
             const openButtonEl =

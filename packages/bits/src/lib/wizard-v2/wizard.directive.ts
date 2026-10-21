@@ -167,17 +167,22 @@ export class WizardDirective
 
         this.selectionChange.pipe(takeUntil(this._destroyed)).subscribe(() => {
             const host = this.focusHost.nativeElement;
-            if (
-                this.focusPending ||
-                !host.contains(host.ownerDocument.activeElement)
-            ) {
+            const focusedElement = host.ownerDocument.activeElement;
+            if (this.focusPending || !host.contains(focusedElement)) {
                 return;
             }
             this.focusPending = true;
             afterNextRender(
                 () => {
                     this.focusPending = false;
-                    this.focusSelectedStepHeader();
+                    const activeElement = host.ownerDocument.activeElement;
+                    if (
+                        host.contains(activeElement) ||
+                        (activeElement === host.ownerDocument.body &&
+                            focusedElement?.isConnected === false)
+                    ) {
+                        this.focusSelectedStepContent();
+                    }
                 },
                 { injector: this.focusInjector }
             );
@@ -225,14 +230,13 @@ export class WizardDirective
         );
     }
 
-    private focusSelectedStepHeader(): void {
-        const header = this.focusHeaders?.find(
-            candidate => candidate.index === this.selectedIndex
+    private focusSelectedStepContent(): void {
+        const host = this.focusHost.nativeElement;
+        const panel = host.ownerDocument.getElementById(
+            this.stepContentIds[this.selectedIndex]
         );
-        if (header) {
-            // _keyManager is private in CdkStepper; keeps arrow-key navigation in step with the focused header.
-            this["_keyManager"].updateActiveItem(header);
+        if (panel && host.contains(panel)) {
+            panel.focus();
         }
-        header?.focus();
     }
 }
