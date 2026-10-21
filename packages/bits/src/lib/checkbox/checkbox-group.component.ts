@@ -26,6 +26,7 @@ import {
     ContentChildren,
     EventEmitter,
     forwardRef,
+    inject,
     Input,
     OnDestroy,
     Output,
@@ -131,11 +132,9 @@ export class CheckboxGroupComponent
 
     private subscriptionsArray = new Array<Subscription>();
     private disabled: boolean = false;
+    private readonly changeDetector = inject(ChangeDetectorRef);
 
-    constructor(
-        private renderer: Renderer2,
-        private changeDetector: ChangeDetectorRef
-    ) {}
+    constructor(private renderer: Renderer2) {}
 
     /**
      * Subscribe to nui-checkbox-group children values change

@@ -104,7 +104,7 @@ test.describe("USERCONTROL expander", () => {
     test("names the button and region from the projected header", async () => {
         const expander = headerCustomContent.getLocator();
         const header = expander.locator(".nui-expander__header");
-        const region = expander.locator('[role="region"]');
+        const region = expander.locator("[role=region]");
 
         await expect(header).toHaveAccessibleName(/^Advanced options\b/);
         await expect(region).toHaveAccessibleName(/^Advanced options\b/);
