@@ -124,6 +124,89 @@ test.describe("USERCONTROL form-field >", () => {
         await hintWithTemplate.toHaveHintText("Hint template");
     });
 
+    test("should distinguish caption-only freetype editors on their native targets", async ({
+        page,
+    }) => {
+        const primary = page.locator(
+            "#nui-form-field-research-query-caption-primary textarea"
+        );
+        const backup = page.locator(
+            "#nui-form-field-research-query-caption-secondary textarea"
+        );
+
+        await expect(primary).toHaveAccessibleName("Primary device query");
+        await expect(backup).toHaveAccessibleName("Backup device query");
+        await primary.fill("select");
+        await backup.fill("backup");
+        await primary.focus();
+        await expect(primary).toBeFocused();
+        await expect(primary).toHaveValue("select");
+        await backup.focus();
+        await expect(backup).toBeFocused();
+        await expect(backup).toHaveValue("backup");
+    });
+
+    test("should preserve freetype descriptions with their configured names", async ({
+        page,
+    }) => {
+        const primary = page.locator(
+            "#nui-form-field-research-query-primary textarea"
+        );
+        const backup = page.locator(
+            "#nui-form-field-research-query-secondary textarea"
+        );
+
+        await expect(primary).toHaveAccessibleName("Primary device query");
+        await expect(primary).toHaveAccessibleDescription(
+            "Enter the query for primary devices."
+        );
+        await expect(backup).toHaveAccessibleName("Backup device query");
+        await expect(backup).toHaveAccessibleDescription(
+            "Enter the query for backup devices."
+        );
+    });
+
+    test("should distinguish inline calendar purposes and preserve help during selection", async ({
+        page,
+    }) => {
+        const maintenance = page
+            .locator("#nui-form-field-research-inline-date")
+            .getByRole("application", {
+                name: "Maintenance date",
+                exact: true,
+            });
+        const recovery = page
+            .locator("#nui-form-field-research-inline-recovery-date")
+            .getByRole("application", { name: "Recovery date", exact: true });
+
+        await expect(maintenance).toHaveAccessibleDescription(
+            "Choose the maintenance date in local time."
+        );
+        await expect(recovery).toHaveAccessibleDescription(
+            "Choose the date when recovery completes."
+        );
+        const recoverySelection = await recovery
+            .locator("button.selected")
+            .allTextContents();
+        await maintenance.locator("nui-day-picker").focus();
+        await expect(maintenance.locator("nui-day-picker")).toBeFocused();
+        await maintenance
+            .getByRole("button", { name: "15", exact: true })
+            .click();
+        await expect(maintenance.locator("button.selected")).toHaveText("15");
+        expect(
+            await recovery.locator("button.selected").allTextContents()
+        ).toEqual(recoverySelection);
+        await maintenance
+            .getByRole("button", { name: "Next month", exact: true })
+            .click();
+        await expect(maintenance).toHaveAccessibleName("Maintenance date");
+        await expect(maintenance).toHaveAccessibleDescription(
+            "Choose the maintenance date in local time."
+        );
+        await expect(recovery).toHaveAccessibleName("Recovery date");
+    });
+
     test("should display info from template", async () => {
         const iconAtom = atomWithTemplate.getInfoIcon();
         await expect(iconAtom.getLocator()).toHaveAttribute(

@@ -2,8 +2,8 @@
 <div
     class="nui-datepicker-inner"
     [attr.role]="role"
-    aria-label="Calendar"
-    i18n-aria-label="@@calendar">
+    [attr.aria-label]="ariaLabel || defaultAriaLabel"
+    [attr.aria-describedby]="ariaDescribedby || null">
     <ng-content></ng-content>
 </div>
 }

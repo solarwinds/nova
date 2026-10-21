@@ -131,6 +131,40 @@ test.describe("USERCONTROL Wizard >", () => {
     });
 
     test.describe("by default", () => {
+        test("should exclude and restore hidden legacy tabs in the accessible workflow", async ({
+            page,
+        }) => {
+            const host = page.locator("#nui-demo-wizard-hide-show");
+            const tabs = host.getByRole("tab");
+            const second = host.getByRole("tab", {
+                name: "Second step",
+                exact: true,
+            });
+            const secondId = await second.getAttribute("id");
+            const panelId = await second.getAttribute("aria-controls");
+
+            await expect(tabs).toHaveCount(2);
+            await hideButton.click();
+            await expect(tabs).toHaveCount(1);
+            await expect(tabs).toHaveAccessibleName("Hide show next step");
+            await expect(host.getByRole("tabpanel")).toHaveAccessibleName(
+                "Hide show next step"
+            );
+            await visibleButton.click();
+            await expect(tabs).toHaveCount(2);
+            await expect(second).toHaveAttribute("id", secondId!);
+            await expect(second).toHaveAttribute("aria-controls", panelId!);
+            await wizardHide.next();
+            await expect(host.getByRole("tabpanel")).toHaveAccessibleName(
+                "Second step"
+            );
+            await wizardHide.back();
+            await hideButton.click();
+            await expect(tabs).toHaveCount(1);
+            await visibleButton.click();
+            await expect(tabs).toHaveCount(2);
+        });
+
         test("should be defined", async () => {
             await wizard.toBeVisible();
         });

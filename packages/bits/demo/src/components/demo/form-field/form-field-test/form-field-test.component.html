@@ -337,3 +337,60 @@
     i18n-hint>
     <nui-date-picker [inline]="true"></nui-date-picker>
 </nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-research-query-caption-primary"
+    caption="Primary device query"
+    i18n-caption>
+    <nui-freetype-query-builder
+        [cursorSetter$]="researchCursor$"
+        [tokenizer]="researchTokenizer"
+        [renderer]="researchRenderer"
+        ariaLabel="Primary device query"
+        i18n-ariaLabel></nui-freetype-query-builder>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-research-query-caption-secondary"
+    caption="Backup device query"
+    i18n-caption>
+    <nui-freetype-query-builder
+        [cursorSetter$]="researchCursor$"
+        [tokenizer]="researchTokenizer"
+        [renderer]="researchRenderer"
+        ariaLabel="Backup device query"
+        i18n-ariaLabel></nui-freetype-query-builder>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-research-inline-recovery-date"
+    caption="Recovery date"
+    hint="Choose the date when recovery completes."
+    i18n-caption
+    i18n-hint>
+    <nui-date-picker [inline]="true"></nui-date-picker>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-research-legacy-select"
+    caption="Maintenance priority"
+    hint="Choose Emergency only when service is unavailable."
+    i18n-caption
+    i18n-hint>
+    <nui-select
+        [itemsSource]="['Normal', 'Emergency']"
+        placeholder="Choose priority"
+        i18n-placeholder></nui-select>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-research-legacy-combobox"
+    caption="Recovery site"
+    hint="Use a site code from the approved recovery plan."
+    i18n-caption
+    i18n-hint>
+    <nui-combobox
+        [itemsSource]="['PRG-01', 'BRN-01']"
+        placeholder="Choose site code"
+        i18n-placeholder></nui-combobox>
+</nui-form-field>

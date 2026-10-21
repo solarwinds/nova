@@ -134,6 +134,36 @@ describe("components >", () => {
         });
 
         describe("hideStep >", () => {
+            it("should exclude the whole hidden header and restore its relationships", () => {
+                const step = component.steps.toArray()[1];
+                const originalId = step.stepId;
+
+                component.hideStep(step);
+                fixture.detectChanges();
+
+                expect(
+                    fixture.nativeElement.querySelectorAll("[role=tab]").length
+                ).toBe(2);
+                expect(
+                    fixture.nativeElement.querySelector(`[id="${originalId}"]`)
+                ).toBeNull();
+                expect(component.steps.toArray()[1]).toBe(step);
+                expect(component.steps.length).toBe(3);
+
+                component.showStep(step);
+                fixture.detectChanges();
+
+                const header: HTMLElement = fixture.nativeElement.querySelector(
+                    `[id="${originalId}"]`
+                );
+                expect(
+                    fixture.nativeElement.querySelectorAll("[role=tab]").length
+                ).toBe(3);
+                expect(header.textContent).toContain("step2");
+                expect(header.getAttribute("aria-controls")).toBe(step.panelId);
+                expect(component.steps.toArray()[1]).toBe(step);
+            });
+
             it("should hide wizard step", () => {
                 component.hideStep(component.steps.toArray()[0]);
                 expect(component.steps.toArray()[0].hidden).toBeTruthy();

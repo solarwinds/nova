@@ -5,7 +5,7 @@
         @if (steps) {
         <ul class="nui-wizard__header-steps" role="tablist">
             @for (step of steps; track step; let first = $first; let last =
-            $last) {
+            $last) { @if (!step.hidden) {
             <li
                 role="tab"
                 [id]="step.stepId"
@@ -38,7 +38,6 @@
                     'nui-wizard__header-step--complete': step.complete
                 }"
                 class="nui-wizard__header-step">
-                @if (!step.hidden) {
                 <div class="nui-wizard__header-step-container">
                     <div class="nui-wizard__header-step-row">
                         <div class="nui-wizard__header-step-col">
@@ -81,9 +80,8 @@
                         </div>
                     </div>
                 </div>
-                }
             </li>
-            }
+            } }
         </ul>
         }
     </div>
