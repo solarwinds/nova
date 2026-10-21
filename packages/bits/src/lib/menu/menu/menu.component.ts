@@ -78,6 +78,8 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
      * sets aria-label for menu button
      */
     @Input() public ariaLabel: string;
+
+    @Input() public ariaDescribedby: string = "";
     /**
      * sets title/name for menu button
      */

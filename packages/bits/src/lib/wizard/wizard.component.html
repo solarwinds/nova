@@ -89,7 +89,10 @@
         class="nui-wizard__container"
         role="tabpanel"
         [id]="currentStep?.panelId"
-        [attr.aria-labelledby]="currentStep?.stepId"
+        [attr.aria-labelledby]="currentStep?.hidden ? null : currentStep?.stepId"
+        [attr.aria-label]="
+            currentStep?.hidden ? currentStep?.shortTitle || currentStep?.title : null
+        "
         [class.show-scroll]="enableScroll"
         [style.height]="bodyContainerHeight">
         <ng-content></ng-content>
