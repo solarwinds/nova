@@ -295,6 +295,31 @@ describe("components >", () => {
                 );
             });
 
+            it("should preserve external focus handed off by a selectionChange subscriber", () => {
+                const outside = document.createElement("button");
+                document.body.appendChild(outside);
+                const subscription = component.selectionChange.subscribe(() =>
+                    outside.focus()
+                );
+
+                try {
+                    fixture.nativeElement
+                        .querySelector(".nui-wizard__next-button")
+                        .focus();
+                    component.onNextClick();
+                    expect(document.activeElement).toBe(outside);
+                    fixture.detectChanges();
+
+                    expect(component.currentStep).toBe(
+                        component.steps.toArray()[1]
+                    );
+                    expect(document.activeElement).toBe(outside);
+                } finally {
+                    subscription.unsubscribe();
+                    outside.remove();
+                }
+            });
+
             it("should leave focus alone when the step changes while focus is outside the wizard", () => {
                 const outside = document.createElement("button");
                 document.body.appendChild(outside);
@@ -414,6 +439,29 @@ describe("components >", () => {
         });
 
         describe("remove step >", () => {
+            function removeFocusedStepWhilePaused(): void {
+                component.addStepDynamic(component.steps.toArray()[1], 1);
+                const dynamicStep = component.steps.toArray()[1];
+                component.selectStep(dynamicStep);
+                fixture.detectChanges();
+                const removeButton: HTMLButtonElement = fixture.debugElement
+                    .queryAll(By.directive(WizardStepComponent))
+                    .find(step => step.componentInstance === dynamicStep)!
+                    .nativeElement.querySelector("button");
+                removeButton.focus();
+                component.navigationControl.next({
+                    busyState: { busy: false },
+                    allowStepChange: false,
+                });
+
+                removeButton.click();
+                fixture.detectChanges();
+
+                expect(removeButton.isConnected).toBeFalse();
+                expect(document.activeElement).toBe(document.body);
+                expect(component.currentStep).toBe(dynamicStep);
+            }
+
             it("should not remove step if index less 1", () => {
                 const length = component.steps.toArray().length;
 
@@ -465,6 +513,60 @@ describe("components >", () => {
                         "[role='tab'][aria-selected='true']"
                     )
                 );
+            });
+
+            it("should restore header focus after paused navigation removes the focused step content", () => {
+                removeFocusedStepWhilePaused();
+
+                component.navigationControl.next({
+                    busyState: { busy: false },
+                    allowStepChange: true,
+                });
+                fixture.detectChanges();
+
+                expect(component.currentStep).toBe(component.steps.first);
+                expect(document.activeElement).toBe(
+                    fixture.nativeElement.querySelector(
+                        "[role='tab'][aria-selected='true']"
+                    )
+                );
+            });
+
+            it("should preserve focus moved outside after the paused step is removed", () => {
+                removeFocusedStepWhilePaused();
+                const outside = document.createElement("button");
+                document.body.appendChild(outside);
+
+                try {
+                    outside.focus();
+                    component.navigationControl.next({
+                        busyState: { busy: false },
+                        allowStepChange: true,
+                    });
+                    fixture.detectChanges();
+
+                    expect(component.currentStep).toBe(component.steps.first);
+                    expect(document.activeElement).toBe(outside);
+                } finally {
+                    outside.remove();
+                }
+            });
+
+            it("should discard removal focus recovery when pending navigation is superseded", () => {
+                removeFocusedStepWhilePaused();
+                const otherStep = component.steps.toArray()[1];
+                otherStep.disabled = false;
+                component.selectStep(otherStep);
+                component.selectStep(component.steps.first);
+
+                component.navigationControl.next({
+                    busyState: { busy: false },
+                    allowStepChange: true,
+                });
+                fixture.detectChanges();
+
+                expect(component.currentStep).toBe(component.steps.first);
+                expect(document.activeElement).toBe(document.body);
             });
 
             it("should restore header focus when the focused remove button is destroyed with the active step content", () => {

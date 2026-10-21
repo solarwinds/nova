@@ -18,6 +18,7 @@
             !step.ariaLabel && step.ariaLabelledby ? step.ariaLabelledby : null
         "
         [index]="i"
+        [step]="step"
         [label]="step.stepLabel || step.label"
         [selected]="selectedIndex === i"
         [active]="step.completed || selectedIndex === i || !linear"
@@ -29,7 +30,7 @@
         <div
             class="nui-wizard-vertical-content"
             role="tabpanel"
-            [attr.tabindex]="selectedIndex === i ? 0 : null"
+            [attr.tabindex]="selectedIndex === i ? -1 : null"
             [id]="_getStepContentId(i)"
             [attr.aria-labelledby]="_getStepLabelId(i)"
             [attr.aria-expanded]="selectedIndex === i">

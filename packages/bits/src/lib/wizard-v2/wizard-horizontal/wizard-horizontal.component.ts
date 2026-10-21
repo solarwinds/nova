@@ -18,8 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { FocusKeyManager } from "@angular/cdk/a11y";
 import { Directionality } from "@angular/cdk/bidi";
 import { BooleanInput } from "@angular/cdk/coercion";
+import { ENTER, hasModifierKey, SPACE } from "@angular/cdk/keycodes";
 import { CdkStepper, StepperSelectionEvent } from "@angular/cdk/stepper";
 import {
     AfterViewInit,
@@ -122,6 +124,36 @@ export class WizardHorizontalComponent
     public ngOnInit(): void {
         // Checking the validity of previous steps by default.
         this.linear = true;
+    }
+
+    public onHeaderKeydown(
+        event: KeyboardEvent,
+        step: WizardStepV2Component
+    ): void {
+        if (
+            !hasModifierKey(event) &&
+            (event.keyCode === ENTER || event.keyCode === SPACE)
+        ) {
+            event.preventDefault();
+            step.select();
+        } else {
+            if (event.code === "Space") {
+                event.preventDefault();
+            }
+            const headers = this.stepHeaders
+                .toArray()
+                .sort((first, second) => first.index - second.index);
+            const manager = new FocusKeyManager(headers)
+                .withWrap()
+                .withHomeAndEnd()
+                .withHorizontalOrientation(this.dir.value)
+                .withVerticalOrientation(false);
+            manager.updateActiveItem(
+                headers.find(header => header.step === step)!
+            );
+            manager.setFocusOrigin("keyboard").onKeydown(event);
+            manager.destroy();
+        }
     }
 
     public ngAfterViewInit(): void {

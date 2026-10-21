@@ -20,25 +20,11 @@
 
 import { AnimationEvent } from "@angular/animations";
 import { CdkStepper } from "@angular/cdk/stepper";
-import {
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    forwardRef,
-    NO_ERRORS_SCHEMA,
-} from "@angular/core";
+import { Component, forwardRef } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import {
-    WizardStepperNextDirective,
-    WizardStepperPreviousDirective,
-} from "./wizard-button/wizard-button";
-import { WizardFooterComponent } from "./wizard-footer/wizard-footer.component";
-import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
-import { WizardStepFooterDirective } from "./wizard-step-footer.directive";
-import { WizardStepHeaderComponent } from "./wizard-step-header/wizard-step-header.component";
-import { WizardStepLabelDirective } from "./wizard-step-label.directive";
 import { WizardDirective } from "./wizard.directive";
+import { NuiWizardV2Module } from "./wizard.module";
 
 @Component({
     selector: "nui-test-cmp",
@@ -53,6 +39,12 @@ import { WizardDirective } from "./wizard.directive";
                 [tabIndex]="selectedIndex === index ? 0 : -1"
                 (keydown)="_onKeydown($event)">
             </nui-wizard-step-header>
+            <div
+                role="tabpanel"
+                [id]="stepContentIds[index]"
+                [attr.tabindex]="selectedIndex === index ? -1 : null">
+                {{ step.label }} content
+            </div>
         }
         <ng-content></ng-content>
     </div>`,
@@ -76,6 +68,24 @@ class TestWrapperComponent extends WizardDirective {}
 })
 class TestHostComponent {}
 
+@Component({
+    template: `<nui-wizard-vertical>
+        <nui-wizard-step-v2 label="step 1" [completed]="true">
+            <ng-template nuiWizardStepFooter>
+                <button type="button" nuiWizardNext>Next</button>
+            </ng-template>
+        </nui-wizard-step-v2>
+        <nui-wizard-step-v2 label="step 2" [completed]="true">
+            <ng-template nuiWizardStepFooter>
+                <button type="button" nuiWizardPrevious>Back</button>
+            </ng-template>
+        </nui-wizard-step-v2>
+    </nui-wizard-vertical>`,
+    imports: [NuiWizardV2Module],
+    standalone: true,
+})
+class VerticalTestHostComponent {}
+
 describe("directives >", () => {
     describe("WizardDirective", () => {
         let component: TestWrapperComponent;
@@ -83,27 +93,8 @@ describe("directives >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [
-                    WizardStepHeaderComponent,
-                    WizardFooterComponent,
-                    WizardStepV2Component,
-                    WizardDirective,
-                    WizardStepLabelDirective,
-                    WizardStepFooterDirective,
-                    WizardStepperNextDirective,
-                    WizardStepperPreviousDirective,
-                    TestWrapperComponent,
-                    TestHostComponent,
-                ],
-                providers: [
-                    CdkStepper,
-                    {
-                        provide: ChangeDetectorRef,
-                        useValue: jasmine.createSpyObj(["markForCheck"]),
-                    },
-                    { provide: ElementRef<HTMLElement>, useValue: {} as any },
-                ],
-                schemas: [NO_ERRORS_SCHEMA],
+                imports: [NuiWizardV2Module],
+                declarations: [TestWrapperComponent, TestHostComponent],
             });
 
             fixture = TestBed.createComponent(TestHostComponent);
@@ -135,6 +126,25 @@ describe("directives >", () => {
         });
 
         describe("focus management on step change >", () => {
+            it("should preserve focus moved outside after a step focus request is scheduled", async () => {
+                component.linear = false;
+                const outside = document.createElement("button");
+                document.body.appendChild(outside);
+
+                try {
+                    fixture.nativeElement.querySelector("button").focus();
+                    component.selectedIndex = 1;
+                    outside.focus();
+                    fixture.detectChanges();
+                    await fixture.whenStable();
+
+                    expect(component.selectedIndex).toBe(1);
+                    expect(document.activeElement).toBe(outside);
+                } finally {
+                    outside.remove();
+                }
+            });
+
             it("should preserve initial completion notifications without moving focus regardless of initialization order", () => {
                 const animationDone = spyOn(component.animationDone, "emit");
                 const button: HTMLButtonElement =
@@ -154,25 +164,71 @@ describe("directives >", () => {
                 expect(document.activeElement).toBe(button);
             });
 
-            it("should focus the selected rendered header without requiring an animation event", async () => {
+            it("should focus the selected content panel without requiring an animation event", async () => {
                 component.linear = false;
                 fixture.nativeElement.querySelector("button").focus();
-                const headers = fixture.nativeElement.querySelectorAll(
-                    "nui-wizard-step-header"
-                );
+                const panels =
+                    fixture.nativeElement.querySelectorAll("[role='tabpanel']");
 
                 component.selectedIndex = 1;
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(document.activeElement).toBe(headers[1]);
+                expect(document.activeElement).toBe(panels[1]);
 
                 component.selectedIndex = 0;
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(document.activeElement).toBe(headers[0]);
+                expect(document.activeElement).toBe(panels[0]);
             });
         });
+    });
+});
+
+describe("WizardVerticalComponent focus", () => {
+    it("should focus step panels on Next, Back and keyboard header activation", async () => {
+        TestBed.configureTestingModule({
+            imports: [VerticalTestHostComponent],
+        });
+        const fixture = TestBed.createComponent(VerticalTestHostComponent);
+        fixture.detectChanges();
+        const panels: NodeListOf<HTMLElement> =
+            fixture.nativeElement.querySelectorAll("[role='tabpanel']");
+
+        for (const panelIndex of [1, 0]) {
+            const button: HTMLButtonElement =
+                fixture.nativeElement.querySelector("wizard-footer button");
+            button.focus();
+            button.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(document.activeElement).toBe(panels[panelIndex]);
+            expect(panels[panelIndex].getAttribute("tabindex")).toBe("-1");
+        }
+
+        const headers: NodeListOf<HTMLElement> =
+            fixture.nativeElement.querySelectorAll("nui-wizard-step-header");
+        headers[0].focus();
+        headers[0].dispatchEvent(
+            new KeyboardEvent("keydown", {
+                key: "ArrowDown",
+                keyCode: 40,
+                bubbles: true,
+            })
+        );
+        expect(document.activeElement).toBe(headers[1]);
+        headers[1].dispatchEvent(
+            new KeyboardEvent("keydown", {
+                key: "Enter",
+                keyCode: 13,
+                bubbles: true,
+            })
+        );
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(document.activeElement).toBe(panels[1]);
     });
 });
