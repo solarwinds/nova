@@ -20,7 +20,12 @@
 
 import { CommonModule } from "@angular/common";
 import { Component, NO_ERRORS_SCHEMA, ViewChild } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { TextboxComponent } from "./textbox.component";
@@ -35,11 +40,12 @@ import { SpinnerComponent } from "../spinner/spinner.component";
                 [control]="form.controls['input']"
                 [caption]="caption"
                 [hint]="hint">
-                <nui-textbox
-                    *ngIf="showTextbox"
-                    formControlName="input"
-                    [ariaDescribedby]="description"
-                    ariaLabel="Dashboard name"></nui-textbox>
+                @if (showTextbox) {
+                    <nui-textbox
+                        formControlName="input"
+                        [ariaDescribedby]="description"
+                        ariaLabel="Dashboard name"></nui-textbox>
+                }
                 <nui-validation-message for="required" [show]="false">
                     This is required
                 </nui-validation-message>
@@ -129,10 +135,16 @@ describe("components >", () => {
         });
 
         describe("reactive form > ", () => {
-            it("preserves an explicit textbox name inside a captionless form field", async () => {
+            function renderFormField(): void {
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
-                await fixture.whenStable();
+                tick();
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
+            }
+
+            it("preserves an explicit textbox name inside a captionless form field", fakeAsync(() => {
+                renderFormField();
 
                 expect(testComponent.input.ariaLabel).toBe("Dashboard name");
                 expect(
@@ -140,26 +152,22 @@ describe("components >", () => {
                         "aria-label"
                     )
                 ).toBe("Dashboard name");
-            });
+            }));
 
-            it("preserves an explicit textbox name when the form field caption is empty", async () => {
+            it("preserves an explicit textbox name when the form field caption is empty", fakeAsync(() => {
                 testComponent.caption = "";
-                fixture.detectChanges();
-                await fixture.whenStable();
-                fixture.detectChanges();
+                renderFormField();
 
                 expect(
                     testComponent.input.textboxInput.nativeElement.getAttribute(
                         "aria-label"
                     )
                 ).toBe("Dashboard name");
-            });
+            }));
 
-            it("continues to name the textbox from a supplied form field caption", async () => {
+            it("continues to name the textbox from a supplied form field caption", fakeAsync(() => {
                 testComponent.caption = "Dashboard title";
-                fixture.detectChanges();
-                await fixture.whenStable();
-                fixture.detectChanges();
+                renderFormField();
 
                 const textbox = testComponent.input.textboxInput.nativeElement;
                 const label = fixture.nativeElement.querySelector("label");
@@ -169,18 +177,14 @@ describe("components >", () => {
                 );
                 expect(label.textContent.trim()).toBe("Dashboard title");
                 expect(label.htmlFor).toBe(textbox.id);
-            });
+            }));
 
-            it("updates the textbox name with its caption and restores the explicit name when cleared", async () => {
+            it("updates the textbox name with its caption and restores the explicit name when cleared", fakeAsync(() => {
                 testComponent.caption = "Dashboard title";
-                fixture.detectChanges();
-                await fixture.whenStable();
-                fixture.detectChanges();
+                renderFormField();
 
                 testComponent.caption = "Dashboard display name";
-                fixture.detectChanges();
-                await fixture.whenStable();
-                fixture.detectChanges();
+                renderFormField();
 
                 const textbox = testComponent.input.textboxInput.nativeElement;
                 expect(textbox.getAttribute("aria-label")).toBe(
@@ -193,21 +197,17 @@ describe("components >", () => {
                 ).toBe("Dashboard display name");
 
                 testComponent.caption = "";
-                fixture.detectChanges();
-                await fixture.whenStable();
-                fixture.detectChanges();
+                renderFormField();
 
                 expect(textbox.getAttribute("aria-label")).toBe(
                     "Dashboard name"
                 );
                 expect(fixture.nativeElement.querySelector("label")).toBeNull();
-            });
+            }));
 
-            it("associates the visible form field hint with the native textbox", async () => {
+            it("associates the visible form field hint with the native textbox", fakeAsync(() => {
                 testComponent.hint = "Use a name that describes this dashboard";
-                fixture.detectChanges();
-                await fixture.whenStable();
-                fixture.detectChanges();
+                renderFormField();
 
                 const textbox = testComponent.input.textboxInput.nativeElement;
                 const help = fixture.nativeElement.querySelector(
@@ -217,14 +217,12 @@ describe("components >", () => {
                 expect(help.id).not.toBe("");
                 expect(textbox.getAttribute("aria-describedby")).toBe(help.id);
                 expect(help.textContent.trim()).toBe(testComponent.hint);
-            });
+            }));
 
-            it("preserves caller description references when field help changes", async () => {
+            it("preserves caller description references when field help changes", fakeAsync(() => {
                 testComponent.description = "dashboard-guidance";
                 testComponent.hint = "Use a descriptive name";
-                fixture.detectChanges();
-                await fixture.whenStable();
-                fixture.detectChanges();
+                renderFormField();
 
                 const textbox = testComponent.input.textboxInput.nativeElement;
                 const help = fixture.nativeElement.querySelector(
@@ -235,20 +233,16 @@ describe("components >", () => {
                 );
 
                 testComponent.hint = "";
-                fixture.detectChanges();
-                await fixture.whenStable();
-                fixture.detectChanges();
+                renderFormField();
 
                 expect(textbox.getAttribute("aria-describedby")).toBe(
                     "dashboard-guidance"
                 );
                 expect(help.textContent.trim()).toBe("");
-            });
+            }));
 
-            it("associates validation only while a message is shown", async () => {
-                fixture.detectChanges();
-                await fixture.whenStable();
-                fixture.detectChanges();
+            it("associates validation only while a message is shown", fakeAsync(() => {
+                renderFormField();
                 const textbox = testComponent.input.textboxInput.nativeElement;
                 const help = fixture.nativeElement.querySelector(
                     ".nui-form-field__help"
@@ -256,32 +250,25 @@ describe("components >", () => {
                 expect(textbox.hasAttribute("aria-describedby")).toBeFalse();
 
                 testComponent.form.controls.input.setErrors({ required: true });
-                fixture.detectChanges();
-                await fixture.whenStable();
-                fixture.detectChanges();
+                renderFormField();
                 expect(textbox.getAttribute("aria-describedby")).toBe(help.id);
                 expect(help.textContent.trim()).toBe("This is required");
 
                 testComponent.form.controls.input.setErrors(null);
-                fixture.detectChanges();
-                await fixture.whenStable();
-                fixture.detectChanges();
+                renderFormField();
                 expect(textbox.hasAttribute("aria-describedby")).toBeFalse();
                 expect(help.textContent.trim()).toBe("");
-            });
+            }));
 
-            it("names and describes a control created after the form field and its replacement", async () => {
+            it("names and describes a control created after the form field and its replacement", fakeAsync(() => {
                 testComponent.showTextbox = false;
                 testComponent.caption = "Initial caption";
                 testComponent.hint = "Use a descriptive name";
-                fixture.detectChanges();
-                await fixture.whenStable();
+                renderFormField();
 
                 testComponent.caption = "Current caption";
                 testComponent.showTextbox = true;
-                fixture.detectChanges();
-                await fixture.whenStable();
-                fixture.detectChanges();
+                renderFormField();
                 const originalTextbox = testComponent.input;
                 expect(originalTextbox.ariaLabel).toBe("Current caption");
                 expect(
@@ -294,12 +281,10 @@ describe("components >", () => {
                 );
 
                 testComponent.showTextbox = false;
-                fixture.detectChanges();
+                renderFormField();
                 testComponent.caption = "Replacement caption";
                 testComponent.showTextbox = true;
-                fixture.detectChanges();
-                await fixture.whenStable();
-                fixture.detectChanges();
+                renderFormField();
                 expect(testComponent.input).not.toBe(originalTextbox);
                 expect(testComponent.input.ariaLabel).toBe(
                     "Replacement caption"
@@ -307,7 +292,7 @@ describe("components >", () => {
                 expect(testComponent.input.textboxInput.nativeElement.id).toBe(
                     fixture.nativeElement.querySelector("label").htmlFor
                 );
-            });
+            }));
 
             it("shouldn't emit valueChanges on blur", () => {
                 fixture.detectChanges();

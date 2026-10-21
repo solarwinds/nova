@@ -121,9 +121,12 @@ describe("components >", () => {
         });
 
         it("should forward and update inline calendar purpose and help", () => {
-            componentInstance.inline = true;
-            componentInstance.ariaLabel = "Maintenance date";
-            componentInstance.ariaDescribedby = "maintenance-help";
+            fixture.componentRef.setInput("inline", true);
+            fixture.componentRef.setInput("ariaLabel", "Maintenance date");
+            fixture.componentRef.setInput(
+                "ariaDescribedby",
+                "maintenance-help"
+            );
             fixture.detectChanges();
             const calendar: HTMLElement = fixture.nativeElement.querySelector(
                 ".nui-datepicker-inner"
@@ -137,8 +140,8 @@ describe("components >", () => {
                 "maintenance-help"
             );
 
-            componentInstance.ariaLabel = "Recovery date";
-            componentInstance.ariaDescribedby = "recovery-help";
+            fixture.componentRef.setInput("ariaLabel", "Recovery date");
+            fixture.componentRef.setInput("ariaDescribedby", "recovery-help");
             fixture.detectChanges();
 
             expect(calendar.getAttribute("aria-label")).toBe("Recovery date");
@@ -146,8 +149,8 @@ describe("components >", () => {
                 "recovery-help"
             );
 
-            componentInstance.ariaLabel = "";
-            componentInstance.ariaDescribedby = "";
+            fixture.componentRef.setInput("ariaLabel", "");
+            fixture.componentRef.setInput("ariaDescribedby", "");
             fixture.detectChanges();
 
             expect(calendar.getAttribute("aria-label")).toBe("Calendar");
@@ -155,10 +158,14 @@ describe("components >", () => {
         });
 
         it("should preserve the popup calendar name and textbox purpose", () => {
-            componentInstance.ariaLabel = "Maintenance date";
-            componentInstance.ariaDescribedby = "maintenance-help";
+            fixture.componentRef.setInput("ariaLabel", "Maintenance date");
+            fixture.componentRef.setInput(
+                "ariaDescribedby",
+                "maintenance-help"
+            );
             fixture.detectChanges();
             componentInstance.overlay.toggle();
+            fixture.changeDetectorRef.markForCheck();
             fixture.detectChanges();
             const calendar: HTMLElement = fixture.nativeElement.querySelector(
                 ".nui-datepicker-inner"
@@ -203,6 +210,7 @@ describe("components >", () => {
 
         it("should name weekday column headers with their localized full names", () => {
             componentInstance.overlay.toggle();
+            fixture.changeDetectorRef.markForCheck();
             fixture.detectChanges();
             const dayPicker = debugElement.query(
                 By.directive(DayPickerComponent)

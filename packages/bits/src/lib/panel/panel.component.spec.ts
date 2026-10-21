@@ -360,10 +360,12 @@ describe("components >", () => {
 
         [PanelModes.collapsible, PanelModes.hoverable].forEach(panelMode => {
             it(`should preserve primary content when ${panelMode} collapses and re-expands`, fakeAsync(() => {
-                testComponent.panelMode = panelMode;
-                testComponent.isCollapsed = true;
+                fixture.componentRef.setInput("panelMode", panelMode);
+                fixture.detectChanges();
+                fixture.componentRef.setInput("isCollapsed", true);
                 fixture.detectChanges();
                 tick(PanelComponent.ANIMATION_TIME);
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
 
                 const panel = fixture.debugElement.query(
@@ -395,6 +397,7 @@ describe("components >", () => {
                     toggle.click();
                 }
                 tick(PanelComponent.ANIMATION_TIME);
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
 
                 expect(panel.isCollapsed).toBeFalse();
@@ -416,6 +419,7 @@ describe("components >", () => {
                     toggle.click();
                 }
                 tick(PanelComponent.ANIMATION_TIME);
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
 
                 expect(panel.isCollapsed).toBeTrue();

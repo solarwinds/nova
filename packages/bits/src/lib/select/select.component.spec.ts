@@ -120,8 +120,8 @@ describe("components >", () => {
         });
 
         it("forwards accessible label updates to the menu trigger and restores title naming when cleared", () => {
-            componentInstance.placeholder = "Choose an owner";
-            componentInstance.ariaLabel = "Dashboard owner";
+            fixture.componentRef.setInput("placeholder", "Choose an owner");
+            fixture.componentRef.setInput("ariaLabel", "Dashboard owner");
             fixture.detectChanges();
             const trigger: HTMLButtonElement = debugElement.query(
                 By.css("button.menu-button")
@@ -130,7 +130,10 @@ describe("components >", () => {
             expect(componentInstance.menu.ariaLabel).toBe("Dashboard owner");
             expect(trigger.getAttribute("aria-label")).toBe("Dashboard owner");
 
-            componentInstance.ariaLabel = "Updated dashboard owner";
+            fixture.componentRef.setInput(
+                "ariaLabel",
+                "Updated dashboard owner"
+            );
             fixture.detectChanges();
             expect(componentInstance.menu.ariaLabel).toBe(
                 "Updated dashboard owner"
@@ -139,7 +142,7 @@ describe("components >", () => {
                 "Updated dashboard owner"
             );
 
-            componentInstance.ariaLabel = "";
+            fixture.componentRef.setInput("ariaLabel", "");
             fixture.detectChanges();
             expect(componentInstance.menu.ariaLabel).toBe("");
             expect(trigger.getAttribute("aria-label")).toBe("Choose an owner");
@@ -147,7 +150,7 @@ describe("components >", () => {
         });
 
         it("forwards description updates and removal to the native menu trigger", () => {
-            componentInstance.ariaDescribedby = "priority-help";
+            fixture.componentRef.setInput("ariaDescribedby", "priority-help");
             fixture.detectChanges();
             const trigger: HTMLButtonElement = debugElement.query(
                 By.css("button.menu-button")
@@ -157,13 +160,16 @@ describe("components >", () => {
                 "priority-help"
             );
 
-            componentInstance.ariaDescribedby = "updated-priority-help";
+            fixture.componentRef.setInput(
+                "ariaDescribedby",
+                "updated-priority-help"
+            );
             fixture.detectChanges();
             expect(trigger.getAttribute("aria-describedby")).toBe(
                 "updated-priority-help"
             );
 
-            componentInstance.ariaDescribedby = "";
+            fixture.componentRef.setInput("ariaDescribedby", "");
             fixture.detectChanges();
             expect(trigger.getAttribute("aria-describedby")).toBeNull();
         });

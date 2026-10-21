@@ -5,8 +5,9 @@
     i18n>
     Toggle vertical wizard research fixture
 </button>
-<nui-wizard-vertical-example
-    *ngIf="showResearchVertical"></nui-wizard-vertical-example>
+@if (showResearchVertical) {
+<nui-wizard-vertical-example></nui-wizard-vertical-example>
+}
 
 <!--Horizontal Wizard-->
 <div class="mb-3">

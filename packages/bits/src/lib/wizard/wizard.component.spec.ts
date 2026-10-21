@@ -138,6 +138,7 @@ describe("components >", () => {
                 const step = component.steps.toArray()[0];
                 expect(component.currentStep).toBe(step);
                 component.hideStep(step);
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
 
                 const panel: HTMLElement =
@@ -150,6 +151,7 @@ describe("components >", () => {
                 expect(panel.getAttribute("aria-label")).toBe(step.title);
 
                 component.showStep(step);
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
 
                 expect(panel.getAttribute("aria-label")).toBeNull();
@@ -164,6 +166,7 @@ describe("components >", () => {
                 const originalId = step.stepId;
 
                 component.hideStep(step);
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
 
                 expect(
@@ -176,6 +179,7 @@ describe("components >", () => {
                 expect(component.steps.length).toBe(3);
 
                 component.showStep(step);
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
 
                 const header: HTMLElement = fixture.nativeElement.querySelector(

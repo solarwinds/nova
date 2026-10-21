@@ -137,6 +137,7 @@ describe("convenience components >", () => {
                 startDatetime: wrapper.baseDate.clone().subtract(1, "hours"),
                 endDatetime: wrapper.baseDate.clone(),
             };
+            fixture.changeDetectorRef.markForCheck();
             fixture.detectChanges();
 
             expect(
