@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import {
     ComponentFixture,
     fakeAsync,
@@ -41,10 +41,11 @@ import { PopupAdapterModule } from "./popup-adapter.module";
             <div popupAreaContent>Popup content</div>
         </nui-popup>
     `,
-    standalone: false,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [PopupAdapterModule],
 })
 class PopupAdapterTestHostComponent {
-    public isOpen = false;
+    @Input() public isOpen = false;
     public openedStates: boolean[] = [];
 }
 
@@ -53,8 +54,7 @@ describe("PopupComponent (adapter)", () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [PopupAdapterTestHostComponent],
-            imports: [PopupAdapterModule],
+            imports: [PopupAdapterTestHostComponent],
         });
         fixture = TestBed.createComponent(PopupAdapterTestHostComponent);
     });
@@ -83,7 +83,7 @@ describe("PopupComponent (adapter)", () => {
         expect(popup.isOpen).toBe(false);
         expect(fixture.componentInstance.openedStates).toEqual([false, false]);
 
-        fixture.componentInstance.isOpen = true;
+        fixture.componentRef.setInput("isOpen", true);
         fixture.detectChanges();
 
         const overlayRef = popup.popup.getOverlayRef();
@@ -97,7 +97,7 @@ describe("PopupComponent (adapter)", () => {
             true,
         ]);
 
-        fixture.componentInstance.isOpen = false;
+        fixture.componentRef.setInput("isOpen", false);
         fixture.detectChanges();
         expect(overlayRef.overlayElement.classList.contains("visible")).toBe(
             false
@@ -111,5 +111,41 @@ describe("PopupComponent (adapter)", () => {
             true,
             false,
         ]);
+    }));
+
+    it("cancels stale initial-false and pending-hide timers when opened or destroyed", fakeAsync(() => {
+        fixture.detectChanges();
+
+        fixture.componentRef.setInput("isOpen", true);
+        fixture.detectChanges();
+        tick(0);
+
+        const popup = getPopup();
+        const overlayRef = popup.popup.getOverlayRef();
+        expect(popup.isOpen).toBe(true);
+        expect(fixture.componentInstance.openedStates).toEqual([true]);
+
+        fixture.componentRef.setInput("isOpen", false);
+        fixture.detectChanges();
+        expect(popup.visible).toBe(false);
+
+        fixture.componentRef.setInput("isOpen", true);
+        fixture.detectChanges();
+        tick(0);
+
+        expect(popup.isOpen).toBe(true);
+        expect(overlayRef.overlayElement.classList.contains("visible")).toBe(
+            true
+        );
+        expect(fixture.componentInstance.openedStates).toEqual([true, true]);
+
+        const hideSpy = spyOn(popup.popup, "hide").and.callThrough();
+        fixture.componentRef.setInput("isOpen", false);
+        fixture.detectChanges();
+
+        fixture.destroy();
+        tick(0);
+
+        expect(hideSpy).toHaveBeenCalledTimes(1);
     }));
 });

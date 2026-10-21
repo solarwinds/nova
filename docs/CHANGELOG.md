@@ -8,6 +8,7 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | Guard lazy overlay access in `nui-popup` when `isOpen` is initially `false` and cancel stale deferred open/close timers (NUI-6317).
 - `@nova-ui/bits` | Exposed progressbar semantics only on the progress bar, including determinate zero and indeterminate values.
 - `@nova-ui/bits` | A11y fixes and improvements across form controls, pickers, panels, expanders, repeat lists, tables and wizards.
 - `@nova-ui/dashboards` | Table widget scroll area is reachable by the Tab key when its content overflows, even without focusable content inside, and is exposed as a region named by the widget title (WCAG 2.1.1).
