@@ -146,6 +146,28 @@ describe("components >", () => {
             expect(trigger.textContent).toContain("Choose an owner");
         });
 
+        it("forwards description updates and removal to the native menu trigger", () => {
+            componentInstance.ariaDescribedby = "priority-help";
+            fixture.detectChanges();
+            const trigger: HTMLButtonElement = debugElement.query(
+                By.css("button.menu-button")
+            ).nativeElement;
+
+            expect(trigger.getAttribute("aria-describedby")).toBe(
+                "priority-help"
+            );
+
+            componentInstance.ariaDescribedby = "updated-priority-help";
+            fixture.detectChanges();
+            expect(trigger.getAttribute("aria-describedby")).toBe(
+                "updated-priority-help"
+            );
+
+            componentInstance.ariaDescribedby = "";
+            fixture.detectChanges();
+            expect(trigger.getAttribute("aria-describedby")).toBeNull();
+        });
+
         it("should show placeholder if it's set and value is not selected", () => {
             expect(componentInstance.displayPlaceholder()).toEqual(false);
             componentInstance.placeholder = "select item";

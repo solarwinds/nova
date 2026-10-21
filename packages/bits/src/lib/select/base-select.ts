@@ -105,6 +105,8 @@ export abstract class BaseSelect
      */
     @Input() public ariaLabel: string = "";
 
+    @Input() public ariaDescribedby: string = "";
+
     /**
      * Value for enabling remove value feature
      */

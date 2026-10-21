@@ -39,6 +39,42 @@ import {
 import { RadioGroupAtom } from "../radio-group/radio-group.atom";
 
 test.describe("legacy research form-field", () => {
+    test("describes the native legacy focus targets and removes cleared hints", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("form-field/form-field-legacy-test", page);
+        const priority = page.getByRole("button", {
+            name: "Maintenance priority",
+            exact: true,
+        });
+        const site = page.getByRole("textbox", {
+            name: "Recovery site",
+            exact: true,
+        });
+
+        await expect(priority).toHaveAccessibleDescription(
+            "Choose Emergency only when service is unavailable."
+        );
+        await expect(site).toHaveAccessibleDescription(
+            "Use a site code from the approved recovery plan."
+        );
+        await priority.focus();
+        await expect(priority).toBeFocused();
+        await site.focus();
+        await expect(site).toBeFocused();
+
+        await page
+            .getByRole("button", {
+                name: "Clear legacy field hints",
+                exact: true,
+            })
+            .click();
+        for (const control of [priority, site]) {
+            await expect(control).toHaveAccessibleDescription("");
+            await expect(control).not.toHaveAttribute("aria-describedby");
+        }
+    });
+
     test("keeps legacy controls and instructions usable on their own page", async ({
         page,
     }) => {

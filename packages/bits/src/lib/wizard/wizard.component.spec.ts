@@ -112,6 +112,31 @@ describe("components >", () => {
         });
 
         describe("hideStep >", () => {
+            it("keeps the active panel named when its header is hidden and restores the reference", () => {
+                const step = component.steps.toArray()[0];
+                expect(component.currentStep).toBe(step);
+                component.hideStep(step);
+                fixture.detectChanges();
+
+                const panel: HTMLElement =
+                    fixture.nativeElement.querySelector("[role=tabpanel]");
+                expect(component.currentStep).toBe(step);
+                expect(
+                    fixture.nativeElement.querySelector(`[id="${step.stepId}"]`)
+                ).toBeNull();
+                expect(panel.getAttribute("aria-labelledby")).toBeNull();
+                expect(panel.getAttribute("aria-label")).toBe(step.title);
+
+                component.showStep(step);
+                fixture.detectChanges();
+
+                expect(panel.getAttribute("aria-label")).toBeNull();
+                expect(panel.getAttribute("aria-labelledby")).toBe(step.stepId);
+                expect(
+                    fixture.nativeElement.querySelector(`[id="${step.stepId}"]`)
+                ).not.toBeNull();
+            });
+
             it("should exclude the whole hidden header and restore its relationships", () => {
                 const step = component.steps.toArray()[1];
                 const originalId = step.stepId;
