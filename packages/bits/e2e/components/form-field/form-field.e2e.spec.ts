@@ -38,6 +38,43 @@ import {
 } from "../public_api";
 import { RadioGroupAtom } from "../radio-group/radio-group.atom";
 
+test.describe("legacy research form-field", () => {
+    test("keeps legacy controls and instructions usable on their own page", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("form-field/form-field-legacy-test", page);
+        const priority = page.getByRole("button", {
+            name: "Maintenance priority",
+            exact: true,
+        });
+        const site = page.getByRole("textbox", {
+            name: "Recovery site",
+            exact: true,
+        });
+
+        await expect(page.locator("nui-form-field")).toHaveCount(2);
+        await expect(priority).toBeVisible();
+        await expect(site).toBeVisible();
+        await expect(
+            page.getByText(
+                "Choose Emergency only when service is unavailable.",
+                { exact: true }
+            )
+        ).toBeVisible();
+        await expect(
+            page.getByText("Use a site code from the approved recovery plan.", {
+                exact: true,
+            })
+        ).toBeVisible();
+        await priority.click();
+        await page.getByText("Emergency", { exact: true }).click();
+        await expect(priority).toHaveText("Emergency");
+        await site.fill("PRG-01");
+        await site.press("Tab");
+        await expect(site).toHaveValue("PRG-01");
+    });
+});
+
 test.describe("USERCONTROL form-field >", () => {
     let hintWithTemplate: FormFieldAtom;
     let atomWithTemplate: FormFieldAtom;

@@ -2,6 +2,33 @@ import { PopupAtom } from "./popup.atom";
 import { Atom } from "../../atom";
 import { Helpers, test, expect } from "../../setup";
 
+test.describe("legacy research popup", () => {
+    test("opens and closes independently of the modern popup examples", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("popup/popup-legacy-test", page);
+        const toggle = page.getByRole("button", {
+            name: "Open legacy research popup",
+            exact: true,
+        });
+        const content = page.getByText("Legacy popup details", { exact: true });
+        const area = page.locator(
+            "body > nui-popup-container .nui-popup__area"
+        );
+
+        await expect(page.locator("nui-popup")).toHaveCount(0);
+        await expect(content).toBeHidden();
+        await toggle.click();
+        await expect(area).toBeVisible();
+        await expect(content).toBeVisible();
+        await toggle.click();
+        await expect(content).toBeHidden();
+        await expect(
+            page.locator("body > nui-popup-container .nui-popup--opened")
+        ).toHaveCount(0);
+    });
+});
+
 test.describe("USERCONTROL Popup", () => {
     let popupSimple: PopupAtom;
     let popupCustomWidth: PopupAtom;
