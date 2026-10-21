@@ -122,10 +122,10 @@ export class PopupComponent
     public set visible(value: boolean) {
         this._visible = value;
         if (value) {
-            this.popup.getOverlayRef().addPanelClass(POPUP_VISIBLE);
+            this.popup?.getOverlayRef()?.addPanelClass(POPUP_VISIBLE);
             return;
         }
-        this.popup.getOverlayRef().removePanelClass(POPUP_VISIBLE);
+        this.popup?.getOverlayRef()?.removePanelClass(POPUP_VISIBLE);
     }
     public get visible(): boolean {
         return Boolean(this._visible);
