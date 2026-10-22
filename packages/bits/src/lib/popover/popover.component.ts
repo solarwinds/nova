@@ -54,7 +54,7 @@ import _isUndefined from "lodash/isUndefined";
 import {
     BehaviorSubject,
     EMPTY,
-    merge,
+    mergeWith,
     Observable,
     Subject,
     Subscription,
@@ -219,6 +219,14 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     private suppressFocusReopenUntilExit = false;
     private focusReturnTarget?: HTMLElement;
     private positionStrategySubscriptions: Subscription[] = [];
+    public host: ElementRef<HTMLElement> =
+        inject<ElementRef<HTMLElement>>(ElementRef);
+    private componentFactoryResolver = inject(ComponentFactoryResolver);
+    private viewContainerRef = inject(ViewContainerRef);
+    private overlay = inject(Overlay);
+    private cdRef = inject(ChangeDetectorRef);
+    private eventBusService = inject(EventBusService);
+    private popoverPositionService = inject(PopoverPositionService);
     private readonly interactivityChecker = inject(InteractivityChecker);
     private overlayUtilitiesService: OverlayUtilitiesService =
         new OverlayUtilitiesService();
@@ -298,16 +306,6 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
             this.handleTriggerTabKeydown(event);
         }
     }
-
-    constructor(
-        public host: ElementRef<HTMLElement>,
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private viewContainerRef: ViewContainerRef,
-        private overlay: Overlay,
-        private cdRef: ChangeDetectorRef,
-        private eventBusService: EventBusService,
-        private popoverPositionService: PopoverPositionService
-    ) {}
 
     public ngOnInit(): void {
         if (this.container) {
@@ -469,14 +467,14 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
 
     private initializePopover() {
         this.popoverModalSubscriptions = [];
-        const closePopoverSubscription = merge(
-            (!this.preventClosing
-                ? this.eventBusService.getStream(CLOSE_POPOVER_EVENT)
-                : EMPTY) as Observable<void>,
-            this.closePopover || EMPTY
-        ).subscribe(() => {
-            this.hidePopover();
-        });
+        const closePopoverEvents: Observable<void> = !this.preventClosing
+            ? this.eventBusService.getStream(CLOSE_POPOVER_EVENT)
+            : EMPTY;
+        const closePopoverSubscription = closePopoverEvents
+            .pipe(mergeWith(this.closePopover || EMPTY))
+            .subscribe(() => {
+                this.hidePopover();
+            });
 
         if (!this.popover) {
             throw new Error("PopoverModalComponent is undefined");
