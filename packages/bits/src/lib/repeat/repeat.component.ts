@@ -50,6 +50,7 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import _isEqual from "lodash/isEqual";
+import _uniqueId from "lodash/uniqueId";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
@@ -100,6 +101,8 @@ interface IDndItemDropped<T = unknown> {
 export class RepeatComponent<T extends IRepeatItem = unknown>
     implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub
 {
+    public readonly contentIdPrefix = _uniqueId("nui-repeat-item-content-");
+
     /**
      * Turns on/off dragging functionality
      */

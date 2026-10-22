@@ -58,6 +58,7 @@ import {
     WizardResetStepExampleComponent,
     WizardWithSeparateStepHeadingsExampleComponent,
 } from "./index";
+import { WizardHiddenTestComponent } from "./wizard-hide/wizard-hide-test.component";
 import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
@@ -74,6 +75,10 @@ const routes = [
     {
         path: "wizard-test",
         component: WizardExampleComponent,
+    },
+    {
+        path: "wizard-hide-test",
+        component: WizardHiddenTestComponent,
     },
     {
         path: "wizard-visual-test",
@@ -118,6 +123,7 @@ const routes = [
         WizardDynamicExampleComponent,
         WizardExampleComponent,
         WizardHiddenExampleComponent,
+        WizardHiddenTestComponent,
         WizardSimpleExampleComponent,
         WizardValidationExampleComponent,
         WizardVisualTestComponent,

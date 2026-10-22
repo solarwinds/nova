@@ -13,11 +13,13 @@
         <div class="pb-3">
             <strong i18n>+{{ overflownStepsStart.length }} more steps</strong>
         </div>
-        } @for ( step of overflownStepsStart; track step; let i = $index; let
-        isFirst = $first) {
-        <div class="nui-wizard-horizontal-header-wrapper">
-            <ng-template
-                *ngTemplateOutlet="
+        }
+        <div role="tablist" aria-label="Previous steps" i18n-aria-label>
+            @for ( step of overflownStepsStart; track step; let i = $index; let
+            isFirst = $first) {
+            <div class="nui-wizard-horizontal-header-wrapper">
+                <ng-template
+                    *ngTemplateOutlet="
                     stepHeaderWithLines;
                     context: {
                         $implicit: steps,
@@ -26,17 +28,19 @@
                         isFirst: isFirst
                     }
                 "></ng-template>
+            </div>
+            }
         </div>
-        }
     </ng-template>
     }
 
     <!--  Visible items container -->
-    @for (step of (isInResponsiveMode ? visibleSteps : steps); track step; let i
-    = $index; let isFirst = $first) {
-    <div class="nui-wizard-horizontal-header-wrapper">
-        <ng-template
-            *ngTemplateOutlet="
+    <div role="tablist" aria-orientation="horizontal" class="d-flex">
+        @for (step of (isInResponsiveMode ? visibleSteps : steps); track step;
+        let i = $index; let isFirst = $first) {
+        <div class="nui-wizard-horizontal-header-wrapper">
+            <ng-template
+                *ngTemplateOutlet="
                 stepHeaderWithLines;
                 context: {
                     $implicit: steps,
@@ -45,8 +49,9 @@
                     isFirst: isFirst
                 }
             "></ng-template>
+        </div>
+        }
     </div>
-    }
 
     <!--  Right overflow container -->
     @if (isInResponsiveMode && overflownStepsEnd.length) {
@@ -63,11 +68,13 @@
         <div class="pb-3">
             <strong i18n>+{{ overflownStepsEnd.length }} more steps</strong>
         </div>
-        } @for ( step of overflownStepsEnd; track step; let i = $index; let
-        isFirst = $first) {
-        <div class="nui-wizard-horizontal-header-wrapper">
-            <ng-template
-                *ngTemplateOutlet="
+        }
+        <div role="tablist" aria-label="Following steps" i18n-aria-label>
+            @for ( step of overflownStepsEnd; track step; let i = $index; let
+            isFirst = $first) {
+            <div class="nui-wizard-horizontal-header-wrapper">
+                <ng-template
+                    *ngTemplateOutlet="
                     stepHeaderWithLines;
                     context: {
                         $implicit: steps,
@@ -76,8 +83,9 @@
                         isFirst: isFirst
                     }
                 "></ng-template>
+            </div>
+            }
         </div>
-        }
     </ng-template>
     }
 </div>
@@ -90,6 +98,7 @@
         [attr.tabindex]="selectedIndex === i ? 0 : null"
         [id]="stepContentIds[i]"
         [attr.aria-labelledby]="labelIds[i]"
+        [hidden]="selectedIndex !== i"
         [attr.aria-expanded]="selectedIndex === i">
         <ng-container [ngTemplateOutlet]="step.content"></ng-container>
     </div>

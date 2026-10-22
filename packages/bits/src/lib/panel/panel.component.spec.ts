@@ -255,9 +255,7 @@ describe("components >", () => {
                 expect(panelContainer.getAttribute("aria-expanded")).toBe(
                     "true"
                 );
-                expect(panelContainer.getAttribute("aria-hidden")).toBe(
-                    "false"
-                );
+                expect(panelContainer.getAttribute("aria-hidden")).toBeNull();
                 expect(collapseIconDebugElement).toBeNull();
             });
 
@@ -279,9 +277,7 @@ describe("components >", () => {
                 expect(panelContainer.getAttribute("aria-expanded")).toBe(
                     "true"
                 );
-                expect(panelContainer.getAttribute("aria-hidden")).toBe(
-                    "false"
-                );
+                expect(panelContainer.getAttribute("aria-hidden")).toBeNull();
                 expect(collapseIconDebugElement).toBeNull();
             }));
 
@@ -303,9 +299,7 @@ describe("components >", () => {
                 expect(panelContainer.getAttribute("aria-expanded")).toBe(
                     "true"
                 );
-                expect(panelContainer.getAttribute("aria-hidden")).toBe(
-                    "false"
-                );
+                expect(panelContainer.getAttribute("aria-hidden")).toBeNull();
                 expect(collapseIconDebugElement).not.toBeNull();
                 expect(collapseIconDebugElement.context.icon).toBe(
                     "double-caret-left"
@@ -337,11 +331,81 @@ describe("components >", () => {
                 expect(panelContainer.getAttribute("aria-expanded")).toBe(
                     "false"
                 );
-                expect(panelContainer.getAttribute("aria-hidden")).toBe("true");
+                expect(panelContainer.getAttribute("aria-hidden")).toBeNull();
                 expect(collapseIconDebugElement).not.toBeNull();
                 expect(collapseIconDebugElement.context.icon).toBe(
                     "double-caret-right"
                 );
+            }));
+        });
+
+        [PanelModes.collapsible, PanelModes.hoverable].forEach(panelMode => {
+            it(`should preserve primary content when ${panelMode} collapses and re-expands`, fakeAsync(() => {
+                testComponent.panelMode = panelMode;
+                testComponent.isCollapsed = true;
+                fixture.detectChanges();
+                tick(PanelComponent.ANIMATION_TIME);
+                fixture.detectChanges();
+
+                const panel = fixture.debugElement.query(
+                    By.directive(PanelComponent)
+                ).componentInstance as PanelComponent;
+                const centerPane = fixture.nativeElement.querySelector(
+                    ".nui-panel__center-pane"
+                );
+                const toggle = fixture.nativeElement.querySelector(
+                    ".nui-panel__header-btn"
+                );
+                expect(centerPane.textContent).toContain(CENTER_PANE_CONTENT);
+                expect(centerPane.closest("[aria-hidden=true]")).toBeNull();
+                if (panelMode === PanelModes.collapsible) {
+                    expect(toggle.closest("[aria-hidden=true]")).toBeNull();
+                    expect(toggle.getAttribute("aria-label")).toBe(
+                        "Expand panel"
+                    );
+                }
+                expect(
+                    fixture.nativeElement.querySelector(
+                        ".nui-panel__side-pane-body"
+                    )
+                ).toBeNull();
+
+                if (panelMode === PanelModes.hoverable) {
+                    panel.toggleEnter();
+                } else {
+                    toggle.click();
+                }
+                tick(PanelComponent.ANIMATION_TIME);
+                fixture.detectChanges();
+
+                expect(panel.isCollapsed).toBeFalse();
+                expect(centerPane.closest("[aria-hidden=true]")).toBeNull();
+                if (panelMode === PanelModes.collapsible) {
+                    expect(toggle.getAttribute("aria-label")).toBe(
+                        "Collapse panel"
+                    );
+                }
+                expect(
+                    fixture.nativeElement.querySelector(
+                        ".nui-panel__side-pane-body"
+                    ).textContent
+                ).toContain(LEFT_PANE_CONTENT);
+
+                if (panelMode === PanelModes.hoverable) {
+                    panel.toggleLeave();
+                } else {
+                    toggle.click();
+                }
+                tick(PanelComponent.ANIMATION_TIME);
+                fixture.detectChanges();
+
+                expect(panel.isCollapsed).toBeTrue();
+                expect(centerPane.closest("[aria-hidden=true]")).toBeNull();
+                expect(
+                    fixture.nativeElement.querySelector(
+                        ".nui-panel__side-pane-body"
+                    )
+                ).toBeNull();
             }));
         });
 

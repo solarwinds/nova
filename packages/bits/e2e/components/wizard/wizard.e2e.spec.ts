@@ -131,6 +131,86 @@ test.describe("USERCONTROL Wizard >", () => {
     });
 
     test.describe("by default", () => {
+        test("keeps the active panel named when its first or last tab is hidden", async ({
+            page,
+        }) => {
+            await Helpers.prepareBrowser("wizard/wizard-hide-test", page);
+            await Helpers.disableCSSAnimations(Animations.ALL);
+            const activeWizard = Atom.find<WizardAtom>(
+                WizardAtom,
+                "nui-demo-wizard-hide-show"
+            );
+            const host = page.locator("#nui-demo-wizard-hide-show");
+            const panel = host.getByRole("tabpanel");
+            for (const name of ["Hide show next step", "Second step"]) {
+                if (name === "Second step") {
+                    await activeWizard.next();
+                }
+                const tab = host.getByRole("tab", { name, exact: true });
+                await expect(tab).toHaveAttribute("aria-selected", "true");
+                const tabId = await tab.getAttribute("id");
+                const panelId = await panel.getAttribute("id");
+
+                await page
+                    .getByRole("button", {
+                        name: "Hide active step",
+                        exact: true,
+                    })
+                    .click();
+                await expect(host.getByRole("tab")).toHaveCount(1);
+                await expect(host.locator(`[id="${tabId}"]`)).toHaveCount(0);
+                await expect(panel).toHaveAccessibleName(name);
+                await expect(panel).not.toHaveAttribute("aria-labelledby");
+                await expect(panel).toHaveAttribute("id", panelId!);
+
+                await page
+                    .getByRole("button", {
+                        name: "Show active step",
+                        exact: true,
+                    })
+                    .click();
+                await expect(host.getByRole("tab")).toHaveCount(2);
+                await expect(tab).toHaveAttribute("aria-selected", "true");
+                await expect(panel).toHaveAttribute("aria-labelledby", tabId!);
+                await expect(panel).toHaveAccessibleName(name);
+                await expect(panel).not.toHaveAttribute("aria-label");
+            }
+        });
+
+        test("should exclude and restore hidden legacy tabs in the accessible workflow", async ({
+            page,
+        }) => {
+            const host = page.locator("#nui-demo-wizard-hide-show");
+            const tabs = host.getByRole("tab");
+            const second = host.getByRole("tab", {
+                name: "Second step",
+                exact: true,
+            });
+            const secondId = await second.getAttribute("id");
+            const panelId = await second.getAttribute("aria-controls");
+
+            await expect(tabs).toHaveCount(2);
+            await hideButton.click();
+            await expect(tabs).toHaveCount(1);
+            await expect(tabs).toHaveAccessibleName("Hide show next step");
+            await expect(host.getByRole("tabpanel")).toHaveAccessibleName(
+                "Hide show next step"
+            );
+            await visibleButton.click();
+            await expect(tabs).toHaveCount(2);
+            await expect(second).toHaveAttribute("id", secondId!);
+            await expect(second).toHaveAttribute("aria-controls", panelId!);
+            await wizardHide.next();
+            await expect(host.getByRole("tabpanel")).toHaveAccessibleName(
+                "Second step"
+            );
+            await wizardHide.back();
+            await hideButton.click();
+            await expect(tabs).toHaveCount(1);
+            await visibleButton.click();
+            await expect(tabs).toHaveCount(2);
+        });
+
         test("should be defined", async () => {
             await wizard.toBeVisible();
         });

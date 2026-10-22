@@ -3,6 +3,7 @@
         class="nui-expander__header"
         tabindex="0"
         role="button"
+        [attr.aria-labelledby]="labelId"
         [id]="headerId"
         [attr.aria-label]="expanderToggleAriaLabel"
         [attr.aria-expanded]="state === 'expanded'"
@@ -26,6 +27,7 @@
             <div
                 #customHeaderContent
                 class="nui-expander__custom-header"
+                [id]="'nui-expander-custom-header-' + uniqueId"
                 [class.nui-expander__custom-header--empty]="
                     isCustomHeaderContentEmpty
                 ">

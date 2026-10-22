@@ -10,6 +10,7 @@
         displayValueTemplate ? null : isDropdownOpen ? 'nui-overlay' : null
     "
     [attr.aria-label]="displayValueTemplate ? null : accessibleLabel"
+    [attr.aria-describedby]="displayValueTemplate ? null : ariaDescribedby"
     (keydown)="onKeyDown($event)">
     <div *ngIf="!displayValueTemplate" class="nui-select-v2__value">
         <div *ngIf="!isEmpty" class="nui-select-v2__value-content">

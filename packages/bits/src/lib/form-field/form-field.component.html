@@ -29,7 +29,7 @@
         </div>
     </div>
     <ng-content></ng-content>
-    <div class="nui-form-field__help">
+    <div class="nui-form-field__help" [attr.id]="helpId">
         <div>
             <ng-content select="nui-validation-message"> </ng-content>
         </div>

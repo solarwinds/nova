@@ -30,6 +30,7 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import _cloneDeep from "lodash/cloneDeep";
+import _uniqueId from "lodash/uniqueId";
 import { Moment } from "moment/moment";
 import moment from "moment/moment";
 
@@ -47,6 +48,8 @@ import { TimeframeService } from "./services/timeframe.service";
     standalone: false,
 })
 export class TimeFramePickerComponent implements OnChanges, OnInit {
+    private readonly labelIdPrefix = _uniqueId("nui-time-frame-picker-");
+
     /**  earliest selectable date */
     @Input() minDate: Moment;
     /**  latest selectable date */
@@ -55,6 +58,13 @@ export class TimeFramePickerComponent implements OnChanges, OnInit {
     @Input() startModel: ITimeframe;
     /** Allows popup box to be attached to document.body */
     @Input() appendToBody: boolean;
+    /** IDs of visible instructions shared by the start and end inputs. */
+    @Input() public ariaDescribedby?: string;
+
+    public readonly startLabel = $localize`Start`;
+    public readonly endLabel = $localize`End`;
+    public readonly startLabelId = `${this.labelIdPrefix}-start`;
+    public readonly endLabelId = `${this.labelIdPrefix}-end`;
 
     public model: ITimeframe;
 

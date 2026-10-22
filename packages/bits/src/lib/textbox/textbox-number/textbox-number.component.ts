@@ -157,6 +157,7 @@ export class TextboxNumberComponent
      * Input to set aria label text
      */
     @Input() public ariaLabel: string = "Textbox number input";
+    @Input() public ariaDescribedby: string;
 
     /**
      * Minimum value of textBoxNumber component

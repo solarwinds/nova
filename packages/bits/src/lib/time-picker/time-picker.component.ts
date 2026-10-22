@@ -103,6 +103,7 @@ export class TimePickerComponent
     @Input() isInErrorState = false;
     /** Input to set aria label text */
     @Input() public ariaLabel: string = "Time Picker";
+    @Input() public ariaDescribedby: string;
     /** to allow the empty values for init state */
     @Input() initEmpty: boolean;
     /** Allows popup box to be attached to document.body */

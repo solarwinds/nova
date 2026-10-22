@@ -32,6 +32,8 @@ export abstract class NuiFormFieldControl {
     /** Aria label to set on the tab-focusable item. */
     public ariaLabel?: string;
 
+    public ariaDescribedby?: string;
+
     /** Unique id for the control. */
     public id?: string;
 }

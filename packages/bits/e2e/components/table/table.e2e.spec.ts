@@ -478,6 +478,112 @@ test.describe("USERCONTROL table >", () => {
             await Helpers.prepareBrowser("table/sticky", page);
         });
 
+        test("should retain accessible column relationships in sticky and native modes", async ({
+            page,
+        }) => {
+            const session = await page.context().newCDPSession(page);
+            const expectedHeaders = [
+                "no",
+                "nameFirst",
+                "nameLast",
+                "city",
+                "postcode",
+            ];
+            const checkRelationships = async () => {
+                await expect
+                    .poll(async () => {
+                        const { nodes } = await session.send(
+                            "Accessibility.getFullAXTree"
+                        );
+                        return nodes
+                            .filter(
+                                node =>
+                                    !node.ignored &&
+                                    node.role?.value === "columnheader"
+                            )
+                            .map(node => node.name?.value);
+                    })
+                    .toEqual(expectedHeaders);
+                const { nodes } = await session.send(
+                    "Accessibility.getFullAXTree"
+                );
+                const byId = new Map(nodes.map(node => [node.nodeId, node]));
+                const table = nodes.find(
+                    node => !node.ignored && node.role?.value === "table"
+                );
+                expect(table).toBeDefined();
+                const headers = nodes.filter(
+                    node => !node.ignored && node.role?.value === "columnheader"
+                );
+                const cells = nodes.filter(
+                    node => !node.ignored && node.role?.value === "cell"
+                );
+                expect(cells.length).toBeGreaterThan(0);
+                for (const node of [...headers, ...cells]) {
+                    const row = byId.get(node.parentId!);
+                    const rowgroup = row?.parentId
+                        ? byId.get(row.parentId)
+                        : undefined;
+                    expect(row?.role?.value).toBe("row");
+                    expect(rowgroup?.role?.value).toBe("rowgroup");
+                    expect(rowgroup?.parentId).toBe(table?.nodeId);
+                }
+                expect(
+                    table?.childIds?.find(id => !byId.get(id)?.ignored)
+                ).toBe(byId.get(headers[0].parentId!)?.parentId);
+            };
+            const viewport = page.locator("cdk-virtual-scroll-viewport");
+            const nativeTable = viewport.locator("table");
+            await expect(nativeTable).toHaveAttribute("aria-owns", /\S+/);
+            await checkRelationships();
+
+            const firstCell = viewport.locator("tbody td").first();
+            const initialValue = await firstCell.innerText();
+            await viewport.evaluate(element => {
+                element.scrollTop = 800;
+            });
+            await expect(firstCell).not.toHaveText(initialValue);
+            await checkRelationships();
+
+            await nativeTable.evaluate(element => {
+                element.style.minWidth = "1800px";
+            });
+            await expect
+                .poll(async () =>
+                    viewport.evaluate(
+                        element => element.scrollWidth - element.clientWidth
+                    )
+                )
+                .toBeGreaterThan(0);
+            await viewport.evaluate(element => {
+                element.scrollLeft = 150;
+            });
+            await expect
+                .poll(async () =>
+                    viewport.evaluate(element => element.scrollLeft)
+                )
+                .toBe(150);
+            await expect(
+                page.locator(".sticky-table-header-container")
+            ).toHaveCSS("margin-left", "-150px");
+            await checkRelationships();
+
+            const toggle = page.locator("nui-switch").getByRole("checkbox");
+            await toggle.click();
+            await expect(nativeTable).not.toHaveAttribute("aria-owns");
+            await expect(
+                nativeTable.locator(".sticky-header-placeholder")
+            ).toHaveCount(0);
+            await checkRelationships();
+            await toggle.click();
+            await expect(nativeTable).toHaveAttribute("aria-owns", /\S+/);
+            await expect(
+                nativeTable.locator(".sticky-header-placeholder")
+            ).toHaveAttribute("aria-hidden", "true");
+            await checkRelationships();
+            await session.detach();
+        });
+
         test("adjust the virtual scroll viewport height to accommodate the header height", async () => {
             const container = Helpers.page.locator(
                 "#nui-demo-table-sticky-header"

@@ -48,9 +48,12 @@
         </tr>
         <tr>
             <th *ngIf="datePicker.showWeeks"></th>
-            <th *ngFor="let label of labels" class="text-center">
+            <th
+                *ngFor="let label of labels"
+                class="text-center"
+                [attr.aria-label]="label.full">
                 <div class="day-label">
-                    <span aria-label="label.full">{{ label.abbr }}</span>
+                    <span>{{ label.abbr }}</span>
                 </div>
             </th>
         </tr>

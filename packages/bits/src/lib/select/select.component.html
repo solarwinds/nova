@@ -15,7 +15,8 @@
                 (justified ? 'nui-select--justified ' : '') +
                 'nui-select-popup-host'
             "
-            [attr.aria-label]="ariaLabel">
+            [ariaLabel]="ariaLabel"
+            [ariaDescribedby]="ariaDescribedby">
             <nui-menu-action
                 *ngIf="isRemoveValueEnabled"
                 (actionDone)="select(null)">

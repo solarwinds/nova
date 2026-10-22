@@ -25,4 +25,7 @@ import { Component } from "@angular/core";
     templateUrl: "checkbox-test.component.html",
     standalone: false,
 })
-export class CheckboxTestComponent {}
+export class CheckboxTestComponent {
+    public descriptionIds: string | undefined =
+        "checkbox-delivery-instructions checkbox-delivery-error";
+}
