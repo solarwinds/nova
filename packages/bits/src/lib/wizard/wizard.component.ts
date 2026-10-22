@@ -68,6 +68,8 @@ export class WizardComponent
 
     @ContentChildren(WizardStepComponent) steps: QueryList<WizardStepComponent>;
     @ViewChildren("stepTitle") stepTitles: QueryList<ElementRef>;
+    @ViewChildren("stepHeader")
+    private stepHeaders: QueryList<ElementRef<HTMLElement>>;
     @ViewChild("container", { read: ViewContainerRef }) dynamicStep: any;
 
     /**
@@ -126,6 +128,12 @@ export class WizardComponent
     private stepIndex: number;
     private previousStepIndex = 0;
     private futureStep?: WizardStepComponent;
+    private pendingFocusOrigin: Element | null = null;
+    private removalFocus?: {
+        source: WizardStepComponent;
+        destination: WizardStepComponent;
+        element: Element;
+    };
 
     private arraySteps: any[];
     private dynamicSubscriptions = new Map();
@@ -180,9 +188,26 @@ export class WizardComponent
             this.stepLineWidth = Math.round(this.getLargestLabelWidth() / 2);
             this.changeDetector.detectChanges();
         }
+
+        if (this.pendingFocusOrigin) {
+            const origin = this.pendingFocusOrigin;
+            this.pendingFocusOrigin = null;
+            const host: HTMLElement =
+                this.viewContainerRef.element.nativeElement;
+            const activeElement = host.ownerDocument.activeElement;
+            if (
+                host.contains(activeElement) ||
+                (activeElement === host.ownerDocument.body &&
+                    !origin.isConnected)
+            ) {
+                this.stepHeaders?.get(this.stepIndex)?.nativeElement.focus();
+            }
+        }
     }
 
     public ngOnDestroy(): void {
+        this.pendingFocusOrigin = null;
+        this.removalFocus = undefined;
         this.steps
             .toArray()
             .forEach((step: WizardStepComponent) => step.valid.unsubscribe());
@@ -227,8 +252,28 @@ export class WizardComponent
 
         const stepToRemove = steps[index];
 
+        if (this.removalFocus?.destination === stepToRemove) {
+            this.removalFocus = undefined;
+        }
+
         if (this.currentStep === stepToRemove) {
+            const host: HTMLElement =
+                this.viewContainerRef.element.nativeElement;
+            const focusedElement = host.ownerDocument.activeElement;
             this.onBackClick();
+            if (
+                this.currentStep === stepToRemove &&
+                this.futureStep &&
+                this.futureStep !== stepToRemove &&
+                focusedElement &&
+                host.contains(focusedElement)
+            ) {
+                this.removalFocus = {
+                    source: stepToRemove,
+                    destination: this.futureStep,
+                    element: focusedElement,
+                };
+            }
         }
 
         this.onRemoveDynamic(stepToRemove);
@@ -289,6 +334,9 @@ export class WizardComponent
 
     public selectStep(step: WizardStepComponent): void {
         if (!step.disabled) {
+            if (this.removalFocus?.destination !== step) {
+                this.removalFocus = undefined;
+            }
             this.futureStep = step;
             this.currentStep?.exitStep({
                 selectedIndex: this.arraySteps.indexOf(this.futureStep),
@@ -366,6 +414,19 @@ export class WizardComponent
     }
 
     public enterAnotherStep(): void {
+        const stepChanged =
+            !!this.currentStep && this.currentStep !== this.futureStep;
+        const host: HTMLElement = this.viewContainerRef.element.nativeElement;
+        const focusedElement = host.ownerDocument.activeElement;
+        const focusInside = host.contains(focusedElement);
+        const removalFocus = this.removalFocus;
+        this.removalFocus = undefined;
+        const recoverRemovedFocus =
+            !!removalFocus &&
+            removalFocus.source === this.currentStep &&
+            removalFocus.destination === this.futureStep &&
+            !removalFocus.element.isConnected &&
+            host.ownerDocument.activeElement === host.ownerDocument.body;
         this.currentStep?.applyExitingStep();
         this.futureStep?.enterStep();
         this.currentStep = this.futureStep;
@@ -379,6 +440,11 @@ export class WizardComponent
         };
         this.selectionChange.emit(this.selectionEvent);
         this.previousStepIndex = this.stepIndex;
+        if (stepChanged && (focusInside || recoverRemovedFocus)) {
+            this.pendingFocusOrigin ||= focusInside
+                ? focusedElement
+                : removalFocus?.element ?? null;
+        }
     }
 
     private disableFollowingSteps(): void {

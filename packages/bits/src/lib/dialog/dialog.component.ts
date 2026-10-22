@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { InteractivityChecker } from "@angular/cdk/a11y";
 import { CdkScrollable, ScrollDispatcher } from "@angular/cdk/scrolling";
 import { DOCUMENT } from "@angular/common";
 import {
@@ -27,6 +28,7 @@ import {
     EventEmitter,
     HostListener,
     Inject,
+    inject,
     Input,
     OnDestroy,
     OnInit,
@@ -62,7 +64,8 @@ const FOCUSABLE_SELECTOR =
     standalone: false,
 })
 export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
-    private elWithFocus: any;
+    private elWithFocus: Element | null = null;
+    private readonly interactivityChecker = inject(InteractivityChecker);
     /**
      * Whether a backdrop element should be created for a given dialog (true by default).
      * Alternatively, specify 'static' for a backdrop which doesn't close the dialog on click.
@@ -140,8 +143,15 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
         this.dismissEvent.emit(reason);
     }
 
+    /** For DialogStackService only; not part of the public API. */
+    public captureFocus(element: Element | null): void {
+        this.elWithFocus = element;
+    }
+
     public ngOnInit(): void {
-        this.elWithFocus = this.document.activeElement;
+        if (!this.elWithFocus) {
+            this.captureFocus(this.document.activeElement);
+        }
         this.renderer.addClass(this.document.body, "dialog-open");
         this.router.events
             .pipe(
@@ -161,19 +171,58 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        const body = this.document.body;
-        const elWithFocus = this.elWithFocus;
-
-        let elementToFocus;
-        if (elWithFocus && elWithFocus["focus"] && body.contains(elWithFocus)) {
-            elementToFocus = elWithFocus;
-        } else {
-            elementToFocus = body;
+        const remainingDialog =
+            Array.from(
+                this.document.querySelectorAll<HTMLElement>("nui-dialog-window")
+            )
+                .filter(element => element !== this.elRef.nativeElement)
+                .pop() ?? null;
+        if (!remainingDialog) {
+            this.renderer.removeClass(this.document.body, "dialog-open");
         }
-        elementToFocus["focus"].apply(elementToFocus, []);
-
+        this.restoreFocus(remainingDialog);
         this.elWithFocus = null;
-        this.renderer.removeClass(body, "dialog-open");
+    }
+
+    private restoreFocus(remainingDialog: HTMLElement | null): void {
+        if (this.focusElement(this.elWithFocus, remainingDialog)) {
+            return;
+        }
+        if (
+            this.canRestoreFocus(this.document.activeElement, remainingDialog)
+        ) {
+            return;
+        }
+        this.focusElement(remainingDialog, remainingDialog);
+    }
+
+    private canRestoreFocus(
+        element: Element | null,
+        remainingDialog: HTMLElement | null
+    ): element is HTMLElement {
+        return (
+            !!element &&
+            element !== this.document.body &&
+            element !== this.document.documentElement &&
+            element.ownerDocument === this.document &&
+            element.isConnected &&
+            typeof (element as HTMLElement).focus === "function" &&
+            !this.elRef.nativeElement.contains(element) &&
+            (!remainingDialog || remainingDialog.contains(element)) &&
+            !element.closest("[inert], [aria-hidden='true']") &&
+            this.interactivityChecker.isFocusable(element as HTMLElement)
+        );
+    }
+
+    private focusElement(
+        element: Element | null,
+        remainingDialog: HTMLElement | null
+    ): boolean {
+        if (!this.canRestoreFocus(element, remainingDialog)) {
+            return false;
+        }
+        element.focus();
+        return this.document.activeElement === element;
     }
 
     private handleFocus(event: KeyboardEvent): void {
