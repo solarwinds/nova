@@ -21,10 +21,12 @@
 import {
     AfterContentChecked,
     AfterContentInit,
+    ChangeDetectorRef,
     Component,
     ContentChild,
     ContentChildren,
     forwardRef,
+    inject,
     Input,
     OnDestroy,
     QueryList,
@@ -57,6 +59,7 @@ export class FormFieldComponent
     private lastCaption: string | undefined;
     private appliedCaption: string | undefined;
     private controlUpdateTimeout: ReturnType<typeof setTimeout> | undefined;
+    private readonly changeDetector = inject(ChangeDetectorRef);
 
     /**
      * Form control obtained from the parent reactive form
@@ -175,6 +178,7 @@ export class FormFieldComponent
             if (!control.id) {
                 control.id = `${this.labelId}-control`;
             }
+            this.changeDetector.markForCheck();
         });
     }
 

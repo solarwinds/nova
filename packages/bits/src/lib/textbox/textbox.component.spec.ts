@@ -179,6 +179,35 @@ describe("components >", () => {
                 expect(label.htmlFor).toBe(textbox.id);
             }));
 
+            it("renders deferred field names and descriptions without a manual detection pass", async () => {
+                testComponent.caption = "Dashboard title";
+                testComponent.hint = "Choose a recognizable title";
+                fixture.autoDetectChanges();
+                await new Promise<void>(resolve => setTimeout(resolve));
+                await fixture.whenStable();
+
+                const textbox = testComponent.input.textboxInput.nativeElement;
+                const help = fixture.nativeElement.querySelector(
+                    ".nui-form-field__help"
+                );
+                expect(textbox.getAttribute("aria-label")).toBe(
+                    "Dashboard title"
+                );
+                expect(textbox.getAttribute("aria-describedby")).toBe(help.id);
+
+                testComponent.caption = "Dashboard display name";
+                testComponent.hint = "";
+                fixture.changeDetectorRef.markForCheck();
+                await fixture.whenStable();
+                await new Promise<void>(resolve => setTimeout(resolve));
+                await fixture.whenStable();
+
+                expect(textbox.getAttribute("aria-label")).toBe(
+                    "Dashboard display name"
+                );
+                expect(textbox.hasAttribute("aria-describedby")).toBe(false);
+            });
+
             it("updates the textbox name with its caption and restores the explicit name when cleared", fakeAsync(() => {
                 testComponent.caption = "Dashboard title";
                 renderFormField();

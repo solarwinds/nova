@@ -431,6 +431,9 @@ test.describe("USERCONTROL form-field >", () => {
                 const help = target
                     .locator("xpath=ancestor::nui-form-field[1]")
                     .locator(".nui-form-field__help");
+                if (clearHints) {
+                    await expect(help).not.toContainText("Provide a value.");
+                }
                 const text = (await help.innerText())
                     .replace(/\s+/g, " ")
                     .trim();

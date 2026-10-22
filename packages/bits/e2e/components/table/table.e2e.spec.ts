@@ -259,8 +259,9 @@ test.describe("USERCONTROL table >", () => {
                 );
                 await checkbox?.toggle();
                 await submitColumnsButton.click();
-                const rowContent = await tableColumnsAddRemove.getRowContent(0);
-                expect(rowContent).toEqual(testCase.expectedResult);
+                await expect
+                    .poll(async () => tableColumnsAddRemove.getRowContent(0))
+                    .toEqual(testCase.expectedResult);
             });
         });
 
@@ -530,12 +531,16 @@ test.describe("USERCONTROL table >", () => {
             await expect(nativeTable).toHaveAttribute("aria-owns", /\S+/);
             await checkRelationships();
 
-            const firstCell = viewport.locator("tbody td").first();
-            const initialValue = await firstCell.innerText();
-            await viewport.evaluate(element => {
-                element.scrollTop = 800;
-            });
-            await expect(firstCell).not.toHaveText(initialValue);
+            const rows = viewport.locator("tbody tr");
+            const initialLastRow = Number(
+                await rows.last().locator("td").first().innerText()
+            );
+            await rows.last().scrollIntoViewIfNeeded();
+            await expect
+                .poll(async () =>
+                    Number(await rows.last().locator("td").first().innerText())
+                )
+                .toBeGreaterThan(initialLastRow);
             await checkRelationships();
 
             await nativeTable.evaluate(element => {

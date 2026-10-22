@@ -217,6 +217,7 @@ test.describe("USERCONTROL datepicker", () => {
             getTrimmedText("nui-demo-datepicker-max-date");
 
         test("should forbid selection of date via text input, less than minDate", async () => {
+            await expect.poll(getMinDate).not.toBe("");
             const minDate: Moment = moment(await getMinDate());
             let date: Moment = moment(minDate);
 
@@ -254,6 +255,7 @@ test.describe("USERCONTROL datepicker", () => {
         });
 
         test("should forbid selection of date via text input, greater than maxDate", async () => {
+            await expect.poll(getMaxDate).not.toBe("");
             const maxDate: Moment = moment(await getMaxDate());
             let date: Moment = moment(maxDate);
 
