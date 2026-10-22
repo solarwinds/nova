@@ -57,7 +57,6 @@ export class WizardV2TestComponent implements AfterViewInit, OnDestroy {
     public onDestroy$ = new Subject<void>();
     public overlayTriggered$ = new Subject<void>();
     public responsiveSteps: Array<any> = Array.from({ length: 20 });
-    public showResearchVertical = false;
 
     private overlayRef: OverlayRef;
     public busy: boolean = false;
