@@ -8,6 +8,7 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | Dismisses focus- and hover-triggered popovers with Escape without reopening during the active trigger session, and supports Tab/Shift+Tab navigation through interactive content (NUI-6318).
 - `@nova-ui/bits` | Guard lazy overlay access in `nui-popup` when `isOpen` is initially `false` and cancel stale deferred open/close timers (NUI-6317).
 - `@nova-ui/bits` | Exposed progressbar semantics only on the progress bar, including determinate zero and indeterminate values.
 - `@nova-ui/bits` | A11y fixes and improvements across form controls, pickers, panels, expanders, repeat lists, tables and wizards.

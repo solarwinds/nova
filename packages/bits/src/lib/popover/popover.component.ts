@@ -18,6 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { InteractivityChecker } from "@angular/cdk/a11y";
+import { hasModifierKey } from "@angular/cdk/keycodes";
 import {
     ConnectedOverlayPositionChange,
     ConnectedPosition,
@@ -34,6 +36,7 @@ import {
     EmbeddedViewRef,
     EventEmitter,
     HostListener,
+    inject,
     Input,
     OnChanges,
     OnDestroy,
@@ -72,6 +75,7 @@ import {
     CLOSE_POPOVER_EVENT,
     DOCUMENT_CLICK_EVENT,
 } from "../../constants/event.constants";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { popoverConstants } from "../../constants/popover.constants";
 import { EventBusService } from "../../services/event-bus.service";
 import { UtilService } from "../../services/util.service";
@@ -204,15 +208,25 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     // See PopoverComponent.mouseLeaveResolver for details
     private mouseLeaveTimeout?: NodeJS.Timeout;
     private mouseEnterTimeout?: NodeJS.Timeout;
+    private pendingEscapeListener?: (event: KeyboardEvent) => void;
+    private popoverKeydownSubscription?: Subscription;
     private hidingAnimationInProgress = false;
+    private triggerPointerActive = false;
+    private popoverPointerActive = false;
+    private triggerFocusActive = false;
+    private popoverFocusActive = false;
+    private suppressHoverReopenUntilExit = false;
+    private suppressFocusReopenUntilExit = false;
+    private focusReturnTarget?: HTMLElement;
     private positionStrategySubscriptions: Subscription[] = [];
+    private readonly interactivityChecker = inject(InteractivityChecker);
     private overlayUtilitiesService: OverlayUtilitiesService =
         new OverlayUtilitiesService();
     private resizeObserver: ResizeObserver;
 
     @HostListener("click", ["$event"])
     public onClick(event: MouseEvent): void {
-        if (this.isTriggerPresent("click") && this.popover) {
+        if (this.isTriggerPresent("click") && this.isPopoverVisible()) {
             this.hidePopover();
         } else {
             this.onTrigger("click");
@@ -223,32 +237,70 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
 
     @HostListener("mouseenter")
     public onMouseEnter(): void {
+        this.triggerPointerActive = this.isTriggerPresent("mouseenter");
         this.onTrigger("mouseenter");
         this.mouseEnterResolver();
     }
 
-    @HostListener("mouseleave")
-    public onMouseLeave(): void {
+    @HostListener("mouseleave", ["$event"])
+    public onMouseLeave(event?: MouseEvent): void {
+        this.triggerPointerActive = false;
+        if (
+            event &&
+            this.isNode(event.relatedTarget) &&
+            this.isInsidePopover(event.relatedTarget)
+        ) {
+            this.popoverPointerActive = true;
+        }
         this.onTrigger("mouseleave");
         this.mouseLeaveResolver();
+        this.clearPassiveDismissalIfInactive();
     }
 
     @HostListener("focusin")
     public onFocusIn(): void {
+        this.triggerFocusActive = true;
+        const focusReturnTarget = this.getFocusableFocusOrigin();
+        if (focusReturnTarget) {
+            this.focusReturnTarget = focusReturnTarget;
+        }
         this.onTrigger("focus");
     }
 
-    @HostListener("focusout")
-    public onFocusOut(): void {
-        if (!this.closePopover) {
-            if (this.isTriggerPresent("focus") && !this.preventClosing) {
-                this.hidePopover();
-            }
+    @HostListener("focusout", ["$event"])
+    public onFocusOut(event: FocusEvent): void {
+        const relatedTarget = this.isNode(event.relatedTarget)
+            ? event.relatedTarget
+            : null;
+        this.triggerFocusActive =
+            !!relatedTarget && this.isInsideHost(relatedTarget);
+        this.popoverFocusActive =
+            !!relatedTarget && this.isInsidePopover(relatedTarget);
+        this.clearPassiveDismissalIfInactive();
+
+        if (
+            !this.closePopover &&
+            this.isTriggerPresent("focus") &&
+            !this.preventClosing &&
+            !this.isInsideHostOrPopover(relatedTarget)
+        ) {
+            this.closeIfNoPassiveTriggerIsActive();
+        }
+    }
+
+    @HostListener("keydown", ["$event"])
+    public onKeydown(event: KeyboardEvent): void {
+        if (event.defaultPrevented) {
+            return;
+        }
+        this.handleEscapeKeydown(event);
+        if (!event.defaultPrevented) {
+            this.handleTriggerTabKeydown(event);
         }
     }
 
     constructor(
-        public host: ElementRef,
+        public host: ElementRef<HTMLElement>,
         private componentFactoryResolver: ComponentFactoryResolver,
         private viewContainerRef: ViewContainerRef,
         private overlay: Overlay,
@@ -290,10 +342,8 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     }
 
     public ngOnDestroy(): void {
-        if (this.mouseEnterTimeout) {
-            clearTimeout(this.mouseEnterTimeout);
-            this.mouseEnterTimeout = undefined;
-        }
+        this.clearMouseEnterTimeout();
+        this.clearMouseLeaveTimeout();
 
         if (this.popover) {
             this.cleanUp();
@@ -321,11 +371,17 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
             return;
         }
 
+        this.suppressHoverReopenUntilExit = false;
+        this.suppressFocusReopenUntilExit = false;
+        this.clearMouseEnterTimeout();
+        this.clearMouseLeaveTimeout();
+
         if (!_isNil(this.popover)) {
             this.cleanUp();
         }
 
         this.hidingAnimationInProgress = false;
+        this.focusReturnTarget = this.getFocusableFocusOrigin();
         const factory = this.componentFactoryResolver.resolveComponentFactory(
             PopoverModalComponent
         );
@@ -333,6 +389,16 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         this.initializePopover();
         this.setPositionStrategy(this.placement);
         this.overlayComponent.show();
+        this.popoverKeydownSubscription = this.overlayComponent
+            .getOverlayRef()
+            .keydownEvents()
+            .subscribe(event => {
+                this.handleEscapeKeydown(event);
+                if (!event.defaultPrevented) {
+                    this.handlePopoverTabKeydown(event);
+                }
+            });
+        this.popoverModalSubscriptions.push(this.popoverKeydownSubscription);
         this.initializeResizeObserver();
         this.shown.emit();
         // Needs for proper initialization of content inside overlay
@@ -365,19 +431,38 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
                 triggerType === "mouseenter" &&
                 this.isTriggerPresent("mouseenter")
             ) {
-                if (this.mouseEnterTimeout) {
-                    clearTimeout(this.mouseEnterTimeout);
+                if (this.suppressHoverReopenUntilExit) {
+                    return;
                 }
+                this.clearMouseEnterTimeout();
+                // Debounce configured hover activation; leaving the trigger or pressing Escape
+                // cancels the pending open.
                 this.mouseEnterTimeout = setTimeout(() => {
-                    this.activatePopover();
+                    this.mouseEnterTimeout = undefined;
+                    this.removePendingEscapeListener();
+                    this.activatePopover("mouseenter");
                 }, this.delay);
+                this.addPendingEscapeListener();
             } else {
-                this.activatePopover();
+                this.activatePopover(triggerType);
             }
         }
     }
 
-    private activatePopover() {
+    private activatePopover(triggerType: PopoverTrigger) {
+        const isPassiveTrigger =
+            triggerType === "mouseenter" || triggerType === "focus";
+        if (this.isPassiveTriggerSuppressed(triggerType)) {
+            return;
+        }
+        if (!isPassiveTrigger) {
+            this.suppressHoverReopenUntilExit = false;
+            this.suppressFocusReopenUntilExit = false;
+        }
+        if (this.isPopoverVisible()) {
+            return;
+        }
+
         this.eventBusService.getStream(CLOSE_POPOVER_EVENT).next();
         this.showPopover();
     }
@@ -436,7 +521,11 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
                         eventPath,
                         popoverModalNativeElement
                     );
-                    if (!clickInsidePopover) {
+                    const clickInsideTrigger = _includes(
+                        eventPath,
+                        this.host.nativeElement
+                    );
+                    if (!clickInsidePopover && !clickInsideTrigger) {
                         this.popoverOpenedProgrammatically
                             ? (this.popoverOpenedProgrammatically = false)
                             : this.hidePopover();
@@ -455,10 +544,33 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
                             }
                             break;
                         case "mouse-leave":
+                            this.popoverPointerActive = false;
                             this.mouseLeaveResolver();
+                            this.clearPassiveDismissalIfInactive();
                             break;
                         case "mouse-enter":
+                            this.popoverPointerActive = true;
                             this.mouseEnterResolver();
+                            break;
+                        case "focus-enter":
+                            this.popoverFocusActive = true;
+                            break;
+                        case "focus-leave-trigger":
+                            this.popoverFocusActive = false;
+                            this.triggerFocusActive = true;
+                            this.clearPassiveDismissalIfInactive();
+                            break;
+                        case "focus-leave":
+                            this.popoverFocusActive = false;
+                            this.triggerFocusActive = false;
+                            this.clearPassiveDismissalIfInactive();
+                            if (
+                                !this.closePopover &&
+                                this.isTriggerPresent("focus") &&
+                                !this.preventClosing
+                            ) {
+                                this.closeIfNoPassiveTriggerIsActive();
+                            }
                             break;
                     }
                 }
@@ -485,12 +597,19 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         });
         this.popover?.destroy();
         this.overlayComponent.hide();
+        this.popoverKeydownSubscription = undefined;
         this.hidden.emit();
         this.popover = undefined;
+        this.popoverPointerActive = false;
+        this.popoverFocusActive = false;
+        this.clearPassiveDismissalIfInactive();
     }
 
     private hidePopover() {
-        if (!this.disabled) {
+        this.clearMouseEnterTimeout();
+        this.clearMouseLeaveTimeout();
+        if (!this.disabled && this.isPopoverVisible()) {
+            this.popoverKeydownSubscription?.unsubscribe();
             this.popoverDisplaySubject.next(false);
         }
     }
@@ -506,10 +625,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     }
 
     private mouseEnterResolver() {
-        if (this.mouseLeaveTimeout) {
-            clearTimeout(this.mouseLeaveTimeout);
-            this.mouseLeaveTimeout = undefined;
-        }
+        this.clearMouseLeaveTimeout();
     }
 
     private mouseLeaveResolver() {
@@ -517,18 +633,326 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         // to return cursor to these elements. In case of using hover trigger it helps to ensure that popover won't close
         // when user moves their's cursor from popover trigger to popover body
         if (this.isTriggerPresent("mouseenter")) {
+            this.clearMouseLeaveTimeout();
             this.mouseLeaveTimeout = setTimeout(() => {
-                if (this.popover) {
-                    this.hidePopover();
-                    this.mouseLeaveTimeout = undefined;
+                this.mouseLeaveTimeout = undefined;
+                this.clearPassiveDismissalIfInactive();
+                if (this.isPopoverVisible()) {
+                    this.closeIfNoPassiveTriggerIsActive();
                 }
             }, popoverConstants.mouseLeaveDelay);
 
-            if (this.mouseEnterTimeout) {
-                clearTimeout(this.mouseEnterTimeout);
-                this.mouseEnterTimeout = undefined;
-            }
+            this.clearMouseEnterTimeout();
         }
+    }
+
+    private closeIfNoPassiveTriggerIsActive(): void {
+        if (!this.hasActivePassiveTrigger()) {
+            this.hidePopover();
+        }
+    }
+
+    private hasActivePassiveTrigger(): boolean {
+        return this.isHoverTriggerActive() || this.isFocusTriggerActive();
+    }
+
+    private clearPassiveDismissalIfInactive(): void {
+        if (!this.isHoverTriggerActive()) {
+            this.suppressHoverReopenUntilExit = false;
+        }
+        if (!this.isFocusTriggerActive()) {
+            this.suppressFocusReopenUntilExit = false;
+        }
+    }
+
+    private isHoverTriggerActive(): boolean {
+        return (
+            this.isTriggerPresent("mouseenter") &&
+            (this.triggerPointerActive || this.popoverPointerActive)
+        );
+    }
+
+    private isFocusTriggerActive(): boolean {
+        return (
+            this.isTriggerPresent("focus") &&
+            (this.triggerFocusActive || this.popoverFocusActive)
+        );
+    }
+
+    private isPassiveTriggerSuppressed(triggerType: PopoverTrigger): boolean {
+        return (
+            (triggerType === "mouseenter" &&
+                this.suppressHoverReopenUntilExit) ||
+            (triggerType === "focus" && this.suppressFocusReopenUntilExit)
+        );
+    }
+
+    private isPopoverVisible(): boolean {
+        return !!this.popover && this.popoverDisplaySubject?.value === true;
+    }
+
+    private isUnmodifiedEscape(event: KeyboardEvent): boolean {
+        return (
+            (event.key === KEYBOARD_CODE.ESCAPE ||
+                event.code === KEYBOARD_CODE.ESCAPE) &&
+            !hasModifierKey(event)
+        );
+    }
+
+    private handleEscapeKeydown(event: KeyboardEvent): void {
+        if (event.defaultPrevented || !this.isUnmodifiedEscape(event)) {
+            return;
+        }
+
+        if (this.disabled) {
+            return;
+        }
+
+        if (!this.isPopoverVisible()) {
+            return;
+        }
+
+        const activeElement =
+            this.host.nativeElement.ownerDocument.activeElement;
+        const shouldRestoreFocus =
+            !!activeElement && this.isInsidePopover(activeElement);
+        const focusTarget = this.getSafeFocusReturnTarget();
+
+        this.suppressHoverReopenUntilExit = this.isHoverTriggerActive();
+        this.suppressFocusReopenUntilExit = this.isFocusTriggerActive();
+        this.hidePopover();
+
+        if (shouldRestoreFocus && focusTarget) {
+            focusTarget.focus({ preventScroll: true });
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    private handleTriggerTabKeydown(event: KeyboardEvent): void {
+        if (
+            event.defaultPrevented ||
+            event.shiftKey ||
+            !this.isTabNavigationKey(event) ||
+            !this.isPopoverVisible() ||
+            this.disabled ||
+            !this.isNode(event.target) ||
+            !this.isInsideHost(event.target) ||
+            this.isInsidePopover(event.target)
+        ) {
+            return;
+        }
+
+        const ownerDocument: Document = this.host.nativeElement.ownerDocument;
+        const HTMLElementConstructor = ownerDocument.defaultView?.HTMLElement;
+        const activeElement = ownerDocument.activeElement;
+        if (
+            !HTMLElementConstructor ||
+            !(activeElement instanceof HTMLElementConstructor) ||
+            !this.isInsideHost(activeElement)
+        ) {
+            return;
+        }
+
+        const hostTabStops = this.getTabbableElements(this.host.nativeElement);
+        if (hostTabStops[hostTabStops.length - 1] !== activeElement) {
+            return;
+        }
+
+        const popoverElement = this.popover?.instance.elRef.nativeElement;
+        const popoverTabStops = popoverElement
+            ? this.getTabbableElements(popoverElement)
+            : [];
+        const firstPopoverTabStop = popoverTabStops[0];
+        if (!firstPopoverTabStop) {
+            return;
+        }
+
+        firstPopoverTabStop.focus();
+        event.preventDefault();
+    }
+
+    private handlePopoverTabKeydown(event: KeyboardEvent): void {
+        if (
+            event.defaultPrevented ||
+            !this.isTabNavigationKey(event) ||
+            !this.isNode(event.target) ||
+            !this.isInsidePopover(event.target)
+        ) {
+            return;
+        }
+
+        const ownerDocument: Document = this.host.nativeElement.ownerDocument;
+        const HTMLElementConstructor = ownerDocument.defaultView?.HTMLElement;
+        const activeElement = ownerDocument.activeElement;
+        const popoverElement = this.popover?.instance.elRef.nativeElement;
+        if (
+            !HTMLElementConstructor ||
+            !(activeElement instanceof HTMLElementConstructor) ||
+            !popoverElement
+        ) {
+            return;
+        }
+
+        const popoverTabStops = this.getTabbableElements(popoverElement);
+        const focusTarget = this.getSafeFocusReturnTarget();
+        if (!focusTarget || popoverTabStops.length === 0) {
+            return;
+        }
+
+        if (event.shiftKey && popoverTabStops[0] === activeElement) {
+            focusTarget.focus();
+            event.preventDefault();
+        } else if (
+            !event.shiftKey &&
+            popoverTabStops[popoverTabStops.length - 1] === activeElement
+        ) {
+            // Let the browser perform its native Tab action from the trigger.
+            // This preserves the trigger's normal place in the page tab order.
+            focusTarget.focus();
+        }
+    }
+
+    private isTabNavigationKey(event: KeyboardEvent): boolean {
+        return (
+            (event.key === KEYBOARD_CODE.TAB ||
+                event.code === KEYBOARD_CODE.TAB) &&
+            !event.altKey &&
+            !event.ctrlKey &&
+            !event.metaKey
+        );
+    }
+
+    private getTabbableElements(root: HTMLElement): HTMLElement[] {
+        const elements = [
+            root,
+            ...Array.from(root.querySelectorAll<HTMLElement>("*")),
+        ];
+        return elements
+            .filter(
+                element =>
+                    this.interactivityChecker.isFocusable(element) &&
+                    this.interactivityChecker.isTabbable(element)
+            )
+            .sort((first, second) => {
+                if (first.tabIndex > 0 && second.tabIndex > 0) {
+                    return first.tabIndex - second.tabIndex;
+                }
+                if (first.tabIndex > 0) {
+                    return -1;
+                }
+                if (second.tabIndex > 0) {
+                    return 1;
+                }
+                return 0;
+            });
+    }
+
+    private getSafeFocusReturnTarget(): HTMLElement | undefined {
+        const focusTarget = this.focusReturnTarget;
+        const ownerDocument: Document = this.host.nativeElement.ownerDocument;
+        return focusTarget &&
+            focusTarget.isConnected &&
+            focusTarget.ownerDocument === ownerDocument &&
+            this.isInsideHost(focusTarget) &&
+            this.interactivityChecker.isFocusable(focusTarget)
+            ? focusTarget
+            : undefined;
+    }
+
+    private addPendingEscapeListener(): void {
+        if (this.pendingEscapeListener) {
+            return;
+        }
+
+        const ownerDocument: Document = this.host.nativeElement.ownerDocument;
+        this.pendingEscapeListener = (event: KeyboardEvent) => {
+            if (!event.defaultPrevented && this.isUnmodifiedEscape(event)) {
+                this.suppressHoverReopenUntilExit = this.isHoverTriggerActive();
+                this.clearMouseEnterTimeout();
+            }
+        };
+        ownerDocument.addEventListener(
+            "keydown",
+            this.pendingEscapeListener,
+            true
+        );
+    }
+
+    private removePendingEscapeListener(): void {
+        if (!this.pendingEscapeListener) {
+            return;
+        }
+        const ownerDocument: Document = this.host.nativeElement.ownerDocument;
+        ownerDocument.removeEventListener(
+            "keydown",
+            this.pendingEscapeListener,
+            true
+        );
+        this.pendingEscapeListener = undefined;
+    }
+
+    private clearMouseEnterTimeout(): void {
+        if (this.mouseEnterTimeout !== undefined) {
+            clearTimeout(this.mouseEnterTimeout);
+            this.mouseEnterTimeout = undefined;
+        }
+        this.removePendingEscapeListener();
+    }
+
+    private clearMouseLeaveTimeout(): void {
+        if (this.mouseLeaveTimeout !== undefined) {
+            clearTimeout(this.mouseLeaveTimeout);
+            this.mouseLeaveTimeout = undefined;
+        }
+    }
+
+    private isNode(target: EventTarget | null): target is Node {
+        const NodeConstructor =
+            this.host.nativeElement.ownerDocument.defaultView?.Node;
+        return !!NodeConstructor && target instanceof NodeConstructor;
+    }
+
+    private isInsideHost(target: Node): boolean {
+        return this.host.nativeElement.contains(target);
+    }
+
+    private isInsidePopover(target: Node): boolean {
+        const popoverElement = this.popover?.instance.elRef.nativeElement;
+        return !!popoverElement && popoverElement.contains(target);
+    }
+
+    private isInsideHostOrPopover(target: Node | null): boolean {
+        return (
+            !!target &&
+            (this.isInsideHost(target) || this.isInsidePopover(target))
+        );
+    }
+
+    private getFocusableFocusOrigin(): HTMLElement | undefined {
+        const ownerDocument: Document = this.host.nativeElement.ownerDocument;
+        const activeElement = ownerDocument.activeElement;
+        const HTMLElementConstructor = ownerDocument.defaultView?.HTMLElement;
+        if (
+            HTMLElementConstructor &&
+            activeElement instanceof HTMLElementConstructor &&
+            this.isInsideHost(activeElement) &&
+            this.interactivityChecker.isFocusable(activeElement)
+        ) {
+            return activeElement;
+        }
+
+        const hostElement = this.host.nativeElement;
+        if (
+            HTMLElementConstructor &&
+            hostElement instanceof HTMLElementConstructor &&
+            this.interactivityChecker.isFocusable(hostElement)
+        ) {
+            return hostElement;
+        }
+
+        return undefined;
     }
 
     private isTriggerPresent(valueToCompare: string): boolean {
