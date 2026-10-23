@@ -57,10 +57,10 @@ describe("components >", () => {
             });
             fixture = TestBed.createComponent(PopoverModalComponent);
             subject = fixture.componentInstance;
-            // Set required inputs so ngOnInit/template doesn't crash if Angular triggers CD
-            // via zone events (e.g., from zone.run() in ngAfterViewInit test)
+            // Set required inputs before Angular's first change-detection pass.
             subject.displayChange = new BehaviorSubject<boolean>(true);
             subject.popoverBeforeHiddenSubject = new Subject<void>();
+            subject.popoverAfterHiddenSubject = new Subject<void>();
             subject.popoverModalEventSubject =
                 new Subject<PopoverModalEvents>();
             subject.context = {
@@ -96,29 +96,84 @@ describe("components >", () => {
         });
 
         describe("displayChange>", () => {
-            it("should update fadeIn", () => {
-                subject.fadeIn = true;
-                subject.popoverBeforeHiddenSubject = new Subject<void>();
-                subject.displayChange = new BehaviorSubject<boolean>(true);
-                subject.ngOnInit();
+            it("should update fadeIn", fakeAsync(() => {
+                fixture.detectChanges();
+                tick();
+                expect(subject.fadeIn).toBeTrue();
                 subject.displayChange.next(false);
-                expect(subject.fadeIn).toBe(false);
-            });
+                expect(subject.fadeIn).toBeFalse();
+                tick();
+            }));
+
+            it("should cancel a pending fade-in when hidden before it starts", fakeAsync(() => {
+                const beforeHidden = spyOn(
+                    subject.popoverBeforeHiddenSubject,
+                    "next"
+                );
+                const afterHidden = spyOn(
+                    subject.popoverAfterHiddenSubject,
+                    "next"
+                );
+                fixture.detectChanges();
+
+                subject.displayChange.next(false);
+                tick();
+
+                expect(subject.fadeIn).toBeFalse();
+                expect(beforeHidden).toHaveBeenCalledTimes(1);
+                expect(afterHidden).toHaveBeenCalledTimes(1);
+            }));
+
+            it("should not finish an animated hide early on repeated close requests", fakeAsync(() => {
+                fixture.detectChanges();
+                tick();
+                const beforeHidden = spyOn(
+                    subject.popoverBeforeHiddenSubject,
+                    "next"
+                );
+                const afterHidden = spyOn(
+                    subject.popoverAfterHiddenSubject,
+                    "next"
+                );
+
+                subject.displayChange.next(false);
+                subject.displayChange.next(false);
+
+                expect(beforeHidden).toHaveBeenCalledTimes(1);
+                expect(afterHidden).not.toHaveBeenCalled();
+                tick();
+            }));
+
+            it("should not schedule a fade-in when initially hidden", fakeAsync(() => {
+                const afterHidden = spyOn(
+                    subject.popoverAfterHiddenSubject,
+                    "next"
+                );
+                subject.displayChange.next(false);
+
+                fixture.detectChanges();
+                tick();
+
+                expect(subject.fadeIn).toBeFalse();
+                expect(afterHidden).toHaveBeenCalledTimes(1);
+            }));
         });
 
         describe("ngAfterViewInit>", () => {
             it("should update fadeIn asynchronously after initial render", fakeAsync(() => {
-                subject.fadeIn = false;
-                subject.context = {
-                    arrowMarginTop: 0,
-                    icon: "add",
-                    popoverPosition: "left",
-                    title: "title",
-                    placement: "left",
-                };
-                subject.ngAfterViewInit();
+                fixture.detectChanges();
+                expect(subject.fadeIn).toBeFalse();
                 tick();
-                expect(subject.fadeIn).toBe(true);
+                expect(subject.fadeIn).toBeTrue();
+            }));
+
+            it("should cancel a pending fade-in on destruction", fakeAsync(() => {
+                fixture.detectChanges();
+
+                fixture.destroy();
+                tick();
+
+                expect(subject.fadeIn).toBeFalse();
             }));
         });
     });

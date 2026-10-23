@@ -43,6 +43,9 @@ import { fadeIn } from "../../animations/fadeIn";
 export type PopoverModalEvents =
     | "mouse-enter"
     | "mouse-leave"
+    | "focus-enter"
+    | "focus-leave-trigger"
+    | "focus-leave"
     | "backdrop-click"
     | "outside-click";
 
@@ -80,7 +83,7 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
     /**
      * Popover hostElement
      */
-    @Input() hostElement: any;
+    @Input() hostElement: HTMLElement;
 
     /**
      * Defines if container has padding.
@@ -100,6 +103,7 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
 
     private popoverModalSubscriptions: Subscription[] = [];
     private fadeInTimeout?: ReturnType<typeof setTimeout>;
+    private isClosing = false;
 
     @HostListener("click", ["$event"])
     onClick(event: MouseEvent): void {
@@ -116,13 +120,44 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
         this.popoverModalEventSubject.next("mouse-leave");
     }
 
-    constructor(public elRef: ElementRef, private cdRef: ChangeDetectorRef) {}
+    @HostListener("focusin")
+    onFocusIn(): void {
+        this.popoverModalEventSubject.next("focus-enter");
+    }
+
+    @HostListener("focusout", ["$event"])
+    onFocusOut(event: FocusEvent): void {
+        const relatedTarget = this.isNode(event.relatedTarget)
+            ? event.relatedTarget
+            : null;
+        if (relatedTarget && this.elRef.nativeElement.contains(relatedTarget)) {
+            return;
+        }
+
+        this.popoverModalEventSubject.next(
+            relatedTarget && this.hostElement.contains(relatedTarget)
+                ? "focus-leave-trigger"
+                : "focus-leave"
+        );
+    }
+
+    constructor(
+        public elRef: ElementRef<HTMLElement>,
+        private cdRef: ChangeDetectorRef
+    ) {}
 
     public ngOnInit(): void {
         const displayChangeSubscription = this.displayChange.subscribe(
             (show: boolean) => {
-                if (!show) {
+                if (!show && !this.isClosing) {
+                    this.isClosing = true;
+                    this.clearFadeInTimeout();
                     this.popoverBeforeHiddenSubject.next();
+                    // No exit animation runs if the initial fade-in has not started.
+                    if (!this.fadeIn) {
+                        this.popoverAfterHiddenSubject.next();
+                        return;
+                    }
                     this.fadeIn = false;
                     this.cdRef.markForCheck();
                 }
@@ -133,13 +168,16 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
     }
 
     public ngAfterViewInit(): void {
+        if (this.isClosing) {
+            return;
+        }
         // To prevent from exception 'expression was changed after check'
         // Angular 21 no longer guarantees an NgZone.onStable emission here for dynamically
         // created views, so we schedule the state flip explicitly after the initial render.
         this.fadeInTimeout = setTimeout(() => {
+            this.fadeInTimeout = undefined;
             this.fadeIn = true;
             this.cdRef.detectChanges();
-            this.fadeInTimeout = undefined;
         });
     }
 
@@ -150,12 +188,22 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if (this.fadeInTimeout) {
-            clearTimeout(this.fadeInTimeout);
-            this.fadeInTimeout = undefined;
-        }
+        this.clearFadeInTimeout();
         this.popoverModalSubscriptions.forEach(sub => {
             sub.unsubscribe();
         });
+    }
+
+    private clearFadeInTimeout(): void {
+        if (this.fadeInTimeout !== undefined) {
+            clearTimeout(this.fadeInTimeout);
+            this.fadeInTimeout = undefined;
+        }
+    }
+
+    private isNode(target: EventTarget | null): target is Node {
+        const NodeConstructor =
+            this.elRef.nativeElement.ownerDocument.defaultView?.Node;
+        return !!NodeConstructor && target instanceof NodeConstructor;
     }
 }
