@@ -42,6 +42,52 @@ test.describe("CONVENIENCE COMPONENTS", () => {
             await page.reset();
         });
 
+        test("range-shift buttons describe and perform their keyboard actions", async ({
+            page: pwPage,
+        }) => {
+            const previous = page.timeFrameBar.prevButton.getLocator();
+            const next = page.timeFrameBar.nextButton.getLocator();
+            const range = pwPage.locator(
+                "nui-time-frame-bar .picker-label-content"
+            );
+            const originalRange = (await range.innerText()).trim();
+
+            await expect(previous).toHaveAccessibleName(
+                "Shift timeframe backward by 7 days"
+            );
+            await expect(next).toHaveAccessibleName(
+                "Shift timeframe forward by 7 days"
+            );
+            await previous.focus();
+            await expect(previous).toBeFocused();
+            await pwPage.keyboard.press("Enter");
+            await expect(range).not.toHaveText(originalRange);
+            await next.focus();
+            await expect(next).toBeFocused();
+            await pwPage.keyboard.press("Space");
+            await expect(range).toHaveText(originalRange);
+        });
+
+        test("range-shift buttons update their names after duration changes", async () => {
+            await page.zoomIn();
+
+            await expect(
+                page.timeFrameBar.prevButton.getLocator()
+            ).toHaveAccessibleName("Shift timeframe backward by 5 days");
+            await expect(
+                page.timeFrameBar.nextButton.getLocator()
+            ).toHaveAccessibleName("Shift timeframe forward by 5 days");
+
+            await page.reset();
+
+            await expect(
+                page.timeFrameBar.prevButton.getLocator()
+            ).toHaveAccessibleName("Shift timeframe backward by 7 days");
+            await expect(
+                page.timeFrameBar.nextButton.getLocator()
+            ).toHaveAccessibleName("Shift timeframe forward by 7 days");
+        });
+
         test("should have 'prev' and 'next' buttons enabled by default", async () => {
             await expect(
                 page.timeFrameBar.nextButton.getLocator()

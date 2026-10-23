@@ -66,6 +66,52 @@ describe("components >", () => {
             });
         });
 
+        describe("description relationships >", () => {
+            it("should describe the focusable checkbox label", () => {
+                fixture.componentRef.setInput(
+                    "ariaDescribedby",
+                    "checkbox-instructions checkbox-error"
+                );
+                fixture.detectChanges();
+
+                expect(
+                    subject.checkboxLabel.nativeElement.getAttribute(
+                        "aria-describedby"
+                    )
+                ).toBe("checkbox-instructions checkbox-error");
+                expect(
+                    subject.checkboxLabel.nativeElement.getAttribute("tabindex")
+                ).toBe("0");
+            });
+
+            it("should update and remove focusable label description references", () => {
+                fixture.componentRef.setInput(
+                    "ariaDescribedby",
+                    "original-instructions"
+                );
+                fixture.detectChanges();
+                fixture.componentRef.setInput(
+                    "ariaDescribedby",
+                    "updated-instructions"
+                );
+                fixture.detectChanges();
+
+                expect(
+                    subject.checkboxLabel.nativeElement.getAttribute(
+                        "aria-describedby"
+                    )
+                ).toBe("updated-instructions");
+
+                fixture.componentRef.setInput("ariaDescribedby", null);
+                fixture.detectChanges();
+                expect(
+                    subject.checkboxLabel.nativeElement.hasAttribute(
+                        "aria-describedby"
+                    )
+                ).toBeFalse();
+            });
+        });
+
         describe("output handling logic >", () => {
             it("should output emit event if clicked", () => {
                 spyOn(subject.valueChange, "emit").and.callThrough();

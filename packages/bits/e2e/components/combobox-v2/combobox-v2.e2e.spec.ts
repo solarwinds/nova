@@ -159,13 +159,17 @@ test.describe("USERCONTROL Combobox v2 >", () => {
                 const option = await comboboxError.getOption(5);
                 await option.click();
 
-                expect(await comboboxError.getInputValue()).toEqual("Item 5");
+                await expect
+                    .poll(async () => comboboxError.getInputValue())
+                    .toEqual("Item 5");
                 await (await comboboxError.getOption(5)).toBeActive();
 
                 await comboboxError.input.dblclick();
                 await Helpers.pressKey("Backspace");
 
-                expect(await comboboxError.getInputValue()).toEqual("");
+                await expect
+                    .poll(async () => comboboxError.getInputValue())
+                    .toEqual("");
                 await (await comboboxError.getOption(0)).toBeActive();
             });
         });

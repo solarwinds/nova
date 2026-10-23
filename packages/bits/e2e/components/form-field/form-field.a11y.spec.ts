@@ -20,7 +20,7 @@
 
 import { FormFieldAtom } from "./form-field.atom";
 import { Atom } from "../../atom";
-import { Helpers, test } from "../../setup";
+import { expect, Helpers, test } from "../../setup";
 import { ButtonAtom } from "../button/button.atom";
 
 const rulesToDisable: string[] = [
@@ -44,6 +44,9 @@ test.describe("a11y: form-field", () => {
             ButtonAtom,
             "nui-form-field-test-toggle-disable-state-button"
         );
+        await expect(
+            page.locator("nui-color-picker [role=combobox]")
+        ).toHaveAccessibleName("Color");
     });
 
     test("should check a11y of form-field disabled state", async ({

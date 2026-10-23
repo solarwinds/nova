@@ -58,9 +58,13 @@ test.describe("USERCONTROL progress", () => {
         });
 
         test("should show cancel button when allow-cancel is true and progress run and hide when cancel button clicked", async () => {
-            expect(await indeterminateProgress.canCancel()).toBe(true);
+            await expect
+                .poll(async () => indeterminateProgress.canCancel())
+                .toBe(true);
             await indeterminateProgress.getCancelButton().click();
-            expect(await indeterminateProgress.canCancel()).toBe(false);
+            await expect
+                .poll(async () => indeterminateProgress.canCancel())
+                .toBe(false);
         });
 
         // Percy snapshots freeze animations, so the animation itself is verified here

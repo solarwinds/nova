@@ -18,10 +18,74 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { Page } from "@playwright/test";
+
 import { WizardV2Atom } from "./wizard-v2.atom";
 import { Atom } from "../../atom";
 import { expect, Helpers, test } from "../../setup";
 import { ButtonAtom } from "../button/button.atom";
+
+async function expectActivePanel(
+    page: Page,
+    selector: string,
+    name: string
+): Promise<void> {
+    const activePanel = page
+        .locator(selector)
+        .locator("[role=tabpanel]:visible");
+    await expect(activePanel).toHaveCount(1);
+    await expect(activePanel).toHaveAccessibleName(name);
+    const label = page.locator(
+        `[id="${await activePanel.getAttribute("aria-labelledby")}"]`
+    );
+    await expect(label).toHaveCount(1);
+    await expect(label).toHaveAttribute("aria-selected", "true");
+    const panelId = await activePanel.getAttribute("id");
+    if (!panelId) {
+        throw new Error("The active wizard panel must have a non-empty ID.");
+    }
+    await expect(label).toHaveAttribute("aria-controls", panelId);
+
+    const session = await page.context().newCDPSession(page);
+    try {
+        const { root } = await session.send("DOM.getDocument");
+        const { nodeIds } = await session.send("DOM.querySelectorAll", {
+            nodeId: root.nodeId,
+            selector: `${selector} [role=tabpanel]`,
+        });
+        const panelIds = new Set<number>();
+        for (const nodeId of nodeIds) {
+            const { node } = await session.send("DOM.describeNode", { nodeId });
+            panelIds.add(node.backendNodeId);
+        }
+        const { nodes } = await session.send("Accessibility.getFullAXTree");
+        expect(
+            nodes
+                .filter(
+                    node =>
+                        !node.ignored &&
+                        node.role?.value === "tabpanel" &&
+                        panelIds.has(node.backendDOMNodeId!)
+                )
+                .map(node => node.name?.value)
+        ).toEqual([name]);
+        const byId = new Map(nodes.map(node => [node.nodeId, node]));
+        for (const tab of nodes.filter(
+            node => !node.ignored && node.role?.value === "tab"
+        )) {
+            let parent = byId.get(tab.parentId!);
+            while (parent && parent.role?.value !== "tablist") {
+                parent = byId.get(parent.parentId!);
+            }
+            expect(
+                parent,
+                `Tab ${tab.name?.value} must belong to a tablist`
+            ).toBeTruthy();
+        }
+    } finally {
+        await session.detach();
+    }
+}
 
 test.describe("USERCONTROL Wizard V2: ", () => {
     let wizard: WizardV2Atom;
@@ -80,6 +144,128 @@ test.describe("USERCONTROL Wizard V2: ", () => {
             await wizard
                 .getHeader(1)
                 .toContainClass("nui-wizard-step-header--selected");
+        });
+    });
+
+    test.describe("accessible panels > ", () => {
+        test("exposes only the selected panel and its label", async ({
+            page,
+        }) => {
+            const selector = "#nui-wizard-v2-horizontal";
+            await expectActivePanel(page, selector, "Step1");
+            await wizard.next();
+            await expectActivePanel(page, selector, "Step2");
+            await wizard.getHeader(0).click();
+            await expectActivePanel(page, selector, "Step1");
+        });
+
+        test("preserves responsive panel labels and overflow tab ownership", async ({
+            page,
+        }) => {
+            await page.setViewportSize({ width: 1280, height: 900 });
+            const selector = "#nui-wizard-v2-responsive-headers";
+            const responsiveWizard = page.locator(selector);
+            await expectActivePanel(page, selector, "Step 1");
+            await responsiveWizard
+                .locator(".overflow-right nui-popover")
+                .focus();
+            await expect(
+                page.getByRole("tablist", {
+                    name: "Following steps",
+                    exact: true,
+                })
+            ).toBeVisible();
+            await expectActivePanel(page, selector, "Step 1");
+            await responsiveWizard.locator("[role=tabpanel]:visible").focus();
+            await expect(
+                page.getByRole("tablist", {
+                    name: "Following steps",
+                    exact: true,
+                })
+            ).toBeHidden();
+
+            for (let index = 1; index < 12; index++) {
+                await responsiveWizard
+                    .getByRole("button", { name: "Next", exact: true })
+                    .click();
+            }
+            await expectActivePanel(page, selector, "Step 12");
+            await responsiveWizard
+                .locator(".overflow-left nui-popover")
+                .focus();
+            await expect(
+                page.getByRole("tablist", {
+                    name: "Previous steps",
+                    exact: true,
+                })
+            ).toBeVisible();
+            await expectActivePanel(page, selector, "Step 12");
+            await page
+                .getByRole("tab", { name: /^Step 1(?: Completed)?$/ })
+                .click();
+            await expectActivePanel(page, selector, "Step 1");
+            await responsiveWizard.locator("[role=tabpanel]:visible").focus();
+            await responsiveWizard
+                .locator(".overflow-right nui-popover")
+                .focus();
+            await page
+                .getByRole("tab", { name: /^Step 12(?: Completed)?$/ })
+                .click();
+            await expectActivePanel(page, selector, "Step 12");
+            await responsiveWizard.locator("[role=tabpanel]:visible").focus();
+        });
+
+        test("excludes inactive form controls while retaining their values", async ({
+            page,
+        }) => {
+            await Helpers.prepareBrowser("wizard-v2/confirm-on-cancel", page);
+            const selector = "nui-wizard-horizontal";
+            const formWizard = page.locator(selector);
+            const firstName = formWizard.locator(
+                "nui-textbox[formControlName=firstName] input"
+            );
+            const lastName = formWizard.locator(
+                "nui-textbox[formControlName=lastName] input"
+            );
+            const originalInput = await firstName.elementHandle();
+            await expectActivePanel(page, selector, "Person Details");
+            await firstName.fill("Ada");
+            await lastName.fill("Lovelace");
+            await lastName.focus();
+            for (let index = 0; index < 8; index++) {
+                await page.keyboard.press("Tab");
+                expect(
+                    await page.evaluate(
+                        () =>
+                            !!document.activeElement?.closest(
+                                "[role=tabpanel][hidden]"
+                            )
+                    )
+                ).toBe(false);
+            }
+            const email = formWizard.locator("input[type=email]");
+            expect(
+                await email.evaluate(input => {
+                    input.focus();
+                    return document.activeElement === input;
+                })
+            ).toBe(false);
+            await formWizard
+                .getByRole("button", { name: "Next", exact: true })
+                .click();
+            await expectActivePanel(page, selector, "Contact Details");
+            await formWizard
+                .getByRole("button", { name: "Back", exact: true })
+                .click();
+            await expectActivePanel(page, selector, "Person Details");
+            await expect(firstName).toHaveValue("Ada");
+            await expect(lastName).toHaveValue("Lovelace");
+            expect(
+                await firstName.evaluate(
+                    (input, original) => input === original,
+                    originalInput
+                )
+            ).toBe(true);
         });
     });
 

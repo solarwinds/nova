@@ -26,6 +26,7 @@
 
     <nui-form-field
         caption="Textbox"
+        [hint]="adapterHint"
         i18n-caption
         [control]="dynamicForm.controls['textbox']">
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
@@ -41,6 +42,7 @@
 
     <nui-form-field
         caption="Textbox Number"
+        [hint]="adapterHint"
         i18n-caption
         [control]="dynamicForm.controls['textboxNumber']">
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
@@ -56,6 +58,7 @@
 
     <nui-form-field
         caption="Switch"
+        [hint]="adapterHint"
         i18n-caption
         [control]="dynamicForm.controls['switch']">
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
@@ -68,6 +71,7 @@
 
     <nui-form-field
         caption="Radio Group"
+        [hint]="adapterHint"
         i18n-caption
         [control]="dynamicForm.controls['radio']">
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
@@ -80,6 +84,7 @@
 
     <nui-form-field
         caption="Checkbox"
+        [hint]="adapterHint"
         i18n-caption
         [control]="dynamicForm.controls['checkbox']">
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
@@ -94,6 +99,7 @@
 
     <nui-form-field
         caption="Checkbox Group"
+        [hint]="adapterHint"
         i18n-caption
         [control]="dynamicForm.controls['checkboxGroup']">
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
@@ -110,8 +116,15 @@
         }
     </nui-form-field>
 
+    <nui-form-field caption="Color" [hint]="adapterHint">
+        <nui-color-picker
+            [colors]="['#0074D9', '#00A4A6']"
+            [isSelect]="true"></nui-color-picker>
+    </nui-form-field>
+
     <nui-form-field
         caption="Datepicker"
+        [hint]="adapterHint"
         i18n-caption
         [control]="dynamicForm.controls['datepicker']">
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
@@ -125,6 +138,7 @@
 
     <nui-form-field
         caption="Timepicker"
+        [hint]="adapterHint"
         i18n-caption
         [control]="dynamicForm.controls['timepicker']">
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
@@ -157,6 +171,7 @@
 
     <nui-form-field
         caption="SelectV2"
+        [hint]="adapterHint"
         i18n-caption
         [control]="dynamicForm.controls['selectV2']">
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
@@ -175,6 +190,7 @@
 
     <nui-form-field
         caption="ComboboxV2"
+        [hint]="adapterHint"
         i18n-caption
         [control]="dynamicForm.controls['comboboxV2']">
         <!-- ngIf added for the QA to verify that there's no "expression changed after it has been checked" error -->
@@ -191,6 +207,42 @@
         }
     </nui-form-field>
 </form>
+
+<button nui-button type="button" (click)="adapterHint = ''" i18n>
+    Clear field hints
+</button>
+
+<nui-form-field
+    id="nui-form-field-test-dynamic-caption"
+    [caption]="dynamicCaption">
+    @if (showDynamicControl) {
+    <nui-textbox ariaLabel="Notification email" i18n-ariaLabel></nui-textbox>
+    }
+</nui-form-field>
+<button
+    nui-button
+    type="button"
+    (click)="dynamicCaption = 'Recovery email'"
+    i18n>
+    Update caption
+</button>
+<button nui-button type="button" (click)="dynamicCaption = ''" i18n>
+    Clear caption
+</button>
+<button
+    nui-button
+    type="button"
+    (click)="dynamicCaption = 'Primary email'"
+    i18n>
+    Restore caption
+</button>
+<button
+    nui-button
+    type="button"
+    (click)="showDynamicControl = !showDynamicControl"
+    i18n>
+    Toggle captioned control
+</button>
 
 <nui-form-field
     caption="This caption is generic for all form fields"
@@ -225,3 +277,95 @@
 <ng-template #hintTemplate>
     <a href="" [routerLink]="[]" i18n>Hint template</a>
 </ng-template>
+
+<nui-form-field id="nui-form-field-test-captionless">
+    <span class="d-block" i18n>Dashboard name</span>
+    <nui-textbox ariaLabel="Dashboard name" i18n-ariaLabel></nui-textbox>
+</nui-form-field>
+
+<nui-form-field id="nui-form-field-test-empty-caption" caption="">
+    <span class="d-block" i18n>Dashboard description</span>
+    <nui-textbox
+        ariaLabel="Dashboard description"
+        i18n-ariaLabel
+        [rows]="2"></nui-textbox>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-research-query-primary"
+    caption="Primary device query"
+    hint="Enter the query for primary devices."
+    i18n-caption
+    i18n-hint>
+    <nui-freetype-query-builder
+        [cursorSetter$]="researchCursor$"
+        [tokenizer]="researchTokenizer"
+        [renderer]="researchRenderer"
+        ariaLabel="Primary device query"
+        i18n-ariaLabel></nui-freetype-query-builder>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-research-query-secondary"
+    caption="Backup device query"
+    hint="Enter the query for backup devices."
+    i18n-caption
+    i18n-hint>
+    <nui-freetype-query-builder
+        [cursorSetter$]="researchCursor$"
+        [tokenizer]="researchTokenizer"
+        [renderer]="researchRenderer"
+        ariaLabel="Backup device query"
+        i18n-ariaLabel></nui-freetype-query-builder>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-research-textarea"
+    caption="Maintenance notes"
+    hint="Include the maintenance window and contact."
+    i18n-caption
+    i18n-hint>
+    <nui-textbox [rows]="3"></nui-textbox>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-research-inline-date"
+    caption="Maintenance date"
+    hint="Choose the maintenance date in local time."
+    i18n-caption
+    i18n-hint>
+    <nui-date-picker [inline]="true"></nui-date-picker>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-research-query-caption-primary"
+    caption="Primary device query"
+    i18n-caption>
+    <nui-freetype-query-builder
+        [cursorSetter$]="researchCursor$"
+        [tokenizer]="researchTokenizer"
+        [renderer]="researchRenderer"
+        ariaLabel="Primary device query"
+        i18n-ariaLabel></nui-freetype-query-builder>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-research-query-caption-secondary"
+    caption="Backup device query"
+    i18n-caption>
+    <nui-freetype-query-builder
+        [cursorSetter$]="researchCursor$"
+        [tokenizer]="researchTokenizer"
+        [renderer]="researchRenderer"
+        ariaLabel="Backup device query"
+        i18n-ariaLabel></nui-freetype-query-builder>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-research-inline-recovery-date"
+    caption="Recovery date"
+    hint="Choose the date when recovery completes."
+    i18n-caption
+    i18n-hint>
+    <nui-date-picker [inline]="true"></nui-date-picker>
+</nui-form-field>

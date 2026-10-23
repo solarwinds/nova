@@ -21,11 +21,14 @@
 import {
     AfterContentChecked,
     AfterContentInit,
+    ChangeDetectorRef,
     Component,
     ContentChild,
     ContentChildren,
     forwardRef,
+    inject,
     Input,
+    OnDestroy,
     QueryList,
     TemplateRef,
     ViewEncapsulation,
@@ -48,9 +51,15 @@ import { ValidationMessageComponent } from "../validation-message/validation-mes
     standalone: false,
 })
 export class FormFieldComponent
-    implements AfterContentInit, AfterContentChecked
+    implements AfterContentInit, AfterContentChecked, OnDestroy
 {
     private static nextUniqueId = 0;
+    private namedControl: NuiFormFieldControl | undefined;
+    private originalControlLabel: string | undefined;
+    private lastCaption: string | undefined;
+    private appliedCaption: string | undefined;
+    private controlUpdateTimeout: ReturnType<typeof setTimeout> | undefined;
+    private readonly changeDetector = inject(ChangeDetectorRef);
 
     /**
      * Form control obtained from the parent reactive form
@@ -95,10 +104,27 @@ export class FormFieldComponent
     public controlIsOptional: boolean = false;
 
     public labelId = `nui-form-field-label-${FormFieldComponent.nextUniqueId++}`;
+    public helpId = `${this.labelId}-help`;
 
     public ngAfterContentChecked(): void {
         this.controlIsOptional =
             this.showOptionalText && !this.hasRequiredField(this.control);
+
+        if (
+            this.nuiFormControl &&
+            (this.nuiFormControl !== this.namedControl ||
+                this.caption !== this.lastCaption ||
+                this.nuiFormControl.ariaDescribedby !==
+                    this.getControlDescription(this.nuiFormControl))
+        ) {
+            if (this.nuiFormControl !== this.namedControl) {
+                this.namedControl = this.nuiFormControl;
+                this.originalControlLabel = this.nuiFormControl.ariaLabel;
+                this.appliedCaption = undefined;
+            }
+            this.lastCaption = this.caption;
+            this.updateControlName();
+        }
     }
 
     public ngAfterContentInit(): void {
@@ -121,19 +147,57 @@ export class FormFieldComponent
                 }
             });
         }
-        if (this.nuiFormControl) {
-            // using setTimeout to prevent "expression changed after it has been checked" error
-            setTimeout(() => {
-                this.nuiFormControl.ariaLabel = this.caption;
-                if (!this.nuiFormControl.id) {
-                    this.nuiFormControl.id = `${this.labelId}-control`;
-                }
-            });
-        }
+    }
+
+    public ngOnDestroy(): void {
+        clearTimeout(this.controlUpdateTimeout);
     }
 
     public getWidth(): string {
         return this.customBoxWidth || "100%";
+    }
+
+    private updateControlName(): void {
+        clearTimeout(this.controlUpdateTimeout);
+        const control = this.nuiFormControl;
+        // using setTimeout to prevent "expression changed after it has been checked" error
+        this.controlUpdateTimeout = setTimeout(() => {
+            if (this.nuiFormControl !== control) {
+                return;
+            }
+            if (this.caption) {
+                control.ariaLabel = this.caption;
+            } else if (
+                this.appliedCaption &&
+                control.ariaLabel === this.appliedCaption
+            ) {
+                control.ariaLabel = this.originalControlLabel;
+            }
+            this.appliedCaption = this.caption;
+            control.ariaDescribedby = this.getControlDescription(control);
+            if (!control.id) {
+                control.id = `${this.labelId}-control`;
+            }
+            this.changeDetector.markForCheck();
+        });
+    }
+
+    private getControlDescription(
+        control: NuiFormFieldControl
+    ): string | undefined {
+        const references = (control.ariaDescribedby || "")
+            .split(/\s+/)
+            .filter(reference => reference && reference !== this.helpId);
+        if (
+            this.hint ||
+            this.hintTemplate ||
+            this.validationMessages?.some(message => message.show)
+        ) {
+            references.push(this.helpId);
+        }
+        return references.length
+            ? Array.from(new Set(references)).join(" ")
+            : undefined;
     }
 
     private hasRequiredField(abstractControl: AbstractControl): boolean {

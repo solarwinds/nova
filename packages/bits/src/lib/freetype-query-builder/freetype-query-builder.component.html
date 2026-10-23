@@ -80,7 +80,8 @@
                         formControlName="body"
                         [placeholder]="placeholder"
                         [maxLength]="maxLength"
-                        aria-label="Freetype query">
+                        [attr.aria-describedby]="ariaDescribedby"
+                        [attr.aria-label]="ariaLabel || 'Freetype query'">
                     </textarea>
                     <div class="overlay-holder" #textHighlightOverlayHolder>
                         <nui-text-highlight-overlay

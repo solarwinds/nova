@@ -107,6 +107,51 @@ describe("convenience components >", () => {
             fixture.detectChanges();
         });
 
+        it("does not expose the composite host as an input", () => {
+            const host: HTMLElement =
+                fixture.nativeElement.querySelector("nui-time-frame-bar");
+
+            expect(host.hasAttribute("role")).toBeFalse();
+            expect(
+                host.querySelectorAll(".prev button, .next button").length
+            ).toBe(2);
+        });
+
+        it("names range-shift buttons by their action and duration", () => {
+            const previousButton: HTMLButtonElement =
+                fixture.nativeElement.querySelector(".prev button");
+            const nextButton: HTMLButtonElement =
+                fixture.nativeElement.querySelector(".next button");
+
+            expect(previousButton.getAttribute("aria-label")).toBe(
+                "Shift timeframe backward by 7 days"
+            );
+            expect(nextButton.getAttribute("aria-label")).toBe(
+                "Shift timeframe forward by 7 days"
+            );
+        });
+
+        it("updates range-shift action names when the duration changes", () => {
+            const wrapper = fixture.componentInstance;
+            wrapper.timeFrame = {
+                startDatetime: wrapper.baseDate.clone().subtract(1, "hours"),
+                endDatetime: wrapper.baseDate.clone(),
+            };
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+
+            expect(
+                fixture.nativeElement
+                    .querySelector(".prev button")
+                    .getAttribute("aria-label")
+            ).toBe("Shift timeframe backward by an hour");
+            expect(
+                fixture.nativeElement
+                    .querySelector(".next button")
+                    .getAttribute("aria-label")
+            ).toBe("Shift timeframe forward by an hour");
+        });
+
         describe("TimeFramePicker initialization", () => {
             it("should throw an error if no time frame picker is projected", () => {
                 // @ts-ignore: Suppressing error for testing purposes

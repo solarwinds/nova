@@ -45,6 +45,7 @@ import {
     PopupWithCustomStylingComponent,
     PopupWithCustomWidthComponent,
 } from "./index";
+import { PopupLegacyTestComponent } from "./popup-legacy-test/popup-legacy-test.example.component";
 import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
@@ -62,6 +63,15 @@ const routes = [
     {
         path: "popup-test",
         component: PopupTestComponent,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+        },
+    },
+    {
+        path: "popup-legacy-test",
+        component: PopupLegacyTestComponent,
         data: {
             srlc: {
                 hideIndicator: true,
@@ -100,6 +110,7 @@ const routes = [
         PopupWithCustomWidthComponent,
         PopupWithCustomContentComponent,
         PopupTestComponent,
+        PopupLegacyTestComponent,
         PopupAppendToBodyExampleComponent,
         PopupExampleComponent,
     ],

@@ -63,6 +63,103 @@ describe("components >", () => {
             debugElement = fixture.debugElement;
         });
 
+        it("should distinguish start and end date and time inputs", () => {
+            componentInstance.startModel = {
+                startDatetime: moment("2019-08-12T13:00:00.000Z"),
+                endDatetime: moment("2019-08-16T13:00:00.000Z"),
+            };
+            fixture.detectChanges();
+
+            const inputs = Array.from(
+                fixture.nativeElement.querySelectorAll("nui-textbox input")
+            ) as HTMLInputElement[];
+
+            expect(
+                inputs.map(input => input.getAttribute("aria-label"))
+            ).toEqual(["Start date", "Start time", "End date", "End time"]);
+            expect(
+                fixture.nativeElement.querySelector(
+                    ".nui-datetime-picker[aria-label]"
+                )
+            ).toBeNull();
+
+            const secondFixture = TestBed.createComponent(
+                TimeFramePickerComponent
+            );
+            secondFixture.componentInstance.startModel =
+                componentInstance.startModel;
+            secondFixture.detectChanges();
+
+            const labelIds: string[] = [];
+            for (const pickerFixture of [fixture, secondFixture]) {
+                const groups = Array.from(
+                    pickerFixture.nativeElement.querySelectorAll("[role=group]")
+                ) as HTMLElement[];
+                expect(groups.length).toBe(2);
+                for (const [index, group] of groups.entries()) {
+                    const labelId = group.getAttribute("aria-labelledby")!;
+                    labelIds.push(labelId);
+                    expect(
+                        pickerFixture.nativeElement
+                            .querySelector(`#${labelId}`)
+                            .textContent.trim()
+                    ).toBe(index === 0 ? "Start" : "End");
+                    expect(
+                        group.querySelectorAll("nui-textbox input").length
+                    ).toBe(2);
+                }
+            }
+            expect(new Set(labelIds).size).toBe(4);
+        });
+
+        it("should update shared instruction references on all endpoint inputs", () => {
+            componentInstance.startModel = {
+                startDatetime: moment("2019-08-12T13:00:00.000Z"),
+                endDatetime: moment("2019-08-16T13:00:00.000Z"),
+            };
+            const guidance = document.createElement("p");
+            guidance.id = "range-guidance";
+            guidance.textContent = "Enter dates and times in UTC.";
+            const error = document.createElement("p");
+            error.id = "range-error";
+            error.textContent = "End must be after Start.";
+            fixture.nativeElement.append(guidance, error);
+
+            for (const description of [
+                "range-guidance range-error",
+                "range-guidance",
+                undefined,
+            ]) {
+                fixture.componentRef.setInput("ariaDescribedby", description);
+                fixture.detectChanges();
+                const inputs = Array.from(
+                    fixture.nativeElement.querySelectorAll("nui-textbox input")
+                ) as HTMLInputElement[];
+                expect(inputs.length).toBe(4);
+                for (const input of inputs) {
+                    expect(input.getAttribute("aria-describedby")).toBe(
+                        description ?? null
+                    );
+                    const referencedText = input
+                        .getAttribute("aria-describedby")
+                        ?.split(" ")
+                        .map(
+                            id =>
+                                input.ownerDocument.getElementById(id)
+                                    ?.textContent
+                        )
+                        .join(" ");
+                    expect(referencedText).toBe(
+                        description === "range-guidance range-error"
+                            ? "Enter dates and times in UTC. End must be after Start."
+                            : description === "range-guidance"
+                            ? "Enter dates and times in UTC."
+                            : undefined
+                    );
+                }
+            }
+        });
+
         describe("when selectPreset() is executed", () => {
             it("it set model based on selected preset", () => {
                 // act

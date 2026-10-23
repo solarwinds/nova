@@ -50,9 +50,9 @@
             @if (datePicker.showWeeks) {
             <th></th>
             } @for (label of labels; track label) {
-            <th class="text-center">
+            <th class="text-center" [attr.aria-label]="label.full">
                 <div class="day-label">
-                    <span [attr.aria-label]="label.full">{{ label.abbr }}</span>
+                    <span>{{ label.abbr }}</span>
                 </div>
             </th>
             }

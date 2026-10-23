@@ -38,6 +38,79 @@ import {
 } from "../public_api";
 import { RadioGroupAtom } from "../radio-group/radio-group.atom";
 
+test.describe("legacy research form-field", () => {
+    test("describes the native legacy focus targets and removes cleared hints", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("form-field/form-field-legacy-test", page);
+        const priority = page.getByRole("button", {
+            name: "Maintenance priority",
+            exact: true,
+        });
+        const site = page.getByRole("textbox", {
+            name: "Recovery site",
+            exact: true,
+        });
+
+        await expect(priority).toHaveAccessibleDescription(
+            "Choose Emergency only when service is unavailable."
+        );
+        await expect(site).toHaveAccessibleDescription(
+            "Use a site code from the approved recovery plan."
+        );
+        await priority.focus();
+        await expect(priority).toBeFocused();
+        await site.focus();
+        await expect(site).toBeFocused();
+
+        await page
+            .getByRole("button", {
+                name: "Clear legacy field hints",
+                exact: true,
+            })
+            .click();
+        for (const control of [priority, site]) {
+            await expect(control).toHaveAccessibleDescription("");
+            await expect(control).not.toHaveAttribute("aria-describedby");
+        }
+    });
+
+    test("keeps legacy controls and instructions usable on their own page", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("form-field/form-field-legacy-test", page);
+        const priority = page.getByRole("button", {
+            name: "Maintenance priority",
+            exact: true,
+        });
+        const site = page.getByRole("textbox", {
+            name: "Recovery site",
+            exact: true,
+        });
+
+        await expect(page.locator("nui-form-field")).toHaveCount(2);
+        await expect(priority).toBeVisible();
+        await expect(site).toBeVisible();
+        await expect(
+            page.getByText(
+                "Choose Emergency only when service is unavailable.",
+                { exact: true }
+            )
+        ).toBeVisible();
+        await expect(
+            page.getByText("Use a site code from the approved recovery plan.", {
+                exact: true,
+            })
+        ).toBeVisible();
+        await priority.click();
+        await page.getByText("Emergency", { exact: true }).click();
+        await expect(priority).toHaveText("Emergency");
+        await site.fill("PRG-01");
+        await site.press("Tab");
+        await expect(site).toHaveValue("PRG-01");
+    });
+});
+
 test.describe("USERCONTROL form-field >", () => {
     let hintWithTemplate: FormFieldAtom;
     let atomWithTemplate: FormFieldAtom;
@@ -122,6 +195,89 @@ test.describe("USERCONTROL form-field >", () => {
 
     test("should display hint template", async () => {
         await hintWithTemplate.toHaveHintText("Hint template");
+    });
+
+    test("should distinguish caption-only freetype editors on their native targets", async ({
+        page,
+    }) => {
+        const primary = page.locator(
+            "#nui-form-field-research-query-caption-primary textarea"
+        );
+        const backup = page.locator(
+            "#nui-form-field-research-query-caption-secondary textarea"
+        );
+
+        await expect(primary).toHaveAccessibleName("Primary device query");
+        await expect(backup).toHaveAccessibleName("Backup device query");
+        await primary.fill("select");
+        await backup.fill("backup");
+        await primary.focus();
+        await expect(primary).toBeFocused();
+        await expect(primary).toHaveValue("select");
+        await backup.focus();
+        await expect(backup).toBeFocused();
+        await expect(backup).toHaveValue("backup");
+    });
+
+    test("should preserve freetype descriptions with their configured names", async ({
+        page,
+    }) => {
+        const primary = page.locator(
+            "#nui-form-field-research-query-primary textarea"
+        );
+        const backup = page.locator(
+            "#nui-form-field-research-query-secondary textarea"
+        );
+
+        await expect(primary).toHaveAccessibleName("Primary device query");
+        await expect(primary).toHaveAccessibleDescription(
+            "Enter the query for primary devices."
+        );
+        await expect(backup).toHaveAccessibleName("Backup device query");
+        await expect(backup).toHaveAccessibleDescription(
+            "Enter the query for backup devices."
+        );
+    });
+
+    test("should distinguish inline calendar purposes and preserve help during selection", async ({
+        page,
+    }) => {
+        const maintenance = page
+            .locator("#nui-form-field-research-inline-date")
+            .getByRole("application", {
+                name: "Maintenance date",
+                exact: true,
+            });
+        const recovery = page
+            .locator("#nui-form-field-research-inline-recovery-date")
+            .getByRole("application", { name: "Recovery date", exact: true });
+
+        await expect(maintenance).toHaveAccessibleDescription(
+            "Choose the maintenance date in local time."
+        );
+        await expect(recovery).toHaveAccessibleDescription(
+            "Choose the date when recovery completes."
+        );
+        const recoverySelection = await recovery
+            .locator("button.selected")
+            .allTextContents();
+        await maintenance.locator("nui-day-picker").focus();
+        await expect(maintenance.locator("nui-day-picker")).toBeFocused();
+        await maintenance
+            .getByRole("button", { name: "15", exact: true })
+            .click();
+        await expect(maintenance.locator("button.selected")).toHaveText("15");
+        expect(
+            await recovery.locator("button.selected").allTextContents()
+        ).toEqual(recoverySelection);
+        await maintenance
+            .getByRole("button", { name: "Next month", exact: true })
+            .click();
+        await expect(maintenance).toHaveAccessibleName("Maintenance date");
+        await expect(maintenance).toHaveAccessibleDescription(
+            "Choose the maintenance date in local time."
+        );
+        await expect(recovery).toHaveAccessibleName("Recovery date");
     });
 
     test("should display info from template", async () => {
@@ -213,6 +369,136 @@ test.describe("USERCONTROL form-field >", () => {
                 "ComboboxV2"
             );
         });
+    });
+
+    test("preserves explicit names in captionless fields after creation and reload", async ({
+        page,
+    }) => {
+        const dashboardName = page.locator(
+            "#nui-form-field-test-captionless input"
+        );
+        const dashboardDescription = page.locator(
+            "#nui-form-field-test-empty-caption textarea"
+        );
+
+        await expect(dashboardName).toHaveAccessibleName("Dashboard name");
+        await expect(dashboardDescription).toHaveAccessibleName(
+            "Dashboard description"
+        );
+        await dashboardName.fill("Monitoring overview");
+        await expect(dashboardName).toHaveValue("Monitoring overview");
+        await expect(dashboardName).toHaveAccessibleName("Dashboard name");
+
+        await page.reload();
+
+        await expect(dashboardName).toHaveAccessibleName("Dashboard name");
+        await expect(dashboardDescription).toHaveAccessibleName(
+            "Dashboard description"
+        );
+        await expect(textbox.input).toHaveAccessibleName("Textbox");
+    });
+
+    test("describes supported controls from visible field help and removes cleared hints", async ({
+        page,
+    }) => {
+        const targets = [
+            "#nui-form-field-test-textbox input",
+            "#nui-form-field-test-textbox-number input",
+            "#nui-form-field-test-switch [role=checkbox]",
+            "#nui-form-field-test-radio",
+            "#nui-form-field-test-checkbox label",
+            "#nui-form-field-test-checkbox-group",
+            "nui-color-picker [role=combobox]",
+            "#nui-form-field-test-datepicker input",
+            "#nui-form-field-test-timepicker input",
+            "#nui-form-field-test-datetimepicker nui-date-picker input",
+            "#nui-form-field-test-datetimepicker nui-time-picker input",
+            "#nui-form-field-test-select [role=combobox]",
+            "#nui-form-field-test-combobox input",
+        ];
+
+        for (const clearHints of [false, true]) {
+            if (clearHints) {
+                await page
+                    .getByRole("button", {
+                        name: "Clear field hints",
+                        exact: true,
+                    })
+                    .click();
+            }
+            for (const selector of targets) {
+                const target = page.locator(selector);
+                const help = target
+                    .locator("xpath=ancestor::nui-form-field[1]")
+                    .locator(".nui-form-field__help");
+                if (clearHints) {
+                    await expect(help).not.toContainText("Provide a value.");
+                }
+                const text = (await help.innerText())
+                    .replace(/\s+/g, " ")
+                    .trim();
+                const helpId = await help.getAttribute("id");
+                await expect(target).toHaveAccessibleDescription(text);
+                if (text) {
+                    await expect(target).toHaveAttribute(
+                        "aria-describedby",
+                        helpId!
+                    );
+                    await expect(page.locator(`[id="${helpId}"]`)).toHaveCount(
+                        1
+                    );
+                } else {
+                    await expect(target).not.toHaveAttribute(
+                        "aria-describedby"
+                    );
+                }
+            }
+        }
+    });
+
+    test("updates, clears and restores the caption name and names a recreated control", async ({
+        page,
+    }) => {
+        const field = page.locator("#nui-form-field-test-dynamic-caption");
+        const input = field.locator("input");
+        await expect(input).toHaveAccessibleName("Primary email");
+        await input.fill("person@example.com");
+        await page
+            .getByRole("button", { name: "Update caption", exact: true })
+            .click();
+        await expect(input).toHaveAccessibleName("Recovery email");
+        await expect(field.locator("label")).toHaveText("Recovery email");
+        await expect(input).toHaveValue("person@example.com");
+        await page
+            .getByRole("button", { name: "Clear caption", exact: true })
+            .click();
+        await expect(input).toHaveAccessibleName("Notification email");
+        await expect(field.locator("label")).toHaveCount(0);
+        await page
+            .getByRole("button", { name: "Restore caption", exact: true })
+            .click();
+        await expect(input).toHaveAccessibleName("Primary email");
+        await page
+            .getByRole("button", {
+                name: "Toggle captioned control",
+                exact: true,
+            })
+            .click();
+        await expect(input).toHaveCount(0);
+        await page
+            .getByRole("button", { name: "Update caption", exact: true })
+            .click();
+        await page
+            .getByRole("button", {
+                name: "Toggle captioned control",
+                exact: true,
+            })
+            .click();
+        await expect(input).toHaveAccessibleName("Recovery email");
+        await expect(input).toHaveAttribute(
+            "id",
+            (await field.locator("label").getAttribute("for"))!
+        );
     });
 
     test("should set initial disabled state to the fields of form", async () => {

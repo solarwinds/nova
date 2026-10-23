@@ -109,7 +109,30 @@ export class ColorPickerComponent
     public palette: Partial<IPaletteColor[]>;
     public isBlackTick: boolean;
     public isInErrorState: boolean;
-    @Input() public ariaLabel?: string | undefined;
+    @Input() public get ariaLabel(): string | undefined {
+        return this._ariaLabel;
+    }
+
+    public set ariaLabel(value: string | undefined) {
+        if (value !== this._ariaLabel) {
+            this._ariaLabel = value;
+            this.changeDetection.markForCheck();
+        }
+    }
+
+    @Input() public get ariaDescribedby(): string | undefined {
+        return this._ariaDescribedby;
+    }
+
+    public set ariaDescribedby(value: string | undefined) {
+        if (value !== this._ariaDescribedby) {
+            this._ariaDescribedby = value;
+            this.changeDetection.markForCheck();
+        }
+    }
+
+    private _ariaLabel?: string;
+    private _ariaDescribedby?: string;
 
     /** Unique id for the control. */
     @Input() public id: string;

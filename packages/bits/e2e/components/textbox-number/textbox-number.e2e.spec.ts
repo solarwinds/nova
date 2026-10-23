@@ -122,7 +122,7 @@ test.describe("USERCONTROL textbox-number >", () => {
         });
 
         test("should set the value properly", async () => {
-            expect(await component.getValue()).toBe("1");
+            await expect.poll(async () => component.getValue()).toBe("1");
         });
     });
 

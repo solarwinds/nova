@@ -120,6 +120,68 @@ describe("components >", () => {
             expect(noOverlay).toBeTruthy();
         });
 
+        it("should forward and update inline calendar purpose and help", () => {
+            fixture.componentRef.setInput("inline", true);
+            fixture.componentRef.setInput("ariaLabel", "Maintenance date");
+            fixture.componentRef.setInput(
+                "ariaDescribedby",
+                "maintenance-help"
+            );
+            fixture.detectChanges();
+            const calendar: HTMLElement = fixture.nativeElement.querySelector(
+                ".nui-datepicker-inner"
+            );
+
+            expect(calendar.getAttribute("role")).toBe("application");
+            expect(calendar.getAttribute("aria-label")).toBe(
+                "Maintenance date"
+            );
+            expect(calendar.getAttribute("aria-describedby")).toBe(
+                "maintenance-help"
+            );
+
+            fixture.componentRef.setInput("ariaLabel", "Recovery date");
+            fixture.componentRef.setInput("ariaDescribedby", "recovery-help");
+            fixture.detectChanges();
+
+            expect(calendar.getAttribute("aria-label")).toBe("Recovery date");
+            expect(calendar.getAttribute("aria-describedby")).toBe(
+                "recovery-help"
+            );
+
+            fixture.componentRef.setInput("ariaLabel", "");
+            fixture.componentRef.setInput("ariaDescribedby", "");
+            fixture.detectChanges();
+
+            expect(calendar.getAttribute("aria-label")).toBe("Calendar");
+            expect(calendar.hasAttribute("aria-describedby")).toBe(false);
+        });
+
+        it("should preserve the popup calendar name and textbox purpose", () => {
+            fixture.componentRef.setInput("ariaLabel", "Maintenance date");
+            fixture.componentRef.setInput(
+                "ariaDescribedby",
+                "maintenance-help"
+            );
+            fixture.detectChanges();
+            componentInstance.overlay.toggle();
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+            const calendar: HTMLElement = fixture.nativeElement.querySelector(
+                ".nui-datepicker-inner"
+            );
+            const input: HTMLInputElement =
+                fixture.nativeElement.querySelector("input");
+
+            expect(calendar.getAttribute("role")).toBe("dialog");
+            expect(calendar.getAttribute("aria-label")).toBe("Calendar");
+            expect(calendar.hasAttribute("aria-describedby")).toBe(false);
+            expect(input.getAttribute("aria-label")).toBe("Maintenance date");
+            expect(input.getAttribute("aria-describedby")).toBe(
+                "maintenance-help"
+            );
+        });
+
         it("should have only 10 elements for the year mode", () => {
             fixture.componentRef.setInput("inline", true);
             fixture.componentRef.setInput("datepickerMode", "year");
@@ -144,6 +206,33 @@ describe("components >", () => {
                 activeDateTile.nativeElement.innerText.trim();
             const activeDateDay = moment(activeDate).format("D");
             expect(activeDateValue).toBe(activeDateDay);
+        });
+
+        it("should name weekday column headers with their localized full names", () => {
+            componentInstance.overlay.toggle();
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+            const dayPicker = debugElement.query(
+                By.directive(DayPickerComponent)
+            ).componentInstance as DayPickerComponent;
+            const headers = Array.from(
+                fixture.nativeElement.querySelectorAll(
+                    "thead tr:nth-child(2) th[aria-label]"
+                )
+            ) as HTMLElement[];
+
+            expect(
+                headers.map(header => header.getAttribute("aria-label"))
+            ).toEqual(dayPicker.labels.map(label => label.full));
+            expect(headers.length).toBe(7);
+            expect(dayPicker.labels.map(label => label.full)).toEqual(
+                moment.weekdays()
+            );
+            expect(
+                fixture.nativeElement.querySelector(
+                    ".day-label span[aria-label]"
+                )
+            ).toBeNull();
         });
 
         it("should notify about active date change", () => {

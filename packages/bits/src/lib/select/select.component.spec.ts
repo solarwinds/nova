@@ -119,6 +119,61 @@ describe("components >", () => {
             fixture.detectChanges();
         });
 
+        it("forwards accessible label updates to the menu trigger and restores title naming when cleared", () => {
+            fixture.componentRef.setInput("placeholder", "Choose an owner");
+            fixture.componentRef.setInput("ariaLabel", "Dashboard owner");
+            fixture.detectChanges();
+            const trigger: HTMLButtonElement = debugElement.query(
+                By.css("button.menu-button")
+            ).nativeElement;
+
+            expect(componentInstance.menu.ariaLabel).toBe("Dashboard owner");
+            expect(trigger.getAttribute("aria-label")).toBe("Dashboard owner");
+
+            fixture.componentRef.setInput(
+                "ariaLabel",
+                "Updated dashboard owner"
+            );
+            fixture.detectChanges();
+            expect(componentInstance.menu.ariaLabel).toBe(
+                "Updated dashboard owner"
+            );
+            expect(trigger.getAttribute("aria-label")).toBe(
+                "Updated dashboard owner"
+            );
+
+            fixture.componentRef.setInput("ariaLabel", "");
+            fixture.detectChanges();
+            expect(componentInstance.menu.ariaLabel).toBe("");
+            expect(trigger.getAttribute("aria-label")).toBe("Choose an owner");
+            expect(trigger.textContent).toContain("Choose an owner");
+        });
+
+        it("forwards description updates and removal to the native menu trigger", () => {
+            fixture.componentRef.setInput("ariaDescribedby", "priority-help");
+            fixture.detectChanges();
+            const trigger: HTMLButtonElement = debugElement.query(
+                By.css("button.menu-button")
+            ).nativeElement;
+
+            expect(trigger.getAttribute("aria-describedby")).toBe(
+                "priority-help"
+            );
+
+            fixture.componentRef.setInput(
+                "ariaDescribedby",
+                "updated-priority-help"
+            );
+            fixture.detectChanges();
+            expect(trigger.getAttribute("aria-describedby")).toBe(
+                "updated-priority-help"
+            );
+
+            fixture.componentRef.setInput("ariaDescribedby", "");
+            fixture.detectChanges();
+            expect(trigger.getAttribute("aria-describedby")).toBeNull();
+        });
+
         it("should show placeholder if it's set and value is not selected", () => {
             expect(componentInstance.displayPlaceholder()).toEqual(false);
             componentInstance.placeholder = "select item";

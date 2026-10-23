@@ -11,7 +11,7 @@
             type="button"
             icon="caret-left"
             displayStyle="action"
-            ariaLabel="Go to previous time period"
+            ariaLabel="Shift timeframe backward by {{ humanizedTimeframe }}"
             i18n-ariaLabel
             [disabled]="isLeftmostRange"
             (click)="shiftRange(-1)"></button>
@@ -40,7 +40,7 @@
             type="button"
             icon="caret-right"
             displayStyle="action"
-            ariaLabel="Go to next time period"
+            ariaLabel="Shift timeframe forward by {{ humanizedTimeframe }}"
             i18n-ariaLabel
             [disabled]="isRightmostRange"
             (click)="shiftRange(1)"></button>

@@ -21,6 +21,10 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import moment from "moment/moment";
+import { Subject } from "rxjs";
+
+import { ExampleTokenizer } from "../../freetype-query-builder/freetype-query-builder-basic/example-tokenizer";
+import { ExampleAppRenderer } from "../../freetype-query-builder/freetype-query-builder-basic/renderer";
 
 @Component({
     selector: "nui-form-field-test",
@@ -29,6 +33,12 @@ import moment from "moment/moment";
 })
 export class FormFieldTestComponent implements OnInit {
     public dynamicForm;
+    public adapterHint = $localize`Provide a value.`;
+    public dynamicCaption = $localize`Primary email`;
+    public showDynamicControl = true;
+    public researchCursor$ = new Subject<number>();
+    public researchTokenizer = new ExampleTokenizer();
+    public researchRenderer = new ExampleAppRenderer();
 
     public dateTimePickerModel: string;
     public vegetables = [

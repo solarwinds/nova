@@ -33,6 +33,7 @@ import { ISelectChangedEvent } from "@nova-ui/bits";
 })
 export class SelectVisualTestComponent {
     public isRequired = true;
+    public basicAriaLabel = "Demo item selection";
     public datasetBasic = {
         items: [
             "Item 1",

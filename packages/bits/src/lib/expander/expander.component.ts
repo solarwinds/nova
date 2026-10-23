@@ -121,6 +121,12 @@ export class ExpanderComponent implements AfterContentInit {
 
     private actionKeys = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
 
+    public get labelId(): string | null {
+        return this.isCustomHeaderContentEmpty
+            ? null
+            : `nui-expander-custom-header-${this.uniqueId}`;
+    }
+
     constructor(private cdRef: ChangeDetectorRef) {
         this.uniqueId = String(++nextExpanderId);
     }

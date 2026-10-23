@@ -18,6 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import AxeBuilder from "@axe-core/playwright";
+
 import { Atom } from "../../atom";
 import { expect, Helpers, test } from "../../setup";
 import { RepeatAtom } from "./repeat.atom";
@@ -46,6 +48,83 @@ test.describe("USERCONTROL Repeat", () => {
     ): Promise<void> => {
         await expect(locator).toHaveText(text);
     };
+
+    const relationshipRules = [
+        "aria-required-children",
+        "aria-required-parent",
+        "list",
+        "listitem",
+        "aria-allowed-attr",
+    ];
+
+    test("should expose disabled and enabled options in a valid listbox hierarchy", async ({
+        page,
+    }) => {
+        const repeat = page.locator("#nui-demo-multi-repeat-disabled");
+        const options = repeat.getByRole("option");
+        await expect(repeat).toHaveAttribute("role", "listbox");
+        await expect(options).toHaveCount(6);
+        await expect(options.first()).toHaveAttribute("aria-disabled", "true");
+        await expect(options.first()).toHaveAttribute("aria-selected", "true");
+        await expect(
+            options.first().locator("input[type=checkbox]")
+        ).toBeChecked();
+        await expect(
+            options.first().locator("nui-checkbox label")
+        ).toHaveAccessibleName("blue");
+
+        const referencesStayLocal = await page
+            .locator("nui-repeat")
+            .evaluateAll(repeats => {
+                const contentIds = Array.from(
+                    document.querySelectorAll(
+                        ".nui-repeat-item__content-container[id]"
+                    )
+                ).map(content => content.id);
+                return (
+                    new Set(contentIds).size === contentIds.length &&
+                    repeats.every(repeat =>
+                        Array.from(
+                            repeat.querySelectorAll(
+                                "nui-checkbox [aria-labelledby], nui-radio [aria-labelledby]"
+                            )
+                        ).every(control => {
+                            const reference =
+                                control.getAttribute("aria-labelledby");
+                            return (
+                                reference !== null &&
+                                document
+                                    .getElementById(reference)
+                                    ?.closest("nui-repeat") === repeat
+                            );
+                        })
+                    )
+                );
+            });
+        expect(referencesStayLocal).toBe(true);
+
+        const results = await new AxeBuilder({ page })
+            .include("#nui-demo-multi-repeat-disabled")
+            .withRules(relationshipRules)
+            .analyze();
+        expect(results.violations).toEqual([]);
+    });
+
+    test("should expose virtualized non-selectable rows in a valid list hierarchy", async ({
+        page,
+    }) => {
+        await (await getTabByText("Repeat VScroll")).click();
+        const repeat = page.locator("#repeat-test-vscroll nui-repeat");
+        await expect(repeat).toHaveAttribute("role", "list");
+        await expect(repeat.getByRole("listitem").first()).toBeVisible();
+        await expect(repeat.getByRole("option")).toHaveCount(0);
+
+        const results = await new AxeBuilder({ page })
+            .include("#repeat-test-vscroll nui-repeat")
+            .withRules(relationshipRules)
+            .analyze();
+        expect(results.violations).toEqual([]);
+    });
 
     test("should render enough content to fill the full height of the virtual scroll viewport", async () => {
         await (await getTabByText("Repeat VScroll")).click();
