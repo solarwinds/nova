@@ -27,7 +27,7 @@
     "@axe-core/playwright": "4.14.0",
     "@axe-core/webdriverjs": "4.14.0",
     "@compodoc/compodoc": "1.2.1",
-    "@percy/cli": "1.32.12",
+    "@percy/cli": "1.32.6",
     "@percy/playwright": "1.1.2",
     "@playwright/test": "1.64.1",
     "@schematics/angular": "21.2.28",
