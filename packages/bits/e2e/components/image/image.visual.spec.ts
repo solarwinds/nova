@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { test, Helpers } from "../../setup";
+import { test, expect, Helpers } from "../../setup";
 import { Camera } from "../../virtual-camera/Camera";
 
 const name: string = "Image";
@@ -28,6 +28,38 @@ test.describe(`Visual tests: ${name}`, () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("image/image-visual-test", page);
+        await expect(
+            page.getByRole("heading", {
+                name: "Default Image View",
+                exact: true,
+            })
+        ).toBeVisible();
+        await expect(
+            page.locator("#nui-demo-image-custom-alignment-container__left p")
+        ).toContainText("Lorem ipsum dolor sit amet");
+        await expect(page.locator("figcaption").last()).toHaveText(
+            "no-search-results"
+        );
+
+        // Visible text can still have invisible glyphs while its web font loads.
+        await page
+            .locator("nui-image-visual-test")
+            .locator("h3, p, figcaption")
+            .evaluateAll(async elements => {
+                const fonts = new Set(
+                    elements.map(element => getComputedStyle(element).font)
+                );
+                for (const font of fonts) {
+                    const faces = await document.fonts.load(font);
+                    if (faces.length === 0) {
+                        throw new Error(
+                            `Image visual test could not find the web font: ${font}.`
+                        );
+                    }
+                }
+                await document.fonts.ready;
+            });
+
         camera = new Camera().loadFilm(page, name, "Bits");
     });
 

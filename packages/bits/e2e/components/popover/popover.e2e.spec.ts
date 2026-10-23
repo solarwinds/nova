@@ -30,6 +30,8 @@ test.describe("USERCONTROL popover", () => {
     const onClickParentId = "nui-demo-popover-onclick";
     const preventOnclickParentId = "nui-demo-popover-prevent-onclick";
     const focusParentId = "nui-demo-popover-focus";
+    const combinedFocusHoverParentId = "nui-demo-popover-combined-focus-hover";
+    const combinedFocusHoverContentId = "nui-demo-popover-combined-content";
     const popoverWithContainerId = "nui-demo-popover-with-container";
     const leftPlacementParentId = "nui-demo-popover-placement-left";
     const rightPlacementParentId = "nui-demo-popover-placement-right";
@@ -193,13 +195,104 @@ test.describe("USERCONTROL popover", () => {
 
         test("should honor 'focus' trigger", async ({ page }) => {
             await expect(popoverFocusTrigger.getPopoverBody()).toBeHidden();
-            await page.locator("[trigger='focus']").first().click();
+            const focusTrigger = page.locator(`[id="${focusParentId}"]`);
+            await focusTrigger.focus();
             await popoverFocusTrigger.waitForOpen();
             await expect(popoverFocusTrigger.getPopoverBody()).toBeVisible();
-            // move away from parent, shift+tab and ensure the popover disappears
-            await page.keyboard.press("Shift+Tab");
+            await page.keyboard.press("Escape");
             await popoverFocusTrigger.waitForClosed();
             await expect(popoverFocusTrigger.getPopoverBody()).toBeHidden();
+            await expect(focusTrigger).toBeFocused();
+
+            // Move focus away and verify a genuine re-entry can open it again.
+            await page.keyboard.press("Tab");
+            await expect(popoverFocusTrigger.getPopoverBody()).toBeHidden();
+            await page.keyboard.press("Shift+Tab");
+            await popoverFocusTrigger.waitForOpen();
+            await expect(popoverFocusTrigger.getPopoverBody()).toBeVisible();
+        });
+
+        test("supports keyboard navigation through interactive portaled content", async ({
+            page,
+        }) => {
+            const combinedPopover = page.locator(
+                `#${combinedFocusHoverParentId}`
+            );
+            const popoverContent = page.locator(
+                `#${combinedFocusHoverContentId}`
+            );
+            const nextExample = page.locator("nui-example-wrapper").filter({
+                has: page.locator(`[id="${preventOnclickParentId}"]`),
+            });
+            const nextPageTarget = nextExample.getByRole("button", {
+                name: "Toggle source code",
+            });
+
+            await page.mouse.move(1, 1);
+            await combinedPopover.focus();
+            await expect(popoverContent).toBeVisible();
+
+            await page.keyboard.press("Tab");
+            await expect(popoverContent).toBeFocused();
+            await page.keyboard.press("Shift+Tab");
+            await expect(combinedPopover).toBeFocused();
+            await expect(popoverContent).toBeVisible();
+
+            await page.keyboard.press("Escape");
+            await expect(popoverContent).toBeHidden();
+            await expect(combinedPopover).toBeFocused();
+            await page.keyboard.press("Tab");
+            await expect(nextPageTarget).toBeFocused();
+            await expect(popoverContent).toBeHidden();
+
+            await combinedPopover.focus();
+            await expect(popoverContent).toBeVisible();
+            await page.keyboard.press("Tab");
+            await expect(popoverContent).toBeFocused();
+            await page.keyboard.press("Tab");
+            await expect(nextPageTarget).toBeFocused();
+            await expect(popoverContent).toBeHidden();
+        });
+
+        test("should dismiss focus and hover popovers with Escape", async ({
+            page,
+        }) => {
+            const combinedPopover = page.locator(
+                `#${combinedFocusHoverParentId}`
+            );
+            const popoverContent = page.locator(
+                `#${combinedFocusHoverContentId}`
+            );
+            const externalFocusTarget = page.locator(
+                `#${openProgrammaticallyButtonId}`
+            );
+
+            await combinedPopover.focus();
+            await expect(popoverContent).toBeVisible();
+            await page.keyboard.press("Escape");
+            await expect(popoverContent).toBeHidden();
+            await expect(combinedPopover).toBeFocused();
+
+            await page.locator(`[id="${focusParentId}"]`).focus();
+            await combinedPopover.focus();
+            await expect(popoverContent).toBeVisible();
+            await page.keyboard.press("Tab");
+            await expect(popoverContent).toBeFocused();
+            await page.keyboard.press("Escape");
+            await expect(popoverContent).toBeHidden();
+            await expect(combinedPopover).toBeFocused();
+
+            await externalFocusTarget.focus();
+            await combinedPopover.hover();
+            await expect(popoverContent).toBeVisible();
+            await page.keyboard.press("Escape");
+            await expect(popoverContent).toBeHidden();
+            await expect(externalFocusTarget).toBeFocused();
+
+            await page.mouse.move(1, 1);
+            await expect(popoverContent).toBeHidden();
+            await combinedPopover.hover();
+            await expect(popoverContent).toBeVisible();
         });
 
         test.describe("should honor 'mouseenter' trigger as default trigger", () => {

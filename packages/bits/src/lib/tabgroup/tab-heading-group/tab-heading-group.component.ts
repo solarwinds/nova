@@ -94,6 +94,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
             this._ro.observe(this.el.nativeElement);
         });
 
+        // Avoid changing tab bindings during the initial view check.
         queueMicrotask(() => {
             this.setActiveTab();
             this.subscribeToSelection();

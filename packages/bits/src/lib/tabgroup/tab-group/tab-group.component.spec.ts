@@ -34,7 +34,7 @@ import { NuiTabsModule } from "../tabs.module";
             <nui-tab tabId="third" heading="Third">Third content</nui-tab>
         </nui-tab-group>
     `,
-    standalone: false,
+    imports: [NuiTabsModule],
 })
 class TestTabGroupComponent {
     public vertical = false;
@@ -51,7 +51,7 @@ class TestTabGroupComponent {
             <nui-tab heading="Enabled">Enabled content</nui-tab>
         </nui-tab-group>
     `,
-    standalone: false,
+    imports: [NuiTabsModule],
 })
 class TestFirstDisabledTabGroupComponent {}
 
@@ -62,7 +62,7 @@ class TestFirstDisabledTabGroupComponent {}
             <nui-tab heading="Second" [disabled]="true">Second content</nui-tab>
         </nui-tab-group>
     `,
-    standalone: false,
+    imports: [NuiTabsModule],
 })
 class TestAllDisabledTabGroupComponent {}
 
@@ -73,7 +73,7 @@ class TestAllDisabledTabGroupComponent {}
             <nui-tab heading="Second">Second content</nui-tab>
         </nui-tab-group>
     `,
-    standalone: false,
+    imports: [NuiTabsModule],
 })
 class TestGeneratedTabGroupComponent {}
 
@@ -83,8 +83,8 @@ describe("components > tab group", () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NuiTabsModule],
-            declarations: [
+            imports: [
+                NuiTabsModule,
                 TestTabGroupComponent,
                 TestFirstDisabledTabGroupComponent,
                 TestAllDisabledTabGroupComponent,
