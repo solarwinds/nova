@@ -31,6 +31,7 @@ import { StatusChartAtom } from "./status-chart.atom";
 test.describe("Status chart", () => {
     const minIconSize: number = 10;
     const statusSeriesID = "1";
+    const expectedStatusBarCount = 8;
     let statusChartWithIcons: StatusChartAtom;
 
     test.beforeEach(async ({ page }) => {
@@ -42,6 +43,13 @@ test.describe("Status chart", () => {
         statusChartWithIcons = new StatusChartAtom(
             page.locator("#nui-status-chart-with-icons")
         );
+
+        await expect(
+            statusChartWithIcons
+                .getLocator()
+                .locator(`#data-${statusSeriesID}`)
+                .locator(`.${StatusBarDataPointAtom.CSS_CLASS}`)
+        ).toHaveCount(expectedStatusBarCount);
     });
 
     test.describe("basic", () => {
@@ -59,7 +67,7 @@ test.describe("Status chart", () => {
                 .locator(`#data-${statusSeriesID}`)
                 .locator(`.${StatusBarDataPointAtom.CSS_CLASS}`);
 
-            await expect(barsLocator).toHaveCount(8);
+            await expect(barsLocator).toHaveCount(expectedStatusBarCount);
         });
 
         test("should display status bar data points", async () => {

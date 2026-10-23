@@ -56,14 +56,6 @@
     <nui-popover-with-title-example></nui-popover-with-title-example>
 </nui-example-wrapper>
 
-<p>
-    <strong>
-        Note: Popover must be used as an attribute when the
-        <code>trigger</code> input is set to 'focus'. See the focus example
-        under <em>Trigger Events</em> below.
-    </strong>
-</p>
-
 <h2>Trigger Events</h2>
 <p>
     Popover supports four trigger events: 'click' | 'mouseenter' | 'mouseleave'
@@ -94,10 +86,22 @@
 </nui-example-wrapper>
 
 <p>
-    <strong>
-        Note: The 'focus' trigger is only available when Popover is used as an
-        attribute. See <em>Usage as an Attribute</em> above.
-    </strong>
+    For keyboard access, make the popover host or a focusable element inside it
+    reachable by Tab (for example, set <code>tabindex="0"</code> on the host).
+    When the open popover contains interactive controls, Tab from the last
+    focusable trigger element enters the first popover control, and Shift+Tab
+    from the first popover control returns to the trigger. Tab from the last
+    popover control continues from the trigger to the next page control; focus
+    is not trapped. Popovers without focusable content retain native Tab
+    navigation. Press Escape to dismiss an open popover. Focus stays where it is
+    when the trigger has focus; if focus is inside interactive popover content,
+    it returns to the trigger.
+</p>
+<p>
+    When <code>focus</code> is combined with <code>mouseenter</code>, the
+    popover remains open while either trigger remains active. After Escape, it
+    will not reopen until the active focus or hover session ends and starts
+    again.
 </p>
 
 <h2>Prevent Closing on Click</h2>
@@ -110,7 +114,8 @@
     that you provide to <code>nuiPopoverDirective</code> or
     <code>closePopover</code> of <code>PopoverComponent</code>. So when you need
     to close popover you just call <code>next()</code> method of this subject.
-    No arguments are required.
+    No arguments are required. Escape always dismisses an open popover,
+    including when <code>preventClosing</code> is true.
 </p>
 
 <nui-example-wrapper

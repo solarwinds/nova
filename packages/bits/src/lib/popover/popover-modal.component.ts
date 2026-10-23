@@ -45,6 +45,9 @@ import { fadeIn } from "../../animations/fadeIn";
 export type PopoverModalEvents =
     | "mouse-enter"
     | "mouse-leave"
+    | "focus-enter"
+    | "focus-leave-trigger"
+    | "focus-leave"
     | "backdrop-click"
     | "outside-click";
 
@@ -82,7 +85,7 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
     /**
      * Popover hostElement
      */
-    @Input() hostElement: any;
+    @Input() hostElement: HTMLElement;
 
     /**
      * Defines if container has padding.
@@ -117,8 +120,29 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
         this.popoverModalEventSubject.next("mouse-leave");
     }
 
+    @HostListener("focusin")
+    onFocusIn(): void {
+        this.popoverModalEventSubject.next("focus-enter");
+    }
+
+    @HostListener("focusout", ["$event"])
+    onFocusOut(event: FocusEvent): void {
+        const relatedTarget = this.isNode(event.relatedTarget)
+            ? event.relatedTarget
+            : null;
+        if (relatedTarget && this.elRef.nativeElement.contains(relatedTarget)) {
+            return;
+        }
+
+        this.popoverModalEventSubject.next(
+            relatedTarget && this.hostElement.contains(relatedTarget)
+                ? "focus-leave-trigger"
+                : "focus-leave"
+        );
+    }
+
     constructor(
-        public elRef: ElementRef,
+        public elRef: ElementRef<HTMLElement>,
         private zone: NgZone,
         private cdRef: ChangeDetectorRef
     ) {}
@@ -159,5 +183,11 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
         this.popoverModalSubscriptions.forEach(sub => {
             sub.unsubscribe();
         });
+    }
+
+    private isNode(target: EventTarget | null): target is Node {
+        const NodeConstructor =
+            this.elRef.nativeElement.ownerDocument.defaultView?.Node;
+        return !!NodeConstructor && target instanceof NodeConstructor;
     }
 }
