@@ -481,6 +481,8 @@ export const DEMO_PATHS = [
     "dialog/dialog-custom-class/dialog-custom-class.example.component.ts",
     "dialog/dialog-docs/dialog-docs.example.component.html",
     "dialog/dialog-docs/dialog-docs.example.component.ts",
+    "dialog/dialog-focus-restoration/dialog-focus-restoration.example.component.html",
+    "dialog/dialog-focus-restoration/dialog-focus-restoration.example.component.ts",
     "dialog/dialog-inside-overlay/dialog-inside-overlay.example.component.html",
     "dialog/dialog-inside-overlay/dialog-inside-overlay.example.component.ts",
     "dialog/dialog-inside-overlay-with-date-time-picker/dialog-inside-overlay-with-date-time-picker.example.component.html",
