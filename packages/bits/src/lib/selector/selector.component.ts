@@ -151,7 +151,7 @@ export class SelectorComponent
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(_ => this.overlay.hide());
         // TODO: should change programmatically in scope of NUI-5937
-        this.checkbox.checkboxLabel.nativeElement.setAttribute(
+        this.checkbox.inputViewContainer.element.nativeElement.setAttribute(
             "tabindex",
             "-1"
         );
