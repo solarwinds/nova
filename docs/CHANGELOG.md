@@ -4,12 +4,13 @@
 
 ### Fixes
 
-## [20.0.12] 📅 2026-10-26
+## [20.0.13] 📅 2026-10-26
 
 ### Fixes
 
-- `@nova-ui/bits` | Dismisses focus- and hover-triggered popovers with Escape without reopening during the active trigger session, and supports Tab/Shift+Tab navigation through interactive content (NUI-6318).
-- `@nova-ui/bits` | Guard lazy overlay access in `nui-popup` when `isOpen` is initially `false` and cancel stale deferred open/close timers (NUI-6317).
+- `@nova-ui/bits` | Improved dialog and wizard focus management for WCAG 2.4.3: restore focus to usable dialog openers, preserve external focus during wizard navigation, recover focus after removing the active step, and fix horizontal wizard keyboard navigation across responsive overflow. Added a dialog example demonstrating focus handoff through `closed$` when the opener is removed.
+- `@nova-ui/bits` | Dismisses focus- and hover-triggered popovers with Escape without reopening during the active trigger session, and supports Tab/Shift+Tab navigation through interactive content.
+- `@nova-ui/bits` | Guard lazy overlay access in `nui-popup` when `isOpen` is initially `false` and cancel stale deferred open/close timers.
 - `@nova-ui/bits` | Exposed progressbar semantics only on the progress bar, including determinate zero and indeterminate values.
 - `@nova-ui/bits` | A11y fixes and improvements across form controls, pickers, panels, expanders, repeat lists, tables and wizards.
 - `@nova-ui/dashboards` | Table widget scroll area is reachable by the Tab key when its content overflows, even without focusable content inside, and is exposed as a region named by the widget title (WCAG 2.1.1).
