@@ -2,10 +2,6 @@
     <label
         class="nui-checkbox__label"
         #checkboxLabel
-        [attr.aria-label]="ariaLabel || null"
-        [attr.aria-labelledby]="ariaLabelledby"
-        [attr.aria-describedby]="ariaDescribedby"
-        [attr.tabindex]="!disabled ? 0 : -1"
         [title]="title"
         [class.nui-checkbox__translucent]="disabled"
         (mouseenter)="hoverHandler()"
@@ -16,7 +12,9 @@
                 [id]="id"
                 class="nui-checkbox__input"
                 type="checkbox"
-                [attr.aria-checked]="getAriaChecked()"
+                [attr.aria-label]="ariaLabel || null"
+                [attr.aria-labelledby]="ariaLabelledby"
+                [attr.aria-describedby]="ariaDescribedby"
                 [attr.name]="name"
                 [value]="value"
                 [checked]="checked"

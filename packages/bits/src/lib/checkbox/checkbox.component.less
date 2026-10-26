@@ -50,7 +50,7 @@
             .setCssVariable(background-color, nui-color-bg-transparent-hover);
         }
 
-        &:focus {
+        &:focus-within {
             .focus-outline-inset();
             .setCssVariable(background-color, nui-color-bg-transparent-hover);
         }
@@ -65,7 +65,7 @@
             background-color: transparent;
         }
 
-        &:focus {
+        &:focus-within {
             outline: none;
             .no-shadow();
             .setCssVariable(background-color, transparent);
@@ -82,9 +82,13 @@
     }
 
     &__input {
-        display: none;
+        border: 0;
+        clip: rect(0 0 0 0);
         width: 1px;
         height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
         position: absolute;
 
         &:indeterminate + .nui-checkbox__mark {
