@@ -1,7 +1,7 @@
 <span i18n>Set</span>
 <nui-popover
     id="nui-demo-popover-focus"
-    tabindex="1"
+    tabindex="0"
     popoverTitle="Popover with Focus Trigger"
     i18n-popoverTitle
     trigger="focus"
@@ -11,7 +11,7 @@
 <span i18n>on me!</span>
 <span i18n>Then, tab over to</span>
 <nui-popover
-    tabindex="2"
+    tabindex="0"
     popoverTitle="Popover with Focus Trigger"
     i18n-popoverTitle
     trigger="focus"
@@ -21,6 +21,21 @@
 
 <span i18n>on me!</span>
 
+<p i18n>
+    Focus or hover over this trigger. Press Tab to enter its interactive
+    content, Shift+Tab to return, and Escape to dismiss it (focus returns to the
+    trigger only if it was in the popover content).
+</p>
+<nui-popover
+    id="nui-demo-popover-combined-focus-hover"
+    tabindex="0"
+    popoverTitle="Popover with Focus and Hover Triggers"
+    i18n-popoverTitle
+    trigger="mouseenter focus"
+    [template]="popoverCombinedTriggerTemplate"
+    ><mark i18n>focus or hover</mark></nui-popover
+>
+
 <ng-template #popoverFocusTriggerTemplate0>
     <span id="nui-demo-popover-modal-focus" i18n>
         I'm focused and ready-to-go!
@@ -29,4 +44,14 @@
 
 <ng-template #popoverFocusTriggerTemplate1 i18n>
     Now, I'm the one who's focused and ready-to-go!
+</ng-template>
+
+<ng-template #popoverCombinedTriggerTemplate>
+    <button
+        id="nui-demo-popover-combined-content"
+        type="button"
+        nui-button
+        i18n>
+        Interactive popover content
+    </button>
 </ng-template>

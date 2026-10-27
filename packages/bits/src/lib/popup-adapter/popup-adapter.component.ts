@@ -97,11 +97,17 @@ export class PopupComponent
     @Input() public ariaLabel: string = $localize`Popup`;
 
     @Input() set isOpen(open: boolean) {
+        this.clearOpenTimer();
+        this.clearHideTimer();
         if (this.isContentInitialized) {
             this.isOpenHandler(open);
             return;
         }
-        setTimeout(() => this.isOpenHandler(open));
+        // Defer initial open/close handling until content projection and toggle reference are initialized in ngAfterContentInit.
+        this.openTimer = setTimeout(() => {
+            this.openTimer = undefined;
+            this.isOpenHandler(open);
+        });
     }
     get isOpen(): boolean {
         return !!this.popup?.showing;
@@ -122,10 +128,10 @@ export class PopupComponent
     public set visible(value: boolean) {
         this._visible = value;
         if (value) {
-            this.popup.getOverlayRef().addPanelClass(POPUP_VISIBLE);
+            this.popup?.getOverlayRef()?.addPanelClass(POPUP_VISIBLE);
             return;
         }
-        this.popup.getOverlayRef().removePanelClass(POPUP_VISIBLE);
+        this.popup?.getOverlayRef()?.removePanelClass(POPUP_VISIBLE);
     }
     public get visible(): boolean {
         return Boolean(this._visible);
@@ -136,6 +142,8 @@ export class PopupComponent
     private isContentInitialized: boolean;
     private readonly destroy$ = new Subject<void>();
     private lastEventType: string;
+    private openTimer?: ReturnType<typeof setTimeout>;
+    private hideTimer?: ReturnType<typeof setTimeout>;
 
     constructor(
         private overlay: Overlay,
@@ -244,8 +252,12 @@ export class PopupComponent
     }
 
     public ngOnDestroy(): void {
+        this.clearOpenTimer();
+        this.clearHideTimer();
         if (this.isOpen) {
-            this.hide();
+            this.visible = false;
+            this.popup.hide();
+            this.opened.emit(this.popup.showing);
         }
         this.destroy$.next();
         this.destroy$.complete();
@@ -327,6 +339,8 @@ export class PopupComponent
     }
 
     private show(): void {
+        this.clearOpenTimer();
+        this.clearHideTimer();
         if (!this.toggleReference) {
             return;
         }
@@ -354,8 +368,12 @@ export class PopupComponent
     }
 
     private hide(): void {
+        this.clearOpenTimer();
+        this.clearHideTimer();
         this.visible = false;
-        setTimeout(() => {
+        // Remove the visible class first and dispose the overlay on the next macrotask.
+        this.hideTimer = setTimeout(() => {
+            this.hideTimer = undefined;
             this.popup.hide();
             this.opened.emit(this.popup.showing);
         });
@@ -374,5 +392,19 @@ export class PopupComponent
         this.toggleReference = this.popupToggle
             ? this.popupToggle.host.nativeElement
             : this.document.querySelector(this.baseElementSelector);
+    }
+
+    private clearOpenTimer(): void {
+        if (this.openTimer !== undefined) {
+            clearTimeout(this.openTimer);
+            this.openTimer = undefined;
+        }
+    }
+
+    private clearHideTimer(): void {
+        if (this.hideTimer !== undefined) {
+            clearTimeout(this.hideTimer);
+            this.hideTimer = undefined;
+        }
     }
 }
