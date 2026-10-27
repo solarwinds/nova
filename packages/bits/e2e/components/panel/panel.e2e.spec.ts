@@ -28,6 +28,85 @@ test.describe("USERCONTROL Panel", () => {
         await Helpers.prepareBrowser("panel/panel-test", page);
     });
 
+    test.describe("Hoverable keyboard access", () => {
+        let panel: PanelAtom;
+
+        test.beforeEach(async ({ page }) => {
+            panel = Atom.findIn<PanelAtom>(
+                PanelAtom,
+                page.locator("#nui-demo-keyboard-hoverable-panel")
+            );
+            await page.mouse.move(0, 0);
+        });
+
+        test("should reach content with Tab and return focus on Escape", async ({
+            page,
+        }) => {
+            await page.locator("#panel-keyboard-before").focus();
+            await page.keyboard.press("Tab");
+            await expect(panel.sidePane).toBeFocused();
+            await panel.toBeExpanded();
+            expect(
+                await panel.sidePane.evaluate(element => ({
+                    visible: element.matches(":focus-visible"),
+                    shadow: getComputedStyle(element).boxShadow !== "none",
+                }))
+            ).toEqual({ visible: true, shadow: true });
+            await expect(panel.sidePane).toHaveAttribute(
+                "aria-label",
+                "Keyboard panel"
+            );
+            await expect(panel.sidePane).toHaveAttribute(
+                "aria-expanded",
+                "true"
+            );
+            await page.keyboard.press("Tab");
+            await expect(panel.sidePaneInput).toBeFocused();
+            await page.keyboard.type("Keyboard input");
+            await page.keyboard.press("Tab");
+            await expect(
+                panel.sidePane.getByRole("button", { name: "Panel action" })
+            ).toBeFocused();
+            await page.keyboard.press("Shift+Tab");
+            await expect(panel.sidePaneInput).toBeFocused();
+            await page.keyboard.press("Escape");
+            await panel.toBeCollapsed();
+            await expect(panel.sidePane).toBeFocused();
+            await expect(panel.sidePane).toHaveAttribute(
+                "aria-expanded",
+                "false"
+            );
+            await page.keyboard.press("Tab");
+            await expect(page.locator("#panel-keyboard-after")).toBeFocused();
+            await page.keyboard.press("Shift+Tab");
+            await expect(panel.sidePane).toBeFocused();
+            await panel.toBeExpanded();
+        });
+
+        test("should keep keyboard-focused content open after mouseleave", async ({
+            page,
+        }) => {
+            await panel.focusSidePane();
+            await panel.sidePaneInput.focus();
+            await panel.hoverOnSidePane();
+            await page.mouse.move(0, 0);
+            await page.waitForTimeout(800);
+            await panel.toBeExpanded();
+            await expect(panel.sidePaneInput).toBeFocused();
+            await page.locator("#panel-keyboard-after").focus();
+            await panel.toBeCollapsed();
+        });
+
+        test("should still expand and collapse with mouse hover alone", async ({
+            page,
+        }) => {
+            await panel.hoverOnSidePane();
+            await panel.toBeExpanded();
+            await page.mouse.move(0, 0);
+            await panel.toBeCollapsed();
+        });
+    });
+
     test.describe("Collapsible", () => {
         let panelCollapsible: PanelAtom;
 

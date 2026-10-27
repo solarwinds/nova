@@ -8,4 +8,30 @@
     <nui-panel-resize-example></nui-panel-resize-example>
 
     <nui-panel-hide-example></nui-panel-hide-example>
+
+    <h2 i18n>Hoverable panel keyboard test</h2>
+    <button id="panel-keyboard-before" type="button" nui-button i18n>
+        Before hoverable panel
+    </button>
+    <div class="my-3" style="height: 250px">
+        <nui-panel
+            id="nui-demo-keyboard-hoverable-panel"
+            panelMode="hoverable"
+            heading="Keyboard panel"
+            i18n-heading
+            [displacePrimaryContent]="false">
+            <div nuiPanelEmbeddedBody>
+                <label for="panel-keyboard-input" i18n>Panel input</label>
+                <input id="panel-keyboard-input" type="text" />
+                <button type="button" nui-button i18n>Panel action</button>
+            </div>
+            <p i18n
+                >Primary content stays available while the side pane is
+                collapsed.</p
+            >
+        </nui-panel>
+    </div>
+    <button id="panel-keyboard-after" type="button" nui-button i18n>
+        After hoverable panel
+    </button>
 </div>
