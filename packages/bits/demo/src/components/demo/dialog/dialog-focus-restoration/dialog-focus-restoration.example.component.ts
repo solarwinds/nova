@@ -22,30 +22,29 @@ import {
     Component,
     DestroyRef,
     ElementRef,
+    inject,
     TemplateRef,
     ViewChild,
 } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { take } from "rxjs/operators";
 
-import { DialogService } from "@nova-ui/bits";
+import { DialogService, NuiButtonModule, NuiDialogModule } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-dialog-focus-restoration-example",
     templateUrl: "./dialog-focus-restoration.example.component.html",
-    standalone: false,
+    imports: [NuiButtonModule, NuiDialogModule],
 })
 export class DialogFocusRestorationExampleComponent {
+    private readonly dialogService = inject(DialogService);
+    private readonly destroyRef = inject(DestroyRef);
+
     @ViewChild("nextAction", { read: ElementRef })
     private nextAction: ElementRef<HTMLButtonElement>;
 
     public openerRemoved = false;
     public continued = false;
-
-    constructor(
-        private dialogService: DialogService,
-        private destroyRef: DestroyRef
-    ) {}
 
     public open(content: TemplateRef<unknown>): void {
         const dialog = this.dialogService.open(content, { size: "sm" });

@@ -138,6 +138,7 @@ const routes = [
 
 @NgModule({
     imports: [
+        DialogFocusRestorationExampleComponent,
         NuiDialogModule,
         NuiDocsModule,
         NuiButtonModule,
@@ -169,7 +170,6 @@ const routes = [
         ConfirmationDialogExampleComponent,
         DialogCustomClassExampleComponent,
         DialogDocsComponent,
-        DialogFocusRestorationExampleComponent,
         DialogTestComponent,
         DialogWithKeyboardExampleComponent,
         DialogPositionExampleComponent,
