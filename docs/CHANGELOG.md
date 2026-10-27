@@ -14,6 +14,12 @@
 
 - `@nova-ui/bits` | Added `panel-collapse` and `panel-expand` icons.
 
+## [21.0.6] 📅 2026-10-27
+
+### Fixes
+
+- `@nova-ui/bits` | Improved dialog and wizard focus management for WCAG 2.4.3: restore focus to usable dialog openers, preserve external focus during wizard navigation, recover focus after removing the active step, and fix horizontal wizard keyboard navigation across responsive overflow. Added a dialog example demonstrating focus handoff through `closed$` when the opener is removed.
+
 ## [21.0.5] 📅 2026-10-01
 
 ### Added
