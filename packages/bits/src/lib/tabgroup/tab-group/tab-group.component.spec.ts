@@ -260,6 +260,69 @@ describe("components > tab group", () => {
         });
     });
 
+    it("should reveal focused overflowing tabs without selecting them", () => {
+        const host: HTMLElement = componentFixture.nativeElement;
+        const container = host.querySelector<HTMLElement>(
+            ".nui-tabs__container"
+        )!;
+        const viewport = container.parentElement!;
+        const tab = host.querySelectorAll<HTMLElement>("[role='tab']")[2];
+        spyOn(viewport, "getBoundingClientRect").and.returnValue(
+            new DOMRect(100, 0, 100, 50)
+        );
+        const tabRect = spyOn(tab, "getBoundingClientRect").and.returnValue(
+            new DOMRect(170, 0, 50, 50)
+        );
+        Object.defineProperty(viewport, "clientWidth", { value: 100 });
+        Object.defineProperty(container, "scrollWidth", { value: 300 });
+        container.style.marginLeft = "-180px";
+        const selected = tab.getAttribute("aria-selected");
+
+        tab.dispatchEvent(new FocusEvent("focusin", { bubbles: true }));
+
+        expect(container.style.marginLeft).toBe("-200px");
+        expect(tab.getAttribute("aria-selected")).toBe(selected);
+        expect(subject.tabs.first.active).toBeTrue();
+
+        container.style.marginLeft = "-20px";
+        tabRect.and.returnValue(new DOMRect(80, 0, 50, 50));
+        tab.dispatchEvent(new FocusEvent("focusin", { bubbles: true }));
+        expect(container.style.marginLeft).toBe("0px");
+    });
+
+    it("should not shift visible tabs or react to focus in nested tablists", () => {
+        const host: HTMLElement = componentFixture.nativeElement;
+        const container = host.querySelector<HTMLElement>(
+            ".nui-tabs__container"
+        )!;
+        const tab = host.querySelectorAll<HTMLElement>("[role='tab']")[0];
+        spyOn(
+            container.parentElement!,
+            "getBoundingClientRect"
+        ).and.returnValue(new DOMRect(100, 0, 100, 50));
+        spyOn(tab, "getBoundingClientRect").and.returnValue(
+            new DOMRect(120, 0, 50, 50)
+        );
+        Object.defineProperty(container.parentElement!, "clientWidth", {
+            value: 100,
+        });
+        Object.defineProperty(container, "scrollWidth", { value: 300 });
+        container.style.marginLeft = "-50px";
+        tab.dispatchEvent(new FocusEvent("focusin", { bubbles: true }));
+        expect(container.style.marginLeft).toBe("-50px");
+
+        const nestedList = document.createElement("div");
+        nestedList.setAttribute("role", "tablist");
+        const nestedTab = document.createElement("span");
+        nestedTab.setAttribute("role", "tab");
+        nestedList.appendChild(nestedTab);
+        container.appendChild(nestedList);
+        const measure = spyOn(nestedTab, "getBoundingClientRect");
+        nestedTab.dispatchEvent(new FocusEvent("focusin", { bubbles: true }));
+        expect(measure).not.toHaveBeenCalled();
+        expect(container.style.marginLeft).toBe("-50px");
+    });
+
     it("should move focus with arrows, Home, and End including wrap-around", () => {
         const tabs =
             componentFixture.nativeElement.querySelectorAll("[role='tab']");

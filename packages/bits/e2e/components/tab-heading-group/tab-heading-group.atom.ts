@@ -91,6 +91,27 @@ export class TabHeadingGroupAtom extends Atom {
         await expect(this.getCaretRight()).toBeVisible();
     }
 
+    public async toHaveTabInView(tab: TabHeadingAtom): Promise<void> {
+        await expect
+            .poll(() =>
+                tab.getLocator().evaluate(element => {
+                    const viewport = element.closest(
+                        ".nui-tab-headings__container"
+                    )?.parentElement;
+                    if (!viewport) {
+                        throw new Error("Tab heading viewport is missing");
+                    }
+                    const tabRect = element.getBoundingClientRect();
+                    const viewportRect = viewport.getBoundingClientRect();
+                    return (
+                        tabRect.left >= viewportRect.left - 1 &&
+                        tabRect.right <= viewportRect.right + 1
+                    );
+                })
+            )
+            .toBe(true);
+    }
+
     /** Assert no navigation carets are rendered. */
     public async toNotHaveCarets(): Promise<void> {
         await expect(this.getLocator()).toBeVisible();

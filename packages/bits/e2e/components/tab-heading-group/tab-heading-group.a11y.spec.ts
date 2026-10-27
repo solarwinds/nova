@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Helpers, test } from "../../setup";
+import { Helpers, expect, test } from "../../setup";
 import { Atom } from "../../atom";
 import { TabHeadingGroupAtom } from "./tab-heading-group.atom";
 import { TabHeadingAtom } from "./tab-heading.atom";
@@ -30,6 +30,26 @@ test.describe("a11y: tab-heading-group", () => {
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("tabgroup/tabgroup-test", page);
+    });
+
+    test("should expose overflowing tabs after keyboard navigation", async ({
+        page,
+        runA11yScan,
+    }) => {
+        const group = Atom.findIn<TabHeadingGroupAtom>(
+            TabHeadingGroupAtom,
+            page.locator("#nui-demo-visual-tabgroup-responsive")
+        );
+        const firstTab = await group.getFirstTab();
+        const lastTab = await group.getLastTab();
+        await firstTab.getLocator().focus();
+        await page.keyboard.press("End");
+        await expect(lastTab.getLocator()).toBeFocused();
+        await group.toHaveTabInView(lastTab);
+        await runA11yScan(
+            "#nui-demo-visual-tabgroup-responsive",
+            rulesToDisable
+        );
     });
 
     test("should check a11y of tab-heading", async ({ runA11yScan }) => {
