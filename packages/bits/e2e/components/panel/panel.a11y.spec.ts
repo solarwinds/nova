@@ -45,6 +45,25 @@ test.describe("a11y: panel", () => {
         expanders = expanderIds.map(id => page.locator(`#${id}`));
     });
 
+    test("should expose keyboard-focusable hoverable content without nested controls", async ({
+        page,
+        runA11yScan,
+    }) => {
+        await Helpers.prepareBrowser("panel/panel-test", page);
+        await page.mouse.move(0, 0);
+        const panel = page.locator("#nui-demo-keyboard-hoverable-panel");
+        const pane = panel.getByRole("group", { name: "Keyboard panel" });
+        await pane.focus();
+        await expect(pane).toHaveAttribute("aria-expanded", "true");
+        await expect(panel.getByLabel("Panel input")).toBeVisible();
+        await runA11yScan("#nui-demo-keyboard-hoverable-panel");
+        await panel.getByLabel("Panel input").focus();
+        await page.keyboard.press("Escape");
+        await expect(pane).toHaveAttribute("aria-expanded", "false");
+        await expect(pane).toBeFocused();
+        await runA11yScan("#nui-demo-keyboard-hoverable-panel");
+    });
+
     test("should check a11y of panel", async ({ runA11yScan }) => {
         for (const expander of expanders) {
             await expander.click();

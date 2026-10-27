@@ -44,7 +44,7 @@ import {
 } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
 import { Subject, Subscription } from "rxjs";
-import { debounceTime, distinctUntilChanged, filter } from "rxjs/operators";
+import { debounceTime } from "rxjs/operators";
 
 import {
     PanelBackgroundColor,
@@ -223,6 +223,10 @@ export class PanelComponent
             : $localize`Collapse panel`;
     }
 
+    public get hoverPanelAriaLabel(): string {
+        return this.heading || $localize`Panel`;
+    }
+
     private _isCollapsed: boolean;
     private _isHidden: boolean = false;
     private toggles = new Subject<boolean>();
@@ -230,6 +234,9 @@ export class PanelComponent
     private _expandAnimationFactory?: AnimationFactory;
     private _collapseAnimationFactory?: AnimationFactory;
     private lastAnimationPlayer?: AnimationPlayer;
+    private pointerInside = false;
+    private dismissedByKeyboard = false;
+    private pendingHoverExpanded?: boolean;
 
     constructor(
         private renderer: Renderer2,
@@ -241,10 +248,8 @@ export class PanelComponent
         this.defineSizes();
         this.defineState();
         this.togglesSubscription = this.toggles
-            .pipe(filter(toggle => toggle === this._isCollapsed))
-            .pipe(distinctUntilChanged())
             .pipe(debounceTime(PanelComponent.ANIMATION_TIME))
-            .subscribe(_ => this.toggleHideOrCollapsed());
+            .subscribe(expanded => this.applyHoverState(expanded));
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -302,13 +307,82 @@ export class PanelComponent
 
     public toggleEnter(): void {
         if (this.isHoverable) {
+            this.pointerInside = true;
+            this.dismissedByKeyboard = false;
             this.toggles.next(true);
         }
     }
 
     public toggleLeave(): void {
         if (this.isHoverable) {
+            this.pointerInside = false;
             this.toggles.next(false);
+        }
+    }
+
+    public onHoverFocusIn(event: FocusEvent): void {
+        if (!this.isHoverable) {
+            return;
+        }
+        const pane: HTMLElement = this.sidePaneContainer.element.nativeElement;
+        if (
+            !(event.relatedTarget instanceof Node) ||
+            !pane.contains(event.relatedTarget)
+        ) {
+            this.dismissedByKeyboard = false;
+        }
+        if (!this.dismissedByKeyboard) {
+            this.toggles.next(true);
+            this.applyHoverState(true);
+        }
+    }
+
+    public onHoverFocusOut(event: FocusEvent): void {
+        if (!this.isHoverable) {
+            return;
+        }
+        const pane: HTMLElement = this.sidePaneContainer.element.nativeElement;
+        if (
+            event.relatedTarget instanceof Node &&
+            pane.contains(event.relatedTarget)
+        ) {
+            return;
+        }
+        this.toggles.next(this.pointerInside);
+    }
+
+    public onHoverKeyDown(event: KeyboardEvent): void {
+        if (
+            !this.isHoverable ||
+            event.defaultPrevented ||
+            event.key !== "Escape" ||
+            (this.isCollapsed && !this.isAnimating)
+        ) {
+            return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        this.dismissedByKeyboard = true;
+        const pane: HTMLElement = this.sidePaneContainer.element.nativeElement;
+        pane.focus({ preventScroll: true });
+        this.toggles.next(false);
+        this.applyHoverState(false);
+    }
+
+    private applyHoverState(expanded: boolean): void {
+        if (!this.isHoverable) {
+            return;
+        }
+        const pane: HTMLElement = this.sidePaneContainer.element.nativeElement;
+        const shouldExpand =
+            !this.dismissedByKeyboard &&
+            (expanded || pane.contains(document.activeElement));
+        if (this.isAnimating) {
+            this.pendingHoverExpanded = shouldExpand;
+            return;
+        }
+        if (shouldExpand === this._isCollapsed) {
+            this.toggleCollapsed();
         }
     }
 
@@ -354,6 +428,11 @@ export class PanelComponent
                     : this.applyBoundarySizes();
             }
             this.changeDetectorRef.detectChanges();
+            const pendingHoverExpanded = this.pendingHoverExpanded;
+            this.pendingHoverExpanded = undefined;
+            if (this.isHoverable && pendingHoverExpanded !== undefined) {
+                this.applyHoverState(pendingHoverExpanded);
+            }
         });
     }
 
