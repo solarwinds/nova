@@ -127,6 +127,10 @@
             overflow-y: auto;
         }
 
+        &--hoverable > .nui-panel__side-pane:focus-visible {
+            .focus-outline();
+        }
+
         [nuiPanelEmbeddedFooter] {
             border-top: 1px solid @nui-color-line-default;
             border-top: solid 1px

@@ -44,6 +44,15 @@ export class PanelAtom extends Atom {
         return this.getLocator().locator(".nui-panel__side-pane");
     }
 
+    public get sidePaneInput(): Locator {
+        return this.sidePane.locator("input").first();
+    }
+
+    public async focusSidePane(): Promise<void> {
+        await this.sidePane.focus();
+        await this.toBeExpanded();
+    }
+
     public get centerPane(): Locator {
         return this.getLocator().locator(".nui-panel__center-pane");
     }
