@@ -38,6 +38,7 @@ import {
 import { Subscription } from "rxjs";
 
 import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
+import { scrollTabIntoView } from "../scroll-tab-into-view";
 import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
 
 // <example-url>./../examples/index.html#/tabgroup</example-url>
@@ -170,8 +171,25 @@ export class TabHeadingGroupComponent
 
         if (nextIndex >= 0) {
             event.preventDefault();
-            tabElements[nextIndex].focus();
+            tabElements[nextIndex].focus({ preventScroll: !this.vertical });
         }
+    }
+
+    public onFocusIn(event: FocusEvent): void {
+        if (this.vertical || !(event.target instanceof Element)) {
+            return;
+        }
+        const tab = event.target.closest<HTMLElement>("[role='tab']");
+        if (!tab || tab.closest("[role='tablist']") !== this.el.nativeElement) {
+            return;
+        }
+        const container: HTMLElement = this.el.nativeElement.querySelector(
+            ".nui-tab-headings__container"
+        );
+        const margin = scrollTabIntoView(tab, container);
+        this.setNewShift(margin);
+        this.rightTraverseEnabled = this.isTraverseRightAllowed(margin);
+        this.leftTraverseEnabled = this.isTraverseLeftAllowed(margin);
     }
 
     public checkTraverse(): void {

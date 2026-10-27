@@ -30,6 +30,7 @@ import {
 } from "@angular/core";
 
 import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
+import { scrollTabIntoView } from "../scroll-tab-into-view";
 import { TabComponent } from "../tab/tab.component";
 
 // <example-url>./../examples/index.html#/tabgroup</example-url>
@@ -158,8 +159,25 @@ export class TabGroupComponent
 
         if (nextIndex >= 0) {
             event.preventDefault();
-            tabElements[nextIndex].focus();
+            tabElements[nextIndex].focus({ preventScroll: !this.vertical });
         }
+    }
+
+    public onFocusIn(event: FocusEvent): void {
+        if (this.vertical || !(event.target instanceof Element)) {
+            return;
+        }
+        const tab = event.target.closest<HTMLElement>("[role='tab']");
+        const container: HTMLElement = this.el.nativeElement.querySelector(
+            ".nui-tabs__container"
+        );
+        if (!tab || tab.closest("[role='tablist']") !== container) {
+            return;
+        }
+        const margin = scrollTabIntoView(tab, container);
+        this.setNewShift(margin);
+        this.rightTraverseEnabled = this.isTraverseRightAllowed(margin);
+        this.leftTraverseEnabled = this.isTraverseLeftAllowed(margin);
     }
 
     public allowTraverse(): boolean {
