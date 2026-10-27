@@ -45,6 +45,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
         <a
             class="nui-menu-item__link"
             role="menuitem"
+            [id]="id + '-link'"
             [href]="url"
             [target]="target"
             (click)="handleClick($event)"

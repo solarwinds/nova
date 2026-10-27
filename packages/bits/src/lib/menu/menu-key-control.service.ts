@@ -231,13 +231,16 @@ export class MenuKeyControlService implements OnDestroy {
                 event.preventDefault();
                 return;
             }
+            event.preventDefault();
             this.popup.toggleOpened(event);
+            this.menuToggle.nativeElement.focus();
         }
         if (
             event.code === KEYBOARD_CODE.TAB ||
             event.code === KEYBOARD_CODE.ESCAPE
         ) {
             this.popup.toggleOpened(event);
+            this.menuToggle.nativeElement.focus();
         }
     }
 

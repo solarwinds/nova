@@ -87,6 +87,11 @@ class TestAppComponent {
                     title: "Action",
                     disabled: false,
                 },
+                {
+                    itemType: "option",
+                    title: "Option",
+                    checked: false,
+                },
             ],
         },
     ] as IMenuGroup[];
@@ -178,6 +183,53 @@ describe("components >", () => {
                     By.css("#" + menuContentId)
                 );
                 expect(content).toBeTruthy();
+            });
+
+            it("should focus the popup menu and keep its active descendant there", async () => {
+                const button = fixture.debugElement.query(
+                    By.css(".menu-button")
+                ).nativeElement as HTMLButtonElement;
+
+                button.focus();
+                button.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        code: "ArrowDown",
+                        key: "ArrowDown",
+                        bubbles: true,
+                        cancelable: true,
+                    })
+                );
+                await fixture.whenStable();
+                await new Promise(resolve => setTimeout(resolve, 10));
+                fixture.detectChanges();
+
+                const menuContentId = button.getAttribute("aria-controls");
+                expect(menuContentId).toBeTruthy();
+                const menuContent = document.getElementById(menuContentId!);
+                expect(menuContent).toBeTruthy();
+                expect(document.activeElement).toBe(menuContent);
+                expect(button.getAttribute("role")).toBeNull();
+                expect(button.getAttribute("aria-haspopup")).toBe("menu");
+                expect(
+                    button.hasAttribute("aria-activedescendant")
+                ).toBeFalse();
+                expect(menuContent!.getAttribute("aria-labelledby")).toBe(
+                    button.id
+                );
+                expect(
+                    menuContent!
+                        .querySelector("nui-menu-popup")
+                        ?.getAttribute("role")
+                ).toBe("presentation");
+
+                const activeItemId = menuContent!.getAttribute(
+                    "aria-activedescendant"
+                );
+                expect(activeItemId).toBeTruthy();
+                const activeItem = document.getElementById(activeItemId!);
+                expect(activeItem).toBeTruthy();
+                expect(menuContent!.contains(activeItem)).toBeTrue();
+                expect(activeItem!.getAttribute("role")).toBe("menuitem");
             });
 
             it("should have correct roles on menu-link", () => {
