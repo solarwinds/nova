@@ -253,6 +253,7 @@ describe("components >", () => {
                     );
                 nextButton.focus();
                 component.onNextClick();
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
                 expect(component.currentStep).toBe(
                     component.steps.toArray()[1]
@@ -275,6 +276,7 @@ describe("components >", () => {
                     allowStepChange: false,
                 });
                 component.onNextClick();
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
                 expect(component.currentStep).toBe(
                     component.steps.toArray()[0]
@@ -284,6 +286,7 @@ describe("components >", () => {
                     busyState: { busy: false },
                     allowStepChange: true,
                 });
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
                 expect(component.currentStep).toBe(
                     component.steps.toArray()[1]
@@ -308,6 +311,7 @@ describe("components >", () => {
                         .focus();
                     component.onNextClick();
                     expect(document.activeElement).toBe(outside);
+                    fixture.changeDetectorRef.markForCheck();
                     fixture.detectChanges();
 
                     expect(component.currentStep).toBe(
@@ -327,6 +331,7 @@ describe("components >", () => {
                 try {
                     outside.focus();
                     component.onNextClick();
+                    fixture.changeDetectorRef.markForCheck();
                     fixture.detectChanges();
 
                     expect(component.currentStep).toBe(
@@ -360,6 +365,7 @@ describe("components >", () => {
         describe("onBackClick >", () => {
             it("should move to previous wizard step", () => {
                 component.onNextClick();
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
                 const backButton: HTMLButtonElement =
                     fixture.nativeElement.querySelector(
@@ -368,6 +374,7 @@ describe("components >", () => {
                 backButton.focus();
 
                 component.onBackClick();
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
                 expect(component.currentStep).toBe(
                     component.steps.toArray()[0]
@@ -443,6 +450,7 @@ describe("components >", () => {
                 component.addStepDynamic(component.steps.toArray()[1], 1);
                 const dynamicStep = component.steps.toArray()[1];
                 component.selectStep(dynamicStep);
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
                 const removeButton: HTMLButtonElement = fixture.debugElement
                     .queryAll(By.directive(WizardStepComponent))
@@ -495,6 +503,7 @@ describe("components >", () => {
 
             it("should move focus to the selected step header when the active step is removed", () => {
                 component.selectStep(component.steps.toArray()[1]);
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
                 const backButton: HTMLButtonElement =
                     fixture.nativeElement.querySelector(
@@ -503,6 +512,7 @@ describe("components >", () => {
                 backButton.focus();
 
                 component.removeStep(1);
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
 
                 expect(component.currentStep).toBe(
@@ -522,6 +532,7 @@ describe("components >", () => {
                     busyState: { busy: false },
                     allowStepChange: true,
                 });
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
 
                 expect(component.currentStep).toBe(component.steps.first);
@@ -543,6 +554,7 @@ describe("components >", () => {
                         busyState: { busy: false },
                         allowStepChange: true,
                     });
+                    fixture.changeDetectorRef.markForCheck();
                     fixture.detectChanges();
 
                     expect(component.currentStep).toBe(component.steps.first);
@@ -563,6 +575,7 @@ describe("components >", () => {
                     busyState: { busy: false },
                     allowStepChange: true,
                 });
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
 
                 expect(component.currentStep).toBe(component.steps.first);
@@ -575,6 +588,7 @@ describe("components >", () => {
                     1
                 );
                 component.selectStep(component.steps.toArray()[1]);
+                fixture.changeDetectorRef.markForCheck();
                 fixture.detectChanges();
                 const removeButton: HTMLButtonElement = fixture.debugElement
                     .queryAll(By.directive(WizardStepComponent))
