@@ -78,6 +78,39 @@ test.describe("USERCONTROL tab heading group", () => {
         await tabGroupHorizontal.toNotHaveCarets();
     });
 
+    test("should keep overflowing tabs visible during keyboard navigation", async ({
+        page,
+    }) => {
+        const tabs = await tabGroupResponsive.getTabs();
+        await tabs[0].getLocator().focus();
+        const scrollY = await page.evaluate(() => window.scrollY);
+
+        for (let index = 1; index < tabs.length; index++) {
+            await page.keyboard.press("ArrowRight");
+            await expect(tabs[index].getLocator()).toBeFocused();
+            await tabGroupResponsive.toHaveTabInView(tabs[index]);
+        }
+
+        const lastTab = tabs[tabs.length - 1];
+        await expect(tabs[0].getLocator()).toHaveAttribute(
+            "aria-selected",
+            "true"
+        );
+        await expect(lastTab.getLocator()).toHaveAttribute(
+            "aria-selected",
+            "false"
+        );
+        await page.keyboard.press("Home");
+        await expect(tabs[0].getLocator()).toBeFocused();
+        await tabGroupResponsive.toHaveTabInView(tabs[0]);
+        await page.keyboard.press("End");
+        await expect(lastTab.getLocator()).toBeFocused();
+        await tabGroupResponsive.toHaveTabInView(lastTab);
+        await page.keyboard.press("Enter");
+        await lastTab.toBeActive();
+        expect(await page.evaluate(() => window.scrollY)).toBe(scrollY);
+    });
+
     test("should navigate through responsive tabs", async () => {
         const [firstTab, lastTab] = await getFirstLast(tabGroupResponsive);
         await firstTab.toBeVisible();
