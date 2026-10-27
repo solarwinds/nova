@@ -95,7 +95,7 @@
         *ngFor="let step of steps; let i = index"
         class="nui-wizard-horizontal-content"
         role="tabpanel"
-        [attr.tabindex]="selectedIndex === i ? 0 : null"
+        [attr.tabindex]="selectedIndex === i ? -1 : null"
         [id]="stepContentIds[i]"
         [attr.aria-labelledby]="labelIds[i]"
         [hidden]="selectedIndex !== i"
@@ -127,10 +127,7 @@
         #stepHeaders
         class="nui-wizard-horizontal-header"
         (click)="step.select()"
-        (keydown)="
-            $event.code === 'Space' ? $event.preventDefault() : null;
-            _onKeydown($event)
-        "
+        (keydown)="onHeaderKeydown($event, step)"
         [tabIndex]="selectedIndex === i ? 0 : -1"
         [id]="labelIds[i]"
         [attr.aria-posinset]="i + 1"

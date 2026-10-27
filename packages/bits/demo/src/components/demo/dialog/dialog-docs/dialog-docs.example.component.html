@@ -182,6 +182,27 @@
     <nui-dialog-with-keyboard-example></nui-dialog-with-keyboard-example>
 </nui-example-wrapper>
 
+<h2>Restoring Focus</h2>
+<p>
+    Closing restores focus to a usable opener. If the opener is removed,
+    application code should choose a logical next target using the existing
+    <code
+        >dialog.closed$.subscribe(() =&gt;
+        nextAction.nativeElement.focus())</code
+    >.
+</p>
+<p>
+    <code>closed$</code> emits after dialog cleanup for both close and dismiss.
+    Focus a connected native element; if the handler creates the target, wait
+    until it renders before focusing it. The notification does not choose a
+    workflow target automatically.
+</p>
+<nui-example-wrapper
+    filenamePrefix="dialog-focus-restoration"
+    exampleTitle="Restoring Focus When the Trigger Is Removed">
+    <nui-dialog-focus-restoration-example></nui-dialog-focus-restoration-example>
+</nui-example-wrapper>
+
 <h2>Static Backdrop</h2>
 <p>
     By default, nui-dialog closes if user clicks outside the dialog. It is handy

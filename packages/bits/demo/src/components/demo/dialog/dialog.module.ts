@@ -50,6 +50,7 @@ import {
     DialogContentExampleComponent,
     DialogCustomClassExampleComponent,
     DialogDocsComponent,
+    DialogFocusRestorationExampleComponent,
     DialogInsideOverlayExampleComponent,
     DialogInsideOverlayWithDateTimePickerExampleComponent,
     DialogPositionExampleComponent,
@@ -66,6 +67,15 @@ import {
 import { getDemoFiles } from "../../../static/demo-files-factory";
 
 const routes = [
+    {
+        path: "focus-restoration",
+        component: DialogFocusRestorationExampleComponent,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+        },
+    },
     {
         path: "",
         component: DialogDocsComponent,
@@ -148,6 +158,7 @@ const routes = [
         ConfirmationDialogExampleComponent,
         DialogCustomClassExampleComponent,
         DialogDocsComponent,
+        DialogFocusRestorationExampleComponent,
         DialogTestComponent,
         DialogWithKeyboardExampleComponent,
         DialogPositionExampleComponent,

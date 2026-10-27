@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 export * from "./dialog-docs/dialog-docs.example.component";
+export * from "./dialog-focus-restoration/dialog-focus-restoration.example.component";
 export * from "./simple-dialog/simple-dialog.example.component";
 export * from "./component-as-content/component-as-content.example.component";
 export * from "./component-as-content/dialog-content.example.component";

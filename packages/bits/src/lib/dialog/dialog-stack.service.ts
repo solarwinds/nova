@@ -78,6 +78,7 @@ export class DialogStackService {
             );
         }
 
+        const previouslyFocusedElement = this.document.activeElement;
         const activeDialog = new NuiActiveDialog();
         const contentRef = this.getContentRef(
             moduleCFR,
@@ -113,6 +114,7 @@ export class DialogStackService {
         };
 
         this.applyWindowOptions(windowCmptRef.instance, options);
+        windowCmptRef.instance.captureFocus(previouslyFocusedElement);
         return nuiDialogRef;
     }
 
