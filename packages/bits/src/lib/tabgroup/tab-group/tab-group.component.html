@@ -18,7 +18,8 @@
                 role="tablist"
                 [class.flex-column]="vertical"
                 [attr.aria-orientation]="vertical ? 'vertical' : null"
-                (keydown)="onKeyDown($event)">
+                (keydown)="onKeyDown($event)"
+                (focusin)="onFocusIn($event)">
                 @for (tab of tabs; track tab) {
                 <div
                     class="nui-tab"
