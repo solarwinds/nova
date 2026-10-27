@@ -108,7 +108,7 @@ class WithDialogHeaderComponent {}
             ><nui-destroyable-cmpt></nui-destroyable-cmpt
         ></ng-template>
         <ng-template #contentWithClose let-close="close">
-            <button type="button" id="close" (click)="close('myResult')">
+            <button type="button" class="dialog-close" (click)="close('myResult')">
                 Close me
             </button>
         </ng-template>
@@ -333,7 +333,7 @@ describe("nui-dialog", () => {
             opener.focus();
 
             const dialogInstance = fixture.componentInstance.openTplClose();
-            document.querySelector<HTMLButtonElement>("#close")!.focus();
+            document.querySelector<HTMLButtonElement>(".dialog-close")!.focus();
             fixture.detectChanges();
 
             dialogInstance.dismiss();
@@ -531,7 +531,9 @@ describe("nui-dialog", () => {
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog();
 
-            (<HTMLElement>document.querySelector("button#close")).click();
+            (<HTMLElement>(
+                document.querySelector("button.dialog-close")
+            )).click();
             fixture.detectChanges();
             expect(fixture.nativeElement).not.toHaveDialog();
         });
@@ -556,7 +558,9 @@ describe("nui-dialog", () => {
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog();
 
-            (<HTMLElement>document.querySelector("button#close")).click();
+            (<HTMLElement>(
+                document.querySelector("button.dialog-close")
+            )).click();
             fixture.detectChanges();
             expect(fixture.nativeElement).not.toHaveDialog();
 
@@ -880,6 +884,168 @@ describe("nui-dialog", () => {
 
     describe("focus management", () => {
         for (const action of ["close", "dismiss"] as const) {
+            it(`should keep the remaining opening order after oldest dialog ${action} and another dialog opens across containers`, () => {
+                fixture.detectChanges();
+                const opener: HTMLButtonElement =
+                    fixture.nativeElement.querySelector("#open");
+                opener.focus();
+                const first = fixture.componentInstance.openTplClose();
+                fixture.detectChanges();
+                const firstWindow: HTMLElement =
+                    first.windowCmptRef!.location.nativeElement;
+                opener.focus();
+                const second = fixture.componentInstance.openTplClose({
+                    container: "#testContainer",
+                });
+                fixture.detectChanges();
+                const secondWindow: HTMLElement =
+                    second.windowCmptRef!.location.nativeElement;
+                const secondButton =
+                    secondWindow.querySelector<HTMLButtonElement>(
+                        ".dialog-close"
+                    )!;
+                secondButton.focus();
+                const third = fixture.componentInstance.openTplClose();
+                fixture.detectChanges();
+                const thirdWindow: HTMLElement =
+                    third.windowCmptRef!.location.nativeElement;
+                const thirdButton =
+                    thirdWindow.querySelector<HTMLButtonElement>(
+                        ".dialog-close"
+                    )!;
+                thirdButton.focus();
+                let fourth: NuiDialogRef | undefined;
+
+                try {
+                    first[action]();
+
+                    expect(firstWindow.isConnected).toBeFalse();
+                    expect(document.activeElement).toBe(thirdButton);
+                    expect(document.body.classList).toContain("dialog-open");
+
+                    fourth = fixture.componentInstance.openTplClose({
+                        container: "#testContainer",
+                    });
+                    fixture.detectChanges();
+                    const fourthWindow: HTMLElement =
+                        fourth.windowCmptRef!.location.nativeElement;
+                    expect(document.activeElement).toBe(fourthWindow);
+                    expect(
+                        document.querySelectorAll("nui-dialog-window").length
+                    ).toBe(3);
+
+                    fourth[action]();
+                    expect(document.activeElement).toBe(thirdButton);
+                    third[action]();
+                    expect(document.activeElement).toBe(secondButton);
+                    expect(document.body.classList).toContain("dialog-open");
+                    second[action]();
+                    expect(document.activeElement).toBe(opener);
+                    expect(
+                        document.querySelector("nui-dialog-window")
+                    ).toBeNull();
+                    expect(document.body.classList).not.toContain(
+                        "dialog-open"
+                    );
+                } finally {
+                    fourth?.close();
+                    third.close();
+                    second.close();
+                    first.close();
+                }
+            });
+
+            it(`should preserve focus in the newest dialog on background dialog ${action} across containers`, () => {
+                fixture.detectChanges();
+                const opener: HTMLButtonElement =
+                    fixture.nativeElement.querySelector("#open");
+                opener.focus();
+                const first = fixture.componentInstance.openTplClose();
+                fixture.detectChanges();
+                const firstWindow: HTMLElement =
+                    first.windowCmptRef!.location.nativeElement;
+                firstWindow.querySelector<HTMLButtonElement>("button")!.focus();
+                const middle = fixture.componentInstance.openTplClose();
+                fixture.detectChanges();
+                const newest = fixture.componentInstance.openTplClose({
+                    container: "#testContainer",
+                });
+                fixture.detectChanges();
+                const newestWindow: HTMLElement =
+                    newest.windowCmptRef!.location.nativeElement;
+                const activeButton =
+                    newestWindow.querySelector<HTMLButtonElement>("button")!;
+                activeButton.focus();
+
+                try {
+                    middle[action]();
+
+                    expect(document.activeElement).toBe(activeButton);
+                    expect(document.body.classList).toContain("dialog-open");
+                } finally {
+                    newest.close();
+                    middle.close();
+                    first.close();
+                }
+
+                expect(document.activeElement).toBe(opener);
+                expect(document.body.classList).not.toContain("dialog-open");
+            });
+
+            for (const unavailableOpener of [false, true]) {
+                it(`should restore focus to the last opened remaining dialog across containers after ${action} with an ${
+                    unavailableOpener ? "unavailable" : "available"
+                } opener`, () => {
+                    fixture.detectChanges();
+                    const opener: HTMLButtonElement =
+                        fixture.nativeElement.querySelector("#open");
+                    opener.focus();
+                    const first = fixture.componentInstance.openTplClose();
+                    fixture.detectChanges();
+                    const firstWindow: HTMLElement =
+                        first.windowCmptRef!.location.nativeElement;
+                    const firstButton =
+                        firstWindow.querySelector<HTMLButtonElement>("button")!;
+                    firstButton.focus();
+                    const middle = fixture.componentInstance.openTplClose({
+                        container: "#testContainer",
+                    });
+                    fixture.detectChanges();
+                    const middleWindow: HTMLElement =
+                        middle.windowCmptRef!.location.nativeElement;
+                    const middleButton =
+                        middleWindow.querySelector<HTMLButtonElement>(
+                            "button"
+                        )!;
+                    middleButton.focus();
+                    const newest = fixture.componentInstance.openTplClose();
+                    fixture.detectChanges();
+                    middleButton.disabled = unavailableOpener;
+
+                    try {
+                        newest[action]();
+
+                        expect(document.activeElement).toBe(
+                            unavailableOpener ? middleWindow : middleButton
+                        );
+                        expect(document.body.classList).toContain(
+                            "dialog-open"
+                        );
+                        middle.close();
+                        expect(document.activeElement).toBe(firstButton);
+                    } finally {
+                        newest.close();
+                        middle.close();
+                        first.close();
+                    }
+
+                    expect(document.activeElement).toBe(opener);
+                    expect(document.body.classList).not.toContain(
+                        "dialog-open"
+                    );
+                });
+            }
+
             it(`should allow closed$ to hand off focus after ${action} when the opener is removed`, () => {
                 fixture.detectChanges();
                 const opener: HTMLButtonElement =

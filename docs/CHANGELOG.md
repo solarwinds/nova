@@ -4,6 +4,7 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | Track dialog opening order across containers and preserve focus in the active dialog when a background dialog closes.
 - `@nova-ui/bits` | Dismisses focus- and hover-triggered popovers with Escape without reopening during the active trigger session, and supports Tab/Shift+Tab navigation through interactive content.
 - `@nova-ui/bits` | Guard lazy overlay access in `nui-popup` when `isOpen` is initially `false` and cancel stale deferred open/close timers.
 - `@nova-ui/bits` | Exposed progressbar semantics only on the progress bar, including determinate zero and indeterminate values.

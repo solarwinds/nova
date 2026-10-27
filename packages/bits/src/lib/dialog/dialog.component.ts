@@ -40,6 +40,8 @@ import {
 import { NavigationEnd, Router } from "@angular/router";
 import { filter, take } from "rxjs/operators";
 
+import { DialogFocusStackService } from "./dialog-focus-stack.service";
+
 const FOCUSABLE_SELECTOR =
     "a, button, input, textarea, select, details, [tabindex]:not([tabindex='-1'])";
 
@@ -70,6 +72,7 @@ const FOCUSABLE_SELECTOR =
 export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
     private elWithFocus: Element | null = null;
     private readonly interactivityChecker = inject(InteractivityChecker);
+    private readonly focusStack = inject(DialogFocusStackService);
     /**
      * Whether a backdrop element should be created for a given dialog (true by default).
      * Alternatively, specify 'static' for a backdrop which doesn't close the dialog on click.
@@ -120,6 +123,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
         private renderer: Renderer2,
         private router: Router
     ) {
+        this.focusStack.register(this.elRef.nativeElement);
         afterNextRender(() => this.labelByHeaderTitle());
     }
 
@@ -236,14 +240,21 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        const remainingDialog =
-            Array.from(
-                this.document.querySelectorAll<HTMLElement>("nui-dialog-window")
-            )
-                .filter(element => element !== this.elRef.nativeElement)
-                .pop() ?? null;
+        // DOM order can differ from opening order when dialogs use different containers.
+        const wasActive =
+            this.focusStack.activeDialog === this.elRef.nativeElement;
+        this.focusStack.unregister(this.elRef.nativeElement);
+        const remainingDialog = this.focusStack.activeDialog;
         if (!remainingDialog) {
             this.renderer.removeClass(this.document.body, "dialog-open");
+        }
+        if (
+            !wasActive &&
+            remainingDialog &&
+            this.canRestoreFocus(this.document.activeElement, remainingDialog)
+        ) {
+            this.elWithFocus = null;
+            return;
         }
         this.restoreFocus(remainingDialog);
         this.elWithFocus = null;
