@@ -28,9 +28,13 @@ import {
 import {
     AfterContentInit,
     AfterViewInit,
+    afterNextRender,
     ContentChildren,
     Directive,
+    ElementRef,
     EventEmitter,
+    inject,
+    Injector,
     Input,
     OnChanges,
     OnDestroy,
@@ -88,10 +92,14 @@ export class WizardDirective
 
     /** The list of step headers of the steps in the stepper. */
     @ViewChildren(WizardStepHeaderComponent)
-    declare _stepHeader: QueryList<WizardStepHeaderComponent>;
+    private focusHeaders!: QueryList<WizardStepHeaderComponent>;
 
     /** Stream of animation `done` events when the body expands/collapses. */
     _animationDone = new Subject<AnimationEvent>();
+
+    private focusPending = false;
+    private readonly focusHost = inject<ElementRef<HTMLElement>>(ElementRef);
+    private readonly focusInjector = inject(Injector);
 
     /** Steps that the stepper holds. */
     @ContentChildren(WizardStepV2Component, { descendants: true })
@@ -150,11 +158,35 @@ export class WizardDirective
     }
 
     public ngAfterViewInit(): void {
+        this._stepHeader = this.focusHeaders;
         super.ngAfterViewInit();
 
         if (this.state?.finished) {
             this.restore();
         }
+
+        this.selectionChange.pipe(takeUntil(this._destroyed)).subscribe(() => {
+            const host = this.focusHost.nativeElement;
+            const focusedElement = host.ownerDocument.activeElement;
+            if (this.focusPending || !host.contains(focusedElement)) {
+                return;
+            }
+            this.focusPending = true;
+            afterNextRender(
+                () => {
+                    this.focusPending = false;
+                    const activeElement = host.ownerDocument.activeElement;
+                    if (
+                        host.contains(activeElement) ||
+                        (activeElement === host.ownerDocument.body &&
+                            focusedElement?.isConnected === false)
+                    ) {
+                        this.focusSelectedStepContent();
+                    }
+                },
+                { injector: this.focusInjector }
+            );
+        });
     }
 
     public ngOnDestroy(): void {
@@ -196,5 +228,15 @@ export class WizardDirective
         this.stepContentIds = this.stepsArray.map((step, index) =>
             this._getStepContentId(index)
         );
+    }
+
+    private focusSelectedStepContent(): void {
+        const host = this.focusHost.nativeElement;
+        const panel = host.ownerDocument.getElementById(
+            this.stepContentIds[this.selectedIndex]
+        );
+        if (panel && host.contains(panel)) {
+            panel.focus();
+        }
     }
 }

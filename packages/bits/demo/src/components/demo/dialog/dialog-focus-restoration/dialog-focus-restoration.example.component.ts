@@ -1,0 +1,61 @@
+// © 2026 SolarWinds Worldwide, LLC. All rights reserved.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to
+//  deal in the Software without restriction, including without limitation the
+//  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+
+import {
+    Component,
+    DestroyRef,
+    ElementRef,
+    inject,
+    TemplateRef,
+    ViewChild,
+} from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { take } from "rxjs/operators";
+
+import { DialogService, NuiButtonModule, NuiDialogModule } from "@nova-ui/bits";
+
+@Component({
+    selector: "nui-dialog-focus-restoration-example",
+    templateUrl: "./dialog-focus-restoration.example.component.html",
+    imports: [NuiButtonModule, NuiDialogModule],
+})
+export class DialogFocusRestorationExampleComponent {
+    private readonly dialogService = inject(DialogService);
+    private readonly destroyRef = inject(DestroyRef);
+
+    @ViewChild("nextAction", { read: ElementRef })
+    private nextAction: ElementRef<HTMLButtonElement>;
+
+    public openerRemoved = false;
+    public continued = false;
+
+    public open(content: TemplateRef<unknown>): void {
+        const dialog = this.dialogService.open(content, { size: "sm" });
+        dialog.closed$
+            .pipe(take(1), takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => this.nextAction.nativeElement.focus());
+        this.openerRemoved = true;
+    }
+
+    public reset(): void {
+        this.openerRemoved = false;
+        this.continued = false;
+    }
+}
