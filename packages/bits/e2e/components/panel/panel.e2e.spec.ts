@@ -107,6 +107,55 @@ test.describe("USERCONTROL Panel", () => {
         });
     });
 
+    test.describe("Toggle focus", () => {
+        for (const panelId of [
+            "nui-demo-collapsible-panel",
+            "nui-demo-floating-panel",
+            "nui-demo-resizable-panel",
+        ]) {
+            test(`should retain focus on ${panelId} after keyboard and mouse toggles`, async ({
+                page,
+            }) => {
+                const panel = Atom.find<PanelAtom>(PanelAtom, panelId);
+                await panel.toBeVisible();
+                const toggle = panel.toggleButton.first();
+                let collapsed = await panel
+                    .getLocator()
+                    .first()
+                    .evaluate(element =>
+                        element.classList.contains("nui-panel--is-collapsed")
+                    );
+
+                await toggle.focus();
+                for (const activation of [
+                    "Enter",
+                    "Enter",
+                    "Space",
+                    "Space",
+                    "click",
+                    "click",
+                ]) {
+                    if (activation === "click") {
+                        await toggle.click();
+                    } else {
+                        await page.keyboard.press(activation);
+                    }
+                    collapsed = !collapsed;
+                    if (collapsed) {
+                        await panel.toBeCollapsed();
+                    } else {
+                        await panel.toBeExpanded();
+                    }
+                    await expect(toggle).toBeFocused();
+                    await expect(toggle).toHaveAttribute(
+                        "aria-disabled",
+                        "false"
+                    );
+                }
+            });
+        }
+    });
+
     test.describe("Collapsible", () => {
         let panelCollapsible: PanelAtom;
 
