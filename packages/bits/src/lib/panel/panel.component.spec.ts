@@ -224,6 +224,46 @@ describe("components >", () => {
             );
         }));
 
+        for (const initiallyCollapsed of [true, false]) {
+            it(`should keep the toggle focused while ${
+                initiallyCollapsed ? "expanding" : "collapsing"
+            } and ignore repeated activation`, fakeAsync(() => {
+                testComponent.panelMode = PanelModes.collapsible;
+                testComponent.isCollapsed = initiallyCollapsed;
+                fixture.detectChanges();
+                tick(PanelComponent.ANIMATION_TIME);
+                fixture.detectChanges();
+
+                const toggle: HTMLButtonElement =
+                    fixture.nativeElement.querySelector(
+                        ".nui-panel__header-btn"
+                    );
+                toggle.focus();
+                expect(document.activeElement).toBe(toggle);
+
+                toggle.click();
+                fixture.detectChanges();
+                expect(toggle.disabled).toBeFalse();
+                expect(toggle.getAttribute("aria-disabled")).toBe("true");
+                expect(toggle.classList.contains("disabled")).toBeTrue();
+                expect(document.activeElement).toBe(toggle);
+
+                toggle.click();
+                fixture.detectChanges();
+                tick(PanelComponent.ANIMATION_TIME);
+                fixture.detectChanges();
+
+                expect(
+                    fixture.nativeElement
+                        .querySelector(".nui-panel.media")
+                        .classList.contains("nui-panel--is-collapsed")
+                ).toBe(!initiallyCollapsed);
+                expect(toggle.getAttribute("aria-disabled")).toBe("false");
+                expect(toggle.classList.contains("disabled")).toBeFalse();
+                expect(document.activeElement).toBe(toggle);
+            }));
+        }
+
         it("should have collapse button when collapsible", () => {
             fixture.detectChanges();
             let collapseButtonDebugElement = fixture.debugElement.query(

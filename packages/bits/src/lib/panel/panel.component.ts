@@ -506,6 +506,9 @@ export class PanelComponent
     }
 
     public toggleCollapsedOnClick(): void {
+        if (this.isCollapsible && this.isAnimating) {
+            return;
+        }
         if (!this.isHoverable) {
             this.toggleHideOrCollapsed();
         }
