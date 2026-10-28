@@ -169,17 +169,17 @@ commands:
 executors:
     node:
         docker:
-            - image: cimg/node:20.19.0
+            - image: cimg/node:22.22.2
         working_directory: ~/nova
 
     node-browsers:
         docker:
-            - image: cimg/node:20.19.0
+            - image: cimg/node:22.22.2
         working_directory: ~/nova
 
     playwright:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.58.1-noble
+            - image: mcr.microsoft.com/playwright:v1.64.1-noble
         working_directory: ~/nova
         environment:
             NODE_ENV: development

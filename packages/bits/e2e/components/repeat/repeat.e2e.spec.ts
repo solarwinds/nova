@@ -70,7 +70,7 @@ test.describe("USERCONTROL Repeat", () => {
             options.first().locator("input[type=checkbox]")
         ).toBeChecked();
         await expect(
-            options.first().locator("nui-checkbox label")
+            options.first().locator("nui-checkbox input[type=checkbox]")
         ).toHaveAccessibleName("blue");
 
         const referencesStayLocal = await page

@@ -406,7 +406,7 @@ test.describe("USERCONTROL form-field >", () => {
             "#nui-form-field-test-textbox-number input",
             "#nui-form-field-test-switch [role=checkbox]",
             "#nui-form-field-test-radio",
-            "#nui-form-field-test-checkbox label",
+            "#nui-form-field-test-checkbox input[type=checkbox]",
             "#nui-form-field-test-checkbox-group",
             "nui-color-picker [role=combobox]",
             "#nui-form-field-test-datepicker input",

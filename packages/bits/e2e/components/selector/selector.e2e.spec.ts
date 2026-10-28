@@ -50,6 +50,20 @@ test.describe("USERCONTROL Selector", () => {
         indeterminateElement = Helpers.page.locator("#nui-demo-indeterminate");
     });
 
+    test("should keep the decorative checkbox out of the tab order", async ({
+        page,
+    }) => {
+        await expect(subject.getCheckbox.getInputElement).toHaveAttribute(
+            "tabindex",
+            "-1"
+        );
+        await subject.getSelectorButton.getLocator().focus();
+        await page.keyboard.press("Tab");
+        await expect(
+            subject.getLocator().locator(".nui-selector__toggle")
+        ).toBeFocused();
+    });
+
     test("should get appropriate 'SelectionType' state by clicking repeat item", async () => {
         await subject.select(SelectionType.All);
         await expect(selectionElement).toContainText(SelectionType.All);

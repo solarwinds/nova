@@ -103,7 +103,7 @@ export class CheckboxComponent
         }
     }
 
-    /** Users ca specify the 'aria-labelledby' which will be set to the input element */
+    /** The 'aria-labelledby' attribute is set on the focusable input element. */
     @Input() ariaLabelledby: string | null = null;
 
     /** The 'aria-describedby' attribute is read after the element's label and field type. */
@@ -217,7 +217,7 @@ export class CheckboxComponent
 
     public ngAfterViewInit(): void {
         this.rendererListener = this.renderer.listen(
-            this.checkboxLabel.nativeElement,
+            this.inputViewContainer.element.nativeElement,
             "keydown",
             (event: KeyboardEvent) => {
                 this.eventBusService
@@ -229,7 +229,10 @@ export class CheckboxComponent
         this.sub = this.eventBusService
             .getStream(CHECKBOX_KEYDOWN_EVENT)
             .subscribe(event => {
-                if (event.target === this.checkboxLabel.nativeElement) {
+                if (
+                    event.target ===
+                    this.inputViewContainer.element.nativeElement
+                ) {
                     if (this.keysAction.includes(event.code)) {
                         event.stopPropagation();
                         event.preventDefault();

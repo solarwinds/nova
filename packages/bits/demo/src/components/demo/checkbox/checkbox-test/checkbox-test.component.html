@@ -30,11 +30,6 @@
 
 <div class="container mt-4">
     <h4>Checkbox Description</h4>
-    <p id="checkbox-delivery-instructions">Messages are sent once a day.</p>
-    <p id="checkbox-delivery-updated-instructions"
-        >Messages are sent once a week.</p
-    >
-    <p id="checkbox-delivery-error">Confirm your email address first.</p>
     <div id="nui-demo-checkbox-description">
         <nui-checkbox
             [id]="'checkbox-description-input'"
@@ -42,17 +37,40 @@
             [ariaDescribedby]="descriptionIds">
             Send email notifications
         </nui-checkbox>
+        @if (descriptionIds) {
+        <div class="ml-4 mt-2">
+            @if
+            (descriptionIds.includes("checkbox-delivery-updated-instructions"))
+            {
+            <p id="checkbox-delivery-updated-instructions" class="mb-1">
+                Messages are sent once a week.
+            </p>
+            } @else {
+            <p id="checkbox-delivery-instructions" class="mb-1">
+                Messages are sent once a day.
+            </p>
+            }
+            <p id="checkbox-delivery-error" class="mb-0">
+                Confirm your email address first.
+            </p>
+        </div>
+        }
     </div>
-    <button
-        type="button"
-        id="checkbox-update-description"
-        (click)="descriptionIds = 'checkbox-delivery-updated-instructions checkbox-delivery-error'">
-        Update description
-    </button>
-    <button
-        type="button"
-        id="checkbox-remove-description"
-        (click)="descriptionIds = undefined">
-        Remove description
-    </button>
+    <div class="mt-3">
+        <button
+            nui-button
+            type="button"
+            class="mr-2"
+            id="checkbox-update-description"
+            (click)="descriptionIds = 'checkbox-delivery-updated-instructions checkbox-delivery-error'">
+            Update description
+        </button>
+        <button
+            nui-button
+            type="button"
+            id="checkbox-remove-description"
+            (click)="descriptionIds = undefined">
+            Remove description
+        </button>
+    </div>
 </div>
