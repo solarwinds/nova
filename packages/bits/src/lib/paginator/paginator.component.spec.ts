@@ -164,7 +164,7 @@ describe("components >", () => {
 
             expect(subject.page).toBe(5);
             expect(byLabel("Next Page").disabled).toBeTrue();
-            expect(activeElement()).toBe(button('button[aria-current="page"]'));
+            expect(activeElement()).toBe(button("button[aria-current=page]"));
         });
 
         it("should move focus to the current page when Previous becomes disabled", () => {
@@ -176,7 +176,7 @@ describe("components >", () => {
 
             expect(subject.page).toBe(1);
             expect(byLabel("Previous Page").disabled).toBeTrue();
-            expect(activeElement()).toBe(button('button[aria-current="page"]'));
+            expect(activeElement()).toBe(button("button[aria-current=page]"));
         });
 
         it("should not take focus when it was outside the paginator", () => {
@@ -200,7 +200,7 @@ describe("components >", () => {
             TestBed.tick();
 
             expect(byLabel("Next Page").disabled).toBeTrue();
-            expect(activeElement()).toBe(button('button[aria-current="page"]'));
+            expect(activeElement()).toBe(button("button[aria-current=page]"));
         });
     });
 });
