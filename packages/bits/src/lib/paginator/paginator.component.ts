@@ -169,11 +169,6 @@ export class PaginatorComponent
 
     private _dotsPagesPerRow = 5;
 
-    /** Keeps DOM nodes (and focus) stable across page changes. */
-    public trackItem = (index: number, item: IPaginatorItem): unknown =>
-        item.iconName ??
-        (item.value === this.dots ? `dots-${index}` : item.value);
-
     public get dotsPagesPerRow(): number {
         return this._dotsPagesPerRow;
     }
@@ -187,6 +182,11 @@ export class PaginatorComponent
     ) {
         this.popupContainer.parent = this;
     }
+
+    /** Keeps DOM nodes (and focus) stable across page changes. */
+    public trackItem = (index: number, item: IPaginatorItem): unknown =>
+        item.iconName ??
+        (item.value === this.dots ? `dots-${index}` : item.value);
 
     /**
      * Component initialization
@@ -386,9 +386,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
 
                 if (isActiveDisabled || isFocusLost) {
                     element
-                        .querySelector<HTMLElement>(
-                            'button[aria-current="page"]'
-                        )
+                        .querySelector<HTMLElement>("button[aria-current=page]")
                         ?.focus();
                 }
             },
