@@ -8,6 +8,7 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | **nui-paginator** keeps keyboard focus after a page change (WCAG 2.4.3): the clicked button stays focused, and focus moves to the current page when Previous/Next becomes disabled.
 - `@nova-ui/bits` | Improved dialog and wizard focus management for WCAG 2.4.3: restore focus to usable dialog openers, preserve external focus during wizard navigation, recover focus after removing the active step, and fix horizontal wizard keyboard navigation across responsive overflow. Added a dialog example demonstrating focus handoff through `closed$` when the opener is removed.
 - `@nova-ui/bits` | Dismisses focus- and hover-triggered popovers with Escape without reopening during the active trigger session, and supports Tab/Shift+Tab navigation through interactive content.
 - `@nova-ui/bits` | Guard lazy overlay access in `nui-popup` when `isOpen` is initially `false` and cancel stale deferred open/close timers.

@@ -24,6 +24,7 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import noop from "lodash/noop";
 
 import { PaginatorComponent } from "./paginator.component";
+import { NuiPaginatorModule } from "./paginator.module";
 import { LoggerService } from "../../services/log-service";
 
 describe("components >", () => {
@@ -107,6 +108,99 @@ describe("components >", () => {
             subject.pageSize = 35;
             subject.ngOnInit();
             expect(subject.pageSizeSet).toEqual([5, 15, 25, 50, 170]);
+        });
+    });
+
+    describe("paginator focus >", () => {
+        let subject: PaginatorComponent;
+        let fixture: ComponentFixture<PaginatorComponent>;
+        let host: HTMLElement;
+
+        const render = (pageCount: number, page: number): void => {
+            subject.pageSize = 10;
+            subject.total = pageCount * 10;
+            subject.page = page;
+            subject.ngOnChanges({ page: new SimpleChange(1, page, true) });
+        };
+        const button = (selector: string): HTMLButtonElement =>
+            host.querySelector<HTMLButtonElement>(
+                selector
+            ) as HTMLButtonElement;
+        const byLabel = (label: string): HTMLButtonElement =>
+            button(`button[aria-label="${label}"]`);
+        const activeElement = (): Element | null => document.activeElement;
+
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [NuiPaginatorModule],
+            });
+            fixture = TestBed.createComponent(PaginatorComponent);
+            subject = fixture.componentInstance;
+            host = fixture.nativeElement;
+        });
+
+        it("should keep focus on the activated page and Next buttons while they stay enabled", () => {
+            render(5, 1);
+            byLabel("Page 3").focus();
+
+            byLabel("Page 3").click();
+
+            expect(subject.page).toBe(3);
+            expect(activeElement()).toBe(byLabel("Page 3"));
+
+            byLabel("Next Page").focus();
+            byLabel("Next Page").click();
+
+            expect(subject.page).toBe(4);
+            expect(activeElement()).toBe(byLabel("Next Page"));
+        });
+
+        it("should move focus to the current page when Next becomes disabled", () => {
+            render(5, 4);
+            byLabel("Next Page").focus();
+
+            byLabel("Next Page").click();
+            TestBed.tick();
+
+            expect(subject.page).toBe(5);
+            expect(byLabel("Next Page").disabled).toBeTrue();
+            expect(activeElement()).toBe(button("button[aria-current=page]"));
+        });
+
+        it("should move focus to the current page when Previous becomes disabled", () => {
+            render(5, 2);
+            byLabel("Previous Page").focus();
+
+            byLabel("Previous Page").click();
+            TestBed.tick();
+
+            expect(subject.page).toBe(1);
+            expect(byLabel("Previous Page").disabled).toBeTrue();
+            expect(activeElement()).toBe(button("button[aria-current=page]"));
+        });
+
+        it("should not take focus when it was outside the paginator", () => {
+            render(5, 1);
+            const outside = document.createElement("button");
+            document.body.appendChild(outside);
+            outside.focus();
+
+            subject.goToPage(3);
+            TestBed.tick();
+
+            expect(activeElement()).toBe(outside);
+            outside.remove();
+        });
+
+        it("should move focus to the current page when the parent changes the page and Next becomes disabled", () => {
+            render(5, 4);
+            byLabel("Next Page").focus();
+
+            render(5, 5);
+            TestBed.tick();
+
+            expect(byLabel("Next Page").disabled).toBeTrue();
+            expect(activeElement()).toBe(button("button[aria-current=page]"));
         });
     });
 });

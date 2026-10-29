@@ -7,7 +7,7 @@
             <li
                 title="{{ item.title }}"
                 [ngClass]="item.style"
-                *ngFor="let item of itemsList"
+                *ngFor="let item of itemsList; trackBy: trackItem"
                 value="{{ item.value }}">
                 <button
                     nui-button

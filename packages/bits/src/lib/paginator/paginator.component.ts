@@ -20,10 +20,14 @@
 
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
+    afterNextRender,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    ElementRef,
     EventEmitter,
+    inject,
+    Injector,
     Input,
     OnChanges,
     OnDestroy,
@@ -159,6 +163,10 @@ export class PaginatorComponent
     @ViewChild(CdkVirtualScrollViewport)
     private virtualScrollViewport: CdkVirtualScrollViewport;
 
+    private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+    private readonly focusInjector = inject(Injector);
+    private focusRestorePending = false;
+
     private _dotsPagesPerRow = 5;
 
     public get dotsPagesPerRow(): number {
@@ -174,6 +182,11 @@ export class PaginatorComponent
     ) {
         this.popupContainer.parent = this;
     }
+
+    /** Keeps DOM nodes (and focus) stable across page changes. */
+    public trackItem = (index: number, item: IPaginatorItem): unknown =>
+        item.iconName ??
+        (item.value === this.dots ? `dots-${index}` : item.value);
 
     /**
      * Component initialization
@@ -351,10 +364,43 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         }
     }
 
+    private scheduleFocusRestore(focusedElement: Element | null): void {
+        if (this.focusRestorePending) {
+            return;
+        }
+        this.focusRestorePending = true;
+        afterNextRender(
+            () => {
+                this.focusRestorePending = false;
+                const element = this.host.nativeElement;
+                const active = element.ownerDocument.activeElement;
+                const isActiveDisabled =
+                    element.contains(active) &&
+                    (active as HTMLButtonElement).disabled === true;
+                // Focus falls to <body> when the focused button is removed or disabled.
+                const isFocusLost =
+                    active === element.ownerDocument.body &&
+                    (focusedElement?.isConnected === false ||
+                        (focusedElement as HTMLButtonElement | null)
+                            ?.disabled === true);
+
+                if (isActiveDisabled || isFocusLost) {
+                    element
+                        .querySelector<HTMLElement>("button[aria-current=page]")
+                        ?.focus();
+                }
+            },
+            { injector: this.focusInjector }
+        );
+    }
+
     /**
      * Add items to paginator component
      */
     private assemble() {
+        const focusedElement =
+            this.host.nativeElement.ownerDocument.activeElement;
+        const hadFocus = this.host.nativeElement.contains(focusedElement);
         this.itemsList = [];
         if (this.getPageCount() <= 0) {
             return;
@@ -382,6 +428,10 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
 
         this.addNext();
         this.cd.detectChanges();
+
+        if (hadFocus) {
+            this.scheduleFocusRestore(focusedElement);
+        }
     }
 
     /**
