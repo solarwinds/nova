@@ -5,7 +5,7 @@
             class="nui-paginator__list"
             aria-label="List of pages"
             i18n-aria-label="@@paginatorPagesList">
-            @for (item of itemsList; track item) {
+            @for (item of itemsList; track trackItem($index, item)) {
             <li
                 title="{{ item.title }}"
                 [ngClass]="item.style"
