@@ -73,6 +73,16 @@ describe("ConfiguratorComponent", () => {
         expect(component).toBeTruthy();
     });
 
+    it("should expose a named modal dialog with focus trap boundaries", () => {
+        const dialog = fixture.nativeElement.querySelector("[role='dialog']");
+        expect(dialog.getAttribute("aria-label")).toBe("Widget configuration");
+        expect(dialog.getAttribute("aria-modal")).toBe("true");
+        expect(
+            fixture.nativeElement.querySelectorAll(".cdk-focus-trap-anchor")
+                .length
+        ).toBe(2);
+    });
+
     it("should use the placeholder widget in the preview by default", () => {
         expect(component.previewWidget?.type).toEqual("previewPlaceholder");
     });
