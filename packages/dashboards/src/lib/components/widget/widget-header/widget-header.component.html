@@ -144,36 +144,24 @@
                     </nui-menu-action>
                     }
                 </nui-menu>
-                <!--TODO: After NUI-3431 should be changed to regular menu instead of popup-->
-                <nui-popup
-                    #popup
+                <nui-menu
+                    #removeMenu
                     class="nui-widget-header__action-remove"
+                    icon="remove"
+                    displayStyle="action"
+                    ariaLabel="Remove widget"
+                    i18n-ariaLabel
+                    nuiTooltip="Remove widget"
+                    i18n-nuiTooltip
                     [appendToBody]="true"
                     *ngIf="removable && editMode">
-                    <span nuiTooltip="Remove widget" i18n-nuiTooltip>
-                        <button
-                            nui-button
-                            nuiPopupToggle
-                            type="button"
-                            icon="remove"
-                            iconColor="red"
-                            displayStyle="action"
-                            aria-label="Remove widget"
-                            i18n-aria-label
-                            aria-haspopup="menu"
-                            [attr.aria-expanded]="
-                                popup?.isOpen ? 'true' : 'false'
-                            "></button>
-                    </span>
-                    <div popupAreaContent class="nui-menu">
-                        <nui-menu-action
-                            type="destructive"
-                            (actionDone)="removeWidget()"
-                            i18n
-                            >Remove Widget</nui-menu-action
-                        >
-                    </div>
-                </nui-popup>
+                    <nui-menu-action
+                        type="destructive"
+                        (actionDone)="removeWidget()"
+                        i18n
+                        >Remove Widget</nui-menu-action
+                    >
+                </nui-menu>
             </div>
         </div>
     </div>
