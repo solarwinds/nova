@@ -3,17 +3,15 @@
     [ngClass]="['nui-legend-series--state-' + seriesRenderState]"
     [class.nui-legend-series--deselected]="!isSelected">
     <div class="nui-legend-series__tile-wrapper">
-        <div class="nui-legend-series__tile">
-            <ng-content></ng-content>
-        </div>
-        <div
-            class="nui-legend-series__checkbox-wrapper"
-            aria-hidden="true"
-            [class.nui-legend-series__checkbox--checked]="isSelected">
-            <div class="nui-legend-series__checkbox-mark">
-                <i class="nui-legend-series__checkbox-glyph"></i>
-            </div>
-        </div>
+        <button
+            *ngIf="hasSeparateControls; else tile"
+            class="nui-legend-series__toggle"
+            type="button"
+            role="checkbox"
+            [attr.aria-checked]="isSelected"
+            [attr.aria-label]="toggleAriaLabel">
+            <ng-container *ngTemplateOutlet="tile"></ng-container>
+        </button>
     </div>
     <div
         *ngIf="hasInputDescription(); else descriptionTemplate"
@@ -35,6 +33,19 @@
         <ng-content select="[legendMenu]"></ng-content>
     </div>
 </div>
+<ng-template #tile>
+    <div class="nui-legend-series__tile">
+        <ng-content></ng-content>
+    </div>
+    <div
+        class="nui-legend-series__checkbox-wrapper"
+        aria-hidden="true"
+        [class.nui-legend-series__checkbox--checked]="isSelected">
+        <div class="nui-legend-series__checkbox-mark">
+            <i class="nui-legend-series__checkbox-glyph"></i>
+        </div>
+    </div>
+</ng-template>
 <ng-template #descriptionTemplate>
     <div class="d-flex" #projectedDescription>
         <ng-content select="[description]"></ng-content>
