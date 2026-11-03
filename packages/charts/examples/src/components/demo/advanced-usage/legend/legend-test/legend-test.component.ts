@@ -41,6 +41,9 @@ import {
     standalone: false,
 })
 export class LegendTestExampleComponent {
+    public separateLegendSelected = true;
+    public separateLegendActionCount = 0;
+
     public palette: IChartPalette = new ChartPalette(CHART_PALETTE_CS1);
     public markers: IValueProvider<IChartMarker> =
         new SequentialChartMarkerProvider(CHART_MARKERS);

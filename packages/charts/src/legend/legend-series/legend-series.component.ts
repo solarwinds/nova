@@ -85,6 +85,14 @@ export class LegendSeriesComponent implements AfterContentInit {
     @Input() public isSelected = true;
 
     /**
+     * Moves the checkbox from the host to the tile so projected actions remain independent.
+     */
+    @Input() public separateControls = false;
+
+    /** Accessible name of the tile checkbox when separateControls is enabled. */
+    @Input() public toggleAriaLabel = $localize`Toggle series visibility`;
+
+    /**
      * Emits an event with a boolean value indicating a new selected status
      */
     @Output() public isSelectedChange = new EventEmitter();
@@ -127,6 +135,11 @@ export class LegendSeriesComponent implements AfterContentInit {
         return this._interactive;
     }
 
+    @HostBinding(`class.${LEGEND_SERIES_CLASS_NAME}--separate-controls`)
+    public get hasSeparateControls(): boolean {
+        return this._interactive && this.separateControls;
+    }
+
     @HostBinding(`class.${LEGEND_SERIES_CLASS_NAME}--horizontal`)
     public isHorizontalClassApplied = false;
 
@@ -138,19 +151,21 @@ export class LegendSeriesComponent implements AfterContentInit {
     @HostBinding("attr.role")
     get role(): string | null {
         if (this._interactive) {
-            return "checkbox";
+            return this.separateControls ? "group" : "checkbox";
         }
         return this.legend?.interactive === false ? "listitem" : null;
     }
 
     @HostBinding("attr.tabindex")
     get interactiveTabIndex(): number | null {
-        return this._interactive ? 0 : null;
+        return this._interactive && !this.separateControls ? 0 : null;
     }
 
     @HostBinding("attr.aria-checked")
     get interactiveAriaChecked(): boolean | null {
-        return this._interactive ? this.isSelected : null;
+        return this._interactive && !this.separateControls
+            ? this.isSelected
+            : null;
     }
 
     private _seriesRenderState: RenderState;
@@ -185,14 +200,14 @@ export class LegendSeriesComponent implements AfterContentInit {
 
     @HostListener("keydown.enter")
     public onEnterKey(): void {
-        if (this.interactive) {
+        if (this.interactive && !this.separateControls) {
             this.isSelectedChange.emit(!this.isSelected);
         }
     }
 
     @HostListener("keydown.space", ["$event"])
     public onSpaceKey(event: Event): void {
-        if (this.interactive) {
+        if (this.interactive && !this.separateControls) {
             event.preventDefault();
             this.isSelectedChange.emit(!this.isSelected);
         }

@@ -18,6 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import AxeBuilder from "@axe-core/playwright";
+
 import {
     Atom,
     test,
@@ -34,6 +36,107 @@ test.describe("Legend", () => {
     let richLegendDefault: LegendAtom;
     let richLegendInteractive: LegendAtom;
     let richLegendWithProjectedDescription: LegendAtom;
+
+    test.describe("separate controls", () => {
+        test("should expose accessible independent controls", async ({
+            page,
+        }) => {
+            const results = await new AxeBuilder({ page })
+                .include("#separate-controls-legend-test")
+                .analyze();
+            expect(results.violations).toEqual([]);
+        });
+
+        test("should expose independent checkbox and description actions", async ({
+            page,
+        }) => {
+            const legend = page.locator("#separate-controls-legend-test");
+            const series = legend.locator("nui-legend-series");
+            const toggle = legend.getByRole("checkbox", {
+                name: "Series One",
+                exact: true,
+            });
+            const action = legend.getByRole("button", {
+                name: "Inspect Series One",
+            });
+            await expect(series).toHaveAttribute("role", "group");
+            await expect(series).not.toHaveAttribute("tabindex");
+            await expect(toggle).toBeChecked();
+            await expect(toggle.locator("button, a, input")).toHaveCount(0);
+            const toggleBounds = await toggle.boundingBox();
+            const tileBounds = await toggle
+                .locator(".nui-legend-series__tile")
+                .boundingBox();
+            expect(toggleBounds).not.toBeNull();
+            expect(tileBounds).not.toBeNull();
+            expect(toggleBounds?.height).toBe(tileBounds?.height);
+            expect(
+                await action.evaluate(
+                    element => element.closest('[role="checkbox"]') === null
+                )
+            ).toBe(true);
+
+            await toggle.focus();
+            await page.keyboard.press("Tab");
+            await expect(action).toBeFocused();
+            await page.keyboard.press("Shift+Tab");
+            await expect(toggle).toBeFocused();
+        });
+
+        test("should toggle once per key and keep actions independent", async ({
+            page,
+        }) => {
+            const legend = page.locator("#separate-controls-legend-test");
+            const toggle = legend.getByRole("checkbox", {
+                name: "Series One",
+                exact: true,
+            });
+            const count = page.locator("#separate-controls-action-count");
+            await toggle.focus();
+            await page.keyboard.press("Enter");
+            await expect(toggle).not.toBeChecked();
+            await page.keyboard.press("Space");
+            await expect(toggle).toBeChecked();
+            await expect(count).toHaveText("0");
+
+            await page.keyboard.press("Tab");
+            await page.keyboard.press("Enter");
+            await expect(count).toHaveText("1");
+            await page.keyboard.press("Space");
+            await expect(count).toHaveText("2");
+            await expect(toggle).toBeChecked();
+
+            const menuAction = legend.getByRole("button", {
+                name: "Series menu action",
+            });
+            await page.keyboard.press("Tab");
+            await expect(menuAction).toBeFocused();
+            await page.mouse.move(0, 0);
+            await expect(menuAction).toBeVisible();
+            await page.keyboard.press("Enter");
+            await expect(count).toHaveText("3");
+            await expect(toggle).toBeChecked();
+        });
+
+        test("should preserve pointer toggling without toggling from an action", async ({
+            page,
+        }) => {
+            const legend = page.locator("#separate-controls-legend-test");
+            const toggle = legend.getByRole("checkbox", {
+                name: "Series One",
+                exact: true,
+            });
+            await toggle.click();
+            await expect(toggle).not.toBeChecked();
+            await legend
+                .getByRole("button", { name: "Inspect Series One" })
+                .click();
+            await expect(
+                page.locator("#separate-controls-action-count")
+            ).toHaveText("1");
+            await expect(toggle).not.toBeChecked();
+        });
+    });
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("advanced-usage/legend/test", page);

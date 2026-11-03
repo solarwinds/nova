@@ -97,6 +97,20 @@
         display: flex;
     }
 
+    & &__toggle {
+        display: flex;
+        padding: 0;
+        border: 0;
+        background: none;
+        color: inherit;
+        font: inherit;
+        cursor: inherit;
+
+        &:focus-visible {
+            .focus-outline();
+        }
+    }
+
     &--horizontal:not(:last-child) {
         margin-right: @nui-space-sm;
     }
@@ -148,6 +162,10 @@
     }
 
     &:hover .legend-menu {
+        display: flex;
+    }
+
+    &--separate-controls:focus-within .legend-menu {
         display: flex;
     }
 

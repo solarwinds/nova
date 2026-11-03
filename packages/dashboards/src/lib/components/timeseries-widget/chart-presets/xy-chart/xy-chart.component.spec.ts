@@ -236,6 +236,20 @@ describe("XYChartComponent", () => {
             } as SimpleChange,
         };
 
+        it("should stop propagation so drilldown does not toggle visibility", () => {
+            component.configuration = {
+                interaction: "series",
+            } as ITimeseriesWidgetConfig;
+            component.ngOnChanges(initializationChanges);
+            const event = new MouseEvent("click", { bubbles: true });
+            const stopPropagation = spyOn(event, "stopPropagation");
+            component.onPrimaryDescClick(
+                event,
+                component.chartAssist.legendSeriesSet[0]
+            );
+            expect(stopPropagation).toHaveBeenCalledTimes(1);
+        });
+
         it("should communicate interaction on the EventBus when series is interactive", () => {
             const spy = spyOn(
                 eventBus.getStream(INTERACTION),
