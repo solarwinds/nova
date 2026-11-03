@@ -31,6 +31,7 @@ import {
     Component,
     ElementRef,
     HostBinding,
+    HostListener,
     Inject,
     inject,
     Input,
@@ -42,7 +43,7 @@ import {
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { EventBus, IEvent } from "@nova-ui/bits";
+import { EventBus, IEvent, MenuComponent } from "@nova-ui/bits";
 
 import { IHeaderLinkProvider } from "./types";
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
@@ -111,6 +112,8 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @ViewChild("widgetHeaderCustomElement")
     public widgetHeaderCustomElement: ElementRef;
+
+    @ViewChild("removeMenu") public removeMenu?: MenuComponent;
 
     public withCustomElement: boolean;
     private onDestroy$: Subject<void> = new Subject<void>();
@@ -207,6 +210,20 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
     public removeWidget(): void {
         this.eventBus.getStream(WIDGET_REMOVE).next({});
+    }
+
+    @HostListener("document:focusin", ["$event"])
+    public onDocumentFocusIn(event: FocusEvent): void {
+        const menu = this.removeMenu;
+        const target = event.target;
+        if (
+            menu?.popup?.isOpen &&
+            target instanceof Node &&
+            !menu.menuToggle.nativeElement.contains(target) &&
+            !menu.popup.popupAreaContent?.nativeElement.contains(target)
+        ) {
+            menu.popup.closePopup();
+        }
     }
 
     public toggleCollapsed(): void {
