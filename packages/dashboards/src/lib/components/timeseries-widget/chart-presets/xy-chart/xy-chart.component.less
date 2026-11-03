@@ -4,6 +4,21 @@
 @import (reference) "@nova-ui/charts/sdk/less/nui-charts.less";
 
 .xy-chart {
+    &__legend-drilldown {
+        display: block;
+        width: 100%;
+        padding: 0 @nui-space-xs;
+        border: 0;
+        background: none;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+
+        &:focus-visible {
+            .focus-outline();
+        }
+    }
+
     &__legend-series {
         .link {
             &.description-primary,
