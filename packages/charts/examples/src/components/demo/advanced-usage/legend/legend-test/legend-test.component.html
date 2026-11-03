@@ -12,6 +12,35 @@
         </nui-basic-legend-tile>
     </nui-legend-series>
 </nui-legend>
+<h2>Independent legend controls</h2>
+<nui-legend id="separate-controls-legend-test" [interactive]="true">
+    <nui-legend-series
+        [separateControls]="true"
+        toggleAriaLabel="Series One"
+        [(isSelected)]="separateLegendSelected">
+        <nui-rich-legend-tile
+            value="42"
+            unitLabel="Kbps"
+            color="white"
+            backgroundColor="royalblue"></nui-rich-legend-tile>
+        <button
+            description
+            type="button"
+            (click)="$event.stopPropagation(); separateLegendActionCount = separateLegendActionCount + 1">
+            Inspect Series One
+        </button>
+        <button
+            legendMenu
+            type="button"
+            (click)="$event.stopPropagation(); separateLegendActionCount = separateLegendActionCount + 1">
+            Series menu action
+        </button>
+    </nui-legend-series>
+</nui-legend>
+<output
+    id="separate-controls-action-count"
+    >{{ separateLegendActionCount }}</output
+>
 
 <h3>Basic Interactive Legend</h3>
 <nui-legend
