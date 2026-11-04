@@ -18,7 +18,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { DATA_POINT_INTERACTION_RESET, DESTROY_EVENT } from "../../constants";
+import {
+    DATA_POINT_INTERACTION_RESET,
+    DESTROY_EVENT,
+    INTERACTION_DATA_POINTS_EVENT,
+} from "../../constants";
 import { LineAccessors } from "../../renderers/line/line-accessors";
 import { LineRenderer } from "../../renderers/line/line-renderer";
 import { RenderState } from "../../renderers/types";
@@ -27,7 +31,12 @@ import { ChartAssist } from "./chart-assist";
 import { ChartAssistEventType, ChartAssistRenderStateData } from "./types";
 import { LinearScale } from "../common/scales/linear-scale";
 import { NoopScale } from "../common/scales/noop-scale";
-import { IAccessors, IChartSeries, IDataPoint } from "../common/types";
+import {
+    IAccessors,
+    IChartSeries,
+    IDataPoint,
+    InteractionType,
+} from "../common/types";
 import { XYGrid } from "../grid/xy-grid";
 
 describe("chart assist >", () => {
@@ -95,6 +104,50 @@ describe("chart assist >", () => {
     });
 
     describe("highlighted values", () => {
+        it("updates both legend value paths for keyboard inspection and resets on dismissal", () => {
+            let legendData: unknown;
+            const subscription = ca
+                .legendLabelData$(series)
+                .subscribe(value => {
+                    legendData = value;
+                });
+            const inspectedPoint: IDataPoint = {
+                ...dataPoint,
+                index: 1,
+                data: { x: 1, y: 0.25 },
+            };
+            series.data.push(inspectedPoint.data);
+            const stream = chart
+                .getEventBus()
+                .getStream(INTERACTION_DATA_POINTS_EVENT);
+
+            stream.next({
+                data: {
+                    interactionType: InteractionType.Keyboard,
+                    dataPoints: { [series.id]: inspectedPoint },
+                },
+            });
+
+            expect(ca.getHighlightedValue(series, "y")).toBe(0.25);
+            expect(legendData).toEqual(inspectedPoint.data);
+
+            stream.next({
+                data: {
+                    interactionType: InteractionType.Keyboard,
+                    dataPoints: {
+                        [series.id]: {
+                            ...inspectedPoint,
+                            index: DATA_POINT_INTERACTION_RESET,
+                            data: null,
+                        },
+                    },
+                },
+            });
+            expect(ca.getHighlightedValue(series, "y")).toBe(0.25);
+            expect(legendData).toEqual(series.data[1]);
+            subscription.unsubscribe();
+        });
+
         it("returns formatted value", () => {
             expect(ca.getHighlightedValue(series, "y", "tick")).toBe("50%");
         });
