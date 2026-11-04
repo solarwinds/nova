@@ -180,7 +180,9 @@ export class ChartAssist<T extends IAccessors = IAccessors>
             .pipe(
                 filter(
                     event =>
-                        event.data.interactionType === InteractionType.MouseMove
+                        event.data.interactionType ===
+                            InteractionType.MouseMove ||
+                        event.data.interactionType === InteractionType.Keyboard
                 ),
                 map(event => event.data.dataPoints[chartSeries.id])
             );
@@ -375,7 +377,10 @@ export class ChartAssist<T extends IAccessors = IAccessors>
             [INTERACTION_DATA_POINTS_EVENT]: (
                 data: IInteractionDataPointsEvent
             ) => {
-                if (data.interactionType === InteractionType.MouseMove) {
+                if (
+                    data.interactionType === InteractionType.MouseMove ||
+                    data.interactionType === InteractionType.Keyboard
+                ) {
                     this.highlightedDataPoints = Object.assign(
                         {},
                         data.dataPoints

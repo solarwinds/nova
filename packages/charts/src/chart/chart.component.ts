@@ -26,6 +26,7 @@ import {
     ElementRef,
     forwardRef,
     HostBinding,
+    HostListener,
     Input,
     NgZone,
     OnChanges,
@@ -45,6 +46,7 @@ import {
     IChartComponent,
     IChartViewStatusEventPayload,
 } from "../core/common/types";
+import { ChartTooltipsPlugin } from "../core/plugins/tooltips/chart-tooltips-plugin";
 
 @Component({
     selector: "nui-chart",
@@ -71,6 +73,19 @@ export class ChartComponent
     /** Accessible name for the chart. Should be a localized string describing the chart content (WCAG 1.1.1). */
     @Input() public ariaLabel: string;
 
+    /** Opt-in positional tooltip navigation; intended for series with aligned data indices. */
+    @Input() public keyboardTooltips?: ChartTooltipsPlugin;
+
+    @HostBinding("attr.tabindex")
+    get keyboardTabIndex(): number | null {
+        return this.keyboardTooltips ? 0 : null;
+    }
+
+    @HostBinding("class.nui-chart--keyboard-tooltips")
+    get hasKeyboardTooltips(): boolean {
+        return !!this.keyboardTooltips;
+    }
+
     // Only expose role="img" when an accessible name is present; an img role
     // without a name is a WCAG 1.1.1 violation (axe: role-img-alt). When no
     // ariaLabel is supplied the inner svg stays aria-hidden, so the chart is
@@ -88,6 +103,8 @@ export class ChartComponent
     public resizeObserver?: ResizeObserver;
     private resizeHandler: Function;
     private intersectionObserver: IntersectionObserver;
+    private keyboardDataPointIndex = 0;
+    private keyboardInspectionActive = false;
 
     constructor(
         private elRef: ElementRef,
@@ -103,6 +120,17 @@ export class ChartComponent
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
+        if (
+            this.keyboardInspectionActive &&
+            (changes["keyboardTooltips"] || changes["chart"])
+        ) {
+            const previousPlugin: ChartTooltipsPlugin | undefined =
+                changes["keyboardTooltips"]?.previousValue ??
+                this.keyboardTooltips;
+            previousPlugin?.hideKeyboardTooltips();
+            this.keyboardInspectionActive = false;
+            this.keyboardDataPointIndex = 0;
+        }
         if (changes["chart"]) {
             const previousChart: IChart = changes["chart"].previousValue;
             if (previousChart) {
@@ -114,6 +142,84 @@ export class ChartComponent
                 this.redraw();
             }
         }
+    }
+
+    @HostListener("focus")
+    public onKeyboardFocus(): void {
+        this.keyboardDataPointIndex = -1;
+        if (this.elRef.nativeElement.matches(":focus-visible")) {
+            this.keyboardDataPointIndex = 0;
+            this.showKeyboardTooltip();
+        }
+    }
+
+    @HostListener("keydown", ["$event"])
+    public onKeyboardNavigation(event: KeyboardEvent): void {
+        const plugin = this.keyboardTooltips;
+        if (
+            !plugin ||
+            event.target !== this.elRef.nativeElement ||
+            event.altKey ||
+            event.ctrlKey ||
+            event.metaKey ||
+            event.shiftKey
+        ) {
+            return;
+        }
+        if (event.key === "Escape") {
+            if (!this.keyboardInspectionActive) {
+                return;
+            }
+            event.preventDefault();
+            event.stopPropagation();
+            plugin.hideKeyboardTooltips();
+            this.keyboardInspectionActive = false;
+            return;
+        }
+        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
+            return;
+        }
+        const count = plugin.getKeyboardDataPointCount();
+        if (count === 0) {
+            plugin.hideKeyboardTooltips();
+            return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        this.keyboardDataPointIndex = Math.max(
+            0,
+            Math.min(
+                count - 1,
+                this.keyboardDataPointIndex +
+                    (event.key === "ArrowRight" ? 1 : -1)
+            )
+        );
+        this.showKeyboardTooltip();
+    }
+
+    @HostListener("blur")
+    public onKeyboardBlur(): void {
+        this.keyboardTooltips?.hideKeyboardTooltips();
+        this.keyboardDataPointIndex = 0;
+        this.keyboardInspectionActive = false;
+    }
+
+    private showKeyboardTooltip(): void {
+        const plugin = this.keyboardTooltips;
+        if (!plugin) {
+            return;
+        }
+        const count = plugin.getKeyboardDataPointCount();
+        if (count === 0) {
+            plugin.hideKeyboardTooltips();
+            return;
+        }
+        this.keyboardDataPointIndex = Math.min(
+            this.keyboardDataPointIndex,
+            count - 1
+        );
+        plugin.showForIndex(this.keyboardDataPointIndex);
+        this.keyboardInspectionActive = true;
     }
 
     public ngAfterContentInit(): void {
