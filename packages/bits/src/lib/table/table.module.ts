@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { A11yModule } from "@angular/cdk/a11y";
 import { CdkTableModule } from "@angular/cdk/table";
 import { NgModule, Type } from "@angular/core";
 
@@ -45,8 +46,10 @@ import {
 } from "./table-virtual-scroll/table-virtual-scroll.directive";
 import { TableComponent } from "./table.component";
 import { NuiCommonModule } from "../../common/common.module";
+import { NuiButtonModule } from "../button/button.module";
 import { NuiCheckboxModule } from "../checkbox/checkbox.module";
 import { NuiIconModule } from "../icon/icon.module";
+import { NuiOverlayModule } from "../overlay/overlay.module";
 import { NuiRadioModule } from "../radio/radio.module";
 import { NuiSelectModule } from "../select/select.module";
 import { NuiSelectorModule } from "../selector/selector.module";
@@ -85,6 +88,9 @@ const DECLARATIONS_EXPORTS: Array<Type<any> | any[]> = [
         NuiCheckboxModule,
         NuiIconModule,
         CdkTableModule,
+        A11yModule,
+        NuiButtonModule,
+        NuiOverlayModule,
     ],
     declarations: DECLARATIONS_EXPORTS,
     exports: DECLARATIONS_EXPORTS,
