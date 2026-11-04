@@ -416,9 +416,30 @@ test.describe("USERCONTROL form-field >", () => {
             "#nui-form-field-test-select [role=combobox]",
             "#nui-form-field-test-combobox input",
         ];
+        const checkbox = page.locator("#nui-form-field-test-checkbox label");
+        await expect(
+            page.locator("#nui-form-field-test-checkbox").getByRole("checkbox")
+        ).toHaveCount(1);
+        await expect(checkbox).toHaveAttribute("role", "checkbox");
+        await expect(checkbox).toHaveAttribute("aria-disabled", "true");
+        await expect(checkbox).toHaveAccessibleName("Checkbox");
 
         for (const clearHints of [false, true]) {
             if (clearHints) {
+                await page
+                    .getByRole("button", {
+                        name: "Toggle Disabled State",
+                        exact: true,
+                    })
+                    .click();
+                await expect(checkbox).toHaveAttribute(
+                    "aria-disabled",
+                    "false"
+                );
+                await expect(checkbox).toHaveAccessibleName("Checkbox");
+                await expect(checkbox).toHaveAccessibleDescription(
+                    "Provide a value."
+                );
                 await page
                     .getByRole("button", {
                         name: "Clear field hints",
@@ -451,6 +472,15 @@ test.describe("USERCONTROL form-field >", () => {
                 }
             }
         }
+        await page
+            .getByRole("button", {
+                name: "Toggle Disabled State",
+                exact: true,
+            })
+            .click();
+        await expect(checkbox).toBeDisabled();
+        await expect(checkbox).toHaveAccessibleDescription("");
+        await expect(checkbox).not.toHaveAttribute("aria-describedby");
     });
 
     test("updates, clears and restores the caption name and names a recreated control", async ({
