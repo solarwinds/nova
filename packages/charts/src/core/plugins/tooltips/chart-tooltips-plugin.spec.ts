@@ -22,12 +22,18 @@ import { fakeAsync, tick } from "@angular/core/testing";
 
 import { ChartTooltipsPlugin } from "./chart-tooltips-plugin";
 import {
+    DATA_POINT_INTERACTION_RESET,
     INTERACTION_DATA_POINTS_EVENT,
     SERIES_STATE_CHANGE_EVENT,
 } from "../../../constants";
+import { LineAccessors } from "../../../renderers/line/line-accessors";
+import { LineRenderer } from "../../../renderers/line/line-renderer";
 import { RenderState } from "../../../renderers/types";
 import { Chart } from "../../chart";
 import {
+    IAccessors,
+    IChartSeries,
+    IInteractionDataPointsEvent,
     IDataPointsPayload,
     InteractionType,
     IRenderStateData,
@@ -396,6 +402,153 @@ describe("ChartTooltipsPlugin >", () => {
 
             expect(plugin.dataPoints[visibleId]).toBeTruthy();
             expect(plugin.dataPoints[hiddenId]).toBeUndefined();
+        });
+    });
+
+    describe("keyboard tooltip navigation", () => {
+        const createSeries = (
+            id: string,
+            data: object[],
+            position?: {
+                x: number;
+                y: number;
+                width?: number;
+                height?: number;
+            }
+        ): IChartSeries<IAccessors> => {
+            const renderer = new LineRenderer();
+            spyOn(renderer, "getDataPointPosition").and.returnValue(position);
+            return {
+                id,
+                data,
+                scales: {},
+                accessors: new LineAccessors(),
+                renderState: RenderState.default,
+                renderer,
+            };
+        };
+
+        const setSeriesAndVisibility = (
+            series: IChartSeries<IAccessors>[]
+        ): void => {
+            chart.getDataManager().update(series);
+            chart
+                .getEventBus()
+                .getStream(SERIES_STATE_CHANGE_EVENT)
+                .next({
+                    data: series.map(item => ({
+                        seriesId: item.id,
+                        state: item.renderState,
+                    })),
+                });
+        };
+
+        it("counts the longest visible series and excludes series hidden by render state", () => {
+            const shortSeries = createSeries("short", [{}, {}]);
+            const longSeries = createSeries("long", [{}, {}, {}, {}]);
+            const hiddenSeries = createSeries("hidden", [
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+            ]);
+            hiddenSeries.renderState = RenderState.hidden;
+            setSeriesAndVisibility([shortSeries, longSeries, hiddenSeries]);
+
+            expect(plugin.getKeyboardDataPointCount()).toBe(4);
+        });
+
+        it("returns zero when no visible series has data points", () => {
+            const emptySeries = createSeries("empty", []);
+            const hiddenSeries = createSeries("hidden", [{}]);
+            hiddenSeries.renderState = RenderState.hidden;
+            setSeriesAndVisibility([emptySeries, hiddenSeries]);
+
+            expect(plugin.getKeyboardDataPointCount()).toBe(0);
+        });
+
+        it("uses visible renderer geometry, skips invalid points, and emits keyboard data", () => {
+            const visible = createSeries("visible", [{}, {}], {
+                x: 10,
+                y: 20,
+                width: 3,
+                height: 4,
+            });
+            const missing = createSeries("missing", [{}, {}], undefined);
+            const nonFinite = createSeries("non-finite", [{}, {}], {
+                x: Number.NaN,
+                y: 5,
+            });
+            const hidden = createSeries("hidden", [{}, {}], {
+                x: 30,
+                y: 40,
+            });
+            hidden.renderState = RenderState.hidden;
+            setSeriesAndVisibility([visible, missing, nonFinite, hidden]);
+
+            const highlightSpy = spyOn(
+                chart.getRenderEngine(),
+                "highlightDataPoint"
+            );
+            const events: IInteractionDataPointsEvent[] = [];
+            chart
+                .getEventBus()
+                .getStream(INTERACTION_DATA_POINTS_EVENT)
+                .subscribe(event => events.push(event.data));
+            const showSpy = spyOn(plugin.showSubject, "next");
+
+            plugin.showForIndex(1);
+
+            expect(visible.renderer.getDataPointPosition).toHaveBeenCalledWith(
+                visible,
+                1,
+                visible.scales
+            );
+            expect(missing.renderer.getDataPointPosition).toHaveBeenCalled();
+            expect(nonFinite.renderer.getDataPointPosition).toHaveBeenCalled();
+            expect(hidden.renderer.getDataPointPosition).not.toHaveBeenCalled();
+            expect(highlightSpy).toHaveBeenCalledOnceWith("visible", 1);
+            expect(plugin.dataPoints).toEqual({
+                visible: {
+                    seriesId: "visible",
+                    dataSeries: visible,
+                    index: 1,
+                    data: visible.data[1],
+                    position: {
+                        x: 10,
+                        y: 20,
+                        width: 3,
+                        height: 4,
+                    },
+                },
+            });
+            expect(events[0]).toEqual({
+                interactionType: InteractionType.Keyboard,
+                dataPoints: plugin.dataPoints,
+            });
+            expect(showSpy).toHaveBeenCalled();
+
+            plugin.hideKeyboardTooltips();
+
+            expect(highlightSpy.calls.mostRecent().args).toEqual([
+                "visible",
+                DATA_POINT_INTERACTION_RESET,
+            ]);
+            expect(events[1].interactionType).toBe(InteractionType.Keyboard);
+            expect(events[1].dataPoints["visible"].index).toBe(
+                DATA_POINT_INTERACTION_RESET
+            );
+            expect(events[1].dataPoints["hidden"]).toBeUndefined();
+        });
+
+        it("rejects indices outside the visible data range", () => {
+            const series = createSeries("series", [{}]);
+            setSeriesAndVisibility([series]);
+
+            expect(() => plugin.showForIndex(-1)).toThrowError(RangeError);
+            expect(() => plugin.showForIndex(1)).toThrowError(RangeError);
         });
     });
 });

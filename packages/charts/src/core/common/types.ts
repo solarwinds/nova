@@ -71,8 +71,10 @@ export interface ILasagnaLayer {
     clipped: boolean;
 }
 
-/** Mouse interaction types */
+/** Chart interaction types */
 export enum InteractionType {
+    /** Indicates keyboard inspection of a data point */
+    Keyboard = "keyboard",
     /** Indicates that an element has been clicked */
     Click = "click",
     /** Indicates that an element is hovered */

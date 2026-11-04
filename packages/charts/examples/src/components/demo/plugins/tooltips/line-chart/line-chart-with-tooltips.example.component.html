@@ -1,6 +1,16 @@
+<p id="line-chart-keyboard-instructions" i18n>
+    Tab to the chart and use Left and Right Arrow to inspect data points. Escape
+    closes the tooltips. Tab leaves the chart.
+</p>
 <div class="nui-chart-layout">
     <div class="chart">
-        <nui-chart class="w-100" [chart]="chart"></nui-chart>
+        <nui-chart
+            class="w-100"
+            [chart]="chart"
+            [keyboardTooltips]="tooltipsPlugin"
+            ariaLabel="Response time by date"
+            i18n-ariaLabel
+            aria-describedby="line-chart-keyboard-instructions"></nui-chart>
     </div>
     <div class="legend">
         <nui-legend
@@ -51,9 +61,13 @@
 
 <ng-template let-dataPoint="dataPoint" #tooltipTemplate>
     <div class="p-1 d-flex align-items-center">
+        <span class="sr-only">{{ dataPoint.dataSeries.name }}: </span>
         <nui-chart-marker
             [marker]="chartAssist.markers.get(dataPoint.seriesId)"
             [color]="chartAssist.palette.standardColors.get(dataPoint.seriesId)"></nui-chart-marker>
         <span class="pl-2">{{ dataPoint.data.y }}</span>
+        <span class="sr-only">
+            {{ dataPoint.data.x.toDate() | date: "mediumDate" }}
+        </span>
     </div>
 </ng-template>
