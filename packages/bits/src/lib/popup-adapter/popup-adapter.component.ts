@@ -93,6 +93,7 @@ export class PopupComponent
     @Input() public manualOpenControl: Subject<MouseEvent>;
     @Input() public appendToBody: boolean = false;
     @Input() public baseElementSelector: string;
+    /** Uses the host as the anchor and, without nuiPopupToggle, as the internal click boundary. */
     @Input() public isHostToggleRef: boolean;
     @Input() public ariaLabel: string = $localize`Popup`;
 
@@ -208,11 +209,16 @@ export class PopupComponent
             .pipe(takeUntil(this.destroy$))
             .subscribe((event: Event) => {
                 const isToggle =
-                    this.popupToggle && event
-                        ? (
-                              this.popupToggle.host.nativeElement as HTMLElement
-                          ).contains(event.target as HTMLElement)
-                        : false;
+                    !!event &&
+                    ((this.popupToggle &&
+                        this.popupToggle.host.nativeElement.contains(
+                            event.target as Node
+                        )) ||
+                        (!this.popupToggle &&
+                            this.isHostToggleRef &&
+                            this.host.nativeElement.contains(
+                                event.target as Node
+                            )));
                 if (this.isOpen && !isToggle) {
                     this.closePopup();
                 }
