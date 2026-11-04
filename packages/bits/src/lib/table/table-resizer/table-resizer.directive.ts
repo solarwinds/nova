@@ -24,6 +24,7 @@ import {
     HostBinding,
     HostListener,
     Input,
+    OnDestroy,
     Output,
 } from "@angular/core";
 
@@ -38,16 +39,22 @@ export enum TableResizePhase {
     selector: "[nuiTableResizer]",
     standalone: false,
 })
-export class TableResizerDirective {
+export class TableResizerDirective implements OnDestroy {
     @HostBinding("class") hostClasses = "nui-table__resizer";
 
     @Input() columnIndex: number;
 
     @Output() resizerMovement = new EventEmitter<any>();
+    @Output() resizeRequested = new EventEmitter<void>();
+
+    private hasMoved = false;
 
     constructor(private tableStateHandlerService: TableStateHandlerService) {}
 
     private mouseMoveHandler = (event: MouseEvent) => {
+        if (event.movementX !== 0 || event.movementY !== 0) {
+            this.hasMoved = true;
+        }
         this.resizerMovement.emit(event.movementX);
     };
 
@@ -66,6 +73,7 @@ export class TableResizerDirective {
 
     @HostListener("mousedown", ["$event"])
     onMouseDown(ev: MouseEvent): void {
+        this.hasMoved = false;
         // Event should be emitted to highlight all cells
         this.tableStateHandlerService.emitResizeEvent(
             this.columnIndex,
@@ -74,5 +82,25 @@ export class TableResizerDirective {
         ev.preventDefault();
         document.addEventListener("mouseup", this.removeResizeListeners);
         document.addEventListener("mousemove", this.mouseMoveHandler);
+    }
+
+    @HostListener("click", ["$event"])
+    onClick(event: MouseEvent): void {
+        event.stopPropagation();
+        if (event.detail === 0 || !this.hasMoved) {
+            this.resizeRequested.emit();
+        }
+    }
+
+    @HostListener("keydown", ["$event"])
+    onKeyDown(event: KeyboardEvent): void {
+        if (event.key === "Enter" || event.key === " ") {
+            event.stopPropagation();
+        }
+    }
+
+    public ngOnDestroy(): void {
+        document.removeEventListener("mousemove", this.mouseMoveHandler);
+        document.removeEventListener("mouseup", this.removeResizeListeners);
     }
 }

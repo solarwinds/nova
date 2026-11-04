@@ -87,7 +87,7 @@ export interface ITableSortingState {
 }
 
 /** @ignore */
-const MIN_COLUMN_WIDTH_PX = 46;
+export const MIN_COLUMN_WIDTH_PX = 46;
 /** @ignore */
 const ICON_CELL_WIDTH_PX = 40;
 /** @ignore */
