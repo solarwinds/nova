@@ -592,6 +592,33 @@ describe("components >", () => {
         });
 
         describe("highlightDataPoint >", () => {
+            it("should resume pointer highlighting after a manual keyboard highlight", () => {
+                dataManager.update(mockSingleSeriesSet);
+                spyOn(
+                    mockSingleSeriesSet[0].renderer,
+                    "getDataPointIndex"
+                ).and.returnValue(1);
+                const highlight = spyOn(
+                    mockSingleSeriesSet[0].renderer,
+                    "highlightDataPoint"
+                );
+                const interactions = spyOn(
+                    renderEngine.interactionDataPointsSubject,
+                    "next"
+                ).and.callThrough();
+                const payload = {
+                    interactionType: InteractionType.MouseMove,
+                    values: {},
+                };
+
+                renderEngine.emitInteractionDataPoints(payload);
+                renderEngine.highlightDataPoint(mockSingleSeriesSet[0].id, 0);
+                renderEngine.emitInteractionDataPoints(payload);
+
+                expect(interactions).toHaveBeenCalledTimes(2);
+                expect(highlight.calls.mostRecent().args[1]).toBe(1);
+            });
+
             it(`should invoke the highlightDataPoint method of the correct renderer`, () => {
                 spyOn(mockDoubleSeriesSet[0].renderer, "highlightDataPoint");
                 spyOn(mockDoubleSeriesSet[1].renderer, "highlightDataPoint");
