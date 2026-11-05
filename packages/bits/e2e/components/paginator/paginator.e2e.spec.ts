@@ -229,4 +229,157 @@ test.describe("USERCONTROL paginator", () => {
             getDisplayingText(25, 1, itemCount)
         );
     });
+
+    ["Enter", "Space"].forEach(key => {
+        test(`should preserve focus and Tab order after ${key} page and Next activation`, async ({
+            page,
+        }) => {
+            const paginator = basicPaginator.getLocator();
+            const pageThree = paginator.getByRole("button", {
+                name: "Page 3",
+                exact: true,
+            });
+            const pageFour = paginator.getByRole("button", {
+                name: "Page 4",
+                exact: true,
+            });
+            await pageThree.focus();
+            await page.keyboard.press(key);
+
+            await expect(pageThree).toHaveAttribute("aria-current", "page");
+            await expect(pageThree).toBeFocused();
+            await page.keyboard.press("Tab");
+            await expect(pageFour).toBeFocused();
+            await page.keyboard.press("Shift+Tab");
+            await expect(pageThree).toBeFocused();
+
+            const next = basicPaginator.nextLink();
+            await next.focus();
+            await page.keyboard.press(key);
+
+            await expect(pageFour).toHaveAttribute("aria-current", "page");
+            await expect(next).toBeFocused();
+            await page.keyboard.press("Shift+Tab");
+            await expect(
+                paginator.getByRole("button", { name: "Page 41", exact: true })
+            ).toBeFocused();
+            await page.keyboard.press("Tab");
+            await expect(next).toBeFocused();
+        });
+
+        test(`should recover focus and Tab order when Next and Previous become disabled using ${key}`, async ({
+            page,
+        }) => {
+            const paginator = basicPaginator.getLocator();
+            await paginator
+                .getByRole("button", { name: "Page 41", exact: true })
+                .press(key);
+            const previous = basicPaginator.prevLink();
+            const next = basicPaginator.nextLink();
+            await previous.focus();
+            await page.keyboard.press(key);
+            await expect(
+                paginator.getByRole("button", { name: "Page 40", exact: true })
+            ).toHaveAttribute("aria-current", "page");
+
+            await next.focus();
+            await page.keyboard.press(key);
+            const lastPage = paginator.getByRole("button", {
+                name: "Page 41",
+                exact: true,
+            });
+            await expect(next).toBeDisabled();
+            await expect(lastPage).toBeFocused();
+            await page.keyboard.press("Shift+Tab");
+            await expect(
+                paginator.getByRole("button", { name: "Page 40", exact: true })
+            ).toBeFocused();
+            await page.keyboard.press("Tab");
+            await expect(lastPage).toBeFocused();
+
+            await paginator
+                .getByRole("button", { name: "Page 1", exact: true })
+                .press(key);
+            await next.focus();
+            await page.keyboard.press(key);
+            await expect(
+                paginator.getByRole("button", { name: "Page 2", exact: true })
+            ).toHaveAttribute("aria-current", "page");
+
+            await previous.focus();
+            await page.keyboard.press(key);
+            const firstPage = paginator.getByRole("button", {
+                name: "Page 1",
+                exact: true,
+            });
+            await expect(previous).toBeDisabled();
+            await expect(firstPage).toBeFocused();
+            await page.keyboard.press("Tab");
+            await expect(
+                paginator.getByRole("button", { name: "Page 2", exact: true })
+            ).toBeFocused();
+            await page.keyboard.press("Shift+Tab");
+            await expect(firstPage).toBeFocused();
+        });
+
+        [false, true].forEach(appendToBody => {
+            test(`should recover focus and Tab order after ${key} popup selection with appendToBody=${appendToBody}`, async ({
+                page,
+            }) => {
+                const paginator = appendToBody
+                    ? Atom.find<PaginatorAtom>(
+                          PaginatorAtom,
+                          "nui-demo-body-paginator"
+                      )
+                    : basicPaginator;
+                await paginator.ellipsisLink(0).focus();
+                await page.keyboard.press(key);
+
+                const popupRoot = appendToBody
+                    ? page.locator(".cdk-overlay-container")
+                    : paginator.getLocator();
+                await popupRoot
+                    .getByRole("button", {
+                        name: "Go to page 6",
+                        exact: true,
+                    })
+                    .focus();
+                const popupPage = popupRoot.getByRole("button", {
+                    name: "Go to page 20",
+                    exact: true,
+                });
+                for (
+                    let index = 0;
+                    index < 30 &&
+                    !(await popupPage.evaluate(
+                        element => element === document.activeElement
+                    ));
+                    index++
+                ) {
+                    await page.keyboard.press("Tab");
+                }
+                await expect(popupPage).toBeFocused();
+                await page.keyboard.press(key);
+
+                const currentPage = paginator.getLocator().getByRole("button", {
+                    name: "Page 20",
+                    exact: true,
+                });
+                await expect(currentPage).toHaveAttribute(
+                    "aria-current",
+                    "page"
+                );
+                await expect(currentPage).toBeFocused();
+                await page.keyboard.press("Tab");
+                await expect(
+                    paginator.getLocator().getByRole("button", {
+                        name: "Page 21",
+                        exact: true,
+                    })
+                ).toBeFocused();
+                await page.keyboard.press("Shift+Tab");
+                await expect(currentPage).toBeFocused();
+            });
+        });
+    });
 });

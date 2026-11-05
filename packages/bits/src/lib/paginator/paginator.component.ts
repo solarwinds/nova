@@ -33,8 +33,10 @@ import {
     OnDestroy,
     OnInit,
     Output,
+    QueryList,
     SimpleChanges,
     ViewChild,
+    ViewChildren,
     ViewEncapsulation,
 } from "@angular/core";
 import _chunk from "lodash/chunk";
@@ -162,6 +164,9 @@ export class PaginatorComponent
 
     @ViewChild(CdkVirtualScrollViewport)
     private virtualScrollViewport: CdkVirtualScrollViewport;
+
+    @ViewChildren("popupPages", { read: ElementRef })
+    private popupPages: QueryList<ElementRef<HTMLElement>>;
 
     private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
     private readonly focusInjector = inject(Injector);
@@ -400,7 +405,11 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
     private assemble() {
         const focusedElement =
             this.host.nativeElement.ownerDocument.activeElement;
-        const hadFocus = this.host.nativeElement.contains(focusedElement);
+        const hadFocus =
+            this.host.nativeElement.contains(focusedElement) ||
+            this.popupPages?.some(pages =>
+                pages.nativeElement.contains(focusedElement)
+            );
         this.itemsList = [];
         if (this.getPageCount() <= 0) {
             return;
