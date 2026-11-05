@@ -50,7 +50,10 @@
                         class="nui-paginator__dots">
                         {{ item.value }}
                     </button>
-                    <ul popupAreaContent class="nui-paginator__elipsis-pages">
+                    <ul
+                        #popupPages
+                        popupAreaContent
+                        class="nui-paginator__elipsis-pages">
                         <li>
                             <table
                                 class="nui-paginator__page-table"

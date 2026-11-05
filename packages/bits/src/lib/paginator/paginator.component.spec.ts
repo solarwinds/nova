@@ -20,12 +20,21 @@
 
 import { OverlayModule } from "@angular/cdk/overlay";
 import { ChangeDetectorRef, SimpleChange, SimpleChanges } from "@angular/core";
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flush,
+    TestBed,
+    tick,
+    waitForAsync,
+} from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
 import noop from "lodash/noop";
 
 import { PaginatorComponent } from "./paginator.component";
 import { NuiPaginatorModule } from "./paginator.module";
 import { LoggerService } from "../../services/log-service";
+import { PopupComponent } from "../popup-adapter/popup-adapter.component";
 
 describe("components >", () => {
     describe("paginator >", () => {
@@ -122,13 +131,24 @@ describe("components >", () => {
             subject.page = page;
             subject.ngOnChanges({ page: new SimpleChange(1, page, true) });
         };
-        const button = (selector: string): HTMLButtonElement =>
-            host.querySelector<HTMLButtonElement>(
+        const button = (
+            selector: string,
+            root: HTMLElement = host
+        ): HTMLButtonElement =>
+            root.querySelector<HTMLButtonElement>(
                 selector
             ) as HTMLButtonElement;
         const byLabel = (label: string): HTMLButtonElement =>
             button(`button[aria-label="${label}"]`);
         const activeElement = (): Element | null => document.activeElement;
+        const openPopup = (): HTMLElement => {
+            button(".nui-paginator__dots").click();
+            TestBed.tick();
+            const popup: PopupComponent = fixture.debugElement.query(
+                By.directive(PopupComponent)
+            ).componentInstance;
+            return popup.popup.getOverlayRef().overlayElement;
+        };
 
         beforeEach(() => {
             TestBed.configureTestingModule({
@@ -202,5 +222,57 @@ describe("components >", () => {
             expect(byLabel("Next Page").disabled).toBeTrue();
             expect(activeElement()).toBe(button("button[aria-current=page]"));
         });
+
+        [false, true].forEach(appendToBody => {
+            [40, 1100].forEach(pageCount => {
+                it(`should restore focus after popup selection with appendToBody=${appendToBody} and ${pageCount} pages`, fakeAsync(() => {
+                    subject.appendToBody = appendToBody;
+                    render(pageCount, 1);
+                    const popupRoot = openPopup();
+                    // Allow the virtual viewport's animation-frame render to finish.
+                    tick(20);
+                    fixture.detectChanges();
+                    const popupButton = button(
+                        `button[aria-label="Go to page 20"]`,
+                        popupRoot
+                    );
+                    popupButton.focus();
+                    expect(activeElement()).toBe(popupButton);
+                    expect(host.contains(popupButton)).toBe(!appendToBody);
+
+                    popupButton.click();
+                    TestBed.tick();
+
+                    expect(subject.page).toBe(20);
+                    expect(popupButton.isConnected).toBeFalse();
+                    expect(activeElement()).toBe(
+                        button("button[aria-current=page]")
+                    );
+                }));
+            });
+        });
+
+        it("should preserve focus moved outside after body-appended popup selection", fakeAsync(() => {
+            subject.appendToBody = true;
+            render(40, 1);
+            const popupButton = button(
+                `button[aria-label="Go to page 20"]`,
+                openPopup()
+            );
+            const outside = document.createElement("button");
+            document.body.appendChild(outside);
+            try {
+                popupButton.focus();
+                popupButton.click();
+                outside.focus();
+                TestBed.tick();
+
+                expect(subject.page).toBe(20);
+                expect(activeElement()).toBe(outside);
+            } finally {
+                outside.remove();
+                flush();
+            }
+        }));
     });
 });
