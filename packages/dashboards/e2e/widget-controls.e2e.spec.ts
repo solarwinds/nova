@@ -61,9 +61,9 @@ test.describe("Widget editor focus", () => {
             name: "Widget configuration",
             exact: true,
         });
-        const section = dialog
-            .getByRole("button", { name: "Expander", exact: true })
-            .filter({ hasText: "Data Source" });
+        const section = dialog.getByRole("button", {
+            name: /^Data Source(?:\s|$)/,
+        });
         await section.press("Enter");
         const select = dialog.getByRole("combobox", {
             name: "Select Data Source",
