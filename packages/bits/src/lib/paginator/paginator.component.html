@@ -7,7 +7,7 @@
             <li
                 title="{{ item.title }}"
                 [ngClass]="item.style"
-                *ngFor="let item of itemsList"
+                *ngFor="let item of itemsList; trackBy: trackItem"
                 value="{{ item.value }}">
                 <button
                     nui-button
@@ -50,7 +50,10 @@
                         {{ item.value }}
                     </button>
 
-                    <ul popupAreaContent class="nui-paginator__elipsis-pages">
+                    <ul
+                        #popupPages
+                        popupAreaContent
+                        class="nui-paginator__elipsis-pages">
                         <li>
                             <table
                                 class="nui-paginator__page-table"

@@ -4,6 +4,8 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | **nui-paginator** keeps keyboard focus after a page change (WCAG 2.4.3): the activated button stays focused, and focus moves to the current page when Previous/Next becomes disabled or a page is selected from the ellipsis popup, including body-appended popups.
+
 ## [20.0.13] 📅 2026-10-26
 
 ### Fixes
