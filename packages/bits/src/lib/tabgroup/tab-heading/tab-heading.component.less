@@ -23,7 +23,9 @@
             .setCssVariable(background, nui-color-bg-transparent-hover);
         }
         &:focus-visible {
-            .focus-outline();
+            outline: @nui-line-medium solid;
+            outline-offset: -@nui-line-medium;
+            .setCssVariable(outline-color, nui-color-active);
         }
 
         .tab-link {
