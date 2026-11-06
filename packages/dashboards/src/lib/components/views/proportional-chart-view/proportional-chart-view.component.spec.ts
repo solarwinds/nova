@@ -230,12 +230,15 @@ describe("ProportionalChartViewComponent", () => {
 
         item.dispatchEvent(
             new KeyboardEvent("keydown", {
+                key: "Enter",
                 bubbles: true,
+                cancelable: true,
                 code: "Enter",
             })
         );
         item.dispatchEvent(
             new KeyboardEvent("keydown", {
+                key: " ",
                 bubbles: true,
                 cancelable: true,
                 code: "Space",
