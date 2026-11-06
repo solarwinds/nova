@@ -48,8 +48,12 @@ const PANE_HEADER = "DEFAULT HEADER";
     template: `
         <nui-panel
             [paneSize]="paneSize"
+            [paneMinSize]="paneMinSize"
+            [paneMaxSize]="paneMaxSize"
             [panelMode]="panelMode"
             [isCollapsed]="isCollapsed"
+            [isHidden]="isHidden"
+            [isResizable]="isResizable"
             [orientation]="orientation"
             [heading]="heading"
             [displacePrimaryContent]="displacePrimaryContent"
@@ -67,19 +71,30 @@ const PANE_HEADER = "DEFAULT HEADER";
                 >
                 </nui-icon>
             </div>
+            @if (customHeading) {
+            <div nuiPanelEmbeddedHeading>Custom panel heading</div>
+            }
             <div nuiPanelEmbeddedBody class="nui-panel__header-embedded-body">
                 Left Pane Content
+                <input aria-label="Panel input" />
+                <button type="button">Panel action</button>
             </div>
             <div>Center Pane Content</div>
         </nui-panel>
+        <button type="button" class="outside-panel">Outside panel</button>
     `,
     standalone: false,
 })
 class TestAppComponent {
     paneSize = PanelComponent.SIZE_VALUES.width.DEFAULT_VALUE;
     paneCollapsedSize = PanelComponent.SIZE_VALUES.width.COLLAPSED_VALUE;
+    paneMinSize = "100px";
+    paneMaxSize = "500px";
     panelMode = PanelModes.static;
     isCollapsed: boolean = false;
+    isHidden = false;
+    isResizable = false;
+    customHeading = false;
     headerIcon: string;
     orientation = "left";
     heading: string;
@@ -134,6 +149,102 @@ describe("components >", () => {
             ).nativeElement;
             expect(centerPaneBody.textContent).toContain(CENTER_PANE_CONTENT);
         });
+
+        it("should expose a labeled keyboard separator only while the panel can be resized", () => {
+            testComponent.isResizable = true;
+            fixture.detectChanges();
+            let separator = fixture.nativeElement.querySelector(
+                ".nui-resize-gutter"
+            ) as HTMLElement;
+
+            expect(separator.getAttribute("role")).toBe("separator");
+            const label = document.getElementById(
+                separator.getAttribute("aria-labelledby")!
+            );
+            expect(label?.textContent).toBe(PANE_HEADER);
+            const pane = fixture.nativeElement.querySelector(
+                ".nui-panel__side-pane"
+            );
+            expect(separator.getAttribute("aria-controls")).toBe(pane.id);
+            expect(separator.hasAttribute("aria-label")).toBe(false);
+            expect(separator.getAttribute("aria-orientation")).toBe("vertical");
+            expect(separator.getAttribute("aria-valuemin")).toBe("100");
+            expect(separator.getAttribute("aria-valuemax")).toBe("500");
+            expect(separator.getAttribute("tabindex")).toBe("0");
+
+            separator.dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    key: "ArrowRight",
+                    bubbles: true,
+                    cancelable: true,
+                })
+            );
+            fixture.detectChanges();
+            const panel: PanelComponent = fixture.debugElement.query(
+                By.directive(PanelComponent)
+            ).componentInstance;
+            expect(panel.paneSize).toBe("251px");
+            expect(separator.getAttribute("aria-valuenow")).toBe("251");
+
+            testComponent.panelMode = PanelModes.closable;
+            fixture.detectChanges();
+            testComponent.isHidden = true;
+            fixture.detectChanges();
+            separator = fixture.nativeElement.querySelector(
+                ".nui-resize-gutter"
+            ) as HTMLElement;
+            expect(separator.hasAttribute("tabindex")).toBe(false);
+        });
+
+        it("should reference a projected visible heading and keep its existing id", () => {
+            testComponent.isResizable = true;
+            testComponent.heading = "";
+            testComponent.customHeading = true;
+            fixture.detectChanges();
+            const heading: HTMLElement = fixture.nativeElement.querySelector(
+                "[nuiPanelEmbeddedHeading]"
+            );
+            const separator: HTMLElement =
+                fixture.nativeElement.querySelector(".nui-resize-gutter");
+            expect(heading.id).toBeTruthy();
+            expect(separator.getAttribute("aria-labelledby")).toBe(heading.id);
+            heading.id = "custom-panel-heading";
+            fixture.detectChanges();
+            expect(heading.id).toBe("custom-panel-heading");
+            expect(separator.getAttribute("aria-labelledby")).toBe(heading.id);
+        });
+
+        it("should defer RTL panel resizing without changing mouse eligibility", () => {
+            testComponent.isResizable = true;
+            fixture.detectChanges();
+            const pane: HTMLElement = fixture.nativeElement.querySelector(
+                ".nui-panel__side-pane"
+            );
+            pane.dir = "rtl";
+            fixture.detectChanges();
+            const separator: HTMLElement =
+                fixture.nativeElement.querySelector(".nui-resize-gutter");
+            const panel: PanelComponent = fixture.debugElement.query(
+                By.directive(PanelComponent)
+            ).componentInstance;
+            expect(separator.hasAttribute("tabindex")).toBe(false);
+            expect(panel.isPanelResizable()).toBe(true);
+        });
+
+        it("should remove the keyboard tab stop when a resizable panel is collapsed", fakeAsync(() => {
+            testComponent.isResizable = true;
+            testComponent.panelMode = PanelModes.collapsible;
+            fixture.detectChanges();
+            testComponent.isCollapsed = true;
+            fixture.detectChanges();
+            tick(PanelComponent.ANIMATION_TIME);
+            fixture.detectChanges();
+
+            const separator = fixture.nativeElement.querySelector(
+                ".nui-resize-gutter"
+            ) as HTMLElement;
+            expect(separator.hasAttribute("tabindex")).toBe(false);
+        }));
 
         it("should have set width in left pane container and side pane body if not collapsible", () => {
             fixture.detectChanges();
@@ -220,6 +331,46 @@ describe("components >", () => {
                 `${PanelComponent.SIZE_VALUES.height.COLLAPSED_VALUE}`
             );
         }));
+
+        for (const initiallyCollapsed of [true, false]) {
+            it(`should keep the toggle focused while ${
+                initiallyCollapsed ? "expanding" : "collapsing"
+            } and ignore repeated activation`, fakeAsync(() => {
+                testComponent.panelMode = PanelModes.collapsible;
+                testComponent.isCollapsed = initiallyCollapsed;
+                fixture.detectChanges();
+                tick(PanelComponent.ANIMATION_TIME);
+                fixture.detectChanges();
+
+                const toggle: HTMLButtonElement =
+                    fixture.nativeElement.querySelector(
+                        ".nui-panel__header-btn"
+                    );
+                toggle.focus();
+                expect(document.activeElement).toBe(toggle);
+
+                toggle.click();
+                fixture.detectChanges();
+                expect(toggle.disabled).toBeFalse();
+                expect(toggle.getAttribute("aria-disabled")).toBe("true");
+                expect(toggle.classList.contains("disabled")).toBeTrue();
+                expect(document.activeElement).toBe(toggle);
+
+                toggle.click();
+                fixture.detectChanges();
+                tick(PanelComponent.ANIMATION_TIME);
+                fixture.detectChanges();
+
+                expect(
+                    fixture.nativeElement
+                        .querySelector(".nui-panel.media")
+                        .classList.contains("nui-panel--is-collapsed")
+                ).toBe(!initiallyCollapsed);
+                expect(toggle.getAttribute("aria-disabled")).toBe("false");
+                expect(toggle.classList.contains("disabled")).toBeFalse();
+                expect(document.activeElement).toBe(toggle);
+            }));
+        }
 
         it("should have collapse button when collapsible", () => {
             fixture.detectChanges();
@@ -408,6 +559,230 @@ describe("components >", () => {
                 ).toBeNull();
             }));
         });
+
+        describe("hoverable keyboard access", () => {
+            let panel: PanelComponent;
+            let pane: HTMLElement;
+
+            beforeEach(fakeAsync(() => {
+                testComponent.panelMode = PanelModes.hoverable;
+                testComponent.isCollapsed = true;
+                fixture.detectChanges();
+                tick(PanelComponent.ANIMATION_TIME);
+                fixture.detectChanges();
+                panel = fixture.debugElement.query(
+                    By.directive(PanelComponent)
+                ).componentInstance;
+                pane = fixture.nativeElement.querySelector(
+                    ".nui-panel__side-pane"
+                );
+            }));
+
+            it("should expose a named entry point and open when focused", fakeAsync(() => {
+                expect(pane.tabIndex).toBe(0);
+                expect(pane.getAttribute("role")).toBe("group");
+                expect(pane.getAttribute("aria-label")).toBe(PANE_HEADER);
+                expect(pane.getAttribute("aria-expanded")).toBe("false");
+                pane.focus();
+                tick(PanelComponent.ANIMATION_TIME);
+                fixture.detectChanges();
+                expect(panel.isCollapsed).toBeFalse();
+                expect(pane.getAttribute("aria-expanded")).toBe("true");
+                expect(pane.querySelector("input")).not.toBeNull();
+            }));
+
+            it("should retain content when the pointer leaves a keyboard-focused pane", fakeAsync(() => {
+                pane.focus();
+                tick(PanelComponent.ANIMATION_TIME);
+                fixture.detectChanges();
+                const input = pane.querySelector("input")!;
+                input.focus();
+                panel.toggleEnter();
+                panel.toggleLeave();
+                tick(PanelComponent.ANIMATION_TIME * 2);
+                fixture.detectChanges();
+                expect(panel.isCollapsed).toBeFalse();
+                expect(document.activeElement).toBe(input);
+            }));
+
+            it("should cancel a queued mouse close when keyboard focus enters", fakeAsync(() => {
+                panel.toggleEnter();
+                tick(PanelComponent.ANIMATION_TIME * 2);
+                fixture.detectChanges();
+                expect(panel.isCollapsed).toBeFalse();
+                panel.toggleLeave();
+                tick(PanelComponent.ANIMATION_TIME / 2);
+                pane.focus();
+                tick(PanelComponent.ANIMATION_TIME * 2);
+                fixture.detectChanges();
+                expect(panel.isCollapsed).toBeFalse();
+            }));
+
+            it("should close on Escape and retain focus without reopening", fakeAsync(() => {
+                pane.focus();
+                tick(PanelComponent.ANIMATION_TIME);
+                fixture.detectChanges();
+                const input = pane.querySelector("input")!;
+                input.focus();
+                const escape = new KeyboardEvent("keydown", {
+                    key: "Escape",
+                    bubbles: true,
+                    cancelable: true,
+                });
+                input.dispatchEvent(escape);
+                tick(PanelComponent.ANIMATION_TIME * 3);
+                fixture.detectChanges();
+                expect(escape.defaultPrevented).toBeTrue();
+                expect(panel.isCollapsed).toBeTrue();
+                expect(document.activeElement).toBe(pane);
+                expect(pane.querySelector("input")).toBeNull();
+
+                const outside: HTMLButtonElement =
+                    fixture.nativeElement.querySelector(".outside-panel");
+                outside.focus();
+                tick(PanelComponent.ANIMATION_TIME);
+                pane.focus();
+                tick(PanelComponent.ANIMATION_TIME);
+                fixture.detectChanges();
+                expect(panel.isCollapsed).toBeFalse();
+            }));
+
+            it("should not consume Escape already handled by a child", fakeAsync(() => {
+                pane.focus();
+                tick(PanelComponent.ANIMATION_TIME);
+                fixture.detectChanges();
+                const input = pane.querySelector("input")!;
+                const escape = new KeyboardEvent("keydown", {
+                    key: "Escape",
+                    bubbles: true,
+                    cancelable: true,
+                });
+                escape.preventDefault();
+                input.dispatchEvent(escape);
+                tick(PanelComponent.ANIMATION_TIME);
+                expect(panel.isCollapsed).toBeFalse();
+            }));
+
+            it("should close after focus leaves when the pointer is outside", fakeAsync(() => {
+                pane.focus();
+                tick(PanelComponent.ANIMATION_TIME);
+                fixture.detectChanges();
+                const outside: HTMLButtonElement =
+                    fixture.nativeElement.querySelector(".outside-panel");
+                outside.focus();
+                tick(PanelComponent.ANIMATION_TIME * 2);
+                fixture.detectChanges();
+                expect(panel.isCollapsed).toBeTrue();
+                expect(document.activeElement).toBe(outside);
+            }));
+
+            it("should remain open after focus leaves while the pointer is inside", fakeAsync(() => {
+                pane.focus();
+                tick(PanelComponent.ANIMATION_TIME);
+                fixture.detectChanges();
+                panel.toggleEnter();
+                const outside: HTMLButtonElement =
+                    fixture.nativeElement.querySelector(".outside-panel");
+                outside.focus();
+                tick(PanelComponent.ANIMATION_TIME * 2);
+                fixture.detectChanges();
+                expect(panel.isCollapsed).toBeFalse();
+                panel.toggleLeave();
+                tick(PanelComponent.ANIMATION_TIME * 2);
+                fixture.detectChanges();
+                expect(panel.isCollapsed).toBeTrue();
+            }));
+
+            it("should preserve mouse-only open and close behavior", fakeAsync(() => {
+                panel.toggleEnter();
+                tick(PanelComponent.ANIMATION_TIME * 2);
+                fixture.detectChanges();
+                expect(panel.isCollapsed).toBeFalse();
+                panel.toggleLeave();
+                tick(PanelComponent.ANIMATION_TIME * 2);
+                fixture.detectChanges();
+                expect(panel.isCollapsed).toBeTrue();
+            }));
+
+            it("should preserve externally requested collapsed state after hover ends", fakeAsync(() => {
+                panel.toggleEnter();
+                tick(PanelComponent.ANIMATION_TIME * 2);
+                fixture.detectChanges();
+                expect(panel.isCollapsed).toBeFalse();
+                panel.isCollapsed = true;
+                tick(PanelComponent.ANIMATION_TIME * 2);
+                fixture.detectChanges();
+                expect(panel.isCollapsed).toBeTrue();
+            }));
+
+            it("should honor the latest pointer state during rapid hover changes", fakeAsync(() => {
+                panel.toggleEnter();
+                tick(PanelComponent.ANIMATION_TIME / 2);
+                panel.toggleLeave();
+                tick(PanelComponent.ANIMATION_TIME * 2);
+                fixture.detectChanges();
+                expect(panel.isCollapsed).toBeTrue();
+
+                panel.toggleEnter();
+                tick(PanelComponent.ANIMATION_TIME * 2);
+                fixture.detectChanges();
+                panel.toggleLeave();
+                tick(PanelComponent.ANIMATION_TIME / 2);
+                panel.toggleEnter();
+                tick(PanelComponent.ANIMATION_TIME * 2);
+                fixture.detectChanges();
+                expect(panel.isCollapsed).toBeFalse();
+            }));
+
+            it("should finish closing when the pointer leaves during expansion", fakeAsync(() => {
+                panel.toggleEnter();
+                tick(PanelComponent.ANIMATION_TIME);
+                panel.toggleLeave();
+                tick(PanelComponent.ANIMATION_TIME * 3);
+                fixture.detectChanges();
+                expect(panel.isCollapsed).toBeTrue();
+            }));
+
+            it("should honor Escape during the opening animation", fakeAsync(() => {
+                pane.focus();
+                pane.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        key: "Escape",
+                        bubbles: true,
+                        cancelable: true,
+                    })
+                );
+                tick(PanelComponent.ANIMATION_TIME * 3);
+                fixture.detectChanges();
+                expect(panel.isCollapsed).toBeTrue();
+                expect(document.activeElement).toBe(pane);
+            }));
+        });
+
+        it("should not add a focus entry point or handle Escape in other panel modes", fakeAsync(() => {
+            testComponent.panelMode = PanelModes.collapsible;
+            fixture.detectChanges();
+            tick(PanelComponent.ANIMATION_TIME);
+            fixture.detectChanges();
+            const pane: HTMLElement = fixture.nativeElement.querySelector(
+                ".nui-panel__side-pane"
+            );
+            const panel = fixture.debugElement.query(
+                By.directive(PanelComponent)
+            ).componentInstance as PanelComponent;
+            const collapsedBefore = panel.isCollapsed;
+            expect(pane.hasAttribute("tabindex")).toBeFalse();
+            expect(pane.hasAttribute("role")).toBeFalse();
+            const escape = new KeyboardEvent("keydown", {
+                key: "Escape",
+                bubbles: true,
+                cancelable: true,
+            });
+            pane.dispatchEvent(escape);
+            tick(PanelComponent.ANIMATION_TIME);
+            expect(escape.defaultPrevented).toBeFalse();
+            expect(panel.isCollapsed).toBe(collapsedBefore);
+        }));
 
         it("should have header", () => {
             fixture.detectChanges();

@@ -18,7 +18,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    Input,
+} from "@angular/core";
 import {
     ComponentFixture,
     fakeAsync,
@@ -29,6 +34,7 @@ import { By } from "@angular/platform-browser";
 
 import { PopupComponent } from "./popup-adapter.component";
 import { PopupAdapterModule } from "./popup-adapter.module";
+import { PopupToggleDirective } from "../popup/popup-toggle.directive";
 
 @Component({
     template: `
@@ -147,5 +153,69 @@ describe("PopupComponent (adapter)", () => {
         tick(0);
 
         expect(hideSpy).toHaveBeenCalledTimes(1);
+    }));
+
+    it("does not close when a click from a host-toggle reference is intercepted", fakeAsync(() => {
+        fixture.detectChanges();
+        tick(0);
+
+        fixture.componentRef.setInput("isOpen", true);
+        fixture.detectChanges();
+
+        const popup = getPopup();
+        const button = fixture.nativeElement.querySelector("button");
+        const openedStates = fixture.componentInstance.openedStates;
+        expect(popup.isOpen).toBe(true);
+
+        button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        tick(0);
+
+        expect(popup.isOpen).toBe(true);
+        expect(openedStates).toEqual([false, true]);
+    }));
+
+    it("still closes on an outside click with a host-toggle reference", fakeAsync(() => {
+        fixture.detectChanges();
+        tick(0);
+        fixture.componentRef.setInput("isOpen", true);
+        fixture.detectChanges();
+
+        document.body.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        tick(0);
+
+        expect(getPopup().isOpen).toBe(false);
+    }));
+
+    it("keeps an explicit toggle as the click boundary even when the host is the anchor", fakeAsync(() => {
+        fixture.detectChanges();
+        tick(0);
+        fixture.componentRef.setInput("isOpen", true);
+        fixture.detectChanges();
+
+        const popup = getPopup();
+        const toggle = document.createElement("button");
+        popup.popupToggle = new PopupToggleDirective(new ElementRef(toggle));
+        fixture.nativeElement
+            .querySelector("button")
+            .dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        tick(0);
+
+        expect(popup.isOpen).toBe(false);
+    }));
+
+    it("does not treat host clicks as internal without host-reference mode", fakeAsync(() => {
+        fixture.detectChanges();
+        tick(0);
+        fixture.componentRef.setInput("isOpen", true);
+        fixture.detectChanges();
+
+        const popup = getPopup();
+        popup.isHostToggleRef = false;
+        fixture.nativeElement
+            .querySelector("button")
+            .dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        tick(0);
+
+        expect(popup.isOpen).toBe(false);
     }));
 });

@@ -75,6 +75,8 @@
 
             <nui-legend-series
                 class="xy-chart__legend-series"
+                [separateControls]="true"
+                [toggleAriaLabel]="legendSeries.legendDescriptionPrimary || legendSeries.name"
                 [ngClass]="
                     'xy-chart__legend-series--state-' +
                     chartAssist.renderStatesIndex[legendSeries.id]?.state
@@ -114,18 +116,21 @@
                     description
                     class="description-container d-flex nui-text-small justify-content-center">
                     <div class="descriptions">
-                        @if (!legendSeries.link) {
-                        <!-- TODO: NUI-6288 - drill-down sits inside the nui-legend-series (role="checkbox") -->
-                        <div
-                            class="description description-primary"
-                            [ngClass]="{
-                                    'nui-text-link-small link': seriesInteractive
-                                }"
+                        @if (!legendSeries.link) { @if (seriesInteractive) {
+                        <button
+                            type="button"
+                            class="description description-primary nui-text-link-small link xy-chart__legend-drilldown"
                             (click)="onPrimaryDescClick($event, legendSeries)"
                             [title]="legendSeries.legendDescriptionPrimary">
                             {{ legendSeries.legendDescriptionPrimary }}
-                        </div>
+                        </button>
                         } @else {
+                        <div
+                            class="description description-primary"
+                            [title]="legendSeries.legendDescriptionPrimary">
+                            {{ legendSeries.legendDescriptionPrimary }}
+                        </div>
+                        } } @else {
                         <a
                             class="description description-primary nui-text-link-small link"
                             (click)="$event.stopPropagation()"
@@ -166,6 +171,7 @@
                 </div>
                 <nui-menu
                     legendMenu
+                    (click)="$event.stopPropagation()"
                     *ngIf="displayLegendMenu()"
                     icon="menu"
                     displayStyle="action"

@@ -90,6 +90,16 @@ export class RiskScoreTileComponent implements IHasChangeDetector, OnChanges {
         );
     }
 
+    public get accessibleName(): string {
+        const value = this.widgetData?.useStaticLabel
+            ? this.widgetData?.staticLabel ?? this.widgetData?.value
+            : this.widgetData?.value;
+
+        return [this.widgetData?.label, value]
+            .filter(part => part !== null && part !== undefined && part !== "")
+            .join(" ");
+    }
+
     constructor(
         public changeDetector: ChangeDetectorRef,
         @Optional() @Inject(DATA_SOURCE) public dataSource: IDataSource,
@@ -103,6 +113,21 @@ export class RiskScoreTileComponent implements IHasChangeDetector, OnChanges {
         this.eventBus
             .getStream(INTERACTION)
             .next({ payload: { data: this.widgetData } });
+    }
+
+    public onKeydown(event: KeyboardEvent): void {
+        if (
+            !this.interactive ||
+            event.target !== event.currentTarget ||
+            (event.key !== "Enter" && event.key !== " ")
+        ) {
+            return;
+        }
+
+        event.preventDefault();
+        if (!event.repeat) {
+            this.onInteraction();
+        }
     }
 
     public getScaleBroker(id: string): IBroker | undefined {

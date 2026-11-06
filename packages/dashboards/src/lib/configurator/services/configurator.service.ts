@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import {
+    afterEveryRender,
     ApplicationRef,
     ComponentFactoryResolver,
     ComponentRef,
@@ -49,6 +50,7 @@ export class ConfiguratorService {
     private renderer: Renderer2;
     private componentRef: ComponentRef<ConfiguratorComponent>;
     private close$: Subject<void> = new Subject<void>();
+    private restoreFocus?: () => boolean;
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -63,6 +65,36 @@ export class ConfiguratorService {
     }
 
     public open(configurator: IConfigurator): Observable<void> {
+        const trigger = document.activeElement;
+        if (trigger instanceof HTMLElement) {
+            const dashboard = trigger.closest("nui-dashboard");
+            const widgetId = trigger
+                .closest("nui-widget")
+                ?.getAttribute("widget-id");
+            const isEditButton = trigger.matches(
+                ".nui-widget-header__action-edit"
+            );
+            this.restoreFocus = () => {
+                if (trigger.isConnected) {
+                    trigger.focus({ preventScroll: true });
+                    return true;
+                } else if (isEditButton && dashboard?.isConnected && widgetId) {
+                    const replacement = Array.from(
+                        dashboard.querySelectorAll("nui-widget")
+                    )
+                        .find(
+                            widget =>
+                                widget.getAttribute("widget-id") === widgetId
+                        )
+                        ?.querySelector<HTMLElement>(
+                            ".nui-widget-header__action-edit"
+                        );
+                    replacement?.focus({ preventScroll: true });
+                    return document.activeElement === replacement;
+                }
+                return true;
+            };
+        }
         const source: IConfiguratorSource = {
             dashboardComponent: configurator.dashboardComponent,
             previewPizzagnaComponent: configurator.previewPizzagnaComponent,
@@ -99,12 +131,14 @@ export class ConfiguratorService {
         );
     }
 
-    public close(): void {
+    public close(restoreFocus = true): void {
         if (!this.renderer) {
             return;
         }
 
         this.close$.next();
+        const restore = this.restoreFocus;
+        this.restoreFocus = undefined;
         this.renderer.removeChild(
             document.body,
             (this.componentRef.hostView as EmbeddedViewRef<any>)
@@ -114,6 +148,9 @@ export class ConfiguratorService {
         this.componentRef.destroy();
 
         this.renderer.removeStyle(document.body, "overflow");
+        if (restoreFocus) {
+            restore?.();
+        }
     }
 
     public handleSubmit =
@@ -150,6 +187,7 @@ export class ConfiguratorService {
             new Observable<void>(observer =>
                 source.subscribe((widget: IWidget) => {
                     if (widget) {
+                        const restoreFocus = this.restoreFocus;
                         widget.id = widget.id || uuid();
 
                         let widgetToSet: IWidget;
@@ -180,10 +218,27 @@ export class ConfiguratorService {
                         // then we wait for the removal to take effect and we create the widget again
                         setTimeout(() => {
                             dashboardComponent.updateWidget(widgetToSet);
+                            if (!restoreFocus) {
+                                return;
+                            }
+                            // Widget headers can be rendered asynchronously after the widget itself.
+                            const renderRef = afterEveryRender(
+                                () => {
+                                    if (
+                                        document.activeElement !==
+                                            document.body ||
+                                        restoreFocus()
+                                    ) {
+                                        renderRef.destroy();
+                                    }
+                                },
+                                // The originating widget and its injector were destroyed above.
+                                { injector: this.appRef.injector }
+                            );
                         });
                     }
 
-                    this.close();
+                    this.close(!widget);
                     observer.next();
                 })
             );
@@ -208,7 +263,7 @@ export class ConfiguratorService {
                     filter(event => event instanceof NavigationEnd),
                     takeUntil(this.close$)
                 )
-                .subscribe(() => this.close());
+                .subscribe(() => this.close(false));
         }
         return componentRef;
     }

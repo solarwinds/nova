@@ -18,7 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+    waitForAsync,
+} from "@angular/core/testing";
 
 import { EventBus } from "@nova-ui/bits";
 import { IHeaderLinkProvider } from "@nova-ui/dashboards";
@@ -78,6 +84,29 @@ describe("WidgetHeaderComponent", () => {
     });
 
     describe("removable configuration >", () => {
+        it("should close the remove menu on external focus without closing for its own controls", fakeAsync(() => {
+            const menu = component.removeMenu!;
+            menu.popup.isOpen = true;
+            fixture.detectChanges();
+            tick();
+            const close = spyOn(menu.popup, "closePopup");
+            menu.menuToggle.nativeElement.dispatchEvent(
+                new FocusEvent("focusin", { bubbles: true })
+            );
+            expect(close).not.toHaveBeenCalled();
+            menu.popup.popupAreaContent.nativeElement.dispatchEvent(
+                new FocusEvent("focusin", { bubbles: true })
+            );
+            expect(close).not.toHaveBeenCalled();
+            document.body.dispatchEvent(
+                new FocusEvent("focusin", { bubbles: true })
+            );
+            expect(close).toHaveBeenCalledTimes(1);
+            close.and.callThrough();
+            menu.popup.closePopup();
+            tick();
+        }));
+
         [true, false].forEach(removable => {
             it(`is removable button shown ${removable}`, () => {
                 component.removable = removable;
