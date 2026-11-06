@@ -64,6 +64,25 @@ test.describe("a11y: panel", () => {
         await runA11yScan("#nui-demo-keyboard-hoverable-panel");
     });
 
+    test("should expose named keyboard separators with valid ranges", async ({
+        page,
+        runA11yScan,
+    }) => {
+        await Helpers.prepareBrowser("panel/panel-test", page);
+        for (const orientation of ["left", "right", "top"]) {
+            const selector = `#keyboard-resize-${orientation}`;
+            const separator = page.locator(selector).getByRole("separator", {
+                name: `Resizable ${orientation}`,
+                exact: true,
+            });
+            await separator.focus();
+            await runA11yScan(selector);
+            await page.keyboard.press("Home");
+            await expect(separator).toHaveAttribute("aria-valuenow", "100");
+            await runA11yScan(selector);
+        }
+    });
+
     test("should check a11y of panel", async ({ runA11yScan }) => {
         for (const expander of expanders) {
             await expander.click();
