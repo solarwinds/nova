@@ -48,8 +48,12 @@ const PANE_HEADER = "DEFAULT HEADER";
     template: `
         <nui-panel
             [paneSize]="paneSize"
+            [paneMinSize]="paneMinSize"
+            [paneMaxSize]="paneMaxSize"
             [panelMode]="panelMode"
             [isCollapsed]="isCollapsed"
+            [isHidden]="isHidden"
+            [isResizable]="isResizable"
             [orientation]="orientation"
             [heading]="heading"
             [displacePrimaryContent]="displacePrimaryContent"
@@ -67,6 +71,9 @@ const PANE_HEADER = "DEFAULT HEADER";
                 >
                 </nui-icon>
             </div>
+            @if (customHeading) {
+            <div nuiPanelEmbeddedHeading>Custom panel heading</div>
+            }
             <div nuiPanelEmbeddedBody class="nui-panel__header-embedded-body">
                 Left Pane Content
                 <input aria-label="Panel input" />
@@ -81,8 +88,13 @@ const PANE_HEADER = "DEFAULT HEADER";
 class TestAppComponent {
     paneSize = PanelComponent.SIZE_VALUES.width.DEFAULT_VALUE;
     paneCollapsedSize = PanelComponent.SIZE_VALUES.width.COLLAPSED_VALUE;
+    paneMinSize = "100px";
+    paneMaxSize = "500px";
     panelMode = PanelModes.static;
     isCollapsed: boolean = false;
+    isHidden = false;
+    isResizable = false;
+    customHeading = false;
     headerIcon: string;
     orientation = "left";
     heading: string;
@@ -137,6 +149,102 @@ describe("components >", () => {
             ).nativeElement;
             expect(centerPaneBody.textContent).toContain(CENTER_PANE_CONTENT);
         });
+
+        it("should expose a labeled keyboard separator only while the panel can be resized", () => {
+            testComponent.isResizable = true;
+            fixture.detectChanges();
+            let separator = fixture.nativeElement.querySelector(
+                ".nui-resize-gutter"
+            ) as HTMLElement;
+
+            expect(separator.getAttribute("role")).toBe("separator");
+            const label = document.getElementById(
+                separator.getAttribute("aria-labelledby")!
+            );
+            expect(label?.textContent).toBe(PANE_HEADER);
+            const pane = fixture.nativeElement.querySelector(
+                ".nui-panel__side-pane"
+            );
+            expect(separator.getAttribute("aria-controls")).toBe(pane.id);
+            expect(separator.hasAttribute("aria-label")).toBe(false);
+            expect(separator.getAttribute("aria-orientation")).toBe("vertical");
+            expect(separator.getAttribute("aria-valuemin")).toBe("100");
+            expect(separator.getAttribute("aria-valuemax")).toBe("500");
+            expect(separator.getAttribute("tabindex")).toBe("0");
+
+            separator.dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    key: "ArrowRight",
+                    bubbles: true,
+                    cancelable: true,
+                })
+            );
+            fixture.detectChanges();
+            const panel: PanelComponent = fixture.debugElement.query(
+                By.directive(PanelComponent)
+            ).componentInstance;
+            expect(panel.paneSize).toBe("251px");
+            expect(separator.getAttribute("aria-valuenow")).toBe("251");
+
+            testComponent.panelMode = PanelModes.closable;
+            fixture.detectChanges();
+            testComponent.isHidden = true;
+            fixture.detectChanges();
+            separator = fixture.nativeElement.querySelector(
+                ".nui-resize-gutter"
+            ) as HTMLElement;
+            expect(separator.hasAttribute("tabindex")).toBe(false);
+        });
+
+        it("should reference a projected visible heading and keep its existing id", () => {
+            testComponent.isResizable = true;
+            testComponent.heading = "";
+            testComponent.customHeading = true;
+            fixture.detectChanges();
+            const heading: HTMLElement = fixture.nativeElement.querySelector(
+                "[nuiPanelEmbeddedHeading]"
+            );
+            const separator: HTMLElement =
+                fixture.nativeElement.querySelector(".nui-resize-gutter");
+            expect(heading.id).toBeTruthy();
+            expect(separator.getAttribute("aria-labelledby")).toBe(heading.id);
+            heading.id = "custom-panel-heading";
+            fixture.detectChanges();
+            expect(heading.id).toBe("custom-panel-heading");
+            expect(separator.getAttribute("aria-labelledby")).toBe(heading.id);
+        });
+
+        it("should defer RTL panel resizing without changing mouse eligibility", () => {
+            testComponent.isResizable = true;
+            fixture.detectChanges();
+            const pane: HTMLElement = fixture.nativeElement.querySelector(
+                ".nui-panel__side-pane"
+            );
+            pane.dir = "rtl";
+            fixture.detectChanges();
+            const separator: HTMLElement =
+                fixture.nativeElement.querySelector(".nui-resize-gutter");
+            const panel: PanelComponent = fixture.debugElement.query(
+                By.directive(PanelComponent)
+            ).componentInstance;
+            expect(separator.hasAttribute("tabindex")).toBe(false);
+            expect(panel.isPanelResizable()).toBe(true);
+        });
+
+        it("should remove the keyboard tab stop when a resizable panel is collapsed", fakeAsync(() => {
+            testComponent.isResizable = true;
+            testComponent.panelMode = PanelModes.collapsible;
+            fixture.detectChanges();
+            testComponent.isCollapsed = true;
+            fixture.detectChanges();
+            tick(PanelComponent.ANIMATION_TIME);
+            fixture.detectChanges();
+
+            const separator = fixture.nativeElement.querySelector(
+                ".nui-resize-gutter"
+            ) as HTMLElement;
+            expect(separator.hasAttribute("tabindex")).toBe(false);
+        }));
 
         it("should have set width in left pane container and side pane body if not collapsible", () => {
             fixture.detectChanges();
