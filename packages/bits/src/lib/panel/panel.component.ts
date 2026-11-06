@@ -43,6 +43,7 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
+import uniqueId from "lodash/uniqueId";
 import { Subject, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
@@ -216,6 +217,22 @@ export class PanelComponent
     public isClosable = false;
     public isHoverable = false;
     public isAnimating = false;
+    public readonly resizeHeadingId = uniqueId("nui-panel-heading-");
+
+    public get resizeLabelledBy(): string | null {
+        if (!this.displayPanelHeader) {
+            return null;
+        }
+        if (this.heading) {
+            return this.resizeHeadingId;
+        }
+        const header: HTMLElement | undefined =
+            this.headerContent?.element.nativeElement;
+        return (
+            header?.querySelector<HTMLElement>("[nuiPanelEmbeddedHeading]")
+                ?.id || null
+        );
+    }
 
     public get expandCollapseAriaLabel(): string {
         return this._isCollapsed
@@ -225,6 +242,12 @@ export class PanelComponent
 
     public get hoverPanelAriaLabel(): string {
         return this.heading || $localize`Panel`;
+    }
+
+    public get resizeAriaLabel(): string {
+        return this.heading
+            ? $localize`Resize panel: ${this.heading}`
+            : $localize`Resize panel`;
     }
 
     private _isCollapsed: boolean;
@@ -253,6 +276,7 @@ export class PanelComponent
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
+        this.identifyResizeHeading();
         if (changes["panelMode"] && changes["panelMode"].isFirstChange()) {
             this.defineSizes();
         }
@@ -273,6 +297,7 @@ export class PanelComponent
             this.isResizable = false;
         }
         this.displayFooter = !this.paneDirectionHorizontal;
+        this.identifyResizeHeading();
         this.checkPanelEmbeddedContent();
         this.handleContentMargin();
         this.updatePaneContainerSizeWithoutAnimation();
@@ -388,6 +413,28 @@ export class PanelComponent
 
     public isPanelResizable(): boolean {
         return this.isResizable && !this.isCollapsed;
+    }
+
+    public isPanelKeyboardResizable(): boolean {
+        return (
+            this.isPanelResizable() &&
+            !this.isHidden &&
+            !this.isAnimating &&
+            this.orientation !== panelMap.bottom.orientation &&
+            getComputedStyle(this.sidePaneContainer.element.nativeElement)
+                .direction !== "rtl"
+        );
+    }
+
+    private identifyResizeHeading(): void {
+        const header: HTMLElement | undefined =
+            this.headerContent?.element.nativeElement;
+        const heading = header?.querySelector<HTMLElement>(
+            "[nuiPanelEmbeddedHeading]"
+        );
+        if (this.isResizable && heading && !heading.id) {
+            this.renderer.setAttribute(heading, "id", this.resizeHeadingId);
+        }
     }
 
     public toggleHideOrCollapsed(): void {
