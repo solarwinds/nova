@@ -23,8 +23,9 @@ test.describe("KPI tile view keyboard interaction", () => {
             )
         ).toBe(false);
 
+        await uptime.click();
+        await expect(page.getByText("Last clicked: Uptime")).toBeVisible();
         await page.keyboard.press("Shift+Tab");
-        await page.keyboard.press("Tab");
         await expect(activeSessions).toBeFocused();
         await expect
             .poll(async () =>
