@@ -26,6 +26,11 @@
         [resizerDirection]="getResizeDirection()"
         [resizerDisabled]="!isPanelResizable()"
         [resizerValue]="getPaneSizeMeasurement()"
+        [resizerKeyboardEnabled]="isPanelKeyboardResizable()"
+        [resizerKeyboardLabel]="resizeAriaLabel"
+        [resizerKeyboardLabelledBy]="resizeLabelledBy"
+        [resizerKeyboardMinSize]="paneMinSize"
+        [resizerKeyboardMaxSize]="paneMaxSize"
         (resizerSizeChanged)="onSizeChanged($event)"
         #sidePaneContainer>
         <div class="nui-panel__container" #paneContainer>
@@ -96,7 +101,11 @@
 <ng-template #defaultTitle>
     <div class="nui-panel__header-content">
         <span class="nui-panel__header-content-default">
-            <h4 class="nui-panel__header-default-title">{{ heading }}</h4>
+            <h4
+                class="nui-panel__header-default-title"
+                [id]="resizeHeadingId"
+                >{{ heading }}</h4
+            >
         </span>
     </div>
 </ng-template>

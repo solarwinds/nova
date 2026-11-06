@@ -161,7 +161,19 @@
     <code>isResizable</code> input to 'true'. The size of panel by default is
     bordered by corresponding min/max values. To modify this behaviour, boundary
     values can be set to 'auto'. To make percentage sized 'top' panel resizable,
-    absolute height of parent block should be set.
+    absolute height of parent block should be set. When the panel has simple
+    numeric <code>paneMinSize</code> and <code>paneMaxSize</code> values (for
+    example, <code>150px</code>, <code>50%</code>, or <code>20vw</code>), Tab to
+    its separator and resize it with the arrow keys; <code>Home</code> and
+    <code>End</code> move to the minimum and maximum. The separator is labelled
+    by the visible pane heading, controls the side pane, and announces its size
+    in CSS pixels. Percentage values use the panel container size. Non-numeric
+    bounds such as <code>auto</code>, <code>calc()</code>, and other
+    unresolvable bounds keep mouse resizing available but do not expose a
+    keyboard separator because a numeric accessible range cannot be determined
+    safely. Keyboard resizing is currently limited to left-, right-, and
+    top-oriented LTR panels. RTL panel and sheet-group keyboard resizing are
+    deferred. Collapse and expand continue to use the existing panel button.
     <nui-message type="info"
         >Note, collapsed state panel can't be resizable. Resize of
         bottom-oriented panel is not currently supported.</nui-message

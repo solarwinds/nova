@@ -84,5 +84,16 @@ describe("Components >", () => {
                 "nui-layout-resizer--vertical"
             );
         });
+
+        it("should keep layout resizers opted out of keyboard resizing", () => {
+            resizerComponent.resizeDirection = ResizeDirection.right;
+            fixture.detectChanges();
+            expect(fixture.elementRef.nativeElement.hasAttribute("role")).toBe(
+                false
+            );
+            expect(
+                fixture.elementRef.nativeElement.hasAttribute("tabindex")
+            ).toBe(false);
+        });
     });
 });

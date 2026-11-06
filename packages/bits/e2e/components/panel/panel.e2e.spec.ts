@@ -39,6 +39,163 @@ test.describe("USERCONTROL Panel", () => {
             await page.mouse.move(0, 0);
         });
 
+        test.describe("LTR keyboard resizing", () => {
+            for (const orientation of ["left", "right", "top"]) {
+                for (const theme of ["light", "dark", "forced-colors"]) {
+                    test(`should resize the ${orientation} panel with keyboard-only focus in ${theme}`, async ({
+                        page,
+                    }) => {
+                        await page.emulateMedia({
+                            forcedColors:
+                                theme === "forced-colors" ? "active" : "none",
+                        });
+                        await page.evaluate(dark => {
+                            document.documentElement.classList.toggle(
+                                "dark-nova-theme",
+                                dark
+                            );
+                        }, theme === "dark");
+                        const panel = page.locator(
+                            `#keyboard-resize-${orientation}`
+                        );
+                        const pane = panel.locator(".nui-panel__side-pane");
+                        const separator = panel.getByRole("separator", {
+                            name: `Resizable ${orientation}`,
+                            exact: true,
+                        });
+                        const before = page.locator(
+                            `#resize-before-${orientation}`
+                        );
+                        await before.click();
+                        await separator.hover();
+                        const pointerAppearance = await separator.screenshot({
+                            animations: "disabled",
+                        });
+                        await separator.click();
+                        expect(
+                            (
+                                await separator.screenshot({
+                                    animations: "disabled",
+                                })
+                            ).equals(pointerAppearance)
+                        ).toBe(true);
+                        expect(
+                            await separator.evaluate(element =>
+                                element.matches(":focus-visible")
+                            )
+                        ).toBe(false);
+                        if (orientation === "right") {
+                            await before.focus();
+                        } else {
+                            await panel
+                                .getByRole("button", { name: "Pane action" })
+                                .focus();
+                        }
+                        await page.keyboard.press("Tab");
+                        await expect(separator).toBeFocused();
+                        await expect(separator).toHaveCSS(
+                            "outline-style",
+                            "solid"
+                        );
+                        await expect(separator).toHaveCSS(
+                            "outline-width",
+                            "2px"
+                        );
+                        await expect(separator).toHaveCSS(
+                            "outline-offset",
+                            "-2px"
+                        );
+                        expect(
+                            (
+                                await separator.screenshot({
+                                    animations: "disabled",
+                                })
+                            ).equals(pointerAppearance)
+                        ).toBe(false);
+                        await expect(separator).toHaveAttribute(
+                            "aria-controls",
+                            (await pane.getAttribute("id"))!
+                        );
+                        await expect(separator).toHaveAttribute(
+                            "aria-orientation",
+                            orientation === "top" ? "horizontal" : "vertical"
+                        );
+                        const oldPane = await pane.boundingBox();
+                        const oldSeparator = await separator.boundingBox();
+                        const grow =
+                            orientation === "left"
+                                ? "ArrowRight"
+                                : orientation === "right"
+                                ? "ArrowLeft"
+                                : "ArrowDown";
+                        await page.keyboard.press(grow);
+                        const axis = orientation === "top" ? "height" : "width";
+                        await expect
+                            .poll(async () => (await pane.boundingBox())![axis])
+                            .toBeCloseTo(oldPane![axis] + 1, 1);
+                        const moved = (await separator.boundingBox())!;
+                        const coordinate = orientation === "top" ? "y" : "x";
+                        expect(moved[coordinate]).toBeCloseTo(
+                            oldSeparator![coordinate] +
+                                (orientation === "right" ? -1 : 1),
+                            1
+                        );
+                        await expect(separator).toHaveAttribute(
+                            "aria-valuenow",
+                            "151"
+                        );
+                        await expect(separator).toHaveAttribute(
+                            "aria-valuetext",
+                            "151 pixels"
+                        );
+                        await page.keyboard.press("Home");
+                        await expect(separator).toHaveAttribute(
+                            "aria-valuenow",
+                            "100"
+                        );
+                        await expect
+                            .poll(async () => (await pane.boundingBox())![axis])
+                            .toBeCloseTo(100, 1);
+                        const maximum = Number(
+                            await separator.getAttribute("aria-valuemax")
+                        );
+                        await page.keyboard.press("End");
+                        await expect(separator).toHaveAttribute(
+                            "aria-valuenow",
+                            String(maximum)
+                        );
+                        await expect
+                            .poll(async () => (await pane.boundingBox())![axis])
+                            .toBeCloseTo(maximum, 1);
+                        await expect(separator).toBeFocused();
+                        await panel
+                            .getByRole("button", {
+                                name: "Collapse panel",
+                                exact: true,
+                            })
+                            .click();
+                        await expect(panel.getByRole("separator")).toHaveCount(
+                            0
+                        );
+                    });
+                }
+            }
+
+            test("should keep RTL panel keyboard resizing deferred", async ({
+                page,
+            }) => {
+                const gutter = page.locator(
+                    "#keyboard-resize-rtl .nui-resize-gutter"
+                );
+                await expect(gutter).toBeVisible();
+                await expect(gutter).not.toHaveAttribute("role", "separator");
+                await expect(gutter).not.toHaveAttribute("tabindex", "0");
+                await expect(gutter).not.toHaveClass(
+                    /nui-resize-gutter-disabled/
+                );
+            });
+        });
+
         test("should reach content with Tab and return focus on Escape", async ({
             page,
         }) => {
