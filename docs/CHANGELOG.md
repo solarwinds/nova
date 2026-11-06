@@ -4,6 +4,18 @@
 
 ### Fixes
 
+## [20.0.14] 📅 2026-11-13
+
+### Fixes
+
+- `@nova-ui/bits` | Improved keyboard access and focus visibility for overflowing tabs, hoverable and collapsible panels, and sortable table headers.
+- `@nova-ui/bits` | Added keyboard and non-dragging table column resizing, and keyboard resizing for LTR panels with resolvable numeric size bounds.
+- `@nova-ui/bits` | Preserved native activation of host-referenced popups and exposed checkbox semantics and state on the keyboard-focusable control.
+- `@nova-ui/charts` | Added opt-in keyboard tooltip inspection for aligned chart series.
+- `@nova-ui/dashboards` | Separated timeseries legend visibility controls from drilldown links, and added keyboard access and focus emphasis to interactive proportional chart legends.
+- `@nova-ui/dashboards` | Added keyboard activation and visible focus to interactive KPI and risk-score tiles while preserving native links.
+- `@nova-ui/dashboards` | Improved widget editor and Remove Widget menu focus management, keyboard navigation, and dismissal.
+- `@nova-ui/dashboards` | Added keyboard reordering to dynamic items, table columns V2, and background-color rules. Generic drag/repeat components and click/tap reordering without dragging remain outside this fix
 - `@nova-ui/dashboards` | Show accessible placeholders for unavailable PerfStack legend values instead of blank tiles or misleading zero percentages.
 - `@nova-ui/bits` | **nui-paginator** keeps keyboard focus after a page change (WCAG 2.4.3): the activated button stays focused, and focus moves to the current page when Previous/Next becomes disabled or a page is selected from the ellipsis popup, including body-appended popups. The ellipsis popup closes with Escape (focus returns to its trigger) or when focus leaves it, and Tab from the trigger enters the popup directly, also when it is appended to the body.
 
