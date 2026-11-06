@@ -178,7 +178,114 @@ describe("ProportionalChartViewComponent", () => {
         fixture.detectChanges();
 
         component.onInteraction({ id: "segment-1" });
-        expect(host.clickedItem).toEqual(mockData[0]);
+        expect<IProportionalDataItem | null>(host.clickedItem).toEqual(
+            mockData[0]
+        );
+    });
+
+    it("keeps the legend list structure while making its items focusable", () => {
+        host.data = mockData;
+        fixture.detectChanges();
+
+        const legend = fixture.nativeElement.querySelector("nui-legend");
+        const items = legend.querySelectorAll("nui-legend-series");
+
+        expect(legend.getAttribute("role")).toBe("list");
+        expect(items.length).toBe(mockData.length);
+        items.forEach((item: HTMLElement) => {
+            expect(item.getAttribute("role")).toBe("listitem");
+            expect(item.getAttribute("tabindex")).toBe("0");
+        });
+    });
+
+    it("exposes a separate native action button without toggling visibility", () => {
+        host.data = mockData;
+        host.interactive = true;
+        fixture.detectChanges();
+        const item = fixture.nativeElement.querySelector("nui-legend-series");
+        const componentInstance = component;
+
+        const action: HTMLButtonElement = item.querySelector(
+            ".proportional-chart__legend-action"
+        );
+        expect(item.getAttribute("role")).toBe("listitem");
+        expect(item.hasAttribute("tabindex")).toBe(false);
+        expect(action.type).toBe("button");
+        expect(action.getAttribute("aria-label")).toContain("Segment One");
+        spyOn(componentInstance, "onInteraction").and.callThrough();
+        action.click();
+        expect(componentInstance.onInteraction).toHaveBeenCalledTimes(1);
+        expect<IProportionalDataItem | null>(host.clickedItem).toEqual(
+            mockData[0]
+        );
+
+        expect(component.chartAssist.isSeriesHidden("segment-1")).toBe(false);
+    });
+
+    it("does not activate a non-interactive legend item from the keyboard", () => {
+        host.data = mockData;
+        fixture.detectChanges();
+        const item = fixture.nativeElement.querySelector("nui-legend-series");
+        spyOn(component, "onInteraction");
+
+        item.dispatchEvent(
+            new KeyboardEvent("keydown", {
+                bubbles: true,
+                code: "Enter",
+            })
+        );
+        item.dispatchEvent(
+            new KeyboardEvent("keydown", {
+                bubbles: true,
+                cancelable: true,
+                code: "Space",
+            })
+        );
+
+        expect(component.onInteraction).not.toHaveBeenCalled();
+        expect(component.chartAssist.isSeriesHidden("segment-1")).toBe(false);
+    });
+
+    it("uses keyboard focus for emphasis without changing mouse leave behavior", () => {
+        host.data = mockData;
+        fixture.detectChanges();
+        const emphasizeSeriesSpy = spyOn(
+            component.chartAssist,
+            "emphasizeSeries"
+        );
+        const resetVisibleSeriesSpy = spyOn(
+            component.chartAssist,
+            "resetVisibleSeries"
+        );
+
+        component.onLegendSeriesMouseEnter({ id: "segment-3" });
+        component.onLegendMouseLeave();
+        expect(resetVisibleSeriesSpy).toHaveBeenCalledTimes(1);
+        resetVisibleSeriesSpy.calls.reset();
+        emphasizeSeriesSpy.calls.reset();
+
+        const focusedTarget = document.createElement("span");
+        const matchesFocusVisible = spyOn(focusedTarget, "matches");
+        const focusEvent = new FocusEvent("focusin");
+        Object.defineProperty(focusEvent, "target", { value: focusedTarget });
+        Object.defineProperty(focusEvent, "currentTarget", {
+            value: focusedTarget,
+        });
+        matchesFocusVisible.and.returnValue(false);
+        component.onLegendSeriesFocus({ id: "segment-1" }, focusEvent);
+        expect(emphasizeSeriesSpy).not.toHaveBeenCalled();
+
+        matchesFocusVisible.and.returnValue(true);
+        component.onLegendSeriesFocus({ id: "segment-1" }, focusEvent);
+        expect(emphasizeSeriesSpy).toHaveBeenCalledWith("segment-1");
+
+        component.onLegendSeriesMouseEnter({ id: "segment-2" });
+        component.onLegendMouseLeave();
+        expect(emphasizeSeriesSpy).toHaveBeenCalledWith("segment-1");
+        expect(resetVisibleSeriesSpy).not.toHaveBeenCalled();
+
+        component.onLegendFocusOut();
+        expect(resetVisibleSeriesSpy).toHaveBeenCalled();
     });
 
     it("should apply colors from data", () => {
@@ -187,6 +294,57 @@ describe("ProportionalChartViewComponent", () => {
 
         // Chart should be built with data-driven colors
         expect(component.chartAssist).toBeTruthy();
+    });
+
+    it("clears keyboard emphasis when its item is removed", () => {
+        host.data = mockData;
+        fixture.detectChanges();
+        const target = document.createElement("span");
+        spyOn(target, "matches").and.returnValue(true);
+        const focus = new FocusEvent("focusin");
+        Object.defineProperty(focus, "target", { value: target });
+        Object.defineProperty(focus, "currentTarget", { value: target });
+        component.onLegendSeriesFocus({ id: "segment-1" }, focus);
+
+        const reset = spyOn(component.chartAssist, "resetVisibleSeries");
+        host.data = mockData.slice(1);
+        fixture.detectChanges();
+        expect(component.data).withContext("updated input").toEqual(host.data);
+        expect(reset)
+            .withContext("removed focused item")
+            .toHaveBeenCalledTimes(1);
+        const emphasize = spyOn(component.chartAssist, "emphasizeSeries");
+        component.onLegendMouseLeave();
+        expect(emphasize).not.toHaveBeenCalled();
+    });
+
+    it("clears keyboard emphasis when the legend is hidden", () => {
+        host.data = mockData;
+        fixture.detectChanges();
+        const target = document.createElement("span");
+        spyOn(target, "matches").and.returnValue(true);
+        const focus = new FocusEvent("focusin");
+        Object.defineProperty(focus, "target", { value: target });
+        Object.defineProperty(focus, "currentTarget", { value: target });
+        component.onLegendSeriesFocus({ id: "segment-1" }, focus);
+
+        const reset = spyOn(component.chartAssist, "resetVisibleSeries");
+        host.legendPlacement = "none";
+        fixture.detectChanges();
+        expect(reset).toHaveBeenCalledTimes(1);
+        reset.calls.reset();
+        component.onLegendMouseLeave();
+        expect(reset).toHaveBeenCalledTimes(1);
+    });
+
+    it("does not change mouse-only emphasis when the legend placement changes", () => {
+        host.data = mockData;
+        fixture.detectChanges();
+        component.onLegendSeriesMouseEnter({ id: "segment-1" });
+        const reset = spyOn(component.chartAssist, "resetVisibleSeries");
+        host.legendPlacement = "none";
+        fixture.detectChanges();
+        expect(reset).not.toHaveBeenCalled();
     });
 
     it("should apply configuration colors when provided", () => {
