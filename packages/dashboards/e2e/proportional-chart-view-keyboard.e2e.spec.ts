@@ -1,5 +1,4 @@
 import { expect, Helpers, test } from "@nova-ui/bits/sdk/atoms-playwright";
-import { LegendSeriesAtom } from "@nova-ui/charts/sdk/atoms-playwright";
 
 test.describe("Proportional chart view keyboard access", () => {
     test.beforeEach(async ({ page }) => {
@@ -157,9 +156,7 @@ test.describe("Proportional chart view keyboard access", () => {
                 legend.locator(".nui-legend-series--state-deemphasized")
             ).toHaveCount(0);
             await expect(legend.getByRole("button")).toHaveCount(0);
-            await expect(
-                new LegendSeriesAtom(alpha).getActionButton()
-            ).toHaveCount(0);
+            await expect(alpha.locator("button[legendAction]")).toHaveCount(0);
             await expect(
                 page.getByText("Actions: 0; Last item:")
             ).toBeVisible();

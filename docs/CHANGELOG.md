@@ -4,6 +4,18 @@
 
 ### Fixes
 
+## [20.0.14] 📅 2026-11-13
+
+### Fixes
+
+- `@nova-ui/bits` | Improved keyboard access and focus visibility for overflowing tabs, hoverable and collapsible panels, and sortable table headers.
+- `@nova-ui/bits` | Added keyboard and non-dragging table column resizing, and keyboard resizing for LTR panels with resolvable numeric size bounds.
+- `@nova-ui/bits` | Preserved native activation of host-referenced popups and exposed checkbox semantics and state on the keyboard-focusable control.
+- `@nova-ui/charts` | Added opt-in keyboard tooltip inspection for aligned chart series.
+- `@nova-ui/dashboards` | Separated timeseries legend visibility controls from drilldown links, and added keyboard access and focus emphasis to interactive proportional chart legends.
+- `@nova-ui/dashboards` | Added keyboard activation and visible focus to interactive KPI and risk-score tiles while preserving native links.
+- `@nova-ui/dashboards` | Improved widget editor and Remove Widget menu focus management, keyboard navigation, and dismissal.
+- `@nova-ui/dashboards` | Added keyboard reordering to dynamic items, table columns V2, and background-color rules. Generic drag/repeat components and click/tap reordering without dragging remain outside this fix
 - `@nova-ui/bits` | Improve checkbox and switch accessible names, checkbox descriptions and states, and form-field updates in OnPush hosts. Explicit accessible names now take precedence over form-field captions.
 - `@nova-ui/bits` | Keep form-field help references separate from consumer-provided descriptions. Custom templates in control subclasses should render `resolvedAriaDescribedby` (or `descriptionIds` for checkboxes) to retain field help.
 - `@nova-ui/bits` | Fix form-field captions for checkboxes and textboxes with a conflicting host ID. The native input receives a separate ID in these cases.
