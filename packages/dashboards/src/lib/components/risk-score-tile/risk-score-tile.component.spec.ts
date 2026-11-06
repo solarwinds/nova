@@ -106,6 +106,103 @@ describe("RiskScoreTileComponent", () => {
         expect(component).toBeTruthy();
     });
 
+    it("should expose an accessible button and activate it with Enter and Space", () => {
+        component.configuration = { interactive: true };
+        component.widgetData = { value: 4, label: "Risk level" };
+        fixture.detectChanges();
+
+        const tile: HTMLElement = fixture.nativeElement.querySelector(
+            ".nui-risk-score-tile-indicator"
+        );
+        expect(tile.getAttribute("role")).toBe("button");
+        expect(tile.getAttribute("tabindex")).toBe("0");
+        expect(tile.getAttribute("aria-label")).toBe("Risk level 4");
+
+        const interactionSpy = spyOn(
+            component,
+            "onInteraction"
+        ).and.callThrough();
+        tile.dispatchEvent(
+            new KeyboardEvent("keydown", {
+                key: "Enter",
+                bubbles: true,
+                cancelable: true,
+            })
+        );
+        expect(interactionSpy).toHaveBeenCalledTimes(1);
+
+        const spaceEvent = new KeyboardEvent("keydown", {
+            key: " ",
+            bubbles: true,
+            cancelable: true,
+        });
+        tile.dispatchEvent(spaceEvent);
+        expect(interactionSpy).toHaveBeenCalledTimes(2);
+        expect(spaceEvent.defaultPrevented).toBe(true);
+    });
+
+    it("should not add a non-interactive risk score tile to the tab order", () => {
+        component.widgetData = { value: 4, label: "Risk level" };
+        fixture.detectChanges();
+
+        const tile: HTMLElement = fixture.nativeElement.querySelector(
+            ".nui-risk-score-tile-indicator"
+        );
+        expect(tile.hasAttribute("role")).toBe(false);
+        expect(tile.hasAttribute("tabindex")).toBe(false);
+        expect(tile.hasAttribute("aria-label")).toBe(false);
+    });
+
+    it("should name a static-label tile using its displayed label", () => {
+        component.configuration = { interactive: true };
+        component.widgetData = {
+            value: 4,
+            label: "Risk level",
+            useStaticLabel: true,
+            staticLabel: "High",
+        };
+        fixture.detectChanges();
+        const tile: HTMLElement = fixture.nativeElement.querySelector(
+            ".nui-risk-score-tile-indicator"
+        );
+        expect(tile.getAttribute("aria-label")).toBe("Risk level High");
+    });
+
+    it("should preserve native links", () => {
+        component.configuration = { interactive: true };
+        component.widgetData = { value: 4, link: "https://example.com" };
+        fixture.detectChanges();
+        const tile: HTMLAnchorElement = fixture.nativeElement.querySelector(
+            ".nui-risk-score-tile-indicator"
+        );
+        expect(tile.tagName).toBe("A");
+        expect(tile.href).toBe("https://example.com/");
+        expect(tile.hasAttribute("role")).toBe(false);
+        expect(tile.hasAttribute("tabindex")).toBe(false);
+    });
+
+    it("should ignore repeated keys and keys from descendants", () => {
+        component.configuration = { interactive: true };
+        component.widgetData = { value: 4 };
+        fixture.detectChanges();
+        const tile: HTMLElement = fixture.nativeElement.querySelector(
+            ".nui-risk-score-tile-indicator"
+        );
+        const interactionSpy = spyOn(component, "onInteraction");
+        const repeat = new KeyboardEvent("keydown", {
+            key: " ",
+            repeat: true,
+            bubbles: true,
+            cancelable: true,
+        });
+        tile.dispatchEvent(repeat);
+        tile.firstElementChild?.dispatchEvent(
+            new KeyboardEvent("keydown", { key: "Enter", bubbles: true })
+        );
+        expect(repeat.defaultPrevented).toBe(true);
+        expect(interactionSpy).not.toHaveBeenCalled();
+    });
+
     describe("interactive", () => {
         it("is interactive when datasource is interactive with data", () => {
             expect(component.interactive).toBeFalsy();
