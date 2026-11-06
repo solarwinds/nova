@@ -32,7 +32,11 @@
     The <code>&lt;nui-kpi-tile-view&gt;</code> component renders a single KPI
     indicator tile with a label, value, units, and configurable background
     color. It supports interactive click handling and custom value formatting
-    via <code>ng-template</code>.
+    via <code>ng-template</code>. Interactive tiles without a link are keyboard
+    accessible as buttons: Tab focuses the tile, and Enter or Space activates
+    the same action as a click. Space does not scroll the page. Tiles with a
+    link remain links, and empty or non-interactive tiles are not added to the
+    tab order.
 </p>
 
 <h3>Playground &mdash; All States</h3>

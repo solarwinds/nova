@@ -19,6 +19,18 @@
     height: 100%;
     width: 100%;
 
+    &[role="button"]:focus-visible::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        outline: 2px solid;
+        outline-offset: -2px;
+        .setCssVariable(outline-color, nui-color-active);
+        box-shadow: inset 0 0 0 3px
+            var(--nui-color-bg-content, @nui-color-bg-content);
+    }
+
     &__background {
         height: 100%;
         width: 100%;
