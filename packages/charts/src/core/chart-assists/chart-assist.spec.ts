@@ -114,9 +114,9 @@ describe("chart assist >", () => {
             const inspectedPoint: IDataPoint = {
                 ...dataPoint,
                 index: 1,
-                data: { x: 1, y: 0.25 },
+                data: { x: 2, y: 0.25 },
             };
-            series.data.push(inspectedPoint.data);
+            series.data.push(inspectedPoint.data, { x: 3, y: 0.75 });
             const stream = chart
                 .getEventBus()
                 .getStream(INTERACTION_DATA_POINTS_EVENT);
@@ -143,8 +143,8 @@ describe("chart assist >", () => {
                     },
                 },
             });
-            expect(ca.getHighlightedValue(series, "y")).toBe(0.25);
-            expect(legendData).toEqual(series.data[1]);
+            expect(ca.getHighlightedValue(series, "y")).toBe(0.75);
+            expect(legendData).toEqual(series.data[2]);
             subscription.unsubscribe();
         });
 
