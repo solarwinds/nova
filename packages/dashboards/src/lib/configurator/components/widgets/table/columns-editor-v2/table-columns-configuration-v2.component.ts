@@ -66,6 +66,7 @@ import {
     PIZZAGNA_EVENT_BUS,
     WellKnownDataSourceFeatures,
 } from "../../../../../types";
+import { KeyboardReorder } from "../../../../keyboard-reorder";
 import { ConfiguratorDataSourceManagerService } from "../../../../services/configurator-data-source-manager.service";
 import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
 
@@ -81,6 +82,7 @@ export class TableColumnsConfigurationV2Component
     implements OnInit, IHasForm, OnChanges, OnDestroy
 {
     static lateLoadKey = "TableColumnsConfigurationV2Component";
+    private static reorderInstructionsCounter = 0;
 
     @Input() columns: ITableWidgetColumnConfig[] = [];
     @Input() componentId: string;
@@ -110,8 +112,15 @@ export class TableColumnsConfigurationV2Component
     // the last selected data source will be stored here
     public dataSource: IDataSource;
     public columnLabel = $localize`Column`;
-
+    public readonly reorderInstructionsId = `nui-table-columns-reorder-instructions-${TableColumnsConfigurationV2Component.reorderInstructionsCounter++}`;
     private onDestroy$: Subject<void> = new Subject<void>();
+    public readonly reorder = new KeyboardReorder<string>(
+        () => this.columnForms.map(control => control.value.id),
+        (from, to) => this.moveItem(from, to),
+        id =>
+            !this.columnForms.find(control => control.value.id === id)?.enabled,
+        () => this.changeDetector.markForCheck()
+    );
 
     constructor(
         private formBuilder: FormBuilder,
@@ -356,6 +365,7 @@ export class TableColumnsConfigurationV2Component
 
     public removeItem(index: number): void {
         const columns = this.form.controls["columns"] as FormArray;
+        this.reorder.cancel();
         columns.removeAt(index);
 
         this.changeDetector.detectChanges();
@@ -366,6 +376,7 @@ export class TableColumnsConfigurationV2Component
     }
 
     public cdkDragStarted(event: CdkDragStart): void {
+        this.reorder.finish();
         this.draggedItemHeight =
             event.source.element.nativeElement.offsetHeight;
     }

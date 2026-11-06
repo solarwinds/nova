@@ -46,6 +46,7 @@ import {
     IHasForm,
     IPaletteColor,
 } from "../../../../../types";
+import { KeyboardReorder } from "../../../../keyboard-reorder";
 
 const DEFAULT_LABEL = "Custom Comparator";
 
@@ -60,6 +61,7 @@ export class BackgroundColorRulesConfigurationComponent
     implements IHasChangeDetector, IHasForm, OnChanges, OnInit, OnDestroy
 {
     public static lateLoadKey = "BackgroundColorRulesConfigurationComponent";
+    private static reorderInstructionsCounter = 0;
 
     @Input() rules: IKpiColorRules[];
     @Input() backgroundColors: IPaletteColor[];
@@ -70,8 +72,19 @@ export class BackgroundColorRulesConfigurationComponent
     public availableComparators: IComparatorsDict;
     public palette: Partial<IPaletteColor[]>;
     public height: number;
-
+    public readonly reorderInstructionsId = `nui-background-color-rules-reorder-instructions-${BackgroundColorRulesConfigurationComponent.reorderInstructionsCounter++}`;
     private readonly destroy$ = new Subject<void>();
+    public readonly reorder = new KeyboardReorder<FormGroup>(
+        () =>
+            (this.formLocal?.get("rules")?.value as FormArray<FormGroup>)
+                ?.controls ?? [],
+        (from, to) => {
+            this.move(to, from, true);
+            this.changeDetector.detectChanges();
+        },
+        rule => rule.disabled,
+        () => this.changeDetector.markForCheck()
+    );
 
     constructor(
         public changeDetector: ChangeDetectorRef,
@@ -140,6 +153,7 @@ export class BackgroundColorRulesConfigurationComponent
     }
 
     public removeRule(controlIndex: number): void {
+        this.reorder.cancel();
         (this.formLocal?.get("rules")?.value as FormArray).removeAt(
             controlIndex
         );
@@ -160,6 +174,7 @@ export class BackgroundColorRulesConfigurationComponent
     }
 
     public cdkDragStarted(event: CdkDragStart): void {
+        this.reorder.finish();
         this.height = event.source.element.nativeElement.offsetHeight;
     }
 
@@ -174,7 +189,11 @@ export class BackgroundColorRulesConfigurationComponent
         });
     }
 
-    private move(currentIndex: number, previousIndex: number): void {
+    private move(
+        currentIndex: number,
+        previousIndex: number,
+        batchChanges = false
+    ): void {
         const rules = this.formLocal?.get("rules")?.value as FormArray;
         const dir = currentIndex > previousIndex ? 1 : -1;
         if (!rules) {
@@ -185,8 +204,12 @@ export class BackgroundColorRulesConfigurationComponent
 
         for (let i = previousIndex; i * dir < currentIndex * dir; i = i + dir) {
             const current = rules.at(i + dir);
-            rules.setControl(i, current);
+            rules.setControl(i, current, { emitEvent: !batchChanges });
         }
-        rules.setControl(currentIndex, temp);
+        rules.setControl(currentIndex, temp, { emitEvent: !batchChanges });
+        if (batchChanges) {
+            // Intermediate duplicates can destroy the focused rule's view.
+            rules.updateValueAndValidity();
+        }
     }
 }

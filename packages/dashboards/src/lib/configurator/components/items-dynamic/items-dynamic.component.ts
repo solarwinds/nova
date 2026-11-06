@@ -43,6 +43,7 @@ import {
     IHasChangeDetector,
     IHasForm,
 } from "../../../types";
+import { KeyboardReorder } from "../../keyboard-reorder";
 import { IItemConfiguration } from "../types";
 
 /** @ignore */
@@ -59,6 +60,7 @@ export class ItemsDynamicComponent
     implements IHasChangeDetector, IHasForm<FormArray>, OnInit, OnDestroy
 {
     static lateLoadKey = "ItemsDynamicComponent";
+    private static reorderInstructionsCounter = 0;
 
     @Input() items: IItemConfiguration[] = [];
     @Input() moveButtons = true;
@@ -70,6 +72,16 @@ export class ItemsDynamicComponent
     public form: FormArray;
     public height: number;
     public headerMap: Map<string, string> = new Map<string, string>();
+    public readonly reorderInstructionsId = `nui-items-dynamic-reorder-instructions-${ItemsDynamicComponent.reorderInstructionsCounter++}`;
+
+    public readonly reorder = new KeyboardReorder(
+        () => this.nodes ?? [],
+        (from, to) => this.moveItem(from, to),
+        id =>
+            !this.moveButtons ||
+            !this.form?.at(this.nodes.indexOf(id))?.enabled,
+        () => this.changeDetector.markForCheck()
+    );
 
     constructor(
         changeDetector: ChangeDetectorRef,
@@ -162,6 +174,7 @@ export class ItemsDynamicComponent
         if (!item) {
             throw new Error("Unable to remove undefined item from pizzagna");
         }
+        this.reorder.cancel();
 
         // remove item configuration - this will cause the onFormDestroy to be called for related form after component disappears from the view
         this.itemsChange.emit(this.items.filter(it => it !== item));
@@ -180,6 +193,10 @@ export class ItemsDynamicComponent
         const node = nodes.splice(index, 1);
         nodes.splice(toIndex, 0, ...node);
         this.nodes = [...nodes];
+        if (this.reorder.activeItem !== undefined) {
+            // Keep the local input view current while consecutive keyboard moves are made.
+            this.items = items;
+        }
 
         this.moveFormValues(index, toIndex);
         this.itemsChange.emit(items);
@@ -195,6 +212,7 @@ export class ItemsDynamicComponent
     }
 
     public cdkDragStarted(event: CdkDragStart): void {
+        this.reorder.finish();
         this.height = event.source.element.nativeElement.offsetHeight;
     }
 
