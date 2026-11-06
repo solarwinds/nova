@@ -79,6 +79,10 @@ export class LegendSeriesAtom extends Atom {
         await this.tile.click({ force: true });
     }
 
+    public getActionButton(): Locator {
+        return this.getLocator().locator("button[legendAction]");
+    }
+
     public async hoverTile(): Promise<void> {
         await this.tile.hover({ force: true });
     }

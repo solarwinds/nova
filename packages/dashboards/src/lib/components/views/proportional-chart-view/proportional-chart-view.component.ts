@@ -130,12 +130,38 @@ export class ProportionalChartViewComponent
         inject(UnitConversionService)
     );
     private chartSeries: Array<IChartAssistSeries<IAccessors>> = [];
+    private keyboardFocusedSeriesId: string | null = null;
+    private mouseHoveredSeriesId: string | null = null;
 
     public get isEmpty(): boolean {
         return !this.data || this.data.length === 0;
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
+        const hadKeyboardEmphasis =
+            this.keyboardFocusedSeriesId !== null &&
+            this.mouseHoveredSeriesId === null;
+        if (changes.data) {
+            if (
+                !this.data?.some(
+                    item => item.id === this.keyboardFocusedSeriesId
+                )
+            ) {
+                this.keyboardFocusedSeriesId = null;
+            }
+            if (
+                !this.data?.some(item => item.id === this.mouseHoveredSeriesId)
+            ) {
+                this.mouseHoveredSeriesId = null;
+            }
+        }
+        if (changes.legendPlacement && !this.hasLegend()) {
+            this.keyboardFocusedSeriesId = null;
+            this.mouseHoveredSeriesId = null;
+        }
+        if (hadKeyboardEmphasis && this.keyboardFocusedSeriesId === null) {
+            this.chartAssist?.resetVisibleSeries();
+        }
         if (changes.data || changes.colors) {
             this.updateChartColors();
         }
@@ -177,13 +203,58 @@ export class ProportionalChartViewComponent
         return this.legendPlacement === "right";
     }
 
-    public onInteraction(legendSeries: any): void {
+    public onInteraction(legendSeries: { id: string }): void {
         if (!this.interactive) {
             return;
         }
         const item = this.data.find(d => d.id === legendSeries?.id);
         if (item) {
             this.itemClick.emit(item);
+        }
+    }
+
+    public onLegendSeriesMouseEnter(legendSeries: { id: string }): void {
+        this.mouseHoveredSeriesId = legendSeries.id;
+        this.chartAssist.emphasizeSeries(legendSeries.id);
+    }
+
+    public onLegendMouseLeave(): void {
+        this.mouseHoveredSeriesId = null;
+        if (this.keyboardFocusedSeriesId !== null) {
+            this.chartAssist.emphasizeSeries(this.keyboardFocusedSeriesId);
+        } else {
+            this.chartAssist.resetVisibleSeries();
+        }
+    }
+
+    public onLegendSeriesFocus(
+        legendSeries: { id: string },
+        event: FocusEvent
+    ): void {
+        const target = event.target;
+        if (
+            !(target instanceof HTMLElement) ||
+            !target.matches(":focus-visible") ||
+            !(
+                target === event.currentTarget ||
+                target.classList.contains(
+                    "proportional-chart__legend-action"
+                ) ||
+                target instanceof HTMLAnchorElement
+            )
+        ) {
+            return;
+        }
+        this.keyboardFocusedSeriesId = legendSeries.id;
+        if (this.mouseHoveredSeriesId === null) {
+            this.chartAssist.emphasizeSeries(legendSeries.id);
+        }
+    }
+
+    public onLegendFocusOut(): void {
+        this.keyboardFocusedSeriesId = null;
+        if (this.mouseHoveredSeriesId === null) {
+            this.chartAssist.resetVisibleSeries();
         }
     }
 

@@ -197,6 +197,25 @@ describe("LegendSeries >", () => {
             prepareComponent(new MockLegendComponent());
         });
 
+        it("should opt into focus without enabling checkbox interaction", () => {
+            series.interactive = false;
+            fixture.detectChanges();
+            expect(hostElement.hasAttribute("tabindex")).toBeFalse();
+
+            fixture.componentRef.setInput("focusable", true);
+            fixture.detectChanges();
+            const selection = spyOn(series.isSelectedChange, "next");
+            expect(hostElement.getAttribute("role")).toBe("listitem");
+            expect(hostElement.getAttribute("tabindex")).toBe("0");
+            expect(hostElement.hasAttribute("aria-checked")).toBeFalse();
+            hostElement.click();
+            expect(selection).not.toHaveBeenCalled();
+
+            fixture.componentRef.setInput("focusable", false);
+            fixture.detectChanges();
+            expect(hostElement.hasAttribute("tabindex")).toBeFalse();
+        });
+
         it("should hide the description elements if they are not set or set to empty", () => {
             expect(fixture.componentInstance.hasInputDescription()).toBe(false);
             series.descriptionPrimary = "";
