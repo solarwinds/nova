@@ -36,12 +36,32 @@
         .setCssVariable(border-left-color, nui-color-line-default);
         margin-left: @nui-space-sm;
     }
+
+    &__a11y-text {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
 }
 
 .kpi-color-rule {
     .setCssVariable(background-color, nui-color-bg-content);
     &__drag {
         cursor: move;
+        width: @icon-size-default;
+        height: @icon-size-default;
+
+        &:focus-visible {
+            outline: 2px solid;
+            outline-offset: 2px;
+            .setCssVariable(outline-color, nui-color-active);
+        }
     }
     &__control {
         min-width: 30px;
