@@ -25,6 +25,13 @@ import { TestCommonModule } from "./common/common.module";
 
 const routes = [
     {
+        path: "proportional-chart-view",
+        loadComponent: async () =>
+            import("./proportional-chart-view-test.component").then(
+                m => m.ProportionalChartViewTestComponent
+            ),
+    },
+    {
         path: "overview",
         loadChildren: async () =>
             import("./visual/overview/overview.module").then(

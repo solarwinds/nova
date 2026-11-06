@@ -85,6 +85,13 @@ export class LegendSeriesComponent implements AfterContentInit {
     @Input() public isSelected = true;
 
     /**
+     * Makes a non-interactive legend item keyboard-focusable without changing
+     * its listitem role or enabling the series visibility checkbox.
+     * Project independent action controls with the legendAction attribute.
+     */
+    @Input() public focusable = false;
+
+    /**
      * Moves the checkbox from the host to the tile so projected actions remain independent.
      */
     @Input() public separateControls = false;
@@ -158,7 +165,10 @@ export class LegendSeriesComponent implements AfterContentInit {
 
     @HostBinding("attr.tabindex")
     get interactiveTabIndex(): number | null {
-        return this._interactive && !this.separateControls ? 0 : null;
+        return (this.focusable && !this._interactive) ||
+            (this._interactive && !this.separateControls)
+            ? 0
+            : null;
     }
 
     @HostBinding("attr.aria-checked")
