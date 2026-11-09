@@ -141,13 +141,22 @@ describe("components >", () => {
         const byLabel = (label: string): HTMLButtonElement =>
             button(`button[aria-label="${label}"]`);
         const activeElement = (): Element | null => document.activeElement;
+        const popupComponent = (): PopupComponent =>
+            fixture.debugElement.query(By.directive(PopupComponent))
+                .componentInstance;
         const openPopup = (): HTMLElement => {
             button(".nui-paginator__dots").click();
             TestBed.tick();
-            const popup: PopupComponent = fixture.debugElement.query(
-                By.directive(PopupComponent)
-            ).componentInstance;
-            return popup.popup.getOverlayRef().overlayElement;
+            return popupComponent().popup.getOverlayRef().overlayElement;
+        };
+        const keydown = (target: HTMLElement, init: KeyboardEventInit) => {
+            const event = new KeyboardEvent("keydown", {
+                bubbles: true,
+                cancelable: true,
+                ...init,
+            });
+            target.dispatchEvent(event);
+            return event;
         };
 
         beforeEach(() => {
@@ -248,6 +257,134 @@ describe("components >", () => {
                     expect(activeElement()).toBe(
                         button("button[aria-current=page]")
                     );
+                }));
+            });
+        });
+
+        [false, true].forEach(appendToBody => {
+            describe(`popup keyboard with appendToBody=${appendToBody} >`, () => {
+                let outside: HTMLButtonElement;
+
+                const open = (): HTMLElement => {
+                    subject.appendToBody = appendToBody;
+                    render(40, 1);
+                    const popupRoot = openPopup();
+                    tick(20);
+                    fixture.detectChanges();
+                    return popupRoot;
+                };
+
+                beforeEach(() => {
+                    outside = document.createElement("button");
+                    document.body.appendChild(outside);
+                });
+
+                afterEach(() => outside.remove());
+
+                it("should close the popup on Escape and return focus to the trigger", fakeAsync(() => {
+                    const popupRoot = open();
+                    const trigger = button(".nui-paginator__dots");
+                    button(
+                        `button[aria-label="Go to page 7"]`,
+                        popupRoot
+                    ).focus();
+
+                    const event = keydown(activeElement() as HTMLElement, {
+                        key: "Escape",
+                        code: "Escape",
+                    });
+                    tick();
+
+                    expect(event.defaultPrevented).toBeTrue();
+                    expect(popupComponent().isOpen).toBeFalse();
+                    expect(activeElement()).toBe(trigger);
+                }));
+
+                it("should close the popup on Escape pressed on the trigger", fakeAsync(() => {
+                    open();
+                    const trigger = button(".nui-paginator__dots");
+                    trigger.focus();
+
+                    keydown(trigger, { key: "Escape", code: "Escape" });
+                    tick();
+
+                    expect(popupComponent().isOpen).toBeFalse();
+                    expect(activeElement()).toBe(trigger);
+                }));
+
+                it("should close the popup when focus moves outside of it", fakeAsync(() => {
+                    const popupRoot = open();
+                    button(
+                        `button[aria-label="Go to page 7"]`,
+                        popupRoot
+                    ).focus();
+
+                    outside.focus();
+                    tick();
+
+                    expect(popupComponent().isOpen).toBeFalse();
+                    expect(activeElement()).toBe(outside);
+                }));
+
+                it("should keep the popup open while focus moves between the trigger and its pages", fakeAsync(() => {
+                    const popupRoot = open();
+
+                    button(".nui-paginator__dots").focus();
+                    button(
+                        `button[aria-label="Go to page 7"]`,
+                        popupRoot
+                    ).focus();
+                    tick();
+
+                    expect(popupComponent().isOpen).toBeTrue();
+                }));
+
+                it("should move focus from the trigger straight into the popup on Tab", fakeAsync(() => {
+                    const popupRoot = open();
+                    const trigger = button(".nui-paginator__dots");
+                    trigger.focus();
+
+                    const event = keydown(trigger, { key: "Tab", code: "Tab" });
+
+                    expect(event.defaultPrevented).toBeTrue();
+                    expect(activeElement()).toBe(
+                        button(`button[aria-label="Go to page 6"]`, popupRoot)
+                    );
+                }));
+
+                it("should return focus to the trigger and close the popup when tabbing past its last page", fakeAsync(() => {
+                    const popupRoot = open();
+                    const pages = popupRoot.querySelectorAll("button");
+                    (pages[pages.length - 1] as HTMLElement).focus();
+
+                    keydown(activeElement() as HTMLElement, {
+                        key: "Tab",
+                        code: "Tab",
+                    });
+                    tick();
+
+                    expect(activeElement()).toBe(
+                        button(".nui-paginator__dots")
+                    );
+                    expect(popupComponent().isOpen).toBeFalse();
+                }));
+
+                it("should return focus to the trigger when Shift+Tab is pressed on the first page", fakeAsync(() => {
+                    const popupRoot = open();
+                    (popupRoot.querySelector("button") as HTMLElement).focus();
+
+                    const event = keydown(activeElement() as HTMLElement, {
+                        key: "Tab",
+                        code: "Tab",
+                        shiftKey: true,
+                    });
+                    tick();
+
+                    expect(event.defaultPrevented).toBeTrue();
+                    expect(activeElement()).toBe(
+                        button(".nui-paginator__dots")
+                    );
+                    expect(popupComponent().isOpen).toBeFalse();
                 }));
             });
         });

@@ -33,6 +33,7 @@
                     {{ item.value }}
                 </button>
                 <nui-popup
+                    #popup
                     *ngIf="item.value === dots"
                     [appendToBody]="appendToBody"
                     [baseElementSelector]="popupBaseElementSelector">
@@ -46,6 +47,8 @@
                         [isEmpty]="false"
                         [role]="'menu'"
                         (click)="handleDotsClick()"
+                        (keydown)="onDotsKeydown($event, popup)"
+                        (focusout)="onPopupFocusOut($event, popup)"
                         class="nui-paginator__dots">
                         {{ item.value }}
                     </button>
@@ -53,6 +56,8 @@
                     <ul
                         #popupPages
                         popupAreaContent
+                        (keydown)="onPopupKeydown($event, popup)"
+                        (focusout)="onPopupFocusOut($event, popup)"
                         class="nui-paginator__elipsis-pages">
                         <li>
                             <table
