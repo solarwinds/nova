@@ -66,6 +66,8 @@ export interface ITimeseriesWidgetData<T = ITimeseriesWidgetSeriesData> {
     link?: string;
     secondaryLink?: string;
     metricUnits?: UnitOption;
+    /** Multiplier for displaying a scaled series value in the legend. */
+    legendValueMultiplier?: number;
 }
 
 export interface ITimeseriesWidgetSeriesData {
