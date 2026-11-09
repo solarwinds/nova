@@ -134,8 +134,7 @@ export function applyStackMetadata(
             start = 0;
             domainValueStacks[base.valueOf()] = start;
         }
-        const total = domainValueCombinedTotals[base.valueOf()];
-        const diffPercent = total === 0 ? 0 : diff / total;
+        const diffPercent = diff / domainValueCombinedTotals[base.valueOf()];
         const end = start + diffPercent * 100;
         domainValueStacks[base.valueOf()] = end;
 
