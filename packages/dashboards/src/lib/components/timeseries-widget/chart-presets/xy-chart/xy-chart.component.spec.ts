@@ -441,8 +441,42 @@ describe("XYChartComponent", () => {
             );
         });
 
-        it("returns the formatted zero for missing values", () => {
+        it("preserves missing values when a series multiplier is provided", () => {
             const cpu = component.chartAssist.legendSeriesSet[0];
+            for (const projectType of [
+                TimeseriesWidgetProjectType.PerfstackApp,
+                TimeseriesWidgetProjectType.ModernDashboard,
+                undefined,
+            ]) {
+                component.configuration.projectType = projectType;
+                for (const value of [undefined, null]) {
+                    cpu.data[0].y = value;
+                    expect(component.getLegendValue(cpu, "y1"))
+                        .withContext(
+                            `projectType: ${projectType}, value: ${value}`
+                        )
+                        .toBeUndefined();
+                }
+
+                cpu.data[0].y = 0;
+                expect(component.getLegendValue(cpu, "y1"))
+                    .withContext(`projectType: ${projectType}, value: 0`)
+                    .toEqual("0 %");
+            }
+
+            const highlightedPoint =
+                component.chartAssist.highlightedDataPoints[cpu.id];
+            delete component.chartAssist.highlightedDataPoints[cpu.id];
+            expect(component.getLegendValue(cpu, "y1")).toBeUndefined();
+            component.chartAssist.highlightedDataPoints[cpu.id] =
+                highlightedPoint;
+            cpu.data = [];
+            expect(component.getLegendValue(cpu, "y1")).toBeUndefined();
+        });
+
+        it("preserves the zero fallback for missing legacy PerfStack values", () => {
+            const cpu = component.chartAssist.legendSeriesSet[0];
+            component.widgetData.series[0].legendValueMultiplier = undefined;
             cpu.data[0].y = undefined;
             expect(component.getLegendValue(cpu, "y1")).toEqual("0 %");
             cpu.data[0].y = null;

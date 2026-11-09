@@ -481,7 +481,7 @@ export abstract class XYChartComponent
                 this.configuration.projectType ===
                     TimeseriesWidgetProjectType.PerfstackApp
             ) {
-                const submetricsCount = hasValidMultiplier
+                const legendMultiplier = hasValidMultiplier
                     ? multiplier
                     : this.chartAssist.legendSeriesSet.length;
                 const rawValue = this.chartAssist.getHighlightedValue(
@@ -490,8 +490,12 @@ export abstract class XYChartComponent
                     undefined,
                     valueAccessorKey
                 );
+                if (hasValidMultiplier && rawValue == null) {
+                    return undefined;
+                }
+
                 const scaledValue =
-                    parseFloat(`${rawValue ?? 0}`) * submetricsCount;
+                    parseFloat(`${rawValue ?? 0}`) * legendMultiplier;
                 const formatter = legendSeries.scales?.y?.formatters?.tick;
 
                 return formatter ? formatter(scaledValue) : `${scaledValue} %`;
