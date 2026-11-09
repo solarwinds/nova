@@ -35,6 +35,7 @@
                 </button>
                 } @if (item.value === dots) {
                 <nui-popup
+                    #popup
                     [appendToBody]="appendToBody"
                     [baseElementSelector]="popupBaseElementSelector">
                     <button
@@ -47,12 +48,16 @@
                         [isEmpty]="false"
                         [role]="'menu'"
                         (click)="handleDotsClick()"
+                        (keydown)="onDotsKeydown($event, popup)"
+                        (focusout)="onPopupFocusOut($event, popup)"
                         class="nui-paginator__dots">
                         {{ item.value }}
                     </button>
                     <ul
                         #popupPages
                         popupAreaContent
+                        (keydown)="onPopupKeydown($event, popup)"
+                        (focusout)="onPopupFocusOut($event, popup)"
                         class="nui-paginator__elipsis-pages">
                         <li>
                             <table

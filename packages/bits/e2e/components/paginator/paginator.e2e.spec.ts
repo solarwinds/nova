@@ -353,12 +353,13 @@ test.describe("USERCONTROL paginator", () => {
                 const popupRoot = appendToBody
                     ? page.locator(".cdk-overlay-container")
                     : paginator.getLocator();
-                await popupRoot
-                    .getByRole("button", {
+                await page.keyboard.press("Tab");
+                await expect(
+                    popupRoot.getByRole("button", {
                         name: "Go to page 6",
                         exact: true,
                     })
-                    .focus();
+                ).toBeFocused();
                 const popupPage = popupRoot.getByRole("button", {
                     name: "Go to page 20",
                     exact: true,
@@ -395,6 +396,98 @@ test.describe("USERCONTROL paginator", () => {
                 await page.keyboard.press("Shift+Tab");
                 await expect(currentPage).toBeFocused();
             });
+
+            test(`should close the popup with Escape and return focus to the trigger after ${key} opens it with appendToBody=${appendToBody}`, async ({
+                page,
+            }) => {
+                const paginator = appendToBody
+                    ? Atom.find<PaginatorAtom>(
+                          PaginatorAtom,
+                          "nui-demo-body-paginator"
+                      )
+                    : basicPaginator;
+                const trigger = paginator.ellipsisLink(0);
+                const popupRoot = appendToBody
+                    ? page.locator(".cdk-overlay-container")
+                    : paginator.getLocator();
+                // CSS locator: unlike getByRole it still matches while the closing popup is hidden but attached.
+                const firstPopupPage = popupRoot.locator(
+                    `button[aria-label="Go to page 6"]`
+                );
+
+                await trigger.focus();
+                await page.keyboard.press(key);
+                await page.keyboard.press("Tab");
+                await expect(firstPopupPage).toBeFocused();
+                await page.keyboard.press("Escape");
+
+                await expect(firstPopupPage).toHaveCount(0);
+                await expect(trigger).toBeFocused();
+
+                await page.keyboard.press(key);
+                await expect(firstPopupPage).toBeVisible();
+                await page.keyboard.press("Escape");
+                await expect(firstPopupPage).toHaveCount(0);
+                await expect(trigger).toBeFocused();
+            });
+
+            test(`should close the popup when focus leaves it after ${key} opens it with appendToBody=${appendToBody}`, async ({
+                page,
+            }) => {
+                const paginator = appendToBody
+                    ? Atom.find<PaginatorAtom>(
+                          PaginatorAtom,
+                          "nui-demo-body-paginator"
+                      )
+                    : basicPaginator;
+                const trigger = paginator.ellipsisLink(0);
+                const popupRoot = appendToBody
+                    ? page.locator(".cdk-overlay-container")
+                    : paginator.getLocator();
+                const firstPopupPage = popupRoot.locator(
+                    `button[aria-label="Go to page 6"]`
+                );
+
+                await trigger.focus();
+                await page.keyboard.press(key);
+                await expect(firstPopupPage).toBeVisible();
+                await page.keyboard.press("Tab");
+                await expect(firstPopupPage).toBeFocused();
+                await page.keyboard.press("Shift+Tab");
+                await expect(trigger).toBeFocused();
+                await expect(firstPopupPage).toHaveCount(0);
+
+                await page.keyboard.press(key);
+                await expect(firstPopupPage).toBeVisible();
+                await paginator.nextLink().focus();
+                await expect(firstPopupPage).toHaveCount(0);
+            });
+        });
+
+        test(`should close an open popup when ${key} opens the popup of another paginator`, async ({
+            page,
+        }) => {
+            const bodyPaginator = Atom.find<PaginatorAtom>(
+                PaginatorAtom,
+                "nui-demo-body-paginator"
+            );
+            const basicPopupPage = basicPaginator
+                .getLocator()
+                .locator(`button[aria-label="Go to page 6"]`);
+            const bodyPopupPage = page
+                .locator(".cdk-overlay-container")
+                .locator(`button[aria-label="Go to page 6"]`);
+
+            await basicPaginator.ellipsisLink(0).focus();
+            await page.keyboard.press(key);
+            await expect(basicPopupPage).toBeVisible();
+
+            await bodyPaginator.ellipsisLink(0).focus();
+            await expect(basicPopupPage).toHaveCount(0);
+            await page.keyboard.press(key);
+
+            await expect(bodyPopupPage).toBeVisible();
+            await expect(basicPopupPage).toHaveCount(0);
         });
     });
 });

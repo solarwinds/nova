@@ -18,6 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { InteractivityChecker } from "@angular/cdk/a11y";
+import { hasModifierKey } from "@angular/cdk/keycodes";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
     afterNextRender,
@@ -48,6 +50,7 @@ import _range from "lodash/range";
 import { Subject } from "rxjs";
 
 import { IPaginatorItem } from "./public-api";
+import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import {
     IFilter,
     IFilterPub,
@@ -55,6 +58,7 @@ import {
 } from "../../services/data-source/public-api";
 import { LoggerService } from "../../services/log-service";
 import { PopupContainerService } from "../popup/popup-container.service";
+import { PopupComponent } from "../popup-adapter/popup-adapter.component";
 import { SelectComponent } from "../select";
 import { ISelectChangedEvent } from "../select/public-api";
 import { InputValueTypes } from "../select-v2/types";
@@ -170,6 +174,7 @@ export class PaginatorComponent
 
     private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
     private readonly focusInjector = inject(Injector);
+    private readonly interactivityChecker = inject(InteractivityChecker);
     private focusRestorePending = false;
 
     private _dotsPagesPerRow = 5;
@@ -367,6 +372,123 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         if (this.virtualScrollViewport) {
             this.virtualScrollViewport.checkViewportSize();
         }
+    }
+
+    /**
+     * Keyboard handling for the "..." trigger: Escape closes the popup and Tab enters it directly,
+     * which matters when the popup is appended to the body and is not next to the trigger in the DOM.
+     */
+    public onDotsKeydown(event: KeyboardEvent, popup: PopupComponent): void {
+        if (event.defaultPrevented || !popup.isOpen) {
+            return;
+        }
+        if (this.isEscape(event)) {
+            this.closePopupFromKeyboard(event, popup);
+            return;
+        }
+        if (!this.isTab(event) || event.shiftKey) {
+            return;
+        }
+        const firstTabStop = this.getPopupTabStops(popup)[0];
+        if (firstTabStop) {
+            firstTabStop.focus();
+            event.preventDefault();
+        }
+    }
+
+    /**
+     * Keyboard handling inside the popup: Escape closes it, and tabbing past its first or last
+     * button returns focus to the trigger so the native Tab continues from the trigger's place.
+     */
+    public onPopupKeydown(event: KeyboardEvent, popup: PopupComponent): void {
+        if (event.defaultPrevented || !popup.isOpen) {
+            return;
+        }
+        if (this.isEscape(event)) {
+            this.closePopupFromKeyboard(event, popup);
+            return;
+        }
+        if (!this.isTab(event)) {
+            return;
+        }
+        const trigger = this.getPopupTrigger(popup);
+        const tabStops = this.getPopupTabStops(popup);
+        const active = this.host.nativeElement.ownerDocument.activeElement;
+        if (!trigger || tabStops.length === 0) {
+            return;
+        }
+        if (event.shiftKey && tabStops[0] === active) {
+            popup.closePopup();
+            trigger.focus();
+            event.preventDefault();
+        } else if (
+            !event.shiftKey &&
+            tabStops[tabStops.length - 1] === active
+        ) {
+            popup.closePopup();
+            trigger.focus();
+        }
+    }
+
+    /**
+     * Closes the popup once focus moves to an element outside of the trigger and the popup.
+     */
+    public onPopupFocusOut(event: FocusEvent, popup: PopupComponent): void {
+        const nextFocus = event.relatedTarget;
+        if (!popup.isOpen || !(nextFocus instanceof Node)) {
+            return;
+        }
+        if (
+            this.getPopupTrigger(popup)?.contains(nextFocus) ||
+            popup.popupAreaContent?.nativeElement.contains(nextFocus)
+        ) {
+            return;
+        }
+        popup.closePopup();
+    }
+
+    private closePopupFromKeyboard(
+        event: KeyboardEvent,
+        popup: PopupComponent
+    ): void {
+        popup.closePopup();
+        this.getPopupTrigger(popup)?.focus();
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    private getPopupTrigger(popup: PopupComponent): HTMLElement | undefined {
+        return popup.popupToggle?.host.nativeElement;
+    }
+
+    private getPopupTabStops(popup: PopupComponent): HTMLElement[] {
+        const content: HTMLElement | undefined =
+            popup.popupAreaContent?.nativeElement;
+        return Array.from(
+            content?.querySelectorAll<HTMLElement>("button") ?? []
+        ).filter(
+            element =>
+                this.interactivityChecker.isFocusable(element) &&
+                this.interactivityChecker.isTabbable(element)
+        );
+    }
+
+    private isEscape(event: KeyboardEvent): boolean {
+        return (
+            (event.key === KEYBOARD_CODE.ESCAPE ||
+                event.code === KEYBOARD_CODE.ESCAPE) &&
+            !hasModifierKey(event)
+        );
+    }
+
+    private isTab(event: KeyboardEvent): boolean {
+        return (
+            (event.key === KEYBOARD_CODE.TAB ||
+                event.code === KEYBOARD_CODE.TAB) &&
+            !event.altKey &&
+            !event.ctrlKey &&
+            !event.metaKey
+        );
     }
 
     private scheduleFocusRestore(focusedElement: Element | null): void {
