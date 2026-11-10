@@ -4,6 +4,7 @@
 
 ### Fixes
 
+- `@nova-ui/dashboards` | Show accessible placeholders for unavailable PerfStack legend values instead of blank tiles or misleading zero percentages.
 - `@nova-ui/bits` | Dismisses focus- and hover-triggered popovers with Escape without reopening during the active trigger session, and supports Tab/Shift+Tab navigation through interactive content.
 - `@nova-ui/bits` | Guard lazy overlay access in `nui-popup` when `isOpen` is initially `false` and cancel stale deferred open/close timers.
 - `@nova-ui/bits` | Exposed progressbar semantics only on the progress bar, including determinate zero and indeterminate values.

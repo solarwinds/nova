@@ -473,6 +473,7 @@ export abstract class XYChartComponent
             )
         );
 
+        // Preserve missing values so the legend shows its placeholder, not a percentage.
         if (val === undefined) {
             return undefined;
         }
