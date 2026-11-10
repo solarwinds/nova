@@ -8,8 +8,8 @@
             class="d-flex flex-grow-1"
             [chart]="spark.chart"
             [nuiChartCollectionId]="collectionId"></nui-chart>
-        @if ( spark.chartSeriesSet?.length > 0 && spark.chartSeriesSet[0]; as
-        series ) {
+        @if (spark.chartSeriesSet?.length > 0 && spark.chartSeriesSet[0]; as
+        series) {
         <div
             class="d-flex flex-column pl-2"
             [class.justify-content-center]="
@@ -28,13 +28,15 @@
                 <nui-legend-series
                     [descriptionPrimary]="series.legendDescriptionPrimary"
                     [descriptionSecondary]="getDescriptionSecondary(series, i)">
-                    @if ( configuration.type === timeseriesChartTypes.alert ) {
+                    @if (configuration.type === timeseriesChartTypes.alert) {
                     <nui-rich-legend-tile
                         [value]="
-                            chartAssist.getHighlightedValue(
-                                series,
-                                'y',
-                                'value'
+                            getLegendDisplayValue(
+                                chartAssist.getHighlightedValue(
+                                    series,
+                                    'y',
+                                    'value'
+                                )
                             )
                         "
                         [backgroundColor]="
@@ -49,6 +51,17 @@
                                 ? summaryLegendColor
                                 : chartAssist.palette.textColors.get(series.id)
                         ">
+                        <span
+                            top
+                            role="img"
+                            aria-label="No data"
+                            i18n-aria-label
+                            [hidden]="
+                                configuration.projectType !==
+                                timeseriesWidgetProjectType.PerfstackApp
+                            "
+                            >--</span
+                        >
                     </nui-rich-legend-tile>
                     } @if (isStatusChart()) {
                     <div
@@ -62,6 +75,12 @@
                         <nui-icon
                             class="status-bar-chart__legend__tile__icon"
                             [icon]="icon"></nui-icon>
+                        } @if ( configuration.projectType ===
+                        timeseriesWidgetProjectType.PerfstackApp &&
+                        series.data.length === 0 ) {
+                        <span role="img" aria-label="No data" i18n-aria-label
+                            >--</span
+                        >
                         }
                     </div>
                     } @if (displayDeleteButton()) {
