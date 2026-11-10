@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { RadioGroupAtom } from "./radio-group.atom";
-import { Helpers, test } from "../../setup";
+import { expect, Helpers, test } from "../../setup";
 
 const rulesToDisable: string[] = ["nested-interactive", "aria-required-attr"];
 
@@ -33,5 +33,16 @@ test.describe("a11y: radio group", () => {
 
     test("should check a11y of radio group", async ({ runA11yScan }) => {
         await runA11yScan(RadioGroupAtom, rulesToDisable);
+    });
+
+    test("should keep preselected options checked in both color groups", async ({
+        page,
+    }) => {
+        await expect(
+            page.locator('#color-radio-group input[value="Green"]')
+        ).toBeChecked();
+        await expect(
+            page.locator('#inline-color-radio-group input[value="Green"]')
+        ).toBeChecked();
     });
 });

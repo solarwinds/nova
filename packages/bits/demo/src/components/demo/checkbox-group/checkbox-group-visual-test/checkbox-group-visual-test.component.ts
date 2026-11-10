@@ -38,11 +38,11 @@ export class CheckboxGroupVisualTestComponent {
 
     constructor(private formBuilder: FormBuilder) {
         this.testForm = this.formBuilder.group({
-            checkboxGroup: this.formBuilder.control({
+            disabledCheckboxGroup: this.formBuilder.control({
                 value: this.selectedVegetables,
                 disabled: true,
             }),
-            checkboxGroup2: this.formBuilder.control({
+            enabledCheckboxGroup: this.formBuilder.control({
                 value: this.selectedVegetables,
                 disabled: false,
             }),

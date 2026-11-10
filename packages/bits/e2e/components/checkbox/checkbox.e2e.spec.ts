@@ -18,8 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Locator } from "@playwright/test";
-
 import { CheckboxAtom } from "./checkbox.atom";
 import { Atom } from "../../atom";
 import { Helpers, test, expect } from "../../setup";
@@ -29,11 +27,9 @@ test.describe("USERCONTROL Checkbox", () => {
     let atomDisabled: CheckboxAtom;
     let atomIndeterminate: CheckboxAtom;
     let atomWithHint: CheckboxAtom;
-    let columnBasic: Locator;
 
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("checkbox/checkbox-test", page);
-        columnBasic = Helpers.page.locator("#nui-demo-checkbox-basic");
         atomWithHint = Atom.find<CheckboxAtom>(
             CheckboxAtom,
             "nui-demo-checkbox"
@@ -93,9 +89,8 @@ test.describe("USERCONTROL Checkbox", () => {
     test.describe("Keyboard navigation", () => {
         test("should focus checkbox and toggle with space and enter, propagating TAB", async () => {
             await expect(atomBasic.getInputElement).toBeChecked();
-            await columnBasic.click();
-
-            await Helpers.page.keyboard.press("Tab");
+            await atomBasic.getInputElement.focus();
+            await expect(atomBasic.getInputElement).toBeFocused();
 
             await Helpers.page.keyboard.press("Space");
             await expect(atomBasic.getInputElement).not.toBeChecked();
@@ -104,14 +99,7 @@ test.describe("USERCONTROL Checkbox", () => {
             await expect(atomBasic.getInputElement).toBeChecked();
 
             await Helpers.page.keyboard.press("Tab");
-            const active = await Helpers.getActiveElement();
-            const id = await active?.evaluate(el => el.id);
-            const checkboxId = await atomIndeterminate.getLabel.evaluate(
-                el => el.id
-            );
-            expect(id).toBeDefined();
-            expect(checkboxId).toBeDefined();
-            expect(checkboxId).toEqual(id);
+            await expect(atomIndeterminate.getInputElement).toBeFocused();
         });
     });
 });

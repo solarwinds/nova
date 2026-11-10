@@ -17,9 +17,10 @@ test.describe("a11y: checkbox", () => {
         page,
     }) => {
         await Helpers.prepareBrowser("checkbox/checkbox-test", page);
-        const selector = "#nui-demo-checkbox-description label";
-        const label = page.locator(selector);
-        await expect(label).toHaveAccessibleName("Send email notifications");
+        const selector = "#nui-demo-checkbox-description input[type=checkbox]";
+        const input = page.locator(selector);
+        await expect(input).toHaveRole("checkbox");
+        await expect(input).toHaveAccessibleName("Send email notifications");
         const session = await page.context().newCDPSession(page);
         const { root } = await session.send("DOM.getDocument");
         const { nodeId } = await session.send("DOM.querySelector", {
@@ -41,8 +42,8 @@ test.describe("a11y: checkbox", () => {
             if (action) {
                 await page.locator(action).click();
             }
-            await label.focus();
-            await expect(label).toBeFocused();
+            await input.focus();
+            await expect(input).toBeFocused();
             await expect
                 .poll(async () => {
                     const { nodes } = await session.send(
@@ -52,6 +53,7 @@ test.describe("a11y: checkbox", () => {
                     const node = nodes[0];
                     return {
                         ignored: node?.ignored,
+                        role: node?.role?.value,
                         name: node?.name?.value,
                         description: node?.description?.value || "",
                         focused: node?.properties?.find(
@@ -61,6 +63,7 @@ test.describe("a11y: checkbox", () => {
                 })
                 .toEqual({
                     ignored: false,
+                    role: "checkbox",
                     name: "Send email notifications",
                     description,
                     focused: true,
@@ -69,23 +72,73 @@ test.describe("a11y: checkbox", () => {
         await session.detach();
     });
 
-    test("should update and remove descriptions on the focusable checkbox label", async ({
+    test("should show only the current description and keep it associated with the checkbox", async ({
         page,
     }) => {
         await Helpers.prepareBrowser("checkbox/checkbox-test", page);
-        const label = page.locator("#nui-demo-checkbox-description label");
-        await expect(label).toHaveAccessibleName("Send email notifications");
-        await expect(label).toHaveAccessibleDescription(
+        const input = page.locator(
+            "#nui-demo-checkbox-description input[type=checkbox]"
+        );
+        const instructions = page.locator("#checkbox-delivery-instructions");
+        const updatedInstructions = page.locator(
+            "#checkbox-delivery-updated-instructions"
+        );
+        const error = page.locator("#checkbox-delivery-error");
+        await expect(instructions).toBeVisible();
+        await expect(updatedInstructions).toHaveCount(0);
+        await expect(error).toBeVisible();
+        await expect(input).toHaveAccessibleName("Send email notifications");
+        await expect(input).toHaveAccessibleDescription(
             "Messages are sent once a day. Confirm your email address first."
         );
 
         await page.locator("#checkbox-update-description").click();
-        await expect(label).toHaveAccessibleDescription(
+        await expect(instructions).toHaveCount(0);
+        await expect(updatedInstructions).toBeVisible();
+        await expect(error).toBeVisible();
+        await expect(input).toHaveAccessibleDescription(
             "Messages are sent once a week. Confirm your email address first."
         );
 
         await page.locator("#checkbox-remove-description").click();
-        await expect(label).toHaveAccessibleDescription("");
-        await expect(label).toHaveAccessibleName("Send email notifications");
+        await expect(instructions).toHaveCount(0);
+        await expect(updatedInstructions).toHaveCount(0);
+        await expect(error).toHaveCount(0);
+        await expect(input).not.toHaveAttribute("aria-describedby");
+        await expect(input).toHaveAccessibleDescription("");
+        await expect(input).toHaveAccessibleName("Send email notifications");
+
+        await page.locator("#checkbox-update-description").click();
+        await expect(instructions).toHaveCount(0);
+        await expect(updatedInstructions).toBeVisible();
+        await expect(error).toBeVisible();
+        await expect(input).toHaveAccessibleDescription(
+            "Messages are sent once a week. Confirm your email address first."
+        );
+    });
+
+    test("should expose native checkbox states", async ({ page }) => {
+        await Helpers.prepareBrowser("checkbox/checkbox-test", page);
+        const basic = page.locator(
+            "#nui-demo-checkbox-basic input[type=checkbox]"
+        );
+        const disabled = page.locator(
+            "#nui-demo-checkbox-disabled input[type=checkbox]"
+        );
+        const indeterminate = page.locator(
+            "#nui-demo-checkbox-indeterminate input[type=checkbox]"
+        );
+
+        await expect(basic).toHaveRole("checkbox");
+        await expect(basic).toBeChecked();
+        await expect(basic).toHaveJSProperty("required", true);
+        await expect(disabled).toBeDisabled();
+        await expect(disabled).toBeChecked();
+        await expect(indeterminate).toBeChecked({ indeterminate: true });
+        await indeterminate.focus();
+        await expect(indeterminate).toBeFocused();
+        await indeterminate.press("Space");
+        await expect(indeterminate).toBeChecked();
+        await expect(indeterminate).toHaveJSProperty("indeterminate", false);
     });
 });

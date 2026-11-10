@@ -28,7 +28,7 @@ describe("components >", () => {
     describe("checkbox >", () => {
         let fixture: ComponentFixture<CheckboxComponent>;
         let subject: CheckboxComponent;
-        let checkboxInput: HTMLElement;
+        let checkboxInput: HTMLInputElement;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
@@ -67,24 +67,46 @@ describe("components >", () => {
         });
 
         describe("description relationships >", () => {
-            it("should describe the focusable checkbox label", () => {
+            it("should name and describe the focusable checkbox input", () => {
+                fixture.componentRef.setInput(
+                    "ariaLabel",
+                    "Send email notifications"
+                );
+                fixture.componentRef.setInput(
+                    "ariaLabelledby",
+                    "checkbox-caption"
+                );
                 fixture.componentRef.setInput(
                     "ariaDescribedby",
                     "checkbox-instructions checkbox-error"
                 );
                 fixture.detectChanges();
 
-                expect(
-                    subject.checkboxLabel.nativeElement.getAttribute(
-                        "aria-describedby"
-                    )
-                ).toBe("checkbox-instructions checkbox-error");
-                expect(
-                    subject.checkboxLabel.nativeElement.getAttribute("tabindex")
-                ).toBe("0");
+                expect(checkboxInput.getAttribute("aria-describedby")).toBe(
+                    "checkbox-instructions checkbox-error"
+                );
+                expect(checkboxInput.getAttribute("aria-label")).toBe(
+                    "Send email notifications"
+                );
+                expect(checkboxInput.getAttribute("aria-labelledby")).toBe(
+                    "checkbox-caption"
+                );
+                expect(checkboxInput.tabIndex).toBe(0);
+                for (const attribute of [
+                    "aria-label",
+                    "aria-labelledby",
+                    "aria-describedby",
+                    "tabindex",
+                ]) {
+                    expect(
+                        subject.checkboxLabel.nativeElement.hasAttribute(
+                            attribute
+                        )
+                    ).toBeFalse();
+                }
             });
 
-            it("should update and remove focusable label description references", () => {
+            it("should update and remove focusable input description references", () => {
                 fixture.componentRef.setInput(
                     "ariaDescribedby",
                     "original-instructions"
@@ -96,19 +118,55 @@ describe("components >", () => {
                 );
                 fixture.detectChanges();
 
-                expect(
-                    subject.checkboxLabel.nativeElement.getAttribute(
-                        "aria-describedby"
-                    )
-                ).toBe("updated-instructions");
+                expect(checkboxInput.getAttribute("aria-describedby")).toBe(
+                    "updated-instructions"
+                );
 
                 fixture.componentRef.setInput("ariaDescribedby", null);
                 fixture.detectChanges();
                 expect(
-                    subject.checkboxLabel.nativeElement.hasAttribute(
-                        "aria-describedby"
-                    )
+                    checkboxInput.hasAttribute("aria-describedby")
                 ).toBeFalse();
+            });
+        });
+
+        describe("keyboard handling >", () => {
+            for (const code of ["Space", "Enter"]) {
+                it(`should toggle the input once with ${code}`, () => {
+                    fixture.detectChanges();
+                    spyOn(subject.valueChange, "emit").and.callThrough();
+                    const event = new KeyboardEvent("keydown", {
+                        code,
+                        bubbles: true,
+                        cancelable: true,
+                    });
+
+                    checkboxInput.dispatchEvent(event);
+                    fixture.detectChanges();
+
+                    expect(event.defaultPrevented).toBeTrue();
+                    expect(checkboxInput.checked).toBeTrue();
+                    expect(subject.checked).toBeTrue();
+                    expect(subject.valueChange.emit).toHaveBeenCalledTimes(1);
+                });
+            }
+
+            it("should select an indeterminate input with Space", () => {
+                fixture.componentRef.setInput("indeterminate", true);
+                fixture.detectChanges();
+
+                checkboxInput.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        code: "Space",
+                        bubbles: true,
+                        cancelable: true,
+                    })
+                );
+                fixture.detectChanges();
+
+                expect(checkboxInput.checked).toBeTrue();
+                expect(checkboxInput.indeterminate).toBeFalse();
+                expect(subject.indeterminate).toBeFalse();
             });
         });
 
