@@ -57,6 +57,9 @@
             &-btn {
                 border: none;
                 background-color: transparent;
+                &[aria-disabled]:focus:not(:focus-visible) {
+                    box-shadow: none;
+                }
                 &__right {
                     float: left;
                     border: none;

@@ -20,10 +20,10 @@
 
 import { Locator } from "playwright-core";
 
-import { Atom } from "../../atom";
-import { test, Helpers } from "../../setup";
-import { Camera } from "../../virtual-camera/Camera";
 import { PanelAtom } from "./panel.atom";
+import { Atom } from "../../atom";
+import { expect, test, Helpers } from "../../setup";
+import { Camera } from "../../virtual-camera/Camera";
 
 const name: string = "Panel";
 
@@ -93,6 +93,76 @@ test.describe(`Visual tests: ${name}`, () => {
         };
 
         camera = new Camera().loadFilm(page, name, "Bits");
+    });
+
+    test.describe("Collapse toggle focus indicator", () => {
+        test("mouse activation keeps focus without showing the keyboard indicator", async () => {
+            await expanders.detailsTopOriented.click();
+
+            const toggle = topOrientedPanel.toggleButton.first();
+            await toggle.click();
+            await topOrientedPanel.toBeCollapsed();
+
+            await expect(toggle).toBeFocused();
+            expect(
+                await toggle.evaluate(element =>
+                    element.matches(":focus-visible")
+                )
+            ).toBe(false);
+            await expect(toggle).toHaveCSS("box-shadow", "none");
+        });
+
+        test("keyboard activation retains visible focus through collapse and expand", async ({
+            page,
+        }) => {
+            await expanders.detailsTopOriented.evaluate(element => {
+                (element.parentElement as HTMLDetailsElement).open = true;
+            });
+
+            const toggle = topOrientedPanel.toggleButton.first();
+            for (let index = 0; index < 40; index++) {
+                await page.keyboard.press("Tab");
+                if (
+                    await toggle.evaluate(
+                        element => document.activeElement === element
+                    )
+                ) {
+                    break;
+                }
+            }
+
+            await expect(toggle).toBeFocused();
+            expect(
+                await toggle.evaluate(element =>
+                    element.matches(":focus-visible")
+                )
+            ).toBe(true);
+            expect(
+                await toggle.evaluate(
+                    element => getComputedStyle(element).boxShadow
+                )
+            ).toContain("0, 196, 210");
+
+            await page.keyboard.press("Enter");
+            await topOrientedPanel.toBeCollapsed();
+            await expect(toggle).toBeFocused();
+            expect(
+                await toggle.evaluate(element =>
+                    element.matches(":focus-visible")
+                )
+            ).toBe(true);
+            await expect(toggle).not.toHaveCSS("box-shadow", "none");
+
+            await page.keyboard.press("Space");
+            await topOrientedPanel.toBeExpanded();
+            await expect(toggle).toBeFocused();
+            expect(
+                await toggle.evaluate(element =>
+                    element.matches(":focus-visible")
+                )
+            ).toBe(true);
+            await expect(toggle).not.toHaveCSS("box-shadow", "none");
+        });
     });
 
     test(`${name} visual test`, async () => {
