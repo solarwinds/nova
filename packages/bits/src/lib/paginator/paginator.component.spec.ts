@@ -208,6 +208,58 @@ describe("components >", () => {
             expect(activeElement()).toBe(button("button[aria-current=page]"));
         });
 
+        it("should restore focus after Next becomes disabled inside a shadow root", fakeAsync(() => {
+            render(5, 4);
+            const shadowHost = document.createElement("div");
+            document.body.appendChild(shadowHost);
+            const shadowRoot = shadowHost.attachShadow({ mode: "open" });
+            shadowRoot.appendChild(host);
+
+            try {
+                const nextPage = byLabel("Next Page");
+                nextPage.focus();
+                expect(shadowRoot.activeElement).toBe(nextPage);
+
+                nextPage.click();
+                TestBed.tick();
+
+                expect(nextPage.disabled).toBeTrue();
+                expect(shadowRoot.activeElement).toBe(
+                    button("button[aria-current=page]")
+                );
+            } finally {
+                fixture.destroy();
+                shadowHost.remove();
+            }
+        }));
+
+        it("should restore focus after a parent update inside a shadow root", fakeAsync(() => {
+            render(5, 4);
+            const shadowHost = document.createElement("div");
+            document.body.appendChild(shadowHost);
+            const shadowRoot = shadowHost.attachShadow({ mode: "open" });
+            shadowRoot.appendChild(host);
+
+            try {
+                const nextPage = byLabel("Next Page");
+                nextPage.focus();
+
+                subject.page = 5;
+                subject.ngOnChanges({
+                    page: new SimpleChange(4, 5, false),
+                });
+                TestBed.tick();
+
+                expect(nextPage.disabled).toBeTrue();
+                expect(shadowRoot.activeElement).toBe(
+                    button("button[aria-current=page]")
+                );
+            } finally {
+                fixture.destroy();
+                shadowHost.remove();
+            }
+        }));
+
         it("should move focus to the current page when Previous becomes disabled", () => {
             render(5, 2);
             byLabel("Previous Page").focus();
@@ -232,6 +284,61 @@ describe("components >", () => {
             expect(activeElement()).toBe(outside);
             outside.remove();
         });
+
+        it("should not take focus from an external control in the same shadow root", () => {
+            render(5, 1);
+            const shadowHost = document.createElement("div");
+            document.body.appendChild(shadowHost);
+            const shadowRoot = shadowHost.attachShadow({ mode: "open" });
+            shadowRoot.appendChild(host);
+            const outside = document.createElement("button");
+            shadowRoot.appendChild(outside);
+
+            try {
+                outside.focus();
+                subject.goToPage(3);
+                TestBed.tick();
+
+                expect(shadowRoot.activeElement).toBe(outside);
+            } finally {
+                fixture.destroy();
+                shadowHost.remove();
+            }
+        });
+
+        it("should restore focus after popup selection inside a shadow root", fakeAsync(() => {
+            subject.appendToBody = false;
+            render(40, 1);
+            const shadowHost = document.createElement("div");
+            document.body.appendChild(shadowHost);
+            const shadowRoot = shadowHost.attachShadow({ mode: "open" });
+            shadowRoot.appendChild(host);
+
+            try {
+                const popupRoot = openPopup();
+                tick(20);
+                fixture.detectChanges();
+
+                const popupButton = button(
+                    `button[aria-label="Go to page 20"]`,
+                    popupRoot
+                );
+                popupButton.focus();
+                expect(shadowRoot.activeElement).toBe(popupButton);
+
+                popupButton.click();
+                TestBed.tick();
+                tick();
+
+                expect(subject.page).toBe(20);
+                expect(shadowRoot.activeElement).toBe(
+                    button("button[aria-current=page]")
+                );
+            } finally {
+                fixture.destroy();
+                shadowHost.remove();
+            }
+        }));
 
         it("should move focus to the current page when the parent changes the page and Next becomes disabled", () => {
             render(5, 4);
@@ -367,6 +474,39 @@ describe("components >", () => {
                 expect(popupComponent().isOpen).toBeFalse();
                 expect(activeElement()).toBe(outside);
                 outside.remove();
+            }));
+
+            it(`should cancel pending virtual focus after a null related target with appendToBody=${appendToBody}`, fakeAsync(() => {
+                subject.appendToBody = appendToBody;
+                render(2000, 1);
+                const popupRoot = openPopup();
+                tick(20);
+                fixture.detectChanges();
+
+                const viewport = fixture.debugElement.query(
+                    By.directive(CdkVirtualScrollViewport)
+                ).componentInstance as CdkVirtualScrollViewport;
+                spyOn(viewport, "scrollToIndex").and.stub();
+                const pages = popupRoot.querySelectorAll<HTMLButtonElement>(
+                    "button[data-nui-paginator-page]"
+                );
+                const firstPage = pages[0];
+                const lastRendered = pages[pages.length - 1];
+                const nextPage =
+                    Number(lastRendered.dataset.nuiPaginatorPage) + 1;
+                lastRendered.focus({ preventScroll: true });
+                keydown(lastRendered, { key: "Tab", code: "Tab" });
+                expect(activeElement()).toBe(viewport.elementRef.nativeElement);
+
+                viewport.elementRef.nativeElement.blur();
+                firstPage.focus();
+                const latePage = document.createElement("button");
+                latePage.dataset.nuiPaginatorPage = String(nextPage);
+                popupRoot.appendChild(latePage);
+                tick(20);
+
+                expect(popupComponent().isOpen).toBeTrue();
+                expect(activeElement()).toBe(firstPage);
             }));
 
             it(`should report and recover if a virtual page never renders with appendToBody=${appendToBody}`, fakeAsync(() => {
@@ -558,6 +698,302 @@ describe("components >", () => {
 
                     expect(popupComponent().isOpen).toBeFalse();
                     expect(activeElement()).toBe(outside);
+                }));
+
+                it("should close the popup when focus leaves without a related target", fakeAsync(() => {
+                    const popupRoot = open();
+                    const pageButton = button(
+                        `button[aria-label="Go to page 7"]`,
+                        popupRoot
+                    );
+                    pageButton.focus();
+
+                    pageButton.blur();
+                    tick();
+
+                    expect(popupComponent().isOpen).toBeFalse();
+                    expect(activeElement()).toBe(document.body);
+                }));
+
+                it("should keep the popup open when focus returns inside after a null related target", fakeAsync(() => {
+                    const popupRoot = open();
+                    const firstPage = button(
+                        `button[aria-label="Go to page 7"]`,
+                        popupRoot
+                    );
+                    const nextPage = button(
+                        `button[aria-label="Go to page 8"]`,
+                        popupRoot
+                    );
+                    firstPage.focus();
+
+                    firstPage.blur();
+                    queueMicrotask(() => nextPage.focus());
+                    tick();
+
+                    expect(popupComponent().isOpen).toBeTrue();
+                    expect(activeElement()).toBe(nextPage);
+                }));
+
+                it("should keep the popup open when a null related target does not move focus", fakeAsync(() => {
+                    const popupRoot = open();
+                    const pageButton = button(
+                        `button[aria-label="Go to page 7"]`,
+                        popupRoot
+                    );
+                    pageButton.focus();
+
+                    pageButton.dispatchEvent(
+                        new FocusEvent("focusout", {
+                            bubbles: true,
+                            relatedTarget: null,
+                        })
+                    );
+                    tick();
+
+                    expect(popupComponent().isOpen).toBeTrue();
+                    expect(activeElement()).toBe(pageButton);
+                }));
+
+                it("should keep the popup open when focus returns to its trigger in a shadow root", fakeAsync(() => {
+                    const shadowHost = document.createElement("div");
+                    document.body.appendChild(shadowHost);
+                    const shadowRoot = shadowHost.attachShadow({
+                        mode: "open",
+                    });
+                    shadowRoot.appendChild(host);
+
+                    try {
+                        const popupRoot = open();
+                        const trigger = button(".nui-paginator__dots");
+                        const pageButton = button(
+                            `button[aria-label="Go to page 7"]`,
+                            popupRoot
+                        );
+                        pageButton.focus();
+
+                        pageButton.blur();
+                        queueMicrotask(() => trigger.focus());
+                        tick();
+
+                        expect(popupComponent().isOpen).toBeTrue();
+                        expect(shadowRoot.activeElement).toBe(trigger);
+                    } finally {
+                        fixture.destroy();
+                        shadowHost.remove();
+                    }
+                }));
+
+                it("should keep the popup open when focus moves directly to its shadow-root trigger", fakeAsync(() => {
+                    const shadowHost = document.createElement("div");
+                    document.body.appendChild(shadowHost);
+                    const shadowRoot = shadowHost.attachShadow({
+                        mode: "open",
+                    });
+                    shadowRoot.appendChild(host);
+
+                    try {
+                        const popupRoot = open();
+                        const trigger = button(".nui-paginator__dots");
+                        button(
+                            `button[aria-label="Go to page 7"]`,
+                            popupRoot
+                        ).focus();
+
+                        trigger.focus();
+                        tick();
+
+                        expect(popupComponent().isOpen).toBeTrue();
+                        expect(shadowRoot.activeElement).toBe(trigger);
+                    } finally {
+                        fixture.destroy();
+                        shadowHost.remove();
+                    }
+                }));
+
+                it("should close the popup when focus moves to another element in the trigger's shadow root", fakeAsync(() => {
+                    const shadowHost = document.createElement("div");
+                    document.body.appendChild(shadowHost);
+                    const shadowRoot = shadowHost.attachShadow({
+                        mode: "open",
+                    });
+                    shadowRoot.appendChild(host);
+                    const shadowOutside = document.createElement("button");
+                    shadowRoot.appendChild(shadowOutside);
+
+                    try {
+                        const popupRoot = open();
+                        button(
+                            `button[aria-label="Go to page 7"]`,
+                            popupRoot
+                        ).focus();
+
+                        shadowOutside.focus();
+                        tick();
+
+                        expect(popupComponent().isOpen).toBeFalse();
+                        expect(shadowRoot.activeElement).toBe(shadowOutside);
+                    } finally {
+                        fixture.destroy();
+                        shadowHost.remove();
+                    }
+                }));
+
+                it("should cancel a delayed focus check when the popup is reopened", fakeAsync(() => {
+                    const popupRoot = open();
+                    const popup = popupComponent();
+                    const pageButton = button(
+                        `button[aria-label="Go to page 7"]`,
+                        popupRoot
+                    );
+                    pageButton.focus();
+
+                    pageButton.blur();
+                    popup.closePopup();
+                    popup.isOpen = true;
+                    tick();
+
+                    expect(popup.isOpen).toBeTrue();
+                    expect(popup.visible).toBeTrue();
+                }));
+
+                it("should cancel a delayed focus check when destroyed", fakeAsync(() => {
+                    const popupRoot = open();
+                    const popup = popupComponent();
+                    const closePopup = spyOn(
+                        popup,
+                        "closePopup"
+                    ).and.callThrough();
+                    const pageButton = button(
+                        `button[aria-label="Go to page 7"]`,
+                        popupRoot
+                    );
+                    pageButton.focus();
+
+                    pageButton.blur();
+                    fixture.destroy();
+                    tick();
+
+                    expect(closePopup).not.toHaveBeenCalled();
+                }));
+
+                it("should close the popup when its focused page is removed during a total update", fakeAsync(() => {
+                    const popupRoot = open();
+                    const popup = popupComponent();
+                    const pageButton = button(
+                        `button[aria-label="Go to page 6"]`,
+                        popupRoot
+                    );
+                    pageButton.focus();
+
+                    subject.total = 410;
+                    subject.ngOnChanges({
+                        total: new SimpleChange(400, 410, false),
+                    });
+                    TestBed.tick();
+                    tick();
+
+                    expect(pageButton.isConnected).toBeFalse();
+                    expect(popup.isOpen).toBeFalse();
+                    expect(activeElement()).toBe(
+                        button("button[aria-current=page]")
+                    );
+                }));
+
+                it("should close the popup when focusout does not bubble and focus state is temporarily stale", fakeAsync(() => {
+                    const popupRoot = open();
+                    const popup = popupComponent();
+                    const pageButton = button(
+                        `button[aria-label="Go to page 6"]`,
+                        popupRoot
+                    );
+                    const matches = popupRoot.matches.bind(popupRoot);
+                    let focusStateIsStale = true;
+                    spyOn(popupRoot, "matches").and.callFake(
+                        selector =>
+                            (selector === ":focus-within" &&
+                                focusStateIsStale) ||
+                            matches(selector)
+                    );
+                    pageButton.focus();
+                    pageButton.addEventListener(
+                        "focusout",
+                        event => event.stopPropagation(),
+                        { once: true }
+                    );
+
+                    subject.total = 410;
+                    subject.ngOnChanges({
+                        total: new SimpleChange(400, 410, false),
+                    });
+                    focusStateIsStale = false;
+                    TestBed.tick();
+                    tick();
+
+                    expect(pageButton.isConnected).toBeFalse();
+                    expect(popup.isOpen).toBeFalse();
+                    expect(activeElement()).toBe(
+                        button("button[aria-current=page]")
+                    );
+                }));
+
+                it("should keep the popup open when a total update leaves focus on its trigger", fakeAsync(() => {
+                    open();
+                    const trigger = button(".nui-paginator__dots");
+                    trigger.focus();
+
+                    subject.total = 410;
+                    subject.ngOnChanges({
+                        total: new SimpleChange(400, 410, false),
+                    });
+                    TestBed.tick();
+                    tick();
+
+                    expect(popupComponent().isOpen).toBeTrue();
+                    expect(activeElement()).toBe(trigger);
+                }));
+
+                it("should keep the popup open when focus returns inside during a total update", fakeAsync(() => {
+                    const popupRoot = open();
+                    const pageButton = button(
+                        `button[aria-label="Go to page 6"]`,
+                        popupRoot
+                    );
+                    pageButton.focus();
+
+                    subject.total = 410;
+                    subject.ngOnChanges({
+                        total: new SimpleChange(400, 410, false),
+                    });
+                    const replacement = button(
+                        `button[aria-label="Go to page 6"]`,
+                        popupRoot
+                    );
+                    replacement.focus();
+                    TestBed.tick();
+                    tick();
+
+                    expect(replacement).not.toBe(pageButton);
+                    expect(popupComponent().isOpen).toBeTrue();
+                    expect(activeElement()).toBe(replacement);
+                }));
+
+                it("should close the popup when a page change removes its focused page", fakeAsync(() => {
+                    const popupRoot = open();
+                    const popup = popupComponent();
+                    button(
+                        `button[aria-label="Go to page 6"]`,
+                        popupRoot
+                    ).focus();
+
+                    subject.goToPage(6);
+                    TestBed.tick();
+                    tick();
+
+                    expect(popup.isOpen).toBeFalse();
+                    expect(activeElement()).toBe(
+                        button("button[aria-current=page]")
+                    );
                 }));
 
                 it("should keep the popup open while focus moves between the trigger and its pages", fakeAsync(() => {
