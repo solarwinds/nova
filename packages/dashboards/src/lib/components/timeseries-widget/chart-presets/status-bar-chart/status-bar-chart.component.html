@@ -75,6 +75,13 @@
                     <div
                         *ngIf="isStatusChart()"
                         class="status-bar-chart__legend__tile d-flex justify-content-center align-items-center">
+                        @if ( configuration.projectType ===
+                        timeseriesWidgetProjectType.PerfstackApp &&
+                        series.data.length === 0 ) {
+                        <span role="img" aria-label="No data" i18n-aria-label
+                            >--</span
+                        >
+                        } @else {
                         <div
                             class="w-100 h-100 status-bar-chart__legend__tile__background"
                             [style.background-color]="
@@ -84,12 +91,6 @@
                             *ngIf="getDataPointData(series, 'icon'); let icon"
                             class="status-bar-chart__legend__tile__icon"
                             [icon]="icon"></nui-icon>
-                        @if ( configuration.projectType ===
-                        timeseriesWidgetProjectType.PerfstackApp &&
-                        series.data.length === 0 ) {
-                        <span role="img" aria-label="No data" i18n-aria-label
-                            >--</span
-                        >
                         }
                     </div>
                     <button
