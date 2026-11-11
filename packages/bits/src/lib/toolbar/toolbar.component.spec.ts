@@ -59,13 +59,28 @@ import { MenuComponent } from "../menu";
                     [disabled]="firstItemDisabled"
                 >
                 </nui-toolbar-item>
-                <nui-toolbar-item type="primary" icon="edit" title="edit">
+                <nui-toolbar-item
+                    type="primary"
+                    icon="edit"
+                    title="edit"
+                    [disabled]="otherVisibleItemsDisabled"
+                >
                 </nui-toolbar-item>
-                <nui-toolbar-item type="primary" icon="edit" title="edit">
+                <nui-toolbar-item
+                    type="primary"
+                    icon="edit"
+                    title="edit"
+                    [disabled]="otherVisibleItemsDisabled"
+                >
                 </nui-toolbar-item>
             </nui-toolbar-group>
             <nui-toolbar-group title="g2">
-                <nui-toolbar-item type="primary" icon="add" title="add">
+                <nui-toolbar-item
+                    type="primary"
+                    icon="add"
+                    title="add"
+                    [disabled]="otherVisibleItemsDisabled"
+                >
                 </nui-toolbar-item>
                 <nui-toolbar-item
                     type="secondary"
@@ -87,6 +102,7 @@ class TestWrapperComponent {
     @Input() public ariaOrientation = "";
 
     public firstItemDisabled = false;
+    public otherVisibleItemsDisabled = false;
     public menuItemDisabled = false;
 }
 
@@ -318,6 +334,26 @@ describe("components >", () => {
         });
 
         describe("disabled items >", () => {
+            it("should update the overflow menu tabindex when visible items become disabled and enabled", () => {
+                const toggle = component.menu.menuToggle
+                    .nativeElement as HTMLButtonElement;
+                const wrapper = fixture.componentInstance;
+
+                expect(toggle.tabIndex).toBe(-1);
+                wrapper.firstItemDisabled = true;
+                wrapper.otherVisibleItemsDisabled = true;
+                fixture.changeDetectorRef.markForCheck();
+                fixture.detectChanges();
+
+                expect(toggle.tabIndex).toBe(0);
+
+                wrapper.otherVisibleItemsDisabled = false;
+                fixture.changeDetectorRef.markForCheck();
+                fixture.detectChanges();
+
+                expect(toggle.tabIndex).toBe(-1);
+            });
+
             it("should assign tabindex 0 to the first enabled item when the first item is disabled", () => {
                 const wrapper = fixture.componentInstance;
                 wrapper.firstItemDisabled = true;
