@@ -16,6 +16,7 @@
 - `@nova-ui/dashboards` | Added keyboard activation and visible focus to interactive KPI and risk-score tiles while preserving native links.
 - `@nova-ui/dashboards` | Improved widget editor and Remove Widget menu focus management, keyboard navigation, and dismissal.
 - `@nova-ui/dashboards` | Added keyboard reordering to dynamic items, table columns V2, and background-color rules. Generic drag/repeat components and click/tap reordering without dragging remain outside this fix
+- `@nova-ui/bits` | **nui-paginator** keeps keyboard focus after a page change (WCAG 2.4.3): the activated button stays focused, and focus moves to the current page when Previous/Next becomes disabled or a page is selected from the ellipsis popup, including body-appended popups. The ellipsis popup closes with Escape (focus returns to its trigger) or when focus leaves it, and Tab from the trigger enters the popup directly, also when it is appended to the body. In virtualized popups, Tab enters at the first page and keyboard navigation follows the logical page order.
 - `@nova-ui/bits` | Improve checkbox and switch accessible names, checkbox descriptions and states, and form-field updates in OnPush hosts. Explicit accessible names now take precedence over form-field captions.
 - `@nova-ui/bits` | Keep form-field help references separate from consumer-provided descriptions. Custom templates in control subclasses should render `resolvedAriaDescribedby` (or `descriptionIds` for checkboxes) to retain field help.
 - `@nova-ui/bits` | Fix form-field captions for checkboxes and textboxes with a conflicting host ID. The native input receives a separate ID in these cases.
@@ -23,7 +24,6 @@
 - `@nova-ui/dashboards` | Show accessible placeholders for unavailable PerfStack legend values instead of blank tiles or misleading zero percentages.
 - `@nova-ui/dashboards` | Percent stacked-area legends support per-series multipliers, keeping PerfStack CPU and `Remaining` values accurate when chart data is normalized by total CPU count. PerfStack retains its legacy fallback when no valid multiplier is supplied, and unavailable values remain distinct from zero when one is supplied.
 - `@nova-ui/charts` | Percentage-area stacking excludes series marked `preprocess: false` from stack totals.
-- `@nova-ui/bits` | **nui-paginator** keeps keyboard focus after a page change (WCAG 2.4.3): the activated button stays focused, and focus moves to the current page when Previous/Next becomes disabled or a page is selected from the ellipsis popup, including body-appended popups. The ellipsis popup closes with Escape (focus returns to its trigger) or when focus leaves it, and Tab from the trigger enters the popup directly, also when it is appended to the body.
 
 ## [20.0.13] 📅 2026-10-26
 
