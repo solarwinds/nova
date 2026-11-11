@@ -353,7 +353,7 @@ describe("Services > ", () => {
                     items.forEach(item => item.removeAttribute("disabled"));
                 });
 
-                it("should skip a disabled item on pressing right arrow button", () => {
+                it("should skip a disabled item on pressing down arrow button", () => {
                     const items = service["toolbarItems"];
                     const [first, middle, last] = items;
                     const spy = spyOn(last, "focus");
@@ -361,7 +361,7 @@ describe("Services > ", () => {
                     middle.setAttribute("disabled", "true");
                     first.focus();
 
-                    service.onKeyDown(rightButtonPressEvent);
+                    service.onKeyDown(downButtonPressEvent);
                     expect(spy).toHaveBeenCalled();
                 });
 
