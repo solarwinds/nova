@@ -6,7 +6,7 @@
     }
   ],
   "dependencies": {
-    "@nova-ui/bits": "~20.0.13"
+    "@nova-ui/bits": "~20.0.14"
   },
   "devDependencies": {
     "@types/d3": "^5.7.2",
@@ -114,5 +114,5 @@
     "visual:gui": "yarn run visual:base -c gui",
     "visual:serve": "yarn run visual:base -c serve"
   },
-  "version": "20.0.13"
+  "version": "20.0.14"
 }
