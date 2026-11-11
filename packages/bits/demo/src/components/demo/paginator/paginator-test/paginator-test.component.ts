@@ -25,4 +25,7 @@ import { Component } from "@angular/core";
     templateUrl: "./paginator-test.component.html",
     standalone: false,
 })
-export class PaginatorTestComponent {}
+export class PaginatorTestComponent {
+    public dynamicTotal = 400;
+    public virtualizedTotal = 20000;
+}

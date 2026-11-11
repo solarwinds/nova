@@ -68,6 +68,53 @@ test.describe("USERCONTROL paginator", () => {
         return { paginator, popupRoot, popupArea, trigger };
     };
 
+    const openFocusOutPopup = async (
+        page: Page,
+        appendToBody: boolean,
+        virtualized: boolean
+    ) => {
+        if (virtualized) {
+            return openVirtualizedPopup(page, appendToBody);
+        }
+        await page.locator("#nui-demo-dynamic-paginators").evaluate(element => {
+            (element as HTMLElement).style.display = "block";
+        });
+        const paginator = Atom.find<PaginatorAtom>(
+            PaginatorAtom,
+            appendToBody
+                ? "nui-demo-body-dynamic-paginator"
+                : "nui-demo-dynamic-paginator"
+        );
+        const popupRoot = appendToBody
+            ? page.locator(".cdk-overlay-container")
+            : paginator.getLocator();
+        const popupArea = popupRoot.locator(".nui-popup__area:visible").first();
+        const trigger = paginator.ellipsisLink(0);
+
+        await trigger.focus();
+        await page.keyboard.press("Enter");
+        await expect(popupArea).toBeVisible();
+        return { paginator, popupRoot, popupArea, trigger };
+    };
+
+    const updatePaginatorTotal = async (page: Page, virtualized: boolean) => {
+        const input = page.locator(
+            virtualized
+                ? "#nui-demo-virtualized-total"
+                : "#nui-demo-dynamic-total"
+        );
+        await input.evaluate(
+            (element, total) => {
+                if (!(element instanceof HTMLInputElement)) {
+                    throw new Error("Paginator total input was not found.");
+                }
+                element.value = String(total);
+                element.dispatchEvent(new Event("input", { bubbles: true }));
+            },
+            virtualized ? 20010 : 410
+        );
+    };
+
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("paginator/paginator-test", page);
         basicPaginator = Atom.find<PaginatorAtom>(
@@ -86,6 +133,173 @@ test.describe("USERCONTROL paginator", () => {
             PaginatorAtom,
             "nui-demo-body-virtualized-paginator"
         );
+    });
+
+    test("should restore focus after Next becomes disabled inside a shadow root", async ({
+        page,
+    }) => {
+        await page.locator("#nui-demo-dynamic-paginators").evaluate(element => {
+            (element as HTMLElement).style.display = "block";
+            const paginator = element.querySelector(
+                "#nui-demo-dynamic-paginator"
+            );
+            if (!paginator) {
+                throw new Error("Dynamic paginator fixture was not found.");
+            }
+            const shadowHost = document.createElement("div");
+            shadowHost.id = "nui-demo-paginator-shadow-host";
+            shadowHost.attachShadow({ mode: "open" }).appendChild(paginator);
+            document.body.appendChild(shadowHost);
+        });
+
+        const paginator = page
+            .locator("#nui-demo-paginator-shadow-host")
+            .locator("#nui-demo-dynamic-paginator");
+        const trigger = paginator.locator(".nui-paginator__dots").first();
+        await trigger.press("Enter");
+
+        const popupArea = paginator.locator(".nui-popup__area:visible").first();
+        await expect(popupArea).toBeVisible();
+        await popupArea
+            .getByRole("button", { name: "Go to page 39", exact: true })
+            .click();
+
+        const nextPage = paginator.getByRole("button", {
+            name: "Next Page",
+            exact: true,
+        });
+        await nextPage.focus();
+        await nextPage.click();
+
+        await expect(nextPage).toBeDisabled();
+        const currentPage = paginator.locator("button[aria-current=page]");
+        await expect(currentPage).toHaveText("40");
+        await expect(currentPage).toBeFocused();
+    });
+
+    [false, true].forEach(appendToBody => {
+        [false, true].forEach(virtualized => {
+            const testParameters = `appendToBody=${appendToBody}, virtualized=${virtualized}`;
+
+            test(`should close the popup when a focused page is removed by a total update with ${testParameters}`, async ({
+                page,
+            }) => {
+                const { paginator, popupArea } = await openFocusOutPopup(
+                    page,
+                    appendToBody,
+                    virtualized
+                );
+                const pageButton = popupArea.getByRole("button", {
+                    name: "Go to page 6",
+                    exact: true,
+                });
+                await pageButton.focus();
+                await expect(pageButton).toBeFocused();
+
+                await updatePaginatorTotal(page, virtualized);
+
+                await expect(popupArea).toBeHidden();
+                await expect(
+                    paginator.getLocator().locator("button[aria-current=page]")
+                ).toBeFocused();
+            });
+
+            test(`should close the popup without stealing focus when blur has no related target with ${testParameters}`, async ({
+                page,
+            }) => {
+                const { popupArea } = await openFocusOutPopup(
+                    page,
+                    appendToBody,
+                    virtualized
+                );
+                const pageButton = popupArea.getByRole("button", {
+                    name: "Go to page 6",
+                    exact: true,
+                });
+                await pageButton.focus();
+
+                await pageButton.evaluate(element => element.blur());
+
+                await expect(popupArea).toBeHidden();
+                await expect(page.locator("body")).toBeFocused();
+            });
+
+            test(`should keep the popup open if focus returns inside after blur with ${testParameters}`, async ({
+                page,
+            }) => {
+                const { popupArea } = await openFocusOutPopup(
+                    page,
+                    appendToBody,
+                    virtualized
+                );
+                const pageButton = popupArea.getByRole("button", {
+                    name: "Go to page 6",
+                    exact: true,
+                });
+                const nextPage = popupArea.getByRole("button", {
+                    name: "Go to page 7",
+                    exact: true,
+                });
+                await pageButton.focus();
+
+                await popupArea.evaluate(element => {
+                    const first = element.querySelector<HTMLButtonElement>(
+                        "button[aria-label='Go to page 6']"
+                    );
+                    const next = element.querySelector<HTMLButtonElement>(
+                        "button[aria-label='Go to page 7']"
+                    );
+                    if (!first || !next) {
+                        throw new Error("Popup page buttons were not found.");
+                    }
+                    first.blur();
+                    queueMicrotask(() => next.focus());
+                });
+
+                await expect(popupArea).toBeVisible();
+                await expect(nextPage).toBeFocused();
+            });
+
+            test(`should close the popup and restore focus after selecting a page with ${testParameters}`, async ({
+                page,
+            }) => {
+                const { paginator, popupArea } = await openFocusOutPopup(
+                    page,
+                    appendToBody,
+                    virtualized
+                );
+                const pageButton = popupArea.getByRole("button", {
+                    name: "Go to page 6",
+                    exact: true,
+                });
+                await pageButton.focus();
+
+                await page.keyboard.press("Enter");
+
+                await expect(popupArea).toBeHidden();
+                const currentPage = paginator
+                    .getLocator()
+                    .locator("button[aria-current=page]");
+                await expect(currentPage).toHaveText("6");
+                await expect(currentPage).toBeFocused();
+            });
+        });
+
+        test(`should keep the popup open when its trigger retains focus during a total update with appendToBody=${appendToBody}`, async ({
+            page,
+        }) => {
+            const { popupArea, trigger } = await openFocusOutPopup(
+                page,
+                appendToBody,
+                false
+            );
+            await expect(trigger).toBeFocused();
+
+            await updatePaginatorTotal(page, false);
+
+            await expect(popupArea).toBeVisible();
+            await expect(trigger).toBeFocused();
+        });
     });
 
     [false, true].forEach(appendToBody => {
