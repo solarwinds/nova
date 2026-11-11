@@ -15,9 +15,9 @@
     @if (hasLegend()) {
     <div
         class="d-flex"
-        [ngClass]="[
+        [class]="
             legendShouldBeAlignedRight() ? 'legend scrollable' : 'legend-bottom'
-        ]">
+        ">
         <nui-legend
             class="m-auto"
             [active]="chartAssist.isLegendActive"
@@ -32,22 +32,34 @@
                 (mouseenter)="chartAssist.resetVisibleSeries()">
                 <nui-rich-legend-tile
                     [value]="
-                        chartAssist.getHighlightedValue(
-                            summarySerie,
-                            'y',
-                            'tick'
+                        getLegendDisplayValue(
+                            chartAssist.getHighlightedValue(
+                                summarySerie,
+                                'y',
+                                'tick'
+                            )
                         )
                     "
                     [backgroundColor]="summaryLegendBcgColor"
                     [color]="summaryLegendColor">
+                    <span
+                        top
+                        role="img"
+                        aria-label="No data"
+                        i18n-aria-label
+                        [hidden]="
+                            configuration.projectType !==
+                            timeseriesWidgetProjectType.PerfstackApp
+                        "
+                        >--</span
+                    >
                 </nui-rich-legend-tile>
                 <div description class="description-container">
                     <div class="description-text nui-text-small">
                         <div
                             class="description description-primary"
-                            [ngClass]="{
-                                'nui-text-link-small link': seriesInteractive
-                            }"
+                            [class.nui-text-link-small]="seriesInteractive"
+                            [class.link]="seriesInteractive"
                             [title]="summarySerie.legendDescriptionPrimary">
                             {{ summarySerie.legendDescriptionPrimary }}
                         </div>
@@ -70,11 +82,11 @@
                     (click)="removeMetric(summarySerie.id)"></button>
                 }
             </nui-legend-series>
-            } @for ( legendSeries of chartAssist.legendSeriesSet; track
+            } @for (legendSeries of chartAssist.legendSeriesSet; track
             legendSeries.id) {
             <nui-legend-series
                 class="xy-chart__legend-series"
-                [ngClass]="
+                [class]="
                     'xy-chart__legend-series--state-' +
                     chartAssist.renderStatesIndex[legendSeries.id]?.state
                 "
@@ -95,6 +107,17 @@
                     [color]="
                         chartAssist.palette.textColors.get(legendSeries.id)
                     ">
+                    <span
+                        top
+                        role="img"
+                        aria-label="No data"
+                        i18n-aria-label
+                        [hidden]="
+                            configuration.projectType !==
+                            timeseriesWidgetProjectType.PerfstackApp
+                        "
+                        >--</span
+                    >
                     <nui-chart-marker
                         rightEdge
                         [marker]="chartAssist.markers.get(legendSeries.id)"
@@ -113,9 +136,8 @@
                         <!-- TODO: NUI-6288 - drill-down sits inside the nui-legend-series (role="checkbox") -->
                         <div
                             class="description description-primary"
-                            [ngClass]="{
-                                'nui-text-link-small link': seriesInteractive
-                            }"
+                            [class.nui-text-link-small]="seriesInteractive"
+                            [class.link]="seriesInteractive"
                             (click)="onPrimaryDescClick($event, legendSeries)"
                             [title]="legendSeries.legendDescriptionPrimary">
                             {{ legendSeries.legendDescriptionPrimary }}

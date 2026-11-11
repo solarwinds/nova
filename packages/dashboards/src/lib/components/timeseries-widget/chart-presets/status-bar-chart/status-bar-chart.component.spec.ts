@@ -18,22 +18,33 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import moment from "moment/moment";
 
 import { EventBus, IconService, IEvent } from "@nova-ui/bits";
 import {
     Chart,
+    InteractionType,
+    INTERACTION_DATA_POINTS_EVENT,
     SET_DOMAIN_EVENT,
     TimeseriesZoomPlugin,
     ZoomPlugin,
 } from "@nova-ui/charts";
 
 import { StatusBarChartComponent } from "./status-bar-chart.component";
+import { NuiDashboardsModule } from "../../../../dashboards.module";
 import { SET_TIMEFRAME } from "../../../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
+import { LegendPlacement } from "../../../../widget-types/common/widget/legend";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
-import { TimeseriesWidgetProjectType } from "../../types";
+import {
+    ITimeseriesWidgetConfig,
+    TimeseriesChartPreset,
+    TimeseriesChartTypes,
+    TimeseriesScaleType,
+    TimeseriesWidgetProjectType,
+} from "../../types";
 
 describe(StatusBarChartComponent.name, () => {
     const frozenTime = moment("2020-11-06T00:00:00-06:00")
@@ -277,6 +288,273 @@ describe(StatusBarChartComponent.name, () => {
             );
             expect(result[0].start).toEqual(result[0].end);
         });
+    });
+});
+
+describe("StatusBarChartComponent legend values", () => {
+    let component: StatusBarChartComponent;
+    let fixture: ComponentFixture<StatusBarChartComponent>;
+
+    const getTiles = (): HTMLElement[] =>
+        Array.from(
+            fixture.nativeElement.querySelectorAll("nui-rich-legend-tile")
+        );
+
+    beforeEach(waitForAsync(() => {
+        TestBed.configureTestingModule({
+            imports: [NuiDashboardsModule],
+            providers: [
+                {
+                    provide: PIZZAGNA_EVENT_BUS,
+                    useValue: new EventBus<IEvent>(),
+                },
+                { provide: DATA_SOURCE, useValue: {} },
+            ],
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(StatusBarChartComponent);
+        component = fixture.componentInstance;
+        component.configuration = {
+            interaction: null,
+            displayedSeries: [],
+            legendPlacement: LegendPlacement.Right,
+            enableZoom: false,
+            preset: TimeseriesChartPreset.StatusBar,
+            scales: {
+                x: { type: TimeseriesScaleType.Time },
+                y: { type: TimeseriesScaleType.Linear },
+            },
+            units: "generic",
+            type: TimeseriesChartTypes.alert,
+            projectType: TimeseriesWidgetProjectType.PerfstackApp,
+        } satisfies ITimeseriesWidgetConfig;
+        component.widgetData = {
+            series: [
+                { id: "metric", name: "Metric", description: "", data: [] },
+            ],
+            summarySerie: {
+                id: "summary",
+                name: "Summary",
+                description: "",
+                data: [],
+            },
+        };
+        component.zoomPlugins = [];
+        component.ngOnChanges({
+            configuration: new SimpleChange(
+                undefined,
+                component.configuration,
+                true
+            ),
+            widgetData: new SimpleChange(undefined, component.widgetData, true),
+        });
+        fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    it("should render accessible placeholders for missing alert and summary values", () => {
+        const tiles = getTiles();
+
+        expect(tiles.length).toBe(2);
+        for (const tile of tiles) {
+            const placeholder = tile.querySelector<HTMLElement>(
+                "[role='img'][aria-label='No data']"
+            );
+            expect(placeholder?.textContent?.trim()).toBe("--");
+            expect(placeholder?.hidden).toBeFalse();
+        }
+    });
+
+    it("should show real alert values, including zero, without placeholders", () => {
+        spyOn(component.chartAssist, "getHighlightedValue").and.returnValue(0);
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
+
+        for (const tile of getTiles()) {
+            expect(tile.textContent?.trim()).toBe("0");
+            expect(tile.querySelector("[aria-label='No data']")).toBeNull();
+        }
+    });
+
+    it("should leave modern dashboard alert tiles unchanged", () => {
+        component.configuration.projectType =
+            TimeseriesWidgetProjectType.ModernDashboard;
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
+
+        for (const tile of getTiles()) {
+            const placeholder = tile.querySelector<HTMLElement>(
+                "[role='img'][aria-label='No data']"
+            );
+            expect(placeholder?.hidden).toBeTrue();
+        }
+    });
+
+    it("should project and invoke the conditional remove buttons", () => {
+        component.configuration.allowLegendMenu = true;
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
+
+        const buttons: NodeListOf<HTMLButtonElement> =
+            fixture.nativeElement.querySelectorAll(".legend-menu button");
+        expect(buttons.length).toBe(2);
+        const removeMetricSpy = spyOn(component, "removeMetric");
+        buttons[0].click();
+        buttons[1].click();
+        expect(removeMetricSpy).toHaveBeenCalledWith("summary");
+        expect(removeMetricSpy).toHaveBeenCalledWith("metric");
+    });
+
+    it("should restore status placeholders after data becomes empty despite a late highlight", () => {
+        component.configuration.type = TimeseriesChartTypes.multi;
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
+
+        const placeholders = fixture.nativeElement.querySelectorAll(
+            ".status-bar-chart__legend__tile [role='img'][aria-label='No data']"
+        );
+        expect(placeholders.length).toBe(2);
+        expect(placeholders[0].textContent.trim()).toBe("--");
+
+        const previousData = component.widgetData;
+        component.widgetData = {
+            ...previousData,
+            series: [
+                {
+                    ...previousData.series[0],
+                    data: [
+                        {
+                            x: new Date("2026-01-01T00:00:00Z"),
+                            y: 1,
+                            icon: "status_up",
+                            color: "green",
+                        },
+                        {
+                            x: new Date("2026-01-01T00:01:00Z"),
+                            y: 1,
+                            icon: "status_up",
+                        },
+                    ],
+                },
+            ],
+        };
+        component.ngOnChanges({
+            widgetData: new SimpleChange(
+                previousData,
+                component.widgetData,
+                false
+            ),
+        });
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
+
+        const tiles: NodeListOf<HTMLElement> =
+            fixture.nativeElement.querySelectorAll(
+                ".status-bar-chart__legend__tile"
+            );
+        expect(tiles.length).toBe(2);
+        expect(tiles[0].querySelector("[aria-label='No data']")).not.toBeNull();
+        expect(tiles[1].querySelector("[aria-label='No data']")).toBeNull();
+        expect(tiles[1].querySelector("nui-icon")).not.toBeNull();
+
+        const spark = component.chartAssist.sparks[1];
+        const series = spark.chartSeriesSet[0];
+        const highlightEvent = {
+            data: {
+                interactionType: InteractionType.MouseMove,
+                dataPoints: {
+                    [series.id]: {
+                        seriesId: series.id,
+                        dataSeries: series,
+                        index: 0,
+                        data: series.data[0],
+                        position: undefined,
+                    },
+                },
+            },
+        };
+        const populatedData = component.widgetData;
+        component.widgetData = previousData;
+        component.ngOnChanges({
+            widgetData: new SimpleChange(populatedData, previousData, false),
+        });
+        // Simulate a late interaction carrying a point from the previous data.
+        spark.chart
+            ?.getEventBus()
+            .getStream(INTERACTION_DATA_POINTS_EVENT)
+            .next(highlightEvent);
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
+
+        expect(
+            tiles[1]
+                .querySelector("[aria-label='No data']")
+                ?.textContent?.trim()
+        ).toBe("--");
+        expect(tiles[1].querySelector("nui-icon")).toBeNull();
+        expect(
+            tiles[1].querySelector(
+                ".status-bar-chart__legend__tile__background"
+            )
+        ).toBeNull();
+
+        component.configuration.projectType =
+            TimeseriesWidgetProjectType.ModernDashboard;
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
+
+        expect(tiles[1].querySelector("[aria-label='No data']")).toBeNull();
+        expect(tiles[1].querySelector("nui-icon")).not.toBeNull();
+    });
+
+    it("should display a valid status background without requiring an icon", () => {
+        component.configuration.type = TimeseriesChartTypes.multi;
+        const previousData = component.widgetData;
+        component.widgetData = {
+            ...previousData,
+            series: [
+                {
+                    ...previousData.series[0],
+                    data: [
+                        {
+                            x: new Date("2026-01-01T00:00:00Z"),
+                            y: 1,
+                            color: "green",
+                        },
+                        {
+                            x: new Date("2026-01-01T00:01:00Z"),
+                            y: 1,
+                            color: "green",
+                        },
+                    ],
+                },
+            ],
+        };
+        component.ngOnChanges({
+            widgetData: new SimpleChange(
+                previousData,
+                component.widgetData,
+                false
+            ),
+        });
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
+
+        const tile: HTMLElement = fixture.nativeElement.querySelectorAll(
+            ".status-bar-chart__legend__tile"
+        )[1];
+        expect(tile.querySelector("[aria-label='No data']")).toBeNull();
+        expect(tile.querySelector("nui-icon")).toBeNull();
+        expect(
+            tile.querySelector<HTMLElement>(
+                ".status-bar-chart__legend__tile__background"
+            )?.style.backgroundColor
+        ).toBe("green");
     });
 });
 
