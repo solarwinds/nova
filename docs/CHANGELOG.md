@@ -8,6 +8,7 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | Preserve native keyboard navigation in editable toolbar content and keep the overflow menu reachable when toolbar actions change disabled state.
 - `@nova-ui/bits` | Improved keyboard access and focus visibility for overflowing tabs, hoverable and collapsible panels, and sortable table headers.
 - `@nova-ui/bits` | Added keyboard and non-dragging table column resizing, and keyboard resizing for LTR panels with resolvable numeric size bounds.
 - `@nova-ui/bits` | Preserved native activation of host-referenced popups and exposed checkbox semantics and state on the keyboard-focusable control.
