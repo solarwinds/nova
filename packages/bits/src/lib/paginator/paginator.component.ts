@@ -183,6 +183,9 @@ export class PaginatorComponent
     @ViewChildren(CdkVirtualScrollViewport)
     private virtualScrollViewports: QueryList<CdkVirtualScrollViewport>;
 
+    @ViewChildren(PopupComponent)
+    private popups: QueryList<PopupComponent>;
+
     @ViewChildren("popupPages", { read: ElementRef })
     private popupPages: QueryList<ElementRef<HTMLElement>>;
 
@@ -190,7 +193,12 @@ export class PaginatorComponent
     private readonly focusInjector = inject(Injector);
     private readonly interactivityChecker = inject(InteractivityChecker);
     private focusRestorePending = false;
+    private pendingFocusRestoreElement?: Element;
     private pendingVirtualPageFocus?: PendingVirtualPageFocus;
+    private readonly pendingPopupFocusChecks = new Map<
+        PopupComponent,
+        ReturnType<typeof setTimeout>
+    >();
 
     private _dotsPagesPerRow = 5;
 
@@ -391,6 +399,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
     }
 
     public onPopupOpened(isOpen: boolean, popup: PopupComponent): void {
+        this.cancelPendingPopupFocusCheck(popup);
         if (isOpen) {
             this.getPopupViewport(popup)?.checkViewportSize();
         }
@@ -480,7 +489,9 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         }
         const trigger = this.getPopupTrigger(popup);
         const tabStops = this.getPopupTabStops(popup);
-        const active = this.host.nativeElement.ownerDocument.activeElement;
+        const active = this.getDeepActiveElement(
+            this.host.nativeElement.ownerDocument
+        );
         if (!trigger || tabStops.length === 0) {
             return;
         }
@@ -502,10 +513,20 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
      */
     public onPopupFocusOut(event: FocusEvent, popup: PopupComponent): void {
         const nextFocus = event.relatedTarget;
-        if (!popup.isOpen || !(nextFocus instanceof Node)) {
+        if (!popup.isOpen) {
             if (this.pendingVirtualPageFocus?.popup === popup) {
                 this.cancelPendingVirtualPageFocus();
             }
+            return;
+        }
+        if (
+            !(nextFocus instanceof Node) ||
+            this.isTriggerShadowHost(popup, nextFocus)
+        ) {
+            if (this.pendingVirtualPageFocus?.popup === popup) {
+                this.cancelPendingVirtualPageFocus();
+            }
+            this.schedulePopupFocusCheck(popup);
             return;
         }
         if (
@@ -517,7 +538,53 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         if (this.pendingVirtualPageFocus?.popup === popup) {
             this.cancelPendingVirtualPageFocus();
         }
+        this.cancelPendingPopupFocusCheck(popup);
         popup.closePopup();
+    }
+
+    private isTriggerShadowHost(popup: PopupComponent, target: Node): boolean {
+        let root = this.getPopupTrigger(popup)?.getRootNode();
+        // Focus events crossing a shadow boundary expose the host as relatedTarget.
+        while (root instanceof ShadowRoot) {
+            if (root.host === target) {
+                return true;
+            }
+            root = root.host.getRootNode();
+        }
+        return false;
+    }
+
+    private schedulePopupFocusCheck(popup: PopupComponent): void {
+        this.cancelPendingPopupFocusCheck(popup);
+        // Focus may move again before this task completes.
+        const timer = setTimeout(() => {
+            this.pendingPopupFocusChecks.delete(popup);
+            if (!popup.isOpen || !popup.visible) {
+                return;
+            }
+            if (
+                this.getPopupTrigger(popup)?.matches(":focus-within") ||
+                this.isPopupContentFocused(popup)
+            ) {
+                return;
+            }
+            popup.closePopup();
+        });
+        this.pendingPopupFocusChecks.set(popup, timer);
+    }
+
+    private cancelPendingPopupFocusCheck(popup: PopupComponent): void {
+        const timer = this.pendingPopupFocusChecks.get(popup);
+        if (timer !== undefined) {
+            clearTimeout(timer);
+            this.pendingPopupFocusChecks.delete(popup);
+        }
+    }
+
+    private isPopupContentFocused(popup: PopupComponent): boolean {
+        const content: HTMLElement | undefined =
+            popup.popupAreaContent?.nativeElement;
+        return content?.matches(":focus-within") ?? false;
     }
 
     private closePopupFromKeyboard(
@@ -533,6 +600,14 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
 
     private getPopupTrigger(popup: PopupComponent): HTMLElement | undefined {
         return popup.popupToggle?.host.nativeElement;
+    }
+
+    private getDeepActiveElement(document: Document): Element | null {
+        let active = document.activeElement;
+        while (active?.shadowRoot?.activeElement) {
+            active = active.shadowRoot.activeElement;
+        }
+        return active;
     }
 
     private getPopupViewport(
@@ -808,13 +883,17 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
             () => {
                 this.focusRestorePending = false;
                 const element = this.host.nativeElement;
-                const active = element.ownerDocument.activeElement;
+                const active = this.getDeepActiveElement(element.ownerDocument);
                 const isActiveDisabled =
                     element.contains(active) &&
                     (active as HTMLButtonElement).disabled === true;
-                // Focus falls to <body> when the focused button is removed or disabled.
+                const focusRoot = focusedElement?.getRootNode();
+                const focusRootHost =
+                    focusRoot instanceof ShadowRoot ? focusRoot.host : null;
+                // Focus can fall to the body or shadow host when a focused control is removed or disabled.
                 const isFocusLost =
-                    active === element.ownerDocument.body &&
+                    (active === element.ownerDocument.body ||
+                        active === focusRootHost) &&
                     (focusedElement?.isConnected === false ||
                         (focusedElement as HTMLButtonElement | null)
                             ?.disabled === true);
@@ -835,7 +914,12 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
     private assemble() {
         this.cancelPendingVirtualPageFocus();
         const focusedElement =
-            this.host.nativeElement.ownerDocument.activeElement;
+            this.pendingFocusRestoreElement ??
+            this.getDeepActiveElement(this.host.nativeElement.ownerDocument);
+        this.pendingFocusRestoreElement = undefined;
+        const focusedPopup = this.popups?.find(
+            popup => popup.isOpen && this.isPopupContentFocused(popup)
+        );
         const hadFocus =
             this.host.nativeElement.contains(focusedElement) ||
             this.popupPages?.some(pages =>
@@ -869,6 +953,10 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         this.addNext();
         this.cd.detectChanges();
 
+        // Removing a focused node does not dispatch focusout in every browser.
+        if (focusedPopup) {
+            this.schedulePopupFocusCheck(focusedPopup);
+        }
         if (hadFocus) {
             this.scheduleFocusRestore(focusedElement);
         }
@@ -989,8 +1077,11 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
             value: item.value,
             title: item.title,
             style: isDisabled ? this.disabledClass : "",
-            action: () => {
+            action: (event: Event) => {
                 if (item.page) {
+                    if (event.currentTarget instanceof Element) {
+                        this.pendingFocusRestoreElement = event.currentTarget;
+                    }
                     this.goToPage(item.page);
                 }
                 return false;
@@ -1019,6 +1110,8 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
 
     public ngOnDestroy(): void {
         this.cancelPendingVirtualPageFocus();
+        this.pendingPopupFocusChecks.forEach(timer => clearTimeout(timer));
+        this.pendingPopupFocusChecks.clear();
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }
