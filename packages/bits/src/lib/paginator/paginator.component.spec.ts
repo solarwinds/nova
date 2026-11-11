@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 import { OverlayModule } from "@angular/cdk/overlay";
+import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import { ChangeDetectorRef, SimpleChange, SimpleChanges } from "@angular/core";
 import {
     ComponentFixture,
@@ -158,6 +159,17 @@ describe("components >", () => {
             target.dispatchEvent(event);
             return event;
         };
+        const simulateVirtualPageSlice = (
+            root: HTMLElement,
+            firstPage: number
+        ): void => {
+            // The test fixture has no scroll layout, so represent a later slice.
+            root.querySelectorAll<HTMLButtonElement>(
+                "button[data-nui-paginator-page]"
+            ).forEach((pageButton, index) => {
+                pageButton.dataset.nuiPaginatorPage = String(firstPage + index);
+            });
+        };
 
         beforeEach(() => {
             TestBed.configureTestingModule({
@@ -259,6 +271,228 @@ describe("components >", () => {
                     );
                 }));
             });
+        });
+
+        [false, true].forEach(appendToBody => {
+            it(`should queue Tab navigation beyond the rendered virtual pages with appendToBody=${appendToBody}`, fakeAsync(() => {
+                subject.appendToBody = appendToBody;
+                render(2000, 1);
+                const popupRoot = openPopup();
+                tick(20);
+                fixture.detectChanges();
+
+                const viewport = fixture.debugElement.query(
+                    By.directive(CdkVirtualScrollViewport)
+                ).componentInstance as CdkVirtualScrollViewport;
+                const viewportElement = viewport.elementRef.nativeElement;
+                const pages = popupRoot.querySelectorAll<HTMLButtonElement>(
+                    "button[data-nui-paginator-page]"
+                );
+                const lastRendered = pages[pages.length - 1];
+                const lastPage = Number(
+                    lastRendered.getAttribute("data-nui-paginator-page")
+                );
+                expect(lastPage).toBeLessThan(1999);
+                const scrollToIndex = spyOn(
+                    viewport,
+                    "scrollToIndex"
+                ).and.stub();
+                lastRendered.focus({ preventScroll: true });
+
+                const firstTab = keydown(lastRendered, {
+                    key: "Tab",
+                    code: "Tab",
+                });
+                expect(firstTab.defaultPrevented).toBeTrue();
+                expect(activeElement()).toBe(viewportElement);
+                expect(popupComponent().isOpen).toBeTrue();
+                expect(scrollToIndex).toHaveBeenCalledWith(
+                    Math.floor((lastPage + 1 - 6) / 5)
+                );
+
+                const secondTab = keydown(viewportElement, {
+                    key: "Tab",
+                    code: "Tab",
+                });
+                expect(secondTab.defaultPrevented).toBeTrue();
+                expect(scrollToIndex).toHaveBeenCalledWith(
+                    Math.floor((lastPage + 2 - 6) / 5)
+                );
+
+                const reverseTab = keydown(viewportElement, {
+                    key: "Tab",
+                    code: "Tab",
+                    shiftKey: true,
+                });
+                expect(reverseTab.defaultPrevented).toBeTrue();
+                expect(scrollToIndex).toHaveBeenCalledWith(
+                    Math.floor((lastPage + 1 - 6) / 5)
+                );
+
+                keydown(viewportElement, { key: "Escape", code: "Escape" });
+                tick();
+                expect(popupComponent().isOpen).toBeFalse();
+                expect(activeElement()).toBe(button(".nui-paginator__dots"));
+            }));
+
+            it(`should not restore pending virtual focus after focus leaves with appendToBody=${appendToBody}`, fakeAsync(() => {
+                subject.appendToBody = appendToBody;
+                render(2000, 1);
+                const popupRoot = openPopup();
+                tick(20);
+                fixture.detectChanges();
+
+                const viewport = fixture.debugElement.query(
+                    By.directive(CdkVirtualScrollViewport)
+                ).componentInstance as CdkVirtualScrollViewport;
+                spyOn(viewport, "scrollToIndex").and.stub();
+                const pages = popupRoot.querySelectorAll<HTMLButtonElement>(
+                    "button[data-nui-paginator-page]"
+                );
+                const lastRendered = pages[pages.length - 1];
+                const nextPage =
+                    Number(lastRendered.dataset.nuiPaginatorPage) + 1;
+                lastRendered.focus({ preventScroll: true });
+                keydown(lastRendered, { key: "Tab", code: "Tab" });
+                expect(activeElement()).toBe(viewport.elementRef.nativeElement);
+
+                const outside = document.createElement("button");
+                document.body.appendChild(outside);
+                outside.focus();
+                const latePage = document.createElement("button");
+                latePage.dataset.nuiPaginatorPage = String(nextPage);
+                popupRoot.appendChild(latePage);
+                tick(20);
+
+                expect(popupComponent().isOpen).toBeFalse();
+                expect(activeElement()).toBe(outside);
+                outside.remove();
+            }));
+
+            it(`should report and recover if a virtual page never renders with appendToBody=${appendToBody}`, fakeAsync(() => {
+                subject.appendToBody = appendToBody;
+                render(2000, 1);
+                const popupRoot = openPopup();
+                tick(20);
+                fixture.detectChanges();
+
+                const warn = jasmine.createSpy("warn");
+                spyOnProperty(
+                    TestBed.inject(LoggerService),
+                    "warn"
+                ).and.returnValue(warn);
+                const viewport = fixture.debugElement.query(
+                    By.directive(CdkVirtualScrollViewport)
+                ).componentInstance as CdkVirtualScrollViewport;
+                spyOn(viewport, "checkViewportSize").and.stub();
+                spyOn(viewport, "scrollToIndex").and.stub();
+                const pages = popupRoot.querySelectorAll<HTMLButtonElement>(
+                    "button[data-nui-paginator-page]"
+                );
+                const lastRendered = pages[pages.length - 1];
+                const nextPage =
+                    Number(lastRendered.dataset.nuiPaginatorPage) + 1;
+                lastRendered.focus({ preventScroll: true });
+
+                keydown(lastRendered, { key: "Tab", code: "Tab" });
+                tick(4999);
+                expect(activeElement()).toBe(viewport.elementRef.nativeElement);
+                expect(warn).not.toHaveBeenCalled();
+
+                tick(1);
+                expect(warn).toHaveBeenCalledWith(
+                    `Timed out focusing virtual paginator page ${nextPage}.`
+                );
+                expect(activeElement()).toBe(button(".nui-paginator__dots"));
+                expect(popupComponent().isOpen).toBeFalse();
+            }));
+
+            it(`should queue focus at the first page when entering a scrolled virtual popup with appendToBody=${appendToBody}`, fakeAsync(() => {
+                subject.appendToBody = appendToBody;
+                render(2000, 1);
+                const popupRoot = openPopup();
+                tick(20);
+                fixture.detectChanges();
+
+                const viewport = fixture.debugElement.query(
+                    By.directive(CdkVirtualScrollViewport)
+                ).componentInstance as CdkVirtualScrollViewport;
+                simulateVirtualPageSlice(popupRoot, 506);
+                const scrollToIndex = spyOn(
+                    viewport,
+                    "scrollToIndex"
+                ).and.stub();
+                const trigger = button(".nui-paginator__dots");
+                trigger.focus();
+
+                const firstTab = keydown(trigger, {
+                    key: "Tab",
+                    code: "Tab",
+                });
+                expect(firstTab.defaultPrevented).toBeTrue();
+                expect(activeElement()).toBe(viewport.elementRef.nativeElement);
+                expect(scrollToIndex).toHaveBeenCalledWith(0);
+
+                const secondTab = keydown(viewport.elementRef.nativeElement, {
+                    key: "Tab",
+                    code: "Tab",
+                });
+                expect(secondTab.defaultPrevented).toBeTrue();
+                expect(scrollToIndex).toHaveBeenCalledTimes(2);
+                expect(popupComponent().isOpen).toBeTrue();
+
+                keydown(viewport.elementRef.nativeElement, {
+                    key: "Escape",
+                    code: "Escape",
+                });
+                tick();
+            }));
+
+            it(`should navigate to the preceding virtual page from a rendered boundary with appendToBody=${appendToBody}`, fakeAsync(() => {
+                subject.appendToBody = appendToBody;
+                render(2000, 1);
+                const popupRoot = openPopup();
+                tick(20);
+                fixture.detectChanges();
+
+                const viewport = fixture.debugElement.query(
+                    By.directive(CdkVirtualScrollViewport)
+                ).componentInstance as CdkVirtualScrollViewport;
+
+                simulateVirtualPageSlice(popupRoot, 506);
+
+                const firstRendered = button(
+                    "button[data-nui-paginator-page]",
+                    popupRoot
+                );
+                const firstRenderedPage = Number(
+                    firstRendered.getAttribute("data-nui-paginator-page")
+                );
+                expect(firstRenderedPage).toBeGreaterThan(6);
+                const scrollToIndex = spyOn(
+                    viewport,
+                    "scrollToIndex"
+                ).and.stub();
+                firstRendered.focus({ preventScroll: true });
+
+                const event = keydown(firstRendered, {
+                    key: "Tab",
+                    code: "Tab",
+                    shiftKey: true,
+                });
+                expect(event.defaultPrevented).toBeTrue();
+                expect(popupComponent().isOpen).toBeTrue();
+                expect(activeElement()).toBe(viewport.elementRef.nativeElement);
+                expect(scrollToIndex).toHaveBeenCalledWith(
+                    Math.floor((firstRenderedPage - 1 - 6) / 5)
+                );
+
+                keydown(viewport.elementRef.nativeElement, {
+                    key: "Escape",
+                    code: "Escape",
+                });
+                tick();
+            }));
         });
 
         [false, true].forEach(appendToBody => {

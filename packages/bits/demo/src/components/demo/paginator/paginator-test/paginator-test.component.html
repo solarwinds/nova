@@ -10,4 +10,22 @@
         [total]="400"
         [appendToBody]="true">
     </nui-paginator>
+
+    <div id="nui-demo-virtualized-paginators" style="display: none">
+        <nui-paginator
+            id="nui-demo-virtualized-paginator"
+            [page]="1"
+            [pageSize]="10"
+            [total]="20000"
+            [appendToBody]="false">
+        </nui-paginator>
+
+        <nui-paginator
+            id="nui-demo-body-virtualized-paginator"
+            [page]="1"
+            [pageSize]="10"
+            [total]="20000"
+            [appendToBody]="true">
+        </nui-paginator>
+    </div>
 </div>

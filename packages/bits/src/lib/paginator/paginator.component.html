@@ -37,7 +37,8 @@
                 <nui-popup
                     #popup
                     [appendToBody]="appendToBody"
-                    [baseElementSelector]="popupBaseElementSelector">
+                    [baseElementSelector]="popupBaseElementSelector"
+                    (opened)="onPopupOpened($event, popup)">
                     <button
                         nui-button
                         type="button"
@@ -47,8 +48,8 @@
                         [ngClass]="item.imageClass"
                         [isEmpty]="false"
                         [role]="'menu'"
-                        (click)="handleDotsClick()"
-                        (keydown)="onDotsKeydown($event, popup)"
+                        (click)="handleDotsClick(popup)"
+                        (keydown)="onDotsKeydown($event, popup, item)"
                         (focusout)="onPopupFocusOut($event, popup)"
                         class="nui-paginator__dots">
                         {{ item.value }}
@@ -56,7 +57,7 @@
                     <ul
                         #popupPages
                         popupAreaContent
-                        (keydown)="onPopupKeydown($event, popup)"
+                        (keydown)="onPopupKeydown($event, popup, item)"
                         (focusout)="onPopupFocusOut($event, popup)"
                         class="nui-paginator__elipsis-pages">
                         <li>
@@ -67,6 +68,9 @@
                                 }">
                                 @if (item.useVirtualScroll) {
                                 <cdk-virtual-scroll-viewport
+                                    role="group"
+                                    [attr.aria-label]="item.title"
+                                    tabindex="-1"
                                     [style.width.px]="item.popupWidth"
                                     [style.height.px]="130"
                                     [itemSize]="40"
@@ -131,6 +135,7 @@
                 nui-button
                 type="button"
                 displayStyle="action"
+                [attr.data-nui-paginator-page]="value"
                 (click)="goToPage(value)"
                 [ariaLabel]="getPageAriaLabel(value)">
                 <!-- This tag span was added to display value properly on Safari brouser inside a button in ngFor directive -->
