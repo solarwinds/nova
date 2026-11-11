@@ -18,6 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { Page } from "@playwright/test";
+
 import { PaginatorAtom } from "./paginator.atom";
 import { Atom } from "../../atom";
 import { test, expect, Helpers } from "../../setup";
@@ -25,10 +27,15 @@ import { test, expect, Helpers } from "../../setup";
 test.describe("USERCONTROL paginator", () => {
     let basicPaginator: PaginatorAtom;
     let adjacentPaginator: PaginatorAtom;
+    let virtualizedPaginator: PaginatorAtom;
+    let bodyVirtualizedPaginator: PaginatorAtom;
     const adjacent = 2;
     const itemCount = 1012;
     const expectedItemsPerPage = "25";
     const pageTwenty = 20;
+    const virtualizedPageCount = 2000;
+    const virtualizedFirstPopupPage = 6;
+    const virtualizedLastPopupPage = virtualizedPageCount - 1;
 
     const getDisplayingText = (
         itemsPerPage: number,
@@ -38,6 +45,27 @@ test.describe("USERCONTROL paginator", () => {
         const endItem = Math.min(itemsPerPage * page, totalItems);
         const startItem = itemsPerPage * (page - 1) + 1;
         return `${startItem}-${endItem} of ${totalItems}`;
+    };
+
+    const openVirtualizedPopup = async (page: Page, appendToBody: boolean) => {
+        await page
+            .locator("#nui-demo-virtualized-paginators")
+            .evaluate(element => {
+                (element as HTMLElement).style.display = "block";
+            });
+        const paginator = appendToBody
+            ? bodyVirtualizedPaginator
+            : virtualizedPaginator;
+        const popupRoot = appendToBody
+            ? page.locator(".cdk-overlay-container")
+            : paginator.getLocator();
+        const popupArea = popupRoot.locator(".nui-popup__area:visible").first();
+        const trigger = paginator.ellipsisLink(0);
+
+        await trigger.focus();
+        await page.keyboard.press("Enter");
+        await expect(popupArea).toBeVisible();
+        return { paginator, popupRoot, popupArea, trigger };
     };
 
     test.beforeEach(async ({ page }) => {
@@ -50,6 +78,256 @@ test.describe("USERCONTROL paginator", () => {
             PaginatorAtom,
             "nui-demo-adjacent-paginator"
         );
+        virtualizedPaginator = Atom.find<PaginatorAtom>(
+            PaginatorAtom,
+            "nui-demo-virtualized-paginator"
+        );
+        bodyVirtualizedPaginator = Atom.find<PaginatorAtom>(
+            PaginatorAtom,
+            "nui-demo-body-virtualized-paginator"
+        );
+    });
+
+    [false, true].forEach(appendToBody => {
+        test(`should keep rapid Tab navigation sequential across the virtualized popup boundary with appendToBody=${appendToBody}`, async ({
+            page,
+        }) => {
+            const { paginator, popupArea } = await openVirtualizedPopup(
+                page,
+                appendToBody
+            );
+            const popupPageButtons = popupArea.locator(
+                "button[aria-label^='Go to page ']"
+            );
+
+            expect(await paginator.pageCount()).toBe(virtualizedPageCount);
+            await expect(popupPageButtons.first()).toHaveAttribute(
+                "aria-label",
+                `Go to page ${virtualizedFirstPopupPage}`
+            );
+
+            const initiallyRenderedPageCount = await popupPageButtons.count();
+            expect(initiallyRenderedPageCount).toBeGreaterThan(1);
+            expect(initiallyRenderedPageCount).toBeLessThan(
+                virtualizedLastPopupPage - virtualizedFirstPopupPage + 1
+            );
+
+            const lastRenderedPage = popupPageButtons.last();
+            await expect(lastRenderedPage).toHaveAttribute(
+                "aria-label",
+                /^Go to page \d+$/
+            );
+            const lastRenderedPageLabel = await lastRenderedPage.getAttribute(
+                "aria-label"
+            );
+            const lastRenderedPageNumber = Number(
+                lastRenderedPageLabel?.match(/^Go to page (\d+)$/)?.[1]
+            );
+            expect(lastRenderedPageNumber).toBeLessThan(
+                virtualizedLastPopupPage
+            );
+            const nextLogicalPageNumber = lastRenderedPageNumber + 1;
+            const nextLogicalPage = popupArea.getByRole("button", {
+                name: `Go to page ${nextLogicalPageNumber}`,
+                exact: true,
+            });
+
+            await lastRenderedPage.evaluate(element => {
+                (element as HTMLElement).focus({ preventScroll: true });
+            });
+            await expect(lastRenderedPage).toBeFocused();
+            await expect(nextLogicalPage).toHaveCount(0);
+
+            await page.keyboard.press("Tab");
+
+            await expect(nextLogicalPage).toBeFocused();
+            await expect(popupArea).toBeVisible();
+
+            const newLastRenderedPage = popupPageButtons.last();
+            const newLastPageNumber = Number(
+                (await newLastRenderedPage.getAttribute("aria-label"))?.match(
+                    /\d+$/
+                )?.[0]
+            );
+            await newLastRenderedPage.evaluate(element => {
+                (element as HTMLElement).focus({ preventScroll: true });
+            });
+            await expect(newLastRenderedPage).toBeFocused();
+            await expect(
+                popupArea.getByRole("button", {
+                    name: `Go to page ${newLastPageNumber + 1}`,
+                    exact: true,
+                })
+            ).toHaveCount(0);
+            const rapidTabCount = 5;
+            for (let step = 0; step < rapidTabCount; step++) {
+                await page.keyboard.press("Tab");
+            }
+            const finalRapidTabPage = popupArea.getByRole("button", {
+                name: `Go to page ${newLastPageNumber + rapidTabCount}`,
+                exact: true,
+            });
+            await expect(finalRapidTabPage).toBeFocused();
+            await expect(popupArea).toBeVisible();
+        });
+
+        test(`should keep Shift+Tab inside the virtualized popup after scrolling in the middle with appendToBody=${appendToBody}`, async ({
+            page,
+        }) => {
+            const { popupArea, popupRoot, trigger } =
+                await openVirtualizedPopup(page, appendToBody);
+
+            const viewport = popupArea.locator("cdk-virtual-scroll-viewport");
+            await expect(viewport).toBeVisible();
+            await viewport.evaluate(element => {
+                const scrollViewport = element as HTMLElement;
+                scrollViewport.scrollTop = scrollViewport.scrollHeight / 2;
+            });
+            await expect(
+                popupArea.getByRole("button", {
+                    name: "Go to page 1000",
+                    exact: true,
+                })
+            ).toBeAttached();
+
+            const firstRenderedPage = popupArea
+                .locator(
+                    "cdk-virtual-scroll-viewport button[aria-label^='Go to page ']"
+                )
+                .first();
+            const firstRenderedPageLabel = await firstRenderedPage.getAttribute(
+                "aria-label"
+            );
+            const firstRenderedPageNumber = Number(
+                firstRenderedPageLabel?.match(/\d+$/)?.[0]
+            );
+            expect(firstRenderedPageNumber).toBeGreaterThan(500);
+            expect(firstRenderedPageNumber).toBeLessThan(1500);
+
+            const previousLogicalPage = popupArea.getByRole("button", {
+                name: `Go to page ${firstRenderedPageNumber - 1}`,
+                exact: true,
+            });
+            await firstRenderedPage.evaluate(element => {
+                (element as HTMLElement).focus({ preventScroll: true });
+            });
+            await expect(firstRenderedPage).toBeFocused();
+
+            await page.keyboard.press("Shift+Tab");
+
+            await expect(previousLogicalPage).toBeFocused();
+            await expect(popupArea).toBeVisible();
+
+            await page.keyboard.press("Escape");
+            await expect(trigger).toBeFocused();
+            await expect(popupRoot.locator(".nui-popup__area")).toHaveCount(0);
+            await page.keyboard.press("Enter");
+            await page.keyboard.press("Tab");
+            await expect(
+                popupArea.getByRole("button", {
+                    name: `Go to page ${virtualizedFirstPopupPage}`,
+                    exact: true,
+                })
+            ).toBeFocused();
+        });
+
+        test(`should leave the virtualized popup only at its logical start and end with appendToBody=${appendToBody}`, async ({
+            page,
+        }) => {
+            const { paginator, popupRoot, popupArea, trigger } =
+                await openVirtualizedPopup(page, appendToBody);
+            await page.keyboard.press("Tab");
+            await expect(
+                popupArea.getByRole("button", {
+                    name: `Go to page ${virtualizedFirstPopupPage}`,
+                    exact: true,
+                })
+            ).toBeFocused();
+
+            await page.keyboard.press("Shift+Tab");
+            await expect(trigger).toBeFocused();
+            await expect(popupArea).toBeHidden();
+            await expect(popupRoot.locator(".nui-popup__area")).toHaveCount(0);
+
+            await page.keyboard.press("Enter");
+            await expect(popupArea).toBeVisible();
+            const viewport = popupArea.locator("cdk-virtual-scroll-viewport");
+            await expect(viewport).toBeVisible();
+            await viewport.evaluate(element => {
+                const scrollViewport = element as HTMLElement;
+                scrollViewport.scrollTop = scrollViewport.scrollHeight;
+            });
+            const lastPopupPage = popupArea.getByRole("button", {
+                name: `Go to page ${virtualizedLastPopupPage}`,
+                exact: true,
+            });
+            const finalPaginatorPage = paginator
+                .getLocator()
+                .getByRole("button", {
+                    name: `Page ${virtualizedPageCount}`,
+                    exact: true,
+                });
+            await expect(lastPopupPage).toBeAttached();
+            await lastPopupPage.focus();
+            await expect(lastPopupPage).toBeFocused();
+
+            await page.keyboard.press("Tab");
+
+            await expect(popupArea).toBeHidden();
+            await expect(finalPaginatorPage).toBeFocused();
+        });
+
+        test(`should use the matching viewport when both paginator popups are virtualized with appendToBody=${appendToBody}`, async ({
+            page,
+        }) => {
+            const { paginator, popupRoot, popupArea } =
+                await openVirtualizedPopup(page, appendToBody);
+            await popupArea
+                .locator("cdk-virtual-scroll-viewport")
+                .evaluate(element => {
+                    const viewport = element as HTMLElement;
+                    viewport.scrollTop = viewport.scrollHeight / 2;
+                });
+            await popupArea
+                .getByRole("button", { name: "Go to page 1000", exact: true })
+                .click();
+            await expect(popupRoot.locator(".nui-popup__area")).toHaveCount(0);
+
+            const secondTrigger = paginator.ellipsisLink(1);
+            await expect(secondTrigger).toBeVisible();
+            await secondTrigger.focus();
+            await page.keyboard.press("Enter");
+            await page.keyboard.press("Tab");
+            const firstPage = popupArea.getByRole("button", {
+                name: "Go to page 1002",
+                exact: true,
+            });
+            await expect(firstPage).toBeFocused();
+            await expect(popupArea).toBeVisible();
+
+            const lastRenderedPage = popupArea
+                .locator("button[aria-label^='Go to page ']")
+                .last();
+            const lastPageNumber = Number(
+                (await lastRenderedPage.getAttribute("aria-label"))?.match(
+                    /\d+$/
+                )?.[0]
+            );
+            expect(lastPageNumber).toBeLessThan(virtualizedLastPopupPage);
+            const nextPage = popupArea.getByRole("button", {
+                name: `Go to page ${lastPageNumber + 1}`,
+                exact: true,
+            });
+            await lastRenderedPage.evaluate(element => {
+                (element as HTMLElement).focus({ preventScroll: true });
+            });
+            await expect(lastRenderedPage).toBeFocused();
+            await expect(nextPage).toHaveCount(0);
+            await page.keyboard.press("Tab");
+
+            await expect(nextPage).toBeFocused();
+            await expect(popupArea).toBeVisible();
+        });
     });
 
     test(
