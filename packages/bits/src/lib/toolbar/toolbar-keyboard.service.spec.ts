@@ -153,6 +153,59 @@ describe("Services > ", () => {
                 expect(spy).toHaveBeenCalled();
             });
 
+            it("should leave Home, End and arrow keys to a text input", () => {
+                const input = document.createElement("input");
+                input.type = "text";
+                document.body.appendChild(input);
+                input.focus();
+                input.addEventListener("keydown", event =>
+                    service.onKeyDown(event)
+                );
+                const first = service["toolbarItems"][0];
+                const focusSpy = spyOn(first, "focus");
+
+                for (const code of [
+                    KEYBOARD_CODE.HOME,
+                    KEYBOARD_CODE.END,
+                    KEYBOARD_CODE.ARROW_LEFT,
+                ]) {
+                    const event = new KeyboardEvent("keydown", {
+                        code,
+                        bubbles: true,
+                        cancelable: true,
+                    });
+                    input.dispatchEvent(event);
+                    expect(event.defaultPrevented).toBeFalse();
+                }
+
+                expect(focusSpy).not.toHaveBeenCalled();
+                expect(document.activeElement).toBe(input);
+                input.remove();
+            });
+
+            it("should leave Home and End to a nested contenteditable field", () => {
+                const editor = document.createElement("div");
+                editor.contentEditable = "true";
+                const child = document.createElement("span");
+                editor.appendChild(child);
+                document.body.appendChild(editor);
+                editor.addEventListener("keydown", event =>
+                    service.onKeyDown(event)
+                );
+
+                for (const code of [KEYBOARD_CODE.HOME, KEYBOARD_CODE.END]) {
+                    const event = new KeyboardEvent("keydown", {
+                        code,
+                        bubbles: true,
+                        cancelable: true,
+                    });
+                    child.dispatchEvent(event);
+                    expect(event.defaultPrevented).toBeFalse();
+                }
+
+                editor.remove();
+            });
+
             describe("disabled items", () => {
                 afterEach(() => {
                     const items = service["toolbarItems"];
