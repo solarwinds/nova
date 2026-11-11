@@ -464,12 +464,19 @@ export abstract class XYChartComponent
         legendSeries: IChartAssistSeries<IAccessors<any>>,
         valueAccessorKey: string
     ): string | number | undefined {
-        const val = this.chartAssist.getHighlightedValue(
-            legendSeries,
-            "y",
-            "tick",
-            valueAccessorKey
+        const val = this.getLegendDisplayValue(
+            this.chartAssist.getHighlightedValue(
+                legendSeries,
+                "y",
+                "tick",
+                valueAccessorKey
+            )
         );
+
+        // Preserve missing values so the legend shows its placeholder, not a percentage.
+        if (val === undefined) {
+            return undefined;
+        }
 
         if (
             this.configuration.projectType ===
@@ -478,9 +485,9 @@ export abstract class XYChartComponent
             this.configuration.units === "percent"
         ) {
             const submetricsCount = this.chartAssist.legendSeriesSet.length;
-            const strVal = `${val ?? 0}`;
+            const strVal = `${val}`;
 
-            return `${parseFloat(strVal ?? "0") * submetricsCount} %`;
+            return `${parseFloat(strVal) * submetricsCount} %`;
         }
 
         return val;
