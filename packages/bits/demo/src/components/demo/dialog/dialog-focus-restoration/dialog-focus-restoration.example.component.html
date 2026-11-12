@@ -1,0 +1,42 @@
+<p i18n>
+    Opening the dialog removes its trigger button. Closing or dismissing the
+    dialog moves focus to "Continue workflow".
+</p>
+@if (!openerRemoved) {
+<button nui-button type="button" (click)="open(content)" i18n>
+    Open dialog and remove trigger
+</button>
+}
+<button #nextAction nui-button type="button" (click)="continued = true" i18n>
+    Continue workflow
+</button>
+<button nui-button type="button" (click)="reset()" i18n>Reset example</button>
+@if (continued) {
+<p role="status" i18n>Workflow continued.</p>
+}
+
+<ng-template #content let-close="close" let-dismiss="dismiss">
+    <nui-dialog-header
+        title="Focus restoration"
+        i18n-title
+        (closed)="dismiss()"></nui-dialog-header>
+    <div class="dialog-body">
+        <p i18n>
+            The original trigger no longer exists. Close or dismiss this dialog
+            to continue at the next workflow action, or press Escape to dismiss.
+        </p>
+    </div>
+    <nui-dialog-footer>
+        <button nui-button type="button" (click)="dismiss()" i18n>
+            Dismiss dialog
+        </button>
+        <button
+            nui-button
+            type="button"
+            displayStyle="primary"
+            (click)="close()"
+            i18n>
+            Close dialog
+        </button>
+    </nui-dialog-footer>
+</ng-template>
