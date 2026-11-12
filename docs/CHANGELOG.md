@@ -8,6 +8,7 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | Preserved numeric zero values when selecting a SelectV2 option and updating its options, and added numbers to the option value type.
 - `@nova-ui/bits` | Preserved native keyboard navigation in editable toolbar content, kept the overflow menu reachable when actions change disabled state, and restored keyboard focus indicators on menu buttons.
 - `@nova-ui/bits` | Improved keyboard access and focus visibility for overflowing tabs, hoverable and collapsible panels, and sortable table headers.
 - `@nova-ui/bits` | Added keyboard and non-dragging table column resizing, and keyboard resizing for LTR panels with resolvable numeric size bounds.

@@ -434,7 +434,7 @@ export abstract class BaseSelectV2
     ): OptionValueType | OptionValueType[] | null {
         return this.multiselect
             ? options.map(o => o.value)
-            : options[0]?.value || "";
+            : options[0]?.value ?? "";
     }
 
     protected handleValueChange(
