@@ -26,6 +26,63 @@ import { DateTimepickerAtom } from "../datetimepicker/datetimepicker.atom";
 import { SelectV2Atom } from "../select-v2/select-v2.atom";
 import { DialogAtom } from "./dialog.atom";
 
+test.describe("Dialog focus restoration with a removed trigger", () => {
+    for (const action of ["close", "dismiss", "escape"] as const) {
+        test(`should focus the next action after ${action} and preserve Tab order`, async ({
+            page,
+        }) => {
+            await Helpers.prepareBrowser("dialog/focus-restoration", page);
+            const example = page.locator(
+                "nui-dialog-focus-restoration-example"
+            );
+            const opener = example.getByRole("button", {
+                name: "Open dialog and remove trigger",
+                exact: true,
+            });
+            const nextAction = example.getByRole("button", {
+                name: "Continue workflow",
+                exact: true,
+            });
+            await opener.focus();
+            await page.keyboard.press("Enter");
+            await expect(opener).toHaveCount(0);
+            const dialog = page.getByRole("dialog");
+            await expect(dialog).toBeVisible();
+
+            if (action === "escape") {
+                await page.keyboard.press("Escape");
+            } else {
+                await dialog
+                    .getByRole("button", {
+                        name:
+                            action === "close"
+                                ? "Close dialog"
+                                : "Dismiss dialog",
+                        exact: true,
+                    })
+                    .focus();
+                await page.keyboard.press("Enter");
+            }
+
+            await expect(dialog).toHaveCount(0);
+            await expect(nextAction).toBeFocused();
+            await page.keyboard.press("Enter");
+            await expect(example.getByRole("status")).toHaveText(
+                "Workflow continued."
+            );
+            await page.keyboard.press("Tab");
+            await expect(
+                example.getByRole("button", {
+                    name: "Reset example",
+                    exact: true,
+                })
+            ).toBeFocused();
+            await page.keyboard.press("Shift+Tab");
+            await expect(nextAction).toBeFocused();
+        });
+    }
+});
+
 test.describe("USERCONTROL Dialog", () => {
     let defaultDialogBtn: ButtonAtom;
     let closableDialogBtn: ButtonAtom;
