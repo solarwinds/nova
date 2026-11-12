@@ -24,6 +24,7 @@
 - `@nova-ui/dashboards` | Percent stacked-area legends support per-series multipliers, keeping PerfStack CPU and `Remaining` values accurate when chart data is normalized by total CPU count. PerfStack retains its legacy fallback when no valid multiplier is supplied, and unavailable values remain distinct from zero when one is supplied.
 - `@nova-ui/charts` | Percentage-area stacking excludes series marked `preprocess: false` from stack totals.
 - `@nova-ui/bits` | Fixed SelectV2 and ComboboxV2 Playwright atoms to target their own popup by trigger ID, preventing strict-mode failures when multiple overlays coexist. Added paginator regression coverage.
+- `@nova-ui/bits` | Track dialog opening order across containers and preserve focus in the active dialog when a background dialog closes.
 
 ## [20.0.13] 📅 2026-10-26
 
