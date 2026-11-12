@@ -22,6 +22,7 @@
 - `@nova-ui/bits` | **nui-paginator** keeps keyboard focus after a page change (WCAG 2.4.3), including when Previous/Next becomes disabled inside Shadow DOM. The activated button stays focused, focus moves to the current page when Previous/Next becomes disabled or a page is selected from the ellipsis popup, including body-appended popups. The ellipsis popup closes with Escape (focus returns to its trigger) or when focus leaves it, including when a focused page is removed during an update. Tab from the trigger enters the popup directly, also when it is appended to the body. In virtualized popups, Tab enters at the first page and keyboard navigation follows the logical page order.
 - `@nova-ui/dashboards` | Show accessible placeholders for unavailable PerfStack legend values instead of blank tiles or misleading zero percentages.
 - `@nova-ui/bits` | Fixed SelectV2 and ComboboxV2 Playwright atoms to target their own popup by trigger ID, preventing strict-mode failures when multiple overlays coexist. Added paginator regression coverage.
+- `@nova-ui/bits` | Track dialog opening order across containers and preserve focus in the active dialog when a background dialog closes.
 
 ## [20.0.13] 📅 2026-10-26
 
