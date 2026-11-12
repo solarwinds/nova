@@ -464,25 +464,49 @@ export abstract class XYChartComponent
         legendSeries: IChartAssistSeries<IAccessors<any>>,
         valueAccessorKey: string
     ): string | number | undefined {
-        const val = this.chartAssist.getHighlightedValue(
+        if (
+            this.configuration.preset === TimeseriesChartPreset.StackedArea &&
+            this.configuration.units === "percent"
+        ) {
+            const multiplier = this.widgetData?.series?.find(
+                (series) => series.id === legendSeries.id
+            )?.legendValueMultiplier;
+            const hasValidMultiplier =
+                multiplier !== undefined &&
+                Number.isFinite(multiplier) &&
+                multiplier > 0;
+
+            if (
+                hasValidMultiplier ||
+                this.configuration.projectType ===
+                    TimeseriesWidgetProjectType.PerfstackApp
+            ) {
+                const legendMultiplier = hasValidMultiplier
+                    ? multiplier
+                    : this.chartAssist.legendSeriesSet.length;
+                const rawValue = this.chartAssist.getHighlightedValue(
+                    legendSeries,
+                    "y",
+                    undefined,
+                    valueAccessorKey
+                );
+                if (hasValidMultiplier && rawValue == null) {
+                    return undefined;
+                }
+
+                const scaledValue =
+                    parseFloat(`${rawValue ?? 0}`) * legendMultiplier;
+                const formatter = legendSeries.scales?.y?.formatters?.tick;
+
+                return formatter ? formatter(scaledValue) : `${scaledValue} %`;
+            }
+        }
+
+        return this.chartAssist.getHighlightedValue(
             legendSeries,
             "y",
             "tick",
             valueAccessorKey
         );
-
-        if (
-            this.configuration.projectType ===
-                TimeseriesWidgetProjectType.PerfstackApp &&
-            this.configuration.preset === TimeseriesChartPreset.StackedArea &&
-            this.configuration.units === "percent"
-        ) {
-            const submetricsCount = this.chartAssist.legendSeriesSet.length;
-            const strVal = `${val ?? 0}`;
-
-            return `${parseFloat(strVal ?? "0") * submetricsCount} %`;
-        }
-
-        return val;
     }
 }

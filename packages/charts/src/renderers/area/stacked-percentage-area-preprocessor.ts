@@ -39,6 +39,9 @@ export function stackedPercentageAreaPreprocessor(
     const valueAccessorKey = "y";
 
     for (const chartSeries of chartSeriesSet) {
+        if (chartSeries.preprocess === false) {
+            continue;
+        }
         calculateDomainValueCombinedTotals(
             baseAccessorKey,
             valueAccessorKey,
@@ -49,6 +52,9 @@ export function stackedPercentageAreaPreprocessor(
     }
 
     for (const chartSeries of chartSeriesSet) {
+        if (chartSeries.preprocess === false) {
+            continue;
+        }
         applyStackMetadata(
             baseAccessorKey,
             valueAccessorKey,
