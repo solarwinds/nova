@@ -21,6 +21,7 @@
 import {
     AfterContentInit,
     AfterViewInit,
+    AfterViewChecked,
     ChangeDetectorRef,
     Component,
     ContentChildren,
@@ -75,7 +76,7 @@ import { MenuComponent } from "../menu";
     standalone: false,
 })
 export class ToolbarComponent
-    implements AfterViewInit, AfterContentInit, OnDestroy
+    implements AfterViewInit, AfterViewChecked, AfterContentInit, OnDestroy
 {
     @ContentChildren(ToolbarGroupComponent)
     public groups: QueryList<ToolbarGroupComponent>;
@@ -198,6 +199,10 @@ export class ToolbarComponent
             }
         });
         this.subscribeToToolbarStepsChanges();
+    }
+
+    public ngAfterViewChecked(): void {
+        this.updateMenuTabIndex();
     }
 
     public ngOnDestroy(): void {
@@ -365,18 +370,7 @@ export class ToolbarComponent
                     .filter(el => !!el);
 
                 if (this.menu) {
-                    // In case all buttons are hidden within the Commands menu, or all visible buttons are disabled,
-                    // we want this menu to receive the focus.
-                    // If at least one enabled button is visible in the toolbar it should receive the focus first upon navigating onto the toolbar
-                    const hasEnabledItem = this.toolbarItems.some(
-                        el => !(el as HTMLButtonElement).disabled
-                    );
-                    const tabIndex = hasEnabledItem ? "-1" : "0";
-
-                    this.menu.menuToggle.nativeElement.setAttribute(
-                        "tabindex",
-                        tabIndex
-                    );
+                    this.updateMenuTabIndex();
                     this.toolbarItems.push(this.menu.menuToggle.nativeElement);
                 }
 
@@ -386,5 +380,21 @@ export class ToolbarComponent
                     this.ariaOrientation
                 );
             });
+    }
+
+    private updateMenuTabIndex(): void {
+        if (!this.menu?.menuToggle || !this.toolbarButtons) {
+            return;
+        }
+
+        const hasEnabledItem = this.toolbarButtons.some(
+            button =>
+                !(button["el"].nativeElement as HTMLButtonElement).disabled
+        );
+        const toggle = this.menu.menuToggle.nativeElement as HTMLButtonElement;
+        const tabIndex = hasEnabledItem ? -1 : 0;
+        if (toggle.tabIndex !== tabIndex) {
+            toggle.tabIndex = tabIndex;
+        }
     }
 }
