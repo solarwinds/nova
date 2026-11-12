@@ -24,7 +24,12 @@ import {
     DebugElement,
     ViewChild,
 } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
 import { MenuComponent } from "./menu.component";
@@ -185,7 +190,41 @@ describe("components >", () => {
                 expect(content).toBeTruthy();
             });
 
-            it("should focus the popup menu and keep its active descendant there", async () => {
+            it("should not reset keyboard selection after opening with the mouse", fakeAsync(() => {
+                const button = testComponent.menu.menuToggle
+                    .nativeElement as HTMLButtonElement;
+
+                button.focus();
+                button.click();
+                fixture.detectChanges();
+                button.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        code: "ArrowDown",
+                        key: "ArrowDown",
+                        keyCode: 40,
+                        bubbles: true,
+                        cancelable: true,
+                    })
+                );
+                expect(testComponent.menu.popup.isOpen).toBeTrue();
+                const activeDescendant = testComponent.menu.activeDescendant;
+                expect(activeDescendant).toBeTruthy();
+                tick();
+                fixture.detectChanges();
+
+                const menuContent =
+                    testComponent.menu.menuContent.nativeElement;
+                const action = menuContent.querySelector<HTMLElement>(
+                    "nui-menu-action [role=menuitem]"
+                );
+                expect(action).toBeTruthy();
+                expect(testComponent.menu.activeDescendant).toBe(
+                    activeDescendant
+                );
+                expect(activeDescendant).toBe(action!.id);
+            }));
+
+            it("should focus the popup menu and keep its active descendant there", fakeAsync(() => {
                 const button = fixture.debugElement.query(
                     By.css(".menu-button")
                 ).nativeElement as HTMLButtonElement;
@@ -199,8 +238,12 @@ describe("components >", () => {
                         cancelable: true,
                     })
                 );
-                await fixture.whenStable();
-                await new Promise(resolve => setTimeout(resolve, 10));
+                // Opening must make the projected popup focusable before the
+                // synchronous opened handler transfers keyboard focus.
+                expect(document.activeElement).toBe(
+                    testComponent.menu.menuContent.nativeElement
+                );
+                tick();
                 fixture.detectChanges();
 
                 const menuContentId = button.getAttribute("aria-controls");
@@ -230,7 +273,7 @@ describe("components >", () => {
                 expect(activeItem).toBeTruthy();
                 expect(menuContent!.contains(activeItem)).toBeTrue();
                 expect(activeItem!.getAttribute("role")).toBe("menuitem");
-            });
+            }));
 
             it("should have correct roles on menu-link", () => {
                 // Ensure menu items are rendered

@@ -95,10 +95,7 @@ export class MenuKeyControlService implements OnDestroy {
         if (this.menuOpenListener) {
             this.menuOpenListenerSubscription = this.menuOpenListener.subscribe(
                 () => {
-                    // Use timeout to ensure DOM is ready
-                    setTimeout(() => {
-                        this.activatePendingItem();
-                    }, 0);
+                    this.activatePendingItem();
 
                     this.live.announce(`
                     ${
