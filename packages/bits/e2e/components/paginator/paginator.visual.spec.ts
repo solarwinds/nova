@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { Atom } from "../../atom";
-import { Animations, Helpers, test } from "../../setup";
+import { Animations, expect, Helpers, test } from "../../setup";
 import { Camera } from "../../virtual-camera/Camera";
 import { ButtonAtom } from "../button/button.atom";
 import { PaginatorAtom } from "../paginator/paginator.atom";
@@ -106,6 +106,15 @@ test.describe(`Visual tests: ${name}`, () => {
         await customStylingPaginator.ellipsisLink(1).click();
         await camera.say.cheese(`Paginator's ellipsis-pages are shown`);
         await selectBasicPaginator.toggle();
+        const selectTriggerId = await selectBasicPaginator
+            .getLocator()
+            .locator(".nui-select-v2__container")
+            .getAttribute("id");
+        await expect(
+            Helpers.page.locator(
+                `.nui-overlay[role="listbox"][aria-labelledby="${selectTriggerId}"]`
+            )
+        ).toBeVisible();
 
         await virtualScrollPaginator.ellipsisLink(1).click();
         await camera.say.cheese(`Paginator with virtual scroll is shown`);
