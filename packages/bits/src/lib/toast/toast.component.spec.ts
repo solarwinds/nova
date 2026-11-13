@@ -171,9 +171,7 @@ describe("components >", () => {
             tick(10000);
         }));
 
-        // TODO: enable after NUI-3641 is fixed
-        xit("After activation toast should be shown", () => {
-            // @ts-ignore: Suppressing error for testing purposes
+        it("After activation toast should be shown", fakeAsync(() => {
             const componentInstance = new ToastComponent(
                 mockChangeDetector,
                 toastService,
@@ -182,13 +180,16 @@ describe("components >", () => {
             );
             toastRef.activate();
             expect(componentInstance.display).toEqual("block");
+            expect(componentInstance["state"]).toEqual("inactive");
+            tick();
             expect(componentInstance["state"]).toEqual("active");
-            tick(10000);
-        });
+            expect(componentInstance.fadeOut).toBe(false);
+            componentInstance.remove();
+            tick(300);
+            componentInstance.ngOnDestroy();
+        }));
 
-        // TODO: enable after NUI-3641 is fixed
-        xit("After remove toast should be removed", fakeAsync(() => {
-            // @ts-ignore: Suppressing error for testing purposes
+        it("After remove toast should be removed", fakeAsync(() => {
             const componentInstance = new ToastComponent(
                 mockChangeDetector,
                 toastService,
@@ -196,9 +197,17 @@ describe("components >", () => {
                 mockNgZone
             );
             toastRef.activate();
+            tick();
+            expect(componentInstance["state"]).toEqual("active");
+            const remove = spyOn(toastService, "remove").and.callThrough();
             componentInstance.remove();
             expect(componentInstance["state"]).toEqual("removed");
-            tick(10000);
+            expect(componentInstance.fadeOut).toBe(true);
+            tick(299);
+            expect(remove).not.toHaveBeenCalled();
+            tick(1);
+            expect(remove).toHaveBeenCalledOnceWith(toastPackage.toastId);
+            componentInstance.ngOnDestroy();
         }));
     });
 });
