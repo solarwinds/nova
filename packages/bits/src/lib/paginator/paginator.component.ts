@@ -18,7 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { InteractivityChecker } from "@angular/cdk/a11y";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
     afterNextRender,
@@ -77,7 +76,7 @@ const containerPaddingsWithScroll = 37;
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./paginator.component.less"],
     encapsulation: ViewEncapsulation.None,
-    providers: [PopupContainerService],
+    providers: [PopupContainerService, PaginatorPopupKeyboardController],
     host: {
         "role": "navigation",
         "[attr.aria-label]": "ariaLabel",
@@ -179,7 +178,9 @@ export class PaginatorComponent
 
     private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
     private readonly focusInjector = inject(Injector);
-    private readonly popupKeyboardController: PaginatorPopupKeyboardController;
+    private readonly popupKeyboardController = inject(
+        PaginatorPopupKeyboardController
+    );
     private focusRestorePending = false;
     private pendingFocusRestoreElement?: Element;
 
@@ -197,9 +198,7 @@ export class PaginatorComponent
         private cd: ChangeDetectorRef
     ) {
         this.popupContainer.parent = this;
-        this.popupKeyboardController = new PaginatorPopupKeyboardController(
-            this.logger,
-            inject(InteractivityChecker),
+        this.popupKeyboardController.setPopupContext(
             popup => this.getPopupViewport(popup),
             () => this.dotsPagesPerRow
         );

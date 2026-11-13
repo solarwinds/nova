@@ -21,6 +21,7 @@
 import { InteractivityChecker } from "@angular/cdk/a11y";
 import { hasModifierKey } from "@angular/cdk/keycodes";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
+import { inject, Injectable } from "@angular/core";
 import { Subscription } from "rxjs";
 
 import { IPaginatorItem } from "./public-api";
@@ -29,6 +30,13 @@ import { LoggerService } from "../../services/log-service";
 import { PopupComponent } from "../popup-adapter/popup-adapter.component";
 
 const virtualFocusTimeoutMs = 5000;
+
+interface PaginatorPopupContext {
+    getPopupViewport: (
+        popup: PopupComponent
+    ) => CdkVirtualScrollViewport | undefined;
+    getDotsPagesPerRow: () => number;
+}
 
 interface PendingVirtualPageFocus {
     popup: PopupComponent;
@@ -40,26 +48,44 @@ interface PendingVirtualPageFocus {
     timeout?: ReturnType<typeof setTimeout>;
 }
 
+@Injectable()
 export class PaginatorPopupKeyboardController {
+    private readonly logger = inject(LoggerService);
+    private readonly interactivityChecker = inject(InteractivityChecker);
     private pendingVirtualPageFocus?: PendingVirtualPageFocus;
     private readonly pendingPopupFocusChecks = new Map<
         PopupComponent,
         ReturnType<typeof setTimeout>
     >();
+    private popupContext?: PaginatorPopupContext;
 
-    public constructor(
-        private readonly logger: LoggerService,
-        private readonly interactivityChecker: InteractivityChecker,
-        private readonly getPopupViewport: (
+    public setPopupContext(
+        getPopupViewport: (
             popup: PopupComponent
         ) => CdkVirtualScrollViewport | undefined,
-        private readonly getDotsPagesPerRow: () => number
-    ) {}
+        getDotsPagesPerRow: () => number
+    ): void {
+        if (this.popupContext) {
+            throw new Error(
+                "Paginator popup keyboard controller context is already configured."
+            );
+        }
+        this.popupContext = { getPopupViewport, getDotsPagesPerRow };
+    }
+
+    private get context(): PaginatorPopupContext {
+        if (!this.popupContext) {
+            throw new Error(
+                "Paginator popup keyboard controller context is not configured."
+            );
+        }
+        return this.popupContext;
+    }
 
     public onPopupOpened(isOpen: boolean, popup: PopupComponent): void {
         this.cancelPendingPopupFocusCheck(popup);
         if (isOpen) {
-            this.getPopupViewport(popup)?.checkViewportSize();
+            this.context.getPopupViewport(popup)?.checkViewportSize();
         }
     }
 
@@ -81,7 +107,7 @@ export class PaginatorPopupKeyboardController {
         if (!this.isTab(event) || event.shiftKey) {
             return;
         }
-        const viewport = this.getPopupViewport(popup);
+        const viewport = this.context.getPopupViewport(popup);
         viewport?.checkViewportSize();
         if (item?.useVirtualScroll) {
             const content: HTMLElement | undefined =
@@ -341,7 +367,7 @@ export class PaginatorPopupKeyboardController {
             return true;
         }
 
-        const viewport = this.getPopupViewport(popup);
+        const viewport = this.context.getPopupViewport(popup);
         if (!viewport) {
             this.logger.warn(
                 "Paginator virtual scroll viewport is unavailable."
@@ -445,7 +471,7 @@ export class PaginatorPopupKeyboardController {
         }, virtualFocusTimeoutMs);
         viewport.checkViewportSize();
         viewport.scrollToIndex(
-            Math.floor((page - firstPage) / this.getDotsPagesPerRow())
+            Math.floor((page - firstPage) / this.context.getDotsPagesPerRow())
         );
         this.focusVirtualPage();
     }
