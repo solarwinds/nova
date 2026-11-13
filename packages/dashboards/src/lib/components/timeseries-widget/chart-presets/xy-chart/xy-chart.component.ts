@@ -464,7 +464,49 @@ export abstract class XYChartComponent
         legendSeries: IChartAssistSeries<IAccessors<any>>,
         valueAccessorKey: string
     ): string | number | undefined {
-        const val = this.getLegendDisplayValue(
+        if (
+            this.configuration.preset === TimeseriesChartPreset.StackedArea &&
+            this.configuration.units === "percent"
+        ) {
+            const multiplier = this.widgetData?.series?.find(
+                (series) => series.id === legendSeries.id
+            )?.legendValueMultiplier;
+            const hasValidMultiplier =
+                multiplier !== undefined &&
+                Number.isFinite(multiplier) &&
+                multiplier > 0;
+
+            if (
+                hasValidMultiplier ||
+                this.configuration.projectType ===
+                    TimeseriesWidgetProjectType.PerfstackApp
+            ) {
+                const legendMultiplier = hasValidMultiplier
+                    ? multiplier
+                    : this.chartAssist.legendSeriesSet.length;
+                const rawValue = this.getLegendDisplayValue(
+                    this.chartAssist.getHighlightedValue(
+                        legendSeries,
+                        "y",
+                        undefined,
+                        valueAccessorKey
+                    )
+                );
+                if (rawValue === undefined || rawValue === "") {
+                    return rawValue;
+                }
+
+                const scaledValue =
+                    parseFloat(`${rawValue}`) * legendMultiplier;
+                const formatter = legendSeries.scales?.y?.formatters?.tick;
+
+                return this.getLegendDisplayValue(
+                    formatter ? formatter(scaledValue) : `${scaledValue} %`
+                );
+            }
+        }
+
+        return this.getLegendDisplayValue(
             this.chartAssist.getHighlightedValue(
                 legendSeries,
                 "y",
@@ -472,24 +514,5 @@ export abstract class XYChartComponent
                 valueAccessorKey
             )
         );
-
-        // Preserve missing values so the legend shows its placeholder, not a percentage.
-        if (val === undefined) {
-            return undefined;
-        }
-
-        if (
-            this.configuration.projectType ===
-                TimeseriesWidgetProjectType.PerfstackApp &&
-            this.configuration.preset === TimeseriesChartPreset.StackedArea &&
-            this.configuration.units === "percent"
-        ) {
-            const submetricsCount = this.chartAssist.legendSeriesSet.length;
-            const strVal = `${val}`;
-
-            return `${parseFloat(strVal) * submetricsCount} %`;
-        }
-
-        return val;
     }
 }
