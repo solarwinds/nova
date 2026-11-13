@@ -40,23 +40,12 @@ describe("services >", () => {
                     NotificationService,
                     ToastContainerService,
                     ToastService,
-                    ToastServiceBase,
+                    { provide: ToastServiceBase, useExisting: ToastService },
                 ],
             });
 
             toastService = TestBed.inject(ToastService);
             toastService.clear();
-        });
-
-        afterEach(() => {
-            // This hack catches the "_this.toastService.remove is not a function thrown" exception and fixes it's random appearance in tests.
-            // The exception is thrown becasue toast component is not able to remove itself for some reason, which should be investigated.
-            // TODO: NUI-3621 - Investigate why toast message is not closed automatically after default timeout passes, and throws exception instead
-            fakeAsync(() => {
-                try {
-                    tick(10000);
-                } catch (e) {}
-            });
         });
 
         it("setConfig should override global toast config", () => {
@@ -149,13 +138,17 @@ describe("services >", () => {
             tick(10000);
         }));
 
-        // TODO: enable after NUI-3639 is fixed
-        xit("should remove toasts on 'clear'", fakeAsync(() => {
-            toastService.success("Success");
-            toastService.error("Error");
+        it("should remove toasts on 'clear'", fakeAsync(() => {
+            toastService.success({ message: "Success" });
+            toastService.error({ message: "Error" });
+            tick();
             expect(toastService.toasts.length).toEqual(2);
             toastService.clear();
+            tick(299);
+            expect(toastService.toasts.length).toEqual(2);
+            tick(1);
             expect(toastService.toasts.length).toEqual(0);
+            expect(toastService.currentlyActive).toEqual(0);
         }));
 
         // TODO: enable after NUI-3640 is fixed
