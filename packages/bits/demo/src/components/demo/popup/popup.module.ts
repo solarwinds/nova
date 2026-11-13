@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
@@ -27,6 +28,7 @@ import {
     NuiButtonModule,
     NuiCheckboxModule,
     NuiDocsModule,
+    NuiIconModule,
     NuiMenuModule,
     NuiMessageModule,
     NuiPopupModule,
@@ -45,6 +47,7 @@ import {
     PopupWithCustomStylingComponent,
     PopupWithCustomWidthComponent,
 } from "./index";
+import { PopupHostToggleTestComponent } from "./popup-host-toggle-test/popup-host-toggle-test.example.component";
 import { PopupLegacyTestComponent } from "./popup-legacy-test/popup-legacy-test.example.component";
 import { getDemoFiles } from "../../../static/demo-files-factory";
 
@@ -79,6 +82,15 @@ const routes = [
         },
     },
     {
+        path: "popup-host-toggle-test",
+        component: PopupHostToggleTestComponent,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+        },
+    },
+    {
         path: "basic",
         component: PopupSimpleExampleComponent,
         data: {
@@ -91,9 +103,11 @@ const routes = [
 
 @NgModule({
     imports: [
+        CommonModule,
         NuiPopupModule,
         NuiMessageModule,
         NuiButtonModule,
+        NuiIconModule,
         ReactiveFormsModule,
         FormsModule,
         NuiCheckboxModule,
@@ -111,6 +125,7 @@ const routes = [
         PopupWithCustomContentComponent,
         PopupTestComponent,
         PopupLegacyTestComponent,
+        PopupHostToggleTestComponent,
         PopupAppendToBodyExampleComponent,
         PopupExampleComponent,
     ],

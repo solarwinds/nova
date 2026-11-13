@@ -248,6 +248,32 @@ public chartAssist: ChartAssist = new ChartAssist(new Chart(new XYGrid()));</pre
     exampleTitle="Interactive Mode">
     <nui-legend-interactive-example></nui-legend-interactive-example>
 </nui-example-wrapper>
+<h2>Focusable Non-Interactive Series</h2>
+<p>
+    Set <code>[interactive]="false"</code> on <code>nui-legend</code> and
+    <code>[focusable]="true"</code> on its <code>nui-legend-series</code> items
+    to include informational series in the Tab order. The
+    <code
+        ><a
+            href="../components/LegendSeriesComponent.html#focusable"
+            target="_blank"
+            >focusable</a
+        ></code
+    >
+    input defaults to <code>false</code>. It does not enable visibility toggling
+    or change the series from a list item into a checkbox or button.
+</p>
+<p>
+    Tab and Shift+Tab move between the series; Enter and Space do not toggle
+    them. Use native links or buttons for independent actions rather than
+    treating a focusable series as an action control.
+</p>
+<p>
+    Focus alone does not emphasize the chart. Bind <code>focusin</code> and
+    <code>focusout</code> to the same initialized <code>ChartAssist</code> used
+    by the chart, as in this focus-driven emphasis example:
+</p>
+<pre>{{ focusableLegendHtml }}</pre>
 <h2>Description Content Projection</h2>
 <p>
     To provide a custom layout for the series description you can place an

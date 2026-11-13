@@ -27,6 +27,7 @@ import { takeUntil } from "rxjs/operators";
 
 import {
     CHART_VIEW_STATUS_EVENT,
+    DATA_POINT_INTERACTION_RESET,
     INTERACTION_DATA_POINTS_EVENT,
     SERIES_STATE_CHANGE_EVENT,
 } from "../../../constants";
@@ -115,6 +116,7 @@ export class ChartTooltipsPlugin extends ChartPlugin {
     private isChartInView = false;
     private readonly destroy$ = new Subject<void>();
     private seriesVisibilityMap: Record<string, boolean> = {};
+    private keyboardHighlightedSeries = new Set<string>();
 
     /**
      * @param tooltipPositionOffset Offset of a tooltip from edge of a highlighted element
@@ -140,8 +142,9 @@ export class ChartTooltipsPlugin extends ChartPlugin {
             .pipe(takeUntil(this.destroy$))
             .subscribe((event: IChartEvent) => {
                 if (
-                    event.data.interactionType === InteractionType.MouseMove &&
-                    this.isChartInView
+                    (event.data.interactionType === InteractionType.MouseMove &&
+                        this.isChartInView) ||
+                    event.data.interactionType === InteractionType.Keyboard
                 ) {
                     const dataPoints: IDataPointsPayload =
                         event.data.dataPoints;
@@ -175,6 +178,104 @@ export class ChartTooltipsPlugin extends ChartPlugin {
     public destroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
+    }
+
+    /**
+     * Number of positional data indices available for keyboard tooltip inspection.
+     * Series with unequal domains are not aligned by this basic navigation mode.
+     */
+    public getKeyboardDataPointCount(): number {
+        return this.getKeyboardSeries().reduce(
+            (count, series) => Math.max(count, series.data.length),
+            0
+        );
+    }
+
+    /** Inspect the same positional index in each visible series. */
+    public showForIndex(index: number): void {
+        if (
+            !Number.isInteger(index) ||
+            index < 0 ||
+            index >= this.getKeyboardDataPointCount()
+        ) {
+            throw new RangeError(
+                "Data point index is outside visible chart data"
+            );
+        }
+
+        this.resetKeyboardHighlights();
+        const dataPoints: IDataPointsPayload = {};
+        for (const series of this.getKeyboardSeries()) {
+            if (index >= series.data.length) {
+                continue;
+            }
+            const position = series.renderer.getDataPointPosition(
+                series,
+                index,
+                series.scales
+            );
+            if (
+                !position ||
+                !Number.isFinite(position.x) ||
+                !Number.isFinite(position.y)
+            ) {
+                continue;
+            }
+            dataPoints[series.id] = {
+                seriesId: series.id,
+                dataSeries: series,
+                index,
+                data: series.data[index],
+                position,
+            };
+            this.chart.getRenderEngine().highlightDataPoint(series.id, index);
+            this.keyboardHighlightedSeries.add(series.id);
+        }
+        this.publishKeyboardDataPoints(dataPoints);
+    }
+
+    public hideKeyboardTooltips(): void {
+        this.resetKeyboardHighlights();
+        const dataPoints: IDataPointsPayload = {};
+        for (const series of this.getKeyboardSeries()) {
+            dataPoints[series.id] = {
+                seriesId: series.id,
+                dataSeries: series,
+                index: DATA_POINT_INTERACTION_RESET,
+                data: null,
+            };
+        }
+        this.publishKeyboardDataPoints(dataPoints);
+    }
+
+    private getKeyboardSeries(): IChartSeries<IAccessors>[] {
+        return this.chart
+            .getDataManager()
+            .chartSeriesSet.filter(
+                series =>
+                    this.seriesVisibilityMap[series.id] ??
+                    series.renderState !== RenderState.hidden
+            );
+    }
+
+    private resetKeyboardHighlights(): void {
+        for (const seriesId of this.keyboardHighlightedSeries) {
+            if (this.chart.getDataManager().getChartSeries(seriesId)) {
+                this.chart
+                    .getRenderEngine()
+                    .highlightDataPoint(seriesId, DATA_POINT_INTERACTION_RESET);
+            }
+        }
+        this.keyboardHighlightedSeries.clear();
+    }
+
+    private publishKeyboardDataPoints(dataPoints: IDataPointsPayload): void {
+        this.chart
+            .getEventBus()
+            .getStream(INTERACTION_DATA_POINTS_EVENT)
+            .next({
+                data: { interactionType: InteractionType.Keyboard, dataPoints },
+            });
     }
 
     public processHighlightedDataPoints(dataPoints: IDataPointsPayload): void {

@@ -29,6 +29,7 @@ import {
 import { LegendAtom } from "../legend/legend.atom";
 import { ChartAtom } from "./atoms/chart.atom";
 import { SeriesAtom } from "./atoms/series.atom";
+import { waitForChartLayout } from "./visual-test-helpers";
 
 const name: string = "Bar Chart";
 
@@ -63,6 +64,7 @@ test.describe(`Visual tests: Charts - ${name}`, () => {
 
     test(`${name} - Default look`, async ({ page }) => {
         await camera.turn.on();
+        await waitForChartLayout(page);
 
         let dataSeries = await barChartVertical.getDataSeriesById(
             SeriesAtom,
@@ -71,6 +73,7 @@ test.describe(`Visual tests: Charts - ${name}`, () => {
         if (dataSeries) {
             await dataSeries.hover();
         }
+        await waitForChartLayout(page);
         await camera.say.cheese(
             `${name} - Default look with first series highlighted for vertical bar chart`
         );
@@ -82,11 +85,13 @@ test.describe(`Visual tests: Charts - ${name}`, () => {
         if (dataSeries) {
             await dataSeries.hover();
         }
+        await waitForChartLayout(page);
         await camera.say.cheese(
             `${name} - Default look with last series highlighted for horizontal bar chart`
         );
 
         await legendOfVerticalBarChart.getSeriesByIndex(3).hover();
+        await waitForChartLayout(page);
         await camera.say.cheese(
             `${name} - Default look with middle legend tile hovered`
         );
@@ -98,6 +103,7 @@ test.describe(`Visual tests: Charts - ${name}`, () => {
         await Helpers.disableCSSAnimations(
             Animations.TRANSITIONS_AND_ANIMATIONS
         );
+        await waitForChartLayout(page);
         await camera.say.cheese(
             `${name} - Time Interval Daylight Saving Time Scenarios`
         );

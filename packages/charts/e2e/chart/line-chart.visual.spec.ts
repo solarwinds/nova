@@ -25,6 +25,7 @@ import {
     Animations,
 } from "@nova-ui/bits/sdk/atoms-playwright";
 
+import { waitForChartLayout } from "./visual-test-helpers";
 import { LegendAtom } from "../legend/legend.atom";
 
 const name: string = "Line Chart";
@@ -46,12 +47,14 @@ test.describe(`Visual Tests: Charts - ${name}`, () => {
         camera = new Camera().loadFilm(page, name, "Charts");
     });
 
-    test(`${name} - Default look`, async () => {
+    test(`${name} - Default look`, async ({ page }) => {
         await camera.turn.on();
 
+        await waitForChartLayout(page);
         await camera.say.cheese(`${name} - Default look`);
 
         await legend.getSeriesByIndex(1).hover();
+        await waitForChartLayout(page);
         await camera.say.cheese(`${name} - Legend tile hovered`);
 
         await camera.turn.off();

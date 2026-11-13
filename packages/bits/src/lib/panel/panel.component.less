@@ -57,6 +57,9 @@
             &-btn {
                 border: none;
                 background-color: transparent;
+                &[aria-disabled]:focus:not(:focus-visible) {
+                    box-shadow: none;
+                }
                 &__right {
                     float: left;
                     border: none;
@@ -125,6 +128,10 @@
         &__center-pane {
             width: 100%;
             overflow-y: auto;
+        }
+
+        &--hoverable > .nui-panel__side-pane:focus-visible {
+            .focus-outline();
         }
 
         [nuiPanelEmbeddedFooter] {

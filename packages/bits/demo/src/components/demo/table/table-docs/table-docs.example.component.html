@@ -68,6 +68,12 @@
     <nui-table-basic-example></nui-table-basic-example>
 </nui-example-wrapper>
 
+<p>
+    Sortable column headers show an inset focus indicator during keyboard
+    navigation. The indicator stays inside the header cell, including pinned
+    headers, without changing column widths.
+</p>
+
 <h2>Pinned Header</h2>
 <p>
     To make the header sticky, set the <code>sticky</code> input to true on the
@@ -207,6 +213,23 @@
     can provide the desired width of a column in <code>px</code> on the
     <code>columnDef</code> directive. The rest of the table width will be
     distributed among the other columns equally.
+</p>
+<p>
+    A resizable column also has a keyboard-reachable resize control on its right
+    edge. Activate it with Enter, Space, or a click without dragging to enter a
+    width in pixels. Apply or Enter confirms the width; Cancel or Escape leaves
+    it unchanged and returns focus to the resize control. The minimum width is
+    46 pixels. Icon columns are not resizable.
+</p>
+<p>
+    This provides both a keyboard alternative and a single-pointer alternative
+    to dragging, as described in
+    <a
+        href="https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html"
+        target="_blank"
+        rel="noopener noreferrer"
+        >WCAG 2.5.7: Dragging Movements</a
+    >. Existing pointer dragging and header sorting remain available.
 </p>
 <nui-example-wrapper filenamePrefix="table-resize" exampleTitle="Column resize">
     <nui-table-resize-example></nui-table-resize-example>

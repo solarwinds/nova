@@ -18,8 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { InteractivityChecker } from "@angular/cdk/a11y";
-import { hasModifierKey } from "@angular/cdk/keycodes";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
     afterNextRender,
@@ -49,8 +47,8 @@ import _min from "lodash/min";
 import _range from "lodash/range";
 import { Subject } from "rxjs";
 
+import { PaginatorPopupKeyboardController } from "./paginator-popup-keyboard.controller";
 import { IPaginatorItem } from "./public-api";
-import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import {
     IFilter,
     IFilterPub,
@@ -78,7 +76,7 @@ const containerPaddingsWithScroll = 37;
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./paginator.component.less"],
     encapsulation: ViewEncapsulation.None,
-    providers: [PopupContainerService],
+    providers: [PopupContainerService, PaginatorPopupKeyboardController],
     host: {
         "role": "navigation",
         "[attr.aria-label]": "ariaLabel",
@@ -169,13 +167,22 @@ export class PaginatorComponent
     @ViewChild(CdkVirtualScrollViewport)
     private virtualScrollViewport: CdkVirtualScrollViewport;
 
+    @ViewChildren(CdkVirtualScrollViewport)
+    private virtualScrollViewports: QueryList<CdkVirtualScrollViewport>;
+
+    @ViewChildren(PopupComponent)
+    private popups: QueryList<PopupComponent>;
+
     @ViewChildren("popupPages", { read: ElementRef })
     private popupPages: QueryList<ElementRef<HTMLElement>>;
 
     private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
     private readonly focusInjector = inject(Injector);
-    private readonly interactivityChecker = inject(InteractivityChecker);
+    private readonly popupKeyboardController = inject(
+        PaginatorPopupKeyboardController
+    );
     private focusRestorePending = false;
+    private pendingFocusRestoreElement?: Element;
 
     private _dotsPagesPerRow = 5;
 
@@ -191,6 +198,10 @@ export class PaginatorComponent
         private cd: ChangeDetectorRef
     ) {
         this.popupContainer.parent = this;
+        this.popupKeyboardController.setPopupContext(
+            popup => this.getPopupViewport(popup),
+            () => this.dotsPagesPerRow
+        );
     }
 
     /** Keeps DOM nodes (and focus) stable across page changes. */
@@ -368,126 +379,47 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
     /**
      * Re-renders the virtual scroll viewport to properly display items within the virtual scroll viewport
      */
-    public handleDotsClick(): void {
-        if (this.virtualScrollViewport) {
-            this.virtualScrollViewport.checkViewportSize();
-        }
+    public handleDotsClick(popup?: PopupComponent): void {
+        const viewport = popup
+            ? this.getPopupViewport(popup)
+            : this.virtualScrollViewport;
+        viewport?.checkViewportSize();
     }
 
-    /**
-     * Keyboard handling for the "..." trigger: Escape closes the popup and Tab enters it directly,
-     * which matters when the popup is appended to the body and is not next to the trigger in the DOM.
-     */
-    public onDotsKeydown(event: KeyboardEvent, popup: PopupComponent): void {
-        if (event.defaultPrevented || !popup.isOpen) {
-            return;
-        }
-        if (this.isEscape(event)) {
-            this.closePopupFromKeyboard(event, popup);
-            return;
-        }
-        if (!this.isTab(event) || event.shiftKey) {
-            return;
-        }
-        const firstTabStop = this.getPopupTabStops(popup)[0];
-        if (firstTabStop) {
-            firstTabStop.focus();
-            event.preventDefault();
-        }
+    public onPopupOpened(isOpen: boolean, popup: PopupComponent): void {
+        this.popupKeyboardController.onPopupOpened(isOpen, popup);
     }
 
-    /**
-     * Keyboard handling inside the popup: Escape closes it, and tabbing past its first or last
-     * button returns focus to the trigger so the native Tab continues from the trigger's place.
-     */
-    public onPopupKeydown(event: KeyboardEvent, popup: PopupComponent): void {
-        if (event.defaultPrevented || !popup.isOpen) {
-            return;
-        }
-        if (this.isEscape(event)) {
-            this.closePopupFromKeyboard(event, popup);
-            return;
-        }
-        if (!this.isTab(event)) {
-            return;
-        }
-        const trigger = this.getPopupTrigger(popup);
-        const tabStops = this.getPopupTabStops(popup);
-        const active = this.host.nativeElement.ownerDocument.activeElement;
-        if (!trigger || tabStops.length === 0) {
-            return;
-        }
-        if (event.shiftKey && tabStops[0] === active) {
-            popup.closePopup();
-            trigger.focus();
-            event.preventDefault();
-        } else if (
-            !event.shiftKey &&
-            tabStops[tabStops.length - 1] === active
-        ) {
-            popup.closePopup();
-            trigger.focus();
-        }
-    }
-
-    /**
-     * Closes the popup once focus moves to an element outside of the trigger and the popup.
-     */
-    public onPopupFocusOut(event: FocusEvent, popup: PopupComponent): void {
-        const nextFocus = event.relatedTarget;
-        if (!popup.isOpen || !(nextFocus instanceof Node)) {
-            return;
-        }
-        if (
-            this.getPopupTrigger(popup)?.contains(nextFocus) ||
-            popup.popupAreaContent?.nativeElement.contains(nextFocus)
-        ) {
-            return;
-        }
-        popup.closePopup();
-    }
-
-    private closePopupFromKeyboard(
+    public onDotsKeydown(
         event: KeyboardEvent,
-        popup: PopupComponent
+        popup: PopupComponent,
+        item?: IPaginatorItem
     ): void {
-        popup.closePopup();
-        this.getPopupTrigger(popup)?.focus();
-        event.preventDefault();
-        event.stopPropagation();
+        this.popupKeyboardController.onDotsKeydown(event, popup, item);
     }
 
-    private getPopupTrigger(popup: PopupComponent): HTMLElement | undefined {
-        return popup.popupToggle?.host.nativeElement;
+    public onPopupKeydown(
+        event: KeyboardEvent,
+        popup: PopupComponent,
+        item?: IPaginatorItem
+    ): void {
+        this.popupKeyboardController.onPopupKeydown(event, popup, item);
     }
 
-    private getPopupTabStops(popup: PopupComponent): HTMLElement[] {
+    public onPopupFocusOut(event: FocusEvent, popup: PopupComponent): void {
+        this.popupKeyboardController.onPopupFocusOut(event, popup);
+    }
+
+    private getPopupViewport(
+        popup: PopupComponent
+    ): CdkVirtualScrollViewport | undefined {
         const content: HTMLElement | undefined =
             popup.popupAreaContent?.nativeElement;
-        return Array.from(
-            content?.querySelectorAll<HTMLElement>("button") ?? []
-        ).filter(
-            element =>
-                this.interactivityChecker.isFocusable(element) &&
-                this.interactivityChecker.isTabbable(element)
-        );
-    }
-
-    private isEscape(event: KeyboardEvent): boolean {
-        return (
-            (event.key === KEYBOARD_CODE.ESCAPE ||
-                event.code === KEYBOARD_CODE.ESCAPE) &&
-            !hasModifierKey(event)
-        );
-    }
-
-    private isTab(event: KeyboardEvent): boolean {
-        return (
-            (event.key === KEYBOARD_CODE.TAB ||
-                event.code === KEYBOARD_CODE.TAB) &&
-            !event.altKey &&
-            !event.ctrlKey &&
-            !event.metaKey
+        if (!content) {
+            return undefined;
+        }
+        return this.virtualScrollViewports?.find(viewport =>
+            content.contains(viewport.elementRef.nativeElement)
         );
     }
 
@@ -500,13 +432,20 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
             () => {
                 this.focusRestorePending = false;
                 const element = this.host.nativeElement;
-                const active = element.ownerDocument.activeElement;
+                const active =
+                    this.popupKeyboardController.getDeepActiveElement(
+                        element.ownerDocument
+                    );
                 const isActiveDisabled =
                     element.contains(active) &&
                     (active as HTMLButtonElement).disabled === true;
-                // Focus falls to <body> when the focused button is removed or disabled.
+                const focusRoot = focusedElement?.getRootNode();
+                const focusRootHost =
+                    focusRoot instanceof ShadowRoot ? focusRoot.host : null;
+                // Focus can fall to the body or shadow host when a focused control is removed or disabled.
                 const isFocusLost =
-                    active === element.ownerDocument.body &&
+                    (active === element.ownerDocument.body ||
+                        active === focusRootHost) &&
                     (focusedElement?.isConnected === false ||
                         (focusedElement as HTMLButtonElement | null)
                             ?.disabled === true);
@@ -525,8 +464,18 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
      * Add items to paginator component
      */
     private assemble() {
+        this.popupKeyboardController.cancelPendingNavigation();
         const focusedElement =
-            this.host.nativeElement.ownerDocument.activeElement;
+            this.pendingFocusRestoreElement ??
+            this.popupKeyboardController.getDeepActiveElement(
+                this.host.nativeElement.ownerDocument
+            );
+        this.pendingFocusRestoreElement = undefined;
+        const focusedPopup = this.popups?.find(
+            popup =>
+                popup.isOpen &&
+                this.popupKeyboardController.isPopupContentFocused(popup)
+        );
         const hadFocus =
             this.host.nativeElement.contains(focusedElement) ||
             this.popupPages?.some(pages =>
@@ -560,6 +509,10 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         this.addNext();
         this.cd.detectChanges();
 
+        // Removing a focused node does not dispatch focusout in every browser.
+        if (focusedPopup) {
+            this.popupKeyboardController.schedulePopupFocusCheck(focusedPopup);
+        }
         if (hadFocus) {
             this.scheduleFocusRestore(focusedElement);
         }
@@ -680,8 +633,11 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
             value: item.value,
             title: item.title,
             style: isDisabled ? this.disabledClass : "",
-            action: () => {
+            action: (event: Event) => {
                 if (item.page) {
+                    if (event.currentTarget instanceof Element) {
+                        this.pendingFocusRestoreElement = event.currentTarget;
+                    }
                     this.goToPage(item.page);
                 }
                 return false;
@@ -709,6 +665,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
     }
 
     public ngOnDestroy(): void {
+        this.popupKeyboardController.destroy();
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }

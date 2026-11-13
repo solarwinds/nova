@@ -23,10 +23,12 @@ import {
     test,
     Helpers,
     Animations,
+    expect,
 } from "@nova-ui/bits/sdk/atoms-playwright";
 
 import { ChartAtom } from "./atoms/chart.atom";
 import { SeriesAtom } from "./atoms/series.atom";
+import { waitForChartLayout } from "./visual-test-helpers";
 
 const name: string = "Tooltips";
 
@@ -59,32 +61,52 @@ test.describe(`Visual Tests: Charts - ${name}`, () => {
         camera = new Camera().loadFilm(page, name, "Charts");
     });
 
-    test(`${name} - Default look`, async () => {
+    test(`${name} - Default look`, async ({ page }) => {
         await camera.turn.on();
+        await waitForChartLayout(page);
+        const tooltips = page.locator(".nui-chart-tooltip-pane:visible");
 
         const barSeries: SeriesAtom | undefined =
             await barChart.getDataSeriesById(SeriesAtom, "safari");
-        if (barSeries) {
-            await barSeries.hover();
+        if (!barSeries) {
+            throw new Error(
+                "Safari series is missing from the tooltip fixture"
+            );
         }
+        await barSeries.hover();
+        await expect(tooltips).toHaveCount(1);
+        await expect(tooltips).toContainText("14");
         await camera.say.cheese(`${name} - Default look with bar hovered`);
 
         const donutSeries: SeriesAtom | undefined =
             await donutChart.getDataSeriesById(SeriesAtom, "down");
-        if (donutSeries) {
-            await donutSeries.hover();
+        if (!donutSeries) {
+            throw new Error("Down series is missing from the tooltip fixture");
         }
+        await donutSeries.hover();
+        await expect(tooltips).toHaveCount(1);
+        await expect(tooltips).toContainText("7");
         await camera.say.cheese(
             `${name} - Default look with donut series hovered`
         );
 
-        await lineChart.hover();
+        await lineChart.getLocator().locator(".mouse-interactive-area").hover();
+        await expect(tooltips).toHaveCount(2);
+        await waitForChartLayout(page);
+        await expect(tooltips).toHaveText([/Series 1:\s*15/, /Series 2:\s*70/]);
         await camera.say.cheese(
             `${name} - Default look with line chart hovered`
         );
 
         await lineChartInScrollContainer.getLocator().scrollIntoViewIfNeeded();
-        await lineChartInScrollContainer.hover();
+        await waitForChartLayout(page);
+        await lineChartInScrollContainer
+            .getLocator()
+            .locator(".mouse-interactive-area")
+            .hover();
+        await expect(tooltips).toHaveCount(2);
+        await waitForChartLayout(page);
+        await expect(tooltips).toHaveText([/Series 1:\s*15/, /Series 2:\s*70/]);
         await camera.say.cheese(
             `${name} - Default look with line chart in scroll container hovered`
         );

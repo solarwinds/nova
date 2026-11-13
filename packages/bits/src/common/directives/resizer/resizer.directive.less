@@ -1,8 +1,17 @@
+@import (reference) "../../../styles/mixins.less";
+@import (reference) "../../../styles/nui-framework-variables.less";
+
 .nui-resize-gutter {
     position: absolute;
     display: flex;
     top: 0;
     z-index: 1;
+
+    &:focus-visible {
+        outline: 2px solid;
+        outline-offset: -2px;
+        .setCssVariable(outline-color, nui-color-active);
+    }
 
     &-disabled {
         pointer-events: none;

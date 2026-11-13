@@ -45,6 +45,44 @@ test.describe("a11y: panel", () => {
         expanders = expanderIds.map(id => page.locator(`#${id}`));
     });
 
+    test("should expose keyboard-focusable hoverable content without nested controls", async ({
+        page,
+        runA11yScan,
+    }) => {
+        await Helpers.prepareBrowser("panel/panel-test", page);
+        await page.mouse.move(0, 0);
+        const panel = page.locator("#nui-demo-keyboard-hoverable-panel");
+        const pane = panel.getByRole("group", { name: "Keyboard panel" });
+        await pane.focus();
+        await expect(pane).toHaveAttribute("aria-expanded", "true");
+        await expect(panel.getByLabel("Panel input")).toBeVisible();
+        await runA11yScan("#nui-demo-keyboard-hoverable-panel");
+        await panel.getByLabel("Panel input").focus();
+        await page.keyboard.press("Escape");
+        await expect(pane).toHaveAttribute("aria-expanded", "false");
+        await expect(pane).toBeFocused();
+        await runA11yScan("#nui-demo-keyboard-hoverable-panel");
+    });
+
+    test("should expose named keyboard separators with valid ranges", async ({
+        page,
+        runA11yScan,
+    }) => {
+        await Helpers.prepareBrowser("panel/panel-test", page);
+        for (const orientation of ["left", "right", "top"]) {
+            const selector = `#keyboard-resize-${orientation}`;
+            const separator = page.locator(selector).getByRole("separator", {
+                name: `Resizable ${orientation}`,
+                exact: true,
+            });
+            await separator.focus();
+            await runA11yScan(selector);
+            await page.keyboard.press("Home");
+            await expect(separator).toHaveAttribute("aria-valuenow", "100");
+            await runA11yScan(selector);
+        }
+    });
+
     test("should check a11y of panel", async ({ runA11yScan }) => {
         for (const expander of expanders) {
             await expander.click();

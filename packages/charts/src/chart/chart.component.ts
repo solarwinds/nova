@@ -26,6 +26,7 @@ import {
     ElementRef,
     forwardRef,
     HostBinding,
+    HostListener,
     Input,
     NgZone,
     OnChanges,
@@ -35,6 +36,7 @@ import {
 } from "@angular/core";
 import debounce from "lodash/debounce";
 
+import { ChartKeyboardTooltipController } from "./chart-keyboard-tooltip-controller";
 import {
     CHART_COMPONENT,
     CHART_VIEW_STATUS_EVENT,
@@ -45,6 +47,7 @@ import {
     IChartComponent,
     IChartViewStatusEventPayload,
 } from "../core/common/types";
+import { ChartTooltipsPlugin } from "../core/plugins/tooltips/chart-tooltips-plugin";
 
 @Component({
     selector: "nui-chart",
@@ -71,6 +74,19 @@ export class ChartComponent
     /** Accessible name for the chart. Should be a localized string describing the chart content (WCAG 1.1.1). */
     @Input() public ariaLabel: string;
 
+    /** Opt-in positional tooltip navigation; intended for series with aligned data indices. */
+    @Input() public keyboardTooltips?: ChartTooltipsPlugin;
+
+    @HostBinding("attr.tabindex")
+    get keyboardTabIndex(): number | null {
+        return this.keyboardTooltips ? 0 : null;
+    }
+
+    @HostBinding("class.nui-chart--keyboard-tooltips")
+    get hasKeyboardTooltips(): boolean {
+        return !!this.keyboardTooltips;
+    }
+
     // Only expose role="img" when an accessible name is present; an img role
     // without a name is a WCAG 1.1.1 violation (axe: role-img-alt). When no
     // ariaLabel is supplied the inner svg stays aria-hidden, so the chart is
@@ -88,6 +104,8 @@ export class ChartComponent
     public resizeObserver?: ResizeObserver;
     private resizeHandler: Function;
     private intersectionObserver: IntersectionObserver;
+    private readonly keyboardTooltipController =
+        new ChartKeyboardTooltipController();
 
     constructor(
         private elRef: ElementRef,
@@ -103,6 +121,13 @@ export class ChartComponent
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
+        const previousPlugin: ChartTooltipsPlugin | undefined =
+            changes["keyboardTooltips"]?.previousValue ?? this.keyboardTooltips;
+        this.keyboardTooltipController.onConfigurationChange(
+            previousPlugin,
+            this.keyboardTooltips,
+            !!changes["keyboardTooltips"] || !!changes["chart"]
+        );
         if (changes["chart"]) {
             const previousChart: IChart = changes["chart"].previousValue;
             if (previousChart) {
@@ -114,6 +139,28 @@ export class ChartComponent
                 this.redraw();
             }
         }
+    }
+
+    @HostListener("focus")
+    public onKeyboardFocus(): void {
+        this.keyboardTooltipController.onFocus(
+            this.keyboardTooltips,
+            this.elRef.nativeElement.matches(":focus-visible")
+        );
+    }
+
+    @HostListener("keydown", ["$event"])
+    public onKeyboardNavigation(event: KeyboardEvent): void {
+        this.keyboardTooltipController.onKeydown(
+            event,
+            this.keyboardTooltips,
+            this.elRef.nativeElement
+        );
+    }
+
+    @HostListener("blur")
+    public onKeyboardBlur(): void {
+        this.keyboardTooltipController.onBlur(this.keyboardTooltips);
     }
 
     public ngAfterContentInit(): void {

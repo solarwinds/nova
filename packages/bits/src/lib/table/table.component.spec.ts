@@ -36,6 +36,7 @@ import {
     TestBed,
     tick,
 } from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
 import { EMPTY, Subject } from "rxjs";
 
 import { TableHeaderCellComponent } from "./table-cell/table-header-cell.component";
@@ -72,6 +73,7 @@ import {
     UtilService,
 } from "../../public_api";
 import { ISelection } from "../../services/public-api";
+import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import { SorterDirection } from "../sorter/public-api";
 
 describe("components >", () => {
@@ -914,6 +916,115 @@ describe("components >", () => {
                 expect(tableContainer.scrollWidth).toBe(
                     tableContainer.clientWidth
                 );
+            });
+
+            describe("numeric column width", () => {
+                let header: TableHeaderCellComponent;
+                let popup: jasmine.SpyObj<OverlayComponent>;
+                let input: HTMLInputElement;
+                let trigger: HTMLButtonElement;
+
+                beforeEach(() => {
+                    const headerDebug = fixture.debugElement
+                        .queryAll(By.directive(TableHeaderCellComponent))
+                        .find(
+                            cell =>
+                                cell.componentInstance.columnLabel === "Name"
+                        );
+                    if (!headerDebug) {
+                        throw new Error("Name header was not rendered");
+                    }
+                    header = headerDebug.componentInstance;
+                    tableStateHandlerService = headerDebug.injector.get(
+                        TableStateHandlerService
+                    );
+                    popup = jasmine.createSpyObj<OverlayComponent>(
+                        "columnWidthOverlay",
+                        ["hide", "show"],
+                        { showing: true }
+                    );
+                    trigger = document.createElement("button");
+                    fixture.nativeElement.appendChild(trigger);
+                    popup.toggleReference = trigger;
+                    header.columnWidthOverlay = popup;
+                    input = document.createElement("input");
+                    input.type = "number";
+                    fixture.nativeElement.appendChild(input);
+                });
+
+                [46, 120, 2000].forEach(width => {
+                    it(`should apply ${width}px only to the selected column and restore focus`, () => {
+                        const assetWidth =
+                            tableStateHandlerService.getColumnWidth("asset");
+                        const setWidth = spyOn(
+                            tableStateHandlerService,
+                            "setColumnWidth"
+                        ).and.callThrough();
+                        input.value = String(width);
+                        const event = new Event("submit", { cancelable: true });
+
+                        header.applyColumnWidth(event, input);
+
+                        expect(event.defaultPrevented).toBe(true);
+                        expect(setWidth).toHaveBeenCalledOnceWith(
+                            "name",
+                            width
+                        );
+                        expect(
+                            tableStateHandlerService.getColumnWidth("name")
+                        ).toBe(width);
+                        expect(
+                            tableStateHandlerService.getColumnWidth("asset")
+                        ).toBe(assetWidth);
+                        expect(header.columnWidthAnnouncement).toContain(
+                            String(width)
+                        );
+                        expect(popup.hide).toHaveBeenCalledTimes(1);
+                        expect(document.activeElement).toBe(trigger);
+                    });
+                });
+
+                ["", "45", "0", "-1", "Infinity"].forEach(value => {
+                    it(`should reject invalid width '${value}' without closing or applying`, () => {
+                        const setWidth = spyOn(
+                            tableStateHandlerService,
+                            "setColumnWidth"
+                        );
+                        input.value = value;
+
+                        header.applyColumnWidth(new Event("submit"), input);
+
+                        expect(header.isColumnWidthInvalid).toBe(true);
+                        expect(setWidth).not.toHaveBeenCalled();
+                        expect(popup.hide).not.toHaveBeenCalled();
+                        expect(document.activeElement).toBe(input);
+                    });
+                });
+
+                it("should cancel without changing width and return focus to the trigger", () => {
+                    const setWidth = spyOn(
+                        tableStateHandlerService,
+                        "setColumnWidth"
+                    );
+                    input.focus();
+
+                    header.closeColumnWidth();
+
+                    expect(setWidth).not.toHaveBeenCalled();
+                    expect(popup.hide).toHaveBeenCalledTimes(1);
+                    expect(document.activeElement).toBe(trigger);
+                });
+
+                it("should not steal focus when dismissed by an outside click", () => {
+                    const outside = document.createElement("button");
+                    fixture.nativeElement.appendChild(outside);
+                    outside.focus();
+
+                    header.closeColumnWidth(false);
+
+                    expect(popup.hide).toHaveBeenCalledTimes(1);
+                    expect(document.activeElement).toBe(outside);
+                });
             });
         });
     });

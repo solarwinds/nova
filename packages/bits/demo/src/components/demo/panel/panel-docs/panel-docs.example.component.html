@@ -98,6 +98,13 @@
     state of <code>nui-panel</code> externally by setting the
     <code>isCollapsed</code> input.
 </p>
+<p>
+    Use <code>Enter</code> or <code>Space</code> on the arrow button to expand
+    or collapse the pane. Focus stays on the button throughout the animation.
+    During the animation the button is marked <code>aria-disabled</code> and
+    ignores further activations. Keyboard focus retains its visible indicator;
+    mouse activation does not add the keyboard focus shadow.
+</p>
 <nui-example-wrapper
     filenamePrefix="panel-collapse"
     exampleTitle="Collapsible Panel">
@@ -123,6 +130,14 @@
         click.</nui-message
     >
 </p>
+<p>
+    Use <code>Tab</code> to focus the side pane and expand it, then continue
+    with <code>Tab</code> or <code>Shift+Tab</code> through its controls. The
+    pane stays open while focus is inside, even if the pointer leaves it.
+    <code>Escape</code> collapses the pane and returns focus to its entry point.
+    Leave and re-enter the pane to expand it again. A supplied
+    <code>heading</code> also names the focusable pane.
+</p>
 <nui-example-wrapper
     filenamePrefix="panel-hoverable"
     exampleTitle="Hoverable Panel">
@@ -147,7 +162,19 @@
     <code>isResizable</code> input to 'true'. The size of panel by default is
     bordered by corresponding min/max values. To modify this behaviour, boundary
     values can be set to 'auto'. To make percentage sized 'top' panel resizable,
-    absolute height of parent block should be set.
+    absolute height of parent block should be set. When the panel has simple
+    numeric <code>paneMinSize</code> and <code>paneMaxSize</code> values (for
+    example, <code>150px</code>, <code>50%</code>, or <code>20vw</code>), Tab to
+    its separator and resize it with the arrow keys; <code>Home</code> and
+    <code>End</code> move to the minimum and maximum. The separator is labelled
+    by the visible pane heading, controls the side pane, and announces its size
+    in CSS pixels. Percentage values use the panel container size. Non-numeric
+    bounds such as <code>auto</code>, <code>calc()</code>, and other
+    unresolvable bounds keep mouse resizing available but do not expose a
+    keyboard separator because a numeric accessible range cannot be determined
+    safely. Keyboard resizing is currently limited to left-, right-, and
+    top-oriented LTR panels. RTL panel and sheet-group keyboard resizing are
+    deferred. Collapse and expand continue to use the existing panel button.
     <nui-message type="info"
         >Note, collapsed state panel can't be resizable. Resize of
         bottom-oriented panel is not currently supported.</nui-message

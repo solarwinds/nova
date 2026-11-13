@@ -752,6 +752,52 @@ describe("components >", () => {
         });
 
         describe("reactive forms >", () => {
+            [0, "0", ""].forEach(value => {
+                it(`should preserve selected value ${JSON.stringify(
+                    value
+                )} (${typeof value})`, fakeAsync(() => {
+                    wrapperComponentAsync.items = [{ id: value, name: "Zero" }];
+                    wrapperFixtureAsync.detectChanges();
+                    tick();
+                    const select = wrapperComponentAsync.select;
+                    const valueSelected = spyOn(select.valueSelected, "emit");
+                    select.selectOption(select.options.first);
+
+                    expect(select.value).toBe(value);
+                    expect(wrapperComponentAsync.selectControl.value).toBe(
+                        value
+                    );
+                    expect(valueSelected).toHaveBeenCalledWith(value);
+                    expect(select.displayText).toBe("Zero");
+                    expect(select.isEmpty).toBe(false);
+                }));
+            });
+
+            it("should preserve selected numeric zero after options change", fakeAsync(() => {
+                wrapperComponentAsync.items = [{ id: 0, name: "Zero" }];
+                wrapperFixtureAsync.detectChanges();
+                tick();
+                const select = wrapperComponentAsync.select;
+                select.selectOption(select.options.first);
+                const warn = spyOn(console, "warn");
+
+                wrapperComponentAsync.items = [
+                    { id: 1, name: "One" },
+                    { id: 0, name: "Zero" },
+                ];
+                wrapperFixtureAsync.detectChanges();
+                tick();
+
+                expect(wrapperComponentAsync.select.value).toBe(0);
+                expect(wrapperComponentAsync.selectControl.value).toBe(0);
+                expect(
+                    wrapperComponentAsync.select.getLastSelectedOption()?.value
+                ).toBe(0);
+                expect(wrapperComponentAsync.select.displayText).toBe("Zero");
+                expect(wrapperComponentAsync.select.isEmpty).toBe(false);
+                expect(warn).not.toHaveBeenCalled();
+            }));
+
             it("should set value through formControl", () => {
                 const itemToSet = wrapperWithFormControlComponent.items[3];
                 wrapperWithFormControlComponent.selectControl.setValue(

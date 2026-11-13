@@ -30,18 +30,27 @@
         <nui-legend
             class="w-100 m-auto"
             [interactive]="false"
-            (mouseleave)="chartAssist.resetVisibleSeries()"
+            (mouseleave)="onLegendMouseLeave()"
             [orientation]="legendShouldBeAlignedRight() ? 'vertical' : 'horizontal'">
             <nui-legend-series
                 class="proportional-chart__legend-series"
                 *ngFor="let legendSeries of chartAssist.legendSeriesSet; trackBy: chartAssist.seriesTrackByFn; let i = index"
+                [focusable]="!interactive"
                 [ngClass]="(prioritizedGridRows.right || prioritizedGridRows.bottom) && 'description-min-width--unset'"
                 [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                 (isSelectedChange)="chartAssist.toggleSeries(legendSeries.id, $event)"
                 [seriesRenderState]="chartAssist.renderStatesIndex[legendSeries.id]?.state"
-                (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
+                (mouseenter)="onLegendSeriesMouseEnter(legendSeries)"
+                (focusin)="onLegendSeriesFocus(legendSeries, $event)"
+                (focusout)="onLegendFocusOut()"
                 (click)="onInteraction(legendSeries)"
                 [class.nui-proportional-chart-view__legend--interactive]="interactive">
+                <button
+                    *ngIf="interactive"
+                    legendAction
+                    type="button"
+                    class="proportional-chart__legend-action"
+                    [attr.aria-label]="legendSeries.name + ' ' + (computeLegendTileValue(legendSeries.data[0]) | nuiDashboardUnitConversion)"></button>
                 <ng-container
                     *ngIf="legendItemTemplate; else legendDefaultTile">
                     <div description>

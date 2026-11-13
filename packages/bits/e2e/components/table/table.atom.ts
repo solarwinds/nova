@@ -15,6 +15,12 @@ export class TableAtom extends Atom {
         return this.getLocator().locator("th").filter({ hasText: name });
     }
 
+    public getColumnResizer(name: string): Locator {
+        return this.getColumn(name).getByRole("button", {
+            name: `Resize column ${name}`,
+        });
+    }
+
     /**
      *
      * @param {number} rowIndex = 0 stands for header row

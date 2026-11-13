@@ -13,12 +13,24 @@
         [class.nui-panel-pane__closable]="isClosable"
         [class.nui-panel--shrink]="displacePrimaryContent"
         [class.nui-panel-pane__vertical]="paneDirectionHorizontal"
+        [attr.tabindex]="isHoverable ? 0 : null"
+        [attr.role]="isHoverable ? 'group' : null"
+        [attr.aria-label]="isHoverable ? hoverPanelAriaLabel : null"
+        [attr.aria-expanded]="isHoverable ? !isCollapsed : null"
         (mouseenter)="toggleEnter()"
         (mouseleave)="toggleLeave()"
+        (focusin)="onHoverFocusIn($event)"
+        (focusout)="onHoverFocusOut($event)"
+        (keydown)="onHoverKeyDown($event)"
         nuiResizer
         [resizerDirection]="getResizeDirection()"
         [resizerDisabled]="!isPanelResizable()"
         [resizerValue]="getPaneSizeMeasurement()"
+        [resizerKeyboardEnabled]="isPanelKeyboardResizable()"
+        [resizerKeyboardLabel]="resizeAriaLabel"
+        [resizerKeyboardLabelledBy]="resizeLabelledBy"
+        [resizerKeyboardMinSize]="paneMinSize"
+        [resizerKeyboardMaxSize]="paneMaxSize"
         (resizerSizeChanged)="onSizeChanged($event)"
         #sidePaneContainer>
         <div class="nui-panel__container" #paneContainer>
@@ -42,7 +54,8 @@
                         type="button"
                         displayStyle="action"
                         [icon]="mainIcon"
-                        [disabled]="isAnimating"
+                        [attr.aria-disabled]="isAnimating"
+                        [class.disabled]="isAnimating"
                         [ariaLabel]="expandCollapseAriaLabel"
                         [title]="expandCollapseAriaLabel"
                         (click)="toggleCollapsedOnClick()"></button>
@@ -88,7 +101,11 @@
 <ng-template #defaultTitle>
     <div class="nui-panel__header-content">
         <span class="nui-panel__header-content-default">
-            <h4 class="nui-panel__header-default-title">{{ heading }}</h4>
+            <h4
+                class="nui-panel__header-default-title"
+                [id]="resizeHeadingId"
+                >{{ heading }}</h4
+            >
         </span>
     </div>
 </ng-template>

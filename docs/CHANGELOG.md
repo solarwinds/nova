@@ -4,8 +4,25 @@
 
 ### Fixes
 
+## [20.0.14] 📅 2026-11-13
+
+### Fixes
+
+- `@nova-ui/bits` | Preserved numeric zero values when selecting a SelectV2 option and updating its options, and added numbers to the option value type.
+- `@nova-ui/bits` | Preserved native keyboard navigation in editable toolbar content, kept the overflow menu reachable when actions change disabled state, and restored keyboard focus indicators on menu buttons.
+- `@nova-ui/bits` | Improved keyboard access and focus visibility for overflowing tabs, hoverable and collapsible panels, and sortable table headers.
+- `@nova-ui/bits` | Added keyboard and non-dragging table column resizing, and keyboard resizing for LTR panels with resolvable numeric size bounds.
+- `@nova-ui/bits` | Preserved native activation of host-referenced popups and exposed checkbox semantics and state on the keyboard-focusable control.
+- `@nova-ui/charts` | Added opt-in keyboard tooltip inspection for aligned chart series and optional focusable legend series for focus-driven emphasis, with related examples and documentation.
+- `@nova-ui/dashboards` | Separated timeseries legend visibility controls from drilldown links, and added keyboard access and focus emphasis to interactive proportional chart legends.
+- `@nova-ui/dashboards` | Added keyboard activation and visible focus to interactive KPI and risk-score tiles while preserving native links.
+- `@nova-ui/dashboards` | Improved widget editor and Remove Widget menu focus management, keyboard navigation, and dismissal.
+- `@nova-ui/dashboards` | Added keyboard reordering to dynamic items, table columns V2, and background-color rules. Generic drag/repeat components and click/tap reordering without dragging remain outside this fix.
+- `@nova-ui/bits` | Preserved paginator focus after page changes, including disabled Previous/Next controls, popup selection, and Shadow DOM. Ellipsis popups support Escape dismissal, close when focus leaves or a focused page is removed, and retain logical Tab order across virtualized pages and body-appended popups.
+- `@nova-ui/bits` | **nui-paginator** keeps keyboard focus after a page change (WCAG 2.4.3), including when Previous/Next becomes disabled inside Shadow DOM. The activated button stays focused, focus moves to the current page when Previous/Next becomes disabled or a page is selected from the ellipsis popup, including body-appended popups. The ellipsis popup closes with Escape (focus returns to its trigger) or when focus leaves it, including when a focused page is removed during an update. Tab from the trigger enters the popup directly, also when it is appended to the body. In virtualized popups, Tab enters at the first page and keyboard navigation follows the logical page order.
 - `@nova-ui/dashboards` | Show accessible placeholders for unavailable PerfStack legend values instead of blank tiles or misleading zero percentages.
-- `@nova-ui/bits` | **nui-paginator** keeps keyboard focus after a page change (WCAG 2.4.3): the activated button stays focused, and focus moves to the current page when Previous/Next becomes disabled or a page is selected from the ellipsis popup, including body-appended popups. The ellipsis popup closes with Escape (focus returns to its trigger) or when focus leaves it, and Tab from the trigger enters the popup directly, also when it is appended to the body.
+- `@nova-ui/bits` | Fixed SelectV2 and ComboboxV2 Playwright atoms to target their own popup by trigger ID, preventing strict-mode failures when multiple overlays coexist. Added paginator regression coverage.
+- `@nova-ui/bits` | Track dialog opening order across containers and preserve focus in the active dialog when a background dialog closes.
 
 ## [20.0.13] 📅 2026-10-26
 
