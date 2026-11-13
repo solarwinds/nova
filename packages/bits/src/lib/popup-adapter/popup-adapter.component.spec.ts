@@ -29,6 +29,8 @@ import { By } from "@angular/platform-browser";
 
 import { PopupComponent } from "./popup-adapter.component";
 import { PopupAdapterModule } from "./popup-adapter.module";
+import { PopupDeprecatedComponent } from "../popup/popup.component";
+import { NuiPopupModule } from "../popup/popup.module";
 
 @Component({
     template: `
@@ -51,23 +53,26 @@ class PopupAdapterTestHostComponent {
 
 describe("PopupComponent (adapter)", () => {
     let fixture: ComponentFixture<PopupAdapterTestHostComponent>;
+    let deprecatedFixture: ComponentFixture<PopupDeprecatedComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [PopupAdapterTestHostComponent],
+            imports: [PopupAdapterTestHostComponent, NuiPopupModule],
         });
+        deprecatedFixture = TestBed.createComponent(PopupDeprecatedComponent);
         fixture = TestBed.createComponent(PopupAdapterTestHostComponent);
     });
 
     afterEach(() => {
         fixture?.destroy();
+        deprecatedFixture?.destroy();
     });
 
     const getPopup = (): PopupComponent =>
         fixture.debugElement.query(By.directive(PopupComponent))
             .componentInstance;
 
-    it("renders the open state before notifying consumers that may focus the content", fakeAsync(() => {
+    it("renders focusable content before notifying consumers even when deprecated popup styles are loaded", fakeAsync(() => {
         fixture.detectChanges();
         tick(0);
         const popup = getPopup();
@@ -89,6 +94,8 @@ describe("PopupComponent (adapter)", () => {
                     "[popupAreaContent]"
                 ) as HTMLElement;
             content.focus();
+            expect(content.isConnected).toBeTrue();
+            expect(getComputedStyle(content).visibility).toBe("visible");
             expect(document.activeElement).toBe(content);
         });
 

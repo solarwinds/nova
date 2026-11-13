@@ -4,7 +4,7 @@
 
 ### Fixes
 
-- `@nova-ui/bits` | Render the open popup state before emitting `opened`, so keyboard-opened menus can receive focus immediately. Initialize menu keyboard selection synchronously to avoid resetting subsequent navigation.
+- `@nova-ui/bits` | Render the open popup state before emitting `opened`, so keyboard-opened menus can receive focus immediately. Initialize menu keyboard selection synchronously to avoid resetting subsequent navigation. Keep adapter popup content visible and correctly positioned when deprecated popup styles are also loaded.
 - `@nova-ui/bits` | Fixed SelectV2 and ComboboxV2 Playwright atoms to target their own popup by trigger ID, preventing strict-mode failures when multiple overlays coexist. Added paginator regression coverage.
 - `@nova-ui/bits` | Preserve native keyboard navigation in editable toolbar content, keep the overflow menu reachable when actions change disabled state, and show its keyboard focus indicator.
 - `@nova-ui/bits` | Track dialog opening order across containers and preserve focus in the active dialog when a background dialog closes.
