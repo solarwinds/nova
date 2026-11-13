@@ -32,12 +32,78 @@ import {
 import { By } from "@angular/platform-browser";
 import noop from "lodash/noop";
 
+import { PaginatorPopupKeyboardController } from "./paginator-popup-keyboard.controller";
 import { PaginatorComponent } from "./paginator.component";
 import { NuiPaginatorModule } from "./paginator.module";
 import { LoggerService } from "../../services/log-service";
 import { PopupComponent } from "../popup-adapter/popup-adapter.component";
 
 describe("components >", () => {
+    describe("paginator popup keyboard controller >", () => {
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [NuiPaginatorModule],
+            });
+        });
+
+        it("should provide an isolated controller for each paginator", () => {
+            const firstFixture = TestBed.createComponent(PaginatorComponent);
+            const secondFixture = TestBed.createComponent(PaginatorComponent);
+
+            const firstController = firstFixture.debugElement.injector.get(
+                PaginatorPopupKeyboardController
+            );
+            const secondController = secondFixture.debugElement.injector.get(
+                PaginatorPopupKeyboardController
+            );
+
+            expect(firstController).not.toBe(secondController);
+
+            firstFixture.destroy();
+            secondFixture.destroy();
+        });
+
+        it("should use a replaceable component provider", () => {
+            const replacement =
+                jasmine.createSpyObj<PaginatorPopupKeyboardController>(
+                    "popupKeyboardController",
+                    ["setPopupContext", "onPopupOpened", "destroy"]
+                );
+            TestBed.overrideComponent(PaginatorComponent, {
+                add: {
+                    providers: [
+                        {
+                            provide: PaginatorPopupKeyboardController,
+                            useValue: replacement,
+                        },
+                    ],
+                },
+            });
+
+            const fixture = TestBed.createComponent(PaginatorComponent);
+            const injectedController = fixture.debugElement.injector.get(
+                PaginatorPopupKeyboardController
+            );
+            const popup = jasmine.createSpyObj<PopupComponent>("popup", [
+                "closePopup",
+            ]);
+            fixture.componentInstance.onPopupOpened(false, popup);
+
+            expect(injectedController).toBe(replacement);
+            expect(replacement.setPopupContext).toHaveBeenCalledWith(
+                jasmine.any(Function),
+                jasmine.any(Function)
+            );
+            expect(replacement.onPopupOpened).toHaveBeenCalledWith(
+                false,
+                popup
+            );
+
+            fixture.destroy();
+            expect(replacement.destroy).toHaveBeenCalledTimes(1);
+        });
+    });
+
     describe("paginator >", () => {
         let subject: PaginatorComponent;
         let fixture: ComponentFixture<PaginatorComponent>;
@@ -440,6 +506,61 @@ describe("components >", () => {
                 tick();
                 expect(popupComponent().isOpen).toBeFalse();
                 expect(activeElement()).toBe(button(".nui-paginator__dots"));
+            }));
+
+            it(`should clean up pending virtual navigation when destroyed with appendToBody=${appendToBody}`, fakeAsync(() => {
+                subject.appendToBody = appendToBody;
+                render(2000, 1);
+                const popupRoot = openPopup();
+                tick(20);
+                fixture.detectChanges();
+
+                const popup = popupComponent();
+                const subscribe = spyOn(
+                    popup.opened,
+                    "subscribe"
+                ).and.callThrough();
+                const disconnect = spyOn(
+                    MutationObserver.prototype,
+                    "disconnect"
+                ).and.callThrough();
+                const warn = jasmine.createSpy("warn");
+                spyOnProperty(
+                    TestBed.inject(LoggerService),
+                    "warn"
+                ).and.returnValue(warn);
+                const viewport = fixture.debugElement.query(
+                    By.directive(CdkVirtualScrollViewport)
+                ).componentInstance as CdkVirtualScrollViewport;
+                spyOn(viewport, "scrollToIndex").and.stub();
+                const pages = popupRoot.querySelectorAll<HTMLButtonElement>(
+                    "button[data-nui-paginator-page]"
+                );
+                const lastRendered = pages[pages.length - 1];
+                const nextPage =
+                    Number(lastRendered.dataset.nuiPaginatorPage) + 1;
+                const controller = fixture.debugElement.injector.get(
+                    PaginatorPopupKeyboardController
+                );
+                const destroy = spyOn(controller, "destroy").and.callThrough();
+
+                lastRendered.focus({ preventScroll: true });
+                keydown(lastRendered, { key: "Tab", code: "Tab" });
+
+                const closeSubscription =
+                    subscribe.calls.mostRecent().returnValue;
+                expect(activeElement()).toBe(viewport.elementRef.nativeElement);
+                expect(closeSubscription.closed).toBeFalse();
+
+                fixture.destroy();
+
+                expect(destroy).toHaveBeenCalledTimes(1);
+                expect(closeSubscription.closed).toBeTrue();
+                expect(disconnect).toHaveBeenCalled();
+                tick(5000);
+                expect(warn).not.toHaveBeenCalledWith(
+                    `Timed out focusing virtual paginator page ${nextPage}.`
+                );
             }));
 
             it(`should not restore pending virtual focus after focus leaves with appendToBody=${appendToBody}`, fakeAsync(() => {
