@@ -21,7 +21,6 @@
 import { InteractivityChecker } from "@angular/cdk/a11y";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    afterNextRender,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
@@ -49,7 +48,7 @@ import _range from "lodash/range";
 import { Subject } from "rxjs";
 
 import { IPaginatorItem } from "./public-api";
-import { PaginatorPopupFocusController } from "./paginator-popup-focus.controller";
+import { PaginatorFocusController } from "./paginator-focus.controller";
 import {
     IFilter,
     IFilterPub,
@@ -179,9 +178,7 @@ export class PaginatorComponent
     private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
     private readonly focusInjector = inject(Injector);
     private readonly interactivityChecker = inject(InteractivityChecker);
-    private readonly popupFocusController: PaginatorPopupFocusController;
-    private focusRestorePending = false;
-    private pendingFocusRestoreElement?: Element;
+    private readonly focusController: PaginatorFocusController;
 
     private _dotsPagesPerRow = 5;
 
@@ -197,8 +194,9 @@ export class PaginatorComponent
         private cd: ChangeDetectorRef
     ) {
         this.popupContainer.parent = this;
-        this.popupFocusController = new PaginatorPopupFocusController(
+        this.focusController = new PaginatorFocusController(
             this.host.nativeElement,
+            this.focusInjector,
             () => this.virtualScrollViewports,
             this.interactivityChecker,
             this.logger,
@@ -382,14 +380,11 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
      * Re-renders the virtual scroll viewport to properly display items within the virtual scroll viewport
      */
     public handleDotsClick(popup?: PopupComponent): void {
-        this.popupFocusController.handleDotsClick(
-            popup,
-            this.virtualScrollViewport
-        );
+        this.focusController.handleDotsClick(popup, this.virtualScrollViewport);
     }
 
     public onPopupOpened(isOpen: boolean, popup: PopupComponent): void {
-        this.popupFocusController.onPopupOpened(isOpen, popup);
+        this.focusController.onPopupOpened(isOpen, popup);
     }
 
     /**
@@ -401,7 +396,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         popup: PopupComponent,
         item?: IPaginatorItem
     ): void {
-        this.popupFocusController.onDotsKeydown(event, popup, item);
+        this.focusController.onDotsKeydown(event, popup, item);
     }
 
     /**
@@ -414,77 +409,24 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         popup: PopupComponent,
         item?: IPaginatorItem
     ): void {
-        this.popupFocusController.onPopupKeydown(event, popup, item);
+        this.focusController.onPopupKeydown(event, popup, item);
     }
 
     /**
      * Closes the popup once focus moves to an element outside of the trigger and the popup.
      */
     public onPopupFocusOut(event: FocusEvent, popup: PopupComponent): void {
-        this.popupFocusController.onPopupFocusOut(event, popup);
-    }
-
-    private getDeepActiveElement(document: Document): Element | null {
-        let active = document.activeElement;
-        while (active?.shadowRoot?.activeElement) {
-            active = active.shadowRoot.activeElement;
-        }
-        return active;
-    }
-
-    private scheduleFocusRestore(focusedElement: Element | null): void {
-        if (this.focusRestorePending) {
-            return;
-        }
-        this.focusRestorePending = true;
-        afterNextRender(
-            () => {
-                this.focusRestorePending = false;
-                const element = this.host.nativeElement;
-                const active = this.getDeepActiveElement(element.ownerDocument);
-                const isActiveDisabled =
-                    element.contains(active) &&
-                    (active as HTMLButtonElement).disabled === true;
-                const focusRoot = focusedElement?.getRootNode();
-                const focusRootHost =
-                    focusRoot instanceof ShadowRoot ? focusRoot.host : null;
-                // Focus can fall to the body or shadow host when a focused control is removed or disabled.
-                const isFocusLost =
-                    (active === element.ownerDocument.body ||
-                        active === focusRootHost) &&
-                    (focusedElement?.isConnected === false ||
-                        (focusedElement as HTMLButtonElement | null)
-                            ?.disabled === true);
-
-                if (isActiveDisabled || isFocusLost) {
-                    element
-                        .querySelector<HTMLElement>("button[aria-current=page]")
-                        ?.focus();
-                }
-            },
-            { injector: this.focusInjector }
-        );
+        this.focusController.onPopupFocusOut(event, popup);
     }
 
     /**
      * Add items to paginator component
      */
     private assemble() {
-        this.popupFocusController.cancelPendingVirtualPageFocus();
-        const focusedElement =
-            this.pendingFocusRestoreElement ??
-            this.getDeepActiveElement(this.host.nativeElement.ownerDocument);
-        this.pendingFocusRestoreElement = undefined;
-        const focusedPopup = this.popups?.find(
-            popup =>
-                popup.isOpen &&
-                this.popupFocusController.isPopupContentFocused(popup)
+        const focusSnapshot = this.focusController.captureBeforeRebuild(
+            this.popups,
+            this.popupPages
         );
-        const hadFocus =
-            this.host.nativeElement.contains(focusedElement) ||
-            this.popupPages?.some(pages =>
-                pages.nativeElement.contains(focusedElement)
-            );
         this.itemsList = [];
         if (this.getPageCount() <= 0) {
             return;
@@ -513,13 +455,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         this.addNext();
         this.cd.detectChanges();
 
-        // Removing a focused node does not dispatch focusout in every browser.
-        if (focusedPopup) {
-            this.popupFocusController.schedulePopupFocusCheck(focusedPopup);
-        }
-        if (hadFocus) {
-            this.scheduleFocusRestore(focusedElement);
-        }
+        this.focusController.afterRebuild(focusSnapshot);
     }
 
     /**
@@ -639,9 +575,9 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
             style: isDisabled ? this.disabledClass : "",
             action: (event: Event) => {
                 if (item.page) {
-                    if (event.currentTarget instanceof Element) {
-                        this.pendingFocusRestoreElement = event.currentTarget;
-                    }
+                    this.focusController.rememberPageActionTarget(
+                        event.currentTarget
+                    );
                     this.goToPage(item.page);
                 }
                 return false;
@@ -669,7 +605,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
     }
 
     public ngOnDestroy(): void {
-        this.popupFocusController.destroy();
+        this.focusController.destroy();
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }

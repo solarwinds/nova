@@ -21,7 +21,13 @@
 import { InteractivityChecker } from "@angular/cdk/a11y";
 import { hasModifierKey } from "@angular/cdk/keycodes";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import { QueryList } from "@angular/core";
+import {
+    AfterRenderRef,
+    afterNextRender,
+    ElementRef,
+    Injector,
+    QueryList,
+} from "@angular/core";
 import { Subscription } from "rxjs";
 
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
@@ -41,16 +47,25 @@ interface PendingVirtualPageFocus {
     timeout?: ReturnType<typeof setTimeout>;
 }
 
+interface PaginatorRebuildFocusSnapshot {
+    readonly hadFocus: boolean;
+    readonly focusedElement: Element | null;
+    readonly focusedPopup?: PopupComponent;
+}
+
 /** @ignore */
-export class PaginatorPopupFocusController {
+export class PaginatorFocusController {
     private pendingVirtualPageFocus?: PendingVirtualPageFocus;
     private readonly pendingPopupFocusChecks = new Map<
         PopupComponent,
         ReturnType<typeof setTimeout>
     >();
+    private pendingFocusRestore?: AfterRenderRef;
+    private pendingFocusRestoreElement?: Element;
 
     public constructor(
         private readonly host: HTMLElement,
+        private readonly injector: Injector,
         private readonly getViewports: () =>
             | QueryList<CdkVirtualScrollViewport>
             | undefined,
@@ -58,6 +73,43 @@ export class PaginatorPopupFocusController {
         private readonly logger: LoggerService,
         private readonly getDotsPagesPerRow: () => number
     ) {}
+
+    public rememberPageActionTarget(target: EventTarget | null): void {
+        if (target instanceof Element) {
+            this.pendingFocusRestoreElement = target;
+        }
+    }
+
+    public captureBeforeRebuild(
+        popups?: QueryList<PopupComponent>,
+        popupPages?: QueryList<ElementRef<HTMLElement>>
+    ): PaginatorRebuildFocusSnapshot {
+        this.cancelPendingVirtualPageFocus();
+        const focusedElement =
+            this.pendingFocusRestoreElement ??
+            this.getDeepActiveElement(this.host.ownerDocument);
+        this.pendingFocusRestoreElement = undefined;
+        const focusedPopup = popups?.find(
+            popup => popup.isOpen && this.isPopupContentFocused(popup)
+        );
+        const hadFocus =
+            this.host.contains(focusedElement) ||
+            popupPages?.some(pages =>
+                pages.nativeElement.contains(focusedElement)
+            ) === true;
+
+        return { hadFocus, focusedElement, focusedPopup };
+    }
+
+    public afterRebuild(snapshot: PaginatorRebuildFocusSnapshot): void {
+        // Removing a focused node does not dispatch focusout in every browser.
+        if (snapshot.focusedPopup) {
+            this.schedulePopupFocusCheck(snapshot.focusedPopup);
+        }
+        if (snapshot.hadFocus) {
+            this.scheduleFocusRestore(snapshot.focusedElement);
+        }
+    }
 
     public handleDotsClick(
         popup: PopupComponent | undefined,
@@ -199,13 +251,13 @@ export class PaginatorPopupFocusController {
         popup.closePopup();
     }
 
-    public isPopupContentFocused(popup: PopupComponent): boolean {
+    private isPopupContentFocused(popup: PopupComponent): boolean {
         const content: HTMLElement | undefined =
             popup.popupAreaContent?.nativeElement;
         return content?.matches(":focus-within") ?? false;
     }
 
-    public schedulePopupFocusCheck(popup: PopupComponent): void {
+    private schedulePopupFocusCheck(popup: PopupComponent): void {
         this.cancelPendingPopupFocusCheck(popup);
         // Focus may move again before this task completes.
         const timer = setTimeout(() => {
@@ -224,7 +276,7 @@ export class PaginatorPopupFocusController {
         this.pendingPopupFocusChecks.set(popup, timer);
     }
 
-    public cancelPendingVirtualPageFocus(): void {
+    private cancelPendingVirtualPageFocus(): void {
         const pending = this.pendingVirtualPageFocus;
         if (!pending) {
             return;
@@ -241,6 +293,8 @@ export class PaginatorPopupFocusController {
         this.cancelPendingVirtualPageFocus();
         this.pendingPopupFocusChecks.forEach(timer => clearTimeout(timer));
         this.pendingPopupFocusChecks.clear();
+        this.pendingFocusRestore?.destroy();
+        this.pendingFocusRestore = undefined;
     }
 
     private isTriggerShadowHost(popup: PopupComponent, target: Node): boolean {
@@ -284,6 +338,39 @@ export class PaginatorPopupFocusController {
             active = active.shadowRoot.activeElement;
         }
         return active;
+    }
+
+    private scheduleFocusRestore(focusedElement: Element | null): void {
+        if (this.pendingFocusRestore) {
+            return;
+        }
+        this.pendingFocusRestore = afterNextRender(
+            () => {
+                this.pendingFocusRestore = undefined;
+                const element = this.host;
+                const active = this.getDeepActiveElement(element.ownerDocument);
+                const isActiveDisabled =
+                    element.contains(active) &&
+                    (active as HTMLButtonElement).disabled === true;
+                const focusRoot = focusedElement?.getRootNode();
+                const focusRootHost =
+                    focusRoot instanceof ShadowRoot ? focusRoot.host : null;
+                // Focus can fall to the body or shadow host when a focused control is removed or disabled.
+                const isFocusLost =
+                    (active === element.ownerDocument.body ||
+                        active === focusRootHost) &&
+                    (focusedElement?.isConnected === false ||
+                        (focusedElement as HTMLButtonElement | null)
+                            ?.disabled === true);
+
+                if (isActiveDisabled || isFocusLost) {
+                    element
+                        .querySelector<HTMLElement>("button[aria-current=page]")
+                        ?.focus();
+                }
+            },
+            { injector: this.injector }
+        );
     }
 
     private getPopupViewport(

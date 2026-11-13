@@ -208,6 +208,20 @@ describe("components >", () => {
             expect(activeElement()).toBe(button("button[aria-current=page]"));
         });
 
+        it("should cancel pending focus restoration when destroyed", fakeAsync(() => {
+            render(5, 4);
+            byLabel("Next Page").focus();
+
+            byLabel("Next Page").click();
+            const currentPage = button("button[aria-current=page]");
+            const focusCurrentPage = spyOn(currentPage, "focus");
+
+            fixture.destroy();
+            TestBed.tick();
+
+            expect(focusCurrentPage).not.toHaveBeenCalled();
+        }));
+
         it("should restore focus after Next becomes disabled inside a shadow root", fakeAsync(() => {
             render(5, 4);
             const shadowHost = document.createElement("div");
