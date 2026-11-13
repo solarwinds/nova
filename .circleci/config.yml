@@ -693,14 +693,14 @@ jobs:
             - attach_workspace:
                   at: ~/nova
             - reuse-cache
+            - checkout:
+                path: ~/nova
             - add_ssh_keys
             - run:
                   name: Add GitHub to known_hosts
                   command: |
                       mkdir -p ~/.ssh
                       ssh-keyscan github.com >> ~/.ssh/known_hosts
-            - checkout:
-                  path: ~/nova
             - run:
                   name: Configure Git
                   command: |
@@ -717,14 +717,14 @@ jobs:
         environment:
             NOVA_DIR: ~/nova
         steps:
+            - checkout:
+                path: ~/nova
             - add_ssh_keys
             - run:
                   name: Add GitHub to known_hosts
                   command: |
                       mkdir -p ~/.ssh
                       ssh-keyscan github.com >> ~/.ssh/known_hosts
-            - checkout:
-                  path: ~/nova
             - run:
                   name: Configure Git
                   command: |

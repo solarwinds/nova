@@ -39,10 +39,11 @@ DASHBOARDS_DOCS_PATH="./projects/dashboards/${BRANCH_PATH}"
 mkdir nova-docs
 cd ./nova-docs
 
-# avoid prompt related to the HostKeyChecking
-mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+# avoid prompt related to host key checking without replacing CircleCI's SSH config
+mkdir -p ~/.ssh
+ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-git clone $DOC_SERVICE_REPO .
+git clone "$DOC_SERVICE_REPO" .
 
 # move bits docs
 mkdir --parents ./projects/bits
