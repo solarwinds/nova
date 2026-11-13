@@ -293,8 +293,7 @@ describe("components >", () => {
                 fixture.detectChanges();
             });
 
-            // todo check this test
-            xit("should have sticky position when sticky is true", () => {
+            it("should have sticky position when sticky is true", () => {
                 const headerRow: Element | undefined =
                     TableSpecHelpers.getHeaderRow(tableElement) ?? undefined;
                 if (!headerRow) {
@@ -310,8 +309,7 @@ describe("components >", () => {
                 });
             });
 
-            // todo check this test
-            xit("should have sticky cdk-table-sticky class when sticky is true", () => {
+            it("should have sticky cdk-table-sticky class when sticky is true", () => {
                 const headerRow: Element | undefined =
                     TableSpecHelpers.getHeaderRow(tableElement) ?? undefined;
                 if (!headerRow) {
@@ -712,8 +710,7 @@ describe("components >", () => {
                         `cdk-table-sticky`
                     );
                 });
-                // todo check this test
-                xit("first cell should contain cdk-table-sticky class when sticky is true", () => {
+                it("first cell should contain cdk-table-sticky class when sticky is true", () => {
                     const headerRow: Element | undefined =
                         TableSpecHelpers.getHeaderRow(tableElement) ??
                         undefined;
@@ -723,12 +720,12 @@ describe("components >", () => {
                     const headerCell =
                         TableSpecHelpers.getHeaderCells(headerRow)[0];
                     component.isSticky = true;
+                    fixture.changeDetectorRef.markForCheck();
                     fixture.detectChanges();
                     expect(headerCell.classList).toContain(`cdk-table-sticky`);
                 });
 
-                // todo check this test
-                xit("first cell should have sticky position when sticky is true", () => {
+                it("first cell should have sticky position when sticky is true", () => {
                     const headerRow: Element | undefined =
                         TableSpecHelpers.getHeaderRow(tableElement) ??
                         undefined;
@@ -738,6 +735,7 @@ describe("components >", () => {
                     const headerCell =
                         TableSpecHelpers.getHeaderCells(headerRow)[0];
                     component.isSticky = true;
+                    fixture.changeDetectorRef.markForCheck();
                     fixture.detectChanges();
                     expect(
                         window

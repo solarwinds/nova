@@ -47,6 +47,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
             class="nui-menu-item__action nui-menu-item__link"
             href="#"
             role="menuitem"
+            [id]="id + '-action'"
             (click)="handleClick($event)"
             (keydown.enter)="handleClick($event)"
             (keydown.space)="handleClick($event)"

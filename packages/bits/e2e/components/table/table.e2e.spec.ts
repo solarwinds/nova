@@ -4,6 +4,7 @@ import { Helpers, test, expect } from "../../setup";
 import { ButtonAtom } from "../button/button.atom";
 import { CheckboxAtom } from "../checkbox/checkbox.atom";
 import { CheckboxGroupAtom } from "../checkbox-group/checkbox-group.atom";
+import { MenuAtom } from "../menu/menu.atom";
 import { PaginatorAtom } from "../paginator/paginator.atom";
 import { SearchAtom } from "../search/search.atom";
 import { SelectorAtom, SelectionType } from "../selector/selector.atom";
@@ -813,23 +814,30 @@ test.describe("USERCONTROL table >", () => {
     });
 
     test.describe("Table with actions >", () => {
-        let actionsMenu: any;
+        let actionsMenu: MenuAtom;
         let tableColumnsAddRemove: TableAtom;
 
         const toggleActionsMenu = async () => {
-            await actionsMenu.click();
+            await actionsMenu.toggleMenu();
+            await actionsMenu.isMenuOpened();
         };
 
         const clickAddRowStartButton = async () => {
-            await actionsMenu.getByText("Add new row to the beginning").click();
+            await actionsMenu
+                .getMenuItemByContainingText("Add new row to the beginning")
+                .clickItem();
         };
 
         const clickAddRowEndButton = async () => {
-            await actionsMenu.getByText("Add new row to the end").click();
+            await actionsMenu
+                .getMenuItemByContainingText("Add new row to the end")
+                .clickItem();
         };
 
         const clickRemoveRowButton = async () => {
-            await actionsMenu.getByText("Delete row").click();
+            await actionsMenu
+                .getMenuItemByContainingText("Delete row")
+                .clickItem();
         };
 
         test.beforeEach(async ({ page }) => {
@@ -838,50 +846,81 @@ test.describe("USERCONTROL table >", () => {
                 TableAtom,
                 "nui-demo-table-columns-add-remove"
             );
-            actionsMenu = tableColumnsAddRemove
-                .getLocator()
-                .locator(".nui-menu")
-                .first();
+            actionsMenu = Atom.findIn<MenuAtom>(
+                MenuAtom,
+                tableColumnsAddRemove.getLocator().locator(".nui-menu").first(),
+                true
+            );
             await expect(tableColumnsAddRemove.getLocator()).toBeVisible();
         });
 
         test("should add new row to the beginning", async () => {
-            expect(await tableColumnsAddRemove.getRowsCount()).toEqual(5);
-            expect(await tableColumnsAddRemove.getCellText(1, 0)).toEqual(
-                "NUI-111"
-            );
+            await expect
+                .poll(() => tableColumnsAddRemove.getRowsCount())
+                .toBe(5);
+            await expect
+                .poll(() => tableColumnsAddRemove.getCellText(1, 0))
+                .toBe("NUI-111");
             await toggleActionsMenu();
             await clickAddRowStartButton();
-            expect(await tableColumnsAddRemove.getRowsCount()).toEqual(6);
-            expect(await tableColumnsAddRemove.getCellText(1, 0)).toEqual(
-                "NUI-100"
-            );
+            await expect
+                .poll(() => tableColumnsAddRemove.getRowsCount())
+                .toBe(6);
+            await expect
+                .poll(() => tableColumnsAddRemove.getCellText(1, 0))
+                .toBe("NUI-100");
         });
 
         test("should add new row to the end", async () => {
-            expect(await tableColumnsAddRemove.getRowsCount()).toEqual(5);
-            expect(await tableColumnsAddRemove.getCellText(5, 0)).toEqual(
-                "NUI-555"
-            );
+            await expect
+                .poll(() => tableColumnsAddRemove.getRowsCount())
+                .toBe(5);
+            await expect
+                .poll(() => tableColumnsAddRemove.getCellText(5, 0))
+                .toBe("NUI-555");
             await toggleActionsMenu();
             await clickAddRowEndButton();
-            expect(await tableColumnsAddRemove.getRowsCount()).toEqual(6);
-            expect(await tableColumnsAddRemove.getCellText(6, 0)).toEqual(
-                "NUI-1100"
-            );
+            await expect
+                .poll(() => tableColumnsAddRemove.getRowsCount())
+                .toBe(6);
+            await expect
+                .poll(() => tableColumnsAddRemove.getCellText(6, 0))
+                .toBe("NUI-1100");
         });
 
         test("should delete first row under header", async () => {
-            expect(await tableColumnsAddRemove.getRowsCount()).toEqual(5);
-            expect(await tableColumnsAddRemove.getCellText(1, 0)).toEqual(
-                "NUI-111"
-            );
+            await expect
+                .poll(() => tableColumnsAddRemove.getRowsCount())
+                .toBe(5);
+            await expect
+                .poll(() => tableColumnsAddRemove.getCellText(1, 0))
+                .toBe("NUI-111");
             await toggleActionsMenu();
             await clickRemoveRowButton();
-            expect(await tableColumnsAddRemove.getRowsCount()).toEqual(4);
-            expect(await tableColumnsAddRemove.getCellText(1, 0)).toEqual(
-                "NUI-222"
-            );
+            await expect
+                .poll(() => tableColumnsAddRemove.getRowsCount())
+                .toBe(4);
+            await expect
+                .poll(() => tableColumnsAddRemove.getCellText(1, 0))
+                .toBe("NUI-222");
+        });
+
+        test("should delete first row after opening its menu with the keyboard", async () => {
+            const button = actionsMenu.getMenuButton().getLocator();
+            await button.focus();
+            await button.press("ArrowDown");
+            await actionsMenu.isMenuOpened();
+            await expect(
+                actionsMenu.getLocator().getByRole("menu")
+            ).toBeFocused();
+
+            await clickRemoveRowButton();
+            await expect
+                .poll(() => tableColumnsAddRemove.getRowsCount())
+                .toBe(4);
+            await expect
+                .poll(() => tableColumnsAddRemove.getCellText(1, 0))
+                .toBe("NUI-222");
         });
     });
 });

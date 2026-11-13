@@ -29,6 +29,8 @@ import { By } from "@angular/platform-browser";
 
 import { PopupComponent } from "./popup-adapter.component";
 import { PopupAdapterModule } from "./popup-adapter.module";
+import { PopupDeprecatedComponent } from "../popup/popup.component";
+import { NuiPopupModule } from "../popup/popup.module";
 
 @Component({
     template: `
@@ -38,7 +40,7 @@ import { PopupAdapterModule } from "./popup-adapter.module";
             (opened)="openedStates.push($event)"
         >
             <button type="button">Info</button>
-            <div popupAreaContent>Popup content</div>
+            <div popupAreaContent tabindex="-1">Popup content</div>
         </nui-popup>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,21 +53,57 @@ class PopupAdapterTestHostComponent {
 
 describe("PopupComponent (adapter)", () => {
     let fixture: ComponentFixture<PopupAdapterTestHostComponent>;
+    let deprecatedFixture: ComponentFixture<PopupDeprecatedComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [PopupAdapterTestHostComponent],
+            imports: [PopupAdapterTestHostComponent, NuiPopupModule],
         });
+        deprecatedFixture = TestBed.createComponent(PopupDeprecatedComponent);
         fixture = TestBed.createComponent(PopupAdapterTestHostComponent);
     });
 
     afterEach(() => {
         fixture?.destroy();
+        deprecatedFixture?.destroy();
     });
 
     const getPopup = (): PopupComponent =>
         fixture.debugElement.query(By.directive(PopupComponent))
             .componentInstance;
+
+    it("renders focusable content before notifying consumers even when deprecated popup styles are loaded", fakeAsync(() => {
+        fixture.detectChanges();
+        tick(0);
+        const popup = getPopup();
+        const subscription = popup.opened.subscribe(open => {
+            if (!open) {
+                return;
+            }
+
+            const container = fixture.nativeElement.querySelector(
+                ".nui-popup-container"
+            ) as HTMLElement;
+            expect(
+                container.classList.contains("nui-popup--opened")
+            ).toBeTrue();
+            expect(popup.visible).toBeTrue();
+
+            const content =
+                popup.popupAreaContainer.nativeElement.querySelector(
+                    "[popupAreaContent]"
+                ) as HTMLElement;
+            content.focus();
+            expect(content.isConnected).toBeTrue();
+            expect(getComputedStyle(content).visibility).toBe("visible");
+            expect(document.activeElement).toBe(content);
+        });
+
+        popup.toggleOpened(new MouseEvent("click"));
+        expect(fixture.componentInstance.openedStates).toEqual([false, true]);
+        subscription.unsubscribe();
+        tick(0);
+    }));
 
     it("initializes closed on [isOpen]='false', tolerates repeated pre-open closes, and opens/closes normally", fakeAsync(() => {
         fixture.detectChanges();

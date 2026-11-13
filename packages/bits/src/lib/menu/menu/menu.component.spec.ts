@@ -24,7 +24,12 @@ import {
     DebugElement,
     ViewChild,
 } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
 import { MenuComponent } from "./menu.component";
@@ -86,6 +91,11 @@ class TestAppComponent {
                     itemType: "action",
                     title: "Action",
                     disabled: false,
+                },
+                {
+                    itemType: "option",
+                    title: "Option",
+                    checked: false,
                 },
             ],
         },
@@ -179,6 +189,91 @@ describe("components >", () => {
                 );
                 expect(content).toBeTruthy();
             });
+
+            it("should not reset keyboard selection after opening with the mouse", fakeAsync(() => {
+                const button = testComponent.menu.menuToggle
+                    .nativeElement as HTMLButtonElement;
+
+                button.focus();
+                button.click();
+                fixture.detectChanges();
+                button.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        code: "ArrowDown",
+                        key: "ArrowDown",
+                        keyCode: 40,
+                        bubbles: true,
+                        cancelable: true,
+                    })
+                );
+                expect(testComponent.menu.popup.isOpen).toBeTrue();
+                const activeDescendant = testComponent.menu.activeDescendant;
+                expect(activeDescendant).toBeTruthy();
+                tick();
+                fixture.detectChanges();
+
+                const menuContent =
+                    testComponent.menu.menuContent.nativeElement;
+                const action = menuContent.querySelector<HTMLElement>(
+                    "nui-menu-action [role=menuitem]"
+                );
+                expect(action).toBeTruthy();
+                expect(testComponent.menu.activeDescendant).toBe(
+                    activeDescendant
+                );
+                expect(activeDescendant).toBe(action!.id);
+            }));
+
+            it("should focus the popup menu and keep its active descendant there", fakeAsync(() => {
+                const button = fixture.debugElement.query(
+                    By.css(".menu-button")
+                ).nativeElement as HTMLButtonElement;
+
+                button.focus();
+                button.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        code: "ArrowDown",
+                        key: "ArrowDown",
+                        bubbles: true,
+                        cancelable: true,
+                    })
+                );
+                // Opening must make the projected popup focusable before the
+                // synchronous opened handler transfers keyboard focus.
+                expect(document.activeElement).toBe(
+                    testComponent.menu.menuContent.nativeElement
+                );
+                tick();
+                fixture.detectChanges();
+
+                const menuContentId = button.getAttribute("aria-controls");
+                expect(menuContentId).toBeTruthy();
+                const menuContent = document.getElementById(menuContentId!);
+                expect(menuContent).toBeTruthy();
+                expect(document.activeElement).toBe(menuContent);
+                expect(button.getAttribute("role")).toBeNull();
+                expect(button.getAttribute("aria-haspopup")).toBe("menu");
+                expect(
+                    button.hasAttribute("aria-activedescendant")
+                ).toBeFalse();
+                expect(menuContent!.getAttribute("aria-labelledby")).toBe(
+                    button.id
+                );
+                expect(
+                    menuContent!
+                        .querySelector("nui-menu-popup")
+                        ?.getAttribute("role")
+                ).toBe("presentation");
+
+                const activeItemId = menuContent!.getAttribute(
+                    "aria-activedescendant"
+                );
+                expect(activeItemId).toBeTruthy();
+                const activeItem = document.getElementById(activeItemId!);
+                expect(activeItem).toBeTruthy();
+                expect(menuContent!.contains(activeItem)).toBeTrue();
+                expect(activeItem!.getAttribute("role")).toBe("menuitem");
+            }));
 
             it("should have correct roles on menu-link", () => {
                 // Ensure menu items are rendered

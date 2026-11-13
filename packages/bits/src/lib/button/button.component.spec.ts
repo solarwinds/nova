@@ -22,6 +22,7 @@ import {
     Component,
     CUSTOM_ELEMENTS_SCHEMA,
     DebugElement,
+    Input,
     OnInit,
 } from "@angular/core";
 import {
@@ -39,10 +40,14 @@ import { LoggerService } from "../../services/log-service";
 
 @Component({
     selector: "nui-button-on-button",
-    template: ` <button nui-button type="button">Click me!</button> `,
+    template: `
+        <button nui-button type="button" [isBusy]="isBusy">Click me!</button>
+    `,
     standalone: false,
 })
-class TestAppButtonComponent {}
+class TestAppButtonComponent {
+    @Input() public isBusy = false;
+}
 
 @Component({
     selector: "nui-button-on-button-no-type",
@@ -132,13 +137,17 @@ describe("components >", () => {
                 logger = TestBed.inject(LoggerService);
             });
             it(`should log an error for buttons without a type attribute`, () => {
-                const errorSpy = spyOnProperty(
-                    logger,
-                    "error",
-                    "get"
-                ).and.callThrough();
-                fixture = TestBed.createComponent(TestAppButtonNoTypeComponent);
-                expect(errorSpy).toHaveBeenCalled();
+                const errorSpy = jasmine.createSpy("error");
+                spyOnProperty(logger, "error", "get").and.returnValue(errorSpy);
+                const noTypeFixture = TestBed.createComponent(
+                    TestAppButtonNoTypeComponent
+                );
+                expect(errorSpy).toHaveBeenCalledOnceWith(
+                    jasmine.stringMatching(
+                        /^No type specified for button element\./
+                    ),
+                    noTypeFixture.nativeElement.querySelector("button")
+                );
             });
             it(`should not log an error for non-buttons without a type attribute`, () => {
                 const errorSpy = spyOnProperty(
@@ -146,9 +155,7 @@ describe("components >", () => {
                     "error",
                     "get"
                 ).and.callThrough();
-                fixture = TestBed.createComponent(
-                    TestAppButtonOnDivNoTypeComponent
-                );
+                TestBed.createComponent(TestAppButtonOnDivNoTypeComponent);
                 expect(errorSpy).not.toHaveBeenCalled();
             });
             it(`should not log an error for buttons with a type attribute`, () => {
@@ -180,16 +187,19 @@ describe("components >", () => {
         });
 
         describe("repeatable >", () => {
-            let buttonFixture: ComponentFixture<ButtonComponent>;
+            let buttonFixture: ComponentFixture<TestAppButtonComponent>;
             let element: HTMLButtonElement;
 
             beforeEach(() => {
-                buttonFixture = TestBed.createComponent(ButtonComponent);
-                subject = buttonFixture.componentInstance;
+                buttonFixture = TestBed.createComponent(TestAppButtonComponent);
+                const button = buttonFixture.debugElement.query(
+                    By.directive(ButtonComponent)
+                );
+                subject = button.componentInstance;
                 subject.isRepeat = true;
                 buttonFixture.detectChanges();
 
-                element = (<any>subject).el.nativeElement;
+                element = button.nativeElement;
             });
 
             it("stops emitting click after element becomes disabled", fakeAsync(() => {
@@ -213,15 +223,16 @@ describe("components >", () => {
         });
 
         describe("keyboard active state >", () => {
-            let buttonFixture: ComponentFixture<ButtonComponent>;
-            let buttonSubject: ButtonComponent;
+            let buttonFixture: ComponentFixture<TestAppButtonComponent>;
             let hostElement: HTMLButtonElement;
 
             beforeEach(() => {
-                buttonFixture = TestBed.createComponent(ButtonComponent);
-                buttonSubject = buttonFixture.componentInstance;
+                buttonFixture = TestBed.createComponent(TestAppButtonComponent);
+                const button = buttonFixture.debugElement.query(
+                    By.directive(ButtonComponent)
+                );
                 buttonFixture.detectChanges();
-                hostElement = (<any>buttonSubject).el.nativeElement;
+                hostElement = button.nativeElement;
             });
 
             it("should add .active class on Space keydown", () => {
@@ -287,7 +298,7 @@ describe("components >", () => {
             });
 
             it("should NOT add .active class when isBusy is true", () => {
-                buttonSubject.isBusy = true;
+                buttonFixture.componentRef.setInput("isBusy", true);
                 buttonFixture.detectChanges();
                 hostElement.dispatchEvent(
                     new KeyboardEvent("keydown", {

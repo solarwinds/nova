@@ -27,6 +27,7 @@ import {
     OnDestroy,
     ViewRef,
     ViewEncapsulation,
+    inject,
 } from "@angular/core";
 import { SafeHtml } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
@@ -34,6 +35,8 @@ import { Subscription } from "rxjs";
 import { IToastConfig } from "./public-api";
 import { ToastPackage } from "./toast-package";
 import { ToastServiceBase } from "./toast.servicebase";
+import { NuiButtonModule } from "../button/button.module";
+import { IconComponent } from "../icon/icon.component";
 
 enum ToastState {
     Inactive = "inactive",
@@ -58,9 +61,15 @@ enum ToastState {
     styleUrls: ["./toast.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: { "[attr.role]": "role" },
-    standalone: false,
+    standalone: true,
+    imports: [NuiButtonModule, IconComponent],
 })
 export class ToastComponent implements OnDestroy {
+    private changeDetector = inject(ChangeDetectorRef);
+    private toastService = inject(ToastServiceBase);
+    private toastPackage = inject(ToastPackage);
+    private ngZone = inject(NgZone);
+
     public body?: string | SafeHtml | null;
     public title?: string;
     public options: IToastConfig;
@@ -83,6 +92,7 @@ export class ToastComponent implements OnDestroy {
 
     /** controls animation */
     private state: ToastState = ToastState.Inactive;
+    private activationTimeout?: ReturnType<typeof setTimeout>;
     private timeout: any;
     private intervalId: NodeJS.Timeout;
     private hideTime: number;
@@ -95,12 +105,9 @@ export class ToastComponent implements OnDestroy {
         success: "severity_ok",
     };
 
-    constructor(
-        private changeDetector: ChangeDetectorRef,
-        private toastService: ToastServiceBase,
-        private toastPackage: ToastPackage,
-        private ngZone: NgZone
-    ) {
+    constructor() {
+        const toastPackage = this.toastPackage;
+
         this.title = toastPackage.title;
         this.body = toastPackage.body;
         this.options = toastPackage.config;
@@ -113,7 +120,7 @@ export class ToastComponent implements OnDestroy {
             .subscribe(() => {
                 this.display = "block";
                 this.detectChanges();
-                setTimeout(() => {
+                this.activationTimeout = setTimeout(() => {
                     this.activateToast();
                     this.detectChanges();
                 }); // Is needed to make "display: none" & "opacity" transitions working
@@ -160,6 +167,7 @@ export class ToastComponent implements OnDestroy {
             return;
         }
 
+        clearTimeout(this.activationTimeout);
         clearTimeout(this.timeout);
         this.state = ToastState.Removed;
         this.fadeOut = true;
@@ -288,6 +296,7 @@ export class ToastComponent implements OnDestroy {
 
     public ngOnDestroy(): void {
         this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        clearTimeout(this.activationTimeout);
         clearInterval(this.intervalId);
         clearTimeout(this.timeout);
     }
