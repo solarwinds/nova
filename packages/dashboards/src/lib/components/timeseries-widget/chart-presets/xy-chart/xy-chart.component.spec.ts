@@ -474,15 +474,41 @@ describe("XYChartComponent", () => {
             expect(component.getLegendValue(cpu, "y1")).toBeUndefined();
         });
 
-        it("preserves the zero fallback for missing legacy PerfStack values", () => {
+        it("preserves missing legacy PerfStack values for the placeholder", () => {
             const cpu = component.chartAssist.legendSeriesSet[0];
             component.widgetData.series[0].legendValueMultiplier = undefined;
-            cpu.data[0].y = undefined;
-            expect(component.getLegendValue(cpu, "y1")).toEqual("0 %");
-            cpu.data[0].y = null;
+            for (const value of [undefined, null, ""]) {
+                cpu.data[0].y = value;
+                expect(component.getLegendValue(cpu, "y1"))
+                    .withContext(`value: ${value}`)
+                    .toBeUndefined();
+            }
+            cpu.data[0].y = 0;
             expect(component.getLegendValue(cpu, "y1")).toEqual("0 %");
             delete component.chartAssist.highlightedDataPoints[cpu.id];
-            expect(component.getLegendValue(cpu, "y1")).toEqual("0 %");
+            expect(component.getLegendValue(cpu, "y1")).toBeUndefined();
+        });
+
+        it("preserves empty values according to the project type", () => {
+            const cpu = component.chartAssist.legendSeriesSet[0];
+            cpu.data[0].y = "";
+
+            expect(component.getLegendValue(cpu, "y1")).toBeUndefined();
+
+            component.configuration.projectType =
+                TimeseriesWidgetProjectType.ModernDashboard;
+            expect(component.getLegendValue(cpu, "y1")).toEqual("");
+        });
+
+        it("applies placeholder handling to formatted legend values", () => {
+            const cpu = component.chartAssist.legendSeriesSet[0];
+            cpu.scales.y.formatters.tick = () => "";
+
+            expect(component.getLegendValue(cpu, "y1")).toBeUndefined();
+
+            component.configuration.projectType =
+                TimeseriesWidgetProjectType.ModernDashboard;
+            expect(component.getLegendValue(cpu, "y1")).toEqual("");
         });
 
         it("falls back to the old percent suffix if no tick formatter exists", () => {

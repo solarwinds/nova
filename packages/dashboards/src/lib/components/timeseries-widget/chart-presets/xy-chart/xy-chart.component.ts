@@ -484,29 +484,35 @@ export abstract class XYChartComponent
                 const legendMultiplier = hasValidMultiplier
                     ? multiplier
                     : this.chartAssist.legendSeriesSet.length;
-                const rawValue = this.chartAssist.getHighlightedValue(
-                    legendSeries,
-                    "y",
-                    undefined,
-                    valueAccessorKey
+                const rawValue = this.getLegendDisplayValue(
+                    this.chartAssist.getHighlightedValue(
+                        legendSeries,
+                        "y",
+                        undefined,
+                        valueAccessorKey
+                    )
                 );
-                if (hasValidMultiplier && rawValue == null) {
-                    return undefined;
+                if (rawValue === undefined || rawValue === "") {
+                    return rawValue;
                 }
 
                 const scaledValue =
-                    parseFloat(`${rawValue ?? 0}`) * legendMultiplier;
+                    parseFloat(`${rawValue}`) * legendMultiplier;
                 const formatter = legendSeries.scales?.y?.formatters?.tick;
 
-                return formatter ? formatter(scaledValue) : `${scaledValue} %`;
+                return this.getLegendDisplayValue(
+                    formatter ? formatter(scaledValue) : `${scaledValue} %`
+                );
             }
         }
 
-        return this.chartAssist.getHighlightedValue(
-            legendSeries,
-            "y",
-            "tick",
-            valueAccessorKey
+        return this.getLegendDisplayValue(
+            this.chartAssist.getHighlightedValue(
+                legendSeries,
+                "y",
+                "tick",
+                valueAccessorKey
+            )
         );
     }
 }

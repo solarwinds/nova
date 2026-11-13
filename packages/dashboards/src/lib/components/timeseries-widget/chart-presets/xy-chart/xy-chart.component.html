@@ -32,14 +32,27 @@
                 (mouseenter)="chartAssist.resetVisibleSeries()">
                 <nui-rich-legend-tile
                     [value]="
-                        chartAssist.getHighlightedValue(
-                            summarySerie,
-                            'y',
-                            'tick'
+                        getLegendDisplayValue(
+                            chartAssist.getHighlightedValue(
+                                summarySerie,
+                                'y',
+                                'tick'
+                            )
                         )
                     "
                     [backgroundColor]="summaryLegendBcgColor"
                     [color]="summaryLegendColor">
+                    <span
+                        top
+                        role="img"
+                        aria-label="No data"
+                        i18n-aria-label
+                        [hidden]="
+                            configuration.projectType !==
+                            timeseriesWidgetProjectType.PerfstackApp
+                        "
+                        >--</span
+                    >
                 </nui-rich-legend-tile>
 
                 <div description class="description-container">
@@ -100,6 +113,17 @@
                     [color]="
                         chartAssist.palette.textColors.get(legendSeries.id)
                     ">
+                    <span
+                        top
+                        role="img"
+                        aria-label="No data"
+                        i18n-aria-label
+                        [hidden]="
+                            configuration.projectType !==
+                            timeseriesWidgetProjectType.PerfstackApp
+                        "
+                        >--</span
+                    >
                     <nui-chart-marker
                         rightEdge
                         [marker]="chartAssist.markers.get(legendSeries.id)"

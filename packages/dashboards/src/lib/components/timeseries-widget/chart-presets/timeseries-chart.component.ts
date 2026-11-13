@@ -47,6 +47,7 @@ import {
     ITimeseriesWidgetData,
     ITimeseriesWidgetSeriesData,
     TimeseriesChartPreset,
+    TimeseriesWidgetProjectType,
 } from "../types";
 
 @Directive()
@@ -64,6 +65,19 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData>
     protected buildChart$ = new Subject<void>();
     protected resetChart = false;
     protected chartBuilt = false;
+
+    protected readonly timeseriesWidgetProjectType =
+        TimeseriesWidgetProjectType;
+
+    public getLegendDisplayValue(
+        value: string | number | null | undefined
+    ): string | number | undefined {
+        return value === "" &&
+            this.configuration.projectType ===
+                TimeseriesWidgetProjectType.PerfstackApp
+            ? undefined
+            : value ?? undefined;
+    }
 
     public get seriesInteractive(): boolean {
         return (
