@@ -28,7 +28,7 @@ test.describe("a11y: paginator", () => {
     });
 
     test("should check a11y of paginator", async ({ runA11yScan }) => {
-        await runA11yScan(PaginatorAtom, rulesToDisable);
+        await runA11yScan(PaginatorAtom, rulesToDisable, ["wcag2aa"]);
     });
 });
 
@@ -49,7 +49,7 @@ test.describe("a11y: virtualized paginator", () => {
                 : "#nui-demo-virtualized-paginator";
             await page.locator(id).locator(".nui-paginator__dots").focus();
             await page.keyboard.press("Enter");
-            await runA11yScan("cdk-virtual-scroll-viewport");
+            await runA11yScan("cdk-virtual-scroll-viewport", [], ["wcag2aa"]);
         });
     });
 });
