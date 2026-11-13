@@ -21,12 +21,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { EventBus } from "@nova-ui/bits";
-import { XYGridConfig } from "@nova-ui/charts";
+import { LinearScale, TimeScale, XYGridConfig } from "@nova-ui/charts";
 
 import { LineChartComponent } from "./line-chart.component";
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../../types";
+import { LegendPlacement } from "../../../../../widget-types/common/widget/legend";
+import {
+    ITimeseriesWidgetConfig,
+    TimeseriesChartPreset,
+    TimeseriesScaleType,
+    TimeseriesWidgetProjectType,
+} from "../../../types";
 
 describe("LineChartComponent", () => {
     let component: LineChartComponent;
@@ -61,5 +68,169 @@ describe("LineChartComponent", () => {
             (component.chartAssist.chart.getGrid().config() as XYGridConfig)
                 .axis.left.fit
         ).toEqual(true);
+    });
+
+    describe("legend values", () => {
+        let highlightedValues: Record<string, string | number | undefined>;
+        let highlightedValueSpy: jasmine.Spy;
+
+        const getTiles = (): HTMLElement[] =>
+            Array.from(
+                fixture.nativeElement.querySelectorAll("nui-rich-legend-tile")
+            );
+
+        beforeEach(() => {
+            component.configuration = {
+                interaction: null,
+                displayedSeries: [],
+                legendPlacement: LegendPlacement.Right,
+                enableZoom: false,
+                preset: TimeseriesChartPreset.Line,
+                scales: {
+                    x: { type: TimeseriesScaleType.Time },
+                    y: { type: TimeseriesScaleType.Linear },
+                },
+                units: "generic",
+                projectType: TimeseriesWidgetProjectType.PerfstackApp,
+            } satisfies ITimeseriesWidgetConfig;
+            component.widgetData = {
+                series: [
+                    { id: "metric", name: "Metric", description: "", data: [] },
+                ],
+                summarySerie: {
+                    id: "summary",
+                    name: "Summary",
+                    description: "",
+                    data: [],
+                },
+            };
+            const series = component.mapSeriesSet(component.widgetData.series, {
+                x: new TimeScale(),
+                y: new LinearScale(),
+            });
+            component.chartAssist.update(series);
+            highlightedValues = {};
+            highlightedValueSpy = spyOn(
+                component.chartAssist,
+                "getHighlightedValue"
+            ).and.callFake(series => highlightedValues[series.id]);
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+        });
+
+        it("should render accessible placeholders for missing metric and summary values", () => {
+            const tiles = getTiles();
+
+            expect(tiles.length).toBe(2);
+            for (const tile of tiles) {
+                const placeholder = tile.querySelector<HTMLElement>(
+                    "[role='img'][aria-label='No data']"
+                );
+                expect(placeholder?.textContent?.trim()).toBe("--");
+                expect(placeholder?.hidden).toBeFalse();
+            }
+        });
+
+        it("should replace placeholders with available values, including zero and negative values, and restore them when unavailable", () => {
+            highlightedValues["metric"] = 0;
+            highlightedValues["summary"] = "12 ms";
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+
+            expect(getTiles()[0].textContent?.trim()).toBe("12 ms");
+            expect(getTiles()[1].textContent?.trim()).toBe("0");
+
+            highlightedValues["metric"] = -1;
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+
+            expect(getTiles()[1].textContent?.trim()).toBe("-1");
+            expect(
+                getTiles()[1].querySelector("[aria-label='No data']")
+            ).toBeNull();
+
+            highlightedValues["metric"] = "";
+            highlightedValues["summary"] = undefined;
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+
+            expect(getTiles()[0].textContent?.trim()).toBe("--");
+            expect(getTiles()[1].textContent?.trim()).toBe("--");
+        });
+
+        it("should render a real highlighted measurement after an empty series receives data", () => {
+            const data = [{ x: new Date("2026-01-01T00:00:00Z"), y: 17 }];
+            const metric = component.chartAssist.legendSeriesSet[0];
+            metric.data = data;
+            component.chartAssist.highlightedDataPoints = {
+                metric: {
+                    seriesId: metric.id,
+                    dataSeries: metric,
+                    index: 0,
+                    data: data[0],
+                    position: undefined,
+                },
+            };
+            highlightedValueSpy.and.callThrough();
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+
+            expect(getTiles()[1].textContent?.trim()).toBe("17");
+            expect(
+                getTiles()[1].querySelector("[aria-label='No data']")
+            ).toBeNull();
+        });
+
+        it("should not display placeholders in modern dashboards", () => {
+            component.configuration.projectType =
+                TimeseriesWidgetProjectType.ModernDashboard;
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+
+            for (const tile of getTiles()) {
+                const placeholder = tile.querySelector<HTMLElement>(
+                    "[role='img'][aria-label='No data']"
+                );
+                expect(placeholder?.hidden).toBeTrue();
+            }
+        });
+
+        it("should not turn a missing stacked percentage into zero", () => {
+            component.configuration.preset = TimeseriesChartPreset.StackedArea;
+            component.configuration.units = "percent";
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+            expect(getTiles()[1].textContent?.trim()).toBe("--");
+
+            highlightedValues["metric"] = 0;
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+            expect(getTiles()[1].textContent?.trim()).toBe("0 %");
+        });
+
+        it("should project the conditional legend menu and summary remove button", () => {
+            component.configuration.allowLegendMenu = true;
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+
+            expect(
+                fixture.nativeElement.querySelector(
+                    ".xy-chart__legend-series .legend-menu nui-menu"
+                )
+            ).not.toBeNull();
+
+            component.configuration.preset = TimeseriesChartPreset.StackedArea;
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+
+            const removeButton: HTMLButtonElement =
+                fixture.nativeElement.querySelector(
+                    ".summary-serie .legend-menu button"
+                );
+            expect(removeButton).not.toBeNull();
+            const removeMetricSpy = spyOn(component, "removeMetric");
+            removeButton.click();
+            expect(removeMetricSpy).toHaveBeenCalledWith("summary");
+        });
     });
 });
