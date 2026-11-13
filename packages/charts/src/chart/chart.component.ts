@@ -36,6 +36,7 @@ import {
 } from "@angular/core";
 import debounce from "lodash/debounce";
 
+import { ChartKeyboardTooltipController } from "./chart-keyboard-tooltip-controller";
 import {
     CHART_COMPONENT,
     CHART_VIEW_STATUS_EVENT,
@@ -103,8 +104,8 @@ export class ChartComponent
     public resizeObserver?: ResizeObserver;
     private resizeHandler: Function;
     private intersectionObserver: IntersectionObserver;
-    private keyboardDataPointIndex = 0;
-    private keyboardInspectionActive = false;
+    private readonly keyboardTooltipController =
+        new ChartKeyboardTooltipController();
 
     constructor(
         private elRef: ElementRef,
@@ -120,17 +121,13 @@ export class ChartComponent
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (
-            this.keyboardInspectionActive &&
-            (changes["keyboardTooltips"] || changes["chart"])
-        ) {
-            const previousPlugin: ChartTooltipsPlugin | undefined =
-                changes["keyboardTooltips"]?.previousValue ??
-                this.keyboardTooltips;
-            previousPlugin?.hideKeyboardTooltips();
-            this.keyboardInspectionActive = false;
-            this.keyboardDataPointIndex = 0;
-        }
+        const previousPlugin: ChartTooltipsPlugin | undefined =
+            changes["keyboardTooltips"]?.previousValue ?? this.keyboardTooltips;
+        this.keyboardTooltipController.onConfigurationChange(
+            previousPlugin,
+            this.keyboardTooltips,
+            !!changes["keyboardTooltips"] || !!changes["chart"]
+        );
         if (changes["chart"]) {
             const previousChart: IChart = changes["chart"].previousValue;
             if (previousChart) {
@@ -146,80 +143,24 @@ export class ChartComponent
 
     @HostListener("focus")
     public onKeyboardFocus(): void {
-        this.keyboardDataPointIndex = -1;
-        if (this.elRef.nativeElement.matches(":focus-visible")) {
-            this.keyboardDataPointIndex = 0;
-            this.showKeyboardTooltip();
-        }
+        this.keyboardTooltipController.onFocus(
+            this.keyboardTooltips,
+            this.elRef.nativeElement.matches(":focus-visible")
+        );
     }
 
     @HostListener("keydown", ["$event"])
     public onKeyboardNavigation(event: KeyboardEvent): void {
-        const plugin = this.keyboardTooltips;
-        if (
-            !plugin ||
-            event.target !== this.elRef.nativeElement ||
-            event.altKey ||
-            event.ctrlKey ||
-            event.metaKey ||
-            event.shiftKey
-        ) {
-            return;
-        }
-        if (event.key === "Escape") {
-            if (!this.keyboardInspectionActive) {
-                return;
-            }
-            event.preventDefault();
-            event.stopPropagation();
-            plugin.hideKeyboardTooltips();
-            this.keyboardInspectionActive = false;
-            return;
-        }
-        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
-            return;
-        }
-        const count = plugin.getKeyboardDataPointCount();
-        if (count === 0) {
-            plugin.hideKeyboardTooltips();
-            return;
-        }
-        event.preventDefault();
-        event.stopPropagation();
-        this.keyboardDataPointIndex = Math.max(
-            0,
-            Math.min(
-                count - 1,
-                this.keyboardDataPointIndex +
-                    (event.key === "ArrowRight" ? 1 : -1)
-            )
+        this.keyboardTooltipController.onKeydown(
+            event,
+            this.keyboardTooltips,
+            this.elRef.nativeElement
         );
-        this.showKeyboardTooltip();
     }
 
     @HostListener("blur")
     public onKeyboardBlur(): void {
-        this.keyboardTooltips?.hideKeyboardTooltips();
-        this.keyboardDataPointIndex = 0;
-        this.keyboardInspectionActive = false;
-    }
-
-    private showKeyboardTooltip(): void {
-        const plugin = this.keyboardTooltips;
-        if (!plugin) {
-            return;
-        }
-        const count = plugin.getKeyboardDataPointCount();
-        if (count === 0) {
-            plugin.hideKeyboardTooltips();
-            return;
-        }
-        this.keyboardDataPointIndex = Math.min(
-            this.keyboardDataPointIndex,
-            count - 1
-        );
-        plugin.showForIndex(this.keyboardDataPointIndex);
-        this.keyboardInspectionActive = true;
+        this.keyboardTooltipController.onBlur(this.keyboardTooltips);
     }
 
     public ngAfterContentInit(): void {
