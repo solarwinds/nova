@@ -189,6 +189,25 @@ describe("components >", () => {
             componentInstance.ngOnDestroy();
         }));
 
+        it("should cancel pending activation when destroyed", fakeAsync(() => {
+            const componentInstance = new ToastComponent(
+                mockChangeDetector,
+                toastService,
+                toastPackage,
+                mockNgZone
+            );
+            const activate = spyOn(
+                componentInstance,
+                "activateToast"
+            ).and.callThrough();
+
+            toastRef.activate();
+            componentInstance.ngOnDestroy();
+            tick();
+            expect(activate).not.toHaveBeenCalled();
+            expect(componentInstance["state"]).toEqual("inactive");
+        }));
+
         it("After remove toast should be removed", fakeAsync(() => {
             const componentInstance = new ToastComponent(
                 mockChangeDetector,
