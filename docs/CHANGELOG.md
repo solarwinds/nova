@@ -1,4 +1,10 @@
 # Changelog
+## [Unreleased]
+
+### Fixes
+- `@nova-ui/dashboards` | Percent stacked-area legends support per-series multipliers, keeping PerfStack CPU and `Remaining` values accurate when chart data is normalized by total CPU count. PerfStack retains its legacy fallback when no valid multiplier is supplied, and unavailable values remain distinct from zero when one is supplied.
+- `@nova-ui/charts` | Percentage-area stacking excludes series marked `preprocess: false` from stack totals.
+
 ## [20.0.4] 📅 2026-03-24
 ### Added
 - `@nova-ui/dashboards` | Update timeseries widget to allow values over 100 percents
