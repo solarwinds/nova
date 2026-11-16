@@ -20,7 +20,7 @@
 
 import { RadioGroupAtom } from "./radio-group.atom";
 import { Atom } from "../../atom";
-import { Animations, Helpers, test } from "../../setup";
+import { Animations, expect, Helpers, test } from "../../setup";
 import { Camera } from "../../virtual-camera/Camera";
 
 const name = "Radio Group";
@@ -53,6 +53,24 @@ test.describe(`Visual tests: ${name}`, () => {
 
         await Helpers.switchDarkTheme("on");
         await camera.say.cheese(`Dark theme`);
+        await Helpers.switchDarkTheme("off");
+
+        const banana = fruitGroup.getRadioInputByValue("Banana");
+        await banana.focus();
+        await page.keyboard.press("Tab");
+        await page.keyboard.press("Shift+Tab");
+        await expect(banana).toBeFocused();
+        await camera.say.cheese(`Keyboard focus`);
+
+        await page.keyboard.press("ArrowLeft");
+        const papaya = fruitGroup.getRadioInputByValue("Papaya");
+        await expect(papaya).toBeFocused();
+        await expect(papaya).toBeChecked();
+        await camera.say.cheese(`Last radio keyboard focus`);
+
+        await Helpers.switchDarkTheme("on");
+        await expect(papaya).toBeFocused();
+        await camera.say.cheese(`Dark theme keyboard focus`);
         await Helpers.switchDarkTheme("off");
 
         await camera.turn.off();

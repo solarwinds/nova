@@ -1,7 +1,9 @@
 <h1 i18n>Selected fruit: {{ selectedFruit }}</h1>
 <nui-radio-group
     id="fruit-radio-group-inline"
-    name="fruit"
+    name="fruit-inline"
+    ariaLabel="Inline fruit selection"
+    i18n-ariaLabel
     class="nui-radio-group-inline"
     [(value)]="selectedFruit">
     <nui-radio
