@@ -5,6 +5,8 @@
 ### Fixes
 
 - `@nova-ui/dashboards` | Show accessible placeholders for unavailable PerfStack legend values instead of blank tiles or misleading zero percentages.
+- `@nova-ui/dashboards` | Percent stacked-area legends support per-series multipliers, keeping PerfStack CPU and `Remaining` values accurate when chart data is normalized by total CPU count. PerfStack retains its legacy fallback when no valid multiplier is supplied, and unavailable values remain distinct from zero when one is supplied.
+- `@nova-ui/charts` | Percentage-area stacking excludes series marked `preprocess: false` from stack totals.
 - `@nova-ui/bits` | **nui-paginator** keeps keyboard focus after a page change (WCAG 2.4.3): the activated button stays focused, and focus moves to the current page when Previous/Next becomes disabled or a page is selected from the ellipsis popup, including body-appended popups. The ellipsis popup closes with Escape (focus returns to its trigger) or when focus leaves it, and Tab from the trigger enters the popup directly, also when it is appended to the body.
 
 ## [20.0.13] 📅 2026-10-26
