@@ -23,6 +23,141 @@ import { Atom } from "../../atom";
 import { expect, Helpers, test } from "../../setup";
 import { CheckboxAtom } from "../checkbox/checkbox.atom";
 
+test.describe("Radio group documentation examples", () => {
+    test.beforeEach(async ({ page }) => {
+        await Helpers.prepareBrowser("radio-group", page);
+    });
+
+    test("should keep named examples independently selected and keyboard navigation inside their group", async ({
+        page,
+    }) => {
+        for (const name of [
+            "Basic fruit selection",
+            "Inline fruit selection",
+            "Disabled fruit selection",
+            "Color selection with hints",
+            "Color selection with elaborate hints",
+            "Color selection with change notification",
+            "Vegetable selection",
+        ]) {
+            await expect(
+                page.getByRole("radiogroup", { name, exact: true })
+            ).toBeVisible();
+        }
+
+        const names = await page
+            .locator("nui-radio-group")
+            .evaluateAll(groups =>
+                groups.map(
+                    group =>
+                        group.querySelector<HTMLInputElement>("input")?.name
+                )
+            );
+        expect(names).not.toContain("");
+        expect(names).not.toContain(undefined);
+        expect(new Set(names).size).toBe(names.length);
+
+        const mismatches = await page
+            .locator("nui-radio-group input[type=radio]")
+            .evaluateAll((inputs: HTMLInputElement[]) =>
+                inputs
+                    .filter(
+                        input =>
+                            input.checked !==
+                            (input.getAttribute("aria-checked") === "true")
+                    )
+                    .map(input => ({
+                        name: input.name,
+                        value: input.value,
+                    }))
+            );
+        expect(mismatches).toEqual([]);
+
+        const basic = page.getByRole("radiogroup", {
+            name: "Basic fruit selection",
+            exact: true,
+        });
+        const inline = page.getByRole("radiogroup", {
+            name: "Inline fruit selection",
+            exact: true,
+        });
+        await expect(
+            inline.getByRole("radio", { name: "Orange", exact: true })
+        ).toBeChecked();
+        await basic.getByText("Papaya", { exact: true }).click();
+        await page.keyboard.press("ArrowRight");
+        const banana = basic.getByRole("radio", {
+            name: "Banana",
+            exact: true,
+        });
+        await expect(banana).toBeFocused();
+        await expect(banana).toBeChecked();
+        await expect(banana).toHaveAttribute("aria-checked", "true");
+        await expect(
+            inline.getByRole("radio", { name: "Orange", exact: true })
+        ).toBeChecked();
+
+        const hints = page.getByRole("radiogroup", {
+            name: "Color selection with hints",
+            exact: true,
+        });
+        const changes = page.getByRole("radiogroup", {
+            name: "Color selection with change notification",
+            exact: true,
+        });
+        await changes.getByText("Red", { exact: true }).click();
+        const green = hints.getByRole("radio", {
+            name: "Green",
+            exact: true,
+        });
+        await expect(green).toBeChecked();
+        await expect(green).toHaveAttribute("aria-checked", "true");
+    });
+
+    test("should keep interactive descriptions outside labels and activate hint links without selecting another radio", async ({
+        page,
+    }) => {
+        const group = page.getByRole("radiogroup", {
+            name: "Color selection with elaborate hints",
+            exact: true,
+        });
+        const red = group.getByRole("radio", { name: "Red", exact: true });
+        const green = group.getByRole("radio", {
+            name: "Green",
+            exact: true,
+        });
+        await expect(
+            group.locator("label a, label button, label textarea, label select")
+        ).toHaveCount(0);
+        const radio = red.locator("xpath=ancestor::nui-radio");
+
+        await group.getByText("Green", { exact: true }).click();
+        await expect(green).toBeChecked();
+        await page
+            .context()
+            .route("https://en.wiktionary.org/**", async route =>
+                route.fulfill({
+                    contentType: "text/html",
+                    body: "<title>Hint destination</title>",
+                })
+            );
+        const link = radio.getByRole("link", {
+            name: "elaborate",
+            exact: true,
+        });
+        await link.focus();
+        const popupPromise = page.waitForEvent("popup");
+        await page.keyboard.press("Enter");
+        const popup = await popupPromise;
+        await expect(popup).toHaveTitle("Hint destination");
+        await popup.close();
+        await expect(green).toBeChecked();
+        await expect(green).toHaveAttribute("aria-checked", "true");
+        await expect(red).not.toBeChecked();
+        await expect(group.locator("input:checked")).toHaveCount(1);
+    });
+});
+
 test.describe("USERCONTROL Radio group", () => {
     let basicGroup: RadioGroupAtom;
     let disabledGroup: RadioGroupAtom;
@@ -47,6 +182,213 @@ test.describe("USERCONTROL Radio group", () => {
     test("should have 'Kiwi' fruit value", async () => {
         await basicGroup.getRadioByValue("Kiwi").click();
         await basicGroup.toHaveValue("Kiwi");
+    });
+
+    test("should expose a named group with one labeled native radio per option", async ({
+        page,
+    }) => {
+        const group = page.getByRole("radiogroup", {
+            name: "Fruit selection",
+            exact: true,
+        });
+        await expect(group.getByRole("radio")).toHaveCount(4);
+        for (const fruit of ["Banana", "Orange", "Kiwi", "Papaya"]) {
+            const input = group.getByRole("radio", {
+                name: fruit,
+                exact: true,
+            });
+            await expect(input).toHaveAttribute("type", "radio");
+            expect(
+                await input.evaluate(
+                    (radio: HTMLInputElement) =>
+                        !!radio.id &&
+                        radio.labels?.[0]?.htmlFor === radio.id &&
+                        radio.labels[0].control === radio
+                )
+            ).toBe(true);
+        }
+
+        const ids = await page
+            .locator("input[type=radio]")
+            .evaluateAll(inputs => inputs.map(input => input.id));
+        expect(ids).not.toContain("");
+        expect(new Set(ids).size).toBe(ids.length);
+    });
+
+    test("should separate option names from hints and preserve an explicit label reference", async ({
+        page,
+    }) => {
+        const group = page.getByRole("radiogroup", {
+            name: "Query input method",
+            exact: true,
+        });
+        const graphical = group.getByRole("radio", {
+            name: "Use the graphical query builder",
+            exact: true,
+        });
+        const handEdit = group.getByRole("radio", {
+            name: "Hand-edit a SWQL query",
+            exact: true,
+        });
+        await expect(graphical).toHaveAccessibleDescription(
+            "Build the query visually"
+        );
+        await expect(handEdit).toHaveAttribute(
+            "aria-labelledby",
+            "query-hand-edit-label"
+        );
+        await expect(handEdit).toHaveAccessibleDescription(
+            "Edit the query directly"
+        );
+    });
+
+    test("should move the text cursor without changing radios when editing inside a group", async ({
+        page,
+    }) => {
+        const group = page.getByRole("radiogroup", {
+            name: "Query input method",
+            exact: true,
+        });
+        const editor = page.getByRole("textbox", {
+            name: "Query text",
+            exact: true,
+        });
+        const queryText = await editor.inputValue();
+
+        for (const name of [
+            "Use the graphical query builder",
+            "Hand-edit a SWQL query",
+        ]) {
+            const selected = group.getByRole("radio", { name, exact: true });
+            await selected
+                .locator("..")
+                .locator(".nui-radio__transclude")
+                .click();
+            await expect(selected).toHaveAttribute("aria-checked", "true");
+            await editor.click();
+
+            for (const [key, position] of [
+                ["ArrowLeft", 6],
+                ["ArrowRight", 8],
+            ] as const) {
+                await editor.evaluate((input: HTMLTextAreaElement) =>
+                    input.setSelectionRange(7, 7)
+                );
+                await page.keyboard.press(key);
+                expect(
+                    await editor.evaluate(
+                        (input: HTMLTextAreaElement) => input.selectionStart
+                    )
+                ).toBe(position);
+                await expect(editor).toHaveValue(queryText);
+                await expect(editor).toBeFocused();
+                await expect(selected).toBeChecked();
+                await expect(selected).toHaveAttribute("aria-checked", "true");
+                await expect(group.locator("input:checked")).toHaveCount(1);
+            }
+            for (const key of ["ArrowUp", "ArrowDown"]) {
+                const previousPosition = await editor.evaluate(
+                    (input: HTMLTextAreaElement) => input.selectionStart
+                );
+                await page.keyboard.press(key);
+                expect(
+                    await editor.evaluate(
+                        (input: HTMLTextAreaElement) => input.selectionStart
+                    )
+                ).not.toBe(previousPosition);
+                await expect(editor).toHaveValue(queryText);
+                await expect(editor).toBeFocused();
+                await expect(selected).toBeChecked();
+                await expect(selected).toHaveAttribute("aria-checked", "true");
+                await expect(group.locator("input:checked")).toHaveCount(1);
+            }
+        }
+    });
+
+    test("should navigate enabled radios with arrows and leave the group with Tab", async ({
+        page,
+    }) => {
+        const orange = basicGroup.getRadioInputByValue("Orange");
+        const toggle = toggleDisabledGroupCheckbox
+            .getLocator()
+            .locator("label");
+        await toggle.focus();
+        await page.keyboard.press("Shift+Tab");
+        await expect(orange).toBeFocused();
+
+        for (const fruit of ["Kiwi", "Papaya", "Orange"]) {
+            await page.keyboard.press("ArrowRight");
+            const input = basicGroup.getRadioInputByValue(fruit);
+            await expect(input).toBeFocused();
+            await expect(input).toBeChecked();
+            await expect(input).toHaveAttribute("aria-checked", "true");
+            await expect(
+                basicGroup.getLocator().locator("input[aria-checked=true]")
+            ).toHaveCount(1);
+            await expect(
+                basicGroup.getLocator().locator("input:checked")
+            ).toHaveCount(1);
+        }
+
+        await page.keyboard.press("ArrowLeft");
+        const papaya = basicGroup.getRadioInputByValue("Papaya");
+        await expect(papaya).toBeFocused();
+        await expect(papaya).toBeChecked();
+        await page.keyboard.press("Shift+Tab");
+        await expect(basicGroup.getLocator().locator(":focus")).toHaveCount(0);
+        await page.keyboard.press("Tab");
+        await expect(papaya).toBeFocused();
+        await page.keyboard.press("Tab");
+        await expect(toggle).toBeFocused();
+    });
+
+    test("should show keyboard focus on the visible radio mark in both themes", async ({
+        page,
+    }) => {
+        const mark = (fruit: string) =>
+            basicGroup
+                .getRadioInputByValue(fruit)
+                .locator("..")
+                .locator(".nui-radio__mark");
+
+        for (const theme of ["off", "on"] as const) {
+            await Helpers.switchDarkTheme(theme);
+            await basicGroup.selectByValue("Orange");
+            await page.keyboard.press("Tab");
+            await page.keyboard.press("Shift+Tab");
+            await expect(
+                basicGroup.getRadioInputByValue("Orange")
+            ).toBeFocused();
+            await expect(mark("Orange")).toBeVisible();
+            await expect(mark("Orange")).not.toHaveCSS("box-shadow", "none");
+
+            await page.keyboard.press("ArrowLeft");
+            await expect(
+                basicGroup.getRadioInputByValue("Papaya")
+            ).toBeFocused();
+            await expect(mark("Papaya")).toBeVisible();
+            await expect(mark("Papaya")).not.toHaveCSS("box-shadow", "none");
+            await expect(mark("Orange")).toHaveCSS("box-shadow", "none");
+        }
+    });
+
+    test("should keep the visible radio focus indicator in forced colors", async ({
+        page,
+    }) => {
+        await page.emulateMedia({ forcedColors: "active" });
+        const orange = basicGroup.getRadioInputByValue("Orange");
+        await orange.focus();
+        await page.keyboard.press("Tab");
+        await page.keyboard.press("Shift+Tab");
+
+        const mark = basicGroup
+            .getRadioInputByValue("Orange")
+            .locator("..")
+            .locator(".nui-radio__mark");
+        await expect(orange).toBeFocused();
+        await expect(mark).toBeVisible();
+        await expect(mark).toHaveCSS("outline-style", "solid");
+        await expect(mark).toHaveCSS("outline-width", "2px");
     });
 
     test("should not be allowed to select if disabled", async () => {

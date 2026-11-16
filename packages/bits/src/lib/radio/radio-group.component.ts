@@ -44,6 +44,7 @@ import _isUndefined from "lodash/isUndefined";
 import { Subscription } from "rxjs";
 
 import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
+import { _uniqueId } from "../../functions/unique-id";
 import { EventBusService } from "../../services/event-bus.service";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
@@ -234,6 +235,9 @@ export class RadioGroupComponent
     standalone: false,
 })
 export class RadioComponent implements OnInit, OnDestroy {
+    public readonly inputId = _uniqueId("nui-radio-input-");
+    public readonly hintId = `${this.inputId}-hint`;
+
     /**
      * Sets the radio instance value
      */

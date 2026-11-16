@@ -2,6 +2,8 @@
     <nui-radio-group
         id="basic-radio-group"
         name="fruit"
+        ariaLabel="Fruit selection"
+        i18n-ariaLabel
         [(value)]="selectedFruit">
         <nui-radio
             *ngFor="let fruit of fruits"
@@ -34,4 +36,24 @@
         (valueChange)="toggleDisabled($event)">
         Disabled
     </nui-checkbox>
+
+    <nui-radio-group
+        id="query-method-radio-group"
+        name="query-method"
+        ariaLabel="Query input method"
+        i18n-ariaLabel
+        [(value)]="queryMethod">
+        <nui-radio value="graphical" [checked]="true" [hint]="queryHint">
+            <span i18n>Use the graphical query builder</span>
+        </nui-radio>
+        <label for="query-text-input" i18n>Query text</label>
+        <textarea id="query-text-input">
+SELECT Caption
+FROM Orion.Nodes</textarea
+        >
+        <nui-radio value="hand-edit" ariaLabelledby="query-hand-edit-label">
+            <span id="query-hand-edit-label" i18n>Hand-edit a SWQL query</span>
+            <span hint i18n>Edit the query directly</span>
+        </nui-radio>
+    </nui-radio-group>
 </div>
