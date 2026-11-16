@@ -33,6 +33,7 @@ import {
     LineAccessors,
     LinearScale,
     SET_DOMAIN_EVENT,
+    stackedAreaAccessors,
     TimeScale,
     TimeseriesZoomPlugin,
     XYGrid,
@@ -54,8 +55,11 @@ import {
 import {
     ITimeseriesWidgetConfig,
     ITimeseriesWidgetData,
+    TimeseriesChartPreset,
     TimeseriesInteractionType,
+    TimeseriesScaleType,
     TimeseriesTransformer,
+    TimeseriesWidgetProjectType,
 } from "../../types";
 
 @Component({
@@ -326,6 +330,281 @@ describe("XYChartComponent", () => {
 
             expect(res[0].scales.y).toEqual(scales.yRight);
             expect(res[1].scales.y).toEqual(scales.y);
+        });
+    });
+
+    describe("getLegendValue", () => {
+        beforeEach(() => {
+            component.ngOnChanges({
+                configuration: {
+                    isFirstChange: () => false,
+                    currentValue: {},
+                } as SimpleChange,
+            });
+            component.configuration = {
+                projectType: TimeseriesWidgetProjectType.PerfstackApp,
+                preset: TimeseriesChartPreset.StackedArea,
+                units: "percent",
+            } as ITimeseriesWidgetConfig;
+            component.widgetData = {
+                series: [
+                    {
+                        id: "cpu",
+                        name: "CPU",
+                        description: "",
+                        data: [{ x: 1, y: 2.5 }],
+                        legendValueMultiplier: 16,
+                    },
+                    {
+                        id: "remaining",
+                        name: "Remaining",
+                        description: "",
+                        data: [{ x: 1, y: 2.5 }],
+                        legendValueMultiplier: 8,
+                    },
+                ],
+                summarySerie: {
+                    id: "summary",
+                    name: "Summary",
+                    description: "",
+                    data: [],
+                },
+            };
+            const yScale = component.timeseriesScalesService.getScale(
+                {
+                    type: TimeseriesScaleType.Linear,
+                    properties: { axisUnits: "percent" },
+                },
+                "percent",
+                component.configuration
+            );
+            const mappedSeries = component.mapSeriesSet(
+                component.widgetData.series,
+                { x: new TimeScale(), y: yScale }
+            );
+            mappedSeries[0].accessors = stackedAreaAccessors();
+            mappedSeries[1].accessors = stackedAreaAccessors();
+            spyOn(component.chartAssist.chart, "update");
+            component.chartAssist.update(mappedSeries);
+            const [cpu, remaining] = component.chartAssist.legendSeriesSet;
+            component.chartAssist.highlightedDataPoints = {
+                cpu: {
+                    seriesId: cpu.id,
+                    dataSeries: cpu,
+                    index: 0,
+                    data: cpu.data[0],
+                },
+                remaining: {
+                    seriesId: remaining.id,
+                    dataSeries: remaining,
+                    index: 0,
+                    data: remaining.data[0],
+                },
+            };
+            spyOn(
+                component.chartAssist,
+                "getHighlightedValue"
+            ).and.callThrough();
+        });
+
+        it("uses the matching widget series multiplier, not the legend count or position", () => {
+            const [cpu, remaining] = component.chartAssist.legendSeriesSet;
+
+            expect(component.getLegendValue(remaining, "y1")).toEqual("20 %");
+            expect(component.getLegendValue(cpu, "y1")).toEqual("40 %");
+            expect(
+                component.chartAssist.getHighlightedValue
+            ).toHaveBeenCalledWith(cpu, "y", undefined, "y1");
+        });
+
+        it("multiplies the raw CPU value before formatting", () => {
+            const cpu = component.chartAssist.legendSeriesSet[0];
+            cpu.data[0].y = 37 / 16;
+            cpu.data[0].__stack_y = { start: 10, end: 15 };
+
+            expect(
+                component.chartAssist.getHighlightedValue(
+                    cpu,
+                    "y",
+                    "tick",
+                    "y1"
+                )
+            ).toEqual(`${(2.3).toLocaleString()} %`);
+            expect(component.getLegendValue(cpu, "y1")).toEqual("37 %");
+        });
+
+        it("formats the raw Remaining sum without floating-point noise", () => {
+            const remaining = component.chartAssist.legendSeriesSet[1];
+            remaining.data[0].y = (7 * 50) / 16;
+            component.widgetData.series[1].legendValueMultiplier = 16 / 7;
+
+            expect(component.getLegendValue(remaining, "y1")).toEqual("50 %");
+            remaining.data[0].y = 216 / 16;
+            expect(component.getLegendValue(remaining, "y1")).toEqual(
+                `${(30.9).toLocaleString()} %`
+            );
+        });
+
+        it("preserves missing values when a series multiplier is provided", () => {
+            const cpu = component.chartAssist.legendSeriesSet[0];
+            for (const projectType of [
+                TimeseriesWidgetProjectType.PerfstackApp,
+                TimeseriesWidgetProjectType.ModernDashboard,
+                undefined,
+            ]) {
+                component.configuration.projectType = projectType;
+                for (const value of [undefined, null]) {
+                    cpu.data[0].y = value;
+                    expect(component.getLegendValue(cpu, "y1"))
+                        .withContext(
+                            `projectType: ${projectType}, value: ${value}`
+                        )
+                        .toBeUndefined();
+                }
+
+                cpu.data[0].y = 0;
+                expect(component.getLegendValue(cpu, "y1"))
+                    .withContext(`projectType: ${projectType}, value: 0`)
+                    .toEqual("0 %");
+            }
+
+            const highlightedPoint =
+                component.chartAssist.highlightedDataPoints[cpu.id];
+            delete component.chartAssist.highlightedDataPoints[cpu.id];
+            expect(component.getLegendValue(cpu, "y1")).toBeUndefined();
+            component.chartAssist.highlightedDataPoints[cpu.id] =
+                highlightedPoint;
+            cpu.data = [];
+            expect(component.getLegendValue(cpu, "y1")).toBeUndefined();
+        });
+
+        it("preserves the zero fallback for missing legacy PerfStack values", () => {
+            const cpu = component.chartAssist.legendSeriesSet[0];
+            component.widgetData.series[0].legendValueMultiplier = undefined;
+            cpu.data[0].y = undefined;
+            expect(component.getLegendValue(cpu, "y1")).toEqual("0 %");
+            cpu.data[0].y = null;
+            expect(component.getLegendValue(cpu, "y1")).toEqual("0 %");
+            delete component.chartAssist.highlightedDataPoints[cpu.id];
+            expect(component.getLegendValue(cpu, "y1")).toEqual("0 %");
+        });
+
+        it("falls back to the old percent suffix if no tick formatter exists", () => {
+            const cpu = component.chartAssist.legendSeriesSet[0];
+            cpu.scales.y.formatters.tick = undefined;
+
+            expect(component.getLegendValue(cpu, "y1")).toEqual("40 %");
+        });
+
+        it("excludes the summary from the legend series count", () => {
+            expect(
+                component.chartAssist.legendSeriesSet.map((s) => s.id)
+            ).toEqual(["cpu", "remaining"]);
+        });
+
+        it("uses the legend count when the matching multiplier is absent or invalid", () => {
+            const cpu = component.chartAssist.legendSeriesSet[0];
+            for (const multiplier of [
+                undefined,
+                0,
+                -1,
+                NaN,
+                Infinity,
+                -Infinity,
+            ]) {
+                component.widgetData.series[0].legendValueMultiplier =
+                    multiplier;
+                expect(component.getLegendValue(cpu, "y1"))
+                    .withContext(`multiplier: ${multiplier}`)
+                    .toEqual("5 %");
+            }
+        });
+
+        it("uses the legend count if there is no matching widget series", () => {
+            component.widgetData.series = [];
+            expect(
+                component.getLegendValue(
+                    component.chartAssist.legendSeriesSet[0],
+                    "y1"
+                )
+            ).toEqual("5 %");
+        });
+
+        it("applies a valid series multiplier for any project type", () => {
+            const cpu = component.chartAssist.legendSeriesSet[0];
+            const remaining = component.chartAssist.legendSeriesSet[1];
+            cpu.data[0].y = 37 / 16;
+            remaining.data[0].y = (7 * 50) / 16;
+            component.widgetData.series[1].legendValueMultiplier = 16 / 7;
+
+            for (const projectType of [
+                TimeseriesWidgetProjectType.PerfstackApp,
+                TimeseriesWidgetProjectType.ModernDashboard,
+                undefined,
+            ]) {
+                component.configuration.projectType = projectType;
+                expect(component.getLegendValue(cpu, "y1"))
+                    .withContext(`projectType: ${projectType}`)
+                    .toEqual("37 %");
+                expect(component.getLegendValue(remaining, "y1"))
+                    .withContext(`projectType: ${projectType}`)
+                    .toEqual("50 %");
+            }
+        });
+
+        it("does not use the legacy legend-count fallback for other projects", () => {
+            const cpu = component.chartAssist.legendSeriesSet[0];
+            component.configuration.projectType =
+                TimeseriesWidgetProjectType.ModernDashboard;
+
+            for (const multiplier of [
+                undefined,
+                0,
+                -1,
+                NaN,
+                Infinity,
+                -Infinity,
+            ]) {
+                component.widgetData.series[0].legendValueMultiplier =
+                    multiplier;
+                expect(component.getLegendValue(cpu, "y1"))
+                    .withContext(`multiplier: ${multiplier}`)
+                    .toEqual("2.5 %");
+            }
+            component.widgetData.series = [];
+            expect(component.getLegendValue(cpu, "y1")).toEqual("2.5 %");
+            expect(
+                component.chartAssist.getHighlightedValue
+            ).toHaveBeenCalledWith(cpu, "y", "tick", "y1");
+        });
+
+        it("does not apply the multiplier for other presets or units", () => {
+            const cpu = component.chartAssist.legendSeriesSet[0];
+            const defaultConfig = component.configuration;
+            const configurations = [
+                { ...defaultConfig, preset: TimeseriesChartPreset.Line },
+                {
+                    ...defaultConfig,
+                    preset: TimeseriesChartPreset.StackedPercentageArea,
+                },
+                { ...defaultConfig, units: "bytes" as const },
+                {
+                    ...defaultConfig,
+                    preset: TimeseriesChartPreset.Line,
+                    projectType: TimeseriesWidgetProjectType.ModernDashboard,
+                },
+                {
+                    ...defaultConfig,
+                    units: "bytes" as const,
+                    projectType: TimeseriesWidgetProjectType.ModernDashboard,
+                },
+            ];
+            for (const configuration of configurations) {
+                component.configuration = configuration;
+                expect(component.getLegendValue(cpu, "y1"))
+                    .withContext(JSON.stringify(configuration))
+                    .toEqual("2.5 %");
+            }
         });
     });
 
