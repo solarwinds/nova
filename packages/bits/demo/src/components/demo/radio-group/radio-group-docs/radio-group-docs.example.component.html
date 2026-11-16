@@ -28,6 +28,19 @@
     <nui-basic-radio-group-example></nui-basic-radio-group-example>
 </nui-example-wrapper>
 
+<h2>Accessibility</h2>
+<p>
+    Provide a meaningful group name through <code>ariaLabel</code>, for example
+    <code>ariaLabel="Query input method" i18n-ariaLabel</code>. The
+    <code>name</code> attribute groups the native inputs; it does not provide an
+    accessible group name. Give each independent group a distinct
+    <code>name</code>.
+</p>
+<p>
+    Keep edit buttons and text inputs outside each radio's label so they are not
+    part of its accessible name. Hints are exposed as the radio's description.
+</p>
+
 <h2>Inline</h2>
 <p>
     Add <code>class="nui-radio-group-inline"</code> to

@@ -8,6 +8,7 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | A11y fixes for nui-radio: visible keyboard focus, explicit label association, hints exposed as descriptions and accessible names for radio group examples
 - `@nova-ui/bits` | Corrected menu keyboard focus and active-descendant semantics, respected handled keyboard events, and kept menu switches out of the tab order.
 - `@nova-ui/bits` | Preserved popup adapter visibility when deprecated popup styles are loaded and rendered popup content before notifying open listeners.
 - `@nova-ui/bits` | Enforced toast activation limits and queue ordering, and canceled pending activation when toasts are cleared, removed, or destroyed.
