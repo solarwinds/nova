@@ -16,7 +16,8 @@
     cursor: pointer;
     line-height: @nui-line-height-small;
 
-    &:hover {
+    &:hover,
+    &:has(.nui-radio__input:focus-visible) {
         .setCssVariable(background-color, nui-color-bg-transparent-hover);
     }
 
@@ -80,22 +81,25 @@
         -moz-appearance: none;
         appearance: none;
         border: 0;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
+        // Matches the visible mark so assistive-technology highlights (e.g. NVDA) surround the circle
+        height: @icon-size-default;
+        margin: 0;
+        opacity: 0;
         outline: 0;
-        overflow: hidden;
         padding: 0;
+        pointer-events: none;
         position: absolute;
-        width: 1px;
+        width: @icon-size-default;
 
         &[disabled],
         &.disabled {
             cursor: @cursor-disabled;
         }
 
-        &:focus {
-            .tab-focus();
+        &:focus-visible + .nui-radio__mark {
+            outline: @nui-line-medium solid;
+            outline-offset: @nui-line-medium;
+            .setCssVariable(outline-color, nui-color-active);
         }
 
         &:disabled + .nui-radio__mark {
@@ -120,8 +124,15 @@
 
     .nui-help-hint {
         line-height: @nui-line-height-small;
-        margin-left: (@icon-size-default + @nui-space-xs + @nui-space-xxs);
-        padding: 0;
+        // Preserve text alignment and spacing without extending the label's click target.
+        margin: -(@nui-space-xs + @nui-space-xxs) (
+                @nui-space-xs + @nui-space-xxs
+            ) 0 (@icon-size-default + 2 * (@nui-space-xs + @nui-space-xxs));
+        padding: 0 0 (@nui-space-xs + @nui-space-xxs);
+
+        &:empty {
+            display: none;
+        }
     }
     &--checked {
         .nui-radio__mark {

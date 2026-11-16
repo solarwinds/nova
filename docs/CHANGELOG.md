@@ -4,6 +4,8 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | A11y fixes for nui-radio: visible keyboard focus, explicit label association, hints exposed as descriptions and accessible names for radio group examples
+
 ## [20.0.14] 📅 2026-11-13
 
 ### Fixes
