@@ -1,14 +1,16 @@
 <div
     class="nui-radio"
-    [class.nui-radio--empty]="radioTranscludeIsEmpty && !hint">
+    [class.nui-radio--empty]="radioTranscludeIsEmpty && !hint"
+    (mouseenter)="hoverHandler()"
+    (mouseleave)="hoverHandler()">
     <label
         class="nui-radio__label"
-        [class.nui-radio__label--translucent]="disabled"
-        (mouseenter)="hoverHandler()"
-        (mouseleave)="hoverHandler()">
+        [attr.for]="inputId"
+        [class.nui-radio__label--translucent]="disabled">
         <div class="nui-radio__content">
             <input
                 #inputViewContainer
+                [id]="inputId"
                 class="nui-radio__input"
                 type="radio"
                 [value]="value"
@@ -16,6 +18,7 @@
                 [disabled]="disabled"
                 [attr.aria-label]="ariaLabel || null"
                 [attr.aria-labelledby]="ariaLabelledby || null"
+                [attr.aria-describedby]="hintId"
                 [attr.aria-checked]="checked"
                 (change)="changeHandler()"
                 (click)="onInputClick($event)" />
@@ -30,12 +33,12 @@
                 <ng-content></ng-content>
             </div>
         </div>
-
-        <div #hintDiv class="nui-radio__hint nui-help-hint">
-            <ng-content select="[hint]"></ng-content>
-            <ng-container *ngIf="!!hint">
-                {{ hint }}
-            </ng-container>
-        </div>
     </label>
+
+    <div #hintDiv class="nui-radio__hint nui-help-hint" [id]="hintId">
+        <ng-content select="[hint]"></ng-content>
+        <ng-container *ngIf="!!hint">
+            {{ hint }}
+        </ng-container>
+    </div>
 </div>

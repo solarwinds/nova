@@ -46,6 +46,8 @@ export class RadioGroupTestComponent {
 
     public selectedFruit: string;
     public selectedFruitInline: string;
+    public queryMethod = "graphical";
+    public queryHint = $localize`Build the query visually`;
 
     constructor(private formBuilder: FormBuilder) {
         this.disabledForm = this.formBuilder.group({

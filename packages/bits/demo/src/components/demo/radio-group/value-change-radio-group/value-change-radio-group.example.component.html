@@ -1,6 +1,8 @@
 <h1 i18n>Selected color: {{ selectedColor }}</h1>
 <nui-radio-group
-    name="color"
+    name="color-value-change"
+    ariaLabel="Color selection with change notification"
+    i18n-ariaLabel
     [(value)]="selectedColor"
     (valueChange)="showSelected()">
     <nui-radio
