@@ -25,7 +25,10 @@ import {
     AfterRenderRef,
     afterNextRender,
     ElementRef,
+    inject,
+    Injectable,
     Injector,
+    OnDestroy,
     QueryList,
 } from "@angular/core";
 import { Subscription } from "rxjs";
@@ -54,7 +57,15 @@ interface PaginatorRebuildFocusSnapshot {
 }
 
 /** @ignore */
-export class PaginatorFocusController {
+@Injectable()
+export class PaginatorFocusService implements OnDestroy {
+    private readonly host =
+        inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+    private readonly injector = inject(Injector);
+    private readonly interactivityChecker = inject(InteractivityChecker);
+    private readonly logger = inject(LoggerService);
+    private getViewports: () => QueryList<CdkVirtualScrollViewport> | undefined;
+    private getDotsPagesPerRow: () => number;
     private pendingVirtualPageFocus?: PendingVirtualPageFocus;
     private readonly pendingPopupFocusChecks = new Map<
         PopupComponent,
@@ -63,16 +74,13 @@ export class PaginatorFocusController {
     private pendingFocusRestore?: AfterRenderRef;
     private pendingFocusRestoreElement?: Element;
 
-    public constructor(
-        private readonly host: HTMLElement,
-        private readonly injector: Injector,
-        private readonly getViewports: () =>
-            | QueryList<CdkVirtualScrollViewport>
-            | undefined,
-        private readonly interactivityChecker: InteractivityChecker,
-        private readonly logger: LoggerService,
-        private readonly getDotsPagesPerRow: () => number
-    ) {}
+    public initialize(
+        getViewports: () => QueryList<CdkVirtualScrollViewport> | undefined,
+        getDotsPagesPerRow: () => number
+    ): void {
+        this.getViewports = getViewports;
+        this.getDotsPagesPerRow = getDotsPagesPerRow;
+    }
 
     public rememberPageActionTarget(target: EventTarget | null): void {
         if (target instanceof Element) {
@@ -289,7 +297,7 @@ export class PaginatorFocusController {
         }
     }
 
-    public destroy(): void {
+    public ngOnDestroy(): void {
         this.cancelPendingVirtualPageFocus();
         this.pendingPopupFocusChecks.forEach(timer => clearTimeout(timer));
         this.pendingPopupFocusChecks.clear();

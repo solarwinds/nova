@@ -33,6 +33,7 @@ import { By } from "@angular/platform-browser";
 import noop from "lodash/noop";
 
 import { PaginatorComponent } from "./paginator.component";
+import { PaginatorFocusService } from "./paginator-focus.service";
 import { NuiPaginatorModule } from "./paginator.module";
 import { LoggerService } from "../../services/log-service";
 import { PopupComponent } from "../popup-adapter/popup-adapter.component";
@@ -121,6 +122,36 @@ describe("components >", () => {
         });
     });
 
+    describe("paginator focus injection >", () => {
+        it("should use the focus service supplied by the component injector", () => {
+            const focusService = jasmine.createSpyObj<PaginatorFocusService>(
+                "PaginatorFocusService",
+                ["initialize", "captureBeforeRebuild", "afterRebuild"]
+            );
+            const snapshot = { hadFocus: false, focusedElement: null };
+            focusService.captureBeforeRebuild.and.returnValue(snapshot);
+            TestBed.configureTestingModule({
+                imports: [NuiPaginatorModule],
+            });
+            TestBed.overrideProvider(PaginatorFocusService, {
+                useValue: focusService,
+            });
+            const fixture = TestBed.createComponent(PaginatorComponent);
+            const component = fixture.componentInstance;
+            component.pageSize = 10;
+            component.total = 50;
+
+            component.ngOnChanges({ page: new SimpleChange(1, 1, true) });
+
+            expect(focusService.initialize).toHaveBeenCalledWith(
+                jasmine.any(Function),
+                jasmine.any(Function)
+            );
+            expect(focusService.captureBeforeRebuild).toHaveBeenCalled();
+            expect(focusService.afterRebuild).toHaveBeenCalledWith(snapshot);
+        });
+    });
+
     describe("paginator focus >", () => {
         let subject: PaginatorComponent;
         let fixture: ComponentFixture<PaginatorComponent>;
@@ -178,6 +209,24 @@ describe("components >", () => {
             fixture = TestBed.createComponent(PaginatorComponent);
             subject = fixture.componentInstance;
             host = fixture.nativeElement;
+        });
+
+        it("should provide a separate focus service for each paginator", () => {
+            const otherFixture = TestBed.createComponent(PaginatorComponent);
+            try {
+                const focusService = fixture.debugElement.injector.get(
+                    PaginatorFocusService
+                );
+                const otherFocusService =
+                    otherFixture.debugElement.injector.get(
+                        PaginatorFocusService
+                    );
+
+                expect(otherFocusService).not.toBe(focusService);
+                expect(TestBed.inject(PaginatorFocusService, null)).toBeNull();
+            } finally {
+                otherFixture.destroy();
+            }
         });
 
         it("should keep focus on the activated page and Next buttons while they stay enabled", () => {

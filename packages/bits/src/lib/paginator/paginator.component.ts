@@ -18,7 +18,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { InteractivityChecker } from "@angular/cdk/a11y";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
     ChangeDetectionStrategy,
@@ -27,7 +26,6 @@ import {
     ElementRef,
     EventEmitter,
     inject,
-    Injector,
     Input,
     OnChanges,
     OnDestroy,
@@ -48,7 +46,7 @@ import _range from "lodash/range";
 import { Subject } from "rxjs";
 
 import { IPaginatorItem } from "./public-api";
-import { PaginatorFocusController } from "./paginator-focus.controller";
+import { PaginatorFocusService } from "./paginator-focus.service";
 import {
     IFilter,
     IFilterPub,
@@ -75,7 +73,7 @@ const containerPaddingsWithScroll = 37;
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./paginator.component.less"],
     encapsulation: ViewEncapsulation.None,
-    providers: [PopupContainerService],
+    providers: [PopupContainerService, PaginatorFocusService],
     host: {
         "role": "navigation",
         "[attr.aria-label]": "ariaLabel",
@@ -175,10 +173,7 @@ export class PaginatorComponent
     @ViewChildren("popupPages", { read: ElementRef })
     private popupPages: QueryList<ElementRef<HTMLElement>>;
 
-    private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
-    private readonly focusInjector = inject(Injector);
-    private readonly interactivityChecker = inject(InteractivityChecker);
-    private readonly focusController: PaginatorFocusController;
+    private readonly focusService = inject(PaginatorFocusService);
 
     private _dotsPagesPerRow = 5;
 
@@ -194,12 +189,8 @@ export class PaginatorComponent
         private cd: ChangeDetectorRef
     ) {
         this.popupContainer.parent = this;
-        this.focusController = new PaginatorFocusController(
-            this.host.nativeElement,
-            this.focusInjector,
+        this.focusService.initialize(
             () => this.virtualScrollViewports,
-            this.interactivityChecker,
-            this.logger,
             () => this.dotsPagesPerRow
         );
     }
@@ -380,11 +371,11 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
      * Re-renders the virtual scroll viewport to properly display items within the virtual scroll viewport
      */
     public handleDotsClick(popup?: PopupComponent): void {
-        this.focusController.handleDotsClick(popup, this.virtualScrollViewport);
+        this.focusService.handleDotsClick(popup, this.virtualScrollViewport);
     }
 
     public onPopupOpened(isOpen: boolean, popup: PopupComponent): void {
-        this.focusController.onPopupOpened(isOpen, popup);
+        this.focusService.onPopupOpened(isOpen, popup);
     }
 
     /**
@@ -396,7 +387,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         popup: PopupComponent,
         item?: IPaginatorItem
     ): void {
-        this.focusController.onDotsKeydown(event, popup, item);
+        this.focusService.onDotsKeydown(event, popup, item);
     }
 
     /**
@@ -409,21 +400,21 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         popup: PopupComponent,
         item?: IPaginatorItem
     ): void {
-        this.focusController.onPopupKeydown(event, popup, item);
+        this.focusService.onPopupKeydown(event, popup, item);
     }
 
     /**
      * Closes the popup once focus moves to an element outside of the trigger and the popup.
      */
     public onPopupFocusOut(event: FocusEvent, popup: PopupComponent): void {
-        this.focusController.onPopupFocusOut(event, popup);
+        this.focusService.onPopupFocusOut(event, popup);
     }
 
     /**
      * Add items to paginator component
      */
     private assemble() {
-        const focusSnapshot = this.focusController.captureBeforeRebuild(
+        const focusSnapshot = this.focusService.captureBeforeRebuild(
             this.popups,
             this.popupPages
         );
@@ -455,7 +446,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         this.addNext();
         this.cd.detectChanges();
 
-        this.focusController.afterRebuild(focusSnapshot);
+        this.focusService.afterRebuild(focusSnapshot);
     }
 
     /**
@@ -575,7 +566,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
             style: isDisabled ? this.disabledClass : "",
             action: (event: Event) => {
                 if (item.page) {
-                    this.focusController.rememberPageActionTarget(
+                    this.focusService.rememberPageActionTarget(
                         event.currentTarget
                     );
                     this.goToPage(item.page);
@@ -605,7 +596,6 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
     }
 
     public ngOnDestroy(): void {
-        this.focusController.destroy();
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }
