@@ -46,6 +46,7 @@ export class MenuKeyControlService implements OnDestroy {
     public menuGroups: QueryList<MenuGroupComponent>;
     public menuItems: QueryList<MenuItemBaseComponent>;
     public menuToggle: ElementRef;
+    public menuContent: ElementRef<HTMLElement>;
     public menuPopup: MenuPopupComponent;
     public menuOpenListener: Subject<void>;
     public keyControlItemsSource: boolean = false;
@@ -116,6 +117,35 @@ export class MenuKeyControlService implements OnDestroy {
 
     public setActiveItem(index: number): void {
         this.keyboardEventsManager.setActiveItem(index);
+    }
+
+    public handleItemClick(event: MouseEvent): void {
+        if (!(event.target instanceof Node)) {
+            return;
+        }
+
+        const target =
+            event.target instanceof Element
+                ? event.target
+                : event.target.parentElement;
+        const itemId = target?.closest(".nui-menu-item")?.id;
+        const items = (
+            this.keyControlItemsSource
+                ? this.menuPopup.menuItems
+                : this.menuItems
+        ).toArray();
+        const index = items.findIndex(item => item.id === itemId);
+        if (index < 0) {
+            return;
+        }
+
+        if (!items[index].disabled) {
+            this.setActiveItem(index);
+        }
+        // Custom items manage focus on their own interactive content.
+        if (!(items[index] instanceof MenuItemComponent)) {
+            this.menuContent.nativeElement.focus();
+        }
     }
 
     public getActiveItemIndex(): number | null {

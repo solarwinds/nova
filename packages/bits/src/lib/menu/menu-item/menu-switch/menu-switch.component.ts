@@ -49,6 +49,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
             <nui-switch
                 [value]="checked"
                 [disabled]="disabled"
+                [tabIndex]="-1"
                 role="presentation"
                 tabindex="-1"
             >
@@ -84,9 +85,17 @@ export class MenuSwitchComponent extends MenuItemBaseComponent {
         event.stopPropagation();
         if (!this.disabled) {
             event.preventDefault();
-            this.checked = !this.checked;
-            this.refreshView();
-            this.actionDone.emit(this.checked);
+            this.doAction();
+        }
+    }
+
+    @HostListener("keydown.enter", ["$event"])
+    @HostListener("keydown.space", ["$event"])
+    public onKeydown(event: KeyboardEvent): void {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!this.disabled) {
+            this.doAction();
         }
     }
 

@@ -73,6 +73,89 @@ test.describe("USERCONTROL Menu", () => {
     });
 
     test.describe("accessibility", () => {
+        test("should follow pointer selection for projected items appended to body", async () => {
+            const button = appendToBody.getMenuButton().getLocator();
+            await button.focus();
+            await Helpers.pressKey("ArrowDown");
+            await expect(button).toHaveAttribute("aria-expanded", "true");
+            const menuId = await button.getAttribute("aria-controls");
+            const menuContent = Helpers.page.locator(`#${menuId}`);
+            const item = menuContent
+                .locator("nui-menu-option")
+                .filter({ hasText: "Third menu item" });
+            await expect(menuContent).toBeVisible();
+
+            await item.click();
+            await expect(menuContent).toBeFocused();
+            await expect(item).toHaveClass(/nui-menu-item--active/);
+            await expect(menuContent).toHaveAttribute(
+                "aria-activedescendant",
+                await item.getAttribute("id")
+            );
+            await expect(item).toHaveAttribute("aria-checked", "true");
+
+            await Helpers.pressKey("Space");
+            await expect(item).toHaveAttribute("aria-checked", "false");
+            await expect(button).toHaveAttribute("aria-expanded", "true");
+            await expect(menuContent).toBeFocused();
+        });
+
+        for (const target of ["label", ".nui-switch__bar"]) {
+            test(`should keep switch keyboard activation local after clicking ${target}`, async () => {
+                const button = menu.getMenuButton().getLocator();
+                await button.focus();
+                await Helpers.pressKey("ArrowDown");
+                await menu.isMenuOpened();
+                const menuId = await button.getAttribute("aria-controls");
+                const menuContent = Helpers.page.locator(`#${menuId}`);
+                await expect(menuContent).toBeFocused();
+                const item = menu
+                    .getMenuItemByContainingText("Switch unchecked")
+                    .getLocator();
+                const switchBar = item.locator(".nui-switch__bar");
+                const itemId = await item.getAttribute("id");
+                await expect(switchBar).toHaveAttribute("tabindex", "-1");
+
+                await item.locator(target).click();
+                await expect(item).toHaveAttribute("aria-checked", "true");
+                await expect(switchBar).toHaveAttribute("aria-checked", "true");
+
+                for (const { key, checked } of [
+                    { key: "Enter", checked: "false" },
+                    { key: "Space", checked: "true" },
+                    { key: "Enter", checked: "false" },
+                    { key: "Space", checked: "true" },
+                ]) {
+                    await Helpers.pressKey(key);
+                    await expect(item).toHaveAttribute("aria-checked", checked);
+                    await expect(switchBar).toHaveAttribute(
+                        "aria-checked",
+                        checked
+                    );
+                    await expect(button).toHaveAttribute(
+                        "aria-expanded",
+                        "true"
+                    );
+                    await expect(menuContent).toBeFocused();
+                    await expect(menuContent).toHaveAttribute(
+                        "aria-activedescendant",
+                        itemId
+                    );
+                    await expect(item).toHaveClass(/nui-menu-item--active/);
+                    await expect(
+                        menu.getLocator().locator(".nui-menu-item--active")
+                    ).toHaveCount(1);
+                }
+
+                await Helpers.pressKey("ArrowDown");
+                const nextItem = menu
+                    .getMenuItemByContainingText("Menu item with checkbox")
+                    .getLocator();
+                await expect(nextItem).toHaveClass(/nui-menu-item--active/);
+                await expect(menuContent).toBeFocused();
+            });
+        }
+
         test("should have correct aria attributes", async () => {
             const button = menu.getMenuButton().getLocator();
             await expect(button).toHaveAttribute("aria-haspopup", "menu");

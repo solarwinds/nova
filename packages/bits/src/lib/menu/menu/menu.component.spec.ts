@@ -23,6 +23,7 @@ import {
     CUSTOM_ELEMENTS_SCHEMA,
     DebugElement,
     ViewChild,
+    ViewEncapsulation,
 } from "@angular/core";
 import {
     ComponentFixture,
@@ -97,9 +98,23 @@ class TestAppComponent {
                     title: "Option",
                     checked: false,
                 },
+                {
+                    itemType: "switch",
+                    title: "Switch",
+                    checked: false,
+                },
             ],
         },
     ] as IMenuGroup[];
+}
+
+@Component({
+    template: `<nui-test-app></nui-test-app>`,
+    encapsulation: ViewEncapsulation.ShadowDom,
+    standalone: false,
+})
+class ShadowDomTestAppComponent {
+    @ViewChild(TestAppComponent) public app: TestAppComponent;
 }
 
 describe("components >", () => {
@@ -114,6 +129,7 @@ describe("components >", () => {
                 imports: [NuiOverlayModule, IconComponent],
                 declarations: [
                     TestAppComponent,
+                    ShadowDomTestAppComponent,
                     MenuComponent,
                     MenuActionComponent,
                     MenuLinkComponent,
@@ -167,6 +183,201 @@ describe("components >", () => {
         });
 
         describe("accessibility >", () => {
+            for (const { key, code } of [
+                { key: "Enter", code: "Enter" },
+                { key: " ", code: "Space" },
+            ]) {
+                for (const selector of [
+                    "nui-menu-switch",
+                    ".nui-switch__label",
+                ]) {
+                    it(`should activate ${selector} inside Shadow DOM and toggle it with ${code}`, fakeAsync(() => {
+                        const shadowFixture = TestBed.createComponent(
+                            ShadowDomTestAppComponent
+                        );
+                        shadowFixture.detectChanges();
+                        const menu = shadowFixture.componentInstance.app.menu;
+                        const shadowRoot = (
+                            shadowFixture.nativeElement as HTMLElement
+                        ).shadowRoot!;
+                        const trigger = menu.menuToggle
+                            .nativeElement as HTMLButtonElement;
+                        trigger.focus();
+                        trigger.dispatchEvent(
+                            new KeyboardEvent("keydown", {
+                                key: "ArrowDown",
+                                code: "ArrowDown",
+                                bubbles: true,
+                                cancelable: true,
+                            })
+                        );
+                        tick();
+                        shadowFixture.detectChanges();
+                        const content = menu.menuContent.nativeElement;
+                        const switchItem =
+                            content.querySelector<HTMLElement>(
+                                "nui-menu-switch"
+                            )!;
+                        const target =
+                            content.querySelector<HTMLElement>(selector)!;
+                        expect(
+                            document.getElementById(switchItem.id)
+                        ).toBeNull();
+                        expect(menu.activeDescendant).not.toBe(switchItem.id);
+
+                        target.click();
+                        shadowFixture.detectChanges();
+
+                        expect(menu.activeDescendant).toBe(switchItem.id);
+                        expect(
+                            content.querySelector(".nui-menu-item--active")?.id
+                        ).toBe(switchItem.id);
+                        expect(shadowRoot.activeElement).toBe(content);
+                        expect(switchItem.getAttribute("aria-checked")).toBe(
+                            "true"
+                        );
+
+                        content.dispatchEvent(
+                            new KeyboardEvent("keydown", {
+                                key,
+                                code,
+                                bubbles: true,
+                                cancelable: true,
+                            })
+                        );
+                        shadowFixture.detectChanges();
+
+                        expect(switchItem.getAttribute("aria-checked")).toBe(
+                            "false"
+                        );
+                        expect(menu.popup.isOpen).toBeTrue();
+                        expect(menu.activeDescendant).toBe(switchItem.id);
+                        expect(shadowRoot.activeElement).toBe(content);
+                    }));
+                }
+
+                for (const selector of [
+                    ".nui-switch__bar",
+                    "nui-switch",
+                    ".nui-menu-item__switch",
+                ]) {
+                    it(`should handle ${code} on ${selector} without activating another menu item`, fakeAsync(() => {
+                        const trigger = testComponent.menu.menuToggle
+                            .nativeElement as HTMLButtonElement;
+                        trigger.focus();
+                        trigger.dispatchEvent(
+                            new KeyboardEvent("keydown", {
+                                key: "ArrowDown",
+                                code: "ArrowDown",
+                                bubbles: true,
+                                cancelable: true,
+                            })
+                        );
+                        tick();
+                        fixture.detectChanges();
+
+                        const action = fixture.debugElement.query(
+                            By.directive(MenuActionComponent)
+                        ).componentInstance as MenuActionComponent;
+                        const doAction = spyOn(
+                            action,
+                            "doAction"
+                        ).and.callThrough();
+                        const activeDescendant =
+                            testComponent.menu.activeDescendant;
+                        expect(activeDescendant).toBe(
+                            action.menuItem.nativeElement.id
+                        );
+                        const switchBar =
+                            testComponent.menu.menuContent.nativeElement.querySelector<HTMLElement>(
+                                ".nui-switch__bar"
+                            )!;
+                        const switchComponent = fixture.debugElement.query(
+                            By.directive(MenuSwitchComponent)
+                        ).componentInstance as MenuSwitchComponent;
+                        const target =
+                            testComponent.menu.menuContent.nativeElement.querySelector<HTMLElement>(
+                                selector
+                            )!;
+                        target.focus();
+                        target.click();
+                        fixture.detectChanges();
+                        const checked = switchComponent.checked;
+                        const actionDone = spyOn(
+                            switchComponent.actionDone,
+                            "emit"
+                        );
+                        const event = new KeyboardEvent("keydown", {
+                            key,
+                            code,
+                            bubbles: true,
+                            cancelable: true,
+                        });
+
+                        target.dispatchEvent(event);
+                        fixture.detectChanges();
+
+                        expect(event.defaultPrevented).toBeTrue();
+                        expect(switchComponent.checked).toBe(!checked);
+                        expect(actionDone).toHaveBeenCalledOnceWith(!checked);
+                        expect(switchBar.getAttribute("aria-checked")).toBe(
+                            String(!checked)
+                        );
+                        expect(
+                            switchBar
+                                .closest("nui-menu-switch")
+                                ?.getAttribute("aria-checked")
+                        ).toBe(String(!checked));
+                        expect(doAction).not.toHaveBeenCalled();
+                        expect(testComponent.menu.popup.isOpen).toBeTrue();
+                        expect(document.activeElement).toBe(
+                            testComponent.menu.menuContent.nativeElement
+                        );
+                        expect(testComponent.menu.activeDescendant).toBe(
+                            switchComponent.id
+                        );
+                        expect(switchComponent.isActive).toBeTrue();
+                        expect(action.isActive).toBeFalse();
+                        expect(switchBar.tabIndex).toBe(-1);
+                    }));
+                }
+
+                it(`should activate the active menu action with unhandled ${code}`, fakeAsync(() => {
+                    const trigger = testComponent.menu.menuToggle
+                        .nativeElement as HTMLButtonElement;
+                    trigger.dispatchEvent(
+                        new KeyboardEvent("keydown", {
+                            key: "ArrowDown",
+                            code: "ArrowDown",
+                            bubbles: true,
+                            cancelable: true,
+                        })
+                    );
+                    tick();
+                    fixture.detectChanges();
+                    const action = fixture.debugElement.query(
+                        By.directive(MenuActionComponent)
+                    ).componentInstance as MenuActionComponent;
+                    const doAction = spyOn(
+                        action,
+                        "doAction"
+                    ).and.callThrough();
+                    const event = new KeyboardEvent("keydown", {
+                        key,
+                        code,
+                        bubbles: true,
+                        cancelable: true,
+                    });
+
+                    testComponent.menu.menuContent.nativeElement.dispatchEvent(
+                        event
+                    );
+
+                    expect(doAction).toHaveBeenCalledOnceWith(event);
+                    expect(event.defaultPrevented).toBeTrue();
+                }));
+            }
+
             it("should have correct aria attributes on toggle button", () => {
                 const button = fixture.debugElement.query(
                     By.css(".menu-button")

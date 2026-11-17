@@ -24,6 +24,7 @@ import {
     EventEmitter,
     forwardRef,
     Input,
+    numberAttribute,
     OnInit,
     Output,
     ViewChild,
@@ -60,6 +61,7 @@ let switchLabelCounter = 0;
 export class SwitchComponent implements OnInit, ControlValueAccessor {
     @Input() public value: boolean;
     @Input() public disabled: boolean;
+    @Input({ transform: numberAttribute }) public tabIndex = 0;
 
     /**
      * Input to set aria label text

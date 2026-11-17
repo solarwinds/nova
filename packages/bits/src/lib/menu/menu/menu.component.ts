@@ -162,7 +162,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.keyControlService.initKeyboardManager();
         // listening to events for key-control
         const handleKeydown = (event: KeyboardEvent) => {
-            if (!this.popup.popupToggle.disabled) {
+            if (!event.defaultPrevented && !this.popup.popupToggle.disabled) {
                 const isOpeningKey =
                     event.code === KEYBOARD_CODE.ENTER ||
                     event.code === KEYBOARD_CODE.SPACE ||
@@ -201,6 +201,14 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
                 this.menuContent.nativeElement,
                 "keydown",
                 handleKeydown
+            ),
+            this.renderer.listen(
+                this.menuContent.nativeElement,
+                "click",
+                (event: MouseEvent) =>
+                    this.keyControlService.handleItemClick(event),
+                // Menu items stop click propagation after handling activation.
+                { capture: true }
             )
         );
         // Monitor focus changes for accessibility purposes
@@ -273,6 +281,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.keyControlService.menuItems = this.menuItems;
         this.keyControlService.popup = this.popup;
         this.keyControlService.menuToggle = this.menuToggle;
+        this.keyControlService.menuContent = this.menuContent;
         this.keyControlService.keyControlItemsSource = !!this.itemsSource;
         this.keyControlService.menuPopup = this.menuPopup;
         this.keyControlService.menuOpenListener = this.menuOpenStream;
