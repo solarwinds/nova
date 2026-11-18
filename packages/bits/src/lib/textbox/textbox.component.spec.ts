@@ -19,7 +19,12 @@
 //  THE SOFTWARE.
 
 import { CommonModule } from "@angular/common";
-import { Component, NO_ERRORS_SCHEMA, ViewChild } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    NO_ERRORS_SCHEMA,
+    ViewChild,
+} from "@angular/core";
 import {
     ComponentFixture,
     fakeAsync,
@@ -29,7 +34,11 @@ import {
 import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { TextboxComponent } from "./textbox.component";
-import { NuiFormFieldModule, NuiValidationMessageModule } from "../../nui-api";
+import {
+    NuiFormFieldModule,
+    NuiTextboxModule,
+    NuiValidationMessageModule,
+} from "../../nui-api";
 import { SpinnerComponent } from "../spinner/spinner.component";
 
 @Component({
@@ -68,6 +77,94 @@ class TextboxFormComponent {
 
     constructor(private fb: FormBuilder) {}
 }
+
+@Component({
+    template: `
+        <nui-form-field [caption]="caption" [hint]="hint">
+            <nui-textbox type="password"></nui-textbox>
+        </nui-form-field>
+        <nui-form-field caption="Count">
+            <nui-textbox-number></nui-textbox-number>
+        </nui-form-field>
+        <button data-test="update" (click)="caption = 'Secret'; hint = 'Updated hint'">
+            Update
+        </button>
+        <button data-test="clear" (click)="caption = ''">Clear caption</button>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
+})
+class OnPushTextboxFormComponent {
+    public caption = "Password";
+    public hint = "Use a password";
+}
+
+describe("form fields in an OnPush host", () => {
+    it("renders the deferred label, name, and description for each control", async () => {
+        TestBed.configureTestingModule({
+            declarations: [OnPushTextboxFormComponent],
+            imports: [NuiFormFieldModule, NuiTextboxModule],
+        });
+        const fixture = TestBed.createComponent(OnPushTextboxFormComponent);
+        fixture.autoDetectChanges();
+        await fixture.whenStable();
+
+        const host: HTMLElement = fixture.nativeElement;
+        const fields = host.querySelectorAll("nui-form-field");
+        const passwordInput = fields[0].querySelector("input");
+        const passwordLabel = fields[0].querySelector("label");
+        const help = fields[0].querySelector<HTMLElement>(
+            ".nui-form-field__help"
+        );
+        const numberInput = fields[1].querySelector("input");
+        const numberLabel = fields[1].querySelector("label");
+
+        expect(passwordInput?.getAttribute("aria-label")).toBe("Password");
+        expect(passwordLabel?.control).toBe(passwordInput);
+        expect(passwordInput?.getAttribute("aria-describedby")).toBe(help?.id);
+        expect(numberInput?.getAttribute("aria-label")).toBe("Count");
+        expect(numberLabel?.control).toBe(numberInput);
+        expect(numberInput?.hasAttribute("aria-describedby")).toBeFalse();
+    });
+
+    it("updates and clears the caption and hint under an OnPush host", async () => {
+        TestBed.configureTestingModule({
+            declarations: [OnPushTextboxFormComponent],
+            imports: [NuiFormFieldModule, NuiTextboxModule],
+        });
+        const fixture = TestBed.createComponent(OnPushTextboxFormComponent);
+        fixture.autoDetectChanges();
+        await fixture.whenStable();
+
+        const host: HTMLElement = fixture.nativeElement;
+        const input = host.querySelector<HTMLInputElement>("nui-textbox input");
+        host.querySelector<HTMLButtonElement>("[data-test=update]")?.click();
+        await fixture.whenStable();
+
+        expect(input?.getAttribute("aria-label")).toBe("Secret");
+        expect(
+            host.querySelector("nui-form-field label")?.textContent?.trim()
+        ).toBe("Secret");
+        expect(
+            host.querySelector<HTMLLabelElement>("nui-form-field label")
+                ?.control
+        ).toBe(input);
+        expect(
+            host.querySelector(".nui-form-field__help")?.textContent
+        ).toContain("Updated hint");
+        expect(input?.getAttribute("aria-describedby")).toBe(
+            host.querySelector<HTMLElement>(".nui-form-field__help")?.id
+        );
+
+        host.querySelector<HTMLButtonElement>("[data-test=clear]")?.click();
+        await fixture.whenStable();
+
+        expect(input?.getAttribute("aria-label")).toBe("Textbox input");
+        expect(
+            host.querySelector("nui-form-field")?.querySelector("label")
+        ).toBeNull();
+    });
+});
 
 describe("components >", () => {
     describe("textbox >", () => {

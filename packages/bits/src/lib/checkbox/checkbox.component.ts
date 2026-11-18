@@ -211,6 +211,7 @@ export class CheckboxComponent
     public readonly hintId = _uniqueId("nui-checkbox-hint-");
 
     private _ariaLabel: string | undefined;
+    private formFieldLabelId: string | undefined;
 
     private keysAction = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
 
@@ -267,6 +268,25 @@ export class CheckboxComponent
                 .filter(Boolean)
                 .join(" ") || null
         );
+    }
+
+    public setFormFieldLabel(labelId: string | undefined): void {
+        if (this.formFieldLabelId !== labelId) {
+            this.formFieldLabelId = labelId;
+            this.changeDetector.markForCheck();
+        }
+    }
+
+    public get labelIds(): string | null {
+        if (this.ariaLabelledby) {
+            return this.ariaLabelledby;
+        }
+        if (this.ariaLabel) {
+            return null;
+        }
+        return [this.formFieldLabelId, this.contentId]
+            .filter(Boolean)
+            .join(" ");
     }
 
     /**

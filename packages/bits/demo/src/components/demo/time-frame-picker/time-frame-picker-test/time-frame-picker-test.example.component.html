@@ -12,6 +12,13 @@
 <div>{{ acceptedTimeframe | timeFrame : "LL LTS" }}</div>
 
 <ng-template #popoverTimeFramePicker>
+    <p id="nui-time-frame-instructions">{{ instructions }}</p>
+    <button type="button" (click)="instructions = updatedInstructions" i18n>
+        Update time frame instructions
+    </button>
+    <button type="button" (click)="instructions = ''" i18n>
+        Clear time frame instructions
+    </button>
     <div>
         <nui-quick-picker
             [presets]="presets"
@@ -22,6 +29,9 @@
             <nui-time-frame-picker
                 [startModel]="acceptedTimeframe"
                 (changed)="updateTf($event)"
+                [ariaDescribedby]="
+                    instructions ? 'nui-time-frame-instructions' : undefined
+                "
                 [maxDate]="maxDate"
                 [minDate]="minDate">
             </nui-time-frame-picker>

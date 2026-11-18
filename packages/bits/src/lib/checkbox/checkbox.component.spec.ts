@@ -19,10 +19,16 @@
 //  THE SOFTWARE.
 
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
 import { CheckboxComponent } from "./checkbox.component";
+import { NuiFormFieldModule } from "../form-field/form-field.module";
 
 @Component({
     template: `
@@ -51,6 +57,109 @@ class CheckboxHostComponent {
     public disabled = false;
     public required = false;
 }
+
+@Component({
+    template: `
+        <span id="explicit-label">Explicit label</span>
+        <nui-form-field [caption]="caption" [hint]="hint">
+            <nui-checkbox
+                [ariaLabel]="label"
+                [ariaLabelledby]="labelledby"
+                [ariaDescribedby]="description">
+                {{ content }}
+            </nui-checkbox>
+        </nui-form-field>
+    `,
+    standalone: false,
+})
+class CheckboxFormFieldHostComponent {
+    public caption = "Convert to";
+    public content = "UTC";
+    public label: string | undefined;
+    public labelledby: string | null = null;
+    public hint = "";
+    public description = "";
+}
+
+describe("checkbox in a form field", () => {
+    it("associates the caption and projected text while preserving explicit names", fakeAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [CheckboxComponent, CheckboxFormFieldHostComponent],
+            imports: [NuiFormFieldModule],
+        });
+        const fixture = TestBed.createComponent(CheckboxFormFieldHostComponent);
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+
+        const host = fixture.componentInstance;
+        const checkbox = fixture.debugElement.query(
+            By.directive(CheckboxComponent)
+        ).componentInstance as CheckboxComponent;
+        const label = checkbox.checkboxLabel.nativeElement as HTMLElement;
+        const caption = fixture.nativeElement.querySelector(
+            ".nui-form-field__control-label"
+        ) as HTMLLabelElement;
+        expect(label.getAttribute("aria-labelledby")).toBe(
+            `${caption.id} ${checkbox.contentId}`
+        );
+
+        host.caption = "";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(label.getAttribute("aria-labelledby")).toBe(checkbox.contentId);
+
+        host.caption = "Convert to";
+        host.label = "Custom name";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(label.getAttribute("aria-label")).toBe("Custom name");
+        expect(label.hasAttribute("aria-labelledby")).toBeFalse();
+
+        host.label = undefined;
+        fixture.detectChanges();
+        expect(label.getAttribute("aria-labelledby")).toBe(
+            `${caption.id} ${checkbox.contentId}`
+        );
+
+        host.labelledby = "explicit-label";
+        fixture.detectChanges();
+        expect(label.getAttribute("aria-labelledby")).toBe("explicit-label");
+    }));
+
+    it("preserves a caller description when the field hint is removed", fakeAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [CheckboxComponent, CheckboxFormFieldHostComponent],
+            imports: [NuiFormFieldModule],
+        });
+        const fixture = TestBed.createComponent(CheckboxFormFieldHostComponent);
+        fixture.componentInstance.hint = "Choose a timezone";
+        fixture.componentInstance.description = "external-description";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+
+        const label = fixture.nativeElement.querySelector(
+            ".nui-checkbox__label"
+        ) as HTMLElement;
+        const help = fixture.nativeElement.querySelector(
+            ".nui-form-field__help"
+        ) as HTMLElement;
+        expect(label.getAttribute("aria-describedby")).toBe(
+            `external-description ${help.id}`
+        );
+
+        fixture.componentInstance.hint = "";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(label.getAttribute("aria-describedby")).toBe(
+            "external-description"
+        );
+    }));
+});
 
 describe("components >", () => {
     describe("checkbox >", () => {

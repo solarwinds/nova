@@ -38,6 +38,8 @@ export class TimeFramePickerTestExampleComponent {
     public selectedPresetKey?: string = "lastHour";
     public acceptedTimeframe: ITimeframe;
     public tf: ITimeframe;
+    public instructions = $localize`Choose a time range.`;
+    public updatedInstructions = $localize`Choose a local time range.`;
 
     public minDate = moment("04/07/2018", "L"); // "L" is "MM/DD/YYY" in moment.js
     public maxDate = moment();

@@ -13,6 +13,27 @@ test.describe("a11y: checkbox", () => {
         await runA11yScan(CheckboxAtom, rulesToDisable);
     });
 
+    test("exposes projected text, hint and state on the focused checkbox", async ({
+        page,
+    }) => {
+        await Helpers.prepareBrowser("checkbox/checkbox-test", page);
+        const checkbox = page.locator("#nui-demo-checkbox label");
+        await expect(checkbox).toHaveRole("checkbox");
+        await expect(checkbox).toHaveAccessibleName("Checkbox with help text");
+        await expect(checkbox).toHaveAccessibleDescription(
+            "This is some help text"
+        );
+        await expect(checkbox).toHaveAttribute("aria-checked", "false");
+        await checkbox.focus();
+        await expect(checkbox).toBeFocused();
+        await checkbox.press("Space");
+        await expect(checkbox).toHaveAttribute("aria-checked", "true");
+
+        const mixed = page.locator("#nui-demo-checkbox-indeterminate label");
+        await expect(mixed).toHaveRole("checkbox");
+        await expect(mixed).toHaveAttribute("aria-checked", "mixed");
+    });
+
     test("exposes instructions on the actual focused accessibility node", async ({
         page,
     }) => {

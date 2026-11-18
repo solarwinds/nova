@@ -212,6 +212,23 @@
     Clear field hints
 </button>
 
+<p id="nui-form-field-caller-description" i18n>Use your work email.</p>
+<nui-form-field
+    id="nui-form-field-test-merged-description"
+    caption="Contact email"
+    [hint]="adapterHint"
+    i18n-caption>
+    <nui-textbox
+        ariaDescribedby="nui-form-field-caller-description"></nui-textbox>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-test-checkbox-caption"
+    caption="Convert to"
+    i18n-caption>
+    <nui-checkbox i18n>UTC</nui-checkbox>
+</nui-form-field>
+
 <nui-form-field
     id="nui-form-field-test-dynamic-caption"
     [caption]="dynamicCaption">

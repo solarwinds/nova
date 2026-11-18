@@ -165,7 +165,11 @@ export class FormFieldComponent
             if (this.nuiFormControl !== control) {
                 return;
             }
-            if (this.caption) {
+            if (control.setFormFieldLabel) {
+                control.setFormFieldLabel(
+                    this.caption ? this.labelId : undefined
+                );
+            } else if (this.caption) {
                 control.ariaLabel = this.caption;
             } else if (
                 this.appliedCaption &&
