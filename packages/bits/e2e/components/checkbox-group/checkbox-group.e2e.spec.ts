@@ -101,6 +101,17 @@ test.describe("USERCONTROL Checkbox Group", () => {
         await expect(group).toHaveAccessibleName("Vegetables");
     });
 
+    test("names each checkbox from its visible text", async ({ page }) => {
+        const group = page.locator("#nui-demo-checkbox-group-basic");
+        for (const name of ["Cabbage", "Potato", "Tomato", "Carrot"]) {
+            const checkbox = group.getByRole("checkbox", { name, exact: true });
+            await expect(checkbox).toHaveCount(1);
+            await expect(checkbox).toHaveAccessibleDescription(
+                "This is some help text"
+            );
+        }
+    });
+
     test("checking works in a pre-checked group", async () => {
         await checkbox1?.toNotBeChecked();
         await checkbox2?.toBeChecked();

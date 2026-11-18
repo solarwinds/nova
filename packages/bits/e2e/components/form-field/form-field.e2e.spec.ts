@@ -398,6 +398,42 @@ test.describe("USERCONTROL form-field >", () => {
         await expect(textbox.input).toHaveAccessibleName("Textbox");
     });
 
+    test("includes the caption and checkbox text in its accessible name", async ({
+        page,
+    }) => {
+        const field = page.locator("#nui-form-field-test-checkbox-caption");
+        const checkbox = field.getByRole("checkbox");
+        await expect(checkbox).toHaveAccessibleName("Convert to UTC");
+        await checkbox.focus();
+        await checkbox.press("Space");
+        await expect(checkbox).toHaveAttribute("aria-checked", "true");
+    });
+
+    test("preserves caller descriptions when field hints are cleared", async ({
+        page,
+    }) => {
+        const field = page.locator("#nui-form-field-test-merged-description");
+        const input = field.locator("input");
+        const helpId = await field
+            .locator(".nui-form-field__help")
+            .getAttribute("id");
+        await expect(input).toHaveAccessibleDescription(
+            "Use your work email. Provide a value."
+        );
+        await expect(input).toHaveAttribute(
+            "aria-describedby",
+            `nui-form-field-caller-description ${helpId}`
+        );
+        await page
+            .getByRole("button", { name: "Clear field hints", exact: true })
+            .click();
+        await expect(input).toHaveAccessibleDescription("Use your work email.");
+        await expect(input).toHaveAttribute(
+            "aria-describedby",
+            "nui-form-field-caller-description"
+        );
+    });
+
     test("describes supported controls from visible field help and removes cleared hints", async ({
         page,
     }) => {

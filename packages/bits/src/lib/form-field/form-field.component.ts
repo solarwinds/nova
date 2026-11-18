@@ -21,10 +21,12 @@
 import {
     AfterContentChecked,
     AfterContentInit,
+    ChangeDetectorRef,
     Component,
     ContentChild,
     ContentChildren,
     forwardRef,
+    inject,
     Input,
     OnDestroy,
     QueryList,
@@ -57,6 +59,7 @@ export class FormFieldComponent
     private lastCaption: string | undefined;
     private appliedCaption: string | undefined;
     private controlUpdateTimeout: ReturnType<typeof setTimeout> | undefined;
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
     /**
      * Form control obtained from the parent reactive form
@@ -162,7 +165,9 @@ export class FormFieldComponent
             if (this.nuiFormControl !== control) {
                 return;
             }
-            if (this.caption) {
+            if (control.setFormFieldLabel) {
+                control.setFormFieldLabel(this.caption ? this.labelId : undefined);
+            } else if (this.caption) {
                 control.ariaLabel = this.caption;
             } else if (
                 this.appliedCaption &&
@@ -175,6 +180,7 @@ export class FormFieldComponent
             if (!control.id) {
                 control.id = `${this.labelId}-control`;
             }
+            this.changeDetectorRef.markForCheck();
         });
     }
 

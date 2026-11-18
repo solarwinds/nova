@@ -4,7 +4,7 @@
         #checkboxLabel
         role="checkbox"
         [attr.aria-label]="ariaLabel || defaultAriaLabel"
-        [attr.aria-labelledby]="ariaLabelledby || (!ariaLabel ? contentId : null)"
+        [attr.aria-labelledby]="labelIds"
         [attr.aria-describedby]="descriptionIds"
         [attr.aria-checked]="getAriaChecked()"
         [attr.aria-disabled]="disabled ? true : null"
