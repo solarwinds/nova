@@ -18,11 +18,39 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
 import { CheckboxComponent } from "./checkbox.component";
+
+@Component({
+    template: `
+        <span id="external-label">External label</span>
+        <nui-checkbox
+            [ariaLabel]="label"
+            [ariaLabelledby]="labelledby"
+            [checked]="checked"
+            [indeterminate]="indeterminate"
+            [disabled]="disabled"
+            [required]="required"
+            [hint]="hint"
+            (valueChange)="checked = $event.target.checked">
+            {{ content }}
+        </nui-checkbox>
+    `,
+    standalone: false,
+})
+class CheckboxHostComponent {
+    public label: string | undefined;
+    public labelledby: string | null = null;
+    public content = "Visible label";
+    public hint = "Helpful hint";
+    public checked = false;
+    public indeterminate = false;
+    public disabled = false;
+    public required = false;
+}
 
 describe("components >", () => {
     describe("checkbox >", () => {
@@ -32,7 +60,7 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [CheckboxComponent],
+                declarations: [CheckboxComponent, CheckboxHostComponent],
                 schemas: [CUSTOM_ELEMENTS_SCHEMA],
             });
 
@@ -63,6 +91,115 @@ describe("components >", () => {
                 expect(fixture.nativeElement.textContent).toContain(
                     subject.hint
                 );
+            });
+
+            describe("checkbox accessibility >", () => {
+                let fixture: ComponentFixture<CheckboxHostComponent>;
+                let host: CheckboxHostComponent;
+                let checkbox: CheckboxComponent;
+                let label: HTMLElement;
+
+                beforeEach(() => {
+                    fixture = TestBed.createComponent(CheckboxHostComponent);
+                    host = fixture.componentInstance;
+                    fixture.detectChanges();
+                    checkbox = fixture.debugElement.query(
+                        By.directive(CheckboxComponent)
+                    ).componentInstance;
+                    label = checkbox.checkboxLabel.nativeElement;
+                });
+
+                it("uses projected text unless an explicit label or labelledby is supplied", () => {
+                    const content = checkbox.checkboxContent
+                        .nativeElement as HTMLElement;
+                    expect(label.getAttribute("aria-labelledby")).toBe(
+                        content.id
+                    );
+                    expect(content.textContent?.trim()).toBe("Visible label");
+                    expect(label.getAttribute("aria-label")).toBe("Checkbox");
+                    expect(label.getAttribute("aria-describedby")).toBe(
+                        checkbox.hintId
+                    );
+                    checkbox.ariaDescribedby = "external-description";
+                    fixture.detectChanges();
+                    expect(label.getAttribute("aria-describedby")).toBe(
+                        `external-description ${checkbox.hintId}`
+                    );
+
+                    host.content = "Updated label";
+                    fixture.detectChanges();
+                    expect(content.textContent?.trim()).toBe("Updated label");
+
+                    host.label = "Explicit label";
+                    fixture.detectChanges();
+                    expect(label.getAttribute("aria-label")).toBe(
+                        "Explicit label"
+                    );
+                    expect(label.hasAttribute("aria-labelledby")).toBeFalse();
+
+                    host.labelledby = "external-label";
+                    fixture.detectChanges();
+                    expect(label.getAttribute("aria-labelledby")).toBe(
+                        "external-label"
+                    );
+                });
+
+                it("exposes the focused checkbox state and keyboard changes", () => {
+                    expect(label.getAttribute("role")).toBe("checkbox");
+                    expect(label.getAttribute("aria-checked")).toBe("false");
+                    label.dispatchEvent(
+                        new KeyboardEvent("keydown", {
+                            code: "Space",
+                            bubbles: true,
+                        })
+                    );
+                    fixture.detectChanges();
+                    expect(label.getAttribute("aria-checked")).toBe("true");
+
+                    host.indeterminate = true;
+                    host.required = true;
+                    fixture.detectChanges();
+                    expect(label.getAttribute("aria-checked")).toBe("mixed");
+                    expect(label.getAttribute("aria-required")).toBe("true");
+
+                    host.disabled = true;
+                    fixture.detectChanges();
+                    expect(label.getAttribute("aria-disabled")).toBe("true");
+                    expect(label.getAttribute("tabindex")).toBe("-1");
+                    label.dispatchEvent(
+                        new KeyboardEvent("keydown", {
+                            code: "Space",
+                            bubbles: true,
+                        })
+                    );
+                    fixture.detectChanges();
+                    expect(label.getAttribute("aria-checked")).toBe("mixed");
+                });
+
+                it("clears mixed state after a mouse click", () => {
+                    host.indeterminate = true;
+                    fixture.detectChanges();
+                    const input = fixture.debugElement.query(
+                        By.css(".nui-checkbox__input")
+                    ).nativeElement as HTMLInputElement;
+                    input.click();
+                    fixture.detectChanges();
+                    expect(label.getAttribute("aria-checked")).toBe("true");
+                });
+
+                it("clears mixed state on space when already checked", () => {
+                    host.checked = true;
+                    host.indeterminate = true;
+                    fixture.detectChanges();
+                    label.dispatchEvent(
+                        new KeyboardEvent("keydown", {
+                            code: "Space",
+                            bubbles: true,
+                        })
+                    );
+                    fixture.detectChanges();
+                    expect(label.getAttribute("aria-checked")).toBe("true");
+                });
             });
         });
 

@@ -2,9 +2,13 @@
     <label
         class="nui-checkbox__label"
         #checkboxLabel
-        [attr.aria-label]="ariaLabel || null"
-        [attr.aria-labelledby]="ariaLabelledby"
-        [attr.aria-describedby]="ariaDescribedby"
+        role="checkbox"
+        [attr.aria-label]="ariaLabel || defaultAriaLabel"
+        [attr.aria-labelledby]="ariaLabelledby || (!ariaLabel ? contentId : null)"
+        [attr.aria-describedby]="descriptionIds"
+        [attr.aria-checked]="getAriaChecked()"
+        [attr.aria-disabled]="disabled ? true : null"
+        [attr.aria-required]="required ? true : null"
         [attr.tabindex]="!disabled ? 0 : -1"
         [title]="title"
         [class.nui-checkbox__translucent]="disabled"
@@ -28,10 +32,13 @@
             <div class="nui-checkbox__mark">
                 <i class="nui-checkbox__glyph"></i>
             </div>
-            <div #checkboxContent class="nui-checkbox__transclude">
+            <div
+                #checkboxContent
+                [id]="contentId"
+                class="nui-checkbox__transclude">
                 <ng-content></ng-content>
             </div>
         </div>
-        <div class="nui-help-hint" *ngIf="hint">{{ hint }}</div>
+        <div class="nui-help-hint" *ngIf="hint" [id]="hintId">{{ hint }}</div>
     </label>
 </div>
