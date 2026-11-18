@@ -43,6 +43,7 @@ import {
     DOCUMENT_CLICK_EVENT,
 } from "../../constants/event.constants";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
+import { _uniqueId } from "../../functions/unique-id";
 import { EventBusService } from "../../services/event-bus.service";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
@@ -90,13 +91,13 @@ export class CheckboxComponent
     /**
      * Input to set aria label text
      */
-    @Input() public get ariaLabel(): string {
+    @Input() public get ariaLabel(): string | undefined {
         return this._ariaLabel;
     }
 
     // changing the value with regular @Input doesn't trigger change detection
     // so we need to do that manually in the setter
-    public set ariaLabel(value: string) {
+    public set ariaLabel(value: string | undefined) {
         if (value !== this._ariaLabel) {
             this._ariaLabel = value;
             this.changeDetector.markForCheck();
@@ -205,7 +206,11 @@ export class CheckboxComponent
     private rendererListener: Function;
     private sub: Subscription;
 
-    private _ariaLabel: string = $localize`Checkbox`;
+    public readonly defaultAriaLabel = $localize`Checkbox`;
+    public readonly contentId = _uniqueId("nui-checkbox-content-");
+    public readonly hintId = _uniqueId("nui-checkbox-hint-");
+
+    private _ariaLabel: string | undefined;
 
     private keysAction = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
 
@@ -245,11 +250,23 @@ export class CheckboxComponent
     }
 
     public getAriaChecked(): "true" | "false" | "mixed" {
+        if (this.indeterminate) {
+            return "mixed";
+        }
+
         if (this.checked) {
             return "true";
         }
 
-        return this.indeterminate ? "mixed" : "false";
+        return "false";
+    }
+
+    public get descriptionIds(): string | null {
+        return (
+            [this.ariaDescribedby, this.hint ? this.hintId : null]
+                .filter(Boolean)
+                .join(" ") || null
+        );
     }
 
     /**
@@ -264,6 +281,8 @@ export class CheckboxComponent
      * @param event Changed nui-checkbox component
      */
     public changeHandler(event: CheckboxChangeEvent): void {
+        this.indeterminate = false;
+        this.changeDetector.markForCheck();
         this.valueChange.emit(event);
         const checked = !!event.target?.checked;
         this.onChange(checked);
