@@ -79,6 +79,20 @@ describe("LineChartComponent", () => {
                 fixture.nativeElement.querySelectorAll("nui-rich-legend-tile")
             );
 
+        const configureStackedPercent = (): void => {
+            component.configuration.preset = TimeseriesChartPreset.StackedArea;
+            component.configuration.units = "percent";
+            component.chartAssist.legendSeriesSet[0].scales.y =
+                component.timeseriesScalesService.getScale(
+                    {
+                        type: TimeseriesScaleType.Linear,
+                        properties: { axisUnits: "percent" },
+                    },
+                    "percent",
+                    component.configuration
+                );
+        };
+
         beforeEach(() => {
             component.configuration = {
                 interaction: null,
@@ -196,8 +210,12 @@ describe("LineChartComponent", () => {
         });
 
         it("should not turn a missing stacked percentage into zero", () => {
-            component.configuration.preset = TimeseriesChartPreset.StackedArea;
-            component.configuration.units = "percent";
+            configureStackedPercent();
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+            expect(getTiles()[1].textContent?.trim()).toBe("--");
+
+            highlightedValues["metric"] = "";
             fixture.changeDetectorRef.markForCheck();
             fixture.detectChanges();
             expect(getTiles()[1].textContent?.trim()).toBe("--");
@@ -206,6 +224,36 @@ describe("LineChartComponent", () => {
             fixture.changeDetectorRef.markForCheck();
             fixture.detectChanges();
             expect(getTiles()[1].textContent?.trim()).toBe("0 %");
+        });
+
+        it("should display placeholders and scaled values with a legend multiplier", () => {
+            configureStackedPercent();
+            component.widgetData.series[0].legendValueMultiplier = 16;
+
+            for (const { value, expected } of [
+                { value: undefined, expected: "--" },
+                { value: "", expected: "--" },
+                { value: 0, expected: "0 %" },
+                { value: 37 / 16, expected: "37 %" },
+                { value: undefined, expected: "--" },
+            ]) {
+                highlightedValues["metric"] = value;
+                fixture.changeDetectorRef.markForCheck();
+                fixture.detectChanges();
+                const tile = getTiles()[1];
+                expect(tile.textContent?.trim())
+                    .withContext(`value: ${value}`)
+                    .toBe(expected);
+                const placeholder = tile.querySelector<HTMLElement>(
+                    "[role='img'][aria-label='No data']"
+                );
+                expect(placeholder !== null)
+                    .withContext(`value: ${value}`)
+                    .toBe(expected === "--");
+                if (placeholder) {
+                    expect(placeholder.hidden).toBeFalse();
+                }
+            }
         });
 
         it("should project the conditional legend menu and summary remove button", () => {

@@ -66,6 +66,13 @@ export interface ITimeseriesWidgetData<T = ITimeseriesWidgetSeriesData> {
     link?: string;
     secondaryLink?: string;
     metricUnits?: UnitOption;
+    /**
+     * Positive, finite multiplier applied before formatting percent stacked-area
+     * legend values. It does not change chart data or apply to other presets.
+     * When absent or invalid, PerfStack uses the legend series count; other
+     * projects display the unscaled value.
+     */
+    legendValueMultiplier?: number;
 }
 
 export interface ITimeseriesWidgetSeriesData {
