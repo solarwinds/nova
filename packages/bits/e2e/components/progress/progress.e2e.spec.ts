@@ -85,7 +85,9 @@ test.describe("USERCONTROL progress", () => {
             expect(await buttonTooltip.getTooltipText()).toContain("Cancel");
             // Return to initial state
             await indeterminateProgress.getCancelButton().click();
-            expect(await indeterminateProgress.canCancel()).toBe(false);
+            await expect
+                .poll(async () => indeterminateProgress.canCancel())
+                .toBe(false);
         });
     });
 

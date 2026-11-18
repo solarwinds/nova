@@ -23,14 +23,18 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    ElementRef,
     EventEmitter,
+    inject,
     Input,
     OnChanges,
     OnDestroy,
     OnInit,
     Output,
+    QueryList,
     SimpleChanges,
     ViewChild,
+    ViewChildren,
     ViewEncapsulation,
 } from "@angular/core";
 import _chunk from "lodash/chunk";
@@ -42,6 +46,7 @@ import _range from "lodash/range";
 import { Subject } from "rxjs";
 
 import { IPaginatorItem } from "./public-api";
+import { PaginatorFocusService } from "./paginator-focus.service";
 import {
     IFilter,
     IFilterPub,
@@ -49,6 +54,7 @@ import {
 } from "../../services/data-source/public-api";
 import { LoggerService } from "../../services/log-service";
 import { PopupContainerService } from "../popup/popup-container.service";
+import { PopupComponent } from "../popup-adapter/popup-adapter.component";
 import { SelectComponent } from "../select";
 import { ISelectChangedEvent } from "../select/public-api";
 import { InputValueTypes } from "../select-v2/types";
@@ -57,7 +63,6 @@ export const defaultPageSizeSet = [10, 25, 50, 100];
 const singleSymbolWidth = 8;
 const singleCellPaddings = 12;
 const containerPaddingsWithScroll = 37;
-
 /**
  * Component used for pagination of data
  * <example-url>./../examples/index.html#/paginator</example-url>
@@ -68,7 +73,7 @@ const containerPaddingsWithScroll = 37;
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./paginator.component.less"],
     encapsulation: ViewEncapsulation.None,
-    providers: [PopupContainerService],
+    providers: [PopupContainerService, PaginatorFocusService],
     host: {
         "role": "navigation",
         "[attr.aria-label]": "ariaLabel",
@@ -159,6 +164,17 @@ export class PaginatorComponent
     @ViewChild(CdkVirtualScrollViewport)
     private virtualScrollViewport: CdkVirtualScrollViewport;
 
+    @ViewChildren(CdkVirtualScrollViewport)
+    private virtualScrollViewports: QueryList<CdkVirtualScrollViewport>;
+
+    @ViewChildren(PopupComponent)
+    private popups: QueryList<PopupComponent>;
+
+    @ViewChildren("popupPages", { read: ElementRef })
+    private popupPages: QueryList<ElementRef<HTMLElement>>;
+
+    private readonly focusService = inject(PaginatorFocusService);
+
     private _dotsPagesPerRow = 5;
 
     public get dotsPagesPerRow(): number {
@@ -173,7 +189,16 @@ export class PaginatorComponent
         private cd: ChangeDetectorRef
     ) {
         this.popupContainer.parent = this;
+        this.focusService.initialize(
+            () => this.virtualScrollViewports,
+            () => this.dotsPagesPerRow
+        );
     }
+
+    /** Keeps DOM nodes (and focus) stable across page changes. */
+    public trackItem = (index: number, item: IPaginatorItem): unknown =>
+        item.iconName ??
+        (item.value === this.dots ? `dots-${index}` : item.value);
 
     /**
      * Component initialization
@@ -345,16 +370,54 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
     /**
      * Re-renders the virtual scroll viewport to properly display items within the virtual scroll viewport
      */
-    public handleDotsClick(): void {
-        if (this.virtualScrollViewport) {
-            this.virtualScrollViewport.checkViewportSize();
-        }
+    public handleDotsClick(popup?: PopupComponent): void {
+        this.focusService.handleDotsClick(popup, this.virtualScrollViewport);
+    }
+
+    public onPopupOpened(isOpen: boolean, popup: PopupComponent): void {
+        this.focusService.onPopupOpened(isOpen, popup);
+    }
+
+    /**
+     * Keyboard handling for the "..." trigger: Escape closes the popup and Tab enters it directly,
+     * which matters when the popup is appended to the body and is not next to the trigger in the DOM.
+     */
+    public onDotsKeydown(
+        event: KeyboardEvent,
+        popup: PopupComponent,
+        item?: IPaginatorItem
+    ): void {
+        this.focusService.onDotsKeydown(event, popup, item);
+    }
+
+    /**
+     * Keyboard handling inside the popup: Escape closes it, and tabbing past its first or last
+     * button returns focus to the trigger so the native Tab continues from the trigger's place.
+     * Virtualized lists follow logical pages rather than the currently rendered slice.
+     */
+    public onPopupKeydown(
+        event: KeyboardEvent,
+        popup: PopupComponent,
+        item?: IPaginatorItem
+    ): void {
+        this.focusService.onPopupKeydown(event, popup, item);
+    }
+
+    /**
+     * Closes the popup once focus moves to an element outside of the trigger and the popup.
+     */
+    public onPopupFocusOut(event: FocusEvent, popup: PopupComponent): void {
+        this.focusService.onPopupFocusOut(event, popup);
     }
 
     /**
      * Add items to paginator component
      */
     private assemble() {
+        const focusSnapshot = this.focusService.captureBeforeRebuild(
+            this.popups,
+            this.popupPages
+        );
         this.itemsList = [];
         if (this.getPageCount() <= 0) {
             return;
@@ -382,6 +445,8 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
 
         this.addNext();
         this.cd.detectChanges();
+
+        this.focusService.afterRebuild(focusSnapshot);
     }
 
     /**
@@ -499,8 +564,11 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
             value: item.value,
             title: item.title,
             style: isDisabled ? this.disabledClass : "",
-            action: () => {
+            action: (event: Event) => {
                 if (item.page) {
+                    this.focusService.rememberPageActionTarget(
+                        event.currentTarget
+                    );
                     this.goToPage(item.page);
                 }
                 return false;

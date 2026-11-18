@@ -121,6 +121,8 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     @ViewChild(PopupComponent) public popup: PopupComponent;
     @ViewChild(MenuPopupComponent) menuPopup: MenuPopupComponent;
     @ViewChild("menuToggle", { read: ElementRef }) menuToggle: ElementRef;
+    @ViewChild("menuContent", { read: ElementRef })
+    menuContent: ElementRef<HTMLDivElement>;
 
     public readonly menuTriggerId = _uniqueId("nui-menu-trigger-");
     public readonly popupContentId = _uniqueId("nui-menu-content-");
@@ -135,6 +137,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     private menuKeyControlListeners: Function[] = [];
     private focusMonitorSubscription: Subscription;
     private suppressNextToggleClick = false;
+    private focusMenuWhenOpened = false;
     constructor(
         private keyControlService: MenuKeyControlService,
         private renderer: Renderer2,
@@ -158,22 +161,54 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         // initializing key-control manager
         this.keyControlService.initKeyboardManager();
         // listening to events for key-control
+        const handleKeydown = (event: KeyboardEvent) => {
+            if (!event.defaultPrevented && !this.popup.popupToggle.disabled) {
+                const isOpeningKey =
+                    event.code === KEYBOARD_CODE.ENTER ||
+                    event.code === KEYBOARD_CODE.SPACE ||
+                    event.code === KEYBOARD_CODE.ARROW_DOWN ||
+                    event.code === KEYBOARD_CODE.ARROW_UP;
+                this.focusMenuWhenOpened = !this.popup.isOpen && isOpeningKey;
+
+                if (
+                    this.popup.isOpen &&
+                    (isOpeningKey ||
+                        event.code === KEYBOARD_CODE.HOME ||
+                        event.code === KEYBOARD_CODE.END ||
+                        event.code === KEYBOARD_CODE.PAGE_UP ||
+                        event.code === KEYBOARD_CODE.PAGE_DOWN)
+                ) {
+                    this.menuContent.nativeElement.focus();
+                }
+
+                if (
+                    event.code === KEYBOARD_CODE.ENTER ||
+                    event.code === KEYBOARD_CODE.SPACE
+                ) {
+                    this.suppressNextToggleClick = true;
+                }
+
+                this.keyControlService.handleKeydown(event);
+            }
+        };
         this.menuKeyControlListeners.push(
             this.renderer.listen(
                 this.menuToggle.nativeElement,
                 "keydown",
-                (event: KeyboardEvent) => {
-                    if (!this.popup.popupToggle.disabled) {
-                        if (
-                            event.code === KEYBOARD_CODE.ENTER ||
-                            event.code === KEYBOARD_CODE.SPACE
-                        ) {
-                            this.suppressNextToggleClick = true;
-                        }
-
-                        this.keyControlService.handleKeydown(event);
-                    }
-                }
+                handleKeydown
+            ),
+            this.renderer.listen(
+                this.menuContent.nativeElement,
+                "keydown",
+                handleKeydown
+            ),
+            this.renderer.listen(
+                this.menuContent.nativeElement,
+                "click",
+                (event: MouseEvent) =>
+                    this.keyControlService.handleItemClick(event),
+                // Menu items stop click propagation after handling activation.
+                { capture: true }
             )
         );
         // Monitor focus changes for accessibility purposes
@@ -197,7 +232,15 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         return !_isEmpty(this.title);
     }
 
-    public onBlur(event: any): void {
+    public onBlur(event: FocusEvent): void {
+        const nextFocusedElement = event.relatedTarget as Node | null;
+        if (
+            this.menuToggle.nativeElement.contains(nextFocusedElement) ||
+            this.menuContent.nativeElement.contains(nextFocusedElement)
+        ) {
+            return;
+        }
+
         this.blurred.emit(event);
     }
 
@@ -215,13 +258,18 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
             this.keyControlService.initKeyboardManager();
         }
 
+        if (this.focusMenuWhenOpened) {
+            this.menuContent.nativeElement.focus();
+            this.focusMenuWhenOpened = false;
+        }
+
         this.menuOpenStream.next();
     }
 
     public get activeDescendant(): string | null {
-        return (
-            this.keyControlService.keyboardEventsManager?.activeItem?.id || null
-        );
+        const activeItem =
+            this.keyControlService.keyboardEventsManager?.activeItem;
+        return activeItem?.menuItem?.nativeElement.id || activeItem?.id || null;
     }
 
     public isJustified(): boolean {
@@ -233,6 +281,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.keyControlService.menuItems = this.menuItems;
         this.keyControlService.popup = this.popup;
         this.keyControlService.menuToggle = this.menuToggle;
+        this.keyControlService.menuContent = this.menuContent;
         this.keyControlService.keyControlItemsSource = !!this.itemsSource;
         this.keyControlService.menuPopup = this.menuPopup;
         this.keyControlService.menuOpenListener = this.menuOpenStream;

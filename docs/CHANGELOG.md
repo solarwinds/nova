@@ -4,8 +4,12 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | Respect the toast `maxOpened` limit for synchronously created notifications, preserve queued toasts when another queued toast is removed, and cancel activation of removed toasts. Clearing notifications skips closing queue entries and cancels pending fade-in callbacks, so dismissed toasts are not shown again.
+- `@nova-ui/bits` | Render the open popup state before emitting `opened`, so keyboard-opened menus can receive focus immediately. Initialize menu keyboard selection synchronously to avoid resetting subsequent navigation. Keep adapter popup content visible and correctly positioned when deprecated popup styles are also loaded.
+- `@nova-ui/bits` | Fixed SelectV2 and ComboboxV2 Playwright atoms to target their own popup by trigger ID, preventing strict-mode failures when multiple overlays coexist. Added paginator regression coverage.
 - `@nova-ui/bits` | Preserve native keyboard navigation in editable toolbar content, keep the overflow menu reachable when actions change disabled state, and show its keyboard focus indicator.
 - `@nova-ui/bits` | Track dialog opening order across containers and preserve focus in the active dialog when a background dialog closes.
+- `@nova-ui/bits` | **nui-paginator** keeps keyboard focus after a page change (WCAG 2.4.3), including when Previous/Next becomes disabled inside Shadow DOM. The activated button stays focused, focus moves to the current page when Previous/Next becomes disabled or a page is selected from the ellipsis popup, including body-appended popups. The ellipsis popup closes with Escape (focus returns to its trigger) or when focus leaves it, including when a focused page is removed during an update. Tab from the trigger enters the popup directly, also when it is appended to the body. In virtualized popups, Tab enters at the first page and keyboard navigation follows the logical page order.
 - `@nova-ui/bits` | Dismisses focus- and hover-triggered popovers with Escape without reopening during the active trigger session, and supports Tab/Shift+Tab navigation through interactive content.
 - `@nova-ui/bits` | Guard lazy overlay access in `nui-popup` when `isOpen` is initially `false` and cancel stale deferred open/close timers.
 - `@nova-ui/bits` | Exposed progressbar semantics only on the progress bar, including determinate zero and indeterminate values.

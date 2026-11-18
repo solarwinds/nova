@@ -46,6 +46,7 @@ export class MenuKeyControlService implements OnDestroy {
     public menuGroups: QueryList<MenuGroupComponent>;
     public menuItems: QueryList<MenuItemBaseComponent>;
     public menuToggle: ElementRef;
+    public menuContent: ElementRef<HTMLElement>;
     public menuPopup: MenuPopupComponent;
     public menuOpenListener: Subject<void>;
     public keyControlItemsSource: boolean = false;
@@ -95,10 +96,7 @@ export class MenuKeyControlService implements OnDestroy {
         if (this.menuOpenListener) {
             this.menuOpenListenerSubscription = this.menuOpenListener.subscribe(
                 () => {
-                    // Use timeout to ensure DOM is ready
-                    setTimeout(() => {
-                        this.activatePendingItem();
-                    }, 0);
+                    this.activatePendingItem();
 
                     this.live.announce(`
                     ${
@@ -119,6 +117,35 @@ export class MenuKeyControlService implements OnDestroy {
 
     public setActiveItem(index: number): void {
         this.keyboardEventsManager.setActiveItem(index);
+    }
+
+    public handleItemClick(event: MouseEvent): void {
+        if (!(event.target instanceof Node)) {
+            return;
+        }
+
+        const target =
+            event.target instanceof Element
+                ? event.target
+                : event.target.parentElement;
+        const itemId = target?.closest(".nui-menu-item")?.id;
+        const items = (
+            this.keyControlItemsSource
+                ? this.menuPopup.menuItems
+                : this.menuItems
+        ).toArray();
+        const index = items.findIndex(item => item.id === itemId);
+        if (index < 0) {
+            return;
+        }
+
+        if (!items[index].disabled) {
+            this.setActiveItem(index);
+        }
+        // Custom items manage focus on their own interactive content.
+        if (!(items[index] instanceof MenuItemComponent)) {
+            this.menuContent.nativeElement.focus();
+        }
     }
 
     public getActiveItemIndex(): number | null {
@@ -231,13 +258,16 @@ export class MenuKeyControlService implements OnDestroy {
                 event.preventDefault();
                 return;
             }
+            event.preventDefault();
             this.popup.toggleOpened(event);
+            this.menuToggle.nativeElement.focus();
         }
         if (
             event.code === KEYBOARD_CODE.TAB ||
             event.code === KEYBOARD_CODE.ESCAPE
         ) {
             this.popup.toggleOpened(event);
+            this.menuToggle.nativeElement.focus();
         }
     }
 

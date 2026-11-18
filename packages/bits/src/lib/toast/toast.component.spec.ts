@@ -18,6 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import {
+    ChangeDetectorRef,
+    Injector,
+    NgZone,
+    runInInjectionContext,
+} from "@angular/core";
 import { fakeAsync, TestBed, tick } from "@angular/core/testing";
 
 import { IToastConfig, IToastService, ToastPositionClass } from "./public-api";
@@ -26,7 +32,7 @@ import { ToastPackage } from "./toast-package";
 import { ToastRef } from "./toast-ref";
 import { ToastComponent } from "./toast.component";
 import { ToastService } from "./toast.service";
-import { IconComponent } from "../../lib/icon/icon.component";
+import { ToastServiceBase } from "./toast.servicebase";
 import { NotificationService } from "../../services/notification-service";
 
 describe("components >", () => {
@@ -75,13 +81,29 @@ describe("components >", () => {
             );
         };
 
+        const createComponent = (): ToastComponent => {
+            const injector = Injector.create({
+                parent: TestBed.inject(Injector),
+                providers: [
+                    {
+                        provide: ChangeDetectorRef,
+                        useValue: mockChangeDetector,
+                    },
+                    { provide: NgZone, useValue: mockNgZone },
+                    { provide: ToastServiceBase, useValue: toastService },
+                    { provide: ToastPackage, useValue: toastPackage },
+                ],
+            });
+            return runInInjectionContext(injector, () => new ToastComponent());
+        };
+
         beforeAll(() => {
             setToastMetadata();
         });
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [IconComponent],
+                imports: [ToastComponent],
                 providers: [
                     NotificationService,
                     ToastContainerService,
@@ -95,13 +117,7 @@ describe("components >", () => {
         });
 
         it("Title and body of a component should be set correctly", fakeAsync(() => {
-            // @ts-ignore: Suppressing error for testing purposes
-            const componentInstance = new ToastComponent(
-                mockChangeDetector,
-                toastService,
-                toastPackage,
-                mockNgZone
-            );
+            const componentInstance = createComponent();
             expect(componentInstance.body).toEqual("Test message");
             expect(componentInstance.title).toEqual("Test title");
             componentInstance.remove();
@@ -109,13 +125,7 @@ describe("components >", () => {
         }));
 
         it("Class 'success' should be put on success toast", fakeAsync(() => {
-            // @ts-ignore: Suppressing error for testing purposes
-            const componentInstance = new ToastComponent(
-                mockChangeDetector,
-                toastService,
-                toastPackage,
-                mockNgZone
-            );
+            const componentInstance = createComponent();
             expect(
                 componentInstance.toastClasses.indexOf("success")
             ).not.toEqual(-1);
@@ -125,13 +135,7 @@ describe("components >", () => {
 
         it("Class 'info' should be put on info toast", fakeAsync(() => {
             toastPackage.toastType = "info";
-            // @ts-ignore: Suppressing error for testing purposes
-            const componentInstance = new ToastComponent(
-                mockChangeDetector,
-                toastService,
-                toastPackage,
-                mockNgZone
-            );
+            const componentInstance = createComponent();
             expect(componentInstance.toastClasses.indexOf("info")).not.toEqual(
                 -1
             );
@@ -141,13 +145,7 @@ describe("components >", () => {
 
         it("Class 'error' should be put on error toast", fakeAsync(() => {
             toastPackage.toastType = "error";
-            // @ts-ignore: Suppressing error for testing purposes
-            const componentInstance = new ToastComponent(
-                mockChangeDetector,
-                toastService,
-                toastPackage,
-                mockNgZone
-            );
+            const componentInstance = createComponent();
             expect(componentInstance.toastClasses.indexOf("error")).not.toEqual(
                 -1
             );
@@ -157,13 +155,7 @@ describe("components >", () => {
 
         it("Class 'warning' should be put on warning toast", fakeAsync(() => {
             toastPackage.toastType = "warning";
-            // @ts-ignore: Suppressing error for testing purposes
-            const componentInstance = new ToastComponent(
-                mockChangeDetector,
-                toastService,
-                toastPackage,
-                mockNgZone
-            );
+            const componentInstance = createComponent();
             expect(
                 componentInstance.toastClasses.indexOf("warning")
             ).not.toEqual(-1);
@@ -171,34 +163,47 @@ describe("components >", () => {
             tick(10000);
         }));
 
-        // TODO: enable after NUI-3641 is fixed
-        xit("After activation toast should be shown", () => {
-            // @ts-ignore: Suppressing error for testing purposes
-            const componentInstance = new ToastComponent(
-                mockChangeDetector,
-                toastService,
-                toastPackage,
-                mockNgZone
-            );
+        it("After activation toast should be shown", fakeAsync(() => {
+            const componentInstance = createComponent();
             toastRef.activate();
             expect(componentInstance.display).toEqual("block");
+            expect(componentInstance["state"]).toEqual("inactive");
+            tick();
             expect(componentInstance["state"]).toEqual("active");
-            tick(10000);
-        });
+            expect(componentInstance.fadeOut).toBe(false);
+            componentInstance.remove();
+            tick(300);
+            componentInstance.ngOnDestroy();
+        }));
 
-        // TODO: enable after NUI-3641 is fixed
-        xit("After remove toast should be removed", fakeAsync(() => {
-            // @ts-ignore: Suppressing error for testing purposes
-            const componentInstance = new ToastComponent(
-                mockChangeDetector,
-                toastService,
-                toastPackage,
-                mockNgZone
-            );
+        it("should cancel pending activation when destroyed", fakeAsync(() => {
+            const componentInstance = createComponent();
+            const activate = spyOn(
+                componentInstance,
+                "activateToast"
+            ).and.callThrough();
+
             toastRef.activate();
+            componentInstance.ngOnDestroy();
+            tick();
+            expect(activate).not.toHaveBeenCalled();
+            expect(componentInstance["state"]).toEqual("inactive");
+        }));
+
+        it("After remove toast should be removed", fakeAsync(() => {
+            const componentInstance = createComponent();
+            toastRef.activate();
+            tick();
+            expect(componentInstance["state"]).toEqual("active");
+            const remove = spyOn(toastService, "remove").and.callThrough();
             componentInstance.remove();
             expect(componentInstance["state"]).toEqual("removed");
-            tick(10000);
+            expect(componentInstance.fadeOut).toBe(true);
+            tick(299);
+            expect(remove).not.toHaveBeenCalled();
+            tick(1);
+            expect(remove).toHaveBeenCalledOnceWith(toastPackage.toastId);
+            componentInstance.ngOnDestroy();
         }));
     });
 });

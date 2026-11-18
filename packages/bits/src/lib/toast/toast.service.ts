@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Injectable, Injector, SecurityContext } from "@angular/core";
+import { Injectable, Injector, SecurityContext, inject } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import _assign from "lodash/assign";
 import _cloneDeep from "lodash/cloneDeep";
@@ -53,8 +53,17 @@ import { NotificationService } from "../../services/notification-service";
  */
 @Injectable({ providedIn: "root" })
 export class ToastService implements IToastService {
+    private notificationService = inject(NotificationService);
+    private toastContainerService = inject(ToastContainerService);
+    private _injector = inject(Injector);
+    private sanitizer = inject(DomSanitizer);
+
     private index = 0;
-    private currentlyActive = 0;
+    // Includes toasts scheduled for deferred activation.
+    private activeToastIds = new Set<number>();
+    private get currentlyActive(): number {
+        return this.activeToastIds.size;
+    }
     private toasts: IActiveToast[] = [];
     private defaultToastConfig: IToastConfig = {
         maxOpened: 0,
@@ -75,12 +84,7 @@ export class ToastService implements IToastService {
     private toastConfig: IToastConfig;
     private itemIdentificator: string | undefined;
 
-    constructor(
-        private notificationService: NotificationService,
-        private toastContainerService: ToastContainerService,
-        private _injector: Injector,
-        private sanitizer: DomSanitizer
-    ) {
+    constructor() {
         this.toastConfig = _assign({}, this.defaultToastConfig);
     }
 
@@ -214,20 +218,25 @@ export class ToastService implements IToastService {
 
         toastInstance.activeToast.toastRef.close();
         this.toasts.splice(toastInstance.index, 1);
-        this.currentlyActive = this.currentlyActive - 1;
+        const occupiedSlot = this.activeToastIds.delete(toastId);
 
         if (!this.toastConfig.maxOpened || !this.toasts.length) {
             return false;
         }
 
         if (
-            this.currentlyActive <= +this.toastConfig.maxOpened &&
-            this.toasts[this.currentlyActive]
+            occupiedSlot &&
+            this.currentlyActive < +this.toastConfig.maxOpened
         ) {
-            const activeToastRef = this.toasts[this.currentlyActive].toastRef;
-            if (!activeToastRef.isInactive()) {
-                this.currentlyActive = this.currentlyActive + 1;
-                activeToastRef.activate();
+            const nextToast = this.toasts.find(
+                toast =>
+                    toast.toastId !== undefined &&
+                    !this.activeToastIds.has(toast.toastId) &&
+                    !toast.toastRef.isInactive()
+            );
+            if (nextToast?.toastId !== undefined) {
+                this.activeToastIds.add(nextToast.toastId);
+                nextToast.toastRef.activate();
             }
         }
 
@@ -320,9 +329,14 @@ export class ToastService implements IToastService {
         };
 
         if (!keepInactive) {
+            this.activeToastIds.add(toastPackage.toastId);
             setTimeout(() => {
-                toastInstance.toastRef.activate();
-                this.currentlyActive = this.currentlyActive + 1;
+                if (
+                    this.activeToastIds.has(toastPackage.toastId) &&
+                    !toastInstance.toastRef.isInactive()
+                ) {
+                    toastInstance.toastRef.activate();
+                }
             });
         }
 

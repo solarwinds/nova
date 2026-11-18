@@ -363,6 +363,10 @@ export class PopupComponent
             });
         }
 
+        // Attachment updates isOpen, but the adapter's template still reflects
+        // the closed state. Render it before opened handlers try to focus or
+        // interact with the projected content.
+        this.cdRef.detectChanges();
         this.visible = true;
         this.opened.emit(this.popup.showing);
     }
