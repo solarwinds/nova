@@ -28,6 +28,7 @@ import {
     HostBinding,
     HostListener,
     Input,
+    inject,
     NgZone,
     OnChanges,
     OnDestroy,
@@ -53,6 +54,7 @@ import { ChartTooltipsPlugin } from "../core/plugins/tooltips/chart-tooltips-plu
     selector: "nui-chart",
     template: "",
     providers: [
+        ChartKeyboardTooltipController,
         {
             provide: CHART_COMPONENT,
             useExisting: forwardRef(() => ChartComponent),
@@ -104,8 +106,9 @@ export class ChartComponent
     public resizeObserver?: ResizeObserver;
     private resizeHandler: Function;
     private intersectionObserver: IntersectionObserver;
-    private readonly keyboardTooltipController =
-        new ChartKeyboardTooltipController();
+    private readonly keyboardTooltipController = inject(
+        ChartKeyboardTooltipController
+    );
 
     constructor(
         private elRef: ElementRef,

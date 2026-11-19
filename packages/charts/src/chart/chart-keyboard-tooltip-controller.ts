@@ -18,8 +18,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+import { Injectable } from "@angular/core";
+
 import { ChartTooltipsPlugin } from "../core/plugins/tooltips/chart-tooltips-plugin";
 
+@Injectable()
 export class ChartKeyboardTooltipController {
     private dataPointIndex = 0;
     private inspectionActive = false;

@@ -21,6 +21,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { CHART_VIEW_STATUS_EVENT } from "../constants";
+import { ChartKeyboardTooltipController } from "./chart-keyboard-tooltip-controller";
 import { ChartComponent } from "./chart.component";
 import { Chart } from "../core/chart";
 import { XYGrid } from "../core/grid/xy-grid";
@@ -235,6 +236,74 @@ describe("ChartComponent", () => {
             dispatchKey(nestedControl, "ArrowRight");
 
             expect(keyboardTooltips.showForIndex).not.toHaveBeenCalled();
+        });
+
+        it("provides an isolated keyboard tooltip controller per chart fixture", () => {
+            const otherFixture = TestBed.createComponent(ChartComponent);
+            try {
+                const otherComponent = otherFixture.componentInstance;
+                otherComponent.chart = new Chart(new XYGrid());
+                otherFixture.detectChanges();
+
+                expect(
+                    fixture.debugElement.injector.get(
+                        ChartKeyboardTooltipController
+                    )
+                ).not.toBe(
+                    otherFixture.debugElement.injector.get(
+                        ChartKeyboardTooltipController
+                    )
+                );
+
+                const otherKeyboardTooltips =
+                    jasmine.createSpyObj<ChartTooltipsPlugin>(
+                        "OtherChartTooltipsPlugin",
+                        [
+                            "getKeyboardDataPointCount",
+                            "showForIndex",
+                            "hideKeyboardTooltips",
+                        ]
+                    );
+                otherKeyboardTooltips.getKeyboardDataPointCount.and.returnValue(
+                    3
+                );
+
+                component.keyboardTooltips = keyboardTooltips;
+                fixture.detectChanges();
+                otherComponent.keyboardTooltips = otherKeyboardTooltips;
+                otherFixture.detectChanges();
+
+                document.body.appendChild(host);
+                host.focus();
+                expect(document.activeElement).toBe(host);
+                dispatchKey(host, "ArrowRight");
+                expect(
+                    keyboardTooltips.showForIndex.calls.mostRecent().args
+                ).toEqual([1]);
+
+                const replacementTooltips =
+                    jasmine.createSpyObj<ChartTooltipsPlugin>(
+                        "ReplacementChartTooltipsPlugin",
+                        [
+                            "getKeyboardDataPointCount",
+                            "showForIndex",
+                            "hideKeyboardTooltips",
+                        ]
+                    );
+                otherComponent.keyboardTooltips = replacementTooltips;
+                otherFixture.detectChanges();
+
+                dispatchKey(host, "ArrowRight");
+
+                expect(
+                    keyboardTooltips.showForIndex.calls.mostRecent().args
+                ).toEqual([2]);
+                expect(
+                    otherKeyboardTooltips.hideKeyboardTooltips
+                ).not.toHaveBeenCalled();
+            } finally {
+                otherFixture.destroy();
+            }
         });
     });
 });
