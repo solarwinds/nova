@@ -119,6 +119,41 @@ test.describe("USERCONTROL expander", () => {
         await expect(expander.locator("[role=region]")).toHaveCount(0);
     });
 
+    test("exposes an opt-in region named by its header only while open", async ({
+        page,
+    }) => {
+        const expander = page.locator("#nui-demo-expander-region");
+        const header = expander.getByRole("button", {
+            name: "Notification details",
+            exact: true,
+        });
+        const body = expander.locator(".nui-expander__body-wrapper");
+        const region = expander.getByRole("region", {
+            name: "Notification details",
+            exact: true,
+        });
+        const headerId = await header.getAttribute("id");
+        const bodyId = await body.getAttribute("id");
+        expect(headerId).toBeTruthy();
+        expect(bodyId).toBeTruthy();
+        await expect(header).toHaveAttribute("aria-controls", bodyId!);
+        await expect(header).toHaveAttribute("aria-expanded", "false");
+        await expect(region).toHaveCount(0);
+
+        await header.focus();
+        await header.press("Enter");
+        await expect(header).toHaveAttribute("aria-expanded", "true");
+        await expect(region).toBeVisible();
+        await expect(region).toHaveAttribute("aria-labelledby", headerId!);
+        await expect(region).toContainText(
+            "Notification settings are shown here."
+        );
+
+        await header.press("Space");
+        await expect(header).toHaveAttribute("aria-expanded", "false");
+        await expect(region).toHaveCount(0);
+    });
+
     test("menu items should be clickable", async ({ page }) => {
         const menu = Atom.find<MenuAtom>(
             MenuAtom,
