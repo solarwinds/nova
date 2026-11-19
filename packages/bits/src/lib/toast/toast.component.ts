@@ -81,6 +81,7 @@ export class ToastComponent implements OnDestroy {
 
     /** controls animation */
     private state: ToastState = ToastState.Inactive;
+    private activationTimeout?: ReturnType<typeof setTimeout>;
     private timeout: any;
     private intervalId: NodeJS.Timeout;
     private hideTime: number;
@@ -109,7 +110,7 @@ export class ToastComponent implements OnDestroy {
             .afterActivate()
             .subscribe(() => {
                 this.display = "block";
-                setTimeout(() => this.activateToast()); // Is needed to make "display: none" & "opacity" transitions working
+                this.activationTimeout = setTimeout(() => this.activateToast()); // Is needed to make "display: none" & "opacity" transitions working
             });
 
         const closeSubscription = this.toastPackage.toastRef
@@ -152,6 +153,7 @@ export class ToastComponent implements OnDestroy {
             return;
         }
 
+        clearTimeout(this.activationTimeout);
         clearTimeout(this.timeout);
         this.state = ToastState.Removed;
         this.fadeOut = true;
@@ -265,6 +267,7 @@ export class ToastComponent implements OnDestroy {
 
     public ngOnDestroy(): void {
         this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        clearTimeout(this.activationTimeout);
         clearInterval(this.intervalId);
         clearTimeout(this.timeout);
     }

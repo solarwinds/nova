@@ -21,17 +21,20 @@
 import { RadioGroupAtom } from "./radio-group.atom";
 import { Helpers, test } from "../../setup";
 
-const rulesToDisable: string[] = ["nested-interactive", "aria-required-attr"];
-
 test.describe("a11y: radio group", () => {
-    test.beforeEach(async ({ page }) => {
+    test("should check a11y of radio group", async ({ page, runA11yScan }) => {
         await Helpers.prepareBrowser(
             "radio-group/radio-group-visual-test",
             page
         );
+        await runA11yScan(RadioGroupAtom);
     });
 
-    test("should check a11y of radio group", async ({ runA11yScan }) => {
-        await runA11yScan(RadioGroupAtom, rulesToDisable);
+    test("should check radio labels, hints and a separate text editor", async ({
+        page,
+        runA11yScan,
+    }) => {
+        await Helpers.prepareBrowser("radio-group/radio-group-test", page);
+        await runA11yScan(RadioGroupAtom);
     });
 });

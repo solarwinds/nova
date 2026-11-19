@@ -24,7 +24,12 @@ import {
     DebugElement,
     ViewChild,
 } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
 import { MenuComponent } from "./menu.component";
@@ -86,6 +91,11 @@ class TestAppComponent {
                     itemType: "action",
                     title: "Action",
                     disabled: false,
+                },
+                {
+                    itemType: "switch",
+                    title: "Switch",
+                    checked: false,
                 },
             ],
         },
@@ -164,6 +174,7 @@ describe("components >", () => {
                 expect(button.attributes["aria-haspopup"]).toBe("menu");
                 expect(button.attributes["aria-expanded"]).toBe("false");
                 expect(button.attributes["aria-controls"]).toBeFalsy();
+                expect(button.nativeElement.getAttribute("role")).toBeNull();
 
                 // Open menu
                 testComponent.menu.popup.toggleOpened(
@@ -179,6 +190,72 @@ describe("components >", () => {
                 );
                 expect(content).toBeTruthy();
             });
+
+            it("should focus the popup menu and reference its active menu item", fakeAsync(() => {
+                const button = testComponent.menu.menuToggle
+                    .nativeElement as HTMLButtonElement;
+                button.focus();
+                button.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        code: "ArrowDown",
+                        key: "ArrowDown",
+                        bubbles: true,
+                        cancelable: true,
+                    })
+                );
+                tick();
+                fixture.detectChanges();
+
+                const menuContent =
+                    testComponent.menu.menuContent.nativeElement;
+                expect(document.activeElement).toBe(menuContent);
+                const activeItemId = menuContent.getAttribute(
+                    "aria-activedescendant"
+                );
+                expect(activeItemId).toBeTruthy();
+                const activeItem = document.getElementById(activeItemId!);
+                expect(activeItem).toBeTruthy();
+                expect(menuContent.contains(activeItem)).toBeTrue();
+                expect(activeItem!.getAttribute("role")).toBe("menuitem");
+                expect(menuContent.getAttribute("aria-labelledby")).toBe(
+                    button.id
+                );
+                expect(
+                    menuContent
+                        .querySelector("nui-menu-popup")
+                        ?.getAttribute("role")
+                ).toBe("presentation");
+                expect(
+                    button.hasAttribute("aria-activedescendant")
+                ).toBeFalse();
+            }));
+
+            it("should retain keyboard selection when navigating a mouse-open menu", fakeAsync(() => {
+                const button = testComponent.menu.menuToggle
+                    .nativeElement as HTMLButtonElement;
+                button.focus();
+                button.click();
+                fixture.detectChanges();
+
+                button.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        code: "ArrowDown",
+                        key: "ArrowDown",
+                        keyCode: 40,
+                        bubbles: true,
+                        cancelable: true,
+                    })
+                );
+                const activeItemId = testComponent.menu.activeDescendant;
+                expect(activeItemId).toBeTruthy();
+                tick();
+                fixture.detectChanges();
+
+                expect(testComponent.menu.activeDescendant).toBe(activeItemId);
+                expect(document.activeElement).toBe(
+                    testComponent.menu.menuContent.nativeElement
+                );
+            }));
 
             it("should have correct roles on menu-link", () => {
                 // Ensure menu items are rendered

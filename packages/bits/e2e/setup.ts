@@ -33,6 +33,7 @@ export const test = base.extend<AxeFixture>({
             ) => {
                 const builder = new AxeBuilder({ page }).withTags([
                     "wcag2a",
+                    "wcag2aa",
                     "wcag21a",
                     "wcag21aa",
                     "wcag22a",

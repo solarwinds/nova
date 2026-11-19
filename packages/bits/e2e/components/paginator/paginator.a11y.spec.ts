@@ -28,6 +28,28 @@ test.describe("a11y: paginator", () => {
     });
 
     test("should check a11y of paginator", async ({ runA11yScan }) => {
-        await runA11yScan(PaginatorAtom, rulesToDisable);
+        await runA11yScan(PaginatorAtom, rulesToDisable, ["wcag2aa"]);
+    });
+});
+
+test.describe("a11y: virtualized paginator", () => {
+    [false, true].forEach(appendToBody => {
+        test(`should check the open popup with appendToBody=${appendToBody}`, async ({
+            page,
+            runA11yScan,
+        }) => {
+            await Helpers.prepareBrowser("paginator/paginator-test", page);
+            await page
+                .locator("#nui-demo-virtualized-paginators")
+                .evaluate(element => {
+                    (element as HTMLElement).style.display = "block";
+                });
+            const id = appendToBody
+                ? "#nui-demo-body-virtualized-paginator"
+                : "#nui-demo-virtualized-paginator";
+            await page.locator(id).locator(".nui-paginator__dots").focus();
+            await page.keyboard.press("Enter");
+            await runA11yScan("cdk-virtual-scroll-viewport", [], ["wcag2aa"]);
+        });
     });
 });

@@ -30,6 +30,21 @@
         <pre>{{ tooltipsHtml }}</pre>
     </li>
 </ol>
+<h3>Keyboard tooltip inspection (opt-in)</h3>
+<p>
+    Bind the registered tooltip plugin to the chart's
+    <code>[keyboardTooltips]</code> input and provide a localized
+    <code>ariaLabel</code> and keyboard instructions. Tab focuses the chart;
+    Left and Right Arrow inspect data points, Escape dismisses the tooltips, and
+    leaving the chart closes them. Pointer interaction is still available.
+</p>
+<p>
+    This basic mode inspects the same positional data index in each visible
+    series. Use it with aligned series such as the line-chart example below. It
+    does not align unequal time/category domains, provide data-point activation
+    or range selection, or establish complete chart accessibility. Charts
+    without this input retain their existing behavior.
+</p>
 <nui-example-wrapper
     filenamePrefix="line-chart-with-tooltips"
     exampleTitle="Line Chart">

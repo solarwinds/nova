@@ -8,6 +8,23 @@
     &__drag-handler {
         cursor: move;
         display: flex;
+
+        &:focus-visible {
+            outline: 2px solid;
+            outline-offset: 2px;
+            .setCssVariable(outline-color, nui-color-active);
+        }
+    }
+    &__a11y-text {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
     }
     &__node-item {
         .setCssVariable(background-color, nui-color-bg-light);

@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { A11yModule } from "@angular/cdk/a11y";
 import { ComponentPortal, PortalModule } from "@angular/cdk/portal";
 import {
     ApplicationRef,
@@ -34,10 +35,10 @@ import {
     flush,
     TestBed,
 } from "@angular/core/testing";
-import { Router } from "@angular/router";
+import { NavigationEnd, Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { GridsterModule } from "angular-gridster2";
-import { of } from "rxjs";
+import { of, Subject } from "rxjs";
 
 import { NuiPanelModule } from "@nova-ui/bits";
 
@@ -71,10 +72,6 @@ class MockComponentFactoryResolver {
     }
 }
 
-class MockInjector implements Injector {
-    get(token: any, notFoundValue?: any): any {}
-}
-
 class MockRenderer implements Partial<Renderer2> {
     public appendChild(): void {}
 
@@ -106,10 +103,12 @@ describe("ConfiguratorService > ", () => {
     let configuratorArgs: IConfigurator;
     let widgetTypesService: WidgetTypesService;
     let configComponentFixture: ComponentFixture<ConfiguratorComponent>;
+    let triggerButton: HTMLButtonElement | undefined;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                A11yModule,
                 GridsterModule,
                 PortalModule,
                 NuiPanelModule,
@@ -144,7 +143,7 @@ describe("ConfiguratorService > ", () => {
                 configComponentFixture.componentRef
             ) as ComponentFactoryResolver,
             widgetTypesService,
-            new MockInjector(),
+            TestBed.inject(Injector),
             appRef,
             mockLoggerService,
             new MockRendererFactory() as RendererFactory2,
@@ -160,7 +159,11 @@ describe("ConfiguratorService > ", () => {
     });
 
     afterEach(() => {
-        document.body.removeChild(configuratorNativeElement);
+        configuratorNativeElement.parentNode?.removeChild(
+            configuratorNativeElement
+        );
+        triggerButton?.remove();
+        triggerButton = undefined;
     });
 
     describe("open > ", () => {
@@ -171,6 +174,44 @@ describe("ConfiguratorService > ", () => {
             ).and.callThrough();
             service.open(configuratorArgs);
             expect(spy).toHaveBeenCalled();
+        });
+
+        it("should restore focus to the connected trigger when closed", () => {
+            triggerButton = document.createElement("button");
+            document.body.appendChild(triggerButton);
+            triggerButton.focus();
+
+            service.open(configuratorArgs);
+            triggerButton.blur();
+            expect(document.activeElement).not.toBe(triggerButton);
+            service.close();
+
+            expect(triggerButton.isConnected).toBe(true);
+            expect(document.activeElement).toBe(triggerButton);
+        });
+
+        it("should not restore focus when navigation closes the configurator", () => {
+            const router = TestBed.inject(Router);
+            const navigationEvents = new Subject<NavigationEnd>();
+            spyOnProperty(router, "events", "get").and.returnValue(
+                navigationEvents.asObservable()
+            );
+
+            triggerButton = document.createElement("button");
+            document.body.appendChild(triggerButton);
+            triggerButton.focus();
+            const triggerFocusSpy = spyOn(
+                triggerButton,
+                "focus"
+            ).and.callThrough();
+            const closeSpy = spyOn(service, "close").and.callThrough();
+
+            service.open(configuratorArgs);
+            triggerFocusSpy.calls.reset();
+            navigationEvents.next(new NavigationEnd(1, "/next", "/next"));
+
+            expect(closeSpy).toHaveBeenCalledWith(false);
+            expect(triggerFocusSpy).not.toHaveBeenCalled();
         });
     });
 

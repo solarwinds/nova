@@ -46,7 +46,7 @@ import {
             (tileClick)="onTileClick()"
         ></nui-kpi-tile-view>
 
-        <ng-template #customValueTpl let-val>
+        <ng-template #valueTpl let-val>
             <span class="custom-value">{{ val }} custom</span>
         </ng-template>
     `,
@@ -67,7 +67,7 @@ class TestHostComponent {
     customValueTpl: TemplateRef<any> | null = null;
     clicked = false;
 
-    @ViewChild("customValueTpl") customValueTplRef: TemplateRef<any>;
+    @ViewChild("valueTpl") customValueTplRef: TemplateRef<any>;
 
     onTileClick(): void {
         this.clicked = true;
@@ -178,9 +178,92 @@ describe("KpiTileViewComponent", () => {
         expect(component.isInteractive).toBe(false);
     });
 
+    it("should expose an accessible button for interactive tiles", () => {
+        host.value = 42;
+        host.label = "Nodes Up";
+        host.units = "nodes";
+        host.interactive = true;
+        fixture.detectChanges();
+
+        const tile: HTMLElement =
+            fixture.nativeElement.querySelector(".nui-kpi-indicator");
+        expect(tile.getAttribute("role")).toBe("button");
+        expect(tile.getAttribute("tabindex")).toBe("0");
+        expect(tile.getAttribute("aria-label")).toBe("Nodes Up 42 nodes");
+    });
+
+    it("should activate an interactive tile once for Enter and Space", () => {
+        host.value = 42;
+        host.interactive = true;
+        fixture.detectChanges();
+
+        const tile: HTMLElement =
+            fixture.nativeElement.querySelector(".nui-kpi-indicator");
+        const interactionSpy = spyOn(
+            component,
+            "onInteraction"
+        ).and.callThrough();
+
+        tile.dispatchEvent(
+            new KeyboardEvent("keydown", {
+                key: "Enter",
+                bubbles: true,
+                cancelable: true,
+            })
+        );
+        expect(interactionSpy).toHaveBeenCalledTimes(1);
+
+        const spaceEvent = new KeyboardEvent("keydown", {
+            key: " ",
+            bubbles: true,
+            cancelable: true,
+        });
+        tile.dispatchEvent(spaceEvent);
+        expect(interactionSpy).toHaveBeenCalledTimes(2);
+        expect(spaceEvent.defaultPrevented).toBe(true);
+    });
+
+    it("should not add empty or non-interactive tiles to the tab order", () => {
+        host.value = 42;
+        fixture.detectChanges();
+        let tile: HTMLElement =
+            fixture.nativeElement.querySelector(".nui-kpi-indicator");
+        expect(tile.hasAttribute("tabindex")).toBe(false);
+        expect(tile.hasAttribute("role")).toBe(false);
+
+        host.interactive = true;
+        host.empty = true;
+        fixture.detectChanges();
+        tile = fixture.nativeElement.querySelector(".nui-kpi-indicator");
+        expect(tile.hasAttribute("tabindex")).toBe(false);
+        expect(tile.hasAttribute("role")).toBe(false);
+    });
+
+    it("should ignore repeated keys and keys from descendants", () => {
+        host.value = 42;
+        host.interactive = true;
+        fixture.detectChanges();
+        const tile: HTMLElement =
+            fixture.nativeElement.querySelector(".nui-kpi-indicator");
+        const interactionSpy = spyOn(component, "onInteraction");
+        const repeat = new KeyboardEvent("keydown", {
+            key: " ",
+            repeat: true,
+            bubbles: true,
+            cancelable: true,
+        });
+        tile.dispatchEvent(repeat);
+        tile.firstElementChild?.dispatchEvent(
+            new KeyboardEvent("keydown", { key: "Enter", bubbles: true })
+        );
+        expect(repeat.defaultPrevented).toBe(true);
+        expect(interactionSpy).not.toHaveBeenCalled();
+    });
+
     it("should render link as anchor element", () => {
         host.value = 42;
         host.label = "Test";
+        host.interactive = true;
         host.link = "https://example.com";
         fixture.detectChanges();
 
@@ -189,6 +272,22 @@ describe("KpiTileViewComponent", () => {
         );
         expect(anchor).toBeTruthy();
         expect(anchor.href).toContain("example.com");
+        expect(anchor.getAttribute("role")).toBeNull();
+        expect(anchor.hasAttribute("tabindex")).toBe(false);
+    });
+
+    it("should preserve custom value template accessible content", () => {
+        host.value = 42;
+        host.label = "Custom metric";
+        host.interactive = true;
+        fixture.detectChanges();
+        host.customValueTpl = host.customValueTplRef;
+        fixture.detectChanges();
+
+        const tile: HTMLElement =
+            fixture.nativeElement.querySelector(".nui-kpi-indicator");
+        expect(tile.hasAttribute("aria-label")).toBe(false);
+        expect(tile.textContent).toContain("42 custom");
     });
 
     it("should render div when no link", () => {

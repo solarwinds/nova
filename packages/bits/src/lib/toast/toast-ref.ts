@@ -39,6 +39,7 @@ export class ToastRef<T> implements IToastRef<T> {
     constructor(private toastContainerService: ToastContainerService) {}
 
     public manualClose(): void {
+        this.activateSubject.complete();
         this.manualCloseSubject.next();
         this.manualCloseSubject.complete();
     }
@@ -51,6 +52,7 @@ export class ToastRef<T> implements IToastRef<T> {
      * Close toast
      */
     public close(): void {
+        this.activateSubject.complete();
         this.toastContainerService.detachToast(this.componentInstance);
         this.afterClosedSubject.next();
         this.afterClosedSubject.complete();

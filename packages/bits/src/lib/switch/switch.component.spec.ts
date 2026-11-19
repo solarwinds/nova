@@ -27,10 +27,20 @@ import createSpy = jasmine.createSpy;
 import Spy = jasmine.Spy;
 
 @Component({
-    template: `<nui-switch id="public-switch-id">Refresh widget</nui-switch>`,
+    template: `
+        <nui-switch
+            id="public-switch-id"
+            [tabIndex]="tabIndex"
+            [disabled]="disabled">
+            Refresh widget
+        </nui-switch>
+    `,
     standalone: false,
 })
-class SwitchHostComponent {}
+class SwitchHostComponent {
+    public tabIndex = 0;
+    public disabled = false;
+}
 
 describe("components >", () => {
     describe("switch >", () => {
@@ -79,6 +89,38 @@ describe("components >", () => {
         });
 
         describe("accessibility >", () => {
+            it("should keep a standalone switch in the tab order by default", () => {
+                switchFixture.detectChanges();
+
+                const switchBar: HTMLElement =
+                    switchFixture.nativeElement.querySelector(
+                        ".nui-switch__bar"
+                    );
+                expect(switchBar.tabIndex).toBe(0);
+            });
+
+            for (const tabIndex of [0, -1]) {
+                it(`should restore tabIndex=${tabIndex} when re-enabled`, () => {
+                    const hostFixture =
+                        TestBed.createComponent(SwitchHostComponent);
+                    hostFixture.componentInstance.tabIndex = tabIndex;
+                    hostFixture.detectChanges();
+                    const switchBar: HTMLElement =
+                        hostFixture.nativeElement.querySelector(
+                            ".nui-switch__bar"
+                        );
+                    expect(switchBar.tabIndex).toBe(tabIndex);
+
+                    hostFixture.componentInstance.disabled = true;
+                    hostFixture.detectChanges();
+                    expect(switchBar.tabIndex).toBe(-1);
+
+                    hostFixture.componentInstance.disabled = false;
+                    hostFixture.detectChanges();
+                    expect(switchBar.tabIndex).toBe(tabIndex);
+                });
+            }
+
             it("should set aria-labelledby when a projected label is provided", () => {
                 const hostFixture =
                     TestBed.createComponent(SwitchHostComponent);

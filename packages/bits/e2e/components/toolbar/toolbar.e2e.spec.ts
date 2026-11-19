@@ -67,6 +67,17 @@ test.describe("USERCONTROL toolbar: ", () => {
         );
     });
 
+    test("should show a focus indicator on More when reached by arrow key", async () => {
+        const firstButton = toolbar.getItemButton(0).getLocator();
+        const menuButton = toolbar.menu.getMenuButton().getLocator();
+
+        await firstButton.focus();
+        await firstButton.press("ArrowLeft");
+
+        await expect(menuButton).toBeFocused();
+        await expect(menuButton).not.toHaveCSS("box-shadow", "none");
+    });
+
     test.describe("selection mode in toolbar", () => {
         let toolbarSelected: ToolbarAtom;
         let toggleItemButton: ButtonAtom;

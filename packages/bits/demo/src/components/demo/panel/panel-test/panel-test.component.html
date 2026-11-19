@@ -8,4 +8,69 @@
     <nui-panel-resize-example></nui-panel-resize-example>
 
     <nui-panel-hide-example></nui-panel-hide-example>
+
+    <h2 i18n>Hoverable panel keyboard test</h2>
+    <button id="panel-keyboard-before" type="button" nui-button i18n>
+        Before hoverable panel
+    </button>
+    <div class="my-3" style="height: 250px">
+        <nui-panel
+            id="nui-demo-keyboard-hoverable-panel"
+            panelMode="hoverable"
+            heading="Keyboard panel"
+            i18n-heading
+            [displacePrimaryContent]="false">
+            <div nuiPanelEmbeddedBody>
+                <label for="panel-keyboard-input" i18n>Panel input</label>
+                <input id="panel-keyboard-input" type="text" />
+                <button type="button" nui-button i18n>Panel action</button>
+            </div>
+            <p i18n
+                >Primary content stays available while the side pane is
+                collapsed.</p
+            >
+        </nui-panel>
+    </div>
+    <button id="panel-keyboard-after" type="button" nui-button i18n>
+        After hoverable panel
+    </button>
+
+    <h2 i18n>Panel keyboard resizing tests</h2>
+    <div *ngFor="let orientation of ['left', 'right', 'top']" class="my-4">
+        <button [id]="'resize-before-' + orientation" type="button" nui-button>
+            Before {{ orientation }} panel
+        </button>
+        <div style="width: 600px; height: 240px">
+            <nui-panel
+                [id]="'keyboard-resize-' + orientation"
+                [heading]="'Resizable ' + orientation"
+                [orientation]="orientation"
+                panelMode="collapsible"
+                paneSize="150px"
+                paneMinSize="100px"
+                paneMaxSize="80%"
+                [isResizable]="true">
+                <div nuiPanelEmbeddedBody>
+                    <button type="button" nui-button>Pane action</button>
+                </div>
+                <p>Primary content</p>
+            </nui-panel>
+        </div>
+        <button [id]="'resize-after-' + orientation" type="button" nui-button>
+            After {{ orientation }} panel
+        </button>
+    </div>
+
+    <div dir="rtl" style="width: 600px; height: 240px">
+        <nui-panel
+            id="keyboard-resize-rtl"
+            heading="Deferred RTL resizing"
+            paneSize="150px"
+            paneMinSize="100px"
+            paneMaxSize="80%"
+            [isResizable]="true">
+            <p nuiPanelEmbeddedBody>RTL keyboard resizing is deferred.</p>
+            <p>Primary content</p>
+        </nui-panel>
+    </div>
 </div>

@@ -24,6 +24,7 @@ import {
     ChangeDetectorRef,
     Component,
     EventEmitter,
+    inject,
     Input,
     OnChanges,
     OnDestroy,
@@ -46,6 +47,7 @@ import {
     IHasForm,
     IPaletteColor,
 } from "../../../../../types";
+import { KeyboardReorder } from "../../../../keyboard-reorder";
 
 const DEFAULT_LABEL = "Custom Comparator";
 
@@ -53,13 +55,16 @@ const DEFAULT_LABEL = "Custom Comparator";
     selector: "nui-background-color-rules-configuration",
     templateUrl: "./background-color-rules-configuration.component.html",
     styleUrls: ["./background-color-rules-configuration.component.less"],
+    providers: [KeyboardReorder],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    // eslint-disable-next-line @angular-eslint/prefer-standalone -- Preserve the existing NgModule-based library API.
     standalone: false,
 })
 export class BackgroundColorRulesConfigurationComponent
     implements IHasChangeDetector, IHasForm, OnChanges, OnInit, OnDestroy
 {
     public static lateLoadKey = "BackgroundColorRulesConfigurationComponent";
+    private static reorderInstructionsCounter = 0;
 
     @Input() rules: IKpiColorRules[];
     @Input() backgroundColors: IPaletteColor[];
@@ -70,16 +75,31 @@ export class BackgroundColorRulesConfigurationComponent
     public availableComparators: IComparatorsDict;
     public palette: Partial<IPaletteColor[]>;
     public height: number;
-
+    public readonly reorderInstructionsId = `nui-background-color-rules-reorder-instructions-${BackgroundColorRulesConfigurationComponent.reorderInstructionsCounter++}`;
+    public readonly reorder =
+        inject<KeyboardReorder<FormGroup>>(KeyboardReorder);
     private readonly destroy$ = new Subject<void>();
 
+    /* eslint-disable @angular-eslint/prefer-inject -- Preserve the public constructor signature for existing consumers. */
     constructor(
         public changeDetector: ChangeDetectorRef,
         private formBuilder: FormBuilder,
         comparatorsRegistry: KpiColorComparatorsRegistryService
     ) {
         this.availableComparators = comparatorsRegistry.getComparators();
+        this.reorder.configure(
+            () =>
+                (this.formLocal?.get("rules")?.value as FormArray<FormGroup>)
+                    ?.controls ?? [],
+            (from, to) => {
+                this.move(to, from, true);
+                this.changeDetector.detectChanges();
+            },
+            rule => rule.disabled,
+            () => this.changeDetector.markForCheck()
+        );
     }
+    /* eslint-enable @angular-eslint/prefer-inject */
 
     public ngOnInit(): void {
         this.palette = [
@@ -140,6 +160,7 @@ export class BackgroundColorRulesConfigurationComponent
     }
 
     public removeRule(controlIndex: number): void {
+        this.reorder.cancel();
         (this.formLocal?.get("rules")?.value as FormArray).removeAt(
             controlIndex
         );
@@ -160,6 +181,7 @@ export class BackgroundColorRulesConfigurationComponent
     }
 
     public cdkDragStarted(event: CdkDragStart): void {
+        this.reorder.finish();
         this.height = event.source.element.nativeElement.offsetHeight;
     }
 
@@ -174,7 +196,11 @@ export class BackgroundColorRulesConfigurationComponent
         });
     }
 
-    private move(currentIndex: number, previousIndex: number): void {
+    private move(
+        currentIndex: number,
+        previousIndex: number,
+        batchChanges = false
+    ): void {
         const rules = this.formLocal?.get("rules")?.value as FormArray;
         const dir = currentIndex > previousIndex ? 1 : -1;
         if (!rules) {
@@ -185,8 +211,12 @@ export class BackgroundColorRulesConfigurationComponent
 
         for (let i = previousIndex; i * dir < currentIndex * dir; i = i + dir) {
             const current = rules.at(i + dir);
-            rules.setControl(i, current);
+            rules.setControl(i, current, { emitEvent: !batchChanges });
         }
-        rules.setControl(currentIndex, temp);
+        rules.setControl(currentIndex, temp, { emitEvent: !batchChanges });
+        if (batchChanges) {
+            // Intermediate duplicates can destroy the focused rule's view.
+            rules.updateValueAndValidity();
+        }
     }
 }

@@ -55,6 +55,12 @@ describe("components >", () => {
             it("should input change on click", () => {
                 checkboxInput.click();
                 expect(subject.checked).toBeTruthy();
+                fixture.detectChanges();
+                expect(
+                    subject.checkboxLabel.nativeElement.getAttribute(
+                        "aria-checked"
+                    )
+                ).toBe("true");
             });
 
             it("should help hint be displayed", () => {
@@ -80,8 +86,44 @@ describe("components >", () => {
                     )
                 ).toBe("checkbox-instructions checkbox-error");
                 expect(
+                    subject.checkboxLabel.nativeElement.getAttribute("role")
+                ).toBe("checkbox");
+                expect(
+                    subject.checkboxLabel.nativeElement.getAttribute(
+                        "aria-checked"
+                    )
+                ).toBe("false");
+                expect(
+                    subject.checkboxLabel.nativeElement.getAttribute(
+                        "aria-disabled"
+                    )
+                ).toBe("false");
+                expect(
                     subject.checkboxLabel.nativeElement.getAttribute("tabindex")
                 ).toBe("0");
+
+                subject.disabled = true;
+                fixture.detectChanges();
+
+                expect(
+                    subject.checkboxLabel.nativeElement.getAttribute(
+                        "aria-disabled"
+                    )
+                ).toBe("true");
+                expect(
+                    subject.checkboxLabel.nativeElement.getAttribute("tabindex")
+                ).toBe("-1");
+            });
+
+            it("exposes the indeterminate state on the focusable checkbox", () => {
+                fixture.componentRef.setInput("indeterminate", true);
+                fixture.detectChanges();
+
+                expect(
+                    subject.checkboxLabel.nativeElement.getAttribute(
+                        "aria-checked"
+                    )
+                ).toBe("mixed");
             });
 
             it("should update and remove focusable label description references", () => {

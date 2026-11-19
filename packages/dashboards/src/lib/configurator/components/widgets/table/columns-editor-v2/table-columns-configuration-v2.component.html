@@ -1,5 +1,18 @@
 <div class="nui-table-columns-configuration">
-    <!-- TODO: NUI-6281 - Fix no keyboard alternative for drag-to-reorder -->
+    <span
+        class="nui-table-columns-configuration__a11y-text"
+        [id]="reorderInstructionsId"
+        i18n>
+        Press Space or Enter to pick up this column. Use the arrow keys to move
+        it. Press Space or Enter to drop it, or Escape to restore its original
+        position.
+    </span>
+    <span
+        class="nui-table-columns-configuration__a11y-text"
+        aria-live="polite"
+        aria-atomic="true">
+        {{ reorder.announcement }}
+    </span>
     @if (!dataSourceError && dataSourceFields.length) {
     <div cdkDropList (cdkDropListDropped)="drop($event)" [formGroup]="form">
         <div formArrayName="columns">
@@ -21,7 +34,16 @@
                     <ng-container>
                         <div
                             class="nui-table-columns-configuration__drag-handler"
-                            cdkDragHandle>
+                            cdkDragHandle
+                            role="button"
+                            [attr.tabindex]="columnForm.disabled ? -1 : 0"
+                            [attr.aria-disabled]="columnForm.disabled ? 'true' : null"
+                            [attr.aria-pressed]="reorder.activeItem === columnForm.value.id"
+                            aria-label="Reorder column"
+                            i18n-aria-label
+                            [attr.aria-describedby]="reorderInstructionsId"
+                            (keydown)="reorder.onKeydown($event, columnForm.value.id)"
+                            (blur)="reorder.finish()">
                             <nui-icon icon="drag" aria-hidden="true"></nui-icon>
                         </div>
                     </ng-container>

@@ -3,6 +3,8 @@
     <nui-radio-group
         id="fruit-radio-group"
         name="fruit"
+        ariaLabel="Fruit selection"
+        i18n-ariaLabel
         [(value)]="selectedFruit">
         <nui-radio
             *ngFor="let fruit of fruits"
@@ -18,6 +20,8 @@
     <nui-radio-group
         id="color-radio-group"
         name="color"
+        ariaLabel="Color selection"
+        i18n-ariaLabel
         [(value)]="selectedColor">
         <nui-radio
             *ngFor="let color of colors"
@@ -34,7 +38,9 @@
     <nui-radio-group
         class="nui-radio-group-inline"
         id="inline-color-radio-group"
-        name="color"
+        name="inline-color"
+        ariaLabel="Inline color selection"
+        i18n-ariaLabel
         [(value)]="selectedColor">
         <nui-radio
             *ngFor="let color of colors"

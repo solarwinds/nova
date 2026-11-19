@@ -34,6 +34,7 @@ import {
 import debounce from "lodash/debounce";
 import isFunction from "lodash/isFunction";
 import isUndefined from "lodash/isUndefined";
+import uniqueId from "lodash/uniqueId";
 import { Subscription } from "rxjs";
 
 import {
@@ -90,6 +91,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
             if (!isDisabled) {
                 this.refreshStyle();
             }
+            this.updateKeyboardSeparator();
         }
     }
 
@@ -105,6 +107,26 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
      * Switch to mode in which resizer change parent's and sibling's flex-basis (layout-specific)
      */
     @Input() public isMultiple: boolean;
+
+    /**
+     * Opts a resizer into the keyboard separator behavior. Kept off by default
+     * so existing resizer consumers, including sheet groups, are unchanged.
+     */
+    private _resizerKeyboardEnabled = false;
+
+    @Input() set resizerKeyboardEnabled(isEnabled: boolean) {
+        this._resizerKeyboardEnabled = isEnabled;
+        this.updateKeyboardSeparator();
+    }
+
+    get resizerKeyboardEnabled(): boolean {
+        return this._resizerKeyboardEnabled;
+    }
+
+    @Input() public resizerKeyboardLabel: string;
+    @Input() public resizerKeyboardLabelledBy: string | null = null;
+    @Input() public resizerKeyboardMinSize: string;
+    @Input() public resizerKeyboardMaxSize: string;
 
     /**
      * Emits new size of element on which directive was applied
@@ -129,6 +151,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     private eventSubscriptions: (() => void)[] = [];
     private mouseUpUnlisten: () => void;
     private mouseMoveUnlisten: () => void;
+    private windowResizeUnlisten?: () => void;
     private sibling: any;
 
     public constructor(
@@ -143,6 +166,9 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes["resizerDirection"] && this.resizeGutter) {
             this.appendResizeElement();
+        }
+        if (this.resizeGutter) {
+            this.updateKeyboardSeparator();
         }
     }
 
@@ -175,6 +201,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         this.addResizeObserver();
         this.appendEvents();
         this.refreshStyle();
+        this.updateKeyboardSeparator();
     }
 
     public ngOnDestroy(): void {
@@ -185,6 +212,9 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         }
         if (this.resizeSubscription) {
             this.resizeSubscription.unsubscribe();
+        }
+        if (this.windowResizeUnlisten) {
+            this.windowResizeUnlisten();
         }
         this.unlistenEvents();
     }
@@ -240,6 +270,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
                 this.resizePropObj.cursor
             );
             this.switchDisabledClasses();
+            this.updateKeyboardSeparator();
         }
     }
 
@@ -269,6 +300,13 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
                 this.resizeGutter,
                 "mousedown",
                 ($event: MouseEvent) => this.onMouseDown($event)
+            )
+        );
+        this.eventSubscriptions.push(
+            this.renderer.listen(
+                this.resizeGutter,
+                "keydown",
+                ($event: KeyboardEvent) => this.onKeyboardResize($event)
             )
         );
     }
@@ -313,6 +351,297 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         );
         this.renderer.appendChild(this.resizeGutter, this.resizerSplit);
         this.resizePropObj = resizeDirectionHelpers[this.resizerDirection];
+    }
+
+    private updateKeyboardSeparator(): void {
+        if (!this.resizeGutter) {
+            return;
+        }
+
+        const shouldTrackViewportResize =
+            this.resizerKeyboardEnabled && !this.resizerDisabled;
+        if (shouldTrackViewportResize && !this.windowResizeUnlisten) {
+            this.windowResizeUnlisten = this.renderer.listen(
+                window,
+                "resize",
+                () => this.updateKeyboardSeparator()
+            );
+        } else if (!shouldTrackViewportResize && this.windowResizeUnlisten) {
+            this.windowResizeUnlisten();
+            this.windowResizeUnlisten = undefined;
+        }
+
+        const bounds = this.getKeyboardBounds();
+        const currentSize = bounds ? this.getCurrentSize(bounds) : undefined;
+        const isKeyboardResizable =
+            this.resizerKeyboardEnabled &&
+            !this.resizerDisabled &&
+            !!(this.resizerKeyboardLabelledBy || this.resizerKeyboardLabel) &&
+            !!bounds &&
+            bounds.max > bounds.min &&
+            currentSize !== undefined;
+
+        if (!isKeyboardResizable) {
+            [
+                "role",
+                "tabindex",
+                "aria-label",
+                "aria-labelledby",
+                "aria-controls",
+                "aria-orientation",
+                "aria-valuemin",
+                "aria-valuemax",
+                "aria-valuenow",
+                "aria-valuetext",
+            ].forEach(attribute =>
+                this.renderer.removeAttribute(this.resizeGutter, attribute)
+            );
+            return;
+        }
+
+        this.renderer.setAttribute(this.resizeGutter, "role", "separator");
+        this.renderer.setAttribute(this.resizeGutter, "tabindex", "0");
+        if (this.resizerKeyboardLabelledBy) {
+            this.renderer.removeAttribute(this.resizeGutter, "aria-label");
+            this.renderer.setAttribute(
+                this.resizeGutter,
+                "aria-labelledby",
+                this.resizerKeyboardLabelledBy
+            );
+        } else {
+            this.renderer.removeAttribute(this.resizeGutter, "aria-labelledby");
+            this.renderer.setAttribute(
+                this.resizeGutter,
+                "aria-label",
+                this.resizerKeyboardLabel
+            );
+        }
+        const target: HTMLElement = this.targetElement.nativeElement;
+        if (!target.id) {
+            this.renderer.setAttribute(
+                target,
+                "id",
+                uniqueId("nui-resizer-pane-")
+            );
+        }
+        this.renderer.setAttribute(
+            this.resizeGutter,
+            "aria-controls",
+            target.id
+        );
+        this.renderer.setAttribute(
+            this.resizeGutter,
+            "aria-orientation",
+            this.isResizeHorizontal() ? "vertical" : "horizontal"
+        );
+        this.renderer.setAttribute(
+            this.resizeGutter,
+            "aria-valuemin",
+            String(bounds.min)
+        );
+        this.renderer.setAttribute(
+            this.resizeGutter,
+            "aria-valuemax",
+            String(bounds.max)
+        );
+        this.renderer.setAttribute(
+            this.resizeGutter,
+            "aria-valuenow",
+            String(currentSize)
+        );
+        const pixels = Math.round(currentSize * 100) / 100;
+        this.renderer.setAttribute(
+            this.resizeGutter,
+            "aria-valuetext",
+            $localize`${pixels} pixels`
+        );
+    }
+
+    private getKeyboardBounds():
+        | { min: number; max: number; parentSize: number }
+        | undefined {
+        if (
+            !this.resizerKeyboardEnabled ||
+            this.isMultiple ||
+            !this.resizePropObj ||
+            !this.parentContainerNode
+        ) {
+            return undefined;
+        }
+
+        const style = getComputedStyle(this.parentContainerNode);
+        const horizontal = this.isResizeHorizontal();
+        let parentSize = Number.parseFloat(
+            style[horizontal ? "width" : "height"]
+        );
+        const padding =
+            Number.parseFloat(
+                style[horizontal ? "paddingLeft" : "paddingTop"]
+            ) +
+            Number.parseFloat(
+                style[horizontal ? "paddingRight" : "paddingBottom"]
+            );
+        const border =
+            Number.parseFloat(
+                style[horizontal ? "borderLeftWidth" : "borderTopWidth"]
+            ) +
+            Number.parseFloat(
+                style[horizontal ? "borderRightWidth" : "borderBottomWidth"]
+            );
+        if (style.boxSizing === "border-box") {
+            parentSize -= padding + border;
+        }
+        if (
+            getComputedStyle(this.targetElement.nativeElement).position ===
+            "absolute"
+        ) {
+            parentSize += padding;
+        }
+        if (!Number.isFinite(parentSize) || parentSize <= 0) {
+            return undefined;
+        }
+
+        const min = this.resolveCssSize(
+            this.resizerKeyboardMinSize,
+            parentSize
+        );
+        const max = this.resolveCssSize(
+            this.resizerKeyboardMaxSize,
+            parentSize
+        );
+        if (min === undefined || max === undefined) {
+            return undefined;
+        }
+
+        // CSS gives min-size precedence when min-size exceeds max-size.
+        return { min, max: Math.max(min, max), parentSize };
+    }
+
+    private resolveCssSize(
+        value: string,
+        parentSize: number
+    ): number | undefined {
+        if (!value) {
+            return undefined;
+        }
+
+        // Do not publish guessed ARIA bounds for expressions or unsupported units.
+        const match = value.trim().match(/^(\d+(?:\.\d+)?|\.\d+)(px|%|vw)$/);
+        if (!match) {
+            return undefined;
+        }
+
+        const numericValue = Number(match[1]);
+        let resolvedValue: number;
+        switch (match[2]) {
+            case "px":
+                resolvedValue = numericValue;
+                break;
+            case "%":
+                resolvedValue = (numericValue * parentSize) / 100;
+                break;
+            case "vw":
+                resolvedValue = (numericValue * window.innerWidth) / 100;
+                break;
+            default:
+                return undefined;
+        }
+
+        return Number.isFinite(resolvedValue) ? resolvedValue : undefined;
+    }
+
+    private getCurrentSize(bounds: {
+        min: number;
+        max: number;
+    }): number | undefined {
+        if (!this.targetElement || !this.resizePropObj) {
+            return undefined;
+        }
+        const style = getComputedStyle(this.targetElement.nativeElement);
+        const size = Number.parseFloat(style[this.resizePropObj.sizeToSet]);
+        // Used CSS sizes can differ from their bounds by a subpixel layout rounding unit.
+        if (
+            !Number.isFinite(size) ||
+            size < bounds.min - 0.02 ||
+            size > bounds.max + 0.02
+        ) {
+            return undefined;
+        }
+        return Math.max(bounds.min, Math.min(bounds.max, size));
+    }
+
+    private onKeyboardResize(event: KeyboardEvent): void {
+        if (
+            !this.resizerKeyboardEnabled ||
+            this.resizerDisabled ||
+            !this.resizePropObj ||
+            event.target !== this.resizeGutter ||
+            event.defaultPrevented ||
+            event.altKey ||
+            event.ctrlKey ||
+            event.metaKey
+        ) {
+            return;
+        }
+
+        const bounds = this.getKeyboardBounds();
+        const currentSize = bounds ? this.getCurrentSize(bounds) : undefined;
+        if (!bounds || currentSize === undefined) {
+            return;
+        }
+
+        const isHorizontal = this.isResizeHorizontal();
+        const axisKey = isHorizontal
+            ? event.key === "ArrowLeft" || event.key === "ArrowRight"
+            : event.key === "ArrowUp" || event.key === "ArrowDown";
+        const isHome = event.key === "Home";
+        const isEnd = event.key === "End";
+        if (!axisKey && !isHome && !isEnd) {
+            return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+        let requestedSize: number;
+        if (isHome) {
+            requestedSize = bounds.min;
+        } else if (isEnd) {
+            requestedSize = bounds.max;
+        } else {
+            const positiveKey = isHorizontal
+                ? event.key === "ArrowRight"
+                : event.key === "ArrowDown";
+            const coordinateDelta = positiveKey ? 1 : -1;
+            const sizeDelta = this.isAtTheBeginning()
+                ? -coordinateDelta
+                : coordinateDelta;
+            requestedSize = Math.max(
+                bounds.min,
+                Math.min(bounds.max, currentSize + sizeDelta)
+            );
+        }
+
+        if (requestedSize === currentSize) {
+            return;
+        }
+
+        const coordinateSize =
+            this.targetElement.nativeElement[
+                this.resizePropObj.nativeElementSizeProperty
+            ];
+        const sizeDelta = requestedSize - currentSize;
+        const coordinateDelta = this.isAtTheBeginning()
+            ? -sizeDelta
+            : sizeDelta;
+        this._oldSize = coordinateSize;
+        const keyboardSize =
+            this.resizerValue === ResizeUnit.percent
+                ? `${(requestedSize * 100) / bounds.parentSize}%`
+                : `${requestedSize}px`;
+        this.updateSize(coordinateSize + coordinateDelta, keyboardSize);
+        this.calculatePosition();
+        this.eventBusService.getStream(COMPLETE_RESIZE_EVENT).next(event);
+        this.updateKeyboardSeparator();
     }
 
     private unlistenResizeEvents() {
@@ -432,7 +761,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         this.updateSize(newSize);
     }
 
-    private updateSize(newSize: number) {
+    private updateSize(newSize: number, keyboardSize?: string) {
         const updatedProp = this.isMultiple
             ? "flex-basis"
             : this.resizePropObj.sizeToSet;
@@ -444,12 +773,14 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
             this.resizerValue === ResizeUnit.pixel ? 1 : 100 / parentSize;
 
         // if width is already defined then use it without calculating
-        const nativeElSize = `${
-            this.calculateNativeElementSize(
-                newSize,
-                this.resizePropObj.nativeElementSizeProperty
-            ) * valueCoeff
-        }${this.resizerValue}`;
+        const nativeElSize =
+            keyboardSize ??
+            `${
+                this.calculateNativeElementSize(
+                    newSize,
+                    this.resizePropObj.nativeElementSizeProperty
+                ) * valueCoeff
+            }${this.resizerValue}`;
         const resizerPosition = `${
             this.targetElement.nativeElement[
                 this.resizePropObj.nativeElementSizeProperty
