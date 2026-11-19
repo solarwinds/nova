@@ -21,7 +21,7 @@
 import { InteractivityChecker } from "@angular/cdk/a11y";
 import { hasModifierKey } from "@angular/cdk/keycodes";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import { inject, Injectable } from "@angular/core";
+import { DestroyRef, inject, Injectable } from "@angular/core";
 import { Subscription } from "rxjs";
 
 import { IPaginatorItem } from "./public-api";
@@ -58,6 +58,10 @@ export class PaginatorPopupKeyboardController {
         ReturnType<typeof setTimeout>
     >();
     private popupContext?: PaginatorPopupContext;
+
+    constructor() {
+        inject(DestroyRef).onDestroy(() => this.destroy());
+    }
 
     public setPopupContext(
         getPopupViewport: (

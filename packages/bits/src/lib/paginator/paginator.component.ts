@@ -665,7 +665,6 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
     }
 
     public ngOnDestroy(): void {
-        this.popupKeyboardController.destroy();
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }
