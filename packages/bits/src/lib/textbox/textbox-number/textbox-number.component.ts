@@ -154,10 +154,25 @@ export class TextboxNumberComponent
     @Input() public isInErrorState: boolean = false; // TODO: do we need to hook this up?
 
     /**
-     * Input to set aria label text
+     * Explicit accessible name. Prefer the form-field caption when possible.
+     * An override should include the visible caption.
      */
-    @Input() public ariaLabel: string = "Textbox number input";
+    @Input() public get ariaLabel(): string {
+        return (
+            this.explicitAriaLabel ||
+            this.formFieldCaption ||
+            (this.explicitAriaLabel === "" ? "" : "Textbox number input")
+        );
+    }
+
+    public set ariaLabel(value: string) {
+        this.explicitAriaLabel = value;
+    }
+
     @Input() public ariaDescribedby: string;
+
+    private explicitAriaLabel: string | undefined;
+    private formFieldCaption: string | undefined;
 
     /**
      * Minimum value of textBoxNumber component
@@ -182,6 +197,13 @@ export class TextboxNumberComponent
     public isRepeatable = true;
 
     private validatorFn: (c: FormControl) => ValidationErrors | null;
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption: string | undefined
+    ): void {
+        this.formFieldCaption = caption;
+    }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes["minValue"] || changes["maxValue"]) {

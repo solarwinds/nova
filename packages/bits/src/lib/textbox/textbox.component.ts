@@ -148,10 +148,25 @@ export class TextboxComponent
     @Input() public isInErrorState: boolean = false;
 
     /**
-     * Input to set aria label text
+     * Explicit accessible name. Prefer the form-field caption when possible.
+     * An override should include the visible caption.
      */
-    @Input() public ariaLabel: string = $localize`Textbox input`;
+    @Input() public get ariaLabel(): string {
+        return (
+            this.explicitAriaLabel ||
+            this.formFieldCaption ||
+            (this.explicitAriaLabel === "" ? "" : $localize`Textbox input`)
+        );
+    }
+
+    public set ariaLabel(value: string) {
+        this.explicitAriaLabel = value;
+    }
+
     @Input() public ariaDescribedby: string;
+
+    private explicitAriaLabel: string | undefined;
+    private formFieldCaption: string | undefined;
 
     /**
      * Input to apply busy state and show spinner
@@ -165,6 +180,13 @@ export class TextboxComponent
 
     // i18n nui_textbox_optional
     private optionalText = "Optional";
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption: string | undefined
+    ): void {
+        this.formFieldCaption = caption;
+    }
 
     public focus(): void {
         this.textboxInput.nativeElement.focus();

@@ -167,7 +167,8 @@ export class FormFieldComponent
             }
             if (control.setFormFieldLabel) {
                 control.setFormFieldLabel(
-                    this.caption ? this.labelId : undefined
+                    this.caption ? this.labelId : undefined,
+                    this.caption || undefined
                 );
             } else if (this.caption) {
                 control.ariaLabel = this.caption;

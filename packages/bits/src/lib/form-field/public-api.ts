@@ -37,6 +37,9 @@ export abstract class NuiFormFieldControl {
     /** Unique id for the control. */
     public id?: string;
 
-    /** Associates a control's own visible label with the form-field caption. */
-    public setFormFieldLabel?(labelId: string | undefined): void;
+    /** Associates a control with the form-field caption without replacing its explicit name. */
+    public setFormFieldLabel?(
+        labelId: string | undefined,
+        caption?: string
+    ): void;
 }

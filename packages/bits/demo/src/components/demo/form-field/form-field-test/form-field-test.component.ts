@@ -35,6 +35,11 @@ export class FormFieldTestComponent implements OnInit {
     public dynamicForm;
     public adapterHint = $localize`Provide a value.`;
     public dynamicCaption = $localize`Primary email`;
+    public get dynamicExplicitName(): string {
+        return this.dynamicCaption
+            ? $localize`${this.dynamicCaption} notifications`
+            : $localize`Notification email`;
+    }
     public showDynamicControl = true;
     public researchCursor$ = new Subject<number>();
     public researchTokenizer = new ExampleTokenizer();

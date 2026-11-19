@@ -522,17 +522,19 @@ test.describe("USERCONTROL form-field >", () => {
         }
     });
 
-    test("updates, clears and restores the caption name and names a recreated control", async ({
+    test("preserves explicit names across caption changes and control recreation", async ({
         page,
     }) => {
         const field = page.locator("#nui-form-field-test-dynamic-caption");
         const input = field.locator("input");
-        await expect(input).toHaveAccessibleName("Primary email");
+        await expect(input).toHaveAccessibleName("Primary email notifications");
         await input.fill("person@example.com");
         await page
             .getByRole("button", { name: "Update caption", exact: true })
             .click();
-        await expect(input).toHaveAccessibleName("Recovery email");
+        await expect(input).toHaveAccessibleName(
+            "Recovery email notifications"
+        );
         await expect(field.locator("label")).toHaveText("Recovery email");
         await expect(input).toHaveValue("person@example.com");
         await page
@@ -543,7 +545,7 @@ test.describe("USERCONTROL form-field >", () => {
         await page
             .getByRole("button", { name: "Restore caption", exact: true })
             .click();
-        await expect(input).toHaveAccessibleName("Primary email");
+        await expect(input).toHaveAccessibleName("Primary email notifications");
         await page
             .getByRole("button", {
                 name: "Toggle captioned control",
@@ -560,7 +562,9 @@ test.describe("USERCONTROL form-field >", () => {
                 exact: true,
             })
             .click();
-        await expect(input).toHaveAccessibleName("Recovery email");
+        await expect(input).toHaveAccessibleName(
+            "Recovery email notifications"
+        );
         await expect(input).toHaveAttribute(
             "id",
             (await field.locator("label").getAttribute("for"))!

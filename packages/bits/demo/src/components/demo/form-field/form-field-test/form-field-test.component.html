@@ -252,7 +252,7 @@
     id="nui-form-field-test-dynamic-caption"
     [caption]="dynamicCaption">
     @if (showDynamicControl) {
-    <nui-textbox ariaLabel="Notification email" i18n-ariaLabel></nui-textbox>
+    <nui-textbox [ariaLabel]="dynamicExplicitName"></nui-textbox>
     }
 </nui-form-field>
 <button
