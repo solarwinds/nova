@@ -9,7 +9,7 @@
             (click)="toggle()"
             (keydown.enter)="$event.preventDefault(); toggle()"
             (keydown.space)="$event.preventDefault(); toggle()"
-            tabindex="{{ disabled ? -1 : 0 }}"
+            [attr.tabindex]="disabled ? -1 : tabIndex"
             role="checkbox"
             [attr.aria-checked]="value"
             [attr.aria-disabled]="disabled || null"
