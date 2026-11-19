@@ -28,7 +28,11 @@ test.describe("Remove widget menu", () => {
             await trigger.focus();
             await page.keyboard.press(key);
             await expect(trigger).toHaveAttribute("aria-expanded", "true");
-            const action = page.getByRole("menuitem", {
+            const menuId = await trigger.getAttribute("aria-controls");
+            expect(menuId).toBeTruthy();
+            const menu = page.locator(`#${menuId}`);
+            await expect(menu).toBeFocused();
+            const action = menu.getByRole("menuitem", {
                 name: "Remove Widget",
                 exact: true,
             });
@@ -38,9 +42,12 @@ test.describe("Remove widget menu", () => {
                     originalWidget!.evaluate(element => element.isConnected)
                 )
                 .toBe(true);
-            await expect
-                .poll(() => trigger.getAttribute("aria-activedescendant"))
-                .not.toBeNull();
+            const actionId = await action.getAttribute("id");
+            expect(actionId).toBeTruthy();
+            await expect(menu).toHaveAttribute(
+                "aria-activedescendant",
+                actionId!
+            );
             await page.keyboard.press("Enter");
             await expect
                 .poll(() =>
