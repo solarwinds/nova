@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { NgZone } from "@angular/core";
 import { fakeAsync, TestBed, tick } from "@angular/core/testing";
 
 import { IToastService } from "./public-api";
@@ -31,6 +32,9 @@ import { IconComponent } from "../icon/icon.component";
 describe("services >", () => {
     describe("toast >", () => {
         let toastService: IToastService | any;
+        // Production removals reach the service from NgZone-tracked toast timers or UI events.
+        const removeInAngularZone = (toastId: number): boolean =>
+            TestBed.inject(NgZone).run(() => toastService.remove(toastId));
 
         beforeEach(() => {
             TestBed.configureTestingModule({
@@ -40,23 +44,12 @@ describe("services >", () => {
                     NotificationService,
                     ToastContainerService,
                     ToastService,
-                    ToastServiceBase,
+                    { provide: ToastServiceBase, useExisting: ToastService },
                 ],
             });
 
             toastService = TestBed.inject(ToastService);
             toastService.clear();
-        });
-
-        afterEach(() => {
-            // This hack catches the "_this.toastService.remove is not a function thrown" exception and fixes it's random appearance in tests.
-            // The exception is thrown becasue toast component is not able to remove itself for some reason, which should be investigated.
-            // TODO: NUI-3621 - Investigate why toast message is not closed automatically after default timeout passes, and throws exception instead
-            fakeAsync(() => {
-                try {
-                    tick(10000);
-                } catch (e) {}
-            });
         });
 
         it("setConfig should override global toast config", () => {
@@ -149,27 +142,111 @@ describe("services >", () => {
             tick(10000);
         }));
 
-        // TODO: enable after NUI-3639 is fixed
-        xit("should remove toasts on 'clear'", fakeAsync(() => {
-            toastService.success("Success");
-            toastService.error("Error");
+        it("should remove toasts on 'clear'", fakeAsync(() => {
+            toastService.success({ message: "Success" });
+            toastService.error({ message: "Error" });
+            tick();
             expect(toastService.toasts.length).toEqual(2);
             toastService.clear();
+            tick(299);
+            expect(toastService.toasts.length).toEqual(2);
+            tick(1);
             expect(toastService.toasts.length).toEqual(0);
+            expect(toastService.currentlyActive).toEqual(0);
         }));
 
-        // TODO: enable after NUI-3640 is fixed
-        xit("should activate next inactive toast on 'remove'", fakeAsync(() => {
+        it("should reserve activation slots for synchronously created toasts", fakeAsync(() => {
             toastService.setConfig({
                 maxOpened: 1,
             });
-            const activeToast = toastService.success("Success");
-            const deferredToast = toastService.info("Info");
-            spyOn(deferredToast.toastRef, "activate").and.callThrough();
-            expect(toastService.currentlyActive).toEqual(0);
-            toastService.remove(activeToast.id);
+            const first = toastService.success({ message: "First" });
+            const second = toastService.info({ message: "Second" });
+            const third = toastService.warning({ message: "Third" });
+            const firstShown = jasmine.createSpy("firstShown");
+            const secondShown = jasmine.createSpy("secondShown");
+            const thirdShown = jasmine.createSpy("thirdShown");
+            first.onShown?.subscribe(firstShown);
+            second.onShown?.subscribe(secondShown);
+            third.onShown?.subscribe(thirdShown);
+
             expect(toastService.currentlyActive).toEqual(1);
-            expect(deferredToast.toastRef.activate).toHaveBeenCalled();
+            tick();
+            expect(firstShown).toHaveBeenCalledTimes(1);
+            expect(secondShown).not.toHaveBeenCalled();
+            expect(thirdShown).not.toHaveBeenCalled();
+            expect(toastService.currentlyActive).toEqual(1);
+
+            removeInAngularZone(first.toastId);
+            tick();
+            expect(secondShown).toHaveBeenCalledTimes(1);
+            expect(thirdShown).not.toHaveBeenCalled();
+            expect(toastService.currentlyActive).toEqual(1);
+
+            removeInAngularZone(second.toastId);
+            tick();
+            expect(thirdShown).toHaveBeenCalledTimes(1);
+            expect(toastService.currentlyActive).toEqual(1);
+
+            toastService.clear();
+            tick(300);
+            expect(toastService.toasts.length).toEqual(0);
+            expect(toastService.currentlyActive).toEqual(0);
+        }));
+
+        it("should not activate queued toasts when all toasts are cleared", fakeAsync(() => {
+            toastService.setConfig({ maxOpened: 1 });
+            const first = toastService.success({ message: "First" });
+            const queued = toastService.info({ message: "Queued" });
+            const firstHidden = jasmine.createSpy("firstHidden");
+            const queuedShown = jasmine.createSpy("queuedShown");
+            first.onHidden?.subscribe(firstHidden);
+            queued.onShown?.subscribe(queuedShown);
+
+            tick();
+            toastService.clear();
+            tick(300);
+
+            expect(firstHidden).toHaveBeenCalledTimes(1);
+            expect(queuedShown).not.toHaveBeenCalled();
+            expect(toastService.toasts.length).toEqual(0);
+            expect(toastService.currentlyActive).toEqual(0);
+        }));
+
+        it("should not release an active slot when removing a queued toast", fakeAsync(() => {
+            toastService.setConfig({ maxOpened: 1 });
+            const first = toastService.success({ message: "First" });
+            const queued = toastService.info({ message: "Queued" });
+            const next = toastService.warning({ message: "Next" });
+            const nextShown = jasmine.createSpy("nextShown");
+            next.onShown?.subscribe(nextShown);
+
+            tick();
+            toastService.remove(queued.toastId);
+            expect(toastService.currentlyActive).toEqual(1);
+            expect(nextShown).not.toHaveBeenCalled();
+
+            removeInAngularZone(first.toastId);
+            tick();
+            expect(nextShown).toHaveBeenCalledTimes(1);
+            expect(toastService.currentlyActive).toEqual(1);
+
+            toastService.clear();
+            tick(300);
+            expect(toastService.toasts.length).toEqual(0);
+            expect(toastService.currentlyActive).toEqual(0);
+        }));
+
+        it("should not activate a toast removed before its scheduled activation", fakeAsync(() => {
+            const toast = toastService.success({ message: "First" });
+            const shown = jasmine.createSpy("shown");
+            toast.onShown?.subscribe(shown);
+
+            toastService.remove(toast.toastId);
+            tick();
+
+            expect(shown).not.toHaveBeenCalled();
+            expect(toastService.toasts.length).toEqual(0);
+            expect(toastService.currentlyActive).toEqual(0);
         }));
     });
 });
