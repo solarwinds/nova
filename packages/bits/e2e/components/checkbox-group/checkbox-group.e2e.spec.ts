@@ -71,6 +71,15 @@ test.describe("USERCONTROL Checkbox Group", () => {
         page,
     }) => {
         const group = page.locator("#nui-demo-checkbox-group-basic");
+        const checkboxes = group.locator("label[role=checkbox]");
+        const expectedStates = ["false", "true", "true", "false", "true"];
+        await expect(checkboxes).toHaveCount(expectedStates.length);
+        for (const [index, state] of expectedStates.entries()) {
+            await expect(checkboxes.nth(index)).toHaveAttribute(
+                "aria-checked",
+                state
+            );
+        }
         await expect(group).toHaveAttribute("role", "group");
         await expect(group).toHaveAccessibleName("Vegetables");
         await expect(group).toHaveAttribute("aria-label", "Vegetable choices");
@@ -99,6 +108,42 @@ test.describe("USERCONTROL Checkbox Group", () => {
             .getByRole("button", { name: "Use heading label", exact: true })
             .click();
         await expect(group).toHaveAccessibleName("Vegetables");
+        for (const [index, state] of expectedStates.entries()) {
+            await expect(checkboxes.nth(index)).toHaveAttribute(
+                "aria-checked",
+                state
+            );
+        }
+    });
+
+    test("exposes the authored group name in the Chromium accessibility tree", async ({
+        page,
+        browserName,
+    }) => {
+        test.skip(browserName !== "chromium", "Requires Chromium DevTools");
+        const heading = page.locator("#nui-demo-checkbox-group-heading");
+        await expect(heading).toHaveText("Vegetables");
+        await expect(heading).toHaveCSS("text-transform", "uppercase");
+
+        const session = await page.context().newCDPSession(page);
+        try {
+            const { root } = await session.send("DOM.getDocument");
+            const { nodeId } = await session.send("DOM.querySelector", {
+                nodeId: root.nodeId,
+                selector: "#nui-demo-checkbox-group-basic",
+            });
+            await expect
+                .poll(async () => {
+                    const { nodes } = await session.send(
+                        "Accessibility.getPartialAXTree",
+                        { nodeId, fetchRelatives: false }
+                    );
+                    return nodes[0]?.name?.value;
+                })
+                .toBe("Vegetables");
+        } finally {
+            await session.detach();
+        }
     });
 
     test("names each checkbox from its visible text", async ({ page }) => {

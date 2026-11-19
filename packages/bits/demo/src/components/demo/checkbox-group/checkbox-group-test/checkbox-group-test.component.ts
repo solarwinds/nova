@@ -27,6 +27,7 @@ import { FormBuilder } from "@angular/forms";
     standalone: false,
 })
 export class CheckboxGroupTestComponent {
+    public vegetablesHeading = $localize`Vegetables`;
     public cabbage = "Cabbage";
     public potato = "Potato";
     public tomato = "Tomato";
