@@ -20,7 +20,13 @@
 
 import { OverlayModule } from "@angular/cdk/overlay";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import { ChangeDetectorRef, SimpleChange, SimpleChanges } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    createEnvironmentInjector,
+    EnvironmentInjector,
+    SimpleChange,
+    SimpleChanges,
+} from "@angular/core";
 import {
     ComponentFixture,
     fakeAsync,
@@ -67,7 +73,7 @@ describe("components >", () => {
             const replacement =
                 jasmine.createSpyObj<PaginatorPopupKeyboardController>(
                     "popupKeyboardController",
-                    ["setPopupContext", "onPopupOpened", "destroy"]
+                    ["setPopupContext", "onPopupOpened"]
                 );
             TestBed.overrideComponent(PaginatorComponent, {
                 add: {
@@ -99,9 +105,27 @@ describe("components >", () => {
                 popup
             );
 
-            fixture.destroy();
-            expect(replacement.destroy).toHaveBeenCalledTimes(1);
+            expect(() => fixture.destroy()).not.toThrow();
         });
+
+        it("should cancel delayed focus checks when its injector is destroyed", fakeAsync(() => {
+            const injector = createEnvironmentInjector(
+                [PaginatorPopupKeyboardController],
+                TestBed.inject(EnvironmentInjector)
+            );
+            const controller = injector.get(PaginatorPopupKeyboardController);
+            const popup = jasmine.createSpyObj<PopupComponent>(
+                "popup",
+                ["closePopup"],
+                { isOpen: true, visible: true }
+            );
+            controller.schedulePopupFocusCheck(popup);
+
+            injector.destroy();
+            tick();
+
+            expect(popup.closePopup).not.toHaveBeenCalled();
+        }));
     });
 
     describe("paginator >", () => {
@@ -539,11 +563,6 @@ describe("components >", () => {
                 const lastRendered = pages[pages.length - 1];
                 const nextPage =
                     Number(lastRendered.dataset.nuiPaginatorPage) + 1;
-                const controller = fixture.debugElement.injector.get(
-                    PaginatorPopupKeyboardController
-                );
-                const destroy = spyOn(controller, "destroy").and.callThrough();
-
                 lastRendered.focus({ preventScroll: true });
                 keydown(lastRendered, { key: "Tab", code: "Tab" });
 
@@ -554,7 +573,6 @@ describe("components >", () => {
 
                 fixture.destroy();
 
-                expect(destroy).toHaveBeenCalledTimes(1);
                 expect(closeSubscription.closed).toBeTrue();
                 expect(disconnect).toHaveBeenCalled();
                 tick(5000);
