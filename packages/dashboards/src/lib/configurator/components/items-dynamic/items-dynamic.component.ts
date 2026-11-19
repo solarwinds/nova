@@ -32,7 +32,6 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-// eslint-disable-next-line import/no-deprecated
 import { startWith, takeUntil } from "rxjs/operators";
 
 import { IEvent, LoggerService } from "@nova-ui/bits";
@@ -55,6 +54,7 @@ import { IItemConfiguration } from "../types";
     providers: [KeyboardReorder],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line @angular-eslint/prefer-standalone -- Preserve the existing NgModule-based library API.
     standalone: false,
 })
 export class ItemsDynamicComponent
@@ -75,10 +75,9 @@ export class ItemsDynamicComponent
     public height: number;
     public headerMap: Map<string, string> = new Map<string, string>();
     public readonly reorderInstructionsId = `nui-items-dynamic-reorder-instructions-${ItemsDynamicComponent.reorderInstructionsCounter++}`;
-    public readonly reorder = inject<KeyboardReorder<string>>(
-        KeyboardReorder
-    );
+    public readonly reorder = inject<KeyboardReorder<string>>(KeyboardReorder);
 
+    /* eslint-disable @angular-eslint/prefer-inject -- Preserve the public constructor signature for existing consumers. */
     constructor(
         changeDetector: ChangeDetectorRef,
         pizzagnaService: PizzagnaService,
@@ -95,6 +94,7 @@ export class ItemsDynamicComponent
             () => this.changeDetector.markForCheck()
         );
     }
+    /* eslint-enable @angular-eslint/prefer-inject */
 
     public getItemForNode(
         node: IComponentConfiguration
@@ -141,7 +141,6 @@ export class ItemsDynamicComponent
         setTimeout(() => {
             const label = form.get(`${item.id}/description`)?.get("label");
             label?.valueChanges
-                // eslint-disable-next-line import/no-deprecated
                 .pipe(startWith(label.value), takeUntil(this.destroyed$))
                 .subscribe((value: string) => {
                     this.headerMap.set(item.id, value || "");

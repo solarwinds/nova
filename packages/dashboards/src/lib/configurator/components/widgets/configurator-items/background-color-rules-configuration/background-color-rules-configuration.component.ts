@@ -57,6 +57,7 @@ const DEFAULT_LABEL = "Custom Comparator";
     styleUrls: ["./background-color-rules-configuration.component.less"],
     providers: [KeyboardReorder],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    // eslint-disable-next-line @angular-eslint/prefer-standalone -- Preserve the existing NgModule-based library API.
     standalone: false,
 })
 export class BackgroundColorRulesConfigurationComponent
@@ -75,11 +76,11 @@ export class BackgroundColorRulesConfigurationComponent
     public palette: Partial<IPaletteColor[]>;
     public height: number;
     public readonly reorderInstructionsId = `nui-background-color-rules-reorder-instructions-${BackgroundColorRulesConfigurationComponent.reorderInstructionsCounter++}`;
-    public readonly reorder = inject<KeyboardReorder<FormGroup>>(
-        KeyboardReorder
-    );
+    public readonly reorder =
+        inject<KeyboardReorder<FormGroup>>(KeyboardReorder);
     private readonly destroy$ = new Subject<void>();
 
+    /* eslint-disable @angular-eslint/prefer-inject -- Preserve the public constructor signature for existing consumers. */
     constructor(
         public changeDetector: ChangeDetectorRef,
         private formBuilder: FormBuilder,
@@ -98,6 +99,7 @@ export class BackgroundColorRulesConfigurationComponent
             () => this.changeDetector.markForCheck()
         );
     }
+    /* eslint-enable @angular-eslint/prefer-inject */
 
     public ngOnInit(): void {
         this.palette = [

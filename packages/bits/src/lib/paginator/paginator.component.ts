@@ -81,6 +81,7 @@ const containerPaddingsWithScroll = 37;
         "role": "navigation",
         "[attr.aria-label]": "ariaLabel",
     },
+    // eslint-disable-next-line @angular-eslint/prefer-standalone -- Preserve the existing NgModule-based library API.
     standalone: false,
 })
 export class PaginatorComponent
@@ -192,6 +193,7 @@ export class PaginatorComponent
     private mainRangeStart: number;
     private mainRangeEnd: number;
 
+    /* eslint-disable @angular-eslint/prefer-inject -- Preserve the public constructor signature for existing consumers. */
     public constructor(
         private logger: LoggerService,
         private popupContainer: PopupContainerService,
@@ -203,6 +205,7 @@ export class PaginatorComponent
             () => this.dotsPagesPerRow
         );
     }
+    /* eslint-enable @angular-eslint/prefer-inject */
 
     /** Keeps DOM nodes (and focus) stable across page changes. */
     public trackItem = (index: number, item: IPaginatorItem): unknown =>
