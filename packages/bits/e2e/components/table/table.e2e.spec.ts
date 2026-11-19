@@ -4,6 +4,7 @@ import { Helpers, test, expect } from "../../setup";
 import { ButtonAtom } from "../button/button.atom";
 import { CheckboxAtom } from "../checkbox/checkbox.atom";
 import { CheckboxGroupAtom } from "../checkbox-group/checkbox-group.atom";
+import { MenuAtom } from "../menu/menu.atom";
 import { PaginatorAtom } from "../paginator/paginator.atom";
 import { SearchAtom } from "../search/search.atom";
 import { SelectorAtom, SelectionType } from "../selector/selector.atom";
@@ -806,23 +807,30 @@ test.describe("USERCONTROL table >", () => {
     });
 
     test.describe("Table with actions >", () => {
-        let actionsMenu: any;
+        let actionsMenu: MenuAtom;
         let tableColumnsAddRemove: TableAtom;
 
         const toggleActionsMenu = async () => {
-            await actionsMenu.click();
+            await actionsMenu.toggleMenu();
+            await actionsMenu.isMenuOpened();
         };
 
         const clickAddRowStartButton = async () => {
-            await actionsMenu.getByText("Add new row to the beginning").click();
+            await actionsMenu
+                .getMenuItemByContainingText("Add new row to the beginning")
+                .clickItem();
         };
 
         const clickAddRowEndButton = async () => {
-            await actionsMenu.getByText("Add new row to the end").click();
+            await actionsMenu
+                .getMenuItemByContainingText("Add new row to the end")
+                .clickItem();
         };
 
         const clickRemoveRowButton = async () => {
-            await actionsMenu.getByText("Delete row").click();
+            await actionsMenu
+                .getMenuItemByContainingText("Delete row")
+                .clickItem();
         };
 
         test.beforeEach(async ({ page }) => {
@@ -831,10 +839,11 @@ test.describe("USERCONTROL table >", () => {
                 TableAtom,
                 "nui-demo-table-columns-add-remove"
             );
-            actionsMenu = tableColumnsAddRemove
-                .getLocator()
-                .locator(".nui-menu")
-                .first();
+            actionsMenu = Atom.findIn<MenuAtom>(
+                MenuAtom,
+                tableColumnsAddRemove.getLocator().locator(".nui-menu").first(),
+                true
+            );
             await expect(tableColumnsAddRemove.getLocator()).toBeVisible();
         });
 
@@ -874,6 +883,23 @@ test.describe("USERCONTROL table >", () => {
             );
             await toggleActionsMenu();
             await clickRemoveRowButton();
+            await expect(rows).toHaveCount(4);
+            await expect(tableColumnsAddRemove.getCell(1, 0)).toHaveText(
+                "NUI-222"
+            );
+        });
+
+        test("should delete first row after opening its menu with the keyboard", async () => {
+            const button = actionsMenu.getMenuButton().getLocator();
+            await button.focus();
+            await button.press("ArrowDown");
+            await actionsMenu.isMenuOpened();
+            await expect(
+                actionsMenu.getLocator().getByRole("menu")
+            ).toBeFocused();
+
+            await clickRemoveRowButton();
+            const rows = tableColumnsAddRemove.getLocator().locator("tbody tr");
             await expect(rows).toHaveCount(4);
             await expect(tableColumnsAddRemove.getCell(1, 0)).toHaveText(
                 "NUI-222"

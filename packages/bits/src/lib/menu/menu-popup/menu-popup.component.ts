@@ -46,8 +46,8 @@ import { IMenuGroup, IMenuItem } from "../public-api";
 @Component({
     selector: "nui-menu-popup",
     host: {
-        class: "nui-menu-popup",
-        role: "menu",
+        "class": "nui-menu-popup",
+        "[attr.role]": "role",
     },
     templateUrl: "./menu-popup.component.html",
     styleUrls: ["./menu-popup.component.less"],
@@ -57,6 +57,7 @@ import { IMenuGroup, IMenuItem } from "../public-api";
 export class MenuPopupComponent {
     @Input() public itemsSource: IMenuGroup[];
     @Input() public size?: string;
+    @Input() public role: string = "menu";
     @ViewChildren(MenuItemBaseComponent)
     menuItems: QueryList<MenuItemBaseComponent>;
 

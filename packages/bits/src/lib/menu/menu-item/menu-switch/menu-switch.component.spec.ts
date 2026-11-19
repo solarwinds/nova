@@ -58,6 +58,30 @@ describe("components >", () => {
                 expect(mockEvent.stopPropagation).toHaveBeenCalled();
                 expect(spyForSwitchEmit).toHaveBeenCalledWith(true);
             });
+
+            for (const disabled of [true, false]) {
+                it(`should consume keyboard activation with disabled=${disabled}`, () => {
+                    const event = new KeyboardEvent("keydown", {
+                        key: "Enter",
+                        code: "Enter",
+                        bubbles: true,
+                        cancelable: true,
+                    });
+                    const stopPropagation = spyOn(event, "stopPropagation");
+                    menuSwitch.disabled = disabled;
+
+                    menuSwitch.onKeydown(event);
+
+                    expect(event.defaultPrevented).toBeTrue();
+                    expect(stopPropagation).toHaveBeenCalled();
+                    expect(menuSwitch.checked).toBe(!disabled);
+                    if (disabled) {
+                        expect(spyForSwitchEmit).not.toHaveBeenCalled();
+                    } else {
+                        expect(spyForSwitchEmit).toHaveBeenCalledOnceWith(true);
+                    }
+                });
+            }
         });
     });
 });

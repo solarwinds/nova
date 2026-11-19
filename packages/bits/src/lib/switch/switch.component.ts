@@ -26,6 +26,7 @@ import {
     forwardRef,
     inject,
     Input,
+    numberAttribute,
     OnInit,
     Output,
     ViewChild,
@@ -63,6 +64,8 @@ let switchLabelCounter = 0;
 export class SwitchComponent implements OnInit, ControlValueAccessor {
     @Input() public value: boolean;
     @Input() public disabled: boolean;
+    /** Tab order for the switch's interactive control; disabled switches are always removed. */
+    @Input({ transform: numberAttribute }) public tabIndex = 0;
 
     /**
      * Explicit accessible name. Overrides the form-field caption and projected

@@ -1,6 +1,6 @@
 <nui-popup
     [class.nui-menu--compact]="isMenuCompact()"
-    (opened)="onMenuOpen()"
+    (opened)="onMenuOpen($event)"
     [appendToBody]="appendToBody"
     [width]="widthOfPopup"
     [contextClass]="contextClass + ' nui-menu-popup-host'">
@@ -12,8 +12,8 @@
         [toggleOnKey]="false"
         [disabled]="isDisabled"
         [opened]="popup?.isOpen || false"
+        [id]="menuTriggerId"
         [ariaControls]="popup?.isOpen ? popupContentId : null"
-        [attr.aria-activedescendant]="popup?.isOpen ? activeDescendant : null"
         type="button"
         (blur)="onBlur($event)"
         [displayStyle]="displayStyle"
@@ -27,12 +27,19 @@
         <span>{{ title }}</span>
     </button>
     <div
+        #menuContent
         popupAreaContent
         [id]="popupContentId"
         role="menu"
-        (keydown)="onMenuContentKeydown($event)">
+        tabindex="-1"
+        [attr.aria-labelledby]="menuTriggerId"
+        [attr.aria-activedescendant]="
+            popup?.isOpen ? activeDescendant : null
+        "
+        (blur)="onBlur($event)">
         @if (itemsSource) {
         <nui-menu-popup
+            role="presentation"
             [itemsSource]="itemsSource"
             [size]="size"></nui-menu-popup>
         } @else {
