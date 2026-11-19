@@ -101,6 +101,70 @@ class FormFieldControlNamesHostComponent {
     public cursorSetter = new Subject<number>();
 }
 
+@Component({
+    template: `
+        <nui-form-field caption="Notifications">
+            <nui-checkbox ariaLabel="Notifications">Notifications</nui-checkbox>
+        </nui-form-field>
+        <nui-form-field caption="Color">
+            <nui-color-picker [colors]="colors" ariaLabel="Color"></nui-color-picker>
+        </nui-form-field>
+        <nui-form-field caption="Method">
+            <nui-select-v2 ariaLabel="Method"></nui-select-v2>
+        </nui-form-field>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
+})
+class OnPushFormFieldIdsHostComponent {
+    public colors: string[] = [];
+}
+
+describe("form-field labels in an OnPush host", () => {
+    it("renders checkbox and color-picker IDs with explicit caption names", async () => {
+        TestBed.configureTestingModule({
+            declarations: [OnPushFormFieldIdsHostComponent, CheckboxComponent],
+            imports: [
+                NuiFormFieldModule,
+                NuiColorPickerModule,
+                NuiSelectV2Module,
+                NoopAnimationsModule,
+            ],
+        });
+        const fixture = TestBed.createComponent(
+            OnPushFormFieldIdsHostComponent
+        );
+        fixture.autoDetectChanges();
+        await fixture.whenStable();
+        const fields = (fixture.nativeElement as HTMLElement).querySelectorAll(
+            "nui-form-field"
+        );
+        const checkboxInput = fields[0].querySelector<HTMLInputElement>(
+            "input[type=checkbox]"
+        );
+        const checkboxCaption = fields[0].querySelector<HTMLLabelElement>(
+            ".nui-form-field__control-label"
+        );
+        expect(checkboxInput?.id).toBeTruthy();
+        expect(checkboxCaption?.control).toBe(checkboxInput);
+        expect(
+            fields[0]
+                .querySelector(".nui-checkbox__label")
+                ?.getAttribute("aria-label")
+        ).toBe("Notifications");
+        const colorControl = fields[1].querySelector<HTMLElement>(
+            ".color-picker-input"
+        );
+        expect(colorControl?.id).toBeTruthy();
+        expect(colorControl?.getAttribute("aria-label")).toBe("Color");
+        expect(
+            fields[2]
+                .querySelector("[role=combobox]")
+                ?.getAttribute("aria-label")
+        ).toBe("Method");
+    });
+});
+
 describe("form-field control name precedence", () => {
     it("preserves explicit names and restores changed captions across supported controls", async () => {
         TestBed.configureTestingModule({
