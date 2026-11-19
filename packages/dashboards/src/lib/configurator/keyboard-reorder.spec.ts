@@ -1,5 +1,11 @@
-import { ChangeDetectorRef } from "@angular/core";
-import { fakeAsync, flush } from "@angular/core/testing";
+import {
+    ChangeDetectorRef,
+    DestroyableInjector,
+    Injector,
+    NO_ERRORS_SCHEMA,
+    runInInjectionContext,
+} from "@angular/core";
+import { fakeAsync, flush, TestBed, waitForAsync } from "@angular/core/testing";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { Subject } from "rxjs";
 
@@ -8,6 +14,7 @@ import { DialogService, EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 import { PizzagnaService } from "../pizzagna/services/pizzagna.service";
 import { KpiColorComparatorsRegistryService } from "../services/kpi-color-comparators-registry.service";
 import { TableFormatterRegistryService } from "../services/table-formatter-registry.service";
+import { PIZZAGNA_EVENT_BUS } from "../types";
 import { ItemsDynamicComponent } from "./components/items-dynamic/items-dynamic.component";
 import { BackgroundColorRulesConfigurationComponent } from "./components/widgets/configurator-items/background-color-rules-configuration/background-color-rules-configuration.component";
 import { TableColumnsConfigurationV2Component } from "./components/widgets/table/columns-editor-v2/table-columns-configuration-v2.component";
@@ -16,6 +23,7 @@ import { ConfiguratorDataSourceManagerService } from "./services/configurator-da
 
 describe("Configurator keyboard reordering", () => {
     let handle: HTMLDivElement;
+    const reorderInjectors: DestroyableInjector[] = [];
 
     beforeEach(() => {
         handle = document.createElement("div");
@@ -23,7 +31,10 @@ describe("Configurator keyboard reordering", () => {
         document.body.appendChild(handle);
     });
 
-    afterEach(() => handle.remove());
+    afterEach(() => {
+        handle.remove();
+        reorderInjectors.splice(0).forEach(injector => injector.destroy());
+    });
 
     function connect<T>(controller: KeyboardReorder<T>, item: T): void {
         handle.addEventListener("keydown", event =>
@@ -44,6 +55,149 @@ describe("Configurator keyboard reordering", () => {
         return event;
     }
 
+    function createWithReorder<T>(create: () => T): T {
+        const injector = Injector.create({
+            providers: [KeyboardReorder],
+        });
+        reorderInjectors.push(injector);
+        return runInInjectionContext(injector, create);
+    }
+
+    it("requires configuration before handling keys", () => {
+        const controller = new KeyboardReorder<string>();
+
+        expect(() =>
+            controller.onKeydown(new KeyboardEvent("keydown"), "item")
+        ).toThrowError(
+            "Keyboard reorder controller context is not configured."
+        );
+    });
+
+    it("rejects configuring a controller more than once", () => {
+        const controller = new KeyboardReorder<string>();
+        const configuration: [
+            () => string[],
+            (from: number, to: number) => void,
+            (item: string) => boolean
+        ] = [() => ["item"], () => {}, () => false];
+
+        controller.configure(...configuration);
+
+        expect(() => controller.configure(...configuration)).toThrowError(
+            "Keyboard reorder controller context is already configured."
+        );
+    });
+
+    it("provides an isolated controller per configurator component", waitForAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                ItemsDynamicComponent,
+                BackgroundColorRulesConfigurationComponent,
+                TableColumnsConfigurationV2Component,
+            ],
+            providers: [
+                {
+                    provide: PizzagnaService,
+                    useValue: jasmine.createSpyObj<PizzagnaService>(
+                        "PizzagnaService",
+                        ["removeComponents"]
+                    ),
+                },
+                {
+                    provide: LoggerService,
+                    useValue: jasmine.createSpyObj<LoggerService>(
+                        "LoggerService",
+                        ["error"]
+                    ),
+                },
+                {
+                    provide: DialogService,
+                    useValue: jasmine.createSpyObj<DialogService>(
+                        "DialogService",
+                        ["confirm"]
+                    ),
+                },
+                {
+                    provide: KpiColorComparatorsRegistryService,
+                    useValue:
+                        jasmine.createSpyObj<KpiColorComparatorsRegistryService>(
+                            "Comparators",
+                            ["getComparators"]
+                        ),
+                },
+                {
+                    provide: ConfiguratorDataSourceManagerService,
+                    useValue: {
+                        error$: new Subject(),
+                    },
+                },
+                {
+                    provide: TableFormatterRegistryService,
+                    useValue:
+                        jasmine.createSpyObj<TableFormatterRegistryService>(
+                            "FormatterRegistry",
+                            ["getItems", "addItems"]
+                        ),
+                },
+                {
+                    provide: PIZZAGNA_EVENT_BUS,
+                    useValue: new EventBus<IEvent>(),
+                },
+                { provide: FormBuilder, useValue: new FormBuilder() },
+            ],
+            schemas: [NO_ERRORS_SCHEMA],
+        })
+            .overrideComponent(ItemsDynamicComponent, {
+                set: { template: "" },
+            })
+            .overrideComponent(BackgroundColorRulesConfigurationComponent, {
+                set: { template: "" },
+            })
+            .overrideComponent(TableColumnsConfigurationV2Component, {
+                set: { template: "" },
+            })
+            .compileComponents()
+            .then(() => {
+                const itemsFirst = TestBed.createComponent(
+                    ItemsDynamicComponent
+                );
+                const itemsSecond = TestBed.createComponent(
+                    ItemsDynamicComponent
+                );
+                const rulesFirst = TestBed.createComponent(
+                    BackgroundColorRulesConfigurationComponent
+                );
+                const rulesSecond = TestBed.createComponent(
+                    BackgroundColorRulesConfigurationComponent
+                );
+                const columnsFirst = TestBed.createComponent(
+                    TableColumnsConfigurationV2Component
+                );
+                const columnsSecond = TestBed.createComponent(
+                    TableColumnsConfigurationV2Component
+                );
+
+                expect(itemsFirst.componentInstance.reorder).not.toBe(
+                    itemsSecond.componentInstance.reorder
+                );
+                expect(rulesFirst.componentInstance.reorder).not.toBe(
+                    rulesSecond.componentInstance.reorder
+                );
+                expect(columnsFirst.componentInstance.reorder).not.toBe(
+                    columnsSecond.componentInstance.reorder
+                );
+
+                [
+                    itemsFirst,
+                    itemsSecond,
+                    rulesFirst,
+                    rulesSecond,
+                    columnsFirst,
+                    columnsSecond,
+                ].forEach(fixture => fixture.destroy());
+            });
+    }));
+
     describe("shared interaction", () => {
         let items: string[];
         let disabled: boolean;
@@ -58,7 +212,8 @@ describe("Configurator keyboard reordering", () => {
                 .and.callFake((from: number, to: number) => {
                     items.splice(to, 0, ...items.splice(from, 1));
                 });
-            controller = new KeyboardReorder(
+            controller = new KeyboardReorder<string>();
+            controller.configure(
                 () => items,
                 move,
                 () => disabled
@@ -189,6 +344,66 @@ describe("Configurator keyboard reordering", () => {
         }
     });
 
+    it("provides an independent controller state from each injector", () => {
+        const firstInjector = Injector.create({
+            providers: [KeyboardReorder],
+        });
+        const secondInjector = Injector.create({
+            providers: [KeyboardReorder],
+        });
+        const first =
+            firstInjector.get<KeyboardReorder<string>>(KeyboardReorder);
+        const second =
+            secondInjector.get<KeyboardReorder<string>>(KeyboardReorder);
+        const firstHandle = document.createElement("div");
+        const secondHandle = document.createElement("div");
+        firstHandle.tabIndex = 0;
+        secondHandle.tabIndex = 0;
+        document.body.append(firstHandle, secondHandle);
+        first.configure(
+            () => ["first"],
+            () => {},
+            () => false
+        );
+        second.configure(
+            () => ["second"],
+            () => {},
+            () => false
+        );
+        firstHandle.addEventListener("keydown", event =>
+            first.onKeydown(event, "first")
+        );
+        secondHandle.addEventListener("keydown", event =>
+            second.onKeydown(event, "second")
+        );
+
+        try {
+            for (const handle of [firstHandle, secondHandle]) {
+                handle.dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        key: "Enter",
+                        bubbles: true,
+                        cancelable: true,
+                    })
+                );
+            }
+
+            expect(first).not.toBe(second);
+            expect(first.activeItem).toBe("first");
+            expect(second.activeItem).toBe("second");
+            first.finish();
+            expect(first.activeItem).toBeUndefined();
+            expect(first.announcement).toContain("finished");
+            expect(second.activeItem).toBe("second");
+            expect(second.announcement).toContain("picked up");
+        } finally {
+            firstInjector.destroy();
+            secondInjector.destroy();
+            firstHandle.remove();
+            secondHandle.remove();
+        }
+    });
+
     for (const kind of ["items", "columns", "rules"]) {
         describe(`${kind} integration`, () => {
             let controller:
@@ -212,13 +427,17 @@ describe("Configurator keyboard reordering", () => {
                 const builder = new FormBuilder();
                 valueEvents = [];
                 if (kind === "items") {
-                    const component = new ItemsDynamicComponent(
-                        detector,
-                        pizzagna,
-                        jasmine.createSpyObj<LoggerService>("LoggerService", [
-                            "error",
-                        ]),
-                        builder
+                    const component = createWithReorder(
+                        () =>
+                            new ItemsDynamicComponent(
+                                detector,
+                                pizzagna,
+                                jasmine.createSpyObj<LoggerService>(
+                                    "LoggerService",
+                                    ["error"]
+                                ),
+                                builder
+                            )
                     );
                     component.ngOnInit();
                     component.nodes = ["a", "b", "c"];
@@ -243,19 +462,23 @@ describe("Configurator keyboard reordering", () => {
                             [],
                             { error$: new Subject() }
                         );
-                    const component = new TableColumnsConfigurationV2Component(
-                        builder,
-                        detector,
-                        jasmine.createSpyObj<DialogService>("DialogService", [
-                            "confirm",
-                        ]),
-                        pizzagna,
-                        manager,
-                        jasmine.createSpyObj<TableFormatterRegistryService>(
-                            "FormatterRegistry",
-                            ["getItems", "addItems"]
-                        ),
-                        new EventBus<IEvent>()
+                    const component = createWithReorder(
+                        () =>
+                            new TableColumnsConfigurationV2Component(
+                                builder,
+                                detector,
+                                jasmine.createSpyObj<DialogService>(
+                                    "DialogService",
+                                    ["confirm"]
+                                ),
+                                pizzagna,
+                                manager,
+                                jasmine.createSpyObj<TableFormatterRegistryService>(
+                                    "FormatterRegistry",
+                                    ["getItems", "addItems"]
+                                ),
+                                new EventBus<IEvent>()
+                            )
                     );
                     component.updateColumns(
                         ["a", "b", "c"].map(id => ({
@@ -282,12 +505,14 @@ describe("Configurator keyboard reordering", () => {
                             ["getComparators"]
                         );
                     registry.getComparators.and.returnValue({});
-                    const component =
-                        new BackgroundColorRulesConfigurationComponent(
-                            detector,
-                            builder,
-                            registry
-                        );
+                    const component = createWithReorder(
+                        () =>
+                            new BackgroundColorRulesConfigurationComponent(
+                                detector,
+                                builder,
+                                registry
+                            )
+                    );
                     component.backgroundColors = [];
                     component.ngOnInit();
                     const rules = component.formLocal.get("rules")

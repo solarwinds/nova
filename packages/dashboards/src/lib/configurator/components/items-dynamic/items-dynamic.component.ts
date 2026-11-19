@@ -24,6 +24,7 @@ import {
     ChangeDetectorRef,
     Component,
     EventEmitter,
+    inject,
     Input,
     OnDestroy,
     OnInit,
@@ -51,6 +52,7 @@ import { IItemConfiguration } from "../types";
     selector: "nui-items-dynamic",
     templateUrl: "./items-dynamic.component.html",
     styleUrls: ["items-dynamic.component.less"],
+    providers: [KeyboardReorder],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     standalone: false,
@@ -73,14 +75,8 @@ export class ItemsDynamicComponent
     public height: number;
     public headerMap: Map<string, string> = new Map<string, string>();
     public readonly reorderInstructionsId = `nui-items-dynamic-reorder-instructions-${ItemsDynamicComponent.reorderInstructionsCounter++}`;
-
-    public readonly reorder = new KeyboardReorder(
-        () => this.nodes ?? [],
-        (from, to) => this.moveItem(from, to),
-        id =>
-            !this.moveButtons ||
-            !this.form?.at(this.nodes.indexOf(id))?.enabled,
-        () => this.changeDetector.markForCheck()
+    public readonly reorder = inject<KeyboardReorder<string>>(
+        KeyboardReorder
     );
 
     constructor(
@@ -90,6 +86,14 @@ export class ItemsDynamicComponent
         private formBuilder: FormBuilder
     ) {
         super(changeDetector, pizzagnaService, logger);
+        this.reorder.configure(
+            () => this.nodes ?? [],
+            (from, to) => this.moveItem(from, to),
+            id =>
+                !this.moveButtons ||
+                !this.form?.at(this.nodes.indexOf(id))?.enabled,
+            () => this.changeDetector.markForCheck()
+        );
     }
 
     public getItemForNode(
