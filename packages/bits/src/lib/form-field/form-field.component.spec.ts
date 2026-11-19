@@ -20,9 +20,19 @@
 
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { Subject } from "rxjs";
 
 import { NuiFormFieldModule } from "./form-field.module";
 import { CheckboxComponent } from "../checkbox/checkbox.component";
+import { NuiColorPickerModule } from "../color-picker/color-picker.module";
+import { NuiDatePickerModule } from "../date-picker/date-picker.module";
+import { NuiDateTimePickerModule } from "../date-time-picker/date-time-picker.module";
+import { NuiFreetypeQueryModule } from "../freetype-query-builder/freetype-query-builder.module";
+import { NuiRadioModule } from "../radio/radio.module";
+import { NuiSelectModule } from "../select/select.module";
+import { NuiSelectV2Module } from "../select-v2/select-v2.module";
+import { NuiTimePickerModule } from "../time-picker/time-picker.module";
 
 @Component({
     template: `
@@ -44,6 +54,122 @@ class OnPushFormFieldHostComponent {
     public caption = "Notifications";
     public hint = "Choose how to receive alerts";
 }
+
+@Component({
+    template: `
+        <nui-form-field id="select" [caption]="caption">
+            <nui-select [itemsSource]="items" [ariaLabel]="name"></nui-select>
+        </nui-form-field>
+        <nui-form-field id="combobox" [caption]="caption">
+            <nui-combobox [itemsSource]="items" [ariaLabel]="name"></nui-combobox>
+        </nui-form-field>
+        <nui-form-field id="select-v2" [caption]="caption">
+            <nui-select-v2 [ariaLabel]="name"></nui-select-v2>
+        </nui-form-field>
+        <nui-form-field id="combobox-v2" [caption]="caption">
+            <nui-combobox-v2 [ariaLabel]="name"></nui-combobox-v2>
+        </nui-form-field>
+        <nui-form-field id="radio" [caption]="caption">
+            <nui-radio-group [ariaLabel]="name"></nui-radio-group>
+        </nui-form-field>
+        <nui-form-field id="date" [caption]="caption">
+            <nui-date-picker [ariaLabel]="name"></nui-date-picker>
+        </nui-form-field>
+        <nui-form-field id="time" [caption]="caption">
+            <nui-time-picker [ariaLabel]="name" [initEmpty]="true"></nui-time-picker>
+        </nui-form-field>
+        <nui-form-field id="datetime" [caption]="caption">
+            <nui-date-time-picker [ariaLabel]="name" [initEmpty]="true"></nui-date-time-picker>
+        </nui-form-field>
+        <nui-form-field id="color" [caption]="caption">
+            <nui-color-picker [colors]="items" [ariaLabel]="name"></nui-color-picker>
+        </nui-form-field>
+        <nui-form-field id="query" [caption]="caption">
+            <nui-freetype-query-builder [cursorSetter$]="cursorSetter" [ariaLabel]="name"></nui-freetype-query-builder>
+        </nui-form-field>
+        <button data-test="override" (click)="name = 'Filter details'">Override</button>
+        <button data-test="caption" (click)="caption = 'Updated filter'; name = 'Updated filter details'">Update</button>
+        <button data-test="clear" (click)="name = ''">Clear</button>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
+})
+class FormFieldControlNamesHostComponent {
+    public caption = "Filter";
+    public name = "";
+    public items: string[] = [];
+    public cursorSetter = new Subject<number>();
+}
+
+describe("form-field control name precedence", () => {
+    it("preserves explicit names and restores changed captions across supported controls", async () => {
+        TestBed.configureTestingModule({
+            declarations: [FormFieldControlNamesHostComponent],
+            imports: [
+                NuiFormFieldModule,
+                NuiColorPickerModule,
+                NuiDatePickerModule,
+                NuiDateTimePickerModule,
+                NuiFreetypeQueryModule,
+                NuiRadioModule,
+                NuiSelectModule,
+                NuiSelectV2Module,
+                NuiTimePickerModule,
+                NoopAnimationsModule,
+            ],
+        });
+        const fixture = TestBed.createComponent(
+            FormFieldControlNamesHostComponent
+        );
+        fixture.autoDetectChanges();
+        await fixture.whenStable();
+        const host: HTMLElement = fixture.nativeElement;
+        const selectors = [
+            "#select button.menu-button",
+            "#combobox input",
+            "#select-v2 [role=combobox]",
+            "#combobox-v2 input",
+            "#radio nui-radio-group",
+            "#date input",
+            "#time input",
+            "#color .color-picker-input",
+            "#query textarea",
+        ];
+        const controls = selectors.map(selector => {
+            const control = host.querySelector<HTMLElement>(selector);
+            expect(control).withContext(selector).not.toBeNull();
+            return control;
+        });
+        const dateTimeInputs =
+            host.querySelectorAll<HTMLInputElement>("#datetime input");
+        expect(dateTimeInputs.length).toBe(2);
+
+        const expectNames = (name: string) => {
+            controls.forEach((control, index) => {
+                expect(control?.getAttribute("aria-label"))
+                    .withContext(selectors[index])
+                    .toBe(name);
+            });
+            expect(dateTimeInputs[0].getAttribute("aria-label")).toBe(
+                `${name} date`
+            );
+            expect(dateTimeInputs[1].getAttribute("aria-label")).toBe(
+                `${name} time`
+            );
+        };
+
+        expectNames("Filter");
+        host.querySelector<HTMLButtonElement>("[data-test=override]")?.click();
+        await fixture.whenStable();
+        expectNames("Filter details");
+        host.querySelector<HTMLButtonElement>("[data-test=caption]")?.click();
+        await fixture.whenStable();
+        expectNames("Updated filter details");
+        host.querySelector<HTMLButtonElement>("[data-test=clear]")?.click();
+        await fixture.whenStable();
+        expectNames("Updated filter");
+    });
+});
 
 describe("form field with a checkbox in an OnPush host", () => {
     beforeEach(() => {

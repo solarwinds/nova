@@ -81,7 +81,13 @@ export class RadioGroupComponent
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel: string = "";
+    @Input() public get ariaLabel(): string {
+        return this.explicitAriaLabel || this.formFieldCaption || "";
+    }
+
+    public set ariaLabel(value: string) {
+        this.explicitAriaLabel = value;
+    }
     @Input() public ariaDescribedby: string;
 
     /** Unique id for the control. */
@@ -124,7 +130,16 @@ export class RadioGroupComponent
     private _value: any = null;
     private selectedRadio: RadioComponent | null = null;
     private subscriptions = new Array<Subscription>();
+    private explicitAriaLabel = "";
+    private formFieldCaption: string | undefined;
     constructor(private renderer: Renderer2) {}
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption?: string
+    ): void {
+        this.formFieldCaption = caption;
+    }
 
     private registerChild(child: RadioComponent): void {
         this.renderer.setAttribute(

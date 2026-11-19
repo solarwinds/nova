@@ -110,7 +110,7 @@ export class ColorPickerComponent
     public isBlackTick: boolean;
     public isInErrorState: boolean;
     @Input() public get ariaLabel(): string | undefined {
-        return this._ariaLabel;
+        return this._ariaLabel || this.formFieldCaption || this._ariaLabel;
     }
 
     public set ariaLabel(value: string | undefined) {
@@ -132,6 +132,7 @@ export class ColorPickerComponent
     }
 
     private _ariaLabel?: string;
+    private formFieldCaption?: string;
     private _ariaDescribedby?: string;
 
     /** Unique id for the control. */
@@ -148,6 +149,16 @@ export class ColorPickerComponent
         private colorService: ColorService,
         private cdkOverlay: Overlay
     ) {}
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption?: string
+    ): void {
+        if (caption !== this.formFieldCaption) {
+            this.formFieldCaption = caption;
+            this.changeDetection.markForCheck();
+        }
+    }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.colors) {

@@ -200,7 +200,7 @@ export class TextboxNumberComponent
 
     public setFormFieldLabel(
         _labelId: string | undefined,
-        caption: string | undefined
+        caption?: string
     ): void {
         this.formFieldCaption = caption;
     }

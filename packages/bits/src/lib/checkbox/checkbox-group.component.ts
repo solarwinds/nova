@@ -144,7 +144,7 @@ export class CheckboxGroupComponent
 
     public setFormFieldLabel(
         _labelId: string | undefined,
-        caption: string | undefined
+        caption?: string
     ): void {
         if (caption !== this.formFieldCaption) {
             this.formFieldCaption = caption;
