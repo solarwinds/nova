@@ -369,6 +369,7 @@ export class PopupComponent
             });
         }
 
+        this.cdRef.detectChanges();
         this.visible = true;
         this.opened.emit(this.popup.showing);
     }
