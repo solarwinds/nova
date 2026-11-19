@@ -103,7 +103,13 @@ export abstract class BaseSelect
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel: string = "";
+    @Input() public get ariaLabel(): string {
+        return this.explicitAriaLabel || this.formFieldCaption || "";
+    }
+
+    public set ariaLabel(value: string) {
+        this.explicitAriaLabel = value;
+    }
 
     @Input() public ariaDescribedby: string = "";
 
@@ -125,7 +131,17 @@ export abstract class BaseSelect
     public itemToSelect: any;
     public inputValue: string;
 
+    private explicitAriaLabel = "";
+    private formFieldCaption: string | undefined;
+
     protected constructor(protected utilService: UtilService) {}
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption?: string
+    ): void {
+        this.formFieldCaption = caption;
+    }
 
     public ngOnInit(): void {
         this.selectedItem = this.value;

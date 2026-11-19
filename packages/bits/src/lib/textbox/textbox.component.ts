@@ -183,7 +183,7 @@ export class TextboxComponent
 
     public setFormFieldLabel(
         _labelId: string | undefined,
-        caption: string | undefined
+        caption?: string
     ): void {
         this.formFieldCaption = caption;
     }

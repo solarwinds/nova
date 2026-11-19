@@ -141,7 +141,7 @@ export abstract class BaseSelectV2
 
     /** Input to set aria label text */
     @Input() public get ariaLabel(): string {
-        return this._ariaLabel;
+        return this._ariaLabel || this.formFieldCaption || "";
     }
 
     // changing the value with regular @Input doesn't trigger change detection
@@ -205,6 +205,7 @@ export abstract class BaseSelectV2
     private _selectedOptions: SelectV2OptionComponent[] = [];
 
     private _ariaLabel: string = "";
+    private formFieldCaption: string | undefined;
     private _ariaDescribedby: string;
 
     public get accessibleLabel(): string | null {
@@ -237,6 +238,16 @@ export abstract class BaseSelectV2
         public elRef: ElementRef<HTMLElement>,
         public liveAnnouncer: LiveAnnouncer
     ) {}
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption?: string
+    ): void {
+        if (caption !== this.formFieldCaption) {
+            this.formFieldCaption = caption;
+            this.cdRef.markForCheck();
+        }
+    }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.value) {

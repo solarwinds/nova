@@ -124,7 +124,17 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
     @Input() public id: string;
 
     /** Input to set aria label text */
-    @Input() public ariaLabel: string;
+    @Input() public get ariaLabel(): string | undefined {
+        return (
+            this.explicitAriaLabel ||
+            this.formFieldCaption ||
+            this.explicitAriaLabel
+        );
+    }
+
+    public set ariaLabel(value: string | undefined) {
+        this.explicitAriaLabel = value;
+    }
     @Input() public ariaDescribedby: string;
 
     @ViewChild("queryselect", { static: true })
@@ -147,6 +157,8 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
     private bodyControl: FormControl;
     private focusedToken: T;
     private lastHeight: number = 0;
+    private explicitAriaLabel: string | undefined;
+    private formFieldCaption: string | undefined;
 
     formGroup: FormGroup;
     focusedTokenValue = "";
@@ -165,6 +177,14 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
             body: [""],
         });
         this.bodyControl = this.formGroup.get("body") as FormControl;
+    }
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption?: string
+    ): void {
+        this.formFieldCaption = caption;
+        this.cd.markForCheck();
     }
 
     ngOnChanges(changes: SimpleChanges): void {

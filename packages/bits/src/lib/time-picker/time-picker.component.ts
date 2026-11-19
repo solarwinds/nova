@@ -102,7 +102,17 @@ export class TimePickerComponent
     /** to apply error state styles */
     @Input() isInErrorState = false;
     /** Input to set aria label text */
-    @Input() public ariaLabel: string = "Time Picker";
+    @Input() public get ariaLabel(): string {
+        return (
+            this.explicitAriaLabel ||
+            this.formFieldCaption ||
+            (this.explicitAriaLabel === "" ? "" : "Time Picker")
+        );
+    }
+
+    public set ariaLabel(value: string) {
+        this.explicitAriaLabel = value;
+    }
     @Input() public ariaDescribedby: string;
     /** to allow the empty values for init state */
     @Input() initEmpty: boolean;
@@ -149,12 +159,21 @@ export class TimePickerComponent
 
     private itemToSelect: any;
     private inputChanged: Subject<string> = new Subject<string>();
+    private explicitAriaLabel: string | undefined;
+    private formFieldCaption: string | undefined;
 
     constructor(
         private elementRef: ElementRef,
         private keyboardService: TimePickerKeyboardService,
         private cdr: ChangeDetectorRef
     ) {}
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption?: string
+    ): void {
+        this.formFieldCaption = caption;
+    }
 
     public ngOnInit(): void {
         this.times = this.generateTimeItems(this.timeStep);

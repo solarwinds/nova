@@ -109,7 +109,17 @@ export class DatePickerComponent
     /** to apply error state styles */
     @Input() isInErrorState: boolean;
     /** Input to set aria label text */
-    @Input() public ariaLabel: string = $localize`Date Picker`;
+    @Input() public get ariaLabel(): string {
+        return (
+            this.explicitAriaLabel ||
+            this.formFieldCaption ||
+            (this.explicitAriaLabel === "" ? "" : $localize`Date Picker`)
+        );
+    }
+
+    public set ariaLabel(value: string) {
+        this.explicitAriaLabel = value;
+    }
     @Input() public ariaDescribedby: string;
 
     // TODO: Consider injecting locale through LOCALE_ID Injection Token
@@ -209,8 +219,17 @@ export class DatePickerComponent
     private inputChanged: Subject<string> = new Subject<string>();
     private momentDateFormat: string;
     private calendarChanged: Subscription;
+    private explicitAriaLabel: string | undefined;
+    private formFieldCaption: string | undefined;
 
     constructor(private cd: ChangeDetectorRef) {}
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption?: string
+    ): void {
+        this.formFieldCaption = caption;
+    }
 
     public ngOnInit(): void {
         _defaults(this, datePickerDefaults);
