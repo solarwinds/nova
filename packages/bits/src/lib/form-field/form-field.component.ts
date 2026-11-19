@@ -166,7 +166,10 @@ export class FormFieldComponent
                 return;
             }
             if (control.setFormFieldLabel) {
-                control.setFormFieldLabel(this.caption ? this.labelId : undefined);
+                control.setFormFieldLabel(
+                    this.caption ? this.labelId : undefined,
+                    this.caption || undefined
+                );
             } else if (this.caption) {
                 control.ariaLabel = this.caption;
             } else if (

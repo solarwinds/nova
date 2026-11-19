@@ -95,10 +95,15 @@ export class CheckboxGroupComponent
     private children: QueryList<CheckboxComponent>;
 
     /**
-     * Input to set aria label text
+     * Explicit accessible name. Prefer the form-field caption when possible.
+     * An override should include the visible caption.
      */
     @Input() public get ariaLabel(): string {
-        return this._ariaLabel;
+        return (
+            this._ariaLabel ||
+            this.formFieldCaption ||
+            (this._ariaLabel === "" ? "" : "Checkbox Group")
+        );
     }
 
     public set ariaLabel(value: string) {
@@ -108,7 +113,8 @@ export class CheckboxGroupComponent
         }
     }
 
-    private _ariaLabel = "Checkbox Group";
+    private _ariaLabel: string | undefined;
+    private formFieldCaption: string | undefined;
 
     /**
      * Input to set aria label text
@@ -135,6 +141,16 @@ export class CheckboxGroupComponent
     private readonly changeDetector = inject(ChangeDetectorRef);
 
     constructor(private renderer: Renderer2) {}
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption: string | undefined
+    ): void {
+        if (caption !== this.formFieldCaption) {
+            this.formFieldCaption = caption;
+            this.changeDetector.markForCheck();
+        }
+    }
 
     /**
      * Subscribe to nui-checkbox-group children values change

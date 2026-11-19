@@ -243,8 +243,7 @@
     [caption]="dynamicCaption">
     <nui-textbox
         *ngIf="showDynamicControl"
-        ariaLabel="Notification email"
-        i18n-ariaLabel></nui-textbox>
+        [ariaLabel]="dynamicExplicitName"></nui-textbox>
 </nui-form-field>
 <button
     nui-button

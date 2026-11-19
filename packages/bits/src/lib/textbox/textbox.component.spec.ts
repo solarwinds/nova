@@ -48,7 +48,7 @@ import { SpinnerComponent } from "../spinner/spinner.component";
                     *ngIf="showTextbox"
                     formControlName="input"
                     [ariaDescribedby]="description"
-                    ariaLabel="Dashboard name"></nui-textbox>
+                    [ariaLabel]="ariaLabel"></nui-textbox>
                 <nui-validation-message for="required" [show]="false">
                     This is required
                 </nui-validation-message>
@@ -61,6 +61,7 @@ class TextboxFormComponent {
     @ViewChild(TextboxComponent) input: TextboxComponent;
 
     public caption: string;
+    public ariaLabel = "Dashboard name";
     public hint: string;
     public description: string;
     public showTextbox = true;
@@ -78,12 +79,14 @@ class TextboxFormComponent {
             <nui-textbox type="password"></nui-textbox>
         </nui-form-field>
         <nui-form-field caption="Count">
-            <nui-textbox-number></nui-textbox-number>
+            <nui-textbox-number [ariaLabel]="numberLabel"></nui-textbox-number>
         </nui-form-field>
         <button data-test="update" (click)="caption = 'Secret'; hint = 'Updated hint'">
             Update
         </button>
         <button data-test="clear" (click)="caption = ''">Clear caption</button>
+        <button data-test="number-name" (click)="numberLabel = 'Count of retries'">Set numeric name</button>
+        <button data-test="clear-number-name" (click)="numberLabel = ''">Clear numeric name</button>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false,
@@ -91,6 +94,7 @@ class TextboxFormComponent {
 class OnPushTextboxFormComponent {
     public caption = "Password";
     public hint = "Use a password";
+    public numberLabel: string;
 }
 
 describe("form fields in an OnPush host", () => {
@@ -157,6 +161,29 @@ describe("form fields in an OnPush host", () => {
         expect(
             host.querySelector("nui-form-field")?.querySelector("label")
         ).toBeNull();
+    });
+
+    it("uses a changing explicit numeric name and falls back to the caption", async () => {
+        TestBed.configureTestingModule({
+            declarations: [OnPushTextboxFormComponent],
+            imports: [NuiFormFieldModule, NuiTextboxModule],
+        });
+        const fixture = TestBed.createComponent(OnPushTextboxFormComponent);
+        fixture.autoDetectChanges();
+        await fixture.whenStable();
+        const input = fixture.nativeElement.querySelector(
+            "nui-textbox-number input"
+        ) as HTMLInputElement;
+
+        fixture.nativeElement.querySelector("[data-test=number-name]").click();
+        await fixture.whenStable();
+        expect(input.getAttribute("aria-label")).toBe("Count of retries");
+
+        fixture.nativeElement
+            .querySelector("[data-test=clear-number-name]")
+            .click();
+        await fixture.whenStable();
+        expect(input.getAttribute("aria-label")).toBe("Count");
     });
 });
 
@@ -244,8 +271,9 @@ describe("components >", () => {
                 ).toBe("Dashboard name");
             });
 
-            it("continues to name the textbox from a supplied form field caption", async () => {
+            it("uses the caption when no explicit textbox name is provided", async () => {
                 testComponent.caption = "Dashboard title";
+                testComponent.ariaLabel = "";
                 fixture.detectChanges();
                 await fixture.whenStable();
                 fixture.detectChanges();
@@ -260,20 +288,27 @@ describe("components >", () => {
                 expect(label.htmlFor).toBe(textbox.id);
             });
 
-            it("updates the textbox name with its caption and restores the explicit name when cleared", async () => {
+            it("preserves explicit names across caption changes and uses the caption when cleared", async () => {
                 testComponent.caption = "Dashboard title";
-                fixture.detectChanges();
-                await fixture.whenStable();
-                fixture.detectChanges();
-
-                testComponent.caption = "Dashboard display name";
+                testComponent.ariaLabel = "Dashboard title for reporting";
                 fixture.detectChanges();
                 await fixture.whenStable();
                 fixture.detectChanges();
 
                 const textbox = testComponent.input.textboxInput.nativeElement;
                 expect(textbox.getAttribute("aria-label")).toBe(
-                    "Dashboard display name"
+                    "Dashboard title for reporting"
+                );
+
+                testComponent.ariaLabel =
+                    "Dashboard display name for reporting";
+                testComponent.caption = "Dashboard display name";
+                fixture.detectChanges();
+                await fixture.whenStable();
+                fixture.detectChanges();
+
+                expect(textbox.getAttribute("aria-label")).toBe(
+                    "Dashboard display name for reporting"
                 );
                 expect(
                     fixture.nativeElement
@@ -281,11 +316,20 @@ describe("components >", () => {
                         .textContent.trim()
                 ).toBe("Dashboard display name");
 
-                testComponent.caption = "";
+                testComponent.ariaLabel = "";
                 fixture.detectChanges();
                 await fixture.whenStable();
                 fixture.detectChanges();
 
+                expect(textbox.getAttribute("aria-label")).toBe(
+                    "Dashboard display name"
+                );
+
+                testComponent.caption = "";
+                testComponent.ariaLabel = "Dashboard name";
+                fixture.detectChanges();
+                await fixture.whenStable();
+                fixture.detectChanges();
                 expect(textbox.getAttribute("aria-label")).toBe(
                     "Dashboard name"
                 );
@@ -362,6 +406,7 @@ describe("components >", () => {
             it("names and describes a control created after the form field and its replacement", async () => {
                 testComponent.showTextbox = false;
                 testComponent.caption = "Initial caption";
+                testComponent.ariaLabel = "";
                 testComponent.hint = "Use a descriptive name";
                 fixture.detectChanges();
                 await fixture.whenStable();
