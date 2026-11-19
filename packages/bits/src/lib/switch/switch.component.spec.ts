@@ -19,10 +19,16 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectorRef, Component } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 
 import { SwitchComponent } from "./switch.component";
 import { NuiSwitchModule } from "./switch.module";
+import { NuiFormFieldModule } from "../form-field/form-field.module";
 
 import createSpy = jasmine.createSpy;
 import Spy = jasmine.Spy;
@@ -37,6 +43,106 @@ class SwitchHostComponent {
     public tabIndex = 0;
     public disabled = false;
 }
+
+@Component({
+    template: `
+        <nui-form-field [caption]="caption">
+            <nui-switch [ariaLabel]="label">{{ content }}</nui-switch>
+        </nui-form-field>
+    `,
+    standalone: false,
+})
+class SwitchFormFieldHostComponent {
+    public caption = "Notifications";
+    public content = "Email alerts";
+    public label = "";
+}
+
+describe("switch in a form field", () => {
+    it("updates the automatic name as the caption and projected text change", fakeAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [SwitchComponent, SwitchFormFieldHostComponent],
+            imports: [NuiFormFieldModule],
+        });
+        const fixture = TestBed.createComponent(SwitchFormFieldHostComponent);
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+
+        const bar = fixture.nativeElement.querySelector(
+            ".nui-switch__bar"
+        ) as HTMLElement;
+        const caption = fixture.nativeElement.querySelector(
+            ".nui-form-field__control-label"
+        ) as HTMLLabelElement;
+        const label = fixture.nativeElement.querySelector(
+            ".nui-switch__label"
+        ) as HTMLElement;
+        expect(bar.getAttribute("aria-label")).toBeNull();
+        expect(bar.getAttribute("aria-labelledby")).toBe(
+            `${caption.id} ${label.id}`
+        );
+
+        fixture.componentInstance.content = "";
+        fixture.detectChanges();
+        expect(bar.getAttribute("aria-labelledby")).toBe(caption.id);
+
+        fixture.componentInstance.caption = "";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(bar.getAttribute("aria-labelledby")).toBeNull();
+        expect(bar.getAttribute("aria-label")).toBe("Switch");
+
+        fixture.componentInstance.content = "Email alerts";
+        fixture.detectChanges();
+        expect(bar.getAttribute("aria-label")).toBeNull();
+        expect(bar.getAttribute("aria-labelledby")).toBe(label.id);
+    }));
+
+    it("lets an explicit name override the caption and projected text until cleared", fakeAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [SwitchComponent, SwitchFormFieldHostComponent],
+            imports: [NuiFormFieldModule],
+        });
+        const fixture = TestBed.createComponent(SwitchFormFieldHostComponent);
+        fixture.componentInstance.label = "Notifications Email alerts by email";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+
+        const bar = fixture.nativeElement.querySelector(
+            ".nui-switch__bar"
+        ) as HTMLElement;
+        const caption = fixture.nativeElement.querySelector(
+            ".nui-form-field__control-label"
+        ) as HTMLLabelElement;
+        const label = fixture.nativeElement.querySelector(
+            ".nui-switch__label"
+        ) as HTMLElement;
+        expect(bar.getAttribute("aria-label")).toBe(
+            "Notifications Email alerts by email"
+        );
+        expect(bar.getAttribute("aria-labelledby")).toBeNull();
+
+        fixture.componentInstance.label = "";
+        fixture.detectChanges();
+        expect(bar.getAttribute("aria-label")).toBeNull();
+        expect(bar.getAttribute("aria-labelledby")).toBe(
+            `${caption.id} ${label.id}`
+        );
+
+        fixture.componentInstance.label = "Notifications Email alerts custom";
+        fixture.componentInstance.caption = "";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(bar.getAttribute("aria-label")).toBe(
+            "Notifications Email alerts custom"
+        );
+        expect(bar.getAttribute("aria-labelledby")).toBeNull();
+    }));
+});
 
 describe("components >", () => {
     describe("switch >", () => {

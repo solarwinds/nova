@@ -230,6 +230,25 @@
 </nui-form-field>
 
 <nui-form-field
+    id="nui-form-field-test-switch-caption"
+    caption="Notifications"
+    i18n-caption>
+    <nui-switch i18n>Email alerts</nui-switch>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-test-switch-explicit"
+    caption="Notifications"
+    i18n-caption>
+    <nui-switch
+        ariaLabel="Notifications Email alerts by email"
+        i18n-ariaLabel
+        i18n
+        >Email alerts</nui-switch
+    >
+</nui-form-field>
+
+<nui-form-field
     id="nui-form-field-test-dynamic-caption"
     [caption]="dynamicCaption">
     @if (showDynamicControl) {

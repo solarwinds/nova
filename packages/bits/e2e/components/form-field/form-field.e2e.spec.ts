@@ -409,6 +409,36 @@ test.describe("USERCONTROL form-field >", () => {
         await expect(checkbox).toHaveAttribute("aria-checked", "true");
     });
 
+    test("includes the caption and switch text in its accessible name", async ({
+        page,
+    }) => {
+        const field = page.locator("#nui-form-field-test-switch-caption");
+        const control = field.getByRole("checkbox");
+        await expect(control).toHaveAccessibleName(
+            "Notifications Email alerts"
+        );
+        await control.focus();
+        await control.press("Space");
+        await expect(control).toHaveAttribute("aria-checked", "true");
+        await expect(control).toHaveAccessibleName(
+            "Notifications Email alerts"
+        );
+    });
+
+    test("preserves explicit and caption-only switch names", async ({
+        page,
+    }) => {
+        const control = page
+            .locator("#nui-form-field-test-switch-explicit")
+            .getByRole("checkbox");
+        await expect(control).toHaveAccessibleName(
+            "Notifications Email alerts by email"
+        );
+        await expect(
+            page.locator("#nui-form-field-test-switch [role=checkbox]")
+        ).toHaveAccessibleName("Switch");
+    });
+
     test("preserves caller descriptions when field hints are cleared", async ({
         page,
     }) => {
