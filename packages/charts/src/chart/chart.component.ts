@@ -60,6 +60,7 @@ import { ChartTooltipsPlugin } from "../core/plugins/tooltips/chart-tooltips-plu
             useExisting: forwardRef(() => ChartComponent),
         },
     ],
+    // eslint-disable-next-line @angular-eslint/prefer-standalone -- Preserve the existing NgModule-based library API.
     standalone: false,
 })
 export class ChartComponent
@@ -104,17 +105,19 @@ export class ChartComponent
     }
 
     public resizeObserver?: ResizeObserver;
-    private resizeHandler: Function;
+    private resizeHandler: () => void;
     private intersectionObserver: IntersectionObserver;
     private readonly keyboardTooltipController = inject(
         ChartKeyboardTooltipController
     );
 
+    /* eslint-disable @angular-eslint/prefer-inject -- Preserve the public constructor signature for existing consumers. */
     constructor(
         private elRef: ElementRef,
         private ngZone: NgZone,
         private cd: ChangeDetectorRef
     ) {}
+    /* eslint-enable @angular-eslint/prefer-inject */
 
     public ngOnInit(): void {
         this.intersectionObserver = new IntersectionObserver(

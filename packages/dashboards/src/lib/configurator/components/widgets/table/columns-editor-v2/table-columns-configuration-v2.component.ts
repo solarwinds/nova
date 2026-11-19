@@ -78,6 +78,7 @@ import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
     providers: [KeyboardReorder],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line @angular-eslint/prefer-standalone -- Preserve the existing NgModule-based library API.
     standalone: false,
 })
 export class TableColumnsConfigurationV2Component
@@ -115,11 +116,10 @@ export class TableColumnsConfigurationV2Component
     public dataSource: IDataSource;
     public columnLabel = $localize`Column`;
     public readonly reorderInstructionsId = `nui-table-columns-reorder-instructions-${TableColumnsConfigurationV2Component.reorderInstructionsCounter++}`;
-    public readonly reorder = inject<KeyboardReorder<string>>(
-        KeyboardReorder
-    );
+    public readonly reorder = inject<KeyboardReorder<string>>(KeyboardReorder);
     private onDestroy$: Subject<void> = new Subject<void>();
 
+    /* eslint-disable @angular-eslint/prefer-inject -- Preserve the public constructor signature for existing consumers. */
     constructor(
         private formBuilder: FormBuilder,
         private changeDetector: ChangeDetectorRef,
@@ -202,6 +202,7 @@ export class TableColumnsConfigurationV2Component
                 this.changeDetector.markForCheck();
             });
     }
+    /* eslint-enable @angular-eslint/prefer-inject */
 
     public ngOnInit(): void {
         this.formReady.emit(this.form);
