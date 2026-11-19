@@ -103,7 +103,81 @@ class OnPushTextboxFormComponent {
     public numberLabel: string;
 }
 
+@Component({
+    template: `
+        <div [formGroup]="form">
+            <ng-container *ngIf="showPasswords">
+                <nui-form-field caption="Password / Key" [control]="form.controls.authentication">
+                    <nui-textbox
+                        type="password"
+                        formControlName="authentication"
+                        ariaDescribedby="authentication-description"></nui-textbox>
+                    <span id="authentication-description">Authentication guidance</span>
+                </nui-form-field>
+                <nui-form-field caption="Password / Key" [control]="form.controls.privacy">
+                    <nui-textbox
+                        type="password"
+                        formControlName="privacy"
+                        ariaDescribedby="privacy-description"></nui-textbox>
+                    <span id="privacy-description">Privacy guidance</span>
+                </nui-form-field>
+            </ng-container>
+        </div>
+        <button data-test="show" (click)="showPasswords = true">Show</button>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
+})
+class OnPushPasswordFieldsComponent {
+    public showPasswords = false;
+    public form = this.fb.group({
+        authentication: this.fb.control(""),
+        privacy: this.fb.control({ value: "", disabled: true }),
+    });
+
+    constructor(private fb: FormBuilder) {}
+}
+
 describe("form fields in an OnPush host", () => {
+    it("associates both conditionally rendered password captions with their own inputs", async () => {
+        TestBed.configureTestingModule({
+            declarations: [OnPushPasswordFieldsComponent],
+            imports: [
+                CommonModule,
+                ReactiveFormsModule,
+                NuiFormFieldModule,
+                NuiTextboxModule,
+            ],
+        });
+        const fixture = TestBed.createComponent(OnPushPasswordFieldsComponent);
+        fixture.autoDetectChanges();
+        await fixture.whenStable();
+        const host: HTMLElement = fixture.nativeElement;
+        host.querySelector<HTMLButtonElement>("[data-test=show]")?.click();
+        await fixture.whenStable();
+
+        const fields = host.querySelectorAll("nui-form-field");
+        expect(fields.length).toBe(2);
+        const ids = Array.from(fields, (field, index) => {
+            const label = field.querySelector<HTMLLabelElement>(
+                ".nui-form-field__control-label"
+            );
+            const input = field.querySelector<HTMLInputElement>("input");
+            expect(input).not.toBeNull();
+            expect(label?.control).toBe(input);
+            expect(input?.id).toBeTruthy();
+            expect(input?.getAttribute("aria-label")).toBe("Password / Key");
+            expect(input?.getAttribute("aria-describedby")).toBe(
+                index === 0
+                    ? "authentication-description"
+                    : "privacy-description"
+            );
+            expect(input?.disabled).toBe(index === 1);
+            return input?.id;
+        });
+        expect(ids[0]).not.toBe(ids[1]);
+    });
+
     it("renders the deferred label, name, and description for each control", async () => {
         TestBed.configureTestingModule({
             declarations: [OnPushTextboxFormComponent],
