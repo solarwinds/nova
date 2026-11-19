@@ -52,20 +52,11 @@ test.describe("host-referenced popup", () => {
                 content: "Automatic monitoring setup details",
             },
         ];
-        const settlePopup = async (): Promise<void> => {
-            await page.evaluate(
-                async () =>
-                    new Promise<void>(resolve => {
-                        window.setTimeout(
-                            () => window.requestAnimationFrame(() => resolve()),
-                            0
-                        );
-                    })
-            );
-        };
-        const pressAndSettle = async (key: string): Promise<void> => {
+        const pressKey = async (key: string): Promise<void> => {
             await page.keyboard.press(key);
-            await settlePopup();
+            if (key === "Escape") {
+                await expect(page.locator(".cdk-overlay-pane")).toHaveCount(0);
+            }
         };
         const readFormState = async (): Promise<string[]> =>
             page.locator("form input").evaluateAll(inputs =>
@@ -81,7 +72,6 @@ test.describe("host-referenced popup", () => {
             await expect(page.getByText("Form submissions: 0")).toBeVisible();
         };
 
-        await settlePopup();
         await expect(page.locator("form input")).toHaveCount(5);
         const originalFormState = await readFormState();
         expect(originalFormState).toEqual([
@@ -124,29 +114,29 @@ test.describe("host-referenced popup", () => {
             await expect(trigger).toHaveAttribute("aria-expanded", "false");
             await expect(content).toBeHidden();
 
-            await pressAndSettle("Tab");
+            await pressKey("Tab");
             await expect(trigger).toBeFocused();
             await expect(trigger).toHaveAttribute("aria-expanded", "true");
             await expect(content).toBeVisible();
             await expect(popupHost).toBeVisible();
 
-            await pressAndSettle("Escape");
+            await pressKey("Escape");
             await expect(content).toBeHidden();
             await expect(trigger).toHaveAttribute("aria-expanded", "false");
             await expect(trigger).toBeFocused();
 
-            await pressAndSettle("Enter");
+            await pressKey("Enter");
             await expect(content).toBeVisible();
             await expect(trigger).toHaveAttribute("aria-expanded", "true");
             await expect(trigger).toBeFocused();
             await expectFormUnchanged(originalFormState);
 
-            await pressAndSettle("Escape");
+            await pressKey("Escape");
             await expect(content).toBeHidden();
             await expect(trigger).toHaveAttribute("aria-expanded", "false");
 
             const scrollPosition = await page.evaluate(() => window.scrollY);
-            await pressAndSettle("Space");
+            await pressKey("Space");
             await expect(content).toBeVisible();
             await expect(trigger).toHaveAttribute("aria-expanded", "true");
             await expect(trigger).toBeFocused();
@@ -155,15 +145,15 @@ test.describe("host-referenced popup", () => {
             );
             await expectFormUnchanged(originalFormState);
 
-            await pressAndSettle("Escape");
+            await pressKey("Escape");
             await expect(content).toBeHidden();
-            await pressAndSettle("Enter");
+            await pressKey("Enter");
             await expect(content).toBeVisible();
             await expect(trigger).toHaveAttribute("aria-expanded", "true");
             await expect(trigger).toBeFocused();
             await expectFormUnchanged(originalFormState);
 
-            await pressAndSettle("Escape");
+            await pressKey("Escape");
             await expect(content).toBeHidden();
         }
     });
@@ -184,53 +174,37 @@ test.describe("host-referenced popup", () => {
         const content = page.getByText("Preferred polling method details", {
             exact: true,
         });
-        const settlePopup = async (): Promise<void> => {
-            await page.evaluate(
-                async () =>
-                    new Promise<void>(resolve => {
-                        window.setTimeout(
-                            () => window.requestAnimationFrame(() => resolve()),
-                            0
-                        );
-                    })
-            );
-        };
-
         await focusStart.focus();
         await trigger.hover();
-        await settlePopup();
         await expect(content).toBeVisible();
         await expect(trigger).toHaveAttribute("aria-expanded", "true");
         await expect(focusStart).toBeFocused();
 
         await trigger.focus();
         await page.mouse.move(0, 0);
-        await settlePopup();
         await expect(content).toBeVisible();
         await expect(trigger).toHaveAttribute("aria-expanded", "true");
         await expect(trigger).toBeFocused();
 
         await trigger.hover();
         await page.keyboard.press("Escape");
-        await settlePopup();
         await expect(content).toBeHidden();
+        await expect(page.locator(".cdk-overlay-pane")).toHaveCount(0);
         await expect(trigger).toHaveAttribute("aria-expanded", "false");
         await expect(trigger).toBeFocused();
 
         await page.mouse.move(0, 0);
-        await settlePopup();
         await expect(content).toBeHidden();
         await expect(trigger).toHaveAttribute("aria-expanded", "false");
         await expect(trigger).toBeFocused();
 
         await trigger.blur();
-        await settlePopup();
+        await expect(trigger).not.toBeFocused();
         await trigger.focus();
-        await settlePopup();
         await expect(content).toBeVisible();
         await focusStart.click();
-        await settlePopup();
         await expect(content).toBeHidden();
+        await expect(page.locator(".cdk-overlay-pane")).toHaveCount(0);
         await expect(trigger).toHaveAttribute("aria-expanded", "false");
         await expect(focusStart).toBeFocused();
     });

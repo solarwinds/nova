@@ -8,6 +8,10 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | Let Angular cancel paginator keyboard focus checks and virtual navigation when the component-scoped controller is destroyed.
+- `@nova-ui/charts` | Provide keyboard tooltip interaction state per chart through Angular DI without changing the opt-in behavior.
+- `@nova-ui/dashboards` | Provide independent keyboard reorder state through Angular DI for each supported configurator.
+- Accessibility regression tests now include WCAG 2.0 AA rules alongside later WCAG versions and synchronize popup dismissal and panel hover checks without fixed browser sleeps.
 - `@nova-ui/bits` | Preserved numeric zero values when selecting a SelectV2 option and updating its options, and added numbers to the option value type.
 - `@nova-ui/bits` | Preserved native keyboard navigation in editable toolbar content, kept the overflow menu reachable when actions change disabled state, and restored keyboard focus indicators on menu buttons.
 - `@nova-ui/bits` | Improved keyboard access and focus visibility for overflowing tabs, hoverable and collapsible panels, and sortable table headers.
