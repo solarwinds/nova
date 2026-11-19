@@ -246,8 +246,10 @@ test.describe("USERCONTROL Panel", () => {
             await panel.focusSidePane();
             await panel.sidePaneInput.focus();
             await panel.hoverOnSidePane();
+            await page.clock.install();
             await page.mouse.move(0, 0);
-            await page.waitForTimeout(800);
+            // Advance the 300ms hover debounce and the 300ms collapse animation.
+            await page.clock.runFor(600);
             await panel.toBeExpanded();
             await expect(panel.sidePaneInput).toBeFocused();
             await page.locator("#panel-keyboard-after").focus();
