@@ -8,6 +8,9 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | Corrected menu keyboard focus and active-descendant semantics, respected handled keyboard events, and kept menu switches out of the tab order.
+- `@nova-ui/bits` | Preserved popup adapter visibility when deprecated popup styles are loaded and rendered popup content before notifying open listeners.
+- `@nova-ui/bits` | Enforced toast activation limits and queue ordering, and canceled pending activation when toasts are cleared, removed, or destroyed.
 - `@nova-ui/bits` | Let Angular cancel paginator keyboard focus checks and virtual navigation when the component-scoped controller is destroyed.
 - `@nova-ui/charts` | Provide keyboard tooltip interaction state per chart through Angular DI without changing the opt-in behavior, and explicitly type the resize callback.
 - `@nova-ui/dashboards` | Provide independent keyboard reorder state through Angular DI for each supported configurator.
