@@ -24,6 +24,7 @@ import {
     ChangeDetectorRef,
     Component,
     EventEmitter,
+    inject,
     Input,
     OnChanges,
     OnDestroy,
@@ -54,6 +55,7 @@ const DEFAULT_LABEL = "Custom Comparator";
     selector: "nui-background-color-rules-configuration",
     templateUrl: "./background-color-rules-configuration.component.html",
     styleUrls: ["./background-color-rules-configuration.component.less"],
+    providers: [KeyboardReorder],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false,
 })
@@ -73,18 +75,10 @@ export class BackgroundColorRulesConfigurationComponent
     public palette: Partial<IPaletteColor[]>;
     public height: number;
     public readonly reorderInstructionsId = `nui-background-color-rules-reorder-instructions-${BackgroundColorRulesConfigurationComponent.reorderInstructionsCounter++}`;
-    private readonly destroy$ = new Subject<void>();
-    public readonly reorder = new KeyboardReorder<FormGroup>(
-        () =>
-            (this.formLocal?.get("rules")?.value as FormArray<FormGroup>)
-                ?.controls ?? [],
-        (from, to) => {
-            this.move(to, from, true);
-            this.changeDetector.detectChanges();
-        },
-        rule => rule.disabled,
-        () => this.changeDetector.markForCheck()
+    public readonly reorder = inject<KeyboardReorder<FormGroup>>(
+        KeyboardReorder
     );
+    private readonly destroy$ = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef,
@@ -92,6 +86,17 @@ export class BackgroundColorRulesConfigurationComponent
         comparatorsRegistry: KpiColorComparatorsRegistryService
     ) {
         this.availableComparators = comparatorsRegistry.getComparators();
+        this.reorder.configure(
+            () =>
+                (this.formLocal?.get("rules")?.value as FormArray<FormGroup>)
+                    ?.controls ?? [],
+            (from, to) => {
+                this.move(to, from, true);
+                this.changeDetector.detectChanges();
+            },
+            rule => rule.disabled,
+            () => this.changeDetector.markForCheck()
+        );
     }
 
     public ngOnInit(): void {

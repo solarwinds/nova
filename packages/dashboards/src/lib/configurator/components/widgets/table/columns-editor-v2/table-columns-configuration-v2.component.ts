@@ -25,6 +25,7 @@ import {
     Component,
     EventEmitter,
     Inject,
+    inject,
     Input,
     OnChanges,
     OnDestroy,
@@ -74,6 +75,7 @@ import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
     selector: "nui-table-columns-configuration",
     templateUrl: "./table-columns-configuration-v2.component.html",
     styleUrls: ["./table-columns-configuration-v2.component.less"],
+    providers: [KeyboardReorder],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     standalone: false,
@@ -113,14 +115,10 @@ export class TableColumnsConfigurationV2Component
     public dataSource: IDataSource;
     public columnLabel = $localize`Column`;
     public readonly reorderInstructionsId = `nui-table-columns-reorder-instructions-${TableColumnsConfigurationV2Component.reorderInstructionsCounter++}`;
-    private onDestroy$: Subject<void> = new Subject<void>();
-    public readonly reorder = new KeyboardReorder<string>(
-        () => this.columnForms.map(control => control.value.id),
-        (from, to) => this.moveItem(from, to),
-        id =>
-            !this.columnForms.find(control => control.value.id === id)?.enabled,
-        () => this.changeDetector.markForCheck()
+    public readonly reorder = inject<KeyboardReorder<string>>(
+        KeyboardReorder
     );
+    private onDestroy$: Subject<void> = new Subject<void>();
 
     constructor(
         private formBuilder: FormBuilder,
@@ -131,6 +129,15 @@ export class TableColumnsConfigurationV2Component
         public tableFormatterRegistry: TableFormatterRegistryService,
         @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>
     ) {
+        this.reorder.configure(
+            () => this.columnForms.map(control => control.value.id),
+            (from, to) => this.moveItem(from, to),
+            id =>
+                !this.columnForms.find(control => control.value.id === id)
+                    ?.enabled,
+            () => this.changeDetector.markForCheck()
+        );
+
         this.form = this.formBuilder.group({
             columns: this.formBuilder.array([]),
         });

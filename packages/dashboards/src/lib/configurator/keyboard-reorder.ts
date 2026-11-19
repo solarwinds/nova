@@ -1,4 +1,14 @@
+import { Injectable } from "@angular/core";
+
+interface KeyboardReorderContext<T> {
+    getItems: () => T[];
+    move: (from: number, to: number) => void;
+    isDisabled: (item: T) => boolean;
+    notifyChange?: () => void;
+}
+
 /** Keyboard-only interaction for existing configurator drag handles. */
+@Injectable()
 export class KeyboardReorder<T> {
     public activeItem: T | undefined;
     public announcement = "";
@@ -7,20 +17,39 @@ export class KeyboardReorder<T> {
     private expectedOrder: T[] | undefined;
     private handle: HTMLElement | undefined;
     private moving = false;
+    private reorderContext?: KeyboardReorderContext<T>;
 
-    constructor(
-        private readonly getItems: () => T[],
-        private readonly move: (from: number, to: number) => void,
-        private readonly isDisabled: (item: T) => boolean,
-        private readonly notifyChange?: () => void
-    ) {}
+    public configure(
+        getItems: () => T[],
+        move: (from: number, to: number) => void,
+        isDisabled: (item: T) => boolean,
+        notifyChange?: () => void
+    ): void {
+        if (this.reorderContext) {
+            throw new Error(
+                "Keyboard reorder controller context is already configured."
+            );
+        }
+        this.reorderContext = { getItems, move, isDisabled, notifyChange };
+    }
+
+    private get context(): KeyboardReorderContext<T> {
+        if (!this.reorderContext) {
+            throw new Error(
+                "Keyboard reorder controller context is not configured."
+            );
+        }
+        return this.reorderContext;
+    }
 
     public onKeydown(event: KeyboardEvent, item: T): void {
+        const context = this.context;
         this.handleKeydown(event, item);
-        this.notifyChange?.();
+        context.notifyChange?.();
     }
 
     private handleKeydown(event: KeyboardEvent, item: T): void {
+        const context = this.context;
         if (
             event.defaultPrevented ||
             event.altKey ||
@@ -49,7 +78,7 @@ export class KeyboardReorder<T> {
         if (pickup && event.repeat) {
             return;
         }
-        const items = this.getItems();
+        const items = context.getItems();
         if (this.originalOrder) {
             if (
                 items.length !== this.expectedOrder?.length ||
@@ -57,7 +86,7 @@ export class KeyboardReorder<T> {
                     (value, index) => value !== this.expectedOrder?.[index]
                 ) ||
                 this.activeItem === undefined ||
-                this.isDisabled(this.activeItem)
+                context.isDisabled(this.activeItem)
             ) {
                 this.cancel();
                 return;
@@ -85,12 +114,16 @@ export class KeyboardReorder<T> {
                     return;
                 }
                 this.applyMove(from, to);
-                this.expectedOrder = [...this.getItems()];
+                this.expectedOrder = [...context.getItems()];
                 this.announcement = $localize`Item moved to position ${
                     to + 1
                 } of ${items.length}.`;
             }
-        } else if (pickup && items.includes(item) && !this.isDisabled(item)) {
+        } else if (
+            pickup &&
+            items.includes(item) &&
+            !context.isDisabled(item)
+        ) {
             this.activeItem = item;
             this.originalOrder = [...items];
             this.expectedOrder = [...items];
@@ -100,26 +133,29 @@ export class KeyboardReorder<T> {
     }
 
     public finish(): void {
+        const context = this.context;
         if (this.originalOrder && !this.moving) {
             this.clear();
             this.announcement = $localize`Reordering finished.`;
-            this.notifyChange?.();
+            context.notifyChange?.();
         }
     }
 
     public cancel(): void {
+        const context = this.context;
         if (this.originalOrder) {
             this.clear();
             this.announcement = $localize`Reordering cancelled because the items changed or are no longer available.`;
-            this.notifyChange?.();
+            context.notifyChange?.();
         }
     }
 
     private applyMove(from: number, to: number): void {
+        const context = this.context;
         this.moving = true;
         try {
             if (from !== to) {
-                this.move(from, to);
+                context.move(from, to);
             }
             this.handle?.focus({ preventScroll: true });
             this.handle?.scrollIntoView({
