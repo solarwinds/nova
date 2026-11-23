@@ -4,6 +4,8 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | Escape closes a menu inside a dialog without also dismissing the dialog.
+
 ## [20.0.14] 📅 2026-11-20
 
 ### Fixes

@@ -55,6 +55,7 @@ export class MenuKeyControlService implements OnDestroy {
     private keyboardEventsSubscription: Subscription;
     private _scrollContainer: ElementRef;
     private pendingInitialActivation: "first" | "last" | null = null;
+    private suppressEscapeKeyup = false;
 
     public set scrollContainer(container: ElementRef) {
         this._scrollContainer = container;
@@ -110,9 +111,20 @@ export class MenuKeyControlService implements OnDestroy {
     }
 
     public handleKeydown(event: KeyboardEvent): void {
+        if (event.code === KEYBOARD_CODE.ESCAPE && !event.repeat) {
+            this.suppressEscapeKeyup = false;
+        }
         this.popup.isOpen
             ? this.handleOpenKeyDown(event)
             : this.handleClosedKeyDown(event);
+    }
+
+    /** Prevent the Escape release on the refocused toggle from closing a parent overlay. */
+    public handleToggleKeyup(event: KeyboardEvent): void {
+        if (event.code === KEYBOARD_CODE.ESCAPE && this.suppressEscapeKeyup) {
+            this.suppressEscapeKeyup = false;
+            event.preventDefault();
+        }
     }
 
     public setActiveItem(index: number): void {
@@ -265,6 +277,10 @@ export class MenuKeyControlService implements OnDestroy {
             event.code === KEYBOARD_CODE.TAB ||
             event.code === KEYBOARD_CODE.ESCAPE
         ) {
+            if (event.code === KEYBOARD_CODE.ESCAPE) {
+                event.preventDefault();
+                this.suppressEscapeKeyup = true;
+            }
             this.popup.toggleOpened(event);
             this.menuToggle.nativeElement.focus();
         }

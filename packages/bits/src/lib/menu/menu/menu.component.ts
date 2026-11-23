@@ -190,6 +190,12 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
                 handleKeydown
             ),
             this.renderer.listen(
+                this.menuToggle.nativeElement,
+                "keyup",
+                (event: KeyboardEvent) =>
+                    this.keyControlService.handleToggleKeyup(event)
+            ),
+            this.renderer.listen(
                 this.menuContent.nativeElement,
                 "keydown",
                 handleKeydown
