@@ -17,7 +17,9 @@ test.describe("a11y: checkbox", () => {
         page,
     }) => {
         await Helpers.prepareBrowser("checkbox/checkbox-test", page);
-        const checkbox = page.locator("#nui-demo-checkbox label");
+        const checkbox = page.locator(
+            "#nui-demo-checkbox input[type=checkbox]"
+        );
         await expect(checkbox).toHaveRole("checkbox");
         await expect(checkbox).toHaveAccessibleName("Checkbox with help text");
         await expect(checkbox).toHaveAccessibleDescription(
@@ -29,7 +31,9 @@ test.describe("a11y: checkbox", () => {
         await checkbox.press("Space");
         await expect(checkbox).toHaveAttribute("aria-checked", "true");
 
-        const mixed = page.locator("#nui-demo-checkbox-indeterminate label");
+        const mixed = page.locator(
+            "#nui-demo-checkbox-indeterminate input[type=checkbox]"
+        );
         await expect(mixed).toHaveRole("checkbox");
         await expect(mixed).toHaveAttribute("aria-checked", "mixed");
     });

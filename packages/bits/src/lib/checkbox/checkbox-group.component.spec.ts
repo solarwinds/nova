@@ -28,6 +28,14 @@ class CheckboxGroupFormHost {
     public labelledby = "";
 }
 
+async function waitForFieldUpdate<T>(
+    fixture: ComponentFixture<T>
+): Promise<void> {
+    await fixture.whenStable();
+    await new Promise<void>(resolve => setTimeout(resolve));
+    await fixture.whenStable();
+}
+
 describe("components > checkbox-group > naming relationships", () => {
     let fixture: ComponentFixture<CheckboxGroupComponent>;
     let host: HTMLElement;
@@ -88,28 +96,28 @@ describe("checkbox-group inside a form field", () => {
         });
         const fixture = TestBed.createComponent(CheckboxGroupFormHost);
         fixture.autoDetectChanges();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         const group = fixture.nativeElement.querySelector(
             "nui-checkbox-group"
         ) as HTMLElement;
 
         expect(group.getAttribute("aria-label")).toBe("Vegetables");
         fixture.nativeElement.querySelector("[data-test=name]").click();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         expect(group.getAttribute("aria-label")).toBe("Vegetables available");
 
         fixture.nativeElement.querySelector("[data-test=caption]").click();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         expect(group.getAttribute("aria-label")).toBe(
             "Vegetables to buy this week"
         );
 
         fixture.nativeElement.querySelector("[data-test=reference]").click();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         expect(group.getAttribute("aria-labelledby")).toBe("external-heading");
 
         fixture.nativeElement.querySelector("[data-test=clear]").click();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         expect(group.getAttribute("aria-label")).toBe("Vegetables to buy");
         expect(group.hasAttribute("aria-labelledby")).toBeFalse();
     });

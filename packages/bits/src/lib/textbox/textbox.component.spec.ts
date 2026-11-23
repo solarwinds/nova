@@ -106,7 +106,7 @@ class OnPushTextboxFormComponent {
 @Component({
     template: `
         <div [formGroup]="form">
-            <ng-container *ngIf="showPasswords">
+            @if (showPasswords) {
                 <nui-form-field caption="Password / Key" [control]="form.controls.authentication">
                     <nui-textbox
                         type="password"
@@ -121,7 +121,7 @@ class OnPushTextboxFormComponent {
                         ariaDescribedby="privacy-description"></nui-textbox>
                     <span id="privacy-description">Privacy guidance</span>
                 </nui-form-field>
-            </ng-container>
+            }
         </div>
         <button data-test="show" (click)="showPasswords = true">Show</button>
     `,
@@ -138,6 +138,14 @@ class OnPushPasswordFieldsComponent {
     constructor(private fb: FormBuilder) {}
 }
 
+async function waitForFieldUpdate<T>(
+    fixture: ComponentFixture<T>
+): Promise<void> {
+    await fixture.whenStable();
+    await new Promise<void>(resolve => setTimeout(resolve));
+    await fixture.whenStable();
+}
+
 describe("form fields in an OnPush host", () => {
     it("associates both conditionally rendered password captions with their own inputs", async () => {
         TestBed.configureTestingModule({
@@ -151,10 +159,10 @@ describe("form fields in an OnPush host", () => {
         });
         const fixture = TestBed.createComponent(OnPushPasswordFieldsComponent);
         fixture.autoDetectChanges();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         const host: HTMLElement = fixture.nativeElement;
         host.querySelector<HTMLButtonElement>("[data-test=show]")?.click();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
 
         const fields = host.querySelectorAll("nui-form-field");
         expect(fields.length).toBe(2);
@@ -185,7 +193,7 @@ describe("form fields in an OnPush host", () => {
         });
         const fixture = TestBed.createComponent(OnPushTextboxFormComponent);
         fixture.autoDetectChanges();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
 
         const host: HTMLElement = fixture.nativeElement;
         const fields = host.querySelectorAll("nui-form-field");
@@ -212,12 +220,12 @@ describe("form fields in an OnPush host", () => {
         });
         const fixture = TestBed.createComponent(OnPushTextboxFormComponent);
         fixture.autoDetectChanges();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
 
         const host: HTMLElement = fixture.nativeElement;
         const input = host.querySelector<HTMLInputElement>("nui-textbox input");
         host.querySelector<HTMLButtonElement>("[data-test=update]")?.click();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
 
         expect(input?.getAttribute("aria-label")).toBe("Secret");
         expect(
@@ -235,7 +243,7 @@ describe("form fields in an OnPush host", () => {
         );
 
         host.querySelector<HTMLButtonElement>("[data-test=clear]")?.click();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
 
         expect(input?.getAttribute("aria-label")).toBe("Textbox input");
         expect(
@@ -250,19 +258,19 @@ describe("form fields in an OnPush host", () => {
         });
         const fixture = TestBed.createComponent(OnPushTextboxFormComponent);
         fixture.autoDetectChanges();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         const input = fixture.nativeElement.querySelector(
             "nui-textbox-number input"
         ) as HTMLInputElement;
 
         fixture.nativeElement.querySelector("[data-test=number-name]").click();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         expect(input.getAttribute("aria-label")).toBe("Count of retries");
 
         fixture.nativeElement
             .querySelector("[data-test=clear-number-name]")
             .click();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         expect(input.getAttribute("aria-label")).toBe("Count");
     });
 });
@@ -384,7 +392,7 @@ describe("components >", () => {
                 testComponent.hint = "Choose a recognizable title";
                 fixture.autoDetectChanges();
                 await new Promise<void>(resolve => setTimeout(resolve));
-                await fixture.whenStable();
+                await waitForFieldUpdate(fixture);
 
                 const textbox = testComponent.input.textboxInput.nativeElement;
                 const help = fixture.nativeElement.querySelector(
@@ -398,9 +406,9 @@ describe("components >", () => {
                 testComponent.caption = "Dashboard display name";
                 testComponent.hint = "";
                 fixture.changeDetectorRef.markForCheck();
-                await fixture.whenStable();
+                await waitForFieldUpdate(fixture);
                 await new Promise<void>(resolve => setTimeout(resolve));
-                await fixture.whenStable();
+                await waitForFieldUpdate(fixture);
 
                 expect(textbox.getAttribute("aria-label")).toBe(
                     "Dashboard display name"

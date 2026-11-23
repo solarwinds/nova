@@ -65,9 +65,13 @@ describe("switch in a form field", () => {
             imports: [NuiFormFieldModule],
         });
         const fixture = TestBed.createComponent(SwitchFormFieldHostComponent);
-        fixture.detectChanges();
+        const detect = () => {
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+        };
+        detect();
         tick();
-        fixture.detectChanges();
+        detect();
 
         const bar = fixture.nativeElement.querySelector(
             ".nui-switch__bar"
@@ -84,18 +88,18 @@ describe("switch in a form field", () => {
         );
 
         fixture.componentInstance.content = "";
-        fixture.detectChanges();
+        detect();
         expect(bar.getAttribute("aria-labelledby")).toBe(caption.id);
 
         fixture.componentInstance.caption = "";
-        fixture.detectChanges();
+        detect();
         tick();
-        fixture.detectChanges();
+        detect();
         expect(bar.getAttribute("aria-labelledby")).toBeNull();
         expect(bar.getAttribute("aria-label")).toBe("Switch");
 
         fixture.componentInstance.content = "Email alerts";
-        fixture.detectChanges();
+        detect();
         expect(bar.getAttribute("aria-label")).toBeNull();
         expect(bar.getAttribute("aria-labelledby")).toBe(label.id);
     }));
@@ -106,10 +110,14 @@ describe("switch in a form field", () => {
             imports: [NuiFormFieldModule],
         });
         const fixture = TestBed.createComponent(SwitchFormFieldHostComponent);
+        const detect = () => {
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+        };
         fixture.componentInstance.label = "Notifications Email alerts by email";
-        fixture.detectChanges();
+        detect();
         tick();
-        fixture.detectChanges();
+        detect();
 
         const bar = fixture.nativeElement.querySelector(
             ".nui-switch__bar"
@@ -126,7 +134,7 @@ describe("switch in a form field", () => {
         expect(bar.getAttribute("aria-labelledby")).toBeNull();
 
         fixture.componentInstance.label = "";
-        fixture.detectChanges();
+        detect();
         expect(bar.getAttribute("aria-label")).toBeNull();
         expect(bar.getAttribute("aria-labelledby")).toBe(
             `${caption.id} ${label.id}`
@@ -134,9 +142,9 @@ describe("switch in a form field", () => {
 
         fixture.componentInstance.label = "Notifications Email alerts custom";
         fixture.componentInstance.caption = "";
-        fixture.detectChanges();
+        detect();
         tick();
-        fixture.detectChanges();
+        detect();
         expect(bar.getAttribute("aria-label")).toBe(
             "Notifications Email alerts custom"
         );

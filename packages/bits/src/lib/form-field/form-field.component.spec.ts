@@ -19,7 +19,7 @@
 //  THE SOFTWARE.
 
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Subject } from "rxjs";
 
@@ -120,6 +120,14 @@ class OnPushFormFieldIdsHostComponent {
     public colors: string[] = [];
 }
 
+async function waitForFieldUpdate<T>(
+    fixture: ComponentFixture<T>
+): Promise<void> {
+    await fixture.whenStable();
+    await new Promise<void>(resolve => setTimeout(resolve));
+    await fixture.whenStable();
+}
+
 describe("form-field labels in an OnPush host", () => {
     it("renders checkbox and color-picker IDs with explicit caption names", async () => {
         TestBed.configureTestingModule({
@@ -135,7 +143,7 @@ describe("form-field labels in an OnPush host", () => {
             OnPushFormFieldIdsHostComponent
         );
         fixture.autoDetectChanges();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         const fields = (fixture.nativeElement as HTMLElement).querySelectorAll(
             "nui-form-field"
         );
@@ -149,7 +157,7 @@ describe("form-field labels in an OnPush host", () => {
         expect(checkboxCaption?.control).toBe(checkboxInput);
         expect(
             fields[0]
-                .querySelector(".nui-checkbox__label")
+                .querySelector(".nui-checkbox__input")
                 ?.getAttribute("aria-label")
         ).toBe("Notifications");
         const colorControl = fields[1].querySelector<HTMLElement>(
@@ -186,7 +194,7 @@ describe("form-field control name precedence", () => {
             FormFieldControlNamesHostComponent
         );
         fixture.autoDetectChanges();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         const host: HTMLElement = fixture.nativeElement;
         const selectors = [
             "#select button.menu-button",
@@ -224,13 +232,13 @@ describe("form-field control name precedence", () => {
 
         expectNames("Filter");
         host.querySelector<HTMLButtonElement>("[data-test=override]")?.click();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         expectNames("Filter details");
         host.querySelector<HTMLButtonElement>("[data-test=caption]")?.click();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         expectNames("Updated filter details");
         host.querySelector<HTMLButtonElement>("[data-test=clear]")?.click();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         expectNames("Updated filter");
     });
 });
@@ -246,11 +254,11 @@ describe("form field with a checkbox in an OnPush host", () => {
     it("keeps the caption and checkbox text associated when the caption changes", async () => {
         const fixture = TestBed.createComponent(OnPushFormFieldHostComponent);
         fixture.autoDetectChanges();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
 
         const host: HTMLElement = fixture.nativeElement;
         const checkbox = host.querySelector<HTMLElement>(
-            ".nui-checkbox__label"
+            ".nui-checkbox__input"
         );
         const caption = host.querySelector<HTMLElement>(
             ".nui-form-field__control-label"
@@ -266,14 +274,14 @@ describe("form field with a checkbox in an OnPush host", () => {
         expect(projectedText?.textContent?.trim()).toBe("Email alerts");
 
         host.querySelector<HTMLButtonElement>("[data-test=update]")?.click();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         expect(caption?.textContent?.trim()).toBe("Delivery");
         expect(checkbox?.getAttribute("aria-labelledby")).toBe(
             `${caption?.id} ${projectedText?.id}`
         );
 
         host.querySelector<HTMLButtonElement>("[data-test=clear]")?.click();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         expect(host.querySelector(".nui-form-field__control-label")).toBeNull();
         expect(checkbox?.getAttribute("aria-labelledby")).toBe(
             projectedText?.id
@@ -283,11 +291,11 @@ describe("form field with a checkbox in an OnPush host", () => {
     it("removes the field hint without removing a caller description", async () => {
         const fixture = TestBed.createComponent(OnPushFormFieldHostComponent);
         fixture.autoDetectChanges();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
 
         const host: HTMLElement = fixture.nativeElement;
         const checkbox = host.querySelector<HTMLElement>(
-            ".nui-checkbox__label"
+            ".nui-checkbox__input"
         );
         const help = host.querySelector<HTMLElement>(".nui-form-field__help");
         expect(help?.textContent).toContain("Choose how to receive alerts");
@@ -296,7 +304,7 @@ describe("form field with a checkbox in an OnPush host", () => {
         );
 
         host.querySelector<HTMLButtonElement>("[data-test=update]")?.click();
-        await fixture.whenStable();
+        await waitForFieldUpdate(fixture);
         expect(checkbox?.getAttribute("aria-describedby")).toBe(
             "external-description"
         );
