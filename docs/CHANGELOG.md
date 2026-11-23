@@ -4,6 +4,8 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | Improve checkbox and switch accessible names, checkbox descriptions and states, and form-field updates in OnPush hosts. Explicit accessible names now take precedence over form-field captions.
+- `@nova-ui/bits` | Keep selections independent across radio groups without an explicit name.
 - `@nova-ui/bits` | Respect the toast `maxOpened` limit for synchronously created notifications, preserve queued toasts when another queued toast is removed, and cancel activation of removed toasts. Clearing notifications skips closing queue entries and cancels pending fade-in callbacks, so dismissed toasts are not shown again.
 - `@nova-ui/bits` | Render the open popup state before emitting `opened`, so keyboard-opened menus can receive focus immediately. Initialize menu keyboard selection synchronously to avoid resetting subsequent navigation. Keep adapter popup content visible and correctly positioned when deprecated popup styles are also loaded.
 - `@nova-ui/bits` | Fixed SelectV2 and ComboboxV2 Playwright atoms to target their own popup by trigger ID, preventing strict-mode failures when multiple overlays coexist. Added paginator regression coverage.
