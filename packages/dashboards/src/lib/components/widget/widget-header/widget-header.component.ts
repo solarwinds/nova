@@ -208,8 +208,14 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         this.onDestroy$.complete();
     }
 
-    public removeWidget(): void {
-        this.eventBus.getStream(WIDGET_REMOVE).next({});
+    public removeWidget(event?: MouseEvent | KeyboardEvent): void {
+        this.eventBus
+            .getStream(WIDGET_REMOVE)
+            .next(
+                event instanceof KeyboardEvent
+                    ? { payload: { focusOrigin: "keyboard" } }
+                    : {}
+            );
     }
 
     @HostListener("document:focusin", ["$event"])

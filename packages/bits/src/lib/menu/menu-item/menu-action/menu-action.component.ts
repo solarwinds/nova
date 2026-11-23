@@ -22,9 +22,11 @@ import {
     ChangeDetectorRef,
     Component,
     ElementRef,
+    EventEmitter,
     forwardRef,
     Input,
     Optional,
+    Output,
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
@@ -83,6 +85,11 @@ export class MenuActionComponent extends MenuItemBaseComponent {
 
     @Input() public type: MenuActionType;
 
+    /** The input event that activated this enabled action. */
+    @Output() public readonly activated = new EventEmitter<
+        MouseEvent | KeyboardEvent
+    >();
+
     @ViewChild("menuAction") menuItem: ElementRef;
 
     constructor(
@@ -94,11 +101,12 @@ export class MenuActionComponent extends MenuItemBaseComponent {
         this.disabled = false;
     }
 
-    public handleClick(event: MouseEvent): void {
+    public handleClick(event: MouseEvent | KeyboardEvent): void {
         event.preventDefault();
         if (this.disabled) {
             event.stopPropagation();
         } else {
+            this.activated.emit(event);
             this.actionDone.emit();
         }
     }

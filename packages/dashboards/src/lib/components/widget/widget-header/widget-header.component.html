@@ -157,7 +157,7 @@
                     *ngIf="removable && editMode">
                     <nui-menu-action
                         type="destructive"
-                        (actionDone)="removeWidget()"
+                        (activated)="removeWidget($event)"
                         i18n
                         >Remove Widget</nui-menu-action
                     >

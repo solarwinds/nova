@@ -4,12 +4,12 @@
 
 ### Fixes
 
-- `@nova-ui/bits` | Escape closes a menu inside a dialog without also dismissing the dialog.
-
-## [20.0.14] 📅 2026-11-20
+## [20.0.14] 📅 2026-11-24
 
 ### Fixes
 
+- `@nova-ui/bits` | Escape closes a menu inside a dialog without also dismissing the dialog.
+- `@nova-ui/dashboards` | After removing a widget by keyboard, focus moves to a nearby dashboard control.
 - `@nova-ui/bits` | A11y fixes for nui-radio: visible keyboard focus, explicit label association, hints exposed as descriptions and accessible names for radio group examples
 - `@nova-ui/bits` | Corrected menu keyboard focus and active-descendant semantics, respected handled keyboard events, and kept menu switches out of the tab order.
 - `@nova-ui/bits` | Preserved popup adapter visibility when deprecated popup styles are loaded and rendered popup content before notifying open listeners.

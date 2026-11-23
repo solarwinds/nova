@@ -11,6 +11,34 @@ test.describe("Remove widget menu", () => {
         }
     });
 
+    test("should restore keyboard focus to the adjacent widget after removal", async ({
+        page,
+    }) => {
+        const triggers = page.locator(
+            ".nui-widget-header__action-remove button"
+        );
+        await expect.poll(async () => triggers.count()).toBeGreaterThan(1);
+        const trigger = triggers.first();
+        const nextId = await triggers.nth(1).getAttribute("id");
+        expect(nextId).toBeTruthy();
+        const nextTrigger = page.locator(`#${nextId}`);
+        const widget = trigger.locator("xpath=ancestor::nui-widget");
+        const originalWidget = await widget.elementHandle();
+
+        await trigger.focus();
+        await page.keyboard.press("Enter");
+        await expect(trigger).toHaveAttribute("aria-expanded", "true");
+        await page.keyboard.press("Enter");
+
+        await expect
+            .poll(async () =>
+                originalWidget!.evaluate(element => element.isConnected)
+            )
+            .toBe(false);
+        await expect(nextTrigger).toBeFocused();
+        await originalWidget!.dispose();
+    });
+
     for (const key of ["Enter", "Space", "ArrowDown"]) {
         test(`should open with ${key} and remove only after confirmation`, async ({
             page,
@@ -108,6 +136,9 @@ test.describe("Remove widget menu", () => {
         await expect(action).toHaveCount(0);
         const widget = trigger.locator("xpath=ancestor::nui-widget");
         const originalWidget = await widget.elementHandle();
+        const nextTrigger = page
+            .locator(".nui-widget-header__action-remove button")
+            .first();
         await trigger.click();
         await action.click();
         await expect
@@ -115,6 +146,7 @@ test.describe("Remove widget menu", () => {
                 originalWidget!.evaluate(element => element.isConnected)
             )
             .toBe(false);
+        await expect(nextTrigger).not.toBeFocused();
         await originalWidget!.dispose();
     });
 });
