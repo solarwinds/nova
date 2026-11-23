@@ -20,11 +20,21 @@
 
 import { OverlayModule } from "@angular/cdk/overlay";
 import { ChangeDetectorRef, SimpleChange, SimpleChanges } from "@angular/core";
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flush,
+    TestBed,
+    tick,
+    waitForAsync,
+} from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
 import noop from "lodash/noop";
 
 import { PaginatorComponent } from "./paginator.component";
+import { NuiPaginatorModule } from "./paginator.module";
 import { LoggerService } from "../../services/log-service";
+import { PopupComponent } from "../popup-adapter/popup-adapter.component";
 
 describe("components >", () => {
     describe("paginator >", () => {
@@ -108,5 +118,298 @@ describe("components >", () => {
             subject.ngOnInit();
             expect(subject.pageSizeSet).toEqual([5, 15, 25, 50, 170]);
         });
+    });
+
+    describe("paginator focus >", () => {
+        let subject: PaginatorComponent;
+        let fixture: ComponentFixture<PaginatorComponent>;
+        let host: HTMLElement;
+
+        const render = (pageCount: number, page: number): void => {
+            subject.pageSize = 10;
+            subject.total = pageCount * 10;
+            subject.page = page;
+            subject.ngOnChanges({ page: new SimpleChange(1, page, true) });
+        };
+        const button = (
+            selector: string,
+            root: HTMLElement = host
+        ): HTMLButtonElement =>
+            root.querySelector<HTMLButtonElement>(
+                selector
+            ) as HTMLButtonElement;
+        const byLabel = (label: string): HTMLButtonElement =>
+            button(`button[aria-label="${label}"]`);
+        const activeElement = (): Element | null => document.activeElement;
+        const popupComponent = (): PopupComponent =>
+            fixture.debugElement.query(By.directive(PopupComponent))
+                .componentInstance;
+        const openPopup = (): HTMLElement => {
+            button(".nui-paginator__dots").click();
+            TestBed.tick();
+            return popupComponent().popup.getOverlayRef().overlayElement;
+        };
+        const keydown = (target: HTMLElement, init: KeyboardEventInit) => {
+            const event = new KeyboardEvent("keydown", {
+                bubbles: true,
+                cancelable: true,
+                ...init,
+            });
+            target.dispatchEvent(event);
+            return event;
+        };
+
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [NuiPaginatorModule],
+            });
+            fixture = TestBed.createComponent(PaginatorComponent);
+            subject = fixture.componentInstance;
+            host = fixture.nativeElement;
+        });
+
+        it("should keep focus on the activated page and Next buttons while they stay enabled", () => {
+            render(5, 1);
+            byLabel("Page 3").focus();
+
+            byLabel("Page 3").click();
+
+            expect(subject.page).toBe(3);
+            expect(activeElement()).toBe(byLabel("Page 3"));
+
+            byLabel("Next Page").focus();
+            byLabel("Next Page").click();
+
+            expect(subject.page).toBe(4);
+            expect(activeElement()).toBe(byLabel("Next Page"));
+        });
+
+        it("should move focus to the current page when Next becomes disabled", () => {
+            render(5, 4);
+            byLabel("Next Page").focus();
+
+            byLabel("Next Page").click();
+            TestBed.tick();
+
+            expect(subject.page).toBe(5);
+            expect(byLabel("Next Page").disabled).toBeTrue();
+            expect(activeElement()).toBe(button("button[aria-current=page]"));
+        });
+
+        it("should move focus to the current page when Previous becomes disabled", () => {
+            render(5, 2);
+            byLabel("Previous Page").focus();
+
+            byLabel("Previous Page").click();
+            TestBed.tick();
+
+            expect(subject.page).toBe(1);
+            expect(byLabel("Previous Page").disabled).toBeTrue();
+            expect(activeElement()).toBe(button("button[aria-current=page]"));
+        });
+
+        it("should not take focus when it was outside the paginator", () => {
+            render(5, 1);
+            const outside = document.createElement("button");
+            document.body.appendChild(outside);
+            outside.focus();
+
+            subject.goToPage(3);
+            TestBed.tick();
+
+            expect(activeElement()).toBe(outside);
+            outside.remove();
+        });
+
+        it("should move focus to the current page when the parent changes the page and Next becomes disabled", () => {
+            render(5, 4);
+            byLabel("Next Page").focus();
+
+            render(5, 5);
+            TestBed.tick();
+
+            expect(byLabel("Next Page").disabled).toBeTrue();
+            expect(activeElement()).toBe(button("button[aria-current=page]"));
+        });
+
+        [false, true].forEach(appendToBody => {
+            [40, 1100].forEach(pageCount => {
+                it(`should restore focus after popup selection with appendToBody=${appendToBody} and ${pageCount} pages`, fakeAsync(() => {
+                    subject.appendToBody = appendToBody;
+                    render(pageCount, 1);
+                    const popupRoot = openPopup();
+                    // Allow the virtual viewport's animation-frame render to finish.
+                    tick(20);
+                    fixture.detectChanges();
+                    const popupButton = button(
+                        `button[aria-label="Go to page 20"]`,
+                        popupRoot
+                    );
+                    popupButton.focus();
+                    expect(activeElement()).toBe(popupButton);
+                    expect(host.contains(popupButton)).toBe(!appendToBody);
+
+                    popupButton.click();
+                    TestBed.tick();
+
+                    expect(subject.page).toBe(20);
+                    expect(popupButton.isConnected).toBeFalse();
+                    expect(activeElement()).toBe(
+                        button("button[aria-current=page]")
+                    );
+                }));
+            });
+        });
+
+        [false, true].forEach(appendToBody => {
+            describe(`popup keyboard with appendToBody=${appendToBody} >`, () => {
+                let outside: HTMLButtonElement;
+
+                const open = (): HTMLElement => {
+                    subject.appendToBody = appendToBody;
+                    render(40, 1);
+                    const popupRoot = openPopup();
+                    tick(20);
+                    fixture.detectChanges();
+                    return popupRoot;
+                };
+
+                beforeEach(() => {
+                    outside = document.createElement("button");
+                    document.body.appendChild(outside);
+                });
+
+                afterEach(() => outside.remove());
+
+                it("should close the popup on Escape and return focus to the trigger", fakeAsync(() => {
+                    const popupRoot = open();
+                    const trigger = button(".nui-paginator__dots");
+                    button(
+                        `button[aria-label="Go to page 7"]`,
+                        popupRoot
+                    ).focus();
+
+                    const event = keydown(activeElement() as HTMLElement, {
+                        key: "Escape",
+                        code: "Escape",
+                    });
+                    tick();
+
+                    expect(event.defaultPrevented).toBeTrue();
+                    expect(popupComponent().isOpen).toBeFalse();
+                    expect(activeElement()).toBe(trigger);
+                }));
+
+                it("should close the popup on Escape pressed on the trigger", fakeAsync(() => {
+                    open();
+                    const trigger = button(".nui-paginator__dots");
+                    trigger.focus();
+
+                    keydown(trigger, { key: "Escape", code: "Escape" });
+                    tick();
+
+                    expect(popupComponent().isOpen).toBeFalse();
+                    expect(activeElement()).toBe(trigger);
+                }));
+
+                it("should close the popup when focus moves outside of it", fakeAsync(() => {
+                    const popupRoot = open();
+                    button(
+                        `button[aria-label="Go to page 7"]`,
+                        popupRoot
+                    ).focus();
+
+                    outside.focus();
+                    tick();
+
+                    expect(popupComponent().isOpen).toBeFalse();
+                    expect(activeElement()).toBe(outside);
+                }));
+
+                it("should keep the popup open while focus moves between the trigger and its pages", fakeAsync(() => {
+                    const popupRoot = open();
+
+                    button(".nui-paginator__dots").focus();
+                    button(
+                        `button[aria-label="Go to page 7"]`,
+                        popupRoot
+                    ).focus();
+                    tick();
+
+                    expect(popupComponent().isOpen).toBeTrue();
+                }));
+
+                it("should move focus from the trigger straight into the popup on Tab", fakeAsync(() => {
+                    const popupRoot = open();
+                    const trigger = button(".nui-paginator__dots");
+                    trigger.focus();
+
+                    const event = keydown(trigger, { key: "Tab", code: "Tab" });
+
+                    expect(event.defaultPrevented).toBeTrue();
+                    expect(activeElement()).toBe(
+                        button(`button[aria-label="Go to page 6"]`, popupRoot)
+                    );
+                }));
+
+                it("should return focus to the trigger and close the popup when tabbing past its last page", fakeAsync(() => {
+                    const popupRoot = open();
+                    const pages = popupRoot.querySelectorAll("button");
+                    (pages[pages.length - 1] as HTMLElement).focus();
+
+                    keydown(activeElement() as HTMLElement, {
+                        key: "Tab",
+                        code: "Tab",
+                    });
+                    tick();
+
+                    expect(activeElement()).toBe(
+                        button(".nui-paginator__dots")
+                    );
+                    expect(popupComponent().isOpen).toBeFalse();
+                }));
+
+                it("should return focus to the trigger when Shift+Tab is pressed on the first page", fakeAsync(() => {
+                    const popupRoot = open();
+                    (popupRoot.querySelector("button") as HTMLElement).focus();
+
+                    const event = keydown(activeElement() as HTMLElement, {
+                        key: "Tab",
+                        code: "Tab",
+                        shiftKey: true,
+                    });
+                    tick();
+
+                    expect(event.defaultPrevented).toBeTrue();
+                    expect(activeElement()).toBe(
+                        button(".nui-paginator__dots")
+                    );
+                    expect(popupComponent().isOpen).toBeFalse();
+                }));
+            });
+        });
+
+        it("should preserve focus moved outside after body-appended popup selection", fakeAsync(() => {
+            subject.appendToBody = true;
+            render(40, 1);
+            const popupButton = button(
+                `button[aria-label="Go to page 20"]`,
+                openPopup()
+            );
+            const outside = document.createElement("button");
+            document.body.appendChild(outside);
+            try {
+                popupButton.focus();
+                popupButton.click();
+                outside.focus();
+                TestBed.tick();
+
+                expect(subject.page).toBe(20);
+                expect(activeElement()).toBe(outside);
+            } finally {
+                outside.remove();
+                flush();
+            }
+        }));
     });
 });

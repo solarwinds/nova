@@ -7,7 +7,7 @@
             <li
                 title="{{ item.title }}"
                 [ngClass]="item.style"
-                *ngFor="let item of itemsList"
+                *ngFor="let item of itemsList; trackBy: trackItem"
                 value="{{ item.value }}">
                 <button
                     nui-button
@@ -33,6 +33,7 @@
                     {{ item.value }}
                 </button>
                 <nui-popup
+                    #popup
                     *ngIf="item.value === dots"
                     [appendToBody]="appendToBody"
                     [baseElementSelector]="popupBaseElementSelector">
@@ -46,11 +47,18 @@
                         [isEmpty]="false"
                         [role]="'menu'"
                         (click)="handleDotsClick()"
+                        (keydown)="onDotsKeydown($event, popup)"
+                        (focusout)="onPopupFocusOut($event, popup)"
                         class="nui-paginator__dots">
                         {{ item.value }}
                     </button>
 
-                    <ul popupAreaContent class="nui-paginator__elipsis-pages">
+                    <ul
+                        #popupPages
+                        popupAreaContent
+                        (keydown)="onPopupKeydown($event, popup)"
+                        (focusout)="onPopupFocusOut($event, popup)"
+                        class="nui-paginator__elipsis-pages">
                         <li>
                             <table
                                 class="nui-paginator__page-table"
