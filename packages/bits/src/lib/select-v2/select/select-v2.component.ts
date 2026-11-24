@@ -89,6 +89,7 @@ export class SelectV2Component
     public displayText: string;
 
     private readonly document = inject(DOCUMENT);
+    private popupMouseDownTarget: Node | null = null;
 
     constructor(
         elRef: ElementRef<HTMLElement>,
@@ -133,6 +134,16 @@ export class SelectV2Component
         super.ngAfterViewInit();
 
         this.dropdown.show$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+            this.document.addEventListener(
+                "mousedown",
+                this.onMouseDownInPopup,
+                true
+            );
+            this.document.addEventListener(
+                "mouseup",
+                this.clearPopupMouseDown,
+                true
+            );
             // Close before the next select opens and announces its options.
             this.document.addEventListener(
                 "focusin",
@@ -140,13 +151,9 @@ export class SelectV2Component
                 true
             );
         });
-        this.dropdown.hide$.pipe(takeUntil(this.destroy$)).subscribe(() => {
-            this.document.removeEventListener(
-                "focusin",
-                this.closeOnFocusOutside,
-                true
-            );
-        });
+        this.dropdown.hide$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => this.removeDropdownListeners());
     }
 
     /** Selects specific Option and set its value to the model */
@@ -180,16 +187,48 @@ export class SelectV2Component
      * This is a safe guard for preventing memory leaks in derived classes.
      */
     public ngOnDestroy(): void {
+        this.removeDropdownListeners();
+        super.ngOnDestroy();
+    }
+
+    private removeDropdownListeners(): void {
         this.document.removeEventListener(
             "focusin",
             this.closeOnFocusOutside,
             true
         );
-        super.ngOnDestroy();
+        this.document.removeEventListener(
+            "mousedown",
+            this.onMouseDownInPopup,
+            true
+        );
+        this.document.removeEventListener(
+            "mouseup",
+            this.clearPopupMouseDown,
+            true
+        );
+        this.clearPopupMouseDown();
     }
+
+    private readonly onMouseDownInPopup = (event: MouseEvent): void => {
+        const target = event.target;
+        this.popupMouseDownTarget =
+            !this.manualDropdownControl &&
+            event.button === 0 &&
+            target instanceof Node &&
+            this.dropdown.getOverlayRef()?.overlayElement.contains(target)
+                ? target
+                : null;
+    };
+
+    private readonly clearPopupMouseDown = (): void => {
+        this.popupMouseDownTarget = null;
+    };
 
     private readonly closeOnFocusOutside = (event: FocusEvent): void => {
         const target = event.target;
+        const popupMouseDownTarget = this.popupMouseDownTarget;
+        this.clearPopupMouseDown();
         if (
             this.manualDropdownControl ||
             !this.dropdown.showing ||
@@ -197,6 +236,11 @@ export class SelectV2Component
             this.elRef.nativeElement.contains(target) ||
             this.dropdown.getOverlayRef()?.overlayElement.contains(target)
         ) {
+            return;
+        }
+
+        // A popup press can focus its scrollable ancestor before the option's click.
+        if (popupMouseDownTarget && target.contains(popupMouseDownTarget)) {
             return;
         }
 
