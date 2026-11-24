@@ -199,6 +199,48 @@ test.describe("USERCONTROL Select V2 >", () => {
             });
         });
 
+        test.describe("programmatic focus", () => {
+            test("should close only when focus leaves the trigger and popup", async () => {
+                const selectInForm = Atom.find<SelectV2Atom>(
+                    SelectV2Atom,
+                    "reactive-form"
+                );
+                const reactiveTrigger = selectInForm.input;
+                const basicTrigger = selectBasic.input;
+
+                await reactiveTrigger.focus();
+                await selectInForm.toBeOpened();
+
+                const triggerId = await reactiveTrigger.getAttribute("id");
+                if (!triggerId) {
+                    throw new Error("Select trigger does not have an id");
+                }
+
+                const popup = Helpers.page.locator(
+                    `.nui-overlay[aria-labelledby="${triggerId}"]`
+                );
+                await popup.evaluate(element => {
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.id = "select-v2-popup-focus-target";
+                    element.append(button);
+                });
+
+                const popupButton = popup.locator(
+                    "#select-v2-popup-focus-target"
+                );
+                await popupButton.focus();
+                await expect(popupButton).toBeFocused();
+                await selectInForm.toBeOpened();
+
+                await basicTrigger.focus();
+                await selectInForm.toBeHidden();
+                await selectBasic.toBeOpened();
+                await expect(basicTrigger).toBeFocused();
+                await expect(selectInForm.input).toContainText("Select Item");
+            });
+        });
+
         test.describe("work with modals and overlays", () => {
             test("should remove overlay if select gets destroyed", async () => {
                 await buttonDialog.click();

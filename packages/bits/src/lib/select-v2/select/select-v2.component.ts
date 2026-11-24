@@ -19,13 +19,16 @@
 //  THE SOFTWARE.
 
 import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { DOCUMENT } from "@angular/common";
 import {
     AfterContentInit,
+    AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ElementRef,
     forwardRef,
+    inject,
     Input,
     OnChanges,
     OnDestroy,
@@ -77,13 +80,15 @@ import { OptionKeyControlService } from "../option-key-control.service";
 // Will be renamed in scope of the NUI-5797
 export class SelectV2Component
     extends BaseSelectV2
-    implements AfterContentInit, OnDestroy, OnChanges
+    implements AfterContentInit, AfterViewInit, OnDestroy, OnChanges
 {
     /** Sets a custom template for displaying it in the Option */
     @Input() public displayValueTemplate?: TemplateRef<any>;
 
     /** Value of the selected Option that derives in the Select */
     public displayText: string;
+
+    private readonly document = inject(DOCUMENT);
 
     constructor(
         elRef: ElementRef<HTMLElement>,
@@ -124,6 +129,26 @@ export class SelectV2Component
         });
     }
 
+    public override ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        this.dropdown.show$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+            // Close before the next select opens and announces its options.
+            this.document.addEventListener(
+                "focusin",
+                this.closeOnFocusOutside,
+                true
+            );
+        });
+        this.dropdown.hide$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+            this.document.removeEventListener(
+                "focusin",
+                this.closeOnFocusOutside,
+                true
+            );
+        });
+    }
+
     /** Selects specific Option and set its value to the model */
     public selectOption(option: SelectV2OptionComponent): void {
         if (option.outfiltered || option.isDisabled) {
@@ -155,8 +180,28 @@ export class SelectV2Component
      * This is a safe guard for preventing memory leaks in derived classes.
      */
     public ngOnDestroy(): void {
+        this.document.removeEventListener(
+            "focusin",
+            this.closeOnFocusOutside,
+            true
+        );
         super.ngOnDestroy();
     }
+
+    private readonly closeOnFocusOutside = (event: FocusEvent): void => {
+        const target = event.target;
+        if (
+            this.manualDropdownControl ||
+            !this.dropdown.showing ||
+            !(target instanceof Node) ||
+            this.elRef.nativeElement.contains(target) ||
+            this.dropdown.getOverlayRef()?.overlayElement.contains(target)
+        ) {
+            return;
+        }
+
+        this.hideDropdown();
+    };
 
     private defineDisplayText() {
         this.displayText = this.selectedOptions[0]?.viewValue || "";

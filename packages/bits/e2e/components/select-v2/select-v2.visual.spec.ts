@@ -20,7 +20,7 @@
 
 import { SelectV2Atom } from "./select-v2.atom";
 import { Atom } from "../../atom";
-import { test, Helpers, Animations } from "../../setup";
+import { test, expect, Helpers, Animations } from "../../setup";
 import { Camera } from "../../virtual-camera/Camera";
 
 const name: string = "Select-V2";
@@ -68,6 +68,9 @@ test.describe(`Visual tests: ${name}`, () => {
          * 4. Form field validation is triggered on focus out
          */
         await Helpers.pressKey("Tab", 3);
+        await expect(selectBasic.input).toBeFocused();
+        await selectBasic.toBeOpened();
+        await selectInForm.toBeHidden();
         await (await selectBasic.getOption(3)).hover();
         await camera.say.cheese(`State 1`);
 
