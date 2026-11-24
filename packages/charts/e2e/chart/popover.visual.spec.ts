@@ -28,6 +28,7 @@ import {
 
 import { ChartAtom } from "./atoms/chart.atom";
 import { SeriesAtom } from "./atoms/series.atom";
+import { waitForChartLayout } from "./visual-test-helpers";
 
 const name: string = "Popovers";
 
@@ -66,14 +67,23 @@ test.describe(`Visual Tests: Charts - ${name}`, () => {
 
     test(`${name} - Default look`, async ({ page }) => {
         await camera.turn.on();
+        await waitForChartLayout(page);
 
         const barSeries = await barChart.getDataSeriesById(
             SeriesAtom,
             "safari"
         );
-        if (barSeries) {
-            await barSeries.hover();
+        if (!barSeries) {
+            throw new Error(
+                "Safari series is missing from the popover fixture"
+            );
         }
+        await barSeries.hover();
+        const barPopover = page.locator(
+            `#${barPopoverHostId} nui-popover-modal`
+        );
+        await expect(barPopover).toBeVisible();
+        await expect(barPopover).toHaveText(/Safari:\s*14/);
         await camera.say.cheese(`${name} - Default look with bar hovered`);
 
         const donutSeries = await donutChart.getDataSeriesById(
@@ -84,9 +94,7 @@ test.describe(`Visual Tests: Charts - ${name}`, () => {
             await donutSeries.hover();
         }
         // Wait for previous popover to be gone before capturing.
-        await expect(
-            page.locator(`#${barPopoverHostId} nui-popover-modal`)
-        ).toHaveCount(0);
+        await expect(barPopover).toHaveCount(0);
         await camera.say.cheese(
             `${name} - Default look with donut series hovered`
         );
