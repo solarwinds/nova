@@ -314,11 +314,10 @@ test.describe("USERCONTROL form-field >", () => {
             );
         });
 
-        test("should be set for switch", async () => {
-            await expect(getAriaLabel(switchElement)).toHaveAttribute(
-                "aria-label",
-                "Switch"
-            );
+        test("should name the switch from its caption", async () => {
+            await expect(
+                switchElement.getLocator().getByRole("checkbox")
+            ).toHaveAccessibleName("Switch");
         });
 
         test("should be set for radio-group", async () => {
@@ -444,9 +443,9 @@ test.describe("USERCONTROL form-field >", () => {
     }) => {
         const field = page.locator("#nui-form-field-test-merged-description");
         const input = field.locator("input");
-        const helpId = await field
-            .locator(".nui-form-field__help")
-            .getAttribute("id");
+        const help = field.locator(".nui-form-field__help");
+        await expect(help).toHaveAttribute("id", /\S+/);
+        const helpId = await help.getAttribute("id");
         await expect(input).toHaveAccessibleDescription(
             "Use your work email. Provide a value."
         );

@@ -24,7 +24,12 @@ import {
     forwardRef,
     Input,
 } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Subject } from "rxjs";
@@ -134,7 +139,9 @@ class LegacyFormControlComponent {
         <span id="external-description">External instruction</span>
         <span id="other-description">Other instruction</span>
         <nui-form-field id="checkbox-field" caption="Checkbox" [hint]="hint">
-            <nui-checkbox *ngIf="showCheckbox" [ariaDescribedby]="description" hint="Checkbox hint">Checkbox</nui-checkbox>
+            @if (showCheckbox) {
+                <nui-checkbox [ariaDescribedby]="description" hint="Checkbox hint">Checkbox</nui-checkbox>
+            }
         </nui-form-field>
         <nui-form-field id="checkbox-group-field" caption="Checkbox group" [hint]="hint">
             <nui-checkbox-group [ariaDescribedby]="description"></nui-checkbox-group>
@@ -252,7 +259,7 @@ class FormFieldStaticIdsHostComponent {
 }
 
 describe("form-field control IDs", () => {
-    it("keeps host IDs unique and associates captions with native controls", async () => {
+    it("keeps host IDs unique and associates captions with native controls", fakeAsync(() => {
         TestBed.configureTestingModule({
             declarations: [FormFieldStaticIdsHostComponent, CheckboxComponent],
             imports: [NuiFormFieldModule, NuiTextboxModule],
@@ -260,8 +267,14 @@ describe("form-field control IDs", () => {
         const fixture = TestBed.createComponent(
             FormFieldStaticIdsHostComponent
         );
-        fixture.autoDetectChanges();
-        await waitForFieldUpdate(fixture);
+        const update = () => {
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+            tick();
+            fixture.changeDetectorRef.markForCheck();
+            fixture.detectChanges();
+        };
+        update();
         const root = fixture.nativeElement as HTMLElement;
 
         const assertAssociation = (
@@ -299,9 +312,7 @@ describe("form-field control IDs", () => {
         fixture.componentInstance.rows = 2;
         fixture.componentInstance.dynamicId = "changed";
         fixture.componentInstance.checkboxHostId = "other-host-id";
-        fixture.changeDetectorRef.markForCheck();
-        fixture.detectChanges();
-        await waitForFieldUpdate(fixture);
+        update();
         expect(assertAssociation("email").tagName).toBe("TEXTAREA");
         assertAssociation("changed");
         const dynamicCheckbox =
@@ -319,12 +330,10 @@ describe("form-field control IDs", () => {
             .closest("nui-form-field")!
             .querySelector<HTMLLabelElement>("label")!;
         fixture.componentInstance.dynamicId = `${dynamicTextboxCaption.id}-control`;
-        fixture.changeDetectorRef.markForCheck();
-        fixture.detectChanges();
-        await waitForFieldUpdate(fixture);
+        update();
         assertAssociation("bound-id");
         assertAssociation(fixture.componentInstance.dynamicId);
-    });
+    }));
 });
 
 describe("form-field labels in an OnPush host", () => {
@@ -443,7 +452,7 @@ describe("form-field control name precedence", () => {
 });
 
 describe("form-field descriptions", () => {
-    it("keeps consumer descriptions separate while field help changes across controls", async () => {
+    it("keeps consumer descriptions separate while field help changes across controls", fakeAsync(() => {
         TestBed.configureTestingModule({
             declarations: [
                 FormFieldDescriptionsHostComponent,
@@ -468,8 +477,11 @@ describe("form-field descriptions", () => {
         const fixture = TestBed.createComponent(
             FormFieldDescriptionsHostComponent
         );
-        fixture.autoDetectChanges();
-        await fixture.whenStable();
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
+        tick();
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
 
         const cases = [
             ["checkbox-field", "nui-checkbox", "input"],
@@ -529,22 +541,24 @@ describe("form-field descriptions", () => {
                 });
             }
         };
-        const update = async () => {
+        const update = () => {
             root.querySelector<HTMLButtonElement>(
                 "[data-test=detect]"
             )!.click();
+            fixture.changeDetectorRef.markForCheck();
             fixture.detectChanges();
-            await fixture.whenStable();
+            tick();
+            fixture.changeDetectorRef.markForCheck();
             fixture.detectChanges();
         };
 
         expectDescriptions("external-description", true);
         fixture.componentInstance.description =
             "other-description external-description other-description";
-        await update();
+        update();
         expectDescriptions(fixture.componentInstance.description, true);
         fixture.componentInstance.hint = "";
-        await update();
+        update();
         expectDescriptions(fixture.componentInstance.description, false);
         const checkboxInput = root.querySelector<HTMLInputElement>(
             "#checkbox-field input"
@@ -556,10 +570,10 @@ describe("form-field descriptions", () => {
             checkboxHint.id
         );
         fixture.componentInstance.description = "";
-        await update();
+        update();
         expectDescriptions("", false);
         fixture.componentInstance.hint = "New field instruction";
-        await update();
+        update();
         expectDescriptions("", true);
 
         const legacy = root.querySelector<HTMLInputElement>(
@@ -570,21 +584,21 @@ describe("form-field descriptions", () => {
         )!;
         expect(legacy.getAttribute("aria-describedby")).toBe(legacyHelp.id);
         fixture.componentInstance.description = "external-description";
-        await update();
+        update();
         expect(legacy.getAttribute("aria-describedby")).toBe(
             `external-description ${legacyHelp.id}`
         );
         fixture.componentInstance.hint = "";
-        await update();
+        update();
         expect(legacy.getAttribute("aria-describedby")).toBe(
             "external-description"
         );
 
         fixture.componentInstance.showCheckbox = false;
-        await update();
+        update();
         fixture.componentInstance.hint = "Restored instruction";
         fixture.componentInstance.showCheckbox = true;
-        await update();
+        update();
         expectDescriptions("external-description", true);
 
         const textbox = root.querySelector<HTMLInputElement>(
@@ -594,16 +608,16 @@ describe("form-field descriptions", () => {
             "#textbox-field .nui-form-field__help"
         )!.id;
         fixture.componentInstance.description = `${textboxHelpId} external-description ${textboxHelpId}`;
-        await update();
+        update();
         expect(textbox.getAttribute("aria-describedby")).toBe(
             `${textboxHelpId} external-description`
         );
         fixture.componentInstance.hint = "";
-        await update();
+        update();
         expect(textbox.getAttribute("aria-describedby")).toBe(
             fixture.componentInstance.description
         );
-    });
+    }));
 });
 
 describe("form field with a checkbox in an OnPush host", () => {
