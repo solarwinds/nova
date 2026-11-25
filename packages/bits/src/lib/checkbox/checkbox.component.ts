@@ -43,7 +43,9 @@ import {
     DOCUMENT_CLICK_EVENT,
 } from "../../constants/event.constants";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
+import { _uniqueId } from "../../functions/unique-id";
 import { EventBusService } from "../../services/event-bus.service";
+import { FormFieldDescription } from "../form-field/form-field-description";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
 @Component({
@@ -91,12 +93,12 @@ export class CheckboxComponent
      * Input to set aria label text
      */
     @Input() public get ariaLabel(): string {
-        return this._ariaLabel;
+        return this._ariaLabel ?? this.defaultAriaLabel;
     }
 
     // changing the value with regular @Input doesn't trigger change detection
     // so we need to do that manually in the setter
-    public set ariaLabel(value: string) {
+    public set ariaLabel(value: string | undefined) {
         if (value !== this._ariaLabel) {
             this._ariaLabel = value;
             this.changeDetector.markForCheck();
@@ -119,9 +121,15 @@ export class CheckboxComponent
     }
 
     private _ariaDescribedby: string;
+    private readonly formFieldDescription = new FormFieldDescription();
 
     /** Unique id for the control. */
     @Input() public id: string;
+
+    /** Native input ID; in a form field, use it to associate an external label. */
+    public get nativeControlId(): string | undefined {
+        return this.formFieldControlId ?? this.id;
+    }
 
     /**
      * Sets "name" attribute for inner input element of nui-checkbox
@@ -205,7 +213,13 @@ export class CheckboxComponent
     private rendererListener: Function;
     private sub: Subscription;
 
-    private _ariaLabel: string = $localize`Checkbox`;
+    public readonly defaultAriaLabel = $localize`Checkbox`;
+    public readonly contentId = _uniqueId("nui-checkbox-content-");
+    public readonly hintId = _uniqueId("nui-checkbox-hint-");
+
+    private formFieldControlId: string | undefined;
+    private _ariaLabel: string | undefined;
+    private formFieldLabelId: string | undefined;
 
     private keysAction = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
 
@@ -245,11 +259,58 @@ export class CheckboxComponent
     }
 
     public getAriaChecked(): "true" | "false" | "mixed" {
+        if (this.indeterminate) {
+            return "mixed";
+        }
+
         if (this.checked) {
             return "true";
         }
 
-        return this.indeterminate ? "mixed" : "false";
+        return "false";
+    }
+
+    public get descriptionIds(): string | null {
+        return (
+            [
+                this.formFieldDescription.resolve(this.ariaDescribedby),
+                this.hint ? this.hintId : null,
+            ]
+                .filter(Boolean)
+                .join(" ") || null
+        );
+    }
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.changeDetector.markForCheck();
+        }
+    }
+
+    public setFormFieldLabel(labelId: string | undefined): void {
+        if (this.formFieldLabelId !== labelId) {
+            this.formFieldLabelId = labelId;
+            this.changeDetector.markForCheck();
+        }
+    }
+
+    public setFormFieldControlId(id: string | undefined): void {
+        if (this.formFieldControlId !== id) {
+            this.formFieldControlId = id;
+            this.changeDetector.markForCheck();
+        }
+    }
+
+    public get labelIds(): string | null {
+        if (this.ariaLabelledby) {
+            return this.ariaLabelledby;
+        }
+        if (this._ariaLabel) {
+            return null;
+        }
+        return [this.formFieldLabelId, this.contentId]
+            .filter(Boolean)
+            .join(" ");
     }
 
     /**
@@ -264,6 +325,8 @@ export class CheckboxComponent
      * @param event Changed nui-checkbox component
      */
     public changeHandler(event: CheckboxChangeEvent): void {
+        this.indeterminate = false;
+        this.changeDetector.markForCheck();
         this.valueChange.emit(event);
         const checked = !!event.target?.checked;
         this.onChange(checked);

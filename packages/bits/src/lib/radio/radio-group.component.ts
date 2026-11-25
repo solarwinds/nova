@@ -26,6 +26,7 @@ import {
     ElementRef,
     EventEmitter,
     forwardRef,
+    inject,
     Input,
     OnDestroy,
     OnInit,
@@ -44,7 +45,9 @@ import _isUndefined from "lodash/isUndefined";
 import { Subscription } from "rxjs";
 
 import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
+import { _uniqueId } from "../../functions/unique-id";
 import { EventBusService } from "../../services/event-bus.service";
+import { FormFieldDescription } from "../form-field/form-field-description";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
 /*
@@ -70,7 +73,7 @@ import { NuiFormFieldControl } from "../form-field/public-api";
     host: {
         "role": "radiogroup",
         "[attr.aria-label]": "ariaLabel || null",
-        "[attr.aria-describedby]": "ariaDescribedby || null",
+        "[attr.aria-describedby]": "resolvedAriaDescribedby || null",
         "[attr.id]": "id",
     },
     standalone: false,
@@ -81,7 +84,13 @@ export class RadioGroupComponent
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel: string = "";
+    @Input() public get ariaLabel(): string {
+        return this.explicitAriaLabel || this.formFieldCaption || "";
+    }
+
+    public set ariaLabel(value: string) {
+        this.explicitAriaLabel = value;
+    }
     @Input() public ariaDescribedby: string;
 
     /** Unique id for the control. */
@@ -90,7 +99,14 @@ export class RadioGroupComponent
     /**
      * Sets the "name" attribute for each radio button in the group
      */
-    @Input() public name: string;
+    @Input()
+    public get name(): string {
+        return this.explicitName || this.generatedName;
+    }
+
+    public set name(value: string | null | undefined) {
+        this.explicitName = value;
+    }
 
     /**
      * Stores the value from selected radio
@@ -124,7 +140,30 @@ export class RadioGroupComponent
     private _value: any = null;
     private selectedRadio: RadioComponent | null = null;
     private subscriptions = new Array<Subscription>();
+    private readonly generatedName = _uniqueId("nui-radio-group-");
+    private explicitName: string | null | undefined;
+    private explicitAriaLabel = "";
+    private formFieldCaption: string | undefined;
+    private readonly formFieldDescription = new FormFieldDescription();
+    private readonly formFieldChangeDetector = inject(ChangeDetectorRef);
     constructor(private renderer: Renderer2) {}
+
+    public get resolvedAriaDescribedby(): string | null {
+        return this.formFieldDescription.resolve(this.ariaDescribedby);
+    }
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.formFieldChangeDetector.markForCheck();
+        }
+    }
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption?: string
+    ): void {
+        this.formFieldCaption = caption;
+    }
 
     private registerChild(child: RadioComponent): void {
         this.renderer.setAttribute(

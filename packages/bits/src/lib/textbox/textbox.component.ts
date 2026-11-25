@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import {
+    ChangeDetectorRef,
     Component,
     ElementRef,
     EventEmitter,
     forwardRef,
+    inject,
     Input,
     Output,
     ViewChild,
@@ -30,6 +32,7 @@ import {
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
+import { FormFieldDescription } from "../form-field/form-field-description";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
 // <example-url>./../examples/index.html#/textbox</example-url>
@@ -137,6 +140,11 @@ export class TextboxComponent
      */
     @Input() public id: string;
 
+    /** Native input or textarea ID; in a form field, use it to associate an external label. */
+    public get nativeControlId(): string | undefined {
+        return this.formFieldControlId ?? this.id;
+    }
+
     /**
      * Input initial value
      */
@@ -148,10 +156,32 @@ export class TextboxComponent
     @Input() public isInErrorState: boolean = false;
 
     /**
-     * Input to set aria label text
+     * Explicit accessible name. Prefer the form-field caption when possible.
+     * An override should include the visible caption.
      */
-    @Input() public ariaLabel: string = $localize`Textbox input`;
+    @Input() public get ariaLabel(): string {
+        return (
+            this.explicitAriaLabel ||
+            this.formFieldCaption ||
+            (this.explicitAriaLabel === "" ? "" : $localize`Textbox input`)
+        );
+    }
+
+    public set ariaLabel(value: string) {
+        this.explicitAriaLabel = value;
+    }
+
     @Input() public ariaDescribedby: string;
+
+    private readonly formFieldDescription = new FormFieldDescription();
+    private readonly changeDetector = inject(ChangeDetectorRef);
+    private formFieldControlId: string | undefined;
+    private explicitAriaLabel: string | undefined;
+    private formFieldCaption: string | undefined;
+
+    public get resolvedAriaDescribedby(): string | null {
+        return this.formFieldDescription.resolve(this.ariaDescribedby);
+    }
 
     /**
      * Input to apply busy state and show spinner
@@ -165,6 +195,26 @@ export class TextboxComponent
 
     // i18n nui_textbox_optional
     private optionalText = "Optional";
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.changeDetector.markForCheck();
+        }
+    }
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption?: string
+    ): void {
+        this.formFieldCaption = caption;
+    }
+
+    public setFormFieldControlId(id: string | undefined): void {
+        if (this.formFieldControlId !== id) {
+            this.formFieldControlId = id;
+            this.changeDetector.markForCheck();
+        }
+    }
 
     public focus(): void {
         this.textboxInput.nativeElement.focus();

@@ -9,12 +9,12 @@
         <div class="nui-checkbox__content">
             <input
                 #inputViewContainer
-                [id]="id"
+                [attr.id]="nativeControlId || null"
                 class="nui-checkbox__input"
                 type="checkbox"
-                [attr.aria-label]="ariaLabel || null"
-                [attr.aria-labelledby]="ariaLabelledby"
-                [attr.aria-describedby]="ariaDescribedby"
+                [attr.aria-label]="ariaLabel || defaultAriaLabel"
+                [attr.aria-labelledby]="labelIds"
+                [attr.aria-describedby]="descriptionIds"
                 [attr.name]="name"
                 [value]="value"
                 [checked]="checked"
@@ -26,12 +26,15 @@
             <div class="nui-checkbox__mark">
                 <i class="nui-checkbox__glyph"></i>
             </div>
-            <div #checkboxContent class="nui-checkbox__transclude">
+            <div
+                #checkboxContent
+                [id]="contentId"
+                class="nui-checkbox__transclude">
                 <ng-content></ng-content>
             </div>
         </div>
         @if (hint) {
-        <div class="nui-help-hint">{{ hint }}</div>
+        <div class="nui-help-hint" [id]="hintId">{{ hint }}</div>
         }
     </label>
 </div>

@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import {
+    ChangeDetectorRef,
     Component,
     ElementRef,
     EventEmitter,
     forwardRef,
+    inject,
     Input,
     OnChanges,
     Output,
@@ -43,6 +45,7 @@ import round from "lodash/round";
 
 import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
 import { regexpValidation } from "../../../constants/regex.constants";
+import { FormFieldDescription } from "../../form-field/form-field-description";
 import { NuiFormFieldControl } from "../../form-field/public-api";
 
 // <example-url>./../examples/index.html#/textbox/textbox-number</example-url>
@@ -136,6 +139,11 @@ export class TextboxNumberComponent
      */
     @Input() public id: string;
 
+    /** Native input ID; in a form field, use it to associate an external label. */
+    public get nativeControlId(): string | undefined {
+        return this.formFieldControlId ?? this.id;
+    }
+
     /**
      * Step by which the value are increased/decreased
      * when clicking on up/down buttons
@@ -154,10 +162,32 @@ export class TextboxNumberComponent
     @Input() public isInErrorState: boolean = false; // TODO: do we need to hook this up?
 
     /**
-     * Input to set aria label text
+     * Explicit accessible name. Prefer the form-field caption when possible.
+     * An override should include the visible caption.
      */
-    @Input() public ariaLabel: string = "Textbox number input";
+    @Input() public get ariaLabel(): string {
+        return (
+            this.explicitAriaLabel ||
+            this.formFieldCaption ||
+            (this.explicitAriaLabel === "" ? "" : "Textbox number input")
+        );
+    }
+
+    public set ariaLabel(value: string) {
+        this.explicitAriaLabel = value;
+    }
+
     @Input() public ariaDescribedby: string;
+
+    private readonly formFieldDescription = new FormFieldDescription();
+    private readonly changeDetector = inject(ChangeDetectorRef);
+    private formFieldControlId: string | undefined;
+    private explicitAriaLabel: string | undefined;
+    private formFieldCaption: string | undefined;
+
+    public get resolvedAriaDescribedby(): string | null {
+        return this.formFieldDescription.resolve(this.ariaDescribedby);
+    }
 
     /**
      * Minimum value of textBoxNumber component
@@ -182,6 +212,26 @@ export class TextboxNumberComponent
     public isRepeatable = true;
 
     private validatorFn: (c: FormControl) => ValidationErrors | null;
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.changeDetector.markForCheck();
+        }
+    }
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption?: string
+    ): void {
+        this.formFieldCaption = caption;
+    }
+
+    public setFormFieldControlId(id: string | undefined): void {
+        if (this.formFieldControlId !== id) {
+            this.formFieldControlId = id;
+            this.changeDetector.markForCheck();
+        }
+    }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes["minValue"] || changes["maxValue"]) {

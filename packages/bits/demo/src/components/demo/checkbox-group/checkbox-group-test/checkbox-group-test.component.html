@@ -1,6 +1,10 @@
 <div class="container d-flex">
     <div class="d-flex flex-column mr-5">
-        <h3 id="nui-demo-checkbox-group-heading">Vegetables</h3>
+        <h3
+            id="nui-demo-checkbox-group-heading"
+            [attr.aria-label]="vegetablesHeading">
+            {{ vegetablesHeading }}
+        </h3>
         <nui-checkbox-group
             id="nui-demo-checkbox-group-basic"
             name="vegetable"

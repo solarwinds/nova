@@ -37,6 +37,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import moment from "moment/moment";
 import { Moment } from "moment/moment";
 
+import { FormFieldDescription } from "../form-field/form-field-description";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
 // <example-url>./../examples/index.html#/date-time-picker</example-url><br />
@@ -83,7 +84,7 @@ export class DateTimePickerComponent
      * Input to set aria label text
      */
     @Input() public get ariaLabel(): string {
-        return this._ariaLabel;
+        return this._ariaLabel || this.formFieldCaption || "";
     }
 
     // changing the value with regular @Input doesn't trigger change detection
@@ -107,13 +108,18 @@ export class DateTimePickerComponent
     }
 
     private _ariaDescribedby: string;
+    private readonly formFieldDescription = new FormFieldDescription();
+
+    public get resolvedAriaDescribedby(): string | null {
+        return this.formFieldDescription.resolve(this.ariaDescribedby);
+    }
 
     public get dateAriaLabel(): string {
-        return $localize`${this._ariaLabel} date`;
+        return $localize`${this.ariaLabel} date`;
     }
 
     public get timeAriaLabel(): string {
-        return $localize`${this._ariaLabel} time`;
+        return $localize`${this.ariaLabel} time`;
     }
 
     @ViewChild("nuiDatetimePicker", { static: true })
@@ -142,11 +148,28 @@ export class DateTimePickerComponent
     public isInErrorStateTime = false;
 
     private _ariaLabel: string = "";
+    private formFieldCaption: string | undefined;
 
     onTouched = (): void => {};
     onChange = (value: any): void => {};
 
     constructor(private renderer: Renderer2, private cd: ChangeDetectorRef) {}
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.cd.markForCheck();
+        }
+    }
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption?: string
+    ): void {
+        if (caption !== this.formFieldCaption) {
+            this.formFieldCaption = caption;
+            this.cd.markForCheck();
+        }
+    }
 
     public ngOnInit(): void {
         if (!this.initEmpty && !this.model) {

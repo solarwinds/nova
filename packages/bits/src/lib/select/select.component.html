@@ -16,7 +16,7 @@
             'nui-select-popup-host'
         "
         [ariaLabel]="ariaLabel"
-        [ariaDescribedby]="ariaDescribedby">
+        [ariaDescribedby]="resolvedAriaDescribedby">
         @if (isRemoveValueEnabled) {
         <nui-menu-action (actionDone)="select(null)">
             {{ removeValueText }}

@@ -39,6 +39,7 @@ import { Subscription } from "rxjs";
 
 import { CheckboxComponent } from "./checkbox.component";
 import { CheckboxChangeEvent, ICheckboxComponent } from "./public-api";
+import { FormFieldDescription } from "../form-field/form-field-description";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
 @Component({
@@ -62,7 +63,7 @@ import { NuiFormFieldControl } from "../form-field/public-api";
         "[attr.id]": "id",
         "[attr.aria-label]": "ariaLabel || null",
         "[attr.aria-labelledby]": "ariaLabelledby || null",
-        "[attr.aria-describedby]": "ariaDescribedby || null",
+        "[attr.aria-describedby]": "resolvedAriaDescribedby || null",
     },
     standalone: false,
 })
@@ -95,10 +96,15 @@ export class CheckboxGroupComponent
     private children: QueryList<CheckboxComponent>;
 
     /**
-     * Input to set aria label text
+     * Explicit accessible name. Prefer the form-field caption when possible.
+     * An override should include the visible caption.
      */
     @Input() public get ariaLabel(): string {
-        return this._ariaLabel;
+        return (
+            this._ariaLabel ||
+            this.formFieldCaption ||
+            (this._ariaLabel === "" ? "" : "Checkbox Group")
+        );
     }
 
     public set ariaLabel(value: string) {
@@ -108,7 +114,8 @@ export class CheckboxGroupComponent
         }
     }
 
-    private _ariaLabel = "Checkbox Group";
+    private _ariaLabel: string | undefined;
+    private formFieldCaption: string | undefined;
 
     /**
      * Input to set aria label text
@@ -126,6 +133,11 @@ export class CheckboxGroupComponent
     }
 
     private _ariaDescribedby: string;
+    private readonly formFieldDescription = new FormFieldDescription();
+
+    public get resolvedAriaDescribedby(): string | null {
+        return this.formFieldDescription.resolve(this.ariaDescribedby);
+    }
 
     /** Unique id for the control. */
     @Input() public id: string;
@@ -135,6 +147,22 @@ export class CheckboxGroupComponent
     private readonly changeDetector = inject(ChangeDetectorRef);
 
     constructor(private renderer: Renderer2) {}
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.changeDetector.markForCheck();
+        }
+    }
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption?: string
+    ): void {
+        if (caption !== this.formFieldCaption) {
+            this.formFieldCaption = caption;
+            this.changeDetector.markForCheck();
+        }
+    }
 
     /**
      * Subscribe to nui-checkbox-group children values change
