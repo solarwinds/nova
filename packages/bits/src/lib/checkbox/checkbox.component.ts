@@ -91,8 +91,8 @@ export class CheckboxComponent
     /**
      * Input to set aria label text
      */
-    @Input() public get ariaLabel(): string | undefined {
-        return this._ariaLabel;
+    @Input() public get ariaLabel(): string {
+        return this._ariaLabel ?? this.defaultAriaLabel;
     }
 
     // changing the value with regular @Input doesn't trigger change detection
@@ -123,6 +123,11 @@ export class CheckboxComponent
 
     /** Unique id for the control. */
     @Input() public id: string;
+
+    /** Native input ID; in a form field, use it to associate an external label. */
+    public get nativeControlId(): string | undefined {
+        return this.formFieldControlId ?? this.id;
+    }
 
     /**
      * Sets "name" attribute for inner input element of nui-checkbox
@@ -210,6 +215,7 @@ export class CheckboxComponent
     public readonly contentId = _uniqueId("nui-checkbox-content-");
     public readonly hintId = _uniqueId("nui-checkbox-hint-");
 
+    private formFieldControlId: string | undefined;
     private _ariaLabel: string | undefined;
     private formFieldLabelId: string | undefined;
 
@@ -277,11 +283,18 @@ export class CheckboxComponent
         }
     }
 
+    public setFormFieldControlId(id: string | undefined): void {
+        if (this.formFieldControlId !== id) {
+            this.formFieldControlId = id;
+            this.changeDetector.markForCheck();
+        }
+    }
+
     public get labelIds(): string | null {
         if (this.ariaLabelledby) {
             return this.ariaLabelledby;
         }
-        if (this.ariaLabel) {
+        if (this._ariaLabel) {
             return null;
         }
         return [this.formFieldLabelId, this.contentId]

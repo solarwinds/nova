@@ -25,17 +25,21 @@ test.describe("a11y: checkbox", () => {
         await expect(checkbox).toHaveAccessibleDescription(
             "This is some help text"
         );
-        await expect(checkbox).toHaveAttribute("aria-checked", "false");
+        await expect(checkbox).not.toBeChecked();
         await checkbox.focus();
         await expect(checkbox).toBeFocused();
         await checkbox.press("Space");
-        await expect(checkbox).toHaveAttribute("aria-checked", "true");
+        await expect(checkbox).toBeChecked();
 
         const mixed = page.locator(
             "#nui-demo-checkbox-indeterminate input[type=checkbox]"
         );
         await expect(mixed).toHaveRole("checkbox");
-        await expect(mixed).toHaveAttribute("aria-checked", "mixed");
+        await expect(mixed).toBeChecked({ indeterminate: true });
+        await expect(mixed).not.toHaveAttribute("aria-checked");
+        await expect(
+            page.locator("#nui-demo-checkbox label")
+        ).not.toHaveAttribute("role");
     });
 
     test("exposes instructions on the actual focused accessibility node", async ({

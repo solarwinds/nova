@@ -198,6 +198,20 @@ describe("components >", () => {
                 expect(subject.checked).toBeFalsy();
             });
 
+            it("keeps the public default label without overriding projected names", () => {
+                expect(subject.ariaLabel).toBe("Checkbox");
+                expect(subject.labelIds).toBe(subject.contentId);
+                subject.ariaLabel = "Custom name";
+                expect(subject.ariaLabel).toBe("Custom name");
+                expect(subject.labelIds).toBeNull();
+                subject.ariaLabel = "";
+                expect(subject.ariaLabel).toBe("");
+                expect(subject.labelIds).toBe(subject.contentId);
+                subject.ariaLabel = undefined;
+                expect(subject.ariaLabel).toBe("Checkbox");
+                expect(subject.labelIds).toBe(subject.contentId);
+            });
+
             it("should input change on click", () => {
                 checkboxInput.click();
                 expect(subject.checked).toBeTruthy();
@@ -269,20 +283,21 @@ describe("components >", () => {
 
                 it("exposes the focused checkbox state and keyboard changes", () => {
                     expect(input.type).toBe("checkbox");
-                    expect(input.getAttribute("aria-checked")).toBe("false");
+                    expect(input.checked).toBeFalse();
                     input.dispatchEvent(
                         new KeyboardEvent("keydown", {
                             code: "Space",
                             bubbles: true,
+                            cancelable: true,
                         })
                     );
                     detect();
-                    expect(input.getAttribute("aria-checked")).toBe("true");
+                    expect(input.checked).toBeTrue();
 
                     host.indeterminate = true;
                     host.required = true;
                     detect();
-                    expect(input.getAttribute("aria-checked")).toBe("mixed");
+                    expect(input.indeterminate).toBeTrue();
                     expect(input.required).toBeTrue();
 
                     host.disabled = true;
@@ -295,7 +310,7 @@ describe("components >", () => {
                         })
                     );
                     detect();
-                    expect(input.getAttribute("aria-checked")).toBe("mixed");
+                    expect(input.indeterminate).toBeTrue();
                 });
 
                 it("clears mixed state after a mouse click", () => {
@@ -303,7 +318,8 @@ describe("components >", () => {
                     detect();
                     input.click();
                     detect();
-                    expect(input.getAttribute("aria-checked")).toBe("true");
+                    expect(input.checked).toBeTrue();
+                    expect(input.indeterminate).toBeFalse();
                 });
 
                 it("clears mixed state on space when already checked", () => {
@@ -317,7 +333,8 @@ describe("components >", () => {
                         })
                     );
                     detect();
-                    expect(input.getAttribute("aria-checked")).toBe("true");
+                    expect(input.checked).toBeTrue();
+                    expect(input.indeterminate).toBeFalse();
                 });
             });
         });
@@ -360,6 +377,11 @@ describe("components >", () => {
                         )
                     ).toBeFalse();
                 }
+                expect(
+                    subject.checkboxLabel.nativeElement.hasAttribute("role")
+                ).toBeFalse();
+                expect(checkboxInput.hasAttribute("aria-checked")).toBeFalse();
+                expect(checkboxInput.hasAttribute("id")).toBeFalse();
             });
 
             it("should update and remove focusable input description references", () => {

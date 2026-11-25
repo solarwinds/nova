@@ -25,6 +25,7 @@ import {
     Component,
     ContentChild,
     ContentChildren,
+    ElementRef,
     forwardRef,
     inject,
     Input,
@@ -101,6 +102,9 @@ export class FormFieldComponent
     @ContentChild(forwardRef(() => NuiFormFieldControl))
     nuiFormControl: NuiFormFieldControl;
 
+    @ContentChild(forwardRef(() => NuiFormFieldControl), { read: ElementRef })
+    private nuiFormControlElement?: ElementRef<HTMLElement>;
+
     public controlIsOptional: boolean = false;
 
     public labelId = `nui-form-field-label-${FormFieldComponent.nextUniqueId++}`;
@@ -114,6 +118,9 @@ export class FormFieldComponent
             this.nuiFormControl &&
             (this.nuiFormControl !== this.namedControl ||
                 this.caption !== this.lastCaption ||
+                (this.nuiFormControl.setFormFieldControlId &&
+                    this.nuiFormControl.nativeControlId !==
+                        this.getNativeControlId(this.nuiFormControl)) ||
                 this.nuiFormControl.ariaDescribedby !==
                     this.getControlDescription(this.nuiFormControl))
         ) {
@@ -183,8 +190,29 @@ export class FormFieldComponent
             if (!control.id) {
                 control.id = `${this.labelId}-control`;
             }
+            if (control.setFormFieldControlId) {
+                const id = this.getNativeControlId(control);
+                control.setFormFieldControlId(
+                    id !== control.id ? id : undefined
+                );
+            }
             this.changeDetector.markForCheck();
         });
+    }
+
+    private getNativeControlId(
+        control: NuiFormFieldControl
+    ): string | undefined {
+        if (
+            control.id &&
+            this.nuiFormControlElement?.nativeElement.id === control.id
+        ) {
+            const generatedId = `${this.labelId}-control`;
+            return generatedId === control.id
+                ? `${generatedId}-native`
+                : generatedId;
+        }
+        return control.id;
     }
 
     private getControlDescription(

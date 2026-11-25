@@ -52,6 +52,7 @@ import { SpinnerComponent } from "../spinner/spinner.component";
                 @if (showTextbox) {
                     <nui-textbox
                         formControlName="input"
+                        [id]="controlId"
                         [ariaDescribedby]="description"
                         [ariaLabel]="ariaLabel"></nui-textbox>
                 }
@@ -70,6 +71,7 @@ class TextboxFormComponent {
     public ariaLabel = "Dashboard name";
     public hint: string;
     public description: string;
+    public controlId: string;
     public showTextbox = true;
 
     public form = this.fb.group({
@@ -490,6 +492,40 @@ describe("components >", () => {
                     "dashboard-guidance"
                 );
                 expect(help.textContent.trim()).toBe("");
+            }));
+
+            it("merges changing caller descriptions and preserves a changed control id", fakeAsync(() => {
+                testComponent.description = "first-description";
+                testComponent.hint = "Field help";
+                renderFormField();
+
+                const textbox = testComponent.input.textboxInput.nativeElement;
+                const help = fixture.nativeElement.querySelector(
+                    ".nui-form-field__help"
+                );
+                expect(textbox.getAttribute("aria-describedby")).toBe(
+                    `first-description ${help.id}`
+                );
+
+                testComponent.description = "second-description";
+                testComponent.controlId = "consumer-control-id";
+                testComponent.caption = "Dashboard";
+                renderFormField();
+                expect(textbox.getAttribute("aria-describedby")).toBe(
+                    `second-description ${help.id}`
+                );
+                expect(textbox.id).toBe("consumer-control-id");
+                expect(
+                    fixture.nativeElement.querySelector("label").control
+                ).toBe(textbox);
+
+                testComponent.description = "";
+                renderFormField();
+                expect(textbox.getAttribute("aria-describedby")).toBe(help.id);
+
+                testComponent.hint = "";
+                renderFormField();
+                expect(textbox.hasAttribute("aria-describedby")).toBeFalse();
             }));
 
             it("associates validation only while a message is shown", fakeAsync(() => {

@@ -87,6 +87,36 @@ test.describe("USERCONTROL Checkbox", () => {
     });
 
     test.describe("Keyboard navigation", () => {
+        test("shows the checkbox focus style only when its input is focused", async ({
+            page,
+        }) => {
+            await Helpers.prepareBrowser("checkbox/checkbox-visual-test", page);
+            await page.addStyleTag({
+                content:
+                    "*, *::before, *::after { transition: none !important; }",
+            });
+            const checkbox = page.locator("#nui-demo-checkbox-special");
+            const label = checkbox.locator(".nui-checkbox__label");
+            const input = checkbox.locator("input[type=checkbox]");
+            const link = checkbox.locator("a");
+            const focusStyle = () =>
+                label.evaluate(element => {
+                    const style = getComputedStyle(element);
+                    return {
+                        background: style.backgroundColor,
+                        boxShadow: style.boxShadow,
+                        outline: style.outline,
+                    };
+                });
+
+            const initialStyle = await focusStyle();
+            await input.focus();
+            expect(await focusStyle()).not.toEqual(initialStyle);
+            await link.focus();
+            await expect(link).toBeFocused();
+            expect(await focusStyle()).toEqual(initialStyle);
+        });
+
         test("should focus checkbox and toggle with space and enter, propagating TAB", async () => {
             await expect(atomBasic.getInputElement).toBeChecked();
             await atomBasic.getInputElement.focus();

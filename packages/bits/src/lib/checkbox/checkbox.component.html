@@ -9,13 +9,12 @@
         <div class="nui-checkbox__content">
             <input
                 #inputViewContainer
-                [id]="id"
+                [attr.id]="nativeControlId || null"
                 class="nui-checkbox__input"
                 type="checkbox"
                 [attr.aria-label]="ariaLabel || defaultAriaLabel"
                 [attr.aria-labelledby]="labelIds"
                 [attr.aria-describedby]="descriptionIds"
-                [attr.aria-checked]="getAriaChecked()"
                 [attr.name]="name"
                 [value]="value"
                 [checked]="checked"

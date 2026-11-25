@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import {
+    ChangeDetectorRef,
     Component,
     ElementRef,
     EventEmitter,
     forwardRef,
+    inject,
     Input,
     Output,
     ViewChild,
@@ -137,6 +139,11 @@ export class TextboxComponent
      */
     @Input() public id: string;
 
+    /** Native input or textarea ID; in a form field, use it to associate an external label. */
+    public get nativeControlId(): string | undefined {
+        return this.formFieldControlId ?? this.id;
+    }
+
     /**
      * Input initial value
      */
@@ -165,6 +172,8 @@ export class TextboxComponent
 
     @Input() public ariaDescribedby: string;
 
+    private readonly changeDetector = inject(ChangeDetectorRef);
+    private formFieldControlId: string | undefined;
     private explicitAriaLabel: string | undefined;
     private formFieldCaption: string | undefined;
 
@@ -186,6 +195,13 @@ export class TextboxComponent
         caption?: string
     ): void {
         this.formFieldCaption = caption;
+    }
+
+    public setFormFieldControlId(id: string | undefined): void {
+        if (this.formFieldControlId !== id) {
+            this.formFieldControlId = id;
+            this.changeDetector.markForCheck();
+        }
     }
 
     public focus(): void {

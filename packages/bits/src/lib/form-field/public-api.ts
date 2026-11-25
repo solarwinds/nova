@@ -37,6 +37,12 @@ export abstract class NuiFormFieldControl {
     /** Unique id for the control. */
     public id?: string;
 
+    /** ID of the native labelable control, when different from the host ID. */
+    public nativeControlId?: string;
+
+    /** Sets an internal native control ID when the host ID would collide. */
+    public setFormFieldControlId?(id: string | undefined): void;
+
     /** Associates a control with the form-field caption without replacing its explicit name. */
     public setFormFieldLabel?(
         labelId: string | undefined,
