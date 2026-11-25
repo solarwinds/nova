@@ -26,6 +26,7 @@ import {
     ElementRef,
     EventEmitter,
     forwardRef,
+    inject,
     Input,
     OnDestroy,
     OnInit,
@@ -46,6 +47,7 @@ import { Subscription } from "rxjs";
 import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 import { _uniqueId } from "../../functions/unique-id";
 import { EventBusService } from "../../services/event-bus.service";
+import { FormFieldDescription } from "../form-field/form-field-description";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
 /*
@@ -71,7 +73,7 @@ import { NuiFormFieldControl } from "../form-field/public-api";
     host: {
         "role": "radiogroup",
         "[attr.aria-label]": "ariaLabel || null",
-        "[attr.aria-describedby]": "ariaDescribedby || null",
+        "[attr.aria-describedby]": "resolvedAriaDescribedby || null",
         "[attr.id]": "id",
     },
     standalone: false,
@@ -142,7 +144,19 @@ export class RadioGroupComponent
     private explicitName: string | null | undefined;
     private explicitAriaLabel = "";
     private formFieldCaption: string | undefined;
+    private readonly formFieldDescription = new FormFieldDescription();
+    private readonly formFieldChangeDetector = inject(ChangeDetectorRef);
     constructor(private renderer: Renderer2) {}
+
+    public get resolvedAriaDescribedby(): string | null {
+        return this.formFieldDescription.resolve(this.ariaDescribedby);
+    }
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.formFieldChangeDetector.markForCheck();
+        }
+    }
 
     public setFormFieldLabel(
         _labelId: string | undefined,

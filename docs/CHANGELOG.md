@@ -5,6 +5,7 @@
 ### Fixes
 
 - `@nova-ui/bits` | Improve checkbox and switch accessible names, checkbox descriptions and states, and form-field updates in OnPush hosts. Explicit accessible names now take precedence over form-field captions.
+- `@nova-ui/bits` | Keep form-field help references separate from consumer-provided descriptions. Custom templates in control subclasses should render `resolvedAriaDescribedby` (or `descriptionIds` for checkboxes) to retain field help.
 - `@nova-ui/bits` | Fix form-field captions for checkboxes and textboxes with a conflicting host ID. The native input receives a separate ID in these cases.
 - `@nova-ui/bits` | Keep selections independent across radio groups without an explicit name.
 - `@nova-ui/bits` | Respect the toast `maxOpened` limit for synchronously created notifications, preserve queued toasts when another queued toast is removed, and cancel activation of removed toasts. Clearing notifications skips closing queue entries and cancels pending fade-in callbacks, so dismissed toasts are not shown again.

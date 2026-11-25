@@ -34,6 +34,12 @@ export abstract class NuiFormFieldControl {
 
     public ariaDescribedby?: string;
 
+    /**
+     * Associates or clears field help without changing the consumer's description.
+     * Controls should combine both references on the appropriate element.
+     */
+    public setFormFieldDescription?(id: string | undefined): void;
+
     /** Unique id for the control. */
     public id?: string;
 

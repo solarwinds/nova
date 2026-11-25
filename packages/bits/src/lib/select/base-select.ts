@@ -19,8 +19,10 @@
 //  THE SOFTWARE.
 
 import {
+    ChangeDetectorRef,
     Directive,
     EventEmitter,
+    inject,
     Input,
     OnChanges,
     OnInit,
@@ -40,6 +42,7 @@ import { map } from "rxjs/operators";
 
 import { ISelectChangedEvent, ISelectGroup } from "./public-api";
 import { UtilService } from "../../services/util.service";
+import { FormFieldDescription } from "../form-field/form-field-description";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
 /**
@@ -133,8 +136,20 @@ export abstract class BaseSelect
 
     private explicitAriaLabel = "";
     private formFieldCaption: string | undefined;
+    private readonly formFieldDescription = new FormFieldDescription();
+    private readonly formFieldChangeDetector = inject(ChangeDetectorRef);
 
     protected constructor(protected utilService: UtilService) {}
+
+    public get resolvedAriaDescribedby(): string | null {
+        return this.formFieldDescription.resolve(this.ariaDescribedby);
+    }
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.formFieldChangeDetector.markForCheck();
+        }
+    }
 
     public setFormFieldLabel(
         _labelId: string | undefined,

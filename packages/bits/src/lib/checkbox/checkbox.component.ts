@@ -45,6 +45,7 @@ import {
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { _uniqueId } from "../../functions/unique-id";
 import { EventBusService } from "../../services/event-bus.service";
+import { FormFieldDescription } from "../form-field/form-field-description";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
 @Component({
@@ -120,6 +121,7 @@ export class CheckboxComponent
     }
 
     private _ariaDescribedby: string;
+    private readonly formFieldDescription = new FormFieldDescription();
 
     /** Unique id for the control. */
     @Input() public id: string;
@@ -270,10 +272,19 @@ export class CheckboxComponent
 
     public get descriptionIds(): string | null {
         return (
-            [this.ariaDescribedby, this.hint ? this.hintId : null]
+            [
+                this.formFieldDescription.resolve(this.ariaDescribedby),
+                this.hint ? this.hintId : null,
+            ]
                 .filter(Boolean)
                 .join(" ") || null
         );
+    }
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.changeDetector.markForCheck();
+        }
     }
 
     public setFormFieldLabel(labelId: string | undefined): void {

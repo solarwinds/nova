@@ -18,13 +18,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    forwardRef,
+    Input,
+} from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Subject } from "rxjs";
 
 import { NuiFormFieldModule } from "./form-field.module";
+import { NuiFormFieldControl } from "./public-api";
 import { CheckboxComponent } from "../checkbox/checkbox.component";
+import { NuiCheckboxModule } from "../checkbox/checkbox.module";
 import { NuiColorPickerModule } from "../color-picker/color-picker.module";
 import { NuiDatePickerModule } from "../date-picker/date-picker.module";
 import { NuiDateTimePickerModule } from "../date-time-picker/date-time-picker.module";
@@ -32,6 +40,7 @@ import { NuiFreetypeQueryModule } from "../freetype-query-builder/freetype-query
 import { NuiRadioModule } from "../radio/radio.module";
 import { NuiSelectModule } from "../select/select.module";
 import { NuiSelectV2Module } from "../select-v2/select-v2.module";
+import { NuiSwitchModule } from "../switch/switch.module";
 import { NuiTextboxModule } from "../textbox/textbox.module";
 import { NuiTimePickerModule } from "../time-picker/time-picker.module";
 
@@ -100,6 +109,91 @@ class FormFieldControlNamesHostComponent {
     public name = "";
     public items: string[] = [];
     public cursorSetter = new Subject<number>();
+}
+
+@Component({
+    selector: "legacy-form-control",
+    template: `<input [attr.aria-describedby]="ariaDescribedby" />`,
+    providers: [
+        {
+            provide: NuiFormFieldControl,
+            useExisting: forwardRef(() => LegacyFormControlComponent),
+        },
+    ],
+    standalone: false,
+})
+class LegacyFormControlComponent {
+    @Input() public ariaDescribedby: string;
+    public ariaLabel: string;
+    public id: string;
+    public isInErrorState = false;
+}
+
+@Component({
+    template: `
+        <span id="external-description">External instruction</span>
+        <span id="other-description">Other instruction</span>
+        <nui-form-field id="checkbox-field" caption="Checkbox" [hint]="hint">
+            <nui-checkbox *ngIf="showCheckbox" [ariaDescribedby]="description" hint="Checkbox hint">Checkbox</nui-checkbox>
+        </nui-form-field>
+        <nui-form-field id="checkbox-group-field" caption="Checkbox group" [hint]="hint">
+            <nui-checkbox-group [ariaDescribedby]="description"></nui-checkbox-group>
+        </nui-form-field>
+        <nui-form-field id="switch-field" caption="Switch" [hint]="hint">
+            <nui-switch [ariaDescribedby]="description">Switch</nui-switch>
+        </nui-form-field>
+        <nui-form-field id="textbox-field" caption="Textbox" [hint]="hint">
+            <nui-textbox [ariaDescribedby]="description"></nui-textbox>
+        </nui-form-field>
+        <nui-form-field id="number-field" caption="Number" [hint]="hint">
+            <nui-textbox-number [ariaDescribedby]="description"></nui-textbox-number>
+        </nui-form-field>
+        <nui-form-field id="select-field" caption="Select" [hint]="hint">
+            <nui-select [itemsSource]="items" [ariaDescribedby]="description"></nui-select>
+        </nui-form-field>
+        <nui-form-field id="combobox-field" caption="Combobox" [hint]="hint">
+            <nui-combobox [itemsSource]="items" [ariaDescribedby]="description"></nui-combobox>
+        </nui-form-field>
+        <nui-form-field id="select-v2-field" caption="Select V2" [hint]="hint">
+            <nui-select-v2 [ariaDescribedby]="description"></nui-select-v2>
+        </nui-form-field>
+        <nui-form-field id="combobox-v2-field" caption="Combobox V2" [hint]="hint">
+            <nui-combobox-v2 [ariaDescribedby]="description"></nui-combobox-v2>
+        </nui-form-field>
+        <nui-form-field id="radio-field" caption="Radio" [hint]="hint">
+            <nui-radio-group [ariaDescribedby]="description"></nui-radio-group>
+        </nui-form-field>
+        <nui-form-field id="date-field" caption="Date" [hint]="hint">
+            <nui-date-picker [ariaDescribedby]="description"></nui-date-picker>
+        </nui-form-field>
+        <nui-form-field id="time-field" caption="Time" [hint]="hint">
+            <nui-time-picker [ariaDescribedby]="description" [initEmpty]="true"></nui-time-picker>
+        </nui-form-field>
+        <nui-form-field id="datetime-field" caption="Date and time" [hint]="hint">
+            <nui-date-time-picker [ariaDescribedby]="description" [initEmpty]="true"></nui-date-time-picker>
+        </nui-form-field>
+        <nui-form-field id="color-field" caption="Color" [hint]="hint">
+            <nui-color-picker [colors]="items" [ariaDescribedby]="description"></nui-color-picker>
+        </nui-form-field>
+        <nui-form-field id="query-field" caption="Query" [hint]="hint">
+            <nui-freetype-query-builder [cursorSetter$]="cursorSetter" [ariaDescribedby]="description"></nui-freetype-query-builder>
+        </nui-form-field>
+        <nui-form-field id="legacy-field" caption="Custom" [hint]="hint">
+            <legacy-form-control [ariaDescribedby]="description"></legacy-form-control>
+        </nui-form-field>
+        <button data-test="detect" (click)="detectChanges()">Update</button>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
+})
+class FormFieldDescriptionsHostComponent {
+    public hint = "Field instruction";
+    public description = "external-description";
+    public showCheckbox = true;
+    public items: string[] = [];
+    public cursorSetter = new Subject<number>();
+
+    public detectChanges(): void {}
 }
 
 @Component({
@@ -345,6 +439,170 @@ describe("form-field control name precedence", () => {
         host.querySelector<HTMLButtonElement>("[data-test=clear]")?.click();
         await waitForFieldUpdate(fixture);
         expectNames("Updated filter");
+    });
+});
+
+describe("form-field descriptions", () => {
+    it("keeps consumer descriptions separate while field help changes across controls", async () => {
+        TestBed.configureTestingModule({
+            declarations: [
+                FormFieldDescriptionsHostComponent,
+                LegacyFormControlComponent,
+            ],
+            imports: [
+                NuiFormFieldModule,
+                NuiCheckboxModule,
+                NuiSwitchModule,
+                NuiTextboxModule,
+                NuiColorPickerModule,
+                NuiDatePickerModule,
+                NuiDateTimePickerModule,
+                NuiFreetypeQueryModule,
+                NuiRadioModule,
+                NuiSelectModule,
+                NuiSelectV2Module,
+                NuiTimePickerModule,
+                NoopAnimationsModule,
+            ],
+        });
+        const fixture = TestBed.createComponent(
+            FormFieldDescriptionsHostComponent
+        );
+        fixture.autoDetectChanges();
+        await fixture.whenStable();
+
+        const cases = [
+            ["checkbox-field", "nui-checkbox", "input"],
+            [
+                "checkbox-group-field",
+                "nui-checkbox-group",
+                "nui-checkbox-group",
+            ],
+            ["switch-field", "nui-switch", "[role=checkbox]"],
+            ["textbox-field", "nui-textbox", "input"],
+            ["number-field", "nui-textbox-number", "input"],
+            ["select-field", "nui-select", "button.menu-button"],
+            ["combobox-field", "nui-combobox", "input"],
+            ["select-v2-field", "nui-select-v2", "[role=combobox]"],
+            ["combobox-v2-field", "nui-combobox-v2", "input"],
+            ["radio-field", "nui-radio-group", "nui-radio-group"],
+            ["date-field", "nui-date-picker", "input"],
+            ["time-field", "nui-time-picker", "input"],
+            ["datetime-field", "nui-date-time-picker", "input"],
+            ["color-field", "nui-color-picker", ".color-picker-input"],
+            ["query-field", "nui-freetype-query-builder", "textarea"],
+        ];
+        const root = fixture.nativeElement as HTMLElement;
+        const expectDescriptions = (consumer: string, fieldHelp: boolean) => {
+            for (const [fieldId, componentSelector, targetSelector] of cases) {
+                const field = root.querySelector<HTMLElement>(`#${fieldId}`)!;
+                const component = fixture.debugElement.query(
+                    By.css(`#${fieldId} ${componentSelector}`)
+                ).componentInstance;
+                expect(component.ariaDescribedby)
+                    .withContext(`${fieldId} input`)
+                    .toBe(consumer);
+                const helpId = field.querySelector<HTMLElement>(
+                    ".nui-form-field__help"
+                )!.id;
+                const targets =
+                    field.querySelectorAll<HTMLElement>(targetSelector);
+                expect(targets.length).withContext(fieldId).toBeGreaterThan(0);
+                targets.forEach(target => {
+                    const ids = (target.getAttribute("aria-describedby") || "")
+                        .split(/\s+/)
+                        .filter(Boolean);
+                    expect(ids.includes("external-description"))
+                        .withContext(fieldId)
+                        .toBe(consumer.includes("external-description"));
+                    expect(ids.includes("other-description"))
+                        .withContext(fieldId)
+                        .toBe(consumer.includes("other-description"));
+                    expect(ids.includes(helpId))
+                        .withContext(fieldId)
+                        .toBe(fieldHelp);
+                    if (fieldHelp) {
+                        expect(new Set(ids).size)
+                            .withContext(fieldId)
+                            .toBe(ids.length);
+                    }
+                });
+            }
+        };
+        const update = async () => {
+            root.querySelector<HTMLButtonElement>(
+                "[data-test=detect]"
+            )!.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+        };
+
+        expectDescriptions("external-description", true);
+        fixture.componentInstance.description =
+            "other-description external-description other-description";
+        await update();
+        expectDescriptions(fixture.componentInstance.description, true);
+        fixture.componentInstance.hint = "";
+        await update();
+        expectDescriptions(fixture.componentInstance.description, false);
+        const checkboxInput = root.querySelector<HTMLInputElement>(
+            "#checkbox-field input"
+        )!;
+        const checkboxHint = root.querySelector<HTMLElement>(
+            "#checkbox-field .nui-help-hint"
+        )!;
+        expect(checkboxInput.getAttribute("aria-describedby")).toContain(
+            checkboxHint.id
+        );
+        fixture.componentInstance.description = "";
+        await update();
+        expectDescriptions("", false);
+        fixture.componentInstance.hint = "New field instruction";
+        await update();
+        expectDescriptions("", true);
+
+        const legacy = root.querySelector<HTMLInputElement>(
+            "#legacy-field input"
+        )!;
+        const legacyHelp = root.querySelector<HTMLElement>(
+            "#legacy-field .nui-form-field__help"
+        )!;
+        expect(legacy.getAttribute("aria-describedby")).toBe(legacyHelp.id);
+        fixture.componentInstance.description = "external-description";
+        await update();
+        expect(legacy.getAttribute("aria-describedby")).toBe(
+            `external-description ${legacyHelp.id}`
+        );
+        fixture.componentInstance.hint = "";
+        await update();
+        expect(legacy.getAttribute("aria-describedby")).toBe(
+            "external-description"
+        );
+
+        fixture.componentInstance.showCheckbox = false;
+        await update();
+        fixture.componentInstance.hint = "Restored instruction";
+        fixture.componentInstance.showCheckbox = true;
+        await update();
+        expectDescriptions("external-description", true);
+
+        const textbox = root.querySelector<HTMLInputElement>(
+            "#textbox-field input"
+        )!;
+        const textboxHelpId = root.querySelector<HTMLElement>(
+            "#textbox-field .nui-form-field__help"
+        )!.id;
+        fixture.componentInstance.description = `${textboxHelpId} external-description ${textboxHelpId}`;
+        await update();
+        expect(textbox.getAttribute("aria-describedby")).toBe(
+            `${textboxHelpId} external-description`
+        );
+        fixture.componentInstance.hint = "";
+        await update();
+        expect(textbox.getAttribute("aria-describedby")).toBe(
+            fixture.componentInstance.description
+        );
     });
 });
 

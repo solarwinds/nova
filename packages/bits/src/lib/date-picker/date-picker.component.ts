@@ -59,6 +59,7 @@ import {
     IDatePickerDisabledDate,
 } from "./public-api";
 import { NuiValidators } from "../../validators";
+import { FormFieldDescription } from "../form-field/form-field-description";
 import { NuiFormFieldControl } from "../form-field/public-api";
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
@@ -121,6 +122,11 @@ export class DatePickerComponent
         this.explicitAriaLabel = value;
     }
     @Input() public ariaDescribedby: string;
+    private readonly formFieldDescription = new FormFieldDescription();
+
+    public get resolvedAriaDescribedby(): string | null {
+        return this.formFieldDescription.resolve(this.ariaDescribedby);
+    }
 
     // TODO: Consider injecting locale through LOCALE_ID Injection Token
     /** to date format locale */
@@ -223,6 +229,12 @@ export class DatePickerComponent
     private formFieldCaption: string | undefined;
 
     constructor(private cd: ChangeDetectorRef) {}
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.cd.markForCheck();
+        }
+    }
 
     public setFormFieldLabel(
         _labelId: string | undefined,
