@@ -65,13 +65,8 @@
             (@icon-size-default / 2) + @nui-button-border-width +
                 @btn-padding-is-empty - @nui-space-sm
         );
-        top: calc(
-            (
-                    (1em * @line-height-base) + (@nui-space-sm * 2) -
-                        @icon-size-default - (@nui-button-border-width * 2) -
-                        (@btn-padding-is-empty * 2)
-                ) / 2
-        );
+        top: calc(@nui-space-sm + 0.5em * @line-height-base);
+        transform: translateY(-50%);
 
         &:hover,
         &:active,

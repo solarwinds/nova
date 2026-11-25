@@ -4,6 +4,8 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | Aligned the message dismiss button with the status icon, including when the message wraps.
+
 ## [20.0.14] 📅 2026-11-24
 
 ### Fixes

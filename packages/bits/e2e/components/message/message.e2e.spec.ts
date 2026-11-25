@@ -76,6 +76,53 @@ test.describe("USERCONTROL Message", () => {
         ).toHaveAttribute("icon", "severity_warning");
     });
 
+    test("should align a larger dismiss button with the status icon even when text wraps", async () => {
+        const message = messageDismissAllowed.getLocator();
+        await messageDismissAllowed.toBeVisible();
+        const contentHeights: number[] = [];
+
+        for (const [width, buttonHeight] of [
+            [640, 30],
+            [250, 40],
+        ]) {
+            const layout = await message.evaluate(
+                (element, { width, buttonHeight }) => {
+                    element.style.width = `${width}px`;
+                    const statusIcon =
+                        element.querySelector(".nui-message-icon");
+                    const dismissButton =
+                        element.querySelector<HTMLButtonElement>(
+                            ".nui-message-dismiss-button button"
+                        );
+                    const content = element.querySelector(
+                        ".nui-message-content"
+                    );
+                    if (!statusIcon || !dismissButton || !content) {
+                        throw new Error("Message layout elements are missing");
+                    }
+
+                    dismissButton.style.height = `${buttonHeight}px`;
+                    const centerY = (element: Element) => {
+                        const { top, height } = element.getBoundingClientRect();
+                        return top + height / 2;
+                    };
+                    return {
+                        offset: Math.abs(
+                            centerY(statusIcon) - centerY(dismissButton)
+                        ),
+                        contentHeight: content.getBoundingClientRect().height,
+                    };
+                },
+                { width, buttonHeight }
+            );
+
+            expect(layout.offset).toBeLessThan(1);
+            contentHeights.push(layout.contentHeight);
+        }
+
+        expect(contentHeights[1]).toBeGreaterThan(contentHeights[0]);
+    });
+
     test("should be dismissed after 'click'", async () => {
         await messageDismissAllowed.toBeVisible();
         await messageDismissAllowed.dismiss();
