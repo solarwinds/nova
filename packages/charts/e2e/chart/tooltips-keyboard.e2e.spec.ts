@@ -126,9 +126,18 @@ test.describe("opt-in keyboard tooltip navigation", () => {
     }) => {
         await Helpers.prepareBrowser("plugins/tooltips/line", page);
         const chart = page.getByRole("img", { name: "Response time by date" });
+        const tooltipPanes = page
+            .locator(".nui-chart-tooltip-pane")
+            .filter({ visible: true });
+        // A chart redraw after load resets all tooltips, so wait until pointer
+        // tooltips work and close them before opening keyboard tooltips.
+        await chart.hover();
+        await expect(tooltipPanes).toHaveCount(2);
+        await page.mouse.move(0, 0);
+        await expect(tooltipPanes).toHaveCount(0);
         await chart.press("ArrowRight");
         await expect(chart).toBeFocused();
-        await expect(page.locator("nui-chart-tooltip")).toHaveCount(2);
+        await expect(tooltipPanes.locator(".pl-2")).toHaveText(["95", "40"]);
         const results = await new AxeBuilder({ page })
             .include("nui-line-chart-with-tooltips-example")
             .include(".nui-chart-tooltip-pane")
