@@ -39,6 +39,7 @@ import _isEmpty from "lodash/isEmpty";
 import _uniqueId from "lodash/uniqueId";
 import { Subject, Subscription } from "rxjs";
 
+import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
 import { ButtonSizeType } from "../../../lib/button/public-api";
 import { PopupComponent } from "../../popup-adapter/popup-adapter.component";
 import { MenuGroupComponent } from "../menu-item/menu-group/menu-group.component";
@@ -46,6 +47,17 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item/menu-item-base";
 import { MenuKeyControlService } from "../menu-key-control.service";
 import { MenuPopupComponent } from "../menu-popup/menu-popup.component";
 import { IMenuGroup } from "../public-api";
+
+const menuNavigationKeys: string[] = [
+    KEYBOARD_CODE.ARROW_DOWN,
+    KEYBOARD_CODE.ARROW_UP,
+    KEYBOARD_CODE.HOME,
+    KEYBOARD_CODE.END,
+    KEYBOARD_CODE.PAGE_DOWN,
+    KEYBOARD_CODE.PAGE_UP,
+    KEYBOARD_CODE.ESCAPE,
+    KEYBOARD_CODE.TAB,
+];
 
 /**
  * Examples: <example-url>./../examples/index.html#/menu</example-url><br />
@@ -194,6 +206,29 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     public onMenuOpen(): void {
         this.menuOpenStream.next();
+    }
+
+    public onMenuContentKeydown(event: KeyboardEvent): void {
+        const target = event.target;
+        if (
+            !(target instanceof HTMLElement) ||
+            !target.matches("nui-menu-option") ||
+            !menuNavigationKeys.includes(event.code)
+        ) {
+            return;
+        }
+
+        const items = this.itemsSource
+            ? this.menuPopup?.menuItems
+            : this.menuItems;
+        const index = items?.toArray().findIndex(item => item.id === target.id);
+        if (index === undefined || index < 0) {
+            return;
+        }
+        this.keyControlService.setActiveItem(index);
+        this.menuToggle.nativeElement.focus();
+        this.keyControlService.handleKeydown(event);
+        event.stopPropagation();
     }
 
     public get activeDescendant(): string | null {

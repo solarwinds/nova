@@ -38,7 +38,7 @@
                 <nui-menu-option
                     [disabled]="item.disabled"
                     [checked]="item.checked"
-                    (click)="handleClick(item)">
+                    (actionDone)="handleClick(item)">
                     <ng-container>
                         {{ getDisplayValue(item) }}
                     </ng-container>

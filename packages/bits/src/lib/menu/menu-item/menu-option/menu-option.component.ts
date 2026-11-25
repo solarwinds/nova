@@ -45,10 +45,9 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
 @Component({
     selector: "nui-menu-option",
     template: `
-        <div class="nui-menu-item__option" #menuOption tabindex="-1" title>
+        <div class="nui-menu-item__option" #menuOption title>
             <nui-checkbox
                 class="nui-menu-item__checkbox"
-                [attr.tabindex]="-1"
                 role="presentation"
                 [name]="name"
                 [value]="value"
@@ -70,6 +69,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     host: {
         "role": "menuitemcheckbox",
         "[attr.aria-checked]": "checked",
+        "[attr.tabindex]": "disabled ? null : -1",
     },
     standalone: false,
 })
@@ -96,6 +96,19 @@ export class MenuOptionComponent extends MenuItemBaseComponent {
             event.preventDefault();
             this.checked = !this.checked;
             this.actionDone.emit(this.checked);
+        }
+    }
+
+    @HostListener("keydown.enter", ["$event"])
+    @HostListener("keydown.space", ["$event"])
+    public onKeydown(event: KeyboardEvent): void {
+        if (event.target !== event.currentTarget) {
+            return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        if (!this.disabled) {
+            this.doAction();
         }
     }
 
