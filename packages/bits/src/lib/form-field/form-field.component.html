@@ -9,7 +9,7 @@
         <div class="nui-form-field__control-label-container-description">
             <label
                 class="nui-form-field__control-label"
-                [attr.for]="nuiFormControl?.id"
+                [attr.for]="nuiFormControl?.nativeControlId ?? nuiFormControl?.id"
                 [attr.id]="labelId"
                 >{{ caption }}</label
             >

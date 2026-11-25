@@ -9,7 +9,7 @@
             value="{{ value }}"
             [autocomplete]="autocomplete"
             [disabled]="disabled"
-            [attr.id]="id"
+            [attr.id]="nativeControlId"
             [attr.name]="name"
             [type]="type"
             (blur)="onBlurEventEmit()"
@@ -29,7 +29,7 @@
         <textarea
             *ngIf="rows > 1"
             class="form-control input-control nui-textbox__input"
-            [attr.id]="id"
+            [attr.id]="nativeControlId"
             [value]="value || ''"
             [rows]="rows"
             [disabled]="disabled"

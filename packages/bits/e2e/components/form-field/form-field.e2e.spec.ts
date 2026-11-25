@@ -406,7 +406,7 @@ test.describe("USERCONTROL form-field >", () => {
         await expect(checkbox).toHaveAccessibleName("Convert to UTC");
         await checkbox.focus();
         await checkbox.press("Space");
-        await expect(checkbox).toHaveAttribute("aria-checked", "true");
+        await expect(checkbox).toBeChecked();
     });
 
     test("includes the caption and switch text in its accessible name", async ({
@@ -472,7 +472,7 @@ test.describe("USERCONTROL form-field >", () => {
             "#nui-form-field-test-textbox-number input",
             "#nui-form-field-test-switch [role=checkbox]",
             "#nui-form-field-test-radio",
-            "#nui-form-field-test-checkbox label",
+            "#nui-form-field-test-checkbox input[type=checkbox]",
             "#nui-form-field-test-checkbox-group",
             "nui-color-picker [role=combobox]",
             "#nui-form-field-test-datepicker input",
@@ -519,28 +519,84 @@ test.describe("USERCONTROL form-field >", () => {
         }
     });
 
+    test("associates captions with controls that have host IDs", async ({
+        page,
+    }) => {
+        await page
+            .locator("#nui-form-field-test-toggle-disable-state-button")
+            .click();
+
+        for (const hostId of [
+            "nui-form-field-test-checkbox",
+            "nui-form-field-test-textbox",
+            "nui-form-field-test-textbox-number",
+        ]) {
+            const host = page.locator(`[id="${hostId}"]`);
+            const input = host.locator("input");
+            const caption = host
+                .locator("xpath=ancestor::nui-form-field")
+                .locator(".nui-form-field__control-label");
+            await expect(host).toHaveCount(1);
+            await expect(input).toBeEnabled();
+            const inputId = await input.getAttribute("id");
+            expect(inputId).toBeTruthy();
+            await expect
+                .poll(() =>
+                    caption.evaluate(label =>
+                        label instanceof HTMLLabelElement
+                            ? label.control?.id
+                            : undefined
+                    )
+                )
+                .toBe(inputId);
+            if (hostId === "nui-form-field-test-checkbox") {
+                const checked = await input.isChecked();
+                await caption.click();
+                await expect(input).toBeChecked({ checked: !checked });
+            } else {
+                await caption.click();
+                await expect(input).toBeFocused();
+            }
+        }
+    });
+
     test("preserves explicit names across caption changes and control recreation", async ({
         page,
     }) => {
         const field = page.locator("#nui-form-field-test-dynamic-caption");
         const input = field.locator("input");
-        await expect(input).toHaveAccessibleName("Primary email notifications");
+        await expect(input).toHaveAccessibleName(
+            "Primary email and Recovery email notifications"
+        );
         await input.fill("person@example.com");
         await page
             .getByRole("button", { name: "Update caption", exact: true })
             .click();
-        await expect(input).toHaveAccessibleName("Recovery email notifications");
+        await expect(input).toHaveAccessibleName(
+            "Primary email and Recovery email notifications"
+        );
         await expect(field.locator("label")).toHaveText("Recovery email");
         await expect(input).toHaveValue("person@example.com");
         await page
             .getByRole("button", { name: "Clear caption", exact: true })
             .click();
-        await expect(input).toHaveAccessibleName("Notification email");
+        await expect(input).toHaveAccessibleName(
+            "Primary email and Recovery email notifications"
+        );
         await expect(field.locator("label")).toHaveCount(0);
         await page
             .getByRole("button", { name: "Restore caption", exact: true })
             .click();
-        await expect(input).toHaveAccessibleName("Primary email notifications");
+        await expect(input).toHaveAccessibleName(
+            "Primary email and Recovery email notifications"
+        );
+        await page
+            .getByRole("button", { name: "Update caption", exact: true })
+            .click();
+        await page
+            .getByRole("button", { name: "Clear explicit name", exact: true })
+            .click();
+        await expect(input).toHaveAccessibleName("Recovery email");
         await page
             .getByRole("button", {
                 name: "Toggle captioned control",
@@ -549,7 +605,7 @@ test.describe("USERCONTROL form-field >", () => {
             .click();
         await expect(input).toHaveCount(0);
         await page
-            .getByRole("button", { name: "Update caption", exact: true })
+            .getByRole("button", { name: "Restore caption", exact: true })
             .click();
         await page
             .getByRole("button", {
@@ -557,7 +613,7 @@ test.describe("USERCONTROL form-field >", () => {
                 exact: true,
             })
             .click();
-        await expect(input).toHaveAccessibleName("Recovery email notifications");
+        await expect(input).toHaveAccessibleName("Primary email");
         await expect(input).toHaveAttribute(
             "id",
             (await field.locator("label").getAttribute("for"))!

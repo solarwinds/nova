@@ -17,28 +17,36 @@ test.describe("a11y: checkbox", () => {
         page,
     }) => {
         await Helpers.prepareBrowser("checkbox/checkbox-test", page);
-        const checkbox = page.locator("#nui-demo-checkbox label");
+        const checkbox = page.locator(
+            "#nui-demo-checkbox input[type=checkbox]"
+        );
         await expect(checkbox).toHaveRole("checkbox");
         await expect(checkbox).toHaveAccessibleName("Checkbox with help text");
         await expect(checkbox).toHaveAccessibleDescription(
             "This is some help text"
         );
-        await expect(checkbox).toHaveAttribute("aria-checked", "false");
+        await expect(checkbox).not.toBeChecked();
         await checkbox.focus();
         await expect(checkbox).toBeFocused();
         await checkbox.press("Space");
-        await expect(checkbox).toHaveAttribute("aria-checked", "true");
+        await expect(checkbox).toBeChecked();
 
-        const mixed = page.locator("#nui-demo-checkbox-indeterminate label");
+        const mixed = page.locator(
+            "#nui-demo-checkbox-indeterminate input[type=checkbox]"
+        );
         await expect(mixed).toHaveRole("checkbox");
-        await expect(mixed).toHaveAttribute("aria-checked", "mixed");
+        await expect(mixed).toBeChecked({ indeterminate: true });
+        await expect(mixed).not.toHaveAttribute("aria-checked");
+        await expect(
+            page.locator("#nui-demo-checkbox label")
+        ).not.toHaveAttribute("role");
     });
 
     test("exposes instructions on the actual focused accessibility node", async ({
         page,
     }) => {
         await Helpers.prepareBrowser("checkbox/checkbox-test", page);
-        const selector = "#nui-demo-checkbox-description label";
+        const selector = "#nui-demo-checkbox-description input[type=checkbox]";
         const label = page.locator(selector);
         await expect(label).toHaveAccessibleName("Send email notifications");
         const session = await page.context().newCDPSession(page);
@@ -90,11 +98,13 @@ test.describe("a11y: checkbox", () => {
         await session.detach();
     });
 
-    test("should update and remove descriptions on the focusable checkbox label", async ({
+    test("should update and remove descriptions on the focusable checkbox input", async ({
         page,
     }) => {
         await Helpers.prepareBrowser("checkbox/checkbox-test", page);
-        const label = page.locator("#nui-demo-checkbox-description label");
+        const label = page.locator(
+            "#nui-demo-checkbox-description input[type=checkbox]"
+        );
         await expect(label).toHaveAccessibleName("Send email notifications");
         await expect(label).toHaveAccessibleDescription(
             "Messages are sent once a day. Confirm your email address first."

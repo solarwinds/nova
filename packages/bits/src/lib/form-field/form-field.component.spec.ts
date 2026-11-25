@@ -32,6 +32,7 @@ import { NuiFreetypeQueryModule } from "../freetype-query-builder/freetype-query
 import { NuiRadioModule } from "../radio/radio.module";
 import { NuiSelectModule } from "../select/select.module";
 import { NuiSelectV2Module } from "../select-v2/select-v2.module";
+import { NuiTextboxModule } from "../textbox/textbox.module";
 import { NuiTimePickerModule } from "../time-picker/time-picker.module";
 
 @Component({
@@ -120,6 +121,108 @@ class OnPushFormFieldIdsHostComponent {
     public colors: string[] = [];
 }
 
+@Component({
+    template: `
+        <nui-form-field caption="Email alerts">
+            <nui-checkbox id="alerts">Email alerts</nui-checkbox>
+        </nui-form-field>
+        <nui-form-field caption="Email">
+            <nui-textbox id="email" [rows]="rows"></nui-textbox>
+        </nui-form-field>
+        <nui-form-field caption="Count">
+            <nui-textbox-number id="count"></nui-textbox-number>
+        </nui-form-field>
+        <nui-form-field caption="Dynamic">
+            <nui-textbox [id]="dynamicId" [attr.id]="dynamicId"></nui-textbox>
+        </nui-form-field>
+        <nui-form-field caption="Dynamic checkbox">
+            <nui-checkbox [id]="'bound-id'" [attr.id]="checkboxHostId">
+                Dynamic checkbox
+            </nui-checkbox>
+        </nui-form-field>
+    `,
+    standalone: false,
+})
+class FormFieldStaticIdsHostComponent {
+    public rows = 1;
+    public dynamicId = "dynamic";
+    public checkboxHostId = "bound-id";
+}
+
+describe("form-field control IDs", () => {
+    it("keeps host IDs unique and associates captions with native controls", async () => {
+        TestBed.configureTestingModule({
+            declarations: [FormFieldStaticIdsHostComponent, CheckboxComponent],
+            imports: [NuiFormFieldModule, NuiTextboxModule],
+        });
+        const fixture = TestBed.createComponent(
+            FormFieldStaticIdsHostComponent
+        );
+        fixture.autoDetectChanges();
+        await fixture.whenStable();
+        const root = fixture.nativeElement as HTMLElement;
+
+        const assertAssociation = (
+            hostId: string
+        ): HTMLInputElement | HTMLTextAreaElement => {
+            const host = root.querySelector<HTMLElement>(`[id="${hostId}"]`)!;
+            const input = host.querySelector<
+                HTMLInputElement | HTMLTextAreaElement
+            >("input, textarea")!;
+            const caption = host
+                .closest("nui-form-field")!
+                .querySelector<HTMLLabelElement>("label")!;
+            expect(input.id).toBeTruthy();
+            expect(input.id).not.toBe(hostId);
+            expect(root.querySelectorAll(`[id="${hostId}"]`).length).toBe(1);
+            expect(root.querySelectorAll(`[id="${input.id}"]`).length).toBe(1);
+            expect(caption.control).toBe(input);
+            return input;
+        };
+
+        assertAssociation("alerts");
+        const checkbox = root.querySelector<HTMLInputElement>(
+            "#alerts input[type='checkbox']"
+        )!;
+        assertAssociation("email");
+        assertAssociation("count");
+        assertAssociation("dynamic");
+        assertAssociation("bound-id");
+        const caption = root.querySelector<HTMLLabelElement>(
+            `nui-form-field label[for="${checkbox.id}"]`
+        )!;
+        caption.click();
+        expect(checkbox.checked).toBeTrue();
+
+        fixture.componentInstance.rows = 2;
+        fixture.componentInstance.dynamicId = "changed";
+        fixture.componentInstance.checkboxHostId = "other-host-id";
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(assertAssociation("email").tagName).toBe("TEXTAREA");
+        assertAssociation("changed");
+        const dynamicCheckbox =
+            root.querySelector<HTMLElement>("#other-host-id")!;
+        const dynamicInput = dynamicCheckbox.querySelector("input")!;
+        const dynamicCaption = dynamicCheckbox
+            .closest("nui-form-field")!
+            .querySelector<HTMLLabelElement>("label")!;
+        expect(dynamicInput.id).toBe("bound-id");
+        expect(dynamicCaption.control).toBe(dynamicInput);
+
+        fixture.componentInstance.checkboxHostId = "bound-id";
+        const dynamicTextboxCaption = root
+            .querySelector("#changed")!
+            .closest("nui-form-field")!
+            .querySelector<HTMLLabelElement>("label")!;
+        fixture.componentInstance.dynamicId = `${dynamicTextboxCaption.id}-control`;
+        fixture.detectChanges();
+        await fixture.whenStable();
+        assertAssociation("bound-id");
+        assertAssociation(fixture.componentInstance.dynamicId);
+    });
+});
+
 describe("form-field labels in an OnPush host", () => {
     it("renders checkbox and color-picker IDs with explicit caption names", async () => {
         TestBed.configureTestingModule({
@@ -149,7 +252,7 @@ describe("form-field labels in an OnPush host", () => {
         expect(checkboxCaption?.control).toBe(checkboxInput);
         expect(
             fields[0]
-                .querySelector(".nui-checkbox__label")
+                .querySelector(".nui-checkbox__input")
                 ?.getAttribute("aria-label")
         ).toBe("Notifications");
         const colorControl = fields[1].querySelector<HTMLElement>(
@@ -250,7 +353,7 @@ describe("form field with a checkbox in an OnPush host", () => {
 
         const host: HTMLElement = fixture.nativeElement;
         const checkbox = host.querySelector<HTMLElement>(
-            ".nui-checkbox__label"
+            ".nui-checkbox__input"
         );
         const caption = host.querySelector<HTMLElement>(
             ".nui-form-field__control-label"
@@ -287,7 +390,7 @@ describe("form field with a checkbox in an OnPush host", () => {
 
         const host: HTMLElement = fixture.nativeElement;
         const checkbox = host.querySelector<HTMLElement>(
-            ".nui-checkbox__label"
+            ".nui-checkbox__input"
         );
         const help = host.querySelector<HTMLElement>(".nui-form-field__help");
         expect(help?.textContent).toContain("Choose how to receive alerts");

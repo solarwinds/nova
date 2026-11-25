@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import {
+    ChangeDetectorRef,
     Component,
     ElementRef,
     EventEmitter,
     forwardRef,
+    inject,
     Input,
     OnChanges,
     Output,
@@ -136,6 +138,11 @@ export class TextboxNumberComponent
      */
     @Input() public id: string;
 
+    /** Native input ID; in a form field, use it to associate an external label. */
+    public get nativeControlId(): string | undefined {
+        return this.formFieldControlId ?? this.id;
+    }
+
     /**
      * Step by which the value are increased/decreased
      * when clicking on up/down buttons
@@ -171,6 +178,8 @@ export class TextboxNumberComponent
 
     @Input() public ariaDescribedby: string;
 
+    private readonly changeDetector = inject(ChangeDetectorRef);
+    private formFieldControlId: string | undefined;
     private explicitAriaLabel: string | undefined;
     private formFieldCaption: string | undefined;
 
@@ -203,6 +212,13 @@ export class TextboxNumberComponent
         caption?: string
     ): void {
         this.formFieldCaption = caption;
+    }
+
+    public setFormFieldControlId(id: string | undefined): void {
+        if (this.formFieldControlId !== id) {
+            this.formFieldControlId = id;
+            this.changeDetector.markForCheck();
+        }
     }
 
     public ngOnChanges(changes: SimpleChanges): void {

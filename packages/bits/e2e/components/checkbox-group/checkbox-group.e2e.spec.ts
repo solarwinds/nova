@@ -71,12 +71,12 @@ test.describe("USERCONTROL Checkbox Group", () => {
         page,
     }) => {
         const group = page.locator("#nui-demo-checkbox-group-basic");
-        const checkboxes = group.locator("label[role=checkbox]");
-        const expectedStates = ["false", "true", "true", "false", "true"];
+        const checkboxes = group.locator("input[type=checkbox]");
+        const expectedStates = [false, true, true, false, true];
         await expect(checkboxes).toHaveCount(expectedStates.length);
         for (const [index, state] of expectedStates.entries()) {
-            await expect(checkboxes.nth(index)).toHaveAttribute(
-                "aria-checked",
+            await expect(checkboxes.nth(index)).toHaveJSProperty(
+                "checked",
                 state
             );
         }
@@ -109,8 +109,8 @@ test.describe("USERCONTROL Checkbox Group", () => {
             .click();
         await expect(group).toHaveAccessibleName("Vegetables");
         for (const [index, state] of expectedStates.entries()) {
-            await expect(checkboxes.nth(index)).toHaveAttribute(
-                "aria-checked",
+            await expect(checkboxes.nth(index)).toHaveJSProperty(
+                "checked",
                 state
             );
         }

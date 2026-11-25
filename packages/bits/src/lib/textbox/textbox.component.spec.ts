@@ -47,6 +47,7 @@ import { SpinnerComponent } from "../spinner/spinner.component";
                 <nui-textbox
                     *ngIf="showTextbox"
                     formControlName="input"
+                    [id]="controlId"
                     [ariaDescribedby]="description"
                     [ariaLabel]="ariaLabel"></nui-textbox>
                 <nui-validation-message for="required" [show]="false">
@@ -64,6 +65,7 @@ class TextboxFormComponent {
     public ariaLabel = "Dashboard name";
     public hint: string;
     public description: string;
+    public controlId: string;
     public showTextbox = true;
 
     public form = this.fb.group({
@@ -450,6 +452,48 @@ describe("components >", () => {
                     "dashboard-guidance"
                 );
                 expect(help.textContent.trim()).toBe("");
+            });
+
+            it("merges changing caller descriptions and preserves a changed control id", async () => {
+                testComponent.description = "first-description";
+                testComponent.hint = "Field help";
+                fixture.detectChanges();
+                await fixture.whenStable();
+                fixture.detectChanges();
+
+                const textbox = testComponent.input.textboxInput.nativeElement;
+                const help = fixture.nativeElement.querySelector(
+                    ".nui-form-field__help"
+                );
+                expect(textbox.getAttribute("aria-describedby")).toBe(
+                    `first-description ${help.id}`
+                );
+
+                testComponent.description = "second-description";
+                testComponent.controlId = "consumer-control-id";
+                testComponent.caption = "Dashboard";
+                fixture.detectChanges();
+                await fixture.whenStable();
+                fixture.detectChanges();
+                expect(textbox.getAttribute("aria-describedby")).toBe(
+                    `second-description ${help.id}`
+                );
+                expect(textbox.id).toBe("consumer-control-id");
+                expect(
+                    fixture.nativeElement.querySelector("label").control
+                ).toBe(textbox);
+
+                testComponent.description = "";
+                fixture.detectChanges();
+                await fixture.whenStable();
+                fixture.detectChanges();
+                expect(textbox.getAttribute("aria-describedby")).toBe(help.id);
+
+                testComponent.hint = "";
+                fixture.detectChanges();
+                await fixture.whenStable();
+                fixture.detectChanges();
+                expect(textbox.hasAttribute("aria-describedby")).toBeFalse();
             });
 
             it("associates validation only while a message is shown", async () => {
