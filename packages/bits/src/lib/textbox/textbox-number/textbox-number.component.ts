@@ -45,6 +45,7 @@ import round from "lodash/round";
 
 import { KEYBOARD_CODE } from "../../../constants/keycode.constants";
 import { regexpValidation } from "../../../constants/regex.constants";
+import { FormFieldDescription } from "../../form-field/form-field-description";
 import { NuiFormFieldControl } from "../../form-field/public-api";
 
 // <example-url>./../examples/index.html#/textbox/textbox-number</example-url>
@@ -178,10 +179,15 @@ export class TextboxNumberComponent
 
     @Input() public ariaDescribedby: string;
 
+    private readonly formFieldDescription = new FormFieldDescription();
     private readonly changeDetector = inject(ChangeDetectorRef);
     private formFieldControlId: string | undefined;
     private explicitAriaLabel: string | undefined;
     private formFieldCaption: string | undefined;
+
+    public get resolvedAriaDescribedby(): string | null {
+        return this.formFieldDescription.resolve(this.ariaDescribedby);
+    }
 
     /**
      * Minimum value of textBoxNumber component
@@ -206,6 +212,12 @@ export class TextboxNumberComponent
     public isRepeatable = true;
 
     private validatorFn: (c: FormControl) => ValidationErrors | null;
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.changeDetector.markForCheck();
+        }
+    }
 
     public setFormFieldLabel(
         _labelId: string | undefined,

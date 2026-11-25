@@ -59,6 +59,7 @@ export class FormFieldComponent
     private originalControlLabel: string | undefined;
     private lastCaption: string | undefined;
     private appliedCaption: string | undefined;
+    private appliedDescription: string | undefined;
     private controlUpdateTimeout: ReturnType<typeof setTimeout> | undefined;
     private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
@@ -114,6 +115,11 @@ export class FormFieldComponent
         this.controlIsOptional =
             this.showOptionalText && !this.hasRequiredField(this.control);
 
+        if (this.namedControl && this.namedControl !== this.nuiFormControl) {
+            this.namedControl.setFormFieldDescription?.(undefined);
+            this.namedControl = undefined;
+            clearTimeout(this.controlUpdateTimeout);
+        }
         if (
             this.nuiFormControl &&
             (this.nuiFormControl !== this.namedControl ||
@@ -121,13 +127,16 @@ export class FormFieldComponent
                 (this.nuiFormControl.setFormFieldControlId &&
                     this.nuiFormControl.nativeControlId !==
                         this.getNativeControlId(this.nuiFormControl)) ||
-                this.nuiFormControl.ariaDescribedby !==
-                    this.getControlDescription(this.nuiFormControl))
+                (this.nuiFormControl.setFormFieldDescription
+                    ? this.appliedDescription !== this.getFieldDescription()
+                    : this.nuiFormControl.ariaDescribedby !==
+                      this.getControlDescription(this.nuiFormControl)))
         ) {
             if (this.nuiFormControl !== this.namedControl) {
                 this.namedControl = this.nuiFormControl;
                 this.originalControlLabel = this.nuiFormControl.ariaLabel;
                 this.appliedCaption = undefined;
+                this.appliedDescription = undefined;
             }
             this.lastCaption = this.caption;
             this.updateControlName();
@@ -186,7 +195,12 @@ export class FormFieldComponent
                 control.ariaLabel = this.originalControlLabel;
             }
             this.appliedCaption = this.caption;
-            control.ariaDescribedby = this.getControlDescription(control);
+            if (control.setFormFieldDescription) {
+                this.appliedDescription = this.getFieldDescription();
+                control.setFormFieldDescription(this.appliedDescription);
+            } else {
+                control.ariaDescribedby = this.getControlDescription(control);
+            }
             if (!control.id) {
                 control.id = `${this.labelId}-control`;
             }
@@ -221,15 +235,19 @@ export class FormFieldComponent
         const references = (control.ariaDescribedby || "")
             .split(/\s+/)
             .filter(reference => reference && reference !== this.helpId);
-        if (
-            this.hint ||
-            this.hintTemplate ||
-            this.validationMessages?.some(message => message.show)
-        ) {
+        if (this.getFieldDescription()) {
             references.push(this.helpId);
         }
         return references.length
             ? Array.from(new Set(references)).join(" ")
+            : undefined;
+    }
+
+    private getFieldDescription(): string | undefined {
+        return this.hint ||
+            this.hintTemplate ||
+            this.validationMessages?.some(message => message.show)
+            ? this.helpId
             : undefined;
     }
 

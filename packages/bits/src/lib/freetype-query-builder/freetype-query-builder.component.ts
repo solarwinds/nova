@@ -53,6 +53,7 @@ import {
     Tokenizer,
 } from "./models";
 import { TextHighlightOverlayComponent } from "./text-highlight-overlay/text-highlight-overlay-component";
+import { FormFieldDescription } from "../form-field/form-field-description";
 import { NuiFormFieldControl } from "../form-field/public-api";
 import { OptionValueType } from "../overlay/types";
 import { SelectV2Component } from "../select-v2/select/select-v2.component";
@@ -136,6 +137,11 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
         this.explicitAriaLabel = value;
     }
     @Input() public ariaDescribedby: string;
+    private readonly formFieldDescription = new FormFieldDescription();
+
+    public get resolvedAriaDescribedby(): string | null {
+        return this.formFieldDescription.resolve(this.ariaDescribedby);
+    }
 
     @ViewChild("queryselect", { static: true })
     querySelect: SelectV2Component;
@@ -177,6 +183,12 @@ export class FreetypeQueryBuilderComponent<T extends QueryToken>
             body: [""],
         });
         this.bodyControl = this.formGroup.get("body") as FormControl;
+    }
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.cd.markForCheck();
+        }
     }
 
     public setFormFieldLabel(

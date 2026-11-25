@@ -33,6 +33,7 @@ import {
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
+import { FormFieldDescription } from "../form-field/form-field-description";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
 let switchLabelCounter = 0;
@@ -84,8 +85,19 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
     private readonly defaultAriaLabel = $localize`:Accessible name for a switch without a label:Switch`;
     private readonly changeDetector = inject(ChangeDetectorRef);
     private formFieldLabelId: string | undefined;
+    private readonly formFieldDescription = new FormFieldDescription();
 
     @Output() valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    public get resolvedAriaDescribedby(): string | null {
+        return this.formFieldDescription.resolve(this.ariaDescribedby);
+    }
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.changeDetector.markForCheck();
+        }
+    }
 
     public get accessibleLabel(): string | null {
         if (this.ariaLabel) {
