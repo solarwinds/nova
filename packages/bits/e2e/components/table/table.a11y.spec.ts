@@ -410,10 +410,14 @@ test.describe("a11y: table", () => {
                 name: "Column width: Name",
             });
             await expect(dialog).toBeVisible();
+            await expect(
+                dialog.getByRole("spinbutton", { name: "Width (px)" })
+            ).toBeFocused();
             await featuresHeader.click();
 
             await expect(dialog).toBeHidden();
             await expect(featuresHeader).toBeFocused();
+            await expect(resizer).toHaveAttribute("aria-expanded", "false");
         });
 
         test("should preserve pointer resizing without opening the editor after a drag", async () => {

@@ -99,7 +99,6 @@ import { NonResizableColumnTypes, TableAlignmentOptions } from "../types";
                     class="nui-table__column-width-editor p-3"
                     novalidate
                     [cdkTrapFocus]="columnWidthOverlay.showing"
-                    [cdkTrapFocusAutoCapture]="columnWidthOverlay.showing"
                     (submit)="applyColumnWidth($event, columnWidthInput)"
                     (keydown.enter)="$event.stopPropagation()"
                     (keydown.escape)="$event.stopPropagation()"
@@ -108,7 +107,6 @@ import { NonResizableColumnTypes, TableAlignmentOptions } from "../types";
                     <label [attr.for]="columnWidthInputId" i18n>Width (px)</label>
                     <input
                         #columnWidthInput
-                        cdkFocusInitial
                         class="form-control input-control"
                         [id]="columnWidthInputId"
                         type="number"
