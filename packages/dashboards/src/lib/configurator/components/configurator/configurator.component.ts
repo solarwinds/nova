@@ -18,8 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { CdkTrapFocus } from "@angular/cdk/a11y";
 import { Portal } from "@angular/cdk/portal";
 import {
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ComponentRef,
@@ -55,7 +57,7 @@ import { PreviewService } from "../../services/preview.service";
     host: { class: "nui-configurator" },
     standalone: false,
 })
-export class ConfiguratorComponent implements OnInit, OnDestroy {
+export class ConfiguratorComponent implements OnInit, AfterViewInit, OnDestroy {
     public static lateLoadKey = "ConfiguratorComponent";
 
     @Input() formPortal: Portal<any>;
@@ -67,6 +69,8 @@ export class ConfiguratorComponent implements OnInit, OnDestroy {
 
     @ViewChild("previewPizzagnaComponent", { static: false })
     previewPizzagnaComponent: PizzagnaComponent;
+
+    @ViewChild(CdkTrapFocus) private focusTrap: CdkTrapFocus;
 
     public submitError = new Subject<void>();
     private readonly destroy$ = new Subject<void>();
@@ -90,6 +94,10 @@ export class ConfiguratorComponent implements OnInit, OnDestroy {
                         .widget,
             };
         }
+    }
+
+    public ngAfterViewInit(): void {
+        this.focusTrap.focusTrap.focusInitialElementWhenReady();
     }
 
     public ngOnDestroy(): void {

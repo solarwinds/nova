@@ -43,8 +43,9 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
+import uniqueId from "lodash/uniqueId";
 import { Subject, Subscription } from "rxjs";
-import { debounceTime, distinctUntilChanged, filter } from "rxjs/operators";
+import { debounceTime } from "rxjs/operators";
 
 import {
     PanelBackgroundColor,
@@ -216,11 +217,37 @@ export class PanelComponent
     public isClosable = false;
     public isHoverable = false;
     public isAnimating = false;
+    public readonly resizeHeadingId = uniqueId("nui-panel-heading-");
+
+    public get resizeLabelledBy(): string | null {
+        if (!this.displayPanelHeader) {
+            return null;
+        }
+        if (this.heading) {
+            return this.resizeHeadingId;
+        }
+        const header: HTMLElement | undefined =
+            this.headerContent?.element.nativeElement;
+        return (
+            header?.querySelector<HTMLElement>("[nuiPanelEmbeddedHeading]")
+                ?.id || null
+        );
+    }
 
     public get expandCollapseAriaLabel(): string {
         return this._isCollapsed
             ? $localize`Expand panel`
             : $localize`Collapse panel`;
+    }
+
+    public get hoverPanelAriaLabel(): string {
+        return this.heading || $localize`Panel`;
+    }
+
+    public get resizeAriaLabel(): string {
+        return this.heading
+            ? $localize`Resize panel: ${this.heading}`
+            : $localize`Resize panel`;
     }
 
     private _isCollapsed: boolean;
@@ -230,6 +257,9 @@ export class PanelComponent
     private _expandAnimationFactory?: AnimationFactory;
     private _collapseAnimationFactory?: AnimationFactory;
     private lastAnimationPlayer?: AnimationPlayer;
+    private pointerInside = false;
+    private dismissedByKeyboard = false;
+    private pendingHoverExpanded?: boolean;
 
     constructor(
         private renderer: Renderer2,
@@ -241,13 +271,12 @@ export class PanelComponent
         this.defineSizes();
         this.defineState();
         this.togglesSubscription = this.toggles
-            .pipe(filter(toggle => toggle === this._isCollapsed))
-            .pipe(distinctUntilChanged())
             .pipe(debounceTime(PanelComponent.ANIMATION_TIME))
-            .subscribe(_ => this.toggleHideOrCollapsed());
+            .subscribe(expanded => this.applyHoverState(expanded));
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
+        this.identifyResizeHeading();
         if (changes["panelMode"] && changes["panelMode"].isFirstChange()) {
             this.defineSizes();
         }
@@ -268,6 +297,7 @@ export class PanelComponent
             this.isResizable = false;
         }
         this.displayFooter = !this.paneDirectionHorizontal;
+        this.identifyResizeHeading();
         this.checkPanelEmbeddedContent();
         this.handleContentMargin();
         this.updatePaneContainerSizeWithoutAnimation();
@@ -302,18 +332,109 @@ export class PanelComponent
 
     public toggleEnter(): void {
         if (this.isHoverable) {
+            this.pointerInside = true;
+            this.dismissedByKeyboard = false;
             this.toggles.next(true);
         }
     }
 
     public toggleLeave(): void {
         if (this.isHoverable) {
+            this.pointerInside = false;
             this.toggles.next(false);
+        }
+    }
+
+    public onHoverFocusIn(event: FocusEvent): void {
+        if (!this.isHoverable) {
+            return;
+        }
+        const pane: HTMLElement = this.sidePaneContainer.element.nativeElement;
+        if (
+            !(event.relatedTarget instanceof Node) ||
+            !pane.contains(event.relatedTarget)
+        ) {
+            this.dismissedByKeyboard = false;
+        }
+        if (!this.dismissedByKeyboard) {
+            this.toggles.next(true);
+            this.applyHoverState(true);
+        }
+    }
+
+    public onHoverFocusOut(event: FocusEvent): void {
+        if (!this.isHoverable) {
+            return;
+        }
+        const pane: HTMLElement = this.sidePaneContainer.element.nativeElement;
+        if (
+            event.relatedTarget instanceof Node &&
+            pane.contains(event.relatedTarget)
+        ) {
+            return;
+        }
+        this.toggles.next(this.pointerInside);
+    }
+
+    public onHoverKeyDown(event: KeyboardEvent): void {
+        if (
+            !this.isHoverable ||
+            event.defaultPrevented ||
+            event.key !== "Escape" ||
+            (this.isCollapsed && !this.isAnimating)
+        ) {
+            return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        this.dismissedByKeyboard = true;
+        const pane: HTMLElement = this.sidePaneContainer.element.nativeElement;
+        pane.focus({ preventScroll: true });
+        this.toggles.next(false);
+        this.applyHoverState(false);
+    }
+
+    private applyHoverState(expanded: boolean): void {
+        if (!this.isHoverable) {
+            return;
+        }
+        const pane: HTMLElement = this.sidePaneContainer.element.nativeElement;
+        const shouldExpand =
+            !this.dismissedByKeyboard &&
+            (expanded || pane.contains(document.activeElement));
+        if (this.isAnimating) {
+            this.pendingHoverExpanded = shouldExpand;
+            return;
+        }
+        if (shouldExpand === this._isCollapsed) {
+            this.toggleCollapsed();
         }
     }
 
     public isPanelResizable(): boolean {
         return this.isResizable && !this.isCollapsed;
+    }
+
+    public isPanelKeyboardResizable(): boolean {
+        return (
+            this.isPanelResizable() &&
+            !this.isHidden &&
+            !this.isAnimating &&
+            this.orientation !== panelMap.bottom.orientation &&
+            getComputedStyle(this.sidePaneContainer.element.nativeElement)
+                .direction !== "rtl"
+        );
+    }
+
+    private identifyResizeHeading(): void {
+        const header: HTMLElement | undefined =
+            this.headerContent?.element.nativeElement;
+        const heading = header?.querySelector<HTMLElement>(
+            "[nuiPanelEmbeddedHeading]"
+        );
+        if (this.isResizable && heading && !heading.id) {
+            this.renderer.setAttribute(heading, "id", this.resizeHeadingId);
+        }
     }
 
     public toggleHideOrCollapsed(): void {
@@ -354,6 +475,11 @@ export class PanelComponent
                     : this.applyBoundarySizes();
             }
             this.changeDetectorRef.detectChanges();
+            const pendingHoverExpanded = this.pendingHoverExpanded;
+            this.pendingHoverExpanded = undefined;
+            if (this.isHoverable && pendingHoverExpanded !== undefined) {
+                this.applyHoverState(pendingHoverExpanded);
+            }
         });
     }
 
@@ -427,6 +553,9 @@ export class PanelComponent
     }
 
     public toggleCollapsedOnClick(): void {
+        if (this.isCollapsible && this.isAnimating) {
+            return;
+        }
         if (!this.isHoverable) {
             this.toggleHideOrCollapsed();
         }

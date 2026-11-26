@@ -130,13 +130,17 @@ describe("components >", () => {
                 logger = TestBed.inject(LoggerService);
             });
             it(`should log an error for buttons without a type attribute`, () => {
-                const errorSpy = spyOnProperty(
-                    logger,
-                    "error",
-                    "get"
-                ).and.callThrough();
-                fixture = TestBed.createComponent(TestAppButtonNoTypeComponent);
-                expect(errorSpy).toHaveBeenCalled();
+                const errorSpy = jasmine.createSpy("error");
+                spyOnProperty(logger, "error", "get").and.returnValue(errorSpy);
+                const noTypeFixture = TestBed.createComponent(
+                    TestAppButtonNoTypeComponent
+                );
+                expect(errorSpy).toHaveBeenCalledOnceWith(
+                    jasmine.stringMatching(
+                        /^No type specified for button element\./
+                    ),
+                    noTypeFixture.nativeElement.querySelector("button")
+                );
             });
             it(`should not log an error for non-buttons without a type attribute`, () => {
                 const errorSpy = spyOnProperty(
@@ -144,9 +148,7 @@ describe("components >", () => {
                     "error",
                     "get"
                 ).and.callThrough();
-                fixture = TestBed.createComponent(
-                    TestAppButtonOnDivNoTypeComponent
-                );
+                TestBed.createComponent(TestAppButtonOnDivNoTypeComponent);
                 expect(errorSpy).not.toHaveBeenCalled();
             });
             it(`should not log an error for buttons with a type attribute`, () => {
@@ -178,16 +180,19 @@ describe("components >", () => {
         });
 
         describe("repeatable >", () => {
-            let buttonFixture: ComponentFixture<ButtonComponent>;
+            let buttonFixture: ComponentFixture<TestAppButtonComponent>;
             let element: HTMLButtonElement;
 
             beforeEach(() => {
-                buttonFixture = TestBed.createComponent(ButtonComponent);
-                subject = buttonFixture.componentInstance;
+                buttonFixture = TestBed.createComponent(TestAppButtonComponent);
+                const button = buttonFixture.debugElement.query(
+                    By.directive(ButtonComponent)
+                );
+                subject = button.componentInstance;
                 subject.isRepeat = true;
                 buttonFixture.detectChanges();
 
-                element = (<any>subject).el.nativeElement;
+                element = button.nativeElement;
             });
 
             it("stops emitting click after element becomes disabled", fakeAsync(() => {

@@ -18,7 +18,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    Input,
+} from "@angular/core";
 import {
     ComponentFixture,
     fakeAsync,
@@ -29,6 +34,9 @@ import { By } from "@angular/platform-browser";
 
 import { PopupComponent } from "./popup-adapter.component";
 import { PopupAdapterModule } from "./popup-adapter.module";
+import { PopupToggleDirective } from "../popup/popup-toggle.directive";
+import { PopupDeprecatedComponent } from "../popup/popup.component";
+import { NuiPopupModule } from "../popup/popup.module";
 
 @Component({
     template: `
@@ -38,7 +46,7 @@ import { PopupAdapterModule } from "./popup-adapter.module";
             (opened)="openedStates.push($event)"
         >
             <button type="button">Info</button>
-            <div popupAreaContent>Popup content</div>
+            <div popupAreaContent tabindex="-1">Popup content</div>
         </nui-popup>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,21 +59,58 @@ class PopupAdapterTestHostComponent {
 
 describe("PopupComponent (adapter)", () => {
     let fixture: ComponentFixture<PopupAdapterTestHostComponent>;
+    let deprecatedFixture: ComponentFixture<PopupDeprecatedComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [PopupAdapterTestHostComponent],
+            imports: [PopupAdapterTestHostComponent, NuiPopupModule],
         });
+        deprecatedFixture = TestBed.createComponent(PopupDeprecatedComponent);
         fixture = TestBed.createComponent(PopupAdapterTestHostComponent);
     });
 
     afterEach(() => {
         fixture?.destroy();
+        deprecatedFixture?.destroy();
     });
 
     const getPopup = (): PopupComponent =>
         fixture.debugElement.query(By.directive(PopupComponent))
             .componentInstance;
+
+    it("renders focusable content before notifying consumers even when deprecated popup styles are loaded", fakeAsync(() => {
+        fixture.detectChanges();
+        tick(0);
+
+        const popup = getPopup();
+        const subscription = popup.opened.subscribe(open => {
+            if (!open) {
+                return;
+            }
+
+            const container = fixture.nativeElement.querySelector(
+                ".nui-popup-container"
+            ) as HTMLElement;
+            expect(
+                container.classList.contains("nui-popup--opened")
+            ).toBeTrue();
+            expect(popup.visible).toBeTrue();
+
+            const content =
+                popup.popupAreaContainer.nativeElement.querySelector(
+                    "[popupAreaContent]"
+                ) as HTMLElement;
+            content.focus();
+            expect(content.isConnected).toBeTrue();
+            expect(getComputedStyle(content).visibility).toBe("visible");
+            expect(document.activeElement).toBe(content);
+        });
+
+        popup.toggleOpened(new MouseEvent("click"));
+        expect(fixture.componentInstance.openedStates).toEqual([false, true]);
+        subscription.unsubscribe();
+        tick(0);
+    }));
 
     it("initializes closed on [isOpen]='false', tolerates repeated pre-open closes, and opens/closes normally", fakeAsync(() => {
         fixture.detectChanges();
@@ -147,5 +192,69 @@ describe("PopupComponent (adapter)", () => {
         tick(0);
 
         expect(hideSpy).toHaveBeenCalledTimes(1);
+    }));
+
+    it("does not close when a click from a host-toggle reference is intercepted", fakeAsync(() => {
+        fixture.detectChanges();
+        tick(0);
+
+        fixture.componentRef.setInput("isOpen", true);
+        fixture.detectChanges();
+
+        const popup = getPopup();
+        const button = fixture.nativeElement.querySelector("button");
+        const openedStates = fixture.componentInstance.openedStates;
+        expect(popup.isOpen).toBe(true);
+
+        button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        tick(0);
+
+        expect(popup.isOpen).toBe(true);
+        expect(openedStates).toEqual([false, true]);
+    }));
+
+    it("still closes on an outside click with a host-toggle reference", fakeAsync(() => {
+        fixture.detectChanges();
+        tick(0);
+        fixture.componentRef.setInput("isOpen", true);
+        fixture.detectChanges();
+
+        document.body.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        tick(0);
+
+        expect(getPopup().isOpen).toBe(false);
+    }));
+
+    it("keeps an explicit toggle as the click boundary even when the host is the anchor", fakeAsync(() => {
+        fixture.detectChanges();
+        tick(0);
+        fixture.componentRef.setInput("isOpen", true);
+        fixture.detectChanges();
+
+        const popup = getPopup();
+        const toggle = document.createElement("button");
+        popup.popupToggle = new PopupToggleDirective(new ElementRef(toggle));
+        fixture.nativeElement
+            .querySelector("button")
+            .dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        tick(0);
+
+        expect(popup.isOpen).toBe(false);
+    }));
+
+    it("does not treat host clicks as internal without host-reference mode", fakeAsync(() => {
+        fixture.detectChanges();
+        tick(0);
+        fixture.componentRef.setInput("isOpen", true);
+        fixture.detectChanges();
+
+        const popup = getPopup();
+        popup.isHostToggleRef = false;
+        fixture.nativeElement
+            .querySelector("button")
+            .dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        tick(0);
+
+        expect(popup.isOpen).toBe(false);
     }));
 });

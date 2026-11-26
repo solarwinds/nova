@@ -31,4 +31,17 @@ export class LegendDocsExampleComponent {
        [isSelected]="!chartAssist.isSeriesHidden(seriesId)"
        (isSelectedChange)="chartAssist.toggleSeries(seriesId, $event)">
 </nui-legend-series>`;
+
+    public focusableLegendHtml = `<nui-chart [chart]="chartAssist.chart"></nui-chart>
+<nui-legend [interactive]="false">
+    <nui-legend-series
+        *ngFor="let series of chartAssist.legendSeriesSet"
+        [focusable]="true"
+        [descriptionPrimary]="series.name"
+        [seriesRenderState]="chartAssist.renderStatesIndex[series.id]?.state"
+        (focusin)="chartAssist.emphasizeSeries(series.id)"
+        (focusout)="chartAssist.resetVisibleSeries()">
+        <nui-basic-legend-tile></nui-basic-legend-tile>
+    </nui-legend-series>
+</nui-legend>`;
 }

@@ -18,10 +18,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Atom } from "../../atom";
-import { Animations, Helpers, test } from "../../setup";
-import { Camera } from "../../virtual-camera/Camera";
 import { ComboboxV2Atom } from "./combobox-v2.atom";
+import { Atom } from "../../atom";
+import { Animations, expect, Helpers, test } from "../../setup";
+import { Camera } from "../../virtual-camera/Camera";
 
 const name = "Combobox V2";
 
@@ -76,6 +76,15 @@ test.describe(`Visual tests: ${name}`, () => {
         await Helpers.page.locator("#trigger-disabled").click();
         await comboboxMulti.selectAll();
         await comboboxSingle.type("qwerty");
+        await expect(comboboxSingle.input).toHaveValue("qwerty");
+        await expect(comboboxSingle.input).toBeFocused();
+        await comboboxSingle.toBeOpened();
+        await expect(comboboxSingle.createOption).toBeVisible();
+        await comboboxSingle.input.evaluate((input: HTMLInputElement) =>
+            input.setSelectionRange(input.value.length, input.value.length)
+        );
+        expect(await comboboxSingle.getSelectionStart()).toBe(6);
+        expect(await comboboxSingle.getSelectionEnd()).toBe(6);
         await camera.say.cheese("State 2");
 
         // State 3

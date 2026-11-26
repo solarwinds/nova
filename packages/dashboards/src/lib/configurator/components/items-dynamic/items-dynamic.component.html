@@ -1,9 +1,22 @@
-<!-- TODO: NUI-6281 - Fix no keyboard alternative for drag-to-reorder -->
 <div
     class="nui-items-dynamic"
     cdkDropList
     (cdkDropListDropped)="drop($event)"
     [formGroup]="form">
+    <span
+        class="nui-items-dynamic__a11y-text"
+        [id]="reorderInstructionsId"
+        i18n>
+        Press Space or Enter to pick up this item. Use the arrow keys to move
+        it. Press Space or Enter to drop it, or Escape to restore its original
+        position.
+    </span>
+    <span
+        class="nui-items-dynamic__a11y-text"
+        aria-live="polite"
+        aria-atomic="true">
+        {{ reorder.announcement }}
+    </span>
     <div
         cdkDrag
         class="nui-items-dynamic__node-item"
@@ -16,7 +29,18 @@
 
         <ng-template #headerText>
             @if (moveButtons) {
-            <div class="nui-items-dynamic__drag-handler" cdkDragHandle>
+            <div
+                class="nui-items-dynamic__drag-handler"
+                cdkDragHandle
+                role="button"
+                [attr.tabindex]="form?.at(i)?.enabled ? 0 : -1"
+                [attr.aria-disabled]="form?.at(i)?.enabled ? null : 'true'"
+                [attr.aria-pressed]="reorder.activeItem === node.id"
+                aria-label="Reorder item"
+                i18n-aria-label
+                [attr.aria-describedby]="reorderInstructionsId"
+                (keydown)="reorder.onKeydown($event, node.id)"
+                (blur)="reorder.finish()">
                 <nui-icon icon="drag" aria-hidden="true"></nui-icon>
             </div>
             }

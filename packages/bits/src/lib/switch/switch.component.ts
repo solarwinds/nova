@@ -26,6 +26,7 @@ import {
     forwardRef,
     inject,
     Input,
+    numberAttribute,
     OnInit,
     Output,
     ViewChild,
@@ -34,6 +35,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 import { FormFieldDescription } from "../form-field/form-field-description";
+import { formFieldCaptionRepeatsLabel } from "../form-field/form-field-label";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
 let switchLabelCounter = 0;
@@ -63,6 +65,8 @@ let switchLabelCounter = 0;
 export class SwitchComponent implements OnInit, ControlValueAccessor {
     @Input() public value: boolean;
     @Input() public disabled: boolean;
+    /** Tab order for the switch's interactive control; disabled switches are always removed. */
+    @Input({ transform: numberAttribute }) public tabIndex = 0;
 
     /**
      * Explicit accessible name. Overrides the form-field caption and projected
@@ -85,6 +89,7 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
     private readonly defaultAriaLabel = $localize`:Accessible name for a switch without a label:Switch`;
     private readonly changeDetector = inject(ChangeDetectorRef);
     private formFieldLabelId: string | undefined;
+    private formFieldCaption: string | undefined;
     private readonly formFieldDescription = new FormFieldDescription();
 
     @Output() valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -115,7 +120,12 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
         }
         if (this.formFieldLabelId) {
             return [
-                this.formFieldLabelId,
+                formFieldCaptionRepeatsLabel(
+                    this.formFieldCaption,
+                    this.switchLabel?.nativeElement.textContent
+                )
+                    ? null
+                    : this.formFieldLabelId,
                 this.hasProjectedLabel ? this.labelId : null,
             ]
                 .filter(Boolean)
@@ -124,9 +134,16 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
         return !this.hasProjectedLabel ? null : this.labelId;
     }
 
-    public setFormFieldLabel(labelId: string | undefined): void {
-        if (this.formFieldLabelId !== labelId) {
+    public setFormFieldLabel(
+        labelId: string | undefined,
+        caption?: string
+    ): void {
+        if (
+            this.formFieldLabelId !== labelId ||
+            this.formFieldCaption !== caption
+        ) {
             this.formFieldLabelId = labelId;
+            this.formFieldCaption = caption;
             this.changeDetector.markForCheck();
         }
     }

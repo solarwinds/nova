@@ -26,6 +26,14 @@ test.describe("USERCONTROL Menu", () => {
     let menu: MenuAtom;
     let appendToBody: MenuAtom;
 
+    const menuContentOf = async (menuAtom: MenuAtom) =>
+        Helpers.page.locator(
+            `#${await menuAtom
+                .getMenuButton()
+                .getLocator()
+                .getAttribute("aria-controls")}`
+        );
+
     test.beforeEach(async ({ page }) => {
         await Helpers.prepareBrowser("menu/menu-test", page);
         menu = Atom.find<MenuAtom>(
@@ -86,31 +94,41 @@ test.describe("USERCONTROL Menu", () => {
             const nextOption = menu
                 .getMenuItemByContainingText("Menu Item2")
                 .getLocator();
-            const label = option.locator(".nui-checkbox__label");
             const input = option.locator("input[type=checkbox]");
 
             await option.scrollIntoViewIfNeeded();
             await option.click();
             await nextOption.hover();
-            await expect(option).toBeFocused();
+            const menuContent = await menuContentOf(menu);
+            await expect(menuContent).toBeFocused();
+            await expect(menuContent).toHaveAttribute(
+                "aria-activedescendant",
+                (await option.getAttribute("id"))!
+            );
+            await expect(option).toContainClass("nui-menu-item--active");
             await expect(option).toHaveRole("menuitemcheckbox");
             await expect(option).toHaveAccessibleName("Menu Item1");
             await expect(option).toHaveAttribute("aria-checked", "true");
             await expect(input).toBeHidden();
             await expect(option.getByRole("checkbox")).toHaveCount(0);
-            await expect(label).not.toHaveCSS("box-shadow", "none");
+            await expect(option).not.toHaveCSS("box-shadow", "none");
 
             await Helpers.pressKey("Space");
             await expect(option).toHaveAttribute("aria-checked", "false");
             await Helpers.pressKey("Enter");
             await expect(option).toHaveAttribute("aria-checked", "true");
+            await expect(menuContent).toBeFocused();
             await expect(menu.getSelectedCheckboxElements()).toHaveCount(1);
             expect(actions).toHaveLength(3);
             await menu.isMenuOpened();
 
             await Helpers.pressKey("ArrowDown");
             await expect(nextOption).toContainClass("nui-menu-item--active");
-            await expect(menu.getMenuButton().getLocator()).toBeFocused();
+            await expect(menuContent).toBeFocused();
+            await expect(menuContent).toHaveAttribute(
+                "aria-activedescendant",
+                (await nextOption.getAttribute("id"))!
+            );
             await Helpers.pressKey("Escape");
             await menu.isMenuClosed();
             await expect(menu.getMenuButton().getLocator()).toBeFocused();
@@ -124,18 +142,24 @@ test.describe("USERCONTROL Menu", () => {
             await option.scrollIntoViewIfNeeded();
             await option.click();
             await expect(option).toHaveAttribute("aria-checked", "false");
+            await expect(option).not.toContainClass("nui-menu-item--active");
             await expect(menu.getSelectedCheckboxElements()).toHaveCount(0);
             await menu.isMenuOpened();
         });
 
         for (const key of ["Escape", "Tab", "Shift+Tab"]) {
-            test(`closes after ${key} on a mouse-focused option`, async () => {
+            test(`closes after ${key} following an option click`, async () => {
                 await menu.toggleMenu();
                 const option = menu
                     .getMenuItemByContainingText("Menu Item1")
                     .getLocator();
                 await option.click();
-                await expect(option).toBeFocused();
+                const menuContent = await menuContentOf(menu);
+                await expect(menuContent).toBeFocused();
+                await expect(menuContent).toHaveAttribute(
+                    "aria-activedescendant",
+                    (await option.getAttribute("id"))!
+                );
                 await Helpers.pressKey(key);
                 await menu.isMenuClosed();
                 if (key === "Escape") {
@@ -178,9 +202,175 @@ test.describe("USERCONTROL Menu", () => {
             await menu.toggleMenu();
             await expect(button).toHaveAttribute("aria-expanded", "false");
         });
+
+        test("should keep keyboard focus and the active descendant on the menu", async () => {
+            const button = menu.getMenuButton().getLocator();
+            await button.focus();
+            await Helpers.pressKey("ArrowDown");
+            await menu.isMenuOpened();
+
+            const menuId = await button.getAttribute("aria-controls");
+            const menuContent = Helpers.page.locator(`#${menuId}`);
+            await expect(button).not.toHaveAttribute("role", "menu");
+            await expect(button).not.toHaveAttribute(
+                "aria-activedescendant",
+                /\S+/
+            );
+            await expect(menuContent).toBeFocused();
+
+            const checkboxItem = menu
+                .getMenuItemByContainingText("Menu Item1")
+                .getLocator();
+            const checkboxItemId = (await checkboxItem.getAttribute("id"))!;
+            for (let i = 0; i < (await menu.getAllMenuItems().count()); i++) {
+                const activeItemId = await menuContent.getAttribute(
+                    "aria-activedescendant"
+                );
+                expect(activeItemId).toBeTruthy();
+                await expect(
+                    menuContent.locator(`[id="${activeItemId}"]`)
+                ).toHaveAttribute("role", /^menuitem(?:checkbox|radio)?$/);
+                if (activeItemId === checkboxItemId) {
+                    break;
+                }
+                await Helpers.pressKey("ArrowDown");
+            }
+
+            await expect(menuContent).toHaveAttribute(
+                "aria-activedescendant",
+                checkboxItemId
+            );
+            await expect(checkboxItem).toHaveAttribute("aria-checked", "false");
+            await Helpers.pressKey("Enter");
+            await expect(checkboxItem).toHaveAttribute("aria-checked", "true");
+            await expect(menuContent).toBeFocused();
+
+            await Helpers.pressKey("Escape");
+            await menu.isMenuClosed();
+            await expect(button).toBeFocused();
+        });
+
+        test("should transfer focus to the menu when switching from mouse to keyboard", async () => {
+            const button = menu.getMenuButton().getLocator();
+            await menu.toggleMenu();
+            await menu.isMenuOpened();
+            await expect(button).toBeFocused();
+
+            await Helpers.pressKey("ArrowDown");
+            const menuId = await button.getAttribute("aria-controls");
+            const menuContent = Helpers.page.locator(`#${menuId}`);
+            await expect(menuContent).toBeFocused();
+            const activeItemId = await menuContent.getAttribute(
+                "aria-activedescendant"
+            );
+            expect(activeItemId).toBeTruthy();
+            await expect(
+                menuContent.locator(`[id="${activeItemId}"]`)
+            ).toHaveCount(1);
+
+            await Helpers.pressKey("Escape");
+            await menu.isMenuClosed();
+            await expect(button).toBeFocused();
+        });
+
+        test("should follow pointer selection for projected items appended to body", async () => {
+            const button = appendToBody.getMenuButton().getLocator();
+            await button.focus();
+            await Helpers.pressKey("ArrowDown");
+            await expect(button).toHaveAttribute("aria-expanded", "true");
+            const menuId = await button.getAttribute("aria-controls");
+            const menuContent = Helpers.page.locator(`#${menuId}`);
+            const item = menuContent
+                .locator("nui-menu-option")
+                .filter({ hasText: "Third menu item" });
+            const itemId = (await item.getAttribute("id"))!;
+            await expect(menuContent).toBeVisible();
+
+            await item.click();
+            await expect(menuContent).toBeFocused();
+            await expect(item).toHaveClass(/nui-menu-item--active/);
+            await expect(menuContent).toHaveAttribute(
+                "aria-activedescendant",
+                itemId
+            );
+            await expect(item).toHaveAttribute("aria-checked", "true");
+
+            await Helpers.pressKey("Space");
+            await expect(item).toHaveAttribute("aria-checked", "false");
+            await expect(button).toHaveAttribute("aria-expanded", "true");
+            await expect(menuContent).toBeFocused();
+        });
+
+        test("should focus the appended menu container when opened with the keyboard", async () => {
+            const button = appendToBody.getMenuButton().getLocator();
+            await button.focus();
+            await Helpers.pressKey("ArrowDown");
+            await expect(button).toHaveAttribute("aria-expanded", "true");
+
+            const menuId = await button.getAttribute("aria-controls");
+            const menuContent = Helpers.page.locator(`#${menuId}`);
+            await expect(menuContent).toBeVisible();
+            await expect(menuContent).toHaveAttribute("role", "menu");
+            await expect(menuContent).toBeFocused();
+            await expect(button).not.toHaveAttribute(
+                "aria-activedescendant",
+                /\S+/
+            );
+
+            await Helpers.pressKey("Escape");
+            await expect(button).toHaveAttribute("aria-expanded", "false");
+            await expect(menuContent).toBeHidden();
+            await expect(button).toBeFocused();
+        });
     });
 
     test.describe("> key navigation", () => {
+        for (const target of ["label", ".nui-switch__bar"]) {
+            test(`should keep switch keyboard activation local after clicking ${target}`, async () => {
+                const button = menu.getMenuButton().getLocator();
+                await button.focus();
+                await Helpers.pressKey("ArrowDown");
+                await menu.isMenuOpened();
+                const menuId = await button.getAttribute("aria-controls");
+                const menuContent = Helpers.page.locator(`#${menuId}`);
+                await expect(menuContent).toBeFocused();
+                const item = menu
+                    .getMenuItemByContainingText("Switch unchecked")
+                    .getLocator();
+                const switchBar = item.locator(".nui-switch__bar");
+                const itemId = (await item.getAttribute("id"))!;
+                await expect(switchBar).toHaveAttribute("tabindex", "-1");
+
+                await item.locator(target).click();
+                await expect(item).toHaveAttribute("aria-checked", "true");
+                await expect(switchBar).toHaveAttribute("aria-checked", "true");
+
+                for (const { key, checked } of [
+                    { key: "Enter", checked: "false" },
+                    { key: "Space", checked: "true" },
+                    { key: "Enter", checked: "false" },
+                    { key: "Space", checked: "true" },
+                ]) {
+                    await Helpers.pressKey(key);
+                    await expect(item).toHaveAttribute("aria-checked", checked);
+                    await expect(switchBar).toHaveAttribute(
+                        "aria-checked",
+                        checked
+                    );
+                    await expect(button).toHaveAttribute(
+                        "aria-expanded",
+                        "true"
+                    );
+                    await expect(menuContent).toBeFocused();
+                    await expect(menuContent).toHaveAttribute(
+                        "aria-activedescendant",
+                        itemId
+                    );
+                    await expect(item).toHaveClass(/nui-menu-item--active/);
+                }
+            });
+        }
+
         test.describe("> basic", () => {
             test("should NOT open menu when focused by TAB key", async () => {
                 // Focus the menu button using TAB - should only move focus, not open menu
@@ -379,13 +569,16 @@ test.describe("USERCONTROL Menu", () => {
                 await option.scrollIntoViewIfNeeded();
                 await option.click();
                 await nextOption.hover();
-                await expect(option).toBeFocused();
+                const menuContent = await menuContentOf(appendToBody);
+                await expect(menuContent).toBeFocused();
+                await expect(menuContent).toHaveAttribute(
+                    "aria-activedescendant",
+                    (await option.getAttribute("id"))!
+                );
                 await expect(option).toHaveAttribute("aria-checked", "true");
                 await expect(option.getByRole("checkbox")).toHaveCount(0);
                 await Helpers.switchDarkTheme("on");
-                await expect(
-                    option.locator(".nui-checkbox__label")
-                ).not.toHaveCSS("box-shadow", "none");
+                await expect(option).not.toHaveCSS("box-shadow", "none");
 
                 await Helpers.pressKey("Space");
                 await expect(option).toHaveAttribute("aria-checked", "false");
@@ -393,6 +586,7 @@ test.describe("USERCONTROL Menu", () => {
                 await expect(nextOption).toContainClass(
                     "nui-menu-item--active"
                 );
+                await expect(menuContent).toBeFocused();
                 await Helpers.pressKey("Escape");
                 await appendToBody.isMenuClosed();
                 await expect(

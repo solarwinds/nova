@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ContentObserver } from "@angular/cdk/observers";
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import {
     ComponentFixture,
@@ -26,6 +27,7 @@ import {
     tick,
 } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
+import { firstValueFrom } from "rxjs";
 
 import { CheckboxComponent } from "./checkbox.component";
 import { NuiFormFieldModule } from "../form-field/form-field.module";
@@ -82,6 +84,99 @@ class CheckboxFormFieldHostComponent {
 }
 
 describe("checkbox in a form field", () => {
+    it("references matching caption and projected text only once", async () => {
+        TestBed.configureTestingModule({
+            declarations: [CheckboxComponent, CheckboxFormFieldHostComponent],
+            imports: [NuiFormFieldModule],
+        });
+        const fixture = TestBed.createComponent(CheckboxFormFieldHostComponent);
+        const host = fixture.componentInstance;
+        host.caption = "  CHECKBOX \n";
+        host.content = "Checkbox ";
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        const checkbox = fixture.debugElement.query(
+            By.directive(CheckboxComponent)
+        ).componentInstance as CheckboxComponent;
+        const input = checkbox.inputViewContainer.element
+            .nativeElement as HTMLInputElement;
+        const caption = fixture.nativeElement.querySelector(
+            ".nui-form-field__control-label"
+        ) as HTMLLabelElement;
+        const contentId = checkbox.contentId;
+        const bothIds = `${caption.id} ${contentId}`;
+        expect(input.getAttribute("aria-labelledby"))
+            .withContext("matching initial caption")
+            .toBe(contentId);
+
+        host.caption = "Different caption";
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+        expect(input.getAttribute("aria-labelledby"))
+            .withContext("different caption")
+            .toBe(bothIds);
+
+        host.caption = "\t checkbox ";
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+        expect(input.getAttribute("aria-labelledby"))
+            .withContext("caption changed to a normalized match")
+            .toBe(contentId);
+
+        const emptyContentChange = firstValueFrom(
+            TestBed.inject(ContentObserver).observe(
+                checkbox.checkboxContent.nativeElement
+            )
+        );
+        host.content = "";
+        fixture.detectChanges();
+        await emptyContentChange;
+        fixture.detectChanges();
+        expect(input.getAttribute("aria-labelledby"))
+            .withContext("empty projected text")
+            .toBe(bothIds);
+
+        const matchingContentChange = firstValueFrom(
+            TestBed.inject(ContentObserver).observe(
+                checkbox.checkboxContent.nativeElement
+            )
+        );
+        host.content = "  CHECKBOX\n";
+        fixture.detectChanges();
+        await matchingContentChange;
+        fixture.detectChanges();
+        expect(input.getAttribute("aria-labelledby"))
+            .withContext("projected text changed to a normalized match")
+            .toBe(contentId);
+    });
+
+    it("observes projected text only while the form field has a caption", fakeAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [CheckboxComponent, CheckboxFormFieldHostComponent],
+            imports: [NuiFormFieldModule],
+        });
+        const observe = spyOn(
+            TestBed.inject(ContentObserver),
+            "observe"
+        ).and.callThrough();
+        const fixture = TestBed.createComponent(CheckboxFormFieldHostComponent);
+        fixture.componentInstance.caption = "";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(observe).not.toHaveBeenCalled();
+
+        fixture.componentInstance.caption = "Convert to";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(observe).toHaveBeenCalledTimes(1);
+    }));
+
     it("associates the caption and projected text while preserving explicit names", fakeAsync(() => {
         TestBed.configureTestingModule({
             declarations: [CheckboxComponent, CheckboxFormFieldHostComponent],

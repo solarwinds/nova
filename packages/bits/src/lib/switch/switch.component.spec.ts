@@ -33,10 +33,20 @@ import createSpy = jasmine.createSpy;
 import Spy = jasmine.Spy;
 
 @Component({
-    template: `<nui-switch id="public-switch-id">Refresh widget</nui-switch>`,
+    template: `
+        <nui-switch
+            id="public-switch-id"
+            [tabIndex]="tabIndex"
+            [disabled]="disabled">
+            Refresh widget
+        </nui-switch>
+    `,
     standalone: false,
 })
-class SwitchHostComponent {}
+class SwitchHostComponent {
+    public tabIndex = 0;
+    public disabled = false;
+}
 
 @Component({
     template: `
@@ -53,6 +63,56 @@ class SwitchFormFieldHostComponent {
 }
 
 describe("switch in a form field", () => {
+    it("references matching caption and projected text only once", fakeAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [SwitchComponent, SwitchFormFieldHostComponent],
+            imports: [NuiFormFieldModule],
+        });
+        const fixture = TestBed.createComponent(SwitchFormFieldHostComponent);
+        const host = fixture.componentInstance;
+        host.caption = "  EMAIL   ALERTS\n";
+        host.content = "Email alerts ";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+
+        const bar = fixture.nativeElement.querySelector(
+            ".nui-switch__bar"
+        ) as HTMLElement;
+        const caption = fixture.nativeElement.querySelector(
+            ".nui-form-field__control-label"
+        ) as HTMLLabelElement;
+        const label = fixture.nativeElement.querySelector(
+            ".nui-switch__label"
+        ) as HTMLElement;
+        const bothIds = `${caption.id} ${label.id}`;
+        expect(bar.getAttribute("aria-labelledby")).toBe(label.id);
+
+        host.caption = "Notifications";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(bar.getAttribute("aria-labelledby")).toBe(bothIds);
+
+        host.caption = "\t email alerts ";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(bar.getAttribute("aria-labelledby")).toBe(label.id);
+
+        host.content = "";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(bar.getAttribute("aria-labelledby")).toBe(caption.id);
+
+        host.content = "  EMAIL\tALERTS ";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(bar.getAttribute("aria-labelledby")).toBe(label.id);
+    }));
+
     it("updates the automatic name as the caption and projected text change", fakeAsync(() => {
         TestBed.configureTestingModule({
             declarations: [SwitchComponent, SwitchFormFieldHostComponent],
@@ -185,6 +245,38 @@ describe("components >", () => {
         });
 
         describe("accessibility >", () => {
+            it("should keep a standalone switch in the tab order by default", () => {
+                switchFixture.detectChanges();
+
+                const switchBar: HTMLElement =
+                    switchFixture.nativeElement.querySelector(
+                        ".nui-switch__bar"
+                    );
+                expect(switchBar.tabIndex).toBe(0);
+            });
+
+            for (const tabIndex of [0, -1]) {
+                it(`should restore tabIndex=${tabIndex} when re-enabled`, () => {
+                    const hostFixture =
+                        TestBed.createComponent(SwitchHostComponent);
+                    hostFixture.componentInstance.tabIndex = tabIndex;
+                    hostFixture.detectChanges();
+                    const switchBar: HTMLElement =
+                        hostFixture.nativeElement.querySelector(
+                            ".nui-switch__bar"
+                        );
+                    expect(switchBar.tabIndex).toBe(tabIndex);
+
+                    hostFixture.componentInstance.disabled = true;
+                    hostFixture.detectChanges();
+                    expect(switchBar.tabIndex).toBe(-1);
+
+                    hostFixture.componentInstance.disabled = false;
+                    hostFixture.detectChanges();
+                    expect(switchBar.tabIndex).toBe(tabIndex);
+                });
+            }
+
             it("should set aria-labelledby when a projected label is provided", () => {
                 const hostFixture =
                     TestBed.createComponent(SwitchHostComponent);

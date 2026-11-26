@@ -197,6 +197,25 @@ describe("LegendSeries >", () => {
             prepareComponent(new MockLegendComponent());
         });
 
+        it("should opt into focus without enabling checkbox interaction", () => {
+            series.interactive = false;
+            fixture.detectChanges();
+            expect(hostElement.hasAttribute("tabindex")).toBeFalse();
+
+            fixture.componentRef.setInput("focusable", true);
+            fixture.detectChanges();
+            const selection = spyOn(series.isSelectedChange, "next");
+            expect(hostElement.getAttribute("role")).toBe("listitem");
+            expect(hostElement.getAttribute("tabindex")).toBe("0");
+            expect(hostElement.hasAttribute("aria-checked")).toBeFalse();
+            hostElement.click();
+            expect(selection).not.toHaveBeenCalled();
+
+            fixture.componentRef.setInput("focusable", false);
+            fixture.detectChanges();
+            expect(hostElement.hasAttribute("tabindex")).toBeFalse();
+        });
+
         it("should hide the description elements if they are not set or set to empty", () => {
             expect(fixture.componentInstance.hasInputDescription()).toBe(false);
             series.descriptionPrimary = "";
@@ -243,6 +262,79 @@ describe("LegendSeries >", () => {
         it("getter should return RenderState.default if value is not set", () => {
             prepareComponent(new MockLegendComponent());
             expect(series.seriesRenderState).toEqual(RenderState.default);
+        });
+    });
+
+    describe("separate controls", () => {
+        beforeEach(() => {
+            prepareComponent(new MockLegendComponent({ interactive: true }));
+            series.separateControls = true;
+            series.toggleAriaLabel = "Series One";
+            fixture.detectChanges();
+        });
+
+        it("should expose a named tile checkbox outside the host group", () => {
+            const toggle = hostElement.querySelector(
+                ".nui-legend-series__toggle"
+            );
+            expect(hostElement.getAttribute("role")).toBe("group");
+            expect(hostElement.hasAttribute("tabindex")).toBeFalse();
+            expect(hostElement.hasAttribute("aria-checked")).toBeFalse();
+            expect(toggle?.getAttribute("role")).toBe("checkbox");
+            expect(toggle?.getAttribute("aria-label")).toBe("Series One");
+            expect(toggle?.getAttribute("aria-checked")).toBe("true");
+        });
+
+        it("should reflect the selected state on the tile checkbox", () => {
+            fixture.componentRef.setInput("isSelected", false);
+            fixture.detectChanges();
+            expect(
+                hostElement
+                    .querySelector(".nui-legend-series__toggle")
+                    ?.getAttribute("aria-checked")
+            ).toBe("false");
+        });
+
+        it("should emit once when the tile button is clicked", () => {
+            const toggle = hostElement.querySelector<HTMLButtonElement>(
+                ".nui-legend-series__toggle"
+            );
+            const selection = spyOn(series.isSelectedChange, "next");
+            toggle?.click();
+            expect(selection).toHaveBeenCalledOnceWith(false);
+        });
+
+        it("should preserve whole-row mouse activation", () => {
+            const selection = spyOn(series.isSelectedChange, "next");
+            hostElement.click();
+            expect(selection).toHaveBeenCalledOnceWith(false);
+        });
+
+        for (const key of ["Enter", " "]) {
+            it(`should leave ${key} to native controls without toggling from the host`, () => {
+                const toggle = hostElement.querySelector(
+                    ".nui-legend-series__toggle"
+                );
+                const selection = spyOn(series.isSelectedChange, "emit");
+                const event = new KeyboardEvent("keydown", {
+                    key,
+                    bubbles: true,
+                    cancelable: true,
+                });
+                toggle?.dispatchEvent(event);
+                expect(event.defaultPrevented).toBeFalse();
+                expect(selection).not.toHaveBeenCalled();
+            });
+        }
+
+        it("should not add a checkbox when interaction is disabled", () => {
+            fixture.componentRef.setInput("interactive", false);
+            fixture.detectChanges();
+            expect(
+                hostElement.querySelector(".nui-legend-series__toggle")
+            ).toBeNull();
+            expect(hostElement.hasAttribute("tabindex")).toBeFalse();
+            expect(hostElement.hasAttribute("aria-checked")).toBeFalse();
         });
     });
 

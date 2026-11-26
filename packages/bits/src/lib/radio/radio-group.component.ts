@@ -273,6 +273,9 @@ export class RadioGroupComponent
     standalone: false,
 })
 export class RadioComponent implements OnInit, OnDestroy {
+    public readonly inputId = _uniqueId("nui-radio-input-");
+    public readonly hintId = `${this.inputId}-hint`;
+
     /**
      * Sets the radio instance value
      */

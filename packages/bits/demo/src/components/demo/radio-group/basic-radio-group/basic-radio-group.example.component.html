@@ -1,5 +1,9 @@
 <h1 i18n>Selected fruit: {{ selectedFruit }}</h1>
-<nui-radio-group name="fruit" [(value)]="selectedFruit">
+<nui-radio-group
+    name="fruit"
+    ariaLabel="Basic fruit selection"
+    i18n-ariaLabel
+    [(value)]="selectedFruit">
     <nui-radio
         *ngFor="let fruit of fruits"
         [value]="fruit"

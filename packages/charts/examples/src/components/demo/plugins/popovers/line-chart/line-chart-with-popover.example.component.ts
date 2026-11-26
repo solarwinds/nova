@@ -46,6 +46,11 @@ export class LineChartWithPopoverExampleComponent implements OnInit {
     public chartAssist: ChartAssist = new ChartAssist(this.chart);
     public popoverPlugin = new ChartPopoverPlugin();
 
+    public formatPopoverData(data: unknown): string {
+        // Keep the final value attached to its brace without disabling other wrapping.
+        return JSON.stringify(data, null, 2)?.replace(/\n}$/, "\u00a0}") ?? "";
+    }
+
     public ngOnInit(): void {
         const scales: IXYScales = {
             x: new TimeScale(),

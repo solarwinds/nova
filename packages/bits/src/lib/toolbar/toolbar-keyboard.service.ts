@@ -40,6 +40,11 @@ export class ToolbarKeyboardService {
     }
 
     public onKeyDown(event: KeyboardEvent): void {
+        const target = event.target as HTMLElement | null;
+        if (this.isEditableTarget(target)) {
+            return;
+        }
+
         const { code } = event;
 
         const horizontal =
@@ -70,6 +75,19 @@ export class ToolbarKeyboardService {
         if (code === KEYBOARD_CODE.TAB) {
             this.closeMenuIfOpened();
         }
+    }
+
+    private isEditableTarget(target: HTMLElement | null): boolean {
+        if (!target) {
+            return false;
+        }
+
+        return (
+            target.isContentEditable ||
+            !!target.closest(
+                "input, textarea, select, [role=textbox], [role=combobox], [role=spinbutton], [role=searchbox], .search, [class*=search], [data-testid*=search], [data-automation-id*=search]"
+            )
+        );
     }
 
     private navigateByArrow(code: KEYBOARD_CODE): void {

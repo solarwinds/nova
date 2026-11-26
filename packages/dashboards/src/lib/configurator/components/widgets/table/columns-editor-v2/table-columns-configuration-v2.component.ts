@@ -25,6 +25,7 @@ import {
     Component,
     EventEmitter,
     Inject,
+    inject,
     Input,
     OnChanges,
     OnDestroy,
@@ -66,6 +67,7 @@ import {
     PIZZAGNA_EVENT_BUS,
     WellKnownDataSourceFeatures,
 } from "../../../../../types";
+import { KeyboardReorder } from "../../../../keyboard-reorder";
 import { ConfiguratorDataSourceManagerService } from "../../../../services/configurator-data-source-manager.service";
 import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
 
@@ -73,14 +75,17 @@ import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
     selector: "nui-table-columns-configuration",
     templateUrl: "./table-columns-configuration-v2.component.html",
     styleUrls: ["./table-columns-configuration-v2.component.less"],
+    providers: [KeyboardReorder],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line @angular-eslint/prefer-standalone -- Preserve the existing NgModule-based library API.
     standalone: false,
 })
 export class TableColumnsConfigurationV2Component
     implements OnInit, IHasForm, OnChanges, OnDestroy
 {
     static lateLoadKey = "TableColumnsConfigurationV2Component";
+    private static reorderInstructionsCounter = 0;
 
     @Input() columns: ITableWidgetColumnConfig[] = [];
     @Input() componentId: string;
@@ -110,9 +115,11 @@ export class TableColumnsConfigurationV2Component
     // the last selected data source will be stored here
     public dataSource: IDataSource;
     public columnLabel = $localize`Column`;
-
+    public readonly reorderInstructionsId = `nui-table-columns-reorder-instructions-${TableColumnsConfigurationV2Component.reorderInstructionsCounter++}`;
+    public readonly reorder = inject<KeyboardReorder<string>>(KeyboardReorder);
     private onDestroy$: Subject<void> = new Subject<void>();
 
+    /* eslint-disable @angular-eslint/prefer-inject -- Preserve the public constructor signature for existing consumers. */
     constructor(
         private formBuilder: FormBuilder,
         private changeDetector: ChangeDetectorRef,
@@ -122,6 +129,15 @@ export class TableColumnsConfigurationV2Component
         public tableFormatterRegistry: TableFormatterRegistryService,
         @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>
     ) {
+        this.reorder.configure(
+            () => this.columnForms.map(control => control.value.id),
+            (from, to) => this.moveItem(from, to),
+            id =>
+                !this.columnForms.find(control => control.value.id === id)
+                    ?.enabled,
+            () => this.changeDetector.markForCheck()
+        );
+
         this.form = this.formBuilder.group({
             columns: this.formBuilder.array([]),
         });
@@ -186,6 +202,7 @@ export class TableColumnsConfigurationV2Component
                 this.changeDetector.markForCheck();
             });
     }
+    /* eslint-enable @angular-eslint/prefer-inject */
 
     public ngOnInit(): void {
         this.formReady.emit(this.form);
@@ -356,6 +373,7 @@ export class TableColumnsConfigurationV2Component
 
     public removeItem(index: number): void {
         const columns = this.form.controls["columns"] as FormArray;
+        this.reorder.cancel();
         columns.removeAt(index);
 
         this.changeDetector.detectChanges();
@@ -366,6 +384,7 @@ export class TableColumnsConfigurationV2Component
     }
 
     public cdkDragStarted(event: CdkDragStart): void {
+        this.reorder.finish();
         this.draggedItemHeight =
             event.source.element.nativeElement.offsetHeight;
     }

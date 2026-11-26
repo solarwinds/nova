@@ -83,6 +83,53 @@ test.describe("Dialog focus restoration with a removed trigger", () => {
     }
 });
 
+test.describe("Escape handling for a menu inside a dialog", () => {
+    for (const appendToBody of [false, true]) {
+        test(`should close the menu before the dialog (appendToBody=${appendToBody})`, async ({
+            page,
+        }) => {
+            await Helpers.prepareBrowser("dialog/zindex-test", page);
+            await page.locator("#nui-visual-test-open-overlay-btn").click();
+
+            const placement = page.locator(
+                "#nui-visual-test-switch-appendToBody-btn"
+            );
+            if (appendToBody) {
+                await placement.click();
+            }
+            await expect(placement).toContainText(
+                `appendToBody=${appendToBody}`
+            );
+
+            await page.locator("#nui-visual-test-inner-dialog-btn").click();
+            const dialog = page
+                .locator("nui-dialog-window")
+                .filter({ hasText: "Inner Dialog Title" });
+            await expect(dialog).toBeVisible();
+
+            const menuButton = dialog.getByRole("button", {
+                name: "Menu",
+                exact: true,
+            });
+            await menuButton.focus();
+            await page.keyboard.press("Enter");
+            await expect(menuButton).toHaveAttribute("aria-expanded", "true");
+            const menuId = await menuButton.getAttribute("aria-controls");
+            await expect(page.locator(`#${menuId}`)).toBeFocused();
+
+            await page.keyboard.down("Escape");
+            await expect(menuButton).toHaveAttribute("aria-expanded", "false");
+            await expect(menuButton).toBeFocused();
+            await page.keyboard.down("Escape");
+            await page.keyboard.up("Escape");
+            await expect(dialog).toBeVisible();
+
+            await page.keyboard.press("Escape");
+            await expect(dialog).toHaveCount(0);
+        });
+    }
+});
+
 test.describe("USERCONTROL Dialog", () => {
     let defaultDialogBtn: ButtonAtom;
     let closableDialogBtn: ButtonAtom;

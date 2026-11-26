@@ -39,18 +39,7 @@ export class BaseSelectV2Atom extends Atom {
     }
 
     public async options(): Promise<SelectV2OptionAtom> {
-        // Target the visible overlay (.nui-overlay) that actually contains
-        // options. Using .nui-overlay (consistent with waitForPopup) instead of
-        // the CDK pane avoids false negatives, because a CDK overlay pane can be
-        // a zero-size container whose positioned content is still visible. It
-        // also skips stale/empty panes left behind by previously closed popups.
-        const openOverlay = Helpers.page
-            .locator(".nui-overlay")
-            .filter({ visible: true })
-            .filter({
-                has: Helpers.page.locator(".nui-select-v2-option"),
-            })
-            .first();
+        const openOverlay = await this.getOpenOptionsOverlay();
 
         const parentLocator =
             (await openOverlay.count()) > 0 ? openOverlay : this.getLocator();
@@ -71,18 +60,25 @@ export class BaseSelectV2Atom extends Atom {
         return this.popup.getLocator();
     }
 
+    private async getPopupLocator(): Promise<Locator> {
+        const triggerId = await this.focusableTrigger.getAttribute("id");
+        if (!triggerId) {
+            throw new Error("Select trigger does not have an id");
+        }
+
+        return Helpers.page.locator(
+            `.nui-overlay[aria-labelledby="${triggerId}"]`
+        );
+    }
+
     /**
-     * The visible overlay that actually contains options. Used as a reliable
-     * "dropdown is open" signal (a CDK overlay pane can be a zero-size container
-     * whose positioned content is still visible, so checking the pane alone is
-     * not dependable).
+     * The visible overlay containing this select's options. Checking the
+     * overlay itself avoids false negatives from zero-size CDK overlay panes.
      */
-    private get openOptionsOverlay(): Locator {
-        return Helpers.page
-            .locator(".nui-overlay")
+    private async getOpenOptionsOverlay(): Promise<Locator> {
+        return (await this.getPopupLocator())
             .filter({ visible: true })
-            .filter({ has: Helpers.page.locator(".nui-select-v2-option") })
-            .first();
+            .filter({ has: Helpers.page.locator(".nui-select-v2-option") });
     }
 
     /** The focusable trigger element for select-v2 / combobox-v2. */
@@ -93,7 +89,7 @@ export class BaseSelectV2Atom extends Atom {
     }
 
     private async isDropdownOpen(): Promise<boolean> {
-        return (await this.openOptionsOverlay.count()) > 0;
+        return (await this.getOpenOptionsOverlay()).isVisible();
     }
 
     /**
@@ -111,13 +107,13 @@ export class BaseSelectV2Atom extends Atom {
         // toggle it closed) when another overlay is transitioning.
         await this.focusableTrigger.focus();
         try {
-            await this.openOptionsOverlay.waitFor({
+            await (await this.getOpenOptionsOverlay()).waitFor({
                 state: "visible",
                 timeout: 3000,
             });
         } catch {
             await this.click();
-            await this.openOptionsOverlay.waitFor({
+            await (await this.getOpenOptionsOverlay()).waitFor({
                 state: "visible",
                 timeout: 5000,
             });
@@ -160,30 +156,27 @@ export class BaseSelectV2Atom extends Atom {
     }
 
     /**
-     * Note: This method checks whether ANY 'cdk-overlay-pane' on the document body is present
-     * (not just this dropdown instance). Close any other cdk-overlay-pane instances before invoking this
-     * method to ensure an accurate return value.
-     *
-     * Important: this is a pure state check (no auto-waits). Prefer toBeOpened/toBeClosed in tests.
+     * Checks whether this select's listbox is visible. This is a pure state
+     * check (no auto-waits); prefer toBeOpened/toBeClosed in tests.
      */
     public async isOpened(): Promise<boolean> {
-        return this.popup.isOpened();
+        return (await this.getPopupLocator()).isVisible();
     }
 
     public async toBeOpened(): Promise<void> {
-        await this.popup.toBeOpened();
+        await expect(await this.getPopupLocator()).toBeVisible();
     }
 
     public async toBeClosed(): Promise<void> {
-        await this.popup.toNotBeOpened();
+        await expect(await this.getPopupLocator()).toBeHidden();
     }
 
     public async toBeHidden(): Promise<void> {
-        await this.popup.toBeHidden();
+        await expect(await this.getPopupLocator()).toBeHidden();
     }
 
     public async getActiveItemsCount(): Promise<number> {
-        return await this.popup.getLocator().locator(".active").count();
+        return (await this.getPopupLocator()).locator(".active").count();
     }
 
     public async type(text: string): Promise<void> {
@@ -196,7 +189,7 @@ export class BaseSelectV2Atom extends Atom {
     }
 
     public async select(title: string): Promise<void> {
-        if (!(await this.popup.isOpened())) {
+        if (!(await this.isOpened())) {
             await this.toggle();
         }
         // Use Playwright's getByText for exact text match
@@ -206,7 +199,7 @@ export class BaseSelectV2Atom extends Atom {
     }
 
     private async waitForPopup() {
-        await this.popup.toBeVisible();
+        await (await this.getPopupLocator()).waitFor({ state: "visible" });
     }
 
     public async toBeDisabled(): Promise<void> {

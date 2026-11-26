@@ -75,6 +75,19 @@ export class KpiTileViewComponent {
         return this.interactive && !this.showEmpty;
     }
 
+    public get accessibleName(): string | null {
+        if (this.valueTemplate) {
+            return null;
+        }
+
+        const parts = [this.label, this.value, this.units]
+            .filter(part => part !== null && part !== undefined)
+            .map(part => String(part).trim())
+            .filter(part => part.length > 0);
+
+        return parts.join(" ") || $localize`KPI`;
+    }
+
     public get showEmpty(): boolean {
         if (this.empty) {
             return true;
@@ -96,6 +109,21 @@ export class KpiTileViewComponent {
             return;
         }
         this.tileClick.emit();
+    }
+
+    public onKeydown(event: KeyboardEvent): void {
+        if (
+            !this.isInteractive ||
+            event.target !== event.currentTarget ||
+            (event.key !== "Enter" && event.key !== " ")
+        ) {
+            return;
+        }
+
+        event.preventDefault();
+        if (!event.repeat) {
+            this.onInteraction();
+        }
     }
 
     public getScaleBroker(id: string): IKpiTileViewBroker | undefined {

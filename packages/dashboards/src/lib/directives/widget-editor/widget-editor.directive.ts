@@ -18,11 +18,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { Directive, Host, Input, OnDestroy, OnInit, Self } from "@angular/core";
+import { DOCUMENT } from "@angular/common";
+import {
+    AfterRenderRef,
+    Directive,
+    ElementRef,
+    Host,
+    Injector,
+    Input,
+    OnDestroy,
+    OnInit,
+    Self,
+    afterNextRender,
+    inject,
+} from "@angular/core";
 import cloneDeep from "lodash/cloneDeep";
 import { Subject } from "rxjs";
 // eslint-disable-next-line import/no-deprecated
-import { switchMap, takeUntil } from "rxjs/operators";
+import { switchMap, takeUntil, tap } from "rxjs/operators";
 
 import { DashboardComponent } from "../../components/dashboard/dashboard.component";
 import { IDashboardPersistenceHandler } from "../../components/dashboard/types";
@@ -44,6 +57,11 @@ export class WidgetEditorDirective implements OnInit, OnDestroy {
     dashboardPersistenceHandler: IDashboardPersistenceHandler;
 
     private readonly destroy$ = new Subject<void>();
+    private readonly host =
+        inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+    private readonly injector = inject(Injector);
+    private readonly document = inject(DOCUMENT);
+    private pendingFocus?: AfterRenderRef;
 
     constructor(
         @Host() @Self() private dashboardComponent: DashboardComponent,
@@ -104,11 +122,27 @@ export class WidgetEditorDirective implements OnInit, OnDestroy {
                             this.dashboardComponent.dashboard.widgets[widgetId]
                         ),
                     };
-                    return this.widgetRemovalService.handleRemove(
+                    this.pendingFocus?.destroy();
+                    this.pendingFocus = undefined;
+
+                    const removal = this.widgetRemovalService.handleRemove(
                         this.dashboardComponent,
                         widgetId,
                         configuratorSource,
                         tryRemove
+                    );
+                    const payload = event.payload;
+                    if (
+                        typeof payload !== "object" ||
+                        payload === null ||
+                        !("focusOrigin" in payload) ||
+                        payload.focusOrigin !== "keyboard"
+                    ) {
+                        return removal;
+                    }
+
+                    return removal.pipe(
+                        tap(() => this.scheduleRemovalFocus(widgetId))
                     );
                 }),
                 takeUntil(this.destroy$)
@@ -117,7 +151,88 @@ export class WidgetEditorDirective implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
+        this.pendingFocus?.destroy();
         this.destroy$.next();
         this.destroy$.complete();
+    }
+
+    private getWidgets(): HTMLElement[] {
+        return Array.from(
+            this.host.querySelectorAll<HTMLElement>("nui-widget[widget-id]")
+        ).filter(widget => widget.closest("nui-dashboard") === this.host);
+    }
+
+    private scheduleRemovalFocus(widgetId: string): void {
+        const widgets = this.getWidgets();
+        const index = widgets.findIndex(
+            widget => widget.getAttribute("widget-id") === widgetId
+        );
+        const widget = widgets[index];
+        if (!widget) {
+            return;
+        }
+
+        const active = this.document.activeElement;
+        const menuId = widget
+            .querySelector(".nui-widget-header__action-remove button")
+            ?.getAttribute("aria-controls");
+        // A keyboard-opened menu may be rendered under body instead of the widget.
+        if (
+            !widget.contains(active) &&
+            !(menuId && this.document.getElementById(menuId)?.contains(active))
+        ) {
+            return;
+        }
+
+        this.pendingFocus?.destroy();
+        this.pendingFocus = afterNextRender(
+            () => {
+                this.pendingFocus = undefined;
+                if (
+                    !this.host.isConnected ||
+                    widget.isConnected ||
+                    this.dashboardComponent.dashboard.widgets[widgetId] ||
+                    this.document.activeElement !== this.document.body
+                ) {
+                    return;
+                }
+
+                const adjacent = [widgets[index + 1], widgets[index - 1]];
+                for (const neighbor of adjacent) {
+                    if (
+                        this.focusControl(
+                            neighbor,
+                            ".nui-widget-header__action-remove button:not([disabled])"
+                        )
+                    ) {
+                        return;
+                    }
+                }
+                for (const remaining of this.getWidgets()) {
+                    if (
+                        this.focusControl(
+                            remaining,
+                            ".nui-widget-header__action-edit:not([disabled])"
+                        )
+                    ) {
+                        return;
+                    }
+                }
+                if (!this.host.hasAttribute("tabindex")) {
+                    this.host.tabIndex = -1;
+                }
+                this.host.focus();
+            },
+            { injector: this.injector }
+        );
+    }
+
+    private focusControl(
+        widget: HTMLElement | undefined,
+        selector: string
+    ): boolean {
+        const control = widget?.querySelector<HTMLElement>(selector);
+        control?.focus();
+        return !!control && this.document.activeElement === control;
     }
 }

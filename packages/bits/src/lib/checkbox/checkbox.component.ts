@@ -18,6 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { ContentObserver } from "@angular/cdk/observers";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -26,6 +27,7 @@ import {
     ElementRef,
     EventEmitter,
     forwardRef,
+    inject,
     Input,
     OnDestroy,
     Output,
@@ -46,6 +48,7 @@ import { KEYBOARD_CODE } from "../../constants/keycode.constants";
 import { _uniqueId } from "../../functions/unique-id";
 import { EventBusService } from "../../services/event-bus.service";
 import { FormFieldDescription } from "../form-field/form-field-description";
+import { formFieldCaptionRepeatsLabel } from "../form-field/form-field-label";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
 @Component({
@@ -212,6 +215,8 @@ export class CheckboxComponent
 
     private rendererListener: Function;
     private sub: Subscription;
+    private contentObserverSubscription: Subscription | undefined;
+    private readonly contentObserver = inject(ContentObserver);
 
     public readonly defaultAriaLabel = $localize`Checkbox`;
     public readonly contentId = _uniqueId("nui-checkbox-content-");
@@ -220,6 +225,7 @@ export class CheckboxComponent
     private formFieldControlId: string | undefined;
     private _ariaLabel: string | undefined;
     private formFieldLabelId: string | undefined;
+    private formFieldCaption: string | undefined;
 
     private keysAction = [KEYBOARD_CODE.SPACE, KEYBOARD_CODE.ENTER].map(String);
 
@@ -230,6 +236,7 @@ export class CheckboxComponent
     ) {}
 
     public ngAfterViewInit(): void {
+        this.updateContentObserver();
         this.rendererListener = this.renderer.listen(
             this.inputViewContainer.element.nativeElement,
             "keydown",
@@ -287,9 +294,17 @@ export class CheckboxComponent
         }
     }
 
-    public setFormFieldLabel(labelId: string | undefined): void {
-        if (this.formFieldLabelId !== labelId) {
+    public setFormFieldLabel(
+        labelId: string | undefined,
+        caption?: string
+    ): void {
+        if (
+            this.formFieldLabelId !== labelId ||
+            this.formFieldCaption !== caption
+        ) {
             this.formFieldLabelId = labelId;
+            this.formFieldCaption = caption;
+            this.updateContentObserver();
             this.changeDetector.markForCheck();
         }
     }
@@ -308,9 +323,26 @@ export class CheckboxComponent
         if (this._ariaLabel) {
             return null;
         }
-        return [this.formFieldLabelId, this.contentId]
-            .filter(Boolean)
-            .join(" ");
+        const captionId = formFieldCaptionRepeatsLabel(
+            this.formFieldCaption,
+            this.checkboxContent?.nativeElement.textContent
+        )
+            ? undefined
+            : this.formFieldLabelId;
+        return [captionId, this.contentId].filter(Boolean).join(" ");
+    }
+
+    // OnPush does not see projected text changes, which decide whether the caption repeats it.
+    private updateContentObserver(): void {
+        const shouldObserve = !!this.formFieldCaption && !!this.checkboxContent;
+        if (shouldObserve && !this.contentObserverSubscription) {
+            this.contentObserverSubscription = this.contentObserver
+                .observe(this.checkboxContent.nativeElement)
+                .subscribe(() => this.changeDetector.markForCheck());
+        } else if (!shouldObserve && this.contentObserverSubscription) {
+            this.contentObserverSubscription.unsubscribe();
+            this.contentObserverSubscription = undefined;
+        }
     }
 
     /**
@@ -366,6 +398,7 @@ export class CheckboxComponent
         if (this.sub) {
             this.sub.unsubscribe();
         }
+        this.contentObserverSubscription?.unsubscribe();
     }
 
     private handleKeyboardActions(): void {

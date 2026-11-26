@@ -162,8 +162,7 @@ describe("components >", () => {
             tick(10000);
         }));
 
-        // TODO: enable after NUI-3641 is fixed
-        xit("After activation toast should be shown", () => {
+        it("After activation toast should be shown", fakeAsync(() => {
             // @ts-ignore: Suppressing error for testing purposes
             const componentInstance = new ToastComponent(
                 toastService,
@@ -172,12 +171,36 @@ describe("components >", () => {
             );
             toastRef.activate();
             expect(componentInstance.display).toEqual("block");
+            expect(componentInstance["state"]).toEqual("inactive");
+            tick();
             expect(componentInstance["state"]).toEqual("active");
-            tick(10000);
-        });
+            expect(componentInstance.fadeOut).toBe(false);
+            componentInstance.remove();
+            tick(300);
+            componentInstance.ngOnDestroy();
+        }));
 
-        // TODO: enable after NUI-3641 is fixed
-        xit("After remove toast should be removed", fakeAsync(() => {
+        it("should cancel pending activation when destroyed", fakeAsync(() => {
+            // @ts-ignore: Suppressing error for testing purposes
+            const componentInstance = new ToastComponent(
+                toastService,
+                toastPackage,
+                mockNgZone
+            );
+            const activate = spyOn(
+                componentInstance,
+                "activateToast"
+            ).and.callThrough();
+
+            toastRef.activate();
+            componentInstance.ngOnDestroy();
+            tick();
+
+            expect(activate).not.toHaveBeenCalled();
+            expect(componentInstance["state"]).toEqual("inactive");
+        }));
+
+        it("should cancel pending activation when removed", fakeAsync(() => {
             // @ts-ignore: Suppressing error for testing purposes
             const componentInstance = new ToastComponent(
                 toastService,
@@ -186,8 +209,31 @@ describe("components >", () => {
             );
             toastRef.activate();
             componentInstance.remove();
+            tick();
             expect(componentInstance["state"]).toEqual("removed");
-            tick(10000);
+            tick(300);
+            componentInstance.ngOnDestroy();
+        }));
+
+        it("After remove toast should be removed", fakeAsync(() => {
+            // @ts-ignore: Suppressing error for testing purposes
+            const componentInstance = new ToastComponent(
+                toastService,
+                toastPackage,
+                mockNgZone
+            );
+            toastRef.activate();
+            tick();
+            expect(componentInstance["state"]).toEqual("active");
+            const remove = spyOn(toastService, "remove").and.callThrough();
+            componentInstance.remove();
+            expect(componentInstance["state"]).toEqual("removed");
+            expect(componentInstance.fadeOut).toBe(true);
+            tick(299);
+            expect(remove).not.toHaveBeenCalled();
+            tick(1);
+            expect(remove).toHaveBeenCalledOnceWith(toastPackage.toastId);
+            componentInstance.ngOnDestroy();
         }));
     });
 });

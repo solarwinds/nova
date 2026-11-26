@@ -153,6 +153,59 @@ describe("Services > ", () => {
                 expect(spy).toHaveBeenCalled();
             });
 
+            it("should leave Home, End and arrow keys to a text input", () => {
+                const input = document.createElement("input");
+                input.type = "text";
+                document.body.appendChild(input);
+                input.focus();
+                input.addEventListener("keydown", event =>
+                    service.onKeyDown(event)
+                );
+                const first = service["toolbarItems"][0];
+                const focusSpy = spyOn(first, "focus");
+
+                for (const code of [
+                    KEYBOARD_CODE.HOME,
+                    KEYBOARD_CODE.END,
+                    KEYBOARD_CODE.ARROW_LEFT,
+                ]) {
+                    const event = new KeyboardEvent("keydown", {
+                        code,
+                        bubbles: true,
+                        cancelable: true,
+                    });
+                    input.dispatchEvent(event);
+                    expect(event.defaultPrevented).toBeFalse();
+                }
+
+                expect(focusSpy).not.toHaveBeenCalled();
+                expect(document.activeElement).toBe(input);
+                input.remove();
+            });
+
+            it("should leave Home and End to a nested contenteditable field", () => {
+                const editor = document.createElement("div");
+                editor.contentEditable = "true";
+                const child = document.createElement("span");
+                editor.appendChild(child);
+                document.body.appendChild(editor);
+                editor.addEventListener("keydown", event =>
+                    service.onKeyDown(event)
+                );
+
+                for (const code of [KEYBOARD_CODE.HOME, KEYBOARD_CODE.END]) {
+                    const event = new KeyboardEvent("keydown", {
+                        code,
+                        bubbles: true,
+                        cancelable: true,
+                    });
+                    child.dispatchEvent(event);
+                    expect(event.defaultPrevented).toBeFalse();
+                }
+
+                editor.remove();
+            });
+
             describe("disabled items", () => {
                 afterEach(() => {
                     const items = service["toolbarItems"];
@@ -261,6 +314,73 @@ describe("Services > ", () => {
 
                 service.onKeyDown(rightButtonPressEvent);
                 expect(spy).not.toHaveBeenCalled();
+            });
+
+            it("should navigate to first element on pressing Home key", () => {
+                const items = service["toolbarItems"];
+                const first = items[0];
+                const last = items[items.length - 1];
+                const spy = spyOn(first, "focus");
+
+                last.focus();
+
+                service.onKeyDown({
+                    ...keyboardEventMock,
+                    code: KEYBOARD_CODE.HOME,
+                } as KeyboardEvent);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("should navigate to last element on pressing End key", () => {
+                const items = service["toolbarItems"];
+                const first = items[0];
+                const last = items[items.length - 1];
+                const spy = spyOn(last, "focus");
+
+                first.focus();
+
+                service.onKeyDown({
+                    ...keyboardEventMock,
+                    code: KEYBOARD_CODE.END,
+                } as KeyboardEvent);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            describe("disabled items", () => {
+                afterEach(() => {
+                    const items = service["toolbarItems"];
+
+                    items.forEach(item => item.removeAttribute("disabled"));
+                });
+
+                it("should skip a disabled item on pressing down arrow button", () => {
+                    const items = service["toolbarItems"];
+                    const [first, middle, last] = items;
+                    const spy = spyOn(last, "focus");
+
+                    middle.setAttribute("disabled", "true");
+                    first.focus();
+
+                    service.onKeyDown(downButtonPressEvent);
+                    expect(spy).toHaveBeenCalled();
+                });
+
+                it("should not focus a disabled item on pressing End key", () => {
+                    const items = service["toolbarItems"];
+                    const [first, middle, last] = items;
+                    const spy = spyOn(middle, "focus");
+                    const lastSpy = spyOn(last, "focus");
+
+                    last.setAttribute("disabled", "true");
+                    first.focus();
+
+                    service.onKeyDown({
+                        ...keyboardEventMock,
+                        code: KEYBOARD_CODE.END,
+                    } as KeyboardEvent);
+                    expect(spy).toHaveBeenCalled();
+                    expect(lastSpy).not.toHaveBeenCalled();
+                });
             });
         });
     });

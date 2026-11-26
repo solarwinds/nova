@@ -46,6 +46,7 @@ export class MenuKeyControlService implements OnDestroy {
     public menuGroups: QueryList<MenuGroupComponent>;
     public menuItems: QueryList<MenuItemBaseComponent>;
     public menuToggle: ElementRef;
+    public menuContent: ElementRef<HTMLElement>;
     public menuPopup: MenuPopupComponent;
     public menuOpenListener: Subject<void>;
     public keyControlItemsSource: boolean = false;
@@ -54,6 +55,7 @@ export class MenuKeyControlService implements OnDestroy {
     private keyboardEventsSubscription: Subscription;
     private _scrollContainer: ElementRef;
     private pendingInitialActivation: "first" | "last" | null = null;
+    private suppressEscapeKeyup = false;
 
     public set scrollContainer(container: ElementRef) {
         this._scrollContainer = container;
@@ -95,10 +97,7 @@ export class MenuKeyControlService implements OnDestroy {
         if (this.menuOpenListener) {
             this.menuOpenListenerSubscription = this.menuOpenListener.subscribe(
                 () => {
-                    // Use timeout to ensure DOM is ready
-                    setTimeout(() => {
-                        this.activatePendingItem();
-                    }, 0);
+                    this.activatePendingItem();
 
                     this.live.announce(`
                     ${
@@ -112,13 +111,52 @@ export class MenuKeyControlService implements OnDestroy {
     }
 
     public handleKeydown(event: KeyboardEvent): void {
+        if (event.code === KEYBOARD_CODE.ESCAPE && !event.repeat) {
+            this.suppressEscapeKeyup = false;
+        }
         this.popup.isOpen
             ? this.handleOpenKeyDown(event)
             : this.handleClosedKeyDown(event);
     }
 
+    /** Prevent the Escape release on the refocused toggle from closing a parent overlay. */
+    public handleToggleKeyup(event: KeyboardEvent): void {
+        if (event.code === KEYBOARD_CODE.ESCAPE && this.suppressEscapeKeyup) {
+            this.suppressEscapeKeyup = false;
+            event.preventDefault();
+        }
+    }
+
     public setActiveItem(index: number): void {
         this.keyboardEventsManager.setActiveItem(index);
+    }
+
+    public handleItemClick(event: MouseEvent): void {
+        if (!(event.target instanceof Node)) {
+            return;
+        }
+
+        const target =
+            event.target instanceof Element
+                ? event.target
+                : event.target.parentElement;
+        const itemId = target?.closest(".nui-menu-item")?.id;
+        const items = (
+            this.keyControlItemsSource
+                ? this.menuPopup.menuItems
+                : this.menuItems
+        ).toArray();
+        const index = items.findIndex(item => item.id === itemId);
+        if (index < 0) {
+            return;
+        }
+
+        if (!items[index].disabled) {
+            this.setActiveItem(index);
+        }
+        if (!(items[index] instanceof MenuItemComponent)) {
+            this.menuContent.nativeElement.focus();
+        }
     }
 
     public getActiveItemIndex(): number | null {
@@ -231,13 +269,20 @@ export class MenuKeyControlService implements OnDestroy {
                 event.preventDefault();
                 return;
             }
+            event.preventDefault();
             this.popup.toggleOpened(event);
+            this.menuToggle.nativeElement.focus();
         }
         if (
             event.code === KEYBOARD_CODE.TAB ||
             event.code === KEYBOARD_CODE.ESCAPE
         ) {
+            if (event.code === KEYBOARD_CODE.ESCAPE) {
+                event.preventDefault();
+                this.suppressEscapeKeyup = true;
+            }
             this.popup.toggleOpened(event);
+            this.menuToggle.nativeElement.focus();
         }
     }
 

@@ -228,6 +228,8 @@ export class RenderEngine {
      * @param {number} index The data point index to highlight
      */
     public highlightDataPoint(seriesId: string, index: number): void {
+        // A manual highlight must not suppress the next pointer interaction.
+        delete this.highlightedDataPoints[seriesId];
         const childContainers = this.getSeriesChildContainers(seriesId);
         const chartSeries = this.dataManager.getChartSeries(seriesId);
 
