@@ -63,6 +63,56 @@ class SwitchFormFieldHostComponent {
 }
 
 describe("switch in a form field", () => {
+    it("references matching caption and projected text only once", fakeAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [SwitchComponent, SwitchFormFieldHostComponent],
+            imports: [NuiFormFieldModule],
+        });
+        const fixture = TestBed.createComponent(SwitchFormFieldHostComponent);
+        const host = fixture.componentInstance;
+        host.caption = "  EMAIL   ALERTS\n";
+        host.content = "Email alerts ";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+
+        const bar = fixture.nativeElement.querySelector(
+            ".nui-switch__bar"
+        ) as HTMLElement;
+        const caption = fixture.nativeElement.querySelector(
+            ".nui-form-field__control-label"
+        ) as HTMLLabelElement;
+        const label = fixture.nativeElement.querySelector(
+            ".nui-switch__label"
+        ) as HTMLElement;
+        const bothIds = `${caption.id} ${label.id}`;
+        expect(bar.getAttribute("aria-labelledby")).toBe(label.id);
+
+        host.caption = "Notifications";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(bar.getAttribute("aria-labelledby")).toBe(bothIds);
+
+        host.caption = "\t email alerts ";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(bar.getAttribute("aria-labelledby")).toBe(label.id);
+
+        host.content = "";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(bar.getAttribute("aria-labelledby")).toBe(caption.id);
+
+        host.content = "  EMAIL\tALERTS ";
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(bar.getAttribute("aria-labelledby")).toBe(label.id);
+    }));
+
     it("updates the automatic name as the caption and projected text change", fakeAsync(() => {
         TestBed.configureTestingModule({
             declarations: [SwitchComponent, SwitchFormFieldHostComponent],

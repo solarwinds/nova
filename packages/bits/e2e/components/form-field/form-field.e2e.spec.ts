@@ -398,6 +398,15 @@ test.describe("USERCONTROL form-field >", () => {
         await expect(textbox.input).toHaveAccessibleName("Textbox");
     });
 
+    test("does not repeat a checkbox caption that matches its label", async ({
+        page,
+    }) => {
+        const checkbox = page.locator(
+            "#nui-form-field-test-checkbox input[type=checkbox]"
+        );
+        await expect(checkbox).toHaveAccessibleName("Checkbox");
+    });
+
     test("includes the caption and checkbox text in its accessible name", async ({
         page,
     }) => {

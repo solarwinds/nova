@@ -4,12 +4,12 @@
 
 ### Fixes
 
-- `@nova-ui/bits` | Aligned the message dismiss button with the status icon, including when the message wraps.
-
 ## [20.0.14] 📅 2026-11-24
 
 ### Fixes
 
+- `@nova-ui/bits` | Aligned the message dismiss button with the status icon, including when the message wraps.
+- `@nova-ui/bits` | Checkbox and switch accessible names include a form-field caption only once when it matches the control's own label, ignoring case and extra whitespace.
 - `@nova-ui/bits` | Escape closes a menu inside a dialog without also dismissing the dialog.
 - `@nova-ui/dashboards` | After removing a widget by keyboard, focus moves to a nearby dashboard control.
 - `@nova-ui/bits` | A11y fixes for nui-radio: visible keyboard focus, explicit label association, hints exposed as descriptions and accessible names for radio group examples
