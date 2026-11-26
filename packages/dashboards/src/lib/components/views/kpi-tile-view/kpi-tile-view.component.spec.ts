@@ -192,6 +192,28 @@ describe("KpiTileViewComponent", () => {
         expect(tile.getAttribute("aria-label")).toBe("Nodes Up 42 nodes");
     });
 
+    it("should provide a fallback accessible name for an interactive tile with no content", () => {
+        host.value = "";
+        host.interactive = true;
+        fixture.detectChanges();
+
+        const tile: HTMLElement =
+            fixture.nativeElement.querySelector("[role='button']");
+        expect(tile).toBeTruthy();
+        expect(tile.getAttribute("aria-label")).toBe("KPI");
+    });
+
+    it("should trim whitespace from an interactive tile accessible name", () => {
+        host.value = 42;
+        host.label = "  ";
+        host.interactive = true;
+        fixture.detectChanges();
+
+        const tile: HTMLElement =
+            fixture.nativeElement.querySelector("[role='button']");
+        expect(tile.getAttribute("aria-label")).toBe("42");
+    });
+
     it("should activate an interactive tile once for Enter and Space", () => {
         host.value = 42;
         host.interactive = true;

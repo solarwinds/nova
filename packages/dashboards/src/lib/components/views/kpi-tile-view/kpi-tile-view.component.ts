@@ -80,11 +80,12 @@ export class KpiTileViewComponent {
             return null;
         }
 
-        return [this.label, this.value, this.units]
-            .filter(
-                value => value !== null && value !== undefined && value !== ""
-            )
-            .join(" ");
+        const parts = [this.label, this.value, this.units]
+            .filter(part => part !== null && part !== undefined)
+            .map(part => String(part).trim())
+            .filter(part => part.length > 0);
+
+        return parts.join(" ") || $localize`KPI`;
     }
 
     public get showEmpty(): boolean {

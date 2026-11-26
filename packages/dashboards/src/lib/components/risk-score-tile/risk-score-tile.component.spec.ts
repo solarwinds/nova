@@ -141,6 +141,22 @@ describe("RiskScoreTileComponent", () => {
         expect(spaceEvent.defaultPrevented).toBe(true);
     });
 
+    it("should provide a fallback accessible name when the interactive tile has no displayable value", () => {
+        component.configuration = { interactive: true };
+        component.widgetData = {
+            value: 0,
+            label: "",
+            useStaticLabel: true,
+            staticLabel: "",
+        };
+        fixture.detectChanges();
+
+        const tile: HTMLElement =
+            fixture.nativeElement.querySelector("[role='button']");
+        expect(tile).toBeTruthy();
+        expect(tile.getAttribute("aria-label")).toBe("Risk score");
+    });
+
     it("should not add a non-interactive risk score tile to the tab order", () => {
         component.widgetData = { value: 4, label: "Risk level" };
         fixture.detectChanges();

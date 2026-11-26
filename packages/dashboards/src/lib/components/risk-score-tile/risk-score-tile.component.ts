@@ -95,9 +95,12 @@ export class RiskScoreTileComponent implements IHasChangeDetector, OnChanges {
             ? this.widgetData?.staticLabel ?? this.widgetData?.value
             : this.widgetData?.value;
 
-        return [this.widgetData?.label, value]
-            .filter(part => part !== null && part !== undefined && part !== "")
-            .join(" ");
+        const parts = [this.widgetData?.label, value]
+            .filter(part => part !== null && part !== undefined)
+            .map(part => String(part).trim())
+            .filter(part => part.length > 0);
+
+        return parts.join(" ") || $localize`Risk score`;
     }
 
     constructor(
