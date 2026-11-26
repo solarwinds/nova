@@ -8,7 +8,7 @@
         <input
             class="form-control input-control nui-textbox__input"
             #numberInput
-            [id]="id"
+            [attr.id]="nativeControlId"
             step="any"
             [disabled]="disabled"
             type="number"
@@ -24,7 +24,7 @@
             [placeholder]="placeholder"
             [readonly]="readonly"
             [attr.aria-label]="ariaLabel"
-            [attr.aria-describedby]="ariaDescribedby"
+            [attr.aria-describedby]="resolvedAriaDescribedby"
             [attr.aria-valuemin]="minValue"
             [attr.aria-valuemax]="maxValue"
             [attr.aria-valuenow]="value" />

@@ -35,6 +35,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
+import { FormFieldDescription } from "../form-field/form-field-description";
 import {
     getOverlayPositions,
     IOptionValueObject,
@@ -110,7 +111,7 @@ export class ColorPickerComponent
     public isBlackTick: boolean;
     public isInErrorState: boolean;
     @Input() public get ariaLabel(): string | undefined {
-        return this._ariaLabel;
+        return this._ariaLabel || this.formFieldCaption || this._ariaLabel;
     }
 
     public set ariaLabel(value: string | undefined) {
@@ -132,7 +133,13 @@ export class ColorPickerComponent
     }
 
     private _ariaLabel?: string;
+    private formFieldCaption?: string;
     private _ariaDescribedby?: string;
+    private readonly formFieldDescription = new FormFieldDescription();
+
+    public get resolvedAriaDescribedby(): string | null {
+        return this.formFieldDescription.resolve(this.ariaDescribedby);
+    }
 
     /** Unique id for the control. */
     @Input() public id: string;
@@ -148,6 +155,22 @@ export class ColorPickerComponent
         private colorService: ColorService,
         private cdkOverlay: Overlay
     ) {}
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.changeDetection.markForCheck();
+        }
+    }
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption?: string
+    ): void {
+        if (caption !== this.formFieldCaption) {
+            this.formFieldCaption = caption;
+            this.changeDetection.markForCheck();
+        }
+    }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.colors) {

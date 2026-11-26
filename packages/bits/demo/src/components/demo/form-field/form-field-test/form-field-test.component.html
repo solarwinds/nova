@@ -202,13 +202,48 @@
     Clear field hints
 </button>
 
+<p id="nui-form-field-caller-description" i18n>Use your work email.</p>
+<nui-form-field
+    id="nui-form-field-test-merged-description"
+    caption="Contact email"
+    [hint]="adapterHint"
+    i18n-caption>
+    <nui-textbox
+        ariaDescribedby="nui-form-field-caller-description"></nui-textbox>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-test-checkbox-caption"
+    caption="Convert to"
+    i18n-caption>
+    <nui-checkbox i18n>UTC</nui-checkbox>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-test-switch-caption"
+    caption="Notifications"
+    i18n-caption>
+    <nui-switch i18n>Email alerts</nui-switch>
+</nui-form-field>
+
+<nui-form-field
+    id="nui-form-field-test-switch-explicit"
+    caption="Notifications"
+    i18n-caption>
+    <nui-switch
+        ariaLabel="Notifications Email alerts by email"
+        i18n-ariaLabel
+        i18n
+        >Email alerts</nui-switch
+    >
+</nui-form-field>
+
 <nui-form-field
     id="nui-form-field-test-dynamic-caption"
     [caption]="dynamicCaption">
     <nui-textbox
         *ngIf="showDynamicControl"
-        ariaLabel="Notification email"
-        i18n-ariaLabel></nui-textbox>
+        [ariaLabel]="dynamicExplicitName"></nui-textbox>
 </nui-form-field>
 <button
     nui-button
@@ -219,6 +254,9 @@
 </button>
 <button nui-button type="button" (click)="dynamicCaption = ''" i18n>
     Clear caption
+</button>
+<button nui-button type="button" (click)="dynamicExplicitName = ''" i18n>
+    Clear explicit name
 </button>
 <button
     nui-button

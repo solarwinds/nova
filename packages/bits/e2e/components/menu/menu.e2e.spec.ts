@@ -18,10 +18,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import { test, expect, Helpers } from "../../setup";
-
 import { MenuAtom } from "./menu.atom";
 import { Atom } from "../../atom";
+import { test, expect, Helpers } from "../../setup";
 
 test.describe("USERCONTROL Menu", () => {
     let menu: MenuAtom;
@@ -70,6 +69,92 @@ test.describe("USERCONTROL Menu", () => {
             await option1.clickItem();
             await expect(menu.getSelectedCheckboxElements()).toHaveCount(0);
         });
+
+        test("keeps a visible, accessible focus and keyboard control after selecting an option", async ({
+            page,
+        }) => {
+            const actions: string[] = [];
+            page.on("console", message => {
+                if (message.text() === "Action Done") {
+                    actions.push(message.text());
+                }
+            });
+            await menu.toggleMenu();
+            const option = menu
+                .getMenuItemByContainingText("Menu Item1")
+                .getLocator();
+            const nextOption = menu
+                .getMenuItemByContainingText("Menu Item2")
+                .getLocator();
+            const label = option.locator(".nui-checkbox__label");
+            const input = option.locator("input[type=checkbox]");
+
+            await option.scrollIntoViewIfNeeded();
+            await option.click();
+            await nextOption.hover();
+            await expect(option).toBeFocused();
+            await expect(option).toHaveRole("menuitemcheckbox");
+            await expect(option).toHaveAccessibleName("Menu Item1");
+            await expect(option).toHaveAttribute("aria-checked", "true");
+            await expect(input).toBeHidden();
+            await expect(option.getByRole("checkbox")).toHaveCount(0);
+            await expect(label).not.toHaveCSS("box-shadow", "none");
+
+            await Helpers.pressKey("Space");
+            await expect(option).toHaveAttribute("aria-checked", "false");
+            await Helpers.pressKey("Enter");
+            await expect(option).toHaveAttribute("aria-checked", "true");
+            await expect(menu.getSelectedCheckboxElements()).toHaveCount(1);
+            expect(actions).toHaveLength(3);
+            await menu.isMenuOpened();
+
+            await Helpers.pressKey("ArrowDown");
+            await expect(nextOption).toContainClass("nui-menu-item--active");
+            await expect(menu.getMenuButton().getLocator()).toBeFocused();
+            await Helpers.pressKey("Escape");
+            await menu.isMenuClosed();
+            await expect(menu.getMenuButton().getLocator()).toBeFocused();
+        });
+
+        test("keeps disabled options unchanged when clicked", async () => {
+            await menu.toggleMenu();
+            const option = menu
+                .getMenuItemByContainingText("Disabled option")
+                .getLocator();
+            await option.scrollIntoViewIfNeeded();
+            await option.click();
+            await expect(option).toHaveAttribute("aria-checked", "false");
+            await expect(menu.getSelectedCheckboxElements()).toHaveCount(0);
+            await menu.isMenuOpened();
+        });
+
+        for (const key of ["Escape", "Tab", "Shift+Tab"]) {
+            test(`closes after ${key} on a mouse-focused option`, async () => {
+                await menu.toggleMenu();
+                const option = menu
+                    .getMenuItemByContainingText("Menu Item1")
+                    .getLocator();
+                await option.click();
+                await expect(option).toBeFocused();
+                await Helpers.pressKey(key);
+                await menu.isMenuClosed();
+                if (key === "Escape") {
+                    await expect(
+                        menu.getMenuButton().getLocator()
+                    ).toBeFocused();
+                } else if (key === "Tab") {
+                    await expect(
+                        appendToBody.getMenuButton().getLocator()
+                    ).toBeFocused();
+                } else {
+                    expect(
+                        await Helpers.page.evaluate(
+                            () => document.activeElement === document.body
+                        )
+                    ).toBe(true);
+                }
+            });
+        }
     });
 
     test.describe("accessibility", () => {
@@ -282,6 +367,39 @@ test.describe("USERCONTROL Menu", () => {
         });
 
         test.describe("> append-to-body", () => {
+            test("keeps projected options accessible and keyboard-operable after a click", async () => {
+                await appendToBody.toggleMenu();
+                const content = appendToBody.getAppendToBodyMenu();
+                const option = content.getByRole("menuitemcheckbox", {
+                    name: "First from second group",
+                });
+                const nextOption = content.getByRole("menuitemcheckbox", {
+                    name: "Another menu item",
+                });
+                await option.scrollIntoViewIfNeeded();
+                await option.click();
+                await nextOption.hover();
+                await expect(option).toBeFocused();
+                await expect(option).toHaveAttribute("aria-checked", "true");
+                await expect(option.getByRole("checkbox")).toHaveCount(0);
+                await Helpers.switchDarkTheme("on");
+                await expect(
+                    option.locator(".nui-checkbox__label")
+                ).not.toHaveCSS("box-shadow", "none");
+
+                await Helpers.pressKey("Space");
+                await expect(option).toHaveAttribute("aria-checked", "false");
+                await Helpers.pressKey("ArrowDown");
+                await expect(nextOption).toContainClass(
+                    "nui-menu-item--active"
+                );
+                await Helpers.pressKey("Escape");
+                await appendToBody.isMenuClosed();
+                await expect(
+                    appendToBody.getMenuButton().getLocator()
+                ).toBeFocused();
+            });
+
             test("should check and uncheck checkbox in menu item", async () => {
                 await appendToBody.toggleMenu();
                 // Find the first checkbox in the appendToBody menu

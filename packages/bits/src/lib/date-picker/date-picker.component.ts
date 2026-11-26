@@ -58,6 +58,7 @@ import {
     IDatePickerDisabledDate,
 } from "./public-api";
 import { NuiValidators } from "../../validators";
+import { FormFieldDescription } from "../form-field/form-field-description";
 import { NuiFormFieldControl } from "../form-field/public-api";
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
@@ -108,8 +109,23 @@ export class DatePickerComponent
     /** to apply error state styles */
     @Input() isInErrorState: boolean;
     /** Input to set aria label text */
-    @Input() public ariaLabel: string = $localize`Date Picker`;
+    @Input() public get ariaLabel(): string {
+        return (
+            this.explicitAriaLabel ||
+            this.formFieldCaption ||
+            (this.explicitAriaLabel === "" ? "" : $localize`Date Picker`)
+        );
+    }
+
+    public set ariaLabel(value: string) {
+        this.explicitAriaLabel = value;
+    }
     @Input() public ariaDescribedby: string;
+    private readonly formFieldDescription = new FormFieldDescription();
+
+    public get resolvedAriaDescribedby(): string | null {
+        return this.formFieldDescription.resolve(this.ariaDescribedby);
+    }
 
     // TODO: Consider injecting locale through LOCALE_ID Injection Token
     /** to date format locale */
@@ -208,8 +224,23 @@ export class DatePickerComponent
     private inputChanged: Subject<string> = new Subject<string>();
     private momentDateFormat: string;
     private calendarChanged: Subscription;
+    private explicitAriaLabel: string | undefined;
+    private formFieldCaption: string | undefined;
 
     constructor(private cd: ChangeDetectorRef) {}
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.cd.markForCheck();
+        }
+    }
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption?: string
+    ): void {
+        this.formFieldCaption = caption;
+    }
 
     public ngOnInit(): void {
         _defaults(this, datePickerDefaults);

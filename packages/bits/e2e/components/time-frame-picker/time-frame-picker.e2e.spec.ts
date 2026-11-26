@@ -98,6 +98,34 @@ test.describe("USERCONTROL time-frame-picker", () => {
             }
         });
 
+        test("updates the shared description on all four inputs", async ({
+            page,
+        }) => {
+            const inputs = page.locator(
+                "nui-time-frame-picker:visible nui-date-picker input, nui-time-frame-picker:visible nui-time-picker input"
+            );
+            await expect(inputs).toHaveCount(4);
+            for (const input of await inputs.all()) {
+                await expect(input).toHaveAccessibleDescription(
+                    "Choose a time range."
+                );
+            }
+            await page
+                .getByRole("button", { name: "Update time frame instructions" })
+                .click();
+            for (const input of await inputs.all()) {
+                await expect(input).toHaveAccessibleDescription(
+                    "Choose a local time range."
+                );
+            }
+            await page
+                .getByRole("button", { name: "Clear time frame instructions" })
+                .click();
+            for (const input of await inputs.all()) {
+                await expect(input).not.toHaveAttribute("aria-describedby");
+            }
+        });
+
         test("should not have Use button before any control value is changed", async () => {
             const useButton = Atom.find(
                 ButtonAtom,

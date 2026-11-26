@@ -19,10 +19,12 @@
 //  THE SOFTWARE.
 
 import {
+    ChangeDetectorRef,
     Component,
     ElementRef,
     EventEmitter,
     forwardRef,
+    inject,
     Input,
     OnInit,
     Output,
@@ -31,6 +33,7 @@ import {
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
+import { FormFieldDescription } from "../form-field/form-field-description";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
 let switchLabelCounter = 0;
@@ -62,7 +65,8 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
     @Input() public disabled: boolean;
 
     /**
-     * Input to set aria label text
+     * Explicit accessible name. Overrides the form-field caption and projected
+     * label; include the visible label text when supplying a name.
      */
     @Input() public ariaLabel?: string;
     @Input() public ariaDescribedby?: string;
@@ -79,19 +83,53 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
     public readonly labelId = `nui-switch-label-${switchLabelCounter++}`;
 
     private readonly defaultAriaLabel = $localize`:Accessible name for a switch without a label:Switch`;
+    private readonly changeDetector = inject(ChangeDetectorRef);
+    private formFieldLabelId: string | undefined;
+    private readonly formFieldDescription = new FormFieldDescription();
+
+    @Output() valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    public get resolvedAriaDescribedby(): string | null {
+        return this.formFieldDescription.resolve(this.ariaDescribedby);
+    }
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.changeDetector.markForCheck();
+        }
+    }
 
     public get accessibleLabel(): string | null {
-        return (
-            this.ariaLabel ||
-            (!this.hasProjectedLabel ? this.defaultAriaLabel : null)
-        );
+        if (this.ariaLabel) {
+            return this.ariaLabel;
+        }
+        if (this.formFieldLabelId) {
+            return null;
+        }
+        return !this.hasProjectedLabel ? this.defaultAriaLabel : null;
     }
 
     public get labelIdIfProjected(): string | null {
-        return this.ariaLabel || !this.hasProjectedLabel ? null : this.labelId;
+        if (this.ariaLabel) {
+            return null;
+        }
+        if (this.formFieldLabelId) {
+            return [
+                this.formFieldLabelId,
+                this.hasProjectedLabel ? this.labelId : null,
+            ]
+                .filter(Boolean)
+                .join(" ");
+        }
+        return !this.hasProjectedLabel ? null : this.labelId;
     }
 
-    @Output() valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    public setFormFieldLabel(labelId: string | undefined): void {
+        if (this.formFieldLabelId !== labelId) {
+            this.formFieldLabelId = labelId;
+            this.changeDetector.markForCheck();
+        }
+    }
 
     toggle(): void {
         if (this.disabled) {

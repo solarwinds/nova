@@ -18,10 +18,38 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import { TestBed } from "@angular/core/testing";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Subject } from "rxjs";
 import { take } from "rxjs/operators";
 
 import { FreetypeQueryBuilderComponent } from "./freetype-query-builder.component";
+import { NuiFreetypeQueryModule } from "./freetype-query-builder.module";
+
+describe("FreetypeQueryBuilderComponent accessibility", () => {
+    it("renders the default and supplied names and description on the textarea", () => {
+        TestBed.configureTestingModule({
+            imports: [NuiFreetypeQueryModule, NoopAnimationsModule],
+        });
+        const fixture = TestBed.createComponent(FreetypeQueryBuilderComponent);
+        fixture.componentRef.setInput("cursorSetter$", new Subject<number>());
+        fixture.detectChanges();
+
+        const textarea = fixture.nativeElement.querySelector(
+            "textarea"
+        ) as HTMLTextAreaElement;
+        expect(textarea.getAttribute("aria-label")).toBe("Freetype query");
+        expect(textarea.hasAttribute("aria-describedby")).toBeFalse();
+
+        fixture.componentRef.setInput("ariaLabel", "Device query");
+        fixture.componentRef.setInput("ariaDescribedby", "query-instructions");
+        fixture.detectChanges();
+        expect(textarea.getAttribute("aria-label")).toBe("Device query");
+        expect(textarea.getAttribute("aria-describedby")).toBe(
+            "query-instructions"
+        );
+    });
+});
 
 describe("FreetypeQueryBuilderComponent", () => {
     describe("UnitTests", () => {

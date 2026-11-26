@@ -24,10 +24,23 @@
             & > .nui-checkbox {
                 padding: 0;
             }
+
+            // The menu item exposes the checkbox state; the inner input is decorative.
+            .nui-checkbox__input {
+                display: none;
+            }
         }
 
         .nui-checkbox__translucent {
             cursor: not-allowed;
+        }
+    }
+
+    &:focus:not(.nui-menu-item--disabled) > .nui-menu-item__option {
+        .nui-checkbox__label {
+            border-radius: 0;
+            .focus-outline-inset();
+            .setCssVariable(background-color, transparent);
         }
     }
 

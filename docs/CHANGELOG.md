@@ -4,6 +4,10 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | Improve checkbox and switch accessible names, checkbox descriptions and states, and form-field updates in OnPush hosts. Explicit accessible names now take precedence over form-field captions.
+- `@nova-ui/bits` | Keep form-field help references separate from consumer-provided descriptions. Custom templates in control subclasses should render `resolvedAriaDescribedby` (or `descriptionIds` for checkboxes) to retain field help.
+- `@nova-ui/bits` | Fix form-field captions for checkboxes and textboxes with a conflicting host ID. The native input receives a separate ID in these cases.
+- `@nova-ui/bits` | Keep selections independent across radio groups without an explicit name.
 - `@nova-ui/dashboards` | Show accessible placeholders for unavailable PerfStack legend values instead of blank tiles or misleading zero percentages.
 - `@nova-ui/dashboards` | Percent stacked-area legends support per-series multipliers, keeping PerfStack CPU and `Remaining` values accurate when chart data is normalized by total CPU count. PerfStack retains its legacy fallback when no valid multiplier is supplied, and unavailable values remain distinct from zero when one is supplied.
 - `@nova-ui/charts` | Percentage-area stacking excludes series marked `preprocess: false` from stack totals.

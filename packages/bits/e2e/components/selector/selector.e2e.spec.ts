@@ -90,6 +90,24 @@ test.describe("USERCONTROL Selector", () => {
         await expect(selectionElement).toContainText(SelectionType.UnselectAll);
     });
 
+    test("skips the decorative checkbox in keyboard navigation", async ({
+        page,
+    }) => {
+        const selector = page.locator("#nui-demo-selector");
+        const button = selector.locator(".nui-selector__checkbox-button");
+        const toggle = selector.locator(".nui-selector__toggle");
+        const input = selector.locator("input[type=checkbox]");
+
+        await expect(input).toHaveAttribute("tabindex", "-1");
+        await button.focus();
+        await page.keyboard.press("Tab");
+        await expect(toggle).toBeFocused();
+        await page.keyboard.press("Shift+Tab");
+        await expect(button).toBeFocused();
+        await page.keyboard.press("Space");
+        await expect(selectionElement).toContainText(SelectionType.All);
+    });
+
     test.describe("appended to body >", () => {
         test("should get appropriate 'SelectionType' state by clicking repeat item", async () => {
             await makeAppendedToBody();

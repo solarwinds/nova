@@ -21,10 +21,13 @@
 import {
     AfterContentChecked,
     AfterContentInit,
+    ChangeDetectorRef,
     Component,
     ContentChild,
     ContentChildren,
+    ElementRef,
     forwardRef,
+    inject,
     Input,
     OnDestroy,
     QueryList,
@@ -56,7 +59,9 @@ export class FormFieldComponent
     private originalControlLabel: string | undefined;
     private lastCaption: string | undefined;
     private appliedCaption: string | undefined;
+    private appliedDescription: string | undefined;
     private controlUpdateTimeout: ReturnType<typeof setTimeout> | undefined;
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
     /**
      * Form control obtained from the parent reactive form
@@ -98,6 +103,9 @@ export class FormFieldComponent
     @ContentChild(forwardRef(() => NuiFormFieldControl))
     nuiFormControl: NuiFormFieldControl;
 
+    @ContentChild(forwardRef(() => NuiFormFieldControl), { read: ElementRef })
+    private nuiFormControlElement?: ElementRef<HTMLElement>;
+
     public controlIsOptional: boolean = false;
 
     public labelId = `nui-form-field-label-${FormFieldComponent.nextUniqueId++}`;
@@ -107,17 +115,28 @@ export class FormFieldComponent
         this.controlIsOptional =
             this.showOptionalText && !this.hasRequiredField(this.control);
 
+        if (this.namedControl && this.namedControl !== this.nuiFormControl) {
+            this.namedControl.setFormFieldDescription?.(undefined);
+            this.namedControl = undefined;
+            clearTimeout(this.controlUpdateTimeout);
+        }
         if (
             this.nuiFormControl &&
             (this.nuiFormControl !== this.namedControl ||
                 this.caption !== this.lastCaption ||
-                this.nuiFormControl.ariaDescribedby !==
-                    this.getControlDescription(this.nuiFormControl))
+                (this.nuiFormControl.setFormFieldControlId &&
+                    this.nuiFormControl.nativeControlId !==
+                        this.getNativeControlId(this.nuiFormControl)) ||
+                (this.nuiFormControl.setFormFieldDescription
+                    ? this.appliedDescription !== this.getFieldDescription()
+                    : this.nuiFormControl.ariaDescribedby !==
+                      this.getControlDescription(this.nuiFormControl)))
         ) {
             if (this.nuiFormControl !== this.namedControl) {
                 this.namedControl = this.nuiFormControl;
                 this.originalControlLabel = this.nuiFormControl.ariaLabel;
                 this.appliedCaption = undefined;
+                this.appliedDescription = undefined;
             }
             this.lastCaption = this.caption;
             this.updateControlName();
@@ -162,7 +181,12 @@ export class FormFieldComponent
             if (this.nuiFormControl !== control) {
                 return;
             }
-            if (this.caption) {
+            if (control.setFormFieldLabel) {
+                control.setFormFieldLabel(
+                    this.caption ? this.labelId : undefined,
+                    this.caption || undefined
+                );
+            } else if (this.caption) {
                 control.ariaLabel = this.caption;
             } else if (
                 this.appliedCaption &&
@@ -171,11 +195,38 @@ export class FormFieldComponent
                 control.ariaLabel = this.originalControlLabel;
             }
             this.appliedCaption = this.caption;
-            control.ariaDescribedby = this.getControlDescription(control);
+            if (control.setFormFieldDescription) {
+                this.appliedDescription = this.getFieldDescription();
+                control.setFormFieldDescription(this.appliedDescription);
+            } else {
+                control.ariaDescribedby = this.getControlDescription(control);
+            }
             if (!control.id) {
                 control.id = `${this.labelId}-control`;
             }
+            if (control.setFormFieldControlId) {
+                const id = this.getNativeControlId(control);
+                control.setFormFieldControlId(
+                    id !== control.id ? id : undefined
+                );
+            }
+            this.changeDetectorRef.markForCheck();
         });
+    }
+
+    private getNativeControlId(
+        control: NuiFormFieldControl
+    ): string | undefined {
+        if (
+            control.id &&
+            this.nuiFormControlElement?.nativeElement.id === control.id
+        ) {
+            const generatedId = `${this.labelId}-control`;
+            return generatedId === control.id
+                ? `${generatedId}-native`
+                : generatedId;
+        }
+        return control.id;
     }
 
     private getControlDescription(
@@ -184,15 +235,19 @@ export class FormFieldComponent
         const references = (control.ariaDescribedby || "")
             .split(/\s+/)
             .filter(reference => reference && reference !== this.helpId);
-        if (
-            this.hint ||
-            this.hintTemplate ||
-            this.validationMessages?.some(message => message.show)
-        ) {
+        if (this.getFieldDescription()) {
             references.push(this.helpId);
         }
         return references.length
             ? Array.from(new Set(references)).join(" ")
+            : undefined;
+    }
+
+    private getFieldDescription(): string | undefined {
+        return this.hint ||
+            this.hintTemplate ||
+            this.validationMessages?.some(message => message.show)
+            ? this.helpId
             : undefined;
     }
 

@@ -26,7 +26,11 @@
         [ariaLabel]="menuAriaLabel">
         <span>{{ title }}</span>
     </button>
-    <div popupAreaContent [id]="popupContentId" role="menu">
+    <div
+        popupAreaContent
+        [id]="popupContentId"
+        role="menu"
+        (keydown)="onMenuContentKeydown($event)">
         @if (itemsSource) {
         <nui-menu-popup
             [itemsSource]="itemsSource"

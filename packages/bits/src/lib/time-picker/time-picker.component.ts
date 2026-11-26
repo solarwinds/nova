@@ -45,6 +45,7 @@ import { Subject } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
 
 import { TimePickerKeyboardService } from "./time-picker-keyboard.service";
+import { FormFieldDescription } from "../form-field/form-field-description";
 import { NuiFormFieldControl } from "../form-field/public-api";
 import { MenuPopupComponent } from "../menu";
 import { IMenuGroup, IMenuItem } from "../menu/public-api";
@@ -102,8 +103,24 @@ export class TimePickerComponent
     /** to apply error state styles */
     @Input() isInErrorState = false;
     /** Input to set aria label text */
-    @Input() public ariaLabel: string = "Time Picker";
+    @Input() public get ariaLabel(): string {
+        return (
+            this.explicitAriaLabel ||
+            this.formFieldCaption ||
+            (this.explicitAriaLabel === "" ? "" : "Time Picker")
+        );
+    }
+
+    public set ariaLabel(value: string) {
+        this.explicitAriaLabel = value;
+    }
     @Input() public ariaDescribedby: string;
+    private readonly formFieldDescription = new FormFieldDescription();
+
+    public get resolvedAriaDescribedby(): string | null {
+        return this.formFieldDescription.resolve(this.ariaDescribedby);
+    }
+
     /** to allow the empty values for init state */
     @Input() initEmpty: boolean;
     /** Allows popup box to be attached to document.body */
@@ -149,12 +166,27 @@ export class TimePickerComponent
 
     private itemToSelect: any;
     private inputChanged: Subject<string> = new Subject<string>();
+    private explicitAriaLabel: string | undefined;
+    private formFieldCaption: string | undefined;
 
     constructor(
         private elementRef: ElementRef,
         private keyboardService: TimePickerKeyboardService,
         private cdr: ChangeDetectorRef
     ) {}
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.cdr.markForCheck();
+        }
+    }
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption?: string
+    ): void {
+        this.formFieldCaption = caption;
+    }
 
     public ngOnInit(): void {
         this.times = this.generateTimeItems(this.timeStep);

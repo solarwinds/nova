@@ -58,6 +58,7 @@ import { SelectV2OptionComponent } from "./option/select-v2-option.component";
 import { OptionKeyControlService } from "./option-key-control.service";
 import { InputValueTypes, IOptionedComponent } from "./types";
 import { KEYBOARD_CODE } from "../../constants/keycode.constants";
+import { FormFieldDescription } from "../form-field/form-field-description";
 import {
     OVERLAY_ITEM,
     OVERLAY_WITH_POPUP_STYLES_CLASS,
@@ -141,7 +142,7 @@ export abstract class BaseSelectV2
 
     /** Input to set aria label text */
     @Input() public get ariaLabel(): string {
-        return this._ariaLabel;
+        return this._ariaLabel || this.formFieldCaption || "";
     }
 
     // changing the value with regular @Input doesn't trigger change detection
@@ -205,7 +206,13 @@ export abstract class BaseSelectV2
     private _selectedOptions: SelectV2OptionComponent[] = [];
 
     private _ariaLabel: string = "";
+    private formFieldCaption: string | undefined;
     private _ariaDescribedby: string;
+    private readonly formFieldDescription = new FormFieldDescription();
+
+    public get resolvedAriaDescribedby(): string | null {
+        return this.formFieldDescription.resolve(this.ariaDescribedby);
+    }
 
     public get accessibleLabel(): string | null {
         return (
@@ -237,6 +244,22 @@ export abstract class BaseSelectV2
         public elRef: ElementRef<HTMLElement>,
         public liveAnnouncer: LiveAnnouncer
     ) {}
+
+    public setFormFieldDescription(id: string | undefined): void {
+        if (this.formFieldDescription.set(id)) {
+            this.cdRef.markForCheck();
+        }
+    }
+
+    public setFormFieldLabel(
+        _labelId: string | undefined,
+        caption?: string
+    ): void {
+        if (caption !== this.formFieldCaption) {
+            this.formFieldCaption = caption;
+            this.cdRef.markForCheck();
+        }
+    }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.value) {

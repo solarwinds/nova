@@ -13,7 +13,7 @@
             (textChange)="onInputActiveDateChanged($event)"
             (blurred)="updateTouchedState()"
             [ariaLabel]="ariaLabel"
-            [ariaDescribedby]="ariaDescribedby"
+            [ariaDescribedby]="resolvedAriaDescribedby"
             (keydown.arrowdown)="!isDisabled && overlay.show()">
         </nui-textbox>
         <nui-icon
@@ -40,7 +40,7 @@
 <ng-template #datePickerInner>
     <nui-date-picker-inner
         [ariaLabel]="inline ? ariaLabel : undefined"
-        [ariaDescribedby]="inline ? ariaDescribedby : undefined"
+        [ariaDescribedby]="inline ? resolvedAriaDescribedby : undefined"
         [preserveInsignificant]="preserveInsignificant"
         [selectedDate]="selectedDate"
         [inline]="inline"
