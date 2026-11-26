@@ -330,6 +330,9 @@ describe("directives >", () => {
                 expect(
                     Number(gutter.getAttribute("aria-valuenow"))
                 ).toBeCloseTo(expected, 2);
+                expect(gutter.getAttribute("aria-valuetext")).toBe(
+                    `${Math.round(expected)} pixels`
+                );
                 expect(
                     Number.parseFloat(getComputedStyle(target).width)
                 ).toBeCloseTo(expected, 1);

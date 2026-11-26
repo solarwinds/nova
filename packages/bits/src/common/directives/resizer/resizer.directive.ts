@@ -449,7 +449,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
             "aria-valuenow",
             String(currentSize)
         );
-        const pixels = Math.round(currentSize * 100) / 100;
+        const pixels = Math.round(currentSize);
         this.renderer.setAttribute(
             this.resizeGutter,
             "aria-valuetext",
