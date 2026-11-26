@@ -24,7 +24,7 @@
 - `@nova-ui/bits` | Preserved native keyboard navigation in editable toolbar content, kept the overflow menu reachable when actions change disabled state, and restored keyboard focus indicators on menu buttons.
 - `@nova-ui/bits` | Improved keyboard access and focus visibility for overflowing tabs, hoverable and collapsible panels, and sortable table headers.
 - `@nova-ui/bits` | Added keyboard and non-dragging table column resizing, and keyboard resizing for LTR panels with resolvable numeric size bounds.
-- `@nova-ui/bits` | Preserved native activation of host-referenced popups and exposed checkbox semantics and state on the keyboard-focusable control.
+- `@nova-ui/bits` | Preserved native activation of host-referenced popups.
 - `@nova-ui/charts` | Added opt-in keyboard tooltip inspection for aligned chart series and optional focusable legend series for focus-driven emphasis, with related examples and documentation.
 - `@nova-ui/dashboards` | Separated timeseries legend visibility controls from drilldown links, and added keyboard access and focus emphasis to interactive proportional chart legends.
 - `@nova-ui/dashboards` | Added keyboard activation and visible focus to interactive KPI and risk-score tiles while preserving native links.

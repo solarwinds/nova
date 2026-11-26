@@ -311,7 +311,7 @@ test.describe("USERCONTROL Radio group", () => {
         const orange = basicGroup.getRadioInputByValue("Orange");
         const toggle = toggleDisabledGroupCheckbox
             .getLocator()
-            .locator("label");
+            .locator("input[type=checkbox]");
         await toggle.focus();
         await page.keyboard.press("Shift+Tab");
         await expect(orange).toBeFocused();
