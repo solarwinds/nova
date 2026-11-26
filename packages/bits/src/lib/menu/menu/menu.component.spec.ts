@@ -257,6 +257,60 @@ describe("components >", () => {
                 );
             }));
 
+            it("should notify menu opening when onMenuOpen is called without an argument", () => {
+                const opened = jasmine.createSpy("opened");
+                const subscription =
+                    testComponent.menu.menuOpenStream.subscribe(opened);
+
+                testComponent.menu.onMenuOpen();
+
+                expect(opened).toHaveBeenCalledTimes(1);
+                subscription.unsubscribe();
+            });
+
+            it("should keep the deprecated content keydown handler navigating from a focused option", fakeAsync(() => {
+                testComponent.itemsSource = [
+                    {
+                        itemsSource: [
+                            { itemType: "option", title: "First" },
+                            { itemType: "option", title: "Second" },
+                            { itemType: "option", title: "Third" },
+                        ],
+                    },
+                ] as IMenuGroup[];
+                fixture.detectChanges();
+                const button = testComponent.menu.menuToggle
+                    .nativeElement as HTMLButtonElement;
+                button.focus();
+                button.click();
+                fixture.detectChanges();
+                tick();
+
+                const options =
+                    el.querySelectorAll<HTMLElement>("nui-menu-option");
+                options[0].focus();
+                options[0].addEventListener(
+                    "keydown",
+                    event => testComponent.menu.onMenuContentKeydown(event),
+                    { once: true }
+                );
+                options[0].dispatchEvent(
+                    new KeyboardEvent("keydown", {
+                        code: "ArrowDown",
+                        key: "ArrowDown",
+                        keyCode: 40,
+                        bubbles: true,
+                        cancelable: true,
+                    })
+                );
+                fixture.detectChanges();
+
+                expect(testComponent.menu.activeDescendant).toBe(options[1].id);
+                expect(document.activeElement).toBe(
+                    testComponent.menu.menuContent.nativeElement
+                );
+            }));
+
             it("should have correct roles on menu-link", () => {
                 // Ensure menu items are rendered
                 testComponent.menu.popup.toggleOpened(

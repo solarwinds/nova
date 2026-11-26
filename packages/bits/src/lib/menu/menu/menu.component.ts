@@ -48,6 +48,17 @@ import { MenuKeyControlService } from "../menu-key-control.service";
 import { MenuPopupComponent } from "../menu-popup/menu-popup.component";
 import { IMenuGroup } from "../public-api";
 
+const menuNavigationKeys: string[] = [
+    KEYBOARD_CODE.ARROW_DOWN,
+    KEYBOARD_CODE.ARROW_UP,
+    KEYBOARD_CODE.HOME,
+    KEYBOARD_CODE.END,
+    KEYBOARD_CODE.PAGE_DOWN,
+    KEYBOARD_CODE.PAGE_UP,
+    KEYBOARD_CODE.ESCAPE,
+    KEYBOARD_CODE.TAB,
+];
+
 /**
  * Examples: <example-url>./../examples/index.html#/menu</example-url><br />
  * "nui-menu" provides simple dropdown menu option with custom items:
@@ -160,34 +171,11 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         // initializing key-control manager
         this.keyControlService.initKeyboardManager();
         // listening to events for key-control
-        const handleKeydown = (event: KeyboardEvent) => {
-            if (!event.defaultPrevented && !this.popup.popupToggle.disabled) {
-                const isOpeningKey =
-                    event.code === KEYBOARD_CODE.ENTER ||
-                    event.code === KEYBOARD_CODE.SPACE ||
-                    event.code === KEYBOARD_CODE.ARROW_DOWN ||
-                    event.code === KEYBOARD_CODE.ARROW_UP;
-                this.focusMenuWhenOpened = !this.popup.isOpen && isOpeningKey;
-
-                if (
-                    this.popup.isOpen &&
-                    (isOpeningKey ||
-                        event.code === KEYBOARD_CODE.HOME ||
-                        event.code === KEYBOARD_CODE.END ||
-                        event.code === KEYBOARD_CODE.PAGE_UP ||
-                        event.code === KEYBOARD_CODE.PAGE_DOWN)
-                ) {
-                    this.menuContent.nativeElement.focus();
-                }
-
-                this.keyControlService.handleKeydown(event);
-            }
-        };
         this.menuKeyControlListeners.push(
             this.renderer.listen(
                 this.menuToggle.nativeElement,
                 "keydown",
-                handleKeydown
+                this.handleMenuKeydown
             ),
             this.renderer.listen(
                 this.menuToggle.nativeElement,
@@ -198,7 +186,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
             this.renderer.listen(
                 this.menuContent.nativeElement,
                 "keydown",
-                handleKeydown
+                this.handleMenuKeydown
             ),
             this.renderer.listen(
                 this.menuContent.nativeElement,
@@ -241,7 +229,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.blurred.emit(event);
     }
 
-    public onMenuOpen(isOpen: boolean): void {
+    public onMenuOpen(isOpen = true): void {
         if (!isOpen) {
             return;
         }
@@ -263,6 +251,32 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.menuOpenStream.next();
     }
 
+    /**
+     * @deprecated Menu content keyboard events are handled internally. Kept for API compatibility.
+     */
+    public onMenuContentKeydown(event: KeyboardEvent): void {
+        const target = event.target;
+        if (
+            event.defaultPrevented ||
+            !(target instanceof HTMLElement) ||
+            !target.matches("nui-menu-option") ||
+            !menuNavigationKeys.includes(event.code)
+        ) {
+            return;
+        }
+
+        const items = this.itemsSource
+            ? this.menuPopup?.menuItems
+            : this.menuItems;
+        const index = items?.toArray().findIndex(item => item.id === target.id);
+        if (index === undefined || index < 0) {
+            return;
+        }
+        this.keyControlService.setActiveItem(index);
+        this.handleMenuKeydown(event);
+        event.stopPropagation();
+    }
+
     public get activeDescendant(): string | null {
         const activeItem =
             this.keyControlService.keyboardEventsManager?.activeItem;
@@ -272,6 +286,32 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     public isJustified(): boolean {
         return this.contextClass?.includes("nui-select--justified");
     }
+
+    private readonly handleMenuKeydown = (event: KeyboardEvent): void => {
+        if (event.defaultPrevented || this.popup.popupToggle.disabled) {
+            return;
+        }
+
+        const isOpeningKey =
+            event.code === KEYBOARD_CODE.ENTER ||
+            event.code === KEYBOARD_CODE.SPACE ||
+            event.code === KEYBOARD_CODE.ARROW_DOWN ||
+            event.code === KEYBOARD_CODE.ARROW_UP;
+        this.focusMenuWhenOpened = !this.popup.isOpen && isOpeningKey;
+
+        if (
+            this.popup.isOpen &&
+            (isOpeningKey ||
+                event.code === KEYBOARD_CODE.HOME ||
+                event.code === KEYBOARD_CODE.END ||
+                event.code === KEYBOARD_CODE.PAGE_UP ||
+                event.code === KEYBOARD_CODE.PAGE_DOWN)
+        ) {
+            this.menuContent.nativeElement.focus();
+        }
+
+        this.keyControlService.handleKeydown(event);
+    };
 
     private setKeyboardManagerServiceData(): void {
         this.keyControlService.menuGroups = this.menuGroups;

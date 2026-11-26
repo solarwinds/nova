@@ -8,6 +8,7 @@
 
 ### Fixes
 
+- `@nova-ui/bits` | Kept the existing `MenuComponent` and `TableHeaderCellComponent` constructor and method signatures compatible. `MenuComponent.onMenuContentKeydown` is deprecated because the menu handles content keyboard events internally.
 - `@nova-ui/bits` | Aligned the message dismiss button with the status icon, including when the message wraps.
 - `@nova-ui/bits` | Checkbox and switch accessible names include a form-field caption only once when it matches the control's own label, ignoring case and extra whitespace.
 - `@nova-ui/bits` | Escape closes a menu inside a dialog without also dismissing the dialog.

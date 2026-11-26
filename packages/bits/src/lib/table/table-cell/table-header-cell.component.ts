@@ -27,6 +27,7 @@ import {
     ElementRef,
     HostBinding,
     HostListener,
+    inject,
     Input,
     Injector,
     NgZone,
@@ -188,6 +189,8 @@ export class TableHeaderCellComponent
     public columnWidthOverlay: OverlayComponent;
     @ViewChild("columnWidthInput")
     private columnWidthInput: ElementRef<HTMLInputElement>;
+    private readonly overlay = inject(Overlay);
+    private readonly injector = inject(Injector);
 
     public get columnLabel(): string {
         const header = this.elementRef.nativeElement;
@@ -412,9 +415,7 @@ export class TableHeaderCellComponent
         private tableStateHandlerService: TableStateHandlerService,
         private utilService: UtilService,
         private zone: NgZone,
-        private renderer: Renderer2,
-        private overlay: Overlay,
-        private injector: Injector
+        private renderer: Renderer2
     ) {
         super(columnDef, elementRef);
         this.columnWidthInputId =
